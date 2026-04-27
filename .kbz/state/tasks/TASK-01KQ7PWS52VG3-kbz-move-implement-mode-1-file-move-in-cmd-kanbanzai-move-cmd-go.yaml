@@ -1,0 +1,6 @@
+id: TASK-01KQ7PWS52VG3
+parent_feature: FEAT-01KQ7JDT11MH6
+slug: kbz-move-implement-mode-1-file-move-in-cmd-kanbanzai-move-cmd-go
+name: "Implement Mode 1 file move in `cmd/kanbanzai/move_cmd.go`"
+summary: "Implement Mode 1 file move in `cmd/kanbanzai/move_cmd.go`"
+status: queued

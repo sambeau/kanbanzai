@@ -1,0 +1,6 @@
+id: TASK-01KQ7PWS57AGV
+parent_feature: FEAT-01KQ7JDT11MH6
+slug: kbz-move-implement-mode-2-feature-re-parent-in-move-cmd-go
+name: "Implement Mode 2 feature re-parent in `move_cmd.go`"
+summary: "Implement Mode 2 feature re-parent in `move_cmd.go`"
+status: queued

@@ -4,3 +4,8 @@ slug: work-tree-migration-tests-all-17-acceptance-criteria
 name: Tests — all 17 acceptance criteria
 summary: Tests — all 17 acceptance criteria
 status: queued
+depends_on:
+  - TASK-01KQ7PT6RKW3P
+  - TASK-01KQ7PT6RWYK6
+  - TASK-01KQ7PT6RYVHN
+  - TASK-01KQ7PT6S0ZCE

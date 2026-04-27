@@ -4,3 +4,5 @@ slug: work-tree-migration-implement-execute-cleanup-mode
 name: Implement --execute --cleanup mode
 summary: Implement --execute --cleanup mode
 status: queued
+depends_on:
+  - TASK-01KQ7PT6RYVHN

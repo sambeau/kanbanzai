@@ -1,0 +1,6 @@
+id: TASK-01KQ7PWS55NWM
+parent_feature: FEAT-01KQ7JDT11MH6
+slug: kbz-move-wire-dispatch-in-cmd-kanbanzai-main-go
+name: "Wire dispatch in `cmd/kanbanzai/main.go`"
+summary: "Wire dispatch in `cmd/kanbanzai/main.go`"
+status: queued

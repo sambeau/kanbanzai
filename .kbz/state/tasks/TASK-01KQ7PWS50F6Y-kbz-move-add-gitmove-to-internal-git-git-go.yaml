@@ -1,0 +1,6 @@
+id: TASK-01KQ7PWS50F6Y
+parent_feature: FEAT-01KQ7JDT11MH6
+slug: kbz-move-add-gitmove-to-internal-git-git-go
+name: "Add `GitMove` to `internal/git/git.go`"
+summary: "Add `GitMove` to `internal/git/git.go`"
+status: queued

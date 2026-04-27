@@ -4,3 +4,5 @@ slug: work-tree-migration-implement-execute-mode
 name: Implement --execute mode
 summary: Implement --execute mode
 status: queued
+depends_on:
+  - TASK-01KQ7PT6RWYK6
