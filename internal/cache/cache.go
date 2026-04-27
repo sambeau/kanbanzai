@@ -320,6 +320,21 @@ func (c *Cache) GetFields(entityType, id string) (map[string]any, error) {
 	return fields, nil
 }
 
+
+// LookupByDisplayID finds a feature by its P{n}-F{m} display_id.
+// Uses json_extract for O(1) lookup when the cache is warm.
+// Returns empty strings and false if not found.
+func (c *Cache) LookupByDisplayID(displayID string) (id, slug, filePath string, found bool) {
+	row := c.db.QueryRow(
+		`SELECT id, slug, file_path FROM entities WHERE entity_type = 'feature' AND LOWER(json_extract(fields_json, '$.display_id')) = LOWER(?)`,
+		displayID,
+	)
+	if err := row.Scan(&id, &slug, &filePath); err != nil {
+		return "", "", "", false
+	}
+	return id, slug, filePath, true
+}
+
 func scanRows(rows *sql.Rows) ([]EntityRow, error) {
 	var result []EntityRow
 	for rows.Next() {

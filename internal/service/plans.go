@@ -87,9 +87,10 @@ func (s *EntityService) CreatePlan(input CreatePlanInput) (CreateResult, error) 
 		Status:    model.PlanStatusProposed,
 		Summary:   strings.TrimSpace(input.Summary),
 		Tags:      normalizeTags(input.Tags),
-		Created:   now,
-		CreatedBy: strings.TrimSpace(input.CreatedBy),
-		Updated:   now,
+		Created:        now,
+		CreatedBy:      strings.TrimSpace(input.CreatedBy),
+		Updated:        now,
+		NextFeatureSeq: 1,
 	}
 
 	if err := validate.ValidateInitialState(validate.EntityPlan, string(entity.Status)); err != nil {
@@ -447,7 +448,8 @@ func planFields(p model.Plan) map[string]any {
 		"summary":    p.Summary,
 		"created":    p.Created.Format(time.RFC3339),
 		"created_by": p.CreatedBy,
-		"updated":    p.Updated.Format(time.RFC3339),
+		"updated":          p.Updated.Format(time.RFC3339),
+		"next_feature_seq": p.NextFeatureSeq,
 	}
 
 	if p.Design != "" {

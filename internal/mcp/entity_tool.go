@@ -1359,6 +1359,10 @@ func entityFullRecord(entityID, entityType, slug string, state map[string]any) m
 		out[k] = v
 	}
 	displayID := id.FormatFullDisplay(entityID)
+	// Prefer P{n}-F{m} display_id from state when the feature has one.
+	if did, ok := state["display_id"].(string); ok && service.IsFeatureDisplayID(did) {
+		displayID = did
+	}
 	entityName, _ := state["name"].(string)
 	out["display_id"] = displayID
 	out["id"] = entityID

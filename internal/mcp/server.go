@@ -99,6 +99,11 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		}
 	}
 
+	// Backfill display_ids for any existing features that predate this feature (idempotent).
+	if err := service.MigrateDisplayIDs(entitySvc); err != nil {
+		log.Printf("[server] display_id migration warning (non-fatal): %v", err)
+	}
+
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
 
 	profileRoot := filepath.Join(core.InstanceRootDir, "context", "roles")

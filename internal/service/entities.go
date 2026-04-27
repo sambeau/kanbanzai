@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strings"
 	"time"
@@ -181,7 +182,6 @@ func (s *EntityService) RebuildCache() (int, error) {
 func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, error) {
 	if err := validateRequired(
 		field("slug", input.Slug),
-		field("parent", input.Parent),
 		field("summary", input.Summary),
 		field("created_by", input.CreatedBy),
 	); err != nil {
@@ -189,8 +189,33 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 	}
 
 	parentID := strings.TrimSpace(input.Parent)
-	if !s.entityExists(string(model.EntityKindPlan), parentID) {
+	if parentID == "" {
+		return CreateResult{}, fmt.Errorf("parent plan is required: feature must belong to a plan")
+	}
+
+	// Load parent plan — provides existence check, next_feature_seq, and plan number.
+	planResult, err := s.GetPlan(parentID)
+	if err != nil {
 		return CreateResult{}, fmt.Errorf("parent plan %s: %w", parentID, ErrReferenceNotFound)
+	}
+
+	// Read next_feature_seq (default 1 if absent).
+	seq := intFromState(planResult.State, "next_feature_seq", 1)
+
+	// Compute display_id: P{number}-F{seq}.
+	_, planNum, _ := model.ParsePlanID(parentID)
+	displayID := fmt.Sprintf("P%s-F%d", planNum, seq)
+
+	// Write plan with incremented counter BEFORE writing feature (REQ-006).
+	planResult.State["next_feature_seq"] = seq + 1
+	planRecord := storage.EntityRecord{
+		Type:   string(model.EntityKindPlan),
+		ID:     planResult.ID,
+		Slug:   planResult.Slug,
+		Fields: planResult.State,
+	}
+	if _, err := s.store.Write(planRecord); err != nil {
+		return CreateResult{}, fmt.Errorf("increment plan sequence for %s: %w", parentID, err)
 	}
 
 	idValue, err := s.allocateID(model.EntityKindFeature)
@@ -208,6 +233,7 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 		Slug:      normalizeSlug(input.Slug),
 		Name:      featureName,
 		Parent:    parentID,
+		DisplayID: displayID,
 		Status:    model.FeatureStatusProposed,
 		Summary:   strings.TrimSpace(input.Summary),
 		Design:    strings.TrimSpace(input.Design),
@@ -502,6 +528,15 @@ func (s *EntityService) Get(entityType, entityID, slug string) (GetResult, error
 	if entityID == "" {
 		return GetResult{}, fmt.Errorf("entity id is required")
 	}
+	// Resolve P{n}-F{m} display ID to canonical FEAT-TSID.
+	if entityType == "feature" && IsFeatureDisplayID(entityID) {
+		resolvedID, resolvedSlug, err := s.ResolveFeatureDisplayID(entityID)
+		if err != nil {
+			return GetResult{}, err
+		}
+		entityID = resolvedID
+		slug = resolvedSlug
+	}
 	if slug == "" {
 		// Cache fast path: when cache is warm for this type, resolve slug without
 		// a directory scan. Fall through to ResolvePrefix on miss or Load error.
@@ -620,6 +655,16 @@ func (s *EntityService) UpdateStatus(input UpdateStatusInput) (GetResult, error)
 		return GetResult{}, err
 	}
 
+	// Resolve P{n}-F{m} display ID to canonical FEAT-TSID.
+	if entityType == "feature" && IsFeatureDisplayID(entityID) {
+		resolvedID, resolvedSlug, err := s.ResolveFeatureDisplayID(entityID)
+		if err != nil {
+			return GetResult{}, err
+		}
+		entityID = resolvedID
+		slug = resolvedSlug
+	}
+
 	if slug == "" {
 		resolvedID, resolvedSlug, err := s.ResolvePrefix(entityType, entityID)
 		if err != nil {
@@ -695,6 +740,16 @@ func (s *EntityService) UpdateEntity(input UpdateEntityInput) (GetResult, error)
 		field("id", entityID),
 	); err != nil {
 		return GetResult{}, err
+	}
+
+	// Resolve P{n}-F{m} display ID to canonical FEAT-TSID.
+	if entityType == "feature" && IsFeatureDisplayID(entityID) {
+		resolvedID, resolvedSlug, err := s.ResolveFeatureDisplayID(entityID)
+		if err != nil {
+			return GetResult{}, err
+		}
+		entityID = resolvedID
+		slug = resolvedSlug
 	}
 
 	if slug == "" {
@@ -1006,6 +1061,9 @@ func featureFields(e model.Feature) map[string]any {
 		"created":    e.Created.Format(time.RFC3339),
 		"created_by": e.CreatedBy,
 	}
+	if e.DisplayID != "" {
+		fields["display_id"] = e.DisplayID
+	}
 	if e.Estimate != nil {
 		fields["estimate"] = *e.Estimate
 	}
@@ -1225,6 +1283,56 @@ func stringFromState(state map[string]any, key string) string {
 		return fmt.Sprint(v)
 	}
 	return s
+}
+
+
+
+var featureDisplayIDPattern = regexp.MustCompile(`(?i)^P(\d+)-F(\d+)$`)
+
+// IsFeatureDisplayID reports whether id matches the P{n}-F{m} display ID pattern.
+func IsFeatureDisplayID(id string) bool {
+	return featureDisplayIDPattern.MatchString(id)
+}
+
+// ResolveFeatureDisplayID resolves a P{n}-F{m} display ID to (canonicalID, slug).
+// Uses the SQLite cache when warm (O(1)); falls back to a filesystem scan.
+func (s *EntityService) ResolveFeatureDisplayID(displayID string) (string, string, error) {
+	if s.cache != nil && s.cache.IsWarm("feature") {
+		if id, slug, _, found := s.cache.LookupByDisplayID(displayID); found {
+			return id, slug, nil
+		}
+		return "", "", fmt.Errorf("feature with display_id %s: %w", displayID, ErrNotFound)
+	}
+	// Filesystem scan fallback.
+	results, err := s.List("feature")
+	if err != nil {
+		return "", "", fmt.Errorf("resolve display_id %s: %w", displayID, err)
+	}
+	upper := strings.ToUpper(displayID)
+	for _, r := range results {
+		if did, _ := r.State["display_id"].(string); strings.ToUpper(did) == upper {
+			return r.ID, r.Slug, nil
+		}
+	}
+	return "", "", fmt.Errorf("feature with display_id %s: %w", displayID, ErrNotFound)
+}
+
+func intFromState(state map[string]any, key string, defaultVal int) int {
+	if state == nil {
+		return defaultVal
+	}
+	v, ok := state[key]
+	if !ok {
+		return defaultVal
+	}
+	switch n := v.(type) {
+	case int:
+		return n
+	case float64:
+		return int(n)
+	default:
+		return defaultVal
+	}
 }
 
 func extractParentRefFromState(entityType string, state map[string]any) string {
