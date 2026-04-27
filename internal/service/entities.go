@@ -181,7 +181,6 @@ func (s *EntityService) RebuildCache() (int, error) {
 func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, error) {
 	if err := validateRequired(
 		field("slug", input.Slug),
-		field("parent", input.Parent),
 		field("summary", input.Summary),
 		field("created_by", input.CreatedBy),
 	); err != nil {
@@ -189,8 +188,33 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 	}
 
 	parentID := strings.TrimSpace(input.Parent)
-	if !s.entityExists(string(model.EntityKindPlan), parentID) {
+	if parentID == "" {
+		return CreateResult{}, fmt.Errorf("parent plan is required: feature must belong to a plan")
+	}
+
+	// Load parent plan — provides existence check, next_feature_seq, and plan number.
+	planResult, err := s.GetPlan(parentID)
+	if err != nil {
 		return CreateResult{}, fmt.Errorf("parent plan %s: %w", parentID, ErrReferenceNotFound)
+	}
+
+	// Read next_feature_seq (default 1 if absent).
+	seq := intFromState(planResult.State, "next_feature_seq", 1)
+
+	// Compute display_id: P{number}-F{seq}.
+	_, planNum, _ := model.ParsePlanID(parentID)
+	displayID := fmt.Sprintf("P%s-F%d", planNum, seq)
+
+	// Write plan with incremented counter BEFORE writing feature (REQ-006).
+	planResult.State["next_feature_seq"] = seq + 1
+	planRecord := storage.EntityRecord{
+		Type:   string(model.EntityKindPlan),
+		ID:     planResult.ID,
+		Slug:   planResult.Slug,
+		Fields: planResult.State,
+	}
+	if _, err := s.store.Write(planRecord); err != nil {
+		return CreateResult{}, fmt.Errorf("increment plan sequence for %s: %w", parentID, err)
 	}
 
 	idValue, err := s.allocateID(model.EntityKindFeature)
@@ -208,6 +232,7 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 		Slug:      normalizeSlug(input.Slug),
 		Name:      featureName,
 		Parent:    parentID,
+		DisplayID: displayID,
 		Status:    model.FeatureStatusProposed,
 		Summary:   strings.TrimSpace(input.Summary),
 		Design:    strings.TrimSpace(input.Design),
@@ -1228,6 +1253,25 @@ func stringFromState(state map[string]any, key string) string {
 		return fmt.Sprint(v)
 	}
 	return s
+}
+
+
+func intFromState(state map[string]any, key string, defaultVal int) int {
+	if state == nil {
+		return defaultVal
+	}
+	v, ok := state[key]
+	if !ok {
+		return defaultVal
+	}
+	switch n := v.(type) {
+	case int:
+		return n
+	case float64:
+		return int(n)
+	default:
+		return defaultVal
+	}
 }
 
 func extractParentRefFromState(entityType string, state map[string]any) string {
