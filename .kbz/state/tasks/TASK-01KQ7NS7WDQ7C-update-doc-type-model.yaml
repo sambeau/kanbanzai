@@ -1,0 +1,6 @@
+id: TASK-01KQ7NS7WDQ7C
+parent_feature: FEAT-01KQ7JDSZARPC
+slug: update-doc-type-model
+name: Update document type model
+summary: Add DocumentTypeSpec/Review/Retro/Proposal constants; update AllDocumentTypes() to return 8 user-facing types; add NormaliseDocumentType() and ValidDocumentTypeForRegistration(); retain legacy constants for backwards compatibility; ensure ValidDocumentType() accepts all types for the storage layer.
+status: queued
