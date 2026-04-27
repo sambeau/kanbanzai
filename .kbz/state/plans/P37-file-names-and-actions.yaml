@@ -1,0 +1,8 @@
+id: P37-file-names-and-actions
+slug: file-names-and-actions
+name: File Names and Actions
+status: proposed
+summary: "Standardise file names, folder structure, and IDs across the Kanbanzai project. Establish plan-first folder organisation, plan-scoped feature IDs, canonical filename templates, and file operation tools (move, delete). Addresses growing inconsistencies in naming, folder duplication, and human-unfriendly feature IDs as the project scales toward multi-person teams."
+created: "2026-04-27T12:34:48Z"
+created_by: sambeau
+updated: "2026-04-27T12:34:48Z"
