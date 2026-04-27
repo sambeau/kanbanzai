@@ -1,0 +1,8 @@
+id: FEAT-01KQ7YQKHK2GV
+slug: feature-display-ids-document-inheritance
+name: Feature Display IDs and Document Inheritance
+parent: P38-plans-and-batches
+status: proposed
+summary: "Update feature display IDs from P{n}-F{n} to B{n}-F{n}. Extend the document gate four-level lookup chain (feature → feature-owned docs → parent batch docs → grandparent plan docs) to support batch-to-plan design inheritance."
+created: "2026-04-27T17:10:30Z"
+created_by: sambeau
