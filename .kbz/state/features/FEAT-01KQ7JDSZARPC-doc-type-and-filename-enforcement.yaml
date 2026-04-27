@@ -2,8 +2,9 @@ id: FEAT-01KQ7JDSZARPC
 slug: doc-type-and-filename-enforcement
 name: Document type system and filename enforcement
 parent: P37-file-names-and-actions
-status: developing
-summary: "Lock down what gets registered and where. Add proposal type; rename retrospective to retro with backward-compat; split review out from report as distinct type. doc register validates filename template {PlanID}-{type}-{slug}.md and that files are in the correct plan folder work/P{n}-*/."
+status: done
+review_cycle: 1
+summary: "Document type system enforcement: type normalisation (specification→spec, retrospective→retro), filename and folder validation in SubmitDocument, legacy deserialisation. 23 AC tests, all passing."
 spec: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement
 dev_plan: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement
 created: "2026-04-27T13:35:26Z"
@@ -14,3 +15,8 @@ overrides:
     reason: "Specs approved by human owner. Documents use equivalent Problem Statement / Requirements / Constraints headings rather than the required Overview / Scope / Functional Requirements / Non-Functional Requirements naming convention, but the content is complete and user-approved."
     timestamp: "2026-04-27T15:10:40+01:00"
     to_status: dev-planning
+  -
+    from_status: reviewing
+    reason: "All 5 tasks done including tests for all 23 ACs. go test -race ./... passes except pre-existing TestDocIntelFind_Role_* failures unrelated to P37. Human owner approved spec override during P37."
+    timestamp: "2026-04-27T19:23:50+01:00"
+    to_status: done
