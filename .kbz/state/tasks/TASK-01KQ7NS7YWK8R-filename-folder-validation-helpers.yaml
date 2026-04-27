@@ -4,3 +4,5 @@ slug: filename-folder-validation-helpers
 name: Implement filename and folder validation helpers
 summary: "Add validateDocumentFilename and validateDocumentFolder pure functions in service layer. Implement canonical filename template matching (plan-scoped and project-level), folder placement matching, case-insensitive plan ID comparison, and exemptions for work/templates/ and docs/. Return actionable errors naming the specific expected pattern or directory."
 status: queued
+depends_on:
+  - TASK-01KQ7NS7WDQ7C
