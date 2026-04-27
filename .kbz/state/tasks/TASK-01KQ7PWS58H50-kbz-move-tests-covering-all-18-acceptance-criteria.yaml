@@ -3,7 +3,7 @@ parent_feature: FEAT-01KQ7JDT11MH6
 slug: kbz-move-tests-covering-all-18-acceptance-criteria
 name: Tests covering all 18 acceptance criteria
 summary: Tests covering all 18 acceptance criteria
-status: queued
+status: ready
 depends_on:
   - TASK-01KQ7PWS50F6Y
   - TASK-01KQ7PWS52VG3
