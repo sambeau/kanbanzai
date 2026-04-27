@@ -1,0 +1,505 @@
+document_id: P37-file-names-and-actions/design-p37-file-names-and-actions
+document_path: work/design/p37-file-names-and-actions.md
+content_hash: 351ba3fb40186407fe4726d3e74b1331563b6252625af053bbe13dda4828f548
+indexed_at: 2026-04-27T12:38:45.843656Z
+sections:
+    - path: "1"
+      level: 1
+      title: P37 File Names and Actions — Design
+      byte_offset: 0
+      byte_count: 29661
+      word_count: 4195
+      content_hash: 351ba3fb40186407fe4726d3e74b1331563b6252625af053bbe13dda4828f548
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 306
+          byte_count: 2193
+          word_count: 291
+          content_hash: 31dde7b3c8e3defdc7c3f1bc3141a9a79d0ea899a5d4cd0c294354af0e542571
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Prior documents consulted
+              byte_offset: 323
+              byte_count: 1168
+              word_count: 145
+              content_hash: e0549a2807999530d9ec115e03627f4e3ef56e8292953e9523fd5a4b7913f38e
+            - path: 1.1.2
+              level: 3
+              title: Decisions that constrain this design
+              byte_offset: 1491
+              byte_count: 670
+              word_count: 96
+              content_hash: 240c3fb4870c33473489fc44eb245e83eecf19595405044f8bcccf3738e76029
+            - path: 1.1.3
+              level: 3
+              title: Open questions resolved by this design
+              byte_offset: 2161
+              byte_count: 338
+              word_count: 47
+              content_hash: 91b5c3526a17a33562f15005f8b59b46e3bf0ff64268a7bd309c5aa360978209
+        - path: "1.2"
+          level: 2
+          title: Problem and Motivation
+          byte_offset: 2499
+          byte_count: 2189
+          word_count: 286
+          content_hash: 49f59e78a84e759c08c2472ac3970d6608e00acab42217b8b5df6c20c4ee9af6
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 4688
+          byte_count: 12369
+          word_count: 1787
+          content_hash: b3dbfdbf27ac31a59492f4b315d466f376d16446484bf27174f067f29ca64775
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 1. Plan-first folder organisation
+              byte_offset: 4699
+              byte_count: 1585
+              word_count: 192
+              content_hash: d00d1f0fdcb3c35c18183ef8a839605dfa4bd86b93cc0652c35a3811417d5df2
+            - path: 1.3.2
+              level: 3
+              title: 2. Plan-scoped feature IDs
+              byte_offset: 6284
+              byte_count: 1959
+              word_count: 293
+              content_hash: 26a0168de62a979b97a03009e90f25f944a45840120853ab7999b7149a639860
+            - path: 1.3.3
+              level: 3
+              title: 3. Canonical filename template
+              byte_offset: 8243
+              byte_count: 1936
+              word_count: 275
+              content_hash: 7fdc426eef3f0fcf83989917223ee4070e98a922d21b8dfa7ffe7c83a23c9a85
+            - path: 1.3.4
+              level: 3
+              title: 4. Standard document types
+              byte_offset: 10179
+              byte_count: 1759
+              word_count: 255
+              content_hash: 3931fb6f35ecb638b612e1f722f97fb07476e01e770ac11a1e275559960c1f60
+            - path: 1.3.5
+              level: 3
+              title: 5. Assets
+              byte_offset: 11938
+              byte_count: 849
+              word_count: 106
+              content_hash: 2af0f1124a330e59f9594dcb7763923a5aab3716526ef782e80b3d73395e3948
+            - path: 1.3.6
+              level: 3
+              title: 6. File operations
+              byte_offset: 12787
+              byte_count: 3161
+              word_count: 499
+              content_hash: 83a20ab8551d58ecd4426dc04a6e840cb280f76bb84f2bab24d10f5330b35f8f
+              children:
+                - path: 1.3.6.1
+                  level: 4
+                  title: 6.1 `kbz move`
+                  byte_offset: 12920
+                  byte_count: 1648
+                  word_count: 267
+                  content_hash: 100ed706e107df9298e45c0f15964859e46321bd2c9eedc9b3ba46653cbc9f97
+                - path: 1.3.6.2
+                  level: 4
+                  title: 6.2 `kbz delete`
+                  byte_offset: 14568
+                  byte_count: 581
+                  word_count: 84
+                  content_hash: 473665f5bb1e0dd5043def5966fb51340cebdc1a31634232c50ac869d82c283d
+                - path: 1.3.6.3
+                  level: 4
+                  title: 6.3 `kbz move` for re-parenting entities
+                  byte_offset: 15149
+                  byte_count: 799
+                  word_count: 128
+                  content_hash: 8d1f898269d193359835dca36a64d09b48f3f5c2ea8295d9a35e4d57eab02939
+            - path: 1.3.7
+              level: 3
+              title: 7. Migration strategy
+              byte_offset: 15948
+              byte_count: 1109
+              word_count: 165
+              content_hash: 0162cae122f78ee1751da25ce7ff3f11cbaf76d10f13befff260018a9f98d2ea
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 17057
+          byte_count: 3936
+          word_count: 574
+          content_hash: 3495b584902d911060a7ee12412c5d2b598dc21dfc2ef96ff11aa4a3241b1043
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Alternative A: Clean up type-first folders (status quo, improved)'
+              byte_offset: 17085
+              byte_count: 875
+              word_count: 125
+              content_hash: 4199bbda5744040b49595a0df3fa70db53fb9a31cb0717576d20ea34bc438c5b
+            - path: 1.4.2
+              level: 3
+              title: 'Alternative B: Flat structure with no folders'
+              byte_offset: 17960
+              byte_count: 730
+              word_count: 103
+              content_hash: b81fde11117aed7b4bd329d25a77bfc46223123a4d79cf6f5a45456cff516d4d
+            - path: 1.4.3
+              level: 3
+              title: 'Alternative C: Global sequential feature IDs'
+              byte_offset: 18690
+              byte_count: 735
+              word_count: 115
+              content_hash: 842c7cc91e1193ae8d44b5007cd0f8cf2d78a985f17829eb990e32e1c32bfef7
+            - path: 1.4.4
+              level: 3
+              title: 'Alternative D: Keep TSID feature IDs, add display formatting only'
+              byte_offset: 19425
+              byte_count: 840
+              word_count: 119
+              content_hash: 166be4b5e818a35788bc2148e7841de58ffdd9840defbc990072e0fbc8185d47
+            - path: 1.4.5
+              level: 3
+              title: 'Alternative E: User-scoped sequential IDs'
+              byte_offset: 20265
+              byte_count: 728
+              word_count: 109
+              content_hash: e77efff396f3c75d15eaf7abf2f2f5f430a30c073de1555d0ecabe778b750d79
+        - path: "1.5"
+          level: 2
+          title: Decisions
+          byte_offset: 20993
+          byte_count: 6989
+          word_count: 988
+          content_hash: 240da1c4771dc6cadf7610ccb0165d676548a43806b43cb82c017bf35cefb0e1
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'D1: Plan-first folder organisation'
+              byte_offset: 21007
+              byte_count: 1110
+              word_count: 175
+              content_hash: 8f42ab3973ef70fff524bb9f1b37c6419bb0dfa3974599908b8041729fff66ce
+            - path: 1.5.2
+              level: 3
+              title: 'D2: Plan-scoped feature display IDs'
+              byte_offset: 22117
+              byte_count: 1220
+              word_count: 171
+              content_hash: 17ca45a5aa5dfeb5464baf3bb514df5ffd5a5b5d6987cbb9b34876193d783bb5
+            - path: 1.5.3
+              level: 3
+              title: 'D3: Canonical filename template'
+              byte_offset: 23337
+              byte_count: 1182
+              word_count: 157
+              content_hash: af729a3a0ec8d39689eb75cacee60a1be46271e63704ccf4b23bbc8cc00b5f3c
+            - path: 1.5.4
+              level: 3
+              title: 'D4: Eight standard document types'
+              byte_offset: 24519
+              byte_count: 1309
+              word_count: 175
+              content_hash: 6c8156ae038745f8c43c5806e3138e1afe8c21a7ad9adef6dad32530afcbfbfe
+            - path: 1.5.5
+              level: 3
+              title: 'D5: File operation tools'
+              byte_offset: 25828
+              byte_count: 1020
+              word_count: 154
+              content_hash: bed60a091049c45e39132cd3c018f503a21f9593e336a7bf39869fa13f3f194c
+            - path: 1.5.6
+              level: 3
+              title: 'D6: No configurability for structure'
+              byte_offset: 26848
+              byte_count: 1134
+              word_count: 154
+              content_hash: 6bb838a086ecf4d4e765501b396b011d64c5cba41dfad2c35300aa53ea314470
+        - path: "1.6"
+          level: 2
+          title: Open Questions
+          byte_offset: 27982
+          byte_count: 1679
+          word_count: 235
+          content_hash: 64596aba0209b80924e95f197119f99e2865ad468cfa9e8be7a66400933f2b74
+entity_refs:
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.1.1
+      byte_offset: 1014
+    - entity_id: FEAT-01KMKRQSD1TKK
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 3433
+    - entity_id: FEAT-01KM
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 3598
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 4022
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: 1.3.2
+      byte_offset: 6586
+    - entity_id: FEAT-01KMK
+      entity_type: feature
+      section_path: 1.4.4
+      byte_offset: 19590
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: 1.5.2
+      byte_offset: 22423
+    - entity_id: TASK-01KM8JVTJ1ZC5
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 6664
+    - entity_id: DEC-006
+      entity_type: decision
+      section_path: 1.1.1
+      byte_offset: 678
+    - entity_id: DEC-021
+      entity_type: decision
+      section_path: 1.1.1
+      byte_offset: 921
+    - entity_id: DEC-006
+      entity_type: decision
+      section_path: 1.1.2
+      byte_offset: 1541
+    - entity_id: DEC-021
+      entity_type: decision
+      section_path: 1.1.2
+      byte_offset: 1663
+    - entity_id: P37-file-names-and-actions
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 272
+    - entity_id: P7-developer-experience
+      entity_type: plan
+      section_path: 1.1.1
+      byte_offset: 1159
+    - entity_id: P24-ac-pattern
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 4836
+    - entity_id: P24-design-ac-pattern
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 4856
+    - entity_id: P24-spec-ac-pattern
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 4885
+    - entity_id: P24-dev-plan-ac-pattern
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 4912
+    - entity_id: F1-spec-validator-rules
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 4947
+    - entity_id: F2-design-error-reporting
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 4982
+    - entity_id: P24-review-ac-pattern
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 5015
+    - entity_id: P24-retro
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 5044
+    - entity_id: P25-write-file
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 5071
+    - entity_id: P25-design-write-file
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 5091
+    - entity_id: P24-ac-pattern
+      entity_type: plan
+      section_path: 1.3.2
+      byte_offset: 6526
+    - entity_id: P24-design-ac-pattern
+      entity_type: plan
+      section_path: 1.3.3
+      byte_offset: 8727
+    - entity_id: P24-spec-ac-pattern
+      entity_type: plan
+      section_path: 1.3.3
+      byte_offset: 8784
+    - entity_id: F3-spec-auth-flow
+      entity_type: plan
+      section_path: 1.3.3
+      byte_offset: 8854
+    - entity_id: P24-retro
+      entity_type: plan
+      section_path: 1.3.3
+      byte_offset: 8907
+    - entity_id: F1-review-validator-rules
+      entity_type: plan
+      section_path: 1.3.3
+      byte_offset: 8960
+    - entity_id: P24-ac-pattern
+      entity_type: plan
+      section_path: 1.3.5
+      byte_offset: 12039
+    - entity_id: P24-design-foo
+      entity_type: plan
+      section_path: 1.3.6.1
+      byte_offset: 13371
+    - entity_id: P24-report-evaluation
+      entity_type: plan
+      section_path: 1.3.6.2
+      byte_offset: 14679
+    - entity_id: P24-design-ac-pattern
+      entity_type: plan
+      section_path: 1.4.2
+      byte_offset: 18128
+    - entity_id: P24-spec-ac-pattern
+      entity_type: plan
+      section_path: 1.4.2
+      byte_offset: 18155
+    - entity_id: P25-design-write-file
+      entity_type: plan
+      section_path: 1.4.2
+      byte_offset: 18180
+    - entity_id: P24-design
+      entity_type: plan
+      section_path: 1.5.3
+      byte_offset: 24010
+    - entity_id: F3-spec
+      entity_type: plan
+      section_path: 1.5.3
+      byte_offset: 24029
+    - entity_id: P24-research-1-ai-orchestration
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 28477
+    - entity_id: P24-research-2-naming-conventions
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 28515
+cross_doc_links:
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: 1.1.1
+    - target_path: work/plan/phase-1-decision-log.md
+      link_text: work/plan/phase-1-decision-log.md
+      section_path: 1.1.1
+    - target_path: work/reviews/review-P7-developer-experience.md
+      link_text: work/reviews/review-P7-developer-experience.md
+      section_path: 1.1.1
+    - target_path: work/reports/kanbanzai-2.0-workflow-retrospective.md
+      link_text: work/reports/kanbanzai-2.0-workflow-retrospective.md
+      section_path: 1.1.1
+    - target_path: lifecycle-integrity.md
+      link_text: lifecycle-integrity.md
+      section_path: "1.2"
+    - target_path: p24-ac-pattern-and-decompose.md
+      link_text: p24-ac-pattern-and-decompose.md
+      section_path: "1.2"
+    - target_path: feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md
+      link_text: feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md
+      section_path: "1.2"
+    - target_path: spec-default-roles.md
+      link_text: spec-default-roles.md
+      section_path: "1.2"
+    - target_path: review-FEAT-01KMKRQSD1TKK-skills-content.md
+      link_text: review-FEAT-01KMKRQSD1TKK-skills-content.md
+      section_path: "1.2"
+    - target_path: 3.0-role-system.md
+      link_text: 3.0-role-system.md
+      section_path: "1.2"
+    - target_path: '{type}-{slug}.md'
+      link_text: '{type}-{slug}.md'
+      section_path: 1.3.1
+    - target_path: '{plan-id}-{type}-{slug}.md'
+      link_text: |4
+        {plan-id}-{type}-{slug}.md
+      section_path: 1.3.3
+    - target_path: '{plan-id}-{feature-seq}-{type}-{slug}.md'
+      link_text: |4
+        {plan-id}-{feature-seq}-{type}-{slug}.md
+      section_path: 1.3.3
+    - target_path: P24-design-ac-pattern.md
+      link_text: P24-design-ac-pattern.md
+      section_path: 1.3.3
+    - target_path: P24-spec-ac-pattern.md
+      link_text: P24-spec-ac-pattern.md
+      section_path: 1.3.3
+    - target_path: P24-F3-spec-auth-flow.md
+      link_text: P24-F3-spec-auth-flow.md
+      section_path: 1.3.3
+    - target_path: P24-retro.md
+      link_text: P24-retro.md
+      section_path: 1.3.3
+    - target_path: P24-F1-review-validator-rules.md
+      link_text: P24-F1-review-validator-rules.md
+      section_path: 1.3.3
+    - target_path: research-ai-orchestration.md
+      link_text: research-ai-orchestration.md
+      section_path: 1.3.3
+    - target_path: p24-f3-spec-auth-flow.md
+      link_text: p24-f3-spec-auth-flow.md
+      section_path: 1.3.3
+    - target_path: feat-01kmkrqrrx3cc-design-auth-flow.md
+      link_text: feat-01kmkrqrrx3cc-design-auth-flow.md
+      section_path: 1.4.4
+    - target_path: '{PlanID}-{type}-{slug}.md'
+      link_text: '{PlanID}-{type}-{slug}.md'
+      section_path: 1.5.3
+    - target_path: '{PlanID}-{FeatureSeq}-{type}-{slug}.md'
+      link_text: '{PlanID}-{FeatureSeq}-{type}-{slug}.md'
+      section_path: 1.5.3
+    - target_path: P24-research-1-ai-orchestration.md
+      link_text: P24-research-1-ai-orchestration.md
+      section_path: "1.6"
+    - target_path: P24-research-2-naming-conventions.md
+      link_text: P24-research-2-naming-conventions.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: 1.1.2
+      role: decision
+      confidence: high
+    - section_path: 1.1.3
+      role: question
+      confidence: high
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: 1.4.1
+      role: alternative
+      confidence: high
+    - section_path: 1.4.2
+      role: alternative
+      confidence: high
+    - section_path: 1.4.3
+      role: alternative
+      confidence: high
+    - section_path: 1.4.4
+      role: alternative
+      confidence: high
+    - section_path: 1.4.5
+      role: alternative
+      confidence: high
+    - section_path: "1.5"
+      role: decision
+      confidence: high
+    - section_path: 1.5.2
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: question
+      confidence: high
+classified: false

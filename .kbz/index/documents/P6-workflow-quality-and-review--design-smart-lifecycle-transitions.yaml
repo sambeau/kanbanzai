@@ -217,8 +217,8 @@ conventional_roles:
     - section_path: "1.8"
       role: decision
       confidence: high
-access_count: 3
-last_accessed_at: 2026-04-24T15:55:10.19534Z
+access_count: 4
+last_accessed_at: 2026-04-27T12:34:53.09695Z
 classified: true
 classified_at: 2026-04-22T18:18:06.271495Z
 classified_by: claude-sonnet-4-6

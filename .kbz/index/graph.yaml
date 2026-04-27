@@ -1,4 +1,4 @@
-updated_at: 2026-04-27T02:38:56.403968Z
+updated_at: 2026-04-27T14:02:36.338276Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -82598,5 +82598,1150 @@ edges:
     - from: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics#1.3
       from_type: section
       to: work/reviews/review-FEAT-01KQ2E0RR40CD-decompose-apply-supersession.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions
+      from_type: document
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.6
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.6
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.6
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.4
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.4
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.4
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.4
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.4
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1
+      from_type: section
+      to: P37-file-names-and-actions/design-p37-file-names-and-actions#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1.1
+      from_type: section
+      to: FEAT-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.2
+      from_type: section
+      to: FEAT-01KMKRQSD1TKK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.2
+      from_type: section
+      to: FEAT-01KM
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.2
+      from_type: section
+      to: FEAT-01KMKRQRRX3CC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.2
+      from_type: section
+      to: FEAT-01KMKRQRRX3CC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.4.4
+      from_type: section
+      to: FEAT-01KMK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5.2
+      from_type: section
+      to: FEAT-01KMKRQRRX3CC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.2
+      from_type: section
+      to: TASK-01KM8JVTJ1ZC5
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1.1
+      from_type: section
+      to: DEC-006
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1.1
+      from_type: section
+      to: DEC-021
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1.2
+      from_type: section
+      to: DEC-006
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1.2
+      from_type: section
+      to: DEC-021
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1
+      from_type: section
+      to: P37-file-names-and-actions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1.1
+      from_type: section
+      to: P7-developer-experience
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.1
+      from_type: section
+      to: P24-ac-pattern
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.1
+      from_type: section
+      to: P24-design-ac-pattern
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.1
+      from_type: section
+      to: P24-spec-ac-pattern
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.1
+      from_type: section
+      to: P24-dev-plan-ac-pattern
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.1
+      from_type: section
+      to: F1-spec-validator-rules
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.1
+      from_type: section
+      to: F2-design-error-reporting
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.1
+      from_type: section
+      to: P24-review-ac-pattern
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.1
+      from_type: section
+      to: P24-retro
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.1
+      from_type: section
+      to: P25-write-file
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.1
+      from_type: section
+      to: P25-design-write-file
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.2
+      from_type: section
+      to: P24-ac-pattern
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: P24-design-ac-pattern
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: P24-spec-ac-pattern
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: F3-spec-auth-flow
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: P24-retro
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: F1-review-validator-rules
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.5
+      from_type: section
+      to: P24-ac-pattern
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.6.1
+      from_type: section
+      to: P24-design-foo
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.6.2
+      from_type: section
+      to: P24-report-evaluation
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.4.2
+      from_type: section
+      to: P24-design-ac-pattern
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.4.2
+      from_type: section
+      to: P24-spec-ac-pattern
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.4.2
+      from_type: section
+      to: P25-design-write-file
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5.3
+      from_type: section
+      to: P24-design
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5.3
+      from_type: section
+      to: F3-spec
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.6
+      from_type: section
+      to: P24-research-1-ai-orchestration
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.6
+      from_type: section
+      to: P24-research-2-naming-conventions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1.1
+      from_type: section
+      to: work/design/document-centric-interface.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1.1
+      from_type: section
+      to: work/plan/phase-1-decision-log.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1.1
+      from_type: section
+      to: work/reviews/review-P7-developer-experience.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.1.1
+      from_type: section
+      to: work/reports/kanbanzai-2.0-workflow-retrospective.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.2
+      from_type: section
+      to: lifecycle-integrity.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.2
+      from_type: section
+      to: p24-ac-pattern-and-decompose.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.2
+      from_type: section
+      to: feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.2
+      from_type: section
+      to: spec-default-roles.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.2
+      from_type: section
+      to: review-FEAT-01KMKRQSD1TKK-skills-content.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.2
+      from_type: section
+      to: 3.0-role-system.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.1
+      from_type: section
+      to: '{type}-{slug}.md'
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: '{plan-id}-{type}-{slug}.md'
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: '{plan-id}-{feature-seq}-{type}-{slug}.md'
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: P24-design-ac-pattern.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: P24-spec-ac-pattern.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: P24-F3-spec-auth-flow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: P24-retro.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: P24-F1-review-validator-rules.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: research-ai-orchestration.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.3.3
+      from_type: section
+      to: p24-f3-spec-auth-flow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.4.4
+      from_type: section
+      to: feat-01kmkrqrrx3cc-design-auth-flow.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5.3
+      from_type: section
+      to: '{PlanID}-{type}-{slug}.md'
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.5.3
+      from_type: section
+      to: '{PlanID}-{FeatureSeq}-{type}-{slug}.md'
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.6
+      from_type: section
+      to: P24-research-1-ai-orchestration.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P37-file-names-and-actions/design-p37-file-names-and-actions#1.6
+      from_type: section
+      to: P24-research-2-naming-conventions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement
+      from_type: document
+      to: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1
+      from_type: section
+      to: P37-file-names-and-actions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.4
+      from_type: section
+      to: P37-file-names-actions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.4
+      from_type: section
+      to: P37-spec-something
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.4
+      from_type: section
+      to: F2-spec-enforcement
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.4
+      from_type: section
+      to: P25-other-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.4
+      from_type: section
+      to: P37-spec
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.5
+      from_type: section
+      to: P37-file-names-actions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.5
+      from_type: section
+      to: P37-spec-something
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.5
+      from_type: section
+      to: F2-spec-enforcement
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.5
+      from_type: section
+      to: P25-other-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1
+      from_type: section
+      to: work/design/p37-file-names-and-actions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.1
+      from_type: section
+      to: spec-thing.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.1
+      from_type: section
+      to: SPEC_thing.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.1
+      from_type: section
+      to: P24-spec_thing.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.4
+      from_type: section
+      to: work/P37-file-names-actions/P37-spec-something.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.4
+      from_type: section
+      to: work/P37-file-names-actions/spec-something.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.4
+      from_type: section
+      to: work/P37-file-names-actions/P37-F2-spec-enforcement.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.4
+      from_type: section
+      to: work/p37-file-names-actions/p37-spec-something.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.4
+      from_type: section
+      to: work/P25-other-plan/P37-spec-something.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.4
+      from_type: section
+      to: work/_project/research-ai-orchestration.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.4
+      from_type: section
+      to: P37-spec-{slug}.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.4
+      from_type: section
+      to: work/templates/my-template.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.4
+      from_type: section
+      to: docs/architecture/overview.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.5
+      from_type: section
+      to: work/P37-file-names-actions/P37-spec-something.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.5
+      from_type: section
+      to: work/P37-file-names-actions/spec-something.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.5
+      from_type: section
+      to: work/P37-file-names-actions/P37-F2-spec-enforcement.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.5
+      from_type: section
+      to: work/p37-file-names-actions/p37-spec-something.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.5
+      from_type: section
+      to: work/P25-other-plan/P37-spec-something.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.5
+      from_type: section
+      to: work/_project/research-ai-orchestration.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.5
+      from_type: section
+      to: work/templates/my-template.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement#1.5
+      from_type: section
+      to: docs/architecture/overview.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids
+      from_type: document
+      to: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.1
+      from_type: section
+      to: FEAT-01KMKRQRRX3CC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.2.1
+      from_type: section
+      to: FEAT-01KMR
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.2.2
+      from_type: section
+      to: FEAT-01KMKRQRRX3CC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.2.2
+      from_type: section
+      to: FEAT-01KMK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.4
+      from_type: section
+      to: FEAT-01KMKRQRRX3CC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.4
+      from_type: section
+      to: FEAT-01KMK
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.5
+      from_type: section
+      to: FEAT-01KMKRQRRX3CC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.2.1
+      from_type: section
+      to: P37-file-names-and-actions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.2.1
+      from_type: section
+      to: P37-f1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids#1.4
+      from_type: section
+      to: P37-file-names-and-actions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete
+      from_type: document
+      to: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1
+      from_type: section
+      to: FEAT-01KQ7JDT341E8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1
+      from_type: section
+      to: P37-file-names-and-actions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1.2.1
+      from_type: section
+      to: P37-file-names
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1.2.1
+      from_type: section
+      to: F4-spec-kbz-delete
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1.4
+      from_type: section
+      to: P37-foo
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1.4
+      from_type: section
+      to: F1-design
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1.4
+      from_type: section
+      to: F1-spec
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete#1.2.1
+      from_type: section
+      to: work/P37-file-names/P37-F4-spec-kbz-delete.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move
+      from_type: document
+      to: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.2.1
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.2.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.2.1
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.2.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1
+      from_type: section
+      to: P37-file-names-and-actions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.2.1.1
+      from_type: section
+      to: P10-design-foo
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: P24-ac-pattern
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: P24-design-foo
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: P24-old
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: P24-spec-foo
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: P25-new-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: P25-design-foo
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: P25-spec-foo
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.2.1.1
+      from_type: section
+      to: P10-design-foo.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: work/design/foo.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: notes.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: docs/foo.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: work/design/nonexistent.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: work/old/foo.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: work/P24-ac-pattern/P24-design-foo.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: work/scratch/notes.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: work/P24-old/P24-design-foo.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: work/P24-old/P24-spec-foo.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: work/P25-new-plan/P25-design-foo.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move#1.4
+      from_type: section
+      to: work/P25-new-plan/P25-spec-foo.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration
+      from_type: document
+      to: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.1
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.1
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.1
+      from_type: section
+      to: FEAT-01KQ7JDT341E8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.4
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.1
+      from_type: section
+      to: P37-file-names-and-actions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.4
+      from_type: section
+      to: P37-file-names-and-actions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.4
+      from_type: section
+      to: P37-design
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.4
+      from_type: section
+      to: P24-ac-pattern
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.4
+      from_type: section
+      to: P24-spec
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.5
+      from_type: section
+      to: P37-file-names-and-actions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.5
+      from_type: section
+      to: P24-ac-pattern
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.1
+      from_type: section
+      to: work/design/p37-file-names-and-actions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.4
+      from_type: section
+      to: work/P37-file-names-and-actions/P37-design-{slug}.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.4
+      from_type: section
+      to: work/P24-ac-pattern/P24-spec-{slug}.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.4
+      from_type: section
+      to: '{type}-{slug}.md'
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.4
+      from_type: section
+      to: work/dev-plans/feat-abc-cache.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.5
+      from_type: section
+      to: work/_project/{type}-{slug}.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.5
+      from_type: section
+      to: work/dev-plans/feat-abc-cache.md
       to_type: document
       edge_type: LINKS_TO

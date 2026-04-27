@@ -1,0 +1,191 @@
+document_id: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement
+document_path: work/design/p37-f2-spec-doc-type-and-filename-enforcement.md
+content_hash: f87c96deb2ddd1ec592683c74a2cc178f46e89ceab56c832b0a534c28f578459
+indexed_at: 2026-04-27T13:52:07.764072Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P37-F2: Document Type System and Filename Enforcement — Specification'
+      byte_offset: 0
+      byte_count: 17379
+      word_count: 2318
+      content_hash: f87c96deb2ddd1ec592683c74a2cc178f46e89ceab56c832b0a534c28f578459
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem Statement
+          byte_offset: 632
+          byte_count: 1398
+          word_count: 175
+          content_hash: 4618a15bfd38a686975a32391a5af0a1301103beb0b321b8938f6a7ff65fad85
+        - path: "1.2"
+          level: 2
+          title: Requirements
+          byte_offset: 2030
+          byte_count: 4760
+          word_count: 653
+          content_hash: d3e2b2a36369c942ca6c1507c31eca534b6689216f6a066602744add7b6dbb09
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 2047
+              byte_count: 4184
+              word_count: 576
+              content_hash: fa01095b38759bc3474039e32d42643d6bad3179517cb97fbd1d6ae9b2feb25e
+            - path: 1.2.2
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 6231
+              byte_count: 559
+              word_count: 75
+              content_hash: 22a743bf6ac360b880f690a4388d5d68df20fb3e03f1474344604ac64d96f153
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 6790
+          byte_count: 808
+          word_count: 118
+          content_hash: 230f64864623dc06b5a459de13094360885cf1a0a20811ad048c16bcaa9840b5
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 7598
+          byte_count: 5421
+          word_count: 779
+          content_hash: 15290dd42ba446d43cfe0e1f80e4d327d8e91bbb7fc356986c8ae9b175f3b5e2
+        - path: "1.5"
+          level: 2
+          title: Verification Plan
+          byte_offset: 13019
+          byte_count: 4360
+          word_count: 541
+          content_hash: 2c25529d91708142d92bbf6a72a6ea0fcaa622f9940466174be3deab997f53c7
+entity_refs:
+    - entity_id: FEAT-01KQ7JDSZARPC
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 430
+    - entity_id: P37-file-names-and-actions
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 498
+    - entity_id: P37-file-names-actions
+      entity_type: plan
+      section_path: "1.4"
+      byte_offset: 9389
+    - entity_id: P37-spec-something
+      entity_type: plan
+      section_path: "1.4"
+      byte_offset: 9412
+    - entity_id: F2-spec-enforcement
+      entity_type: plan
+      section_path: "1.4"
+      byte_offset: 9865
+    - entity_id: P25-other-plan
+      entity_type: plan
+      section_path: "1.4"
+      byte_offset: 10379
+    - entity_id: P37-spec
+      entity_type: plan
+      section_path: "1.4"
+      byte_offset: 10998
+    - entity_id: P37-file-names-actions
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 14839
+    - entity_id: P37-spec-something
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 14862
+    - entity_id: F2-spec-enforcement
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 15208
+    - entity_id: P25-other-plan
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 15545
+cross_doc_links:
+    - target_path: work/design/p37-file-names-and-actions.md
+      link_text: work/design/p37-file-names-and-actions.md
+      section_path: "1"
+    - target_path: spec-thing.md
+      link_text: spec-thing.md
+      section_path: "1.1"
+    - target_path: SPEC_thing.md
+      link_text: SPEC_thing.md
+      section_path: "1.1"
+    - target_path: P24-spec_thing.md
+      link_text: P24-spec_thing.md
+      section_path: "1.1"
+    - target_path: work/P37-file-names-actions/P37-spec-something.md
+      link_text: work/P37-file-names-actions/P37-spec-something.md
+      section_path: "1.4"
+    - target_path: work/P37-file-names-actions/spec-something.md
+      link_text: work/P37-file-names-actions/spec-something.md
+      section_path: "1.4"
+    - target_path: work/P37-file-names-actions/P37-F2-spec-enforcement.md
+      link_text: work/P37-file-names-actions/P37-F2-spec-enforcement.md
+      section_path: "1.4"
+    - target_path: work/p37-file-names-actions/p37-spec-something.md
+      link_text: work/p37-file-names-actions/p37-spec-something.md
+      section_path: "1.4"
+    - target_path: work/P25-other-plan/P37-spec-something.md
+      link_text: work/P25-other-plan/P37-spec-something.md
+      section_path: "1.4"
+    - target_path: work/_project/research-ai-orchestration.md
+      link_text: work/_project/research-ai-orchestration.md
+      section_path: "1.4"
+    - target_path: P37-spec-{slug}.md
+      link_text: P37-spec-{slug}.md
+      section_path: "1.4"
+    - target_path: work/templates/my-template.md
+      link_text: work/templates/my-template.md
+      section_path: "1.4"
+    - target_path: docs/architecture/overview.md
+      link_text: docs/architecture/overview.md
+      section_path: "1.4"
+    - target_path: work/P37-file-names-actions/P37-spec-something.md
+      link_text: work/P37-file-names-actions/P37-spec-something.md
+      section_path: "1.5"
+    - target_path: work/P37-file-names-actions/spec-something.md
+      link_text: work/P37-file-names-actions/spec-something.md
+      section_path: "1.5"
+    - target_path: work/P37-file-names-actions/P37-F2-spec-enforcement.md
+      link_text: work/P37-file-names-actions/P37-F2-spec-enforcement.md
+      section_path: "1.5"
+    - target_path: work/p37-file-names-actions/p37-spec-something.md
+      link_text: work/p37-file-names-actions/p37-spec-something.md
+      section_path: "1.5"
+    - target_path: work/P25-other-plan/P37-spec-something.md
+      link_text: work/P25-other-plan/P37-spec-something.md
+      section_path: "1.5"
+    - target_path: work/_project/research-ai-orchestration.md
+      link_text: work/_project/research-ai-orchestration.md
+      section_path: "1.5"
+    - target_path: work/templates/my-template.md
+      link_text: work/templates/my-template.md
+      section_path: "1.5"
+    - target_path: docs/architecture/overview.md
+      link_text: docs/architecture/overview.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T13:52:08.261752Z
+classified: false

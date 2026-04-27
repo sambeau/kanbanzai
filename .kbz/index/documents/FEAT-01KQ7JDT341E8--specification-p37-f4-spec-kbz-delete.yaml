@@ -1,0 +1,115 @@
+document_id: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete
+document_path: work/design/p37-f4-spec-kbz-delete.md
+content_hash: 34f525c9646ed24ed5d580e4b34d8285524ab9dc3400ae52d58da7bc67bdf9f4
+indexed_at: 2026-04-27T13:56:25.379795Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P37-F4: kbz delete Command Specification'
+      byte_offset: 0
+      byte_count: 13656
+      word_count: 2041
+      content_hash: 34f525c9646ed24ed5d580e4b34d8285524ab9dc3400ae52d58da7bc67bdf9f4
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem Statement
+          byte_offset: 331
+          byte_count: 903
+          word_count: 137
+          content_hash: febe064f0e1b8f27ca4ee87d5b61a486e38e23b3988c18135fa44c582c06ee04
+        - path: "1.2"
+          level: 2
+          title: Requirements
+          byte_offset: 1234
+          byte_count: 4589
+          word_count: 666
+          content_hash: 53de60efa2ab2d5af7b5df9214d4032f64877f0ba7c35d1ff86dc861631c824e
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 1251
+              byte_count: 3725
+              word_count: 536
+              content_hash: 42e8137b02bf87fc678ecf12bc89deabb13c7256d1b43371e4166625c8a2cac6
+            - path: 1.2.2
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 4976
+              byte_count: 847
+              word_count: 128
+              content_hash: cfaed63f283175186eb8fd3deaa56dae2930da1eeb126885b239de23d3d8d968
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 5823
+          byte_count: 915
+          word_count: 131
+          content_hash: 379c021d6090a021aac4dfde9fa2ff46d03577bb0433010d80f7fed5ce171c16
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 6738
+          byte_count: 4098
+          word_count: 607
+          content_hash: 5223a68a7345cee5218eb7046e705cadc6e554cbc58e525fea4d0e7940ddb709
+        - path: "1.5"
+          level: 2
+          title: Verification Plan
+          byte_offset: 10836
+          byte_count: 2820
+          word_count: 462
+          content_hash: 5b5969256541c428a6e0874dbb124c6cf92ff9ee7dbb8170d39615d06f846bcd
+entity_refs:
+    - entity_id: FEAT-01KQ7JDT341E8
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 256
+    - entity_id: P37-file-names-and-actions
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 296
+    - entity_id: P37-file-names
+      entity_type: plan
+      section_path: 1.2.1
+      byte_offset: 1423
+    - entity_id: F4-spec-kbz-delete
+      entity_type: plan
+      section_path: 1.2.1
+      byte_offset: 1442
+    - entity_id: P37-foo
+      entity_type: plan
+      section_path: "1.4"
+      byte_offset: 6830
+    - entity_id: F1-design
+      entity_type: plan
+      section_path: "1.4"
+      byte_offset: 6842
+    - entity_id: F1-spec
+      entity_type: plan
+      section_path: "1.4"
+      byte_offset: 7826
+cross_doc_links:
+    - target_path: work/P37-file-names/P37-F4-spec-kbz-delete.md
+      link_text: work/P37-file-names/P37-F4-spec-kbz-delete.md
+      section_path: 1.2.1
+conventional_roles:
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T13:56:25.809129Z
+classified: false
