@@ -2,8 +2,14 @@ id: FEAT-01KQ7JDSVMP4E
 slug: plan-scoped-feature-display-ids
 name: Plan-scoped feature display IDs
 parent: P37-file-names-and-actions
-status: specifying
+status: dev-planning
 summary: Add plan-scoped human-friendly display IDs for features (P24-F3 format). Plan state gains next_feature_seq counter; feature state gains display_id field. All tools accept P24-F3 as input and resolve to canonical FEAT-TSID13. CLI displays P24-F3 everywhere. Features must have a parent plan.
 spec: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids
 created: "2026-04-27T13:35:26Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: specifying
+    reason: "Specs approved by human owner. Documents use equivalent Problem Statement / Requirements / Constraints headings rather than the required Overview / Scope / Functional Requirements / Non-Functional Requirements naming convention, but the content is complete and user-approved."
+    timestamp: "2026-04-27T15:10:38+01:00"
+    to_status: dev-planning
