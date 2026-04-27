@@ -571,7 +571,7 @@ func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *ser
 		for _, d := range planDocs {
 			if d.Status == "approved" {
 				switch d.Type {
-				case "specification":
+				case "spec":
 					planApprovedSpec = true
 				case "dev-plan":
 					planApprovedDevPlan = true
@@ -599,7 +599,7 @@ func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *ser
 		tc := tasksByFeature[f.ID]
 
 		docs := docsPerFeature[f.ID]
-		hasSpec := hasDocType(docs, "specification")
+		hasSpec := hasDocType(docs, "spec")
 		hasDevPlan := hasDocType(docs, "dev-plan")
 
 		// Apply plan-level inheritance: if the feature has no direct spec/dev-plan,
@@ -788,7 +788,7 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 			})
 			if d.Status != "superseded" {
 				switch d.Type {
-				case "specification":
+				case "spec":
 					featureHasSpec = true
 				case "dev-plan":
 					featureHasDevPlan = true
@@ -807,7 +807,7 @@ func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *
 			for _, d := range planDocs {
 				if d.Status == "approved" {
 					switch d.Type {
-					case "specification":
+					case "spec":
 						inheritedHasSpec = true
 					case "dev-plan":
 						inheritedHasDevPlan = true
@@ -1360,7 +1360,7 @@ func generateFeatureAttention(tasks []taskInfo, docs []docInfo, totalTasks int, 
 			continue
 		}
 		switch d.Type {
-		case "specification":
+		case "spec":
 			hasSpec = true
 		case "dev-plan":
 			hasDevPlan = true

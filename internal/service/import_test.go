@@ -105,7 +105,7 @@ func TestBatchImport_TypeInferenceFromPath(t *testing.T) {
 		wantType string
 	}{
 		{"work/design/foo.md", "design"},
-		{"work/spec/bar.md", "specification"},
+		{"work/spec/bar.md", "spec"},
 		{"work/plan/baz.md", "report"},
 		{"work/research/qux.md", "research"},
 	}

@@ -556,7 +556,7 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 				targetStatus = "active"
 			case entityType == "feature" && doc.Type == model.DocumentTypeDesign:
 				targetStatus = "specifying"
-			case entityType == "feature" && doc.Type == model.DocumentTypeSpecification:
+			case entityType == "feature" && doc.Type == model.DocumentTypeSpec:
 				targetStatus = "dev-planning"
 				// FR-C01: dev-plan approval does NOT cascade the feature to developing.
 				// The transition from dev-planning → developing requires an explicit
@@ -660,7 +660,7 @@ func (s *DocumentService) SupersedeDocument(input SupersedeDocumentInput) (Docum
 			switch doc.Type {
 			case model.DocumentTypeDesign:
 				targetStatus = "designing"
-			case model.DocumentTypeSpecification:
+			case model.DocumentTypeSpec:
 				targetStatus = "specifying"
 			case model.DocumentTypeDevPlan:
 				targetStatus = "dev-planning"
@@ -1327,7 +1327,7 @@ func (s *DocumentService) DeleteDocument(input DeleteDocumentInput) (DocumentRes
 		switch doc.Type {
 		case model.DocumentTypeDesign:
 			docField = "design"
-		case model.DocumentTypeSpecification:
+		case model.DocumentTypeSpec:
 			docField = "spec"
 		case model.DocumentTypeDevPlan:
 			docField = "dev_plan"
@@ -1367,7 +1367,7 @@ func inferDocTypeFromPath(path string) string {
 	case strings.Contains(lower, "/design/"):
 		return string(model.DocumentTypeDesign)
 	case strings.Contains(lower, "/spec/"):
-		return string(model.DocumentTypeSpecification)
+		return string(model.DocumentTypeSpec)
 	case strings.Contains(lower, "/plan/"):
 		return string(model.DocumentTypeDevPlan)
 	case strings.Contains(lower, "/research/"):

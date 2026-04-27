@@ -269,7 +269,7 @@ func DocCurrencyHealthChecker(
 					continue
 				}
 				for _, doc := range docs {
-					if doc.Type == "specification" && doc.Status == "draft" {
+					if doc.Type == "spec" && doc.Status == "draft" {
 						report.Warnings = append(report.Warnings, validate.ValidationWarning{
 							EntityType: "doc_currency",
 							EntityID:   doc.ID,

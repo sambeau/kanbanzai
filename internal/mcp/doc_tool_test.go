@@ -126,8 +126,8 @@ func TestDocTool_Register_Single(t *testing.T) {
 	if doc["status"] != "draft" {
 		t.Errorf("status = %q, want draft", doc["status"])
 	}
-	if doc["type"] != "specification" {
-		t.Errorf("type = %q, want specification", doc["type"])
+	if doc["type"] != "spec" {
+		t.Errorf("type = %q, want spec", doc["type"])
 	}
 	if doc["title"] != "Foo Specification" {
 		t.Errorf("title = %q, want Foo Specification", doc["title"])
@@ -1511,8 +1511,8 @@ func TestDocTool_Register_AutoCommit_MessageFormat(t *testing.T) {
 	if !strings.HasPrefix(capturedMsg, "workflow(") {
 		t.Errorf("commit message = %q; want prefix \"workflow(\"", capturedMsg)
 	}
-	if !strings.Contains(capturedMsg, "): register specification") {
-		t.Errorf("commit message = %q; want it to contain \": register specification\"", capturedMsg)
+	if !strings.Contains(capturedMsg, "): register spec") {
+		t.Errorf("commit message = %q; want it to contain \": register spec\"", capturedMsg)
 	}
 }
 
@@ -1674,7 +1674,7 @@ func TestDocTool_Gaps_PlanDocInherited(t *testing.T) {
 	foundInherited := false
 	for _, p := range present {
 		pm, _ := p.(map[string]any)
-		if pm["type"] == "specification" && pm["status"] == "approved" {
+		if pm["type"] == "spec" && pm["status"] == "approved" {
 			inherited, _ := pm["inherited"].(bool)
 			if inherited {
 				foundInherited = true
@@ -1689,8 +1689,8 @@ func TestDocTool_Gaps_PlanDocInherited(t *testing.T) {
 	gaps, _ := resp["gaps"].([]any)
 	for _, g := range gaps {
 		gm, _ := g.(map[string]any)
-		if gm["type"] == "specification" {
-			t.Errorf("specification should not appear in gaps when inherited from plan; gaps: %v", gaps)
+		if gm["type"] == "spec" {
+			t.Errorf("spec should not appear in gaps when inherited from plan; gaps: %v", gaps)
 		}
 	}
 }
@@ -1883,7 +1883,7 @@ func TestDocTool_Gaps_FeatureDraftDocBlocksPlanInheritance(t *testing.T) {
 	foundSpecGap := false
 	for _, g := range gaps {
 		gm, _ := g.(map[string]any)
-		if gm["type"] == "specification" {
+		if gm["type"] == "spec" {
 			foundSpecGap = true
 			// The gap entry must reference the feature's own draft doc.
 			if id, _ := gm["id"].(string); id != featSpecID {
@@ -1899,7 +1899,7 @@ func TestDocTool_Gaps_FeatureDraftDocBlocksPlanInheritance(t *testing.T) {
 	present, _ := resp["present"].([]any)
 	for _, p := range present {
 		pm, _ := p.(map[string]any)
-		if pm["type"] == "specification" {
+		if pm["type"] == "spec" {
 			inherited, _ := pm["inherited"].(bool)
 			if inherited {
 				t.Errorf("plan's approved spec should not be inherited when feature has its own draft; present: %v", present)

@@ -358,7 +358,7 @@ func asmExtractSpecSections(
 	if docRecordSvc != nil && intelligenceSvc != nil {
 		specDocs, _ := docRecordSvc.ListDocuments(service.DocumentFilters{
 			Owner: parentFeature,
-			Type:  "specification",
+			Type:  "spec",
 		})
 
 		// Auto-parse any unindexed documents.
@@ -401,7 +401,7 @@ func asmExtractSpecSections(
 	if docRecordSvc != nil && intelligenceSvc == nil {
 		specDocs, _ := docRecordSvc.ListDocuments(service.DocumentFilters{
 			Owner: parentFeature,
-			Type:  "specification",
+			Type:  "spec",
 		})
 		if len(specDocs) > 0 {
 			return nil, specDocs[0].Path

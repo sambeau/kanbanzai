@@ -423,7 +423,7 @@ func TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone(t *testing.T) {
 	writeFeatureEntity(t, stateRoot, featureID, slug, parent, "reviewing", nil)
 
 	// reviewing→done requires a review report document.
-	submitAndApproveDoc(t, docSvc, repoRoot, "work/reports/review.md", "report", featureID, false)
+	submitAndApproveDoc(t, docSvc, repoRoot, "work/_project/report-review.md", "report", featureID, false)
 
 	feature := makeFeatureForAdvance(featureID, slug, parent, "reviewing")
 
@@ -1245,5 +1245,3 @@ func TestAdvanceFeatureStatus_HaltsAtReviewing_NeedsReviewTask(t *testing.T) {
 		t.Errorf("StoppedReason %q should identify the needs-review task", result.StoppedReason)
 	}
 }
-
-

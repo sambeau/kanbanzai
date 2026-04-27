@@ -775,7 +775,7 @@ func TestCheckTransitionGate_ReviewingToDone_ReportExists(t *testing.T) {
 
 	featureID := "FEAT-01CCCCCCCCCC12"
 	// Register report but do NOT approve — the gate only requires existence.
-	submitAndApproveDoc(t, docSvc, repoRoot, "work/reports/review.md", "report", featureID, false)
+	submitAndApproveDoc(t, docSvc, repoRoot, "work/_project/report-review.md", "report", featureID, false)
 
 	feature := &model.Feature{ID: featureID}
 	result := CheckTransitionGate("reviewing", "done", feature, docSvc, entitySvc)
@@ -1059,5 +1059,3 @@ func TestCheckAllTasksHaveVerification_NeedsReview(t *testing.T) {
 		t.Errorf("error %q should identify needs-review task T-01FFFFFFFFFFF05", err.Error())
 	}
 }
-
-
