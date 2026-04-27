@@ -1,0 +1,6 @@
+id: TASK-01KQ7PT6RYVHN
+parent_feature: FEAT-01KQ7JDT511BZ
+slug: work-tree-migration-implement-execute-mode
+name: Implement --execute mode
+summary: Implement --execute mode
+status: queued

@@ -1,0 +1,6 @@
+id: TASK-01KQ7PT6RKW3P
+parent_feature: FEAT-01KQ7JDT511BZ
+slug: work-tree-migration-implement-target-path-resolver
+name: Implement target-path resolver
+summary: Implement target-path resolver
+status: queued
