@@ -3,6 +3,16 @@ parent_feature: FEAT-01KQ7JDT11MH6
 slug: kbz-move-implement-mode-2-feature-re-parent-in-move-cmd-go
 name: "Implement Mode 2 feature re-parent in `move_cmd.go`"
 summary: "Implement Mode 2 feature re-parent in `move_cmd.go`"
-status: ready
+status: done
 depends_on:
   - TASK-01KQ7PWS52VG3
+files_planned:
+  - internal/service/plans.go
+  - cmd/kanbanzai/move_cmd.go
+completed: "2026-04-27T20:28:04Z"
+claimed_at: "2026-04-27T20:09:19Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-27T20:09:19Z"
+dispatched_by: sambeau
+completion_summary: "Implemented Mode 2 (feature re-parent). Added AllocateFeatureDisplayIDInPlan to EntityService (increments next_feature_seq, returns new P{n}-F{m} display ID). Replaced Mode 2 stub in move_cmd.go with runMoveFeature: resolves display ID, validates target plan, checks same-plan guard, prompts confirmation (unless --force), allocates new display ID, updates feature entity, git-moves all owned documents with record updates, prints summary."
+verification: go build ./... OK; go test ./cmd/kanbanzai/... OK (1.849s); go test ./internal/service/... OK (2.017s)
