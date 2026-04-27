@@ -4,5 +4,6 @@ name: Document type system and filename enforcement
 parent: P37-file-names-and-actions
 status: specifying
 summary: "Lock down what gets registered and where. Add proposal type; rename retrospective to retro with backward-compat; split review out from report as distinct type. doc register validates filename template {PlanID}-{type}-{slug}.md and that files are in the correct plan folder work/P{n}-*/."
+spec: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement
 created: "2026-04-27T13:35:26Z"
 created_by: sambeau
