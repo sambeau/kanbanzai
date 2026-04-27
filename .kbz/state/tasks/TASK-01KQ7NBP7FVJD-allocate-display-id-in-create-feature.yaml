@@ -3,6 +3,10 @@ parent_feature: FEAT-01KQ7JDSVMP4E
 slug: allocate-display-id-in-create-feature
 name: Allocate display_id in CreateFeature
 summary: "Update CreateFeature to perform the 4-step REQ-008 allocation sequence: load parent plan, read next_feature_seq, write plan with incremented counter (fail-abort if this write fails), then write feature with display_id set. Improve the missing-parent error message per REQ-007."
-status: ready
+status: active
 depends_on:
   - TASK-01KQ7NBP4MMWG
+claimed_at: "2026-04-27T15:23:17Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-27T15:23:17Z"
+dispatched_by: sambeau
