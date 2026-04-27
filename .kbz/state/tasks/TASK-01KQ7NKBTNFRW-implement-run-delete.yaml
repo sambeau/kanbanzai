@@ -3,9 +3,14 @@ parent_feature: FEAT-01KQ7JDT341E8
 slug: implement-run-delete
 name: Implement runDelete in delete_cmd.go
 summary: "Create cmd/kanbanzai/delete_cmd.go with func runDelete(args []string, deps dependencies) error. Implement: --force flag parsing, work/ restriction, file existence check, document record lookup by path, approved-document guard, confirmation prompt, git rm subprocess via exec.Command, atomicity on git rm failure, DeleteDocument call for record cleanup and entity ref clearing, success/warning output. Include deleteUsageText constant. Covers REQ-001 through REQ-012 and REQ-NF-001 through REQ-NF-004."
-status: active
+status: done
 estimate: "5"
+files_planned:
+  - cmd/kanbanzai/delete_cmd.go
+completed: "2026-04-27T15:21:08Z"
 claimed_at: "2026-04-27T15:01:51Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-27T15:01:51Z"
 dispatched_by: sambeau
+completion_summary: "Created cmd/kanbanzai/delete_cmd.go implementing runDelete with full REQ-001 through REQ-012 and REQ-NF-001 through REQ-NF-004 coverage: --force flag parsing, work/ path restriction, file existence check, document record lookup by path (scanning ListDocuments), approved-document guard, y/N confirmation prompt, git rm subprocess deletion, atomicity (record only deleted after successful git rm), DeleteDocument call with Force:true, success/warning output variants, and deleteUsageText constant."
+verification: "go build ./... passes. go test ./cmd/... and go test ./internal/service/... pass. Only pre-existing failure: TestDocIntelFind_Role_LimitCappedAt50 in internal/mcp (unrelated)."
