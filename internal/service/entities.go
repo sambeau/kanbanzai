@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strings"
 	"time"
@@ -527,6 +528,15 @@ func (s *EntityService) Get(entityType, entityID, slug string) (GetResult, error
 	if entityID == "" {
 		return GetResult{}, fmt.Errorf("entity id is required")
 	}
+	// Resolve P{n}-F{m} display ID to canonical FEAT-TSID.
+	if entityType == "feature" && IsFeatureDisplayID(entityID) {
+		resolvedID, resolvedSlug, err := s.ResolveFeatureDisplayID(entityID)
+		if err != nil {
+			return GetResult{}, err
+		}
+		entityID = resolvedID
+		slug = resolvedSlug
+	}
 	if slug == "" {
 		// Cache fast path: when cache is warm for this type, resolve slug without
 		// a directory scan. Fall through to ResolvePrefix on miss or Load error.
@@ -645,6 +655,16 @@ func (s *EntityService) UpdateStatus(input UpdateStatusInput) (GetResult, error)
 		return GetResult{}, err
 	}
 
+	// Resolve P{n}-F{m} display ID to canonical FEAT-TSID.
+	if entityType == "feature" && IsFeatureDisplayID(entityID) {
+		resolvedID, resolvedSlug, err := s.ResolveFeatureDisplayID(entityID)
+		if err != nil {
+			return GetResult{}, err
+		}
+		entityID = resolvedID
+		slug = resolvedSlug
+	}
+
 	if slug == "" {
 		resolvedID, resolvedSlug, err := s.ResolvePrefix(entityType, entityID)
 		if err != nil {
@@ -720,6 +740,16 @@ func (s *EntityService) UpdateEntity(input UpdateEntityInput) (GetResult, error)
 		field("id", entityID),
 	); err != nil {
 		return GetResult{}, err
+	}
+
+	// Resolve P{n}-F{m} display ID to canonical FEAT-TSID.
+	if entityType == "feature" && IsFeatureDisplayID(entityID) {
+		resolvedID, resolvedSlug, err := s.ResolveFeatureDisplayID(entityID)
+		if err != nil {
+			return GetResult{}, err
+		}
+		entityID = resolvedID
+		slug = resolvedSlug
 	}
 
 	if slug == "" {
@@ -1255,6 +1285,37 @@ func stringFromState(state map[string]any, key string) string {
 	return s
 }
 
+
+
+var featureDisplayIDPattern = regexp.MustCompile(`(?i)^P(\d+)-F(\d+)$`)
+
+// IsFeatureDisplayID reports whether id matches the P{n}-F{m} display ID pattern.
+func IsFeatureDisplayID(id string) bool {
+	return featureDisplayIDPattern.MatchString(id)
+}
+
+// ResolveFeatureDisplayID resolves a P{n}-F{m} display ID to (canonicalID, slug).
+// Uses the SQLite cache when warm (O(1)); falls back to a filesystem scan.
+func (s *EntityService) ResolveFeatureDisplayID(displayID string) (string, string, error) {
+	if s.cache != nil && s.cache.IsWarm("feature") {
+		if id, slug, _, found := s.cache.LookupByDisplayID(displayID); found {
+			return id, slug, nil
+		}
+		return "", "", fmt.Errorf("feature with display_id %s: %w", displayID, ErrNotFound)
+	}
+	// Filesystem scan fallback.
+	results, err := s.List("feature")
+	if err != nil {
+		return "", "", fmt.Errorf("resolve display_id %s: %w", displayID, err)
+	}
+	upper := strings.ToUpper(displayID)
+	for _, r := range results {
+		if did, _ := r.State["display_id"].(string); strings.ToUpper(did) == upper {
+			return r.ID, r.Slug, nil
+		}
+	}
+	return "", "", fmt.Errorf("feature with display_id %s: %w", displayID, ErrNotFound)
+}
 
 func intFromState(state map[string]any, key string, defaultVal int) int {
 	if state == nil {
