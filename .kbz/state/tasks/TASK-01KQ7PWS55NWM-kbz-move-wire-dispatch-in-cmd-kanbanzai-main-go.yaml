@@ -3,6 +3,13 @@ parent_feature: FEAT-01KQ7JDT11MH6
 slug: kbz-move-wire-dispatch-in-cmd-kanbanzai-main-go
 name: "Wire dispatch in `cmd/kanbanzai/main.go`"
 summary: "Wire dispatch in `cmd/kanbanzai/main.go`"
-status: ready
+status: done
 depends_on:
   - TASK-01KQ7PWS52VG3
+completed: "2026-04-27T20:08:39Z"
+claimed_at: "2026-04-27T20:07:56Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-27T20:07:56Z"
+dispatched_by: sambeau
+completion_summary: "Wired case 'move': return runMove(args[1:], deps) into main.go Core workflow commands section (after case 'delete'). Added 'move <src> <plan-id>  Move a document file to a plan's canonical location' to usageText. Done as part of T2 commit (854de2e7)."
+verification: go build ./cmd/kanbanzai/... OK; wired alongside T2 implementation
