@@ -1,0 +1,6 @@
+id: TASK-01KQ7NM2NKFX4
+parent_feature: FEAT-01KQ7JDT341E8
+slug: wire-delete-dispatch
+name: Wire delete dispatch in main.go
+summary: "Add case \"delete\": return runDelete(args[1:], deps) to the switch in run() in cmd/kanbanzai/main.go, in the Core workflow commands section after the doc case. No other changes to main.go required. Covers REQ-013."
+status: queued
