@@ -1,0 +1,17 @@
+id: KE-01KQ7TKTJ7YVB
+tier: 3
+topic: retro-task-01kq7nmw5tm16
+scope: project
+content: "[moderate] tool-friction: Writing Go source files from a worktree sub-agent is significantly complicated by shell/Python/Go triple-escaping. b-string and python3 -c approaches both required multiple debug iterations. Suggestion: Use write_file MCP tool as the primary recommendation in implement-task SKILL.md for worktree file writing."
+learned_from: TASK-01KQ7NMW5TM16
+status: contributed
+use_count: 0
+miss_count: 0
+confidence: "0.5"
+ttl_days: 30
+tags:
+  - retrospective
+  - tool-friction
+created: "2026-04-27T15:58:32Z"
+created_by: unknown
+updated: "2026-04-27T15:58:32Z"

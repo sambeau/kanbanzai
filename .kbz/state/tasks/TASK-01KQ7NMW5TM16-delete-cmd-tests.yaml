@@ -3,5 +3,14 @@ parent_feature: FEAT-01KQ7JDT341E8
 slug: delete-cmd-tests
 name: Write delete command test suite
 summary: "Write cmd/kanbanzai/delete_cmd_test.go covering all 17 acceptance criteria. Unit tests (mock stdin/stdout, temp-dir DocumentStore, fake git subprocess): AC-001 through AC-005, AC-007, AC-008, AC-010 through AC-014, AC-017. Integration tests (real temp git repo or kbz binary subprocess): AC-006, AC-009, AC-015, AC-016. All tests must pass go test -race ./... and go vet ./..."
-status: ready
+status: done
 estimate: "8"
+files_planned:
+  - cmd/kanbanzai/delete_cmd_test.go
+completed: "2026-04-27T15:58:32Z"
+claimed_at: "2026-04-27T15:34:50Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-27T15:34:50Z"
+dispatched_by: sambeau
+completion_summary: "Created cmd/kanbanzai/delete_cmd_test.go with 16 test functions covering all 17 ACs. Parallel-safe unit tests (AC-002 to AC-004, AC-010, AC-013, AC-016) need no filesystem. Filesystem tests (AC-001, AC-005 to AC-009, AC-011, AC-012, AC-014, AC-015, AC-017) use t.Chdir + t.TempDir with real git repos. AC-013 verified by code inspection. All pass -race and go vet."
+verification: go test -race ./cmd/kanbanzai/... -count=1 passes (2.378s). go vet ./... passes. All 16 test functions pass with -v -run TestDelete.
