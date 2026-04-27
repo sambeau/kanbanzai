@@ -1,0 +1,185 @@
+document_id: FEAT-01KQ7YQKMCM6T/specification-p38-f5-spec-recursive-progress-rollup
+document_path: work/design/p38-f5-spec-recursive-progress-rollup.md
+content_hash: acd63ad948184801c775b12d3a23a9e955d55d4c06b11e5a35c7cec79a7321a5
+indexed_at: 2026-04-27T17:23:33.194349Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P38-F5: Recursive Progress Rollup — Specification'
+      byte_offset: 0
+      byte_count: 19703
+      word_count: 2771
+      content_hash: acd63ad948184801c775b12d3a23a9e955d55d4c06b11e5a35c7cec79a7321a5
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 289
+          byte_count: 1440
+          word_count: 189
+          content_hash: 007ade08848d3f71f81e6156900d330047d29936565048e8c21cd23369f4e24d
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 1729
+          byte_count: 1371
+          word_count: 183
+          content_hash: 539d62e29076e48e5e6ce82187eb0658244401888f384977c7519f6f7c6d8b16
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 3100
+          byte_count: 8529
+          word_count: 1199
+          content_hash: b175a18edf5cd22632d193ca30c551e16baf2e5aca7b2acfcda759328a6c3bdd
+          children:
+            - path: 1.3.1
+              level: 3
+              title: ComputeBatchRollup
+              byte_offset: 3128
+              byte_count: 1927
+              word_count: 248
+              content_hash: 9219426a1fc19639f938451054a0a10ad1e54a1a76a211f37993d63942ca8299
+            - path: 1.3.2
+              level: 3
+              title: ComputePlanRollup (replacement)
+              byte_offset: 5055
+              byte_count: 2835
+              word_count: 414
+              content_hash: ad8e9c151460b655eba1cc6ebb528a270f6129ede72dadfc92111db62530619f
+            - path: 1.3.3
+              level: 3
+              title: Progress percentage
+              byte_offset: 7890
+              byte_count: 699
+              word_count: 106
+              content_hash: 14508b0fa2ec44f17aa0f42c352589a716e55ece8aaa1168b32773f33f1c8ab6
+            - path: 1.3.4
+              level: 3
+              title: Status tool — plan dashboard
+              byte_offset: 8589
+              byte_count: 1064
+              word_count: 161
+              content_hash: 20949af0abf5429b27d30fe34470f5e9e364bbb8974307f25f46f11b693ed636
+            - path: 1.3.5
+              level: 3
+              title: Status tool — batch dashboard
+              byte_offset: 9653
+              byte_count: 731
+              word_count: 107
+              content_hash: dfabc8f992122da892df309f22896cf05966ab706dc4deb8ba83f28aaba8f026
+            - path: 1.3.6
+              level: 3
+              title: Status tool — project overview
+              byte_offset: 10384
+              byte_count: 562
+              word_count: 81
+              content_hash: ff9d6c3a9968d98699e44158b39dd046b5a5b973ea3e6c7bec666ea9881517ce
+            - path: 1.3.7
+              level: 3
+              title: Estimate tool
+              byte_offset: 10946
+              byte_count: 683
+              word_count: 79
+              content_hash: acf42cea01d29972477f2eb69b7e53e3a1f139048e63cc3c7691892c27f426be
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 11629
+          byte_count: 1272
+          word_count: 187
+          content_hash: b78caf783091407f3082f8afcaec69a9e4b96ba3ee82af857b0172cdb92101b3
+        - path: "1.5"
+          level: 2
+          title: Scope
+          byte_offset: 12901
+          byte_count: 1102
+          word_count: 145
+          content_hash: f68c2a5df4ba5dea7b04f5e135a8bfe4d677956d13c60bb8ec40568bc9d35c60
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 14003
+          byte_count: 3723
+          word_count: 539
+          content_hash: d44e96af3aa10d714c380d13addb0c042d24308c16d526d03030025198265bfb
+        - path: "1.7"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 17726
+          byte_count: 1977
+          word_count: 288
+          content_hash: 359cd8cbaa8b5184ca13001b043a227f58a2adbec4ca60109f5c2b38e268a00b
+entity_refs:
+    - entity_id: FEAT-01KQ7YQKMCM6T
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 152
+    - entity_id: B1-empty
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 14066
+    - entity_id: P1-empty
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 14875
+    - entity_id: P1-with-batches
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 15061
+    - entity_id: P1-parent
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 15362
+    - entity_id: P2-child
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 15394
+    - entity_id: P1-mixed
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 15658
+    - entity_id: P1-my-plan
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 16271
+    - entity_id: B24-auth-system
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 16562
+    - entity_id: P1-platform
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 16854
+cross_doc_links:
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1"
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.6
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T17:23:34.192016Z
+classified: false

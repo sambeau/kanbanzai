@@ -1,0 +1,375 @@
+document_id: FEAT-01KQ7YQKBDNAP/specification-p38-f2-spec-plan-entity-data-model-lifecycle
+document_path: work/design/p38-f2-spec-plan-entity-data-model-lifecycle.md
+content_hash: 936f6e0d7fdba9e8a9c2ca3665a86e6f3bf8009b4123ba5602d54cdd20a3de05
+indexed_at: 2026-04-27T17:18:56.299371Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P38-F2: Plan Entity Data Model and Lifecycle — Specification'
+      byte_offset: 0
+      byte_count: 17844
+      word_count: 2763
+      content_hash: 936f6e0d7fdba9e8a9c2ca3665a86e6f3bf8009b4123ba5602d54cdd20a3de05
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 257
+          byte_count: 564
+          word_count: 64
+          content_hash: 42b0a9dac5b650bcf6d91256c75c661289ab874998f74c481afe104adc7fbac4
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 821
+          byte_count: 1007
+          word_count: 148
+          content_hash: 3f3f13234f3797a80200aa30f95125c6ec9cf090448a1bbb001fa1cc78761c62
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 1828
+          byte_count: 8878
+          word_count: 1449
+          content_hash: 7e55a2c57978b60c5d1074fe737cc3ec593dab36cbbfc67f6d359b43c78467a6
+          children:
+            - path: 1.3.1
+              level: 3
+              title: FR-001 — Plan state file schema
+              byte_offset: 1856
+              byte_count: 1487
+              word_count: 183
+              content_hash: e922b7304961a6d27699d160e73b8a7219c45f35d46c5d788017488ebdc43d72
+            - path: 1.3.2
+              level: 3
+              title: FR-002 — Field types and constraints
+              byte_offset: 3343
+              byte_count: 1601
+              word_count: 285
+              content_hash: d2ef67f945ea56011341718162866370bfc04903b20305a2d37cf6bf5b72d11f
+            - path: 1.3.3
+              level: 3
+              title: FR-003 — Planning lifecycle state machine
+              byte_offset: 4944
+              byte_count: 758
+              word_count: 127
+              content_hash: ec95c705d1b9865996858c25c25ddd988e95c5c68935f2d5d26204c64ba36928
+            - path: 1.3.4
+              level: 3
+              title: FR-004 — Entry state
+              byte_offset: 5702
+              byte_count: 197
+              word_count: 34
+              content_hash: f0daf41bcfed8aad5e77a12de50c6ab0a5092e6f75d5b14c28ae5680ba1e0c78
+            - path: 1.3.5
+              level: 3
+              title: FR-005 — Allowed lifecycle transitions
+              byte_offset: 5899
+              byte_count: 973
+              word_count: 173
+              content_hash: 807405dd21803864a2dce9d7cc7dc2bfd54b5816e26c5f971197d485916cc95f
+            - path: 1.3.6
+              level: 3
+              title: FR-006 — Terminal state enforcement
+              byte_offset: 6872
+              byte_count: 197
+              word_count: 29
+              content_hash: 6e69fa2a411cd06c41020de66efc6e4b10bd966387284410b18b57e5b5cfc883
+            - path: 1.3.7
+              level: 3
+              title: FR-007 — Plan create operation
+              byte_offset: 7069
+              byte_count: 726
+              word_count: 134
+              content_hash: c5d711abe8e0b10edce4400de8f563b544047558a295629f04b45520bb1b0574
+            - path: 1.3.8
+              level: 3
+              title: FR-008 — Plan get, list, update, and transition operations
+              byte_offset: 7795
+              byte_count: 782
+              word_count: 116
+              content_hash: c22addacc8fa726c438213c2365994843cdaa6a77216f75f5d62683621167c73
+            - path: 1.3.9
+              level: 3
+              title: FR-009 — Parent field validation
+              byte_offset: 8577
+              byte_count: 291
+              word_count: 48
+              content_hash: be735fa4ad7421020198de381fa9802a71641a2e8229483552ff69ad232be746
+            - path: 1.3.10
+              level: 3
+              title: FR-010 — Cycle detection
+              byte_offset: 8868
+              byte_count: 523
+              word_count: 94
+              content_hash: 4eebfa63952f94e1c013e423c83203ccdd53383558753eeb77e3d58418f0630f
+            - path: 1.3.11
+              level: 3
+              title: FR-011 — `order` field defaults
+              byte_offset: 9391
+              byte_count: 269
+              word_count: 46
+              content_hash: f8bd3fb7bb76157c5fd64ea126d40d07c5ecfea36bd0b4c8fbc2356c49c4215e
+            - path: 1.3.12
+              level: 3
+              title: 'FR-012 — `depends_on` field: present but not enforced'
+              byte_offset: 9660
+              byte_count: 528
+              word_count: 88
+              content_hash: 391459ff1df8e49fd5858a4c67bdd624eb3aae356ad53639a0be62cdbbc6c467
+            - path: 1.3.13
+              level: 3
+              title: FR-013 — Nesting rules
+              byte_offset: 10188
+              byte_count: 303
+              word_count: 60
+              content_hash: 98bd8fb698964455cdbecb2b24d55baadfcf39412d033214e1a235e815b65bdc
+            - path: 1.3.14
+              level: 3
+              title: FR-014 — Storage location
+              byte_offset: 10491
+              byte_count: 215
+              word_count: 29
+              content_hash: fb0c12bee1a4fc4d7b8a686594ea26dcc87be742c4dd382110b8504692f09f3d
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 10706
+          byte_count: 1234
+          word_count: 164
+          content_hash: 5b8e9f3648aeeb244926cbd3082eafd8a879cd8eddc17a0252eaeb1572e873aa
+          children:
+            - path: 1.4.1
+              level: 3
+              title: NFR-001 — Lifecycle validation parity
+              byte_offset: 10738
+              byte_count: 321
+              word_count: 43
+              content_hash: 87a36df54ec6483c82724b2f7efd5aa2e16870863a387e5d2dd62ba1ff3ee081
+            - path: 1.4.2
+              level: 3
+              title: NFR-002 — Entry state enforcement
+              byte_offset: 11059
+              byte_count: 181
+              word_count: 22
+              content_hash: dbaaa735e5f59cf9c3ed509c7e2eb88ea61a52c461bfae23b3f012a087f12e2c
+            - path: 1.4.3
+              level: 3
+              title: NFR-003 — Error messages
+              byte_offset: 11240
+              byte_count: 195
+              word_count: 30
+              content_hash: 2a447044292fb980128b1c2a34b2ebaa2af1e0209ffc44525c5d294117f49b6e
+            - path: 1.4.4
+              level: 3
+              title: NFR-004 — No enforced document gates for plans
+              byte_offset: 11435
+              byte_count: 286
+              word_count: 38
+              content_hash: c81f0c4dd941465bcf63bff629ff9b076c613e893932029b2431dbb68c8d6511
+            - path: 1.4.5
+              level: 3
+              title: NFR-005 — Backward compatibility
+              byte_offset: 11721
+              byte_count: 219
+              word_count: 28
+              content_hash: cc9b6ed3d009f89e49c3a870828db5a7f9ff4f7f7af570873dc2e918799b422f
+        - path: "1.5"
+          level: 2
+          title: Scope
+          byte_offset: 11940
+          byte_count: 1254
+          word_count: 165
+          content_hash: 11afc9431c016f20de6400eb8793a22a70eea0ec128d95baf153e9b3a1156fa8
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 13194
+          byte_count: 2974
+          word_count: 485
+          content_hash: dfdc06cae885dc4bcaf95d090bbb796dc45162e135c6f17a9cbad77e985a6f2e
+          children:
+            - path: 1.6.1
+              level: 3
+              title: AC-001 — Create plan with entry state
+              byte_offset: 13218
+              byte_count: 235
+              word_count: 40
+              content_hash: 7057648de4b9ec52b88dbe4bb862b58ee7b0af5e98a17c8bbdabaaac647c102f
+            - path: 1.6.2
+              level: 3
+              title: AC-002 — Forward transitions
+              byte_offset: 13453
+              byte_count: 221
+              word_count: 37
+              content_hash: 3d03880d6de5d529ceb602d4e9a020267681fe66f5dd96d2b61b7da87feae6c9
+            - path: 1.6.3
+              level: 3
+              title: AC-003 — Backward transitions
+              byte_offset: 13674
+              byte_count: 194
+              word_count: 32
+              content_hash: fdb4ecfbd851ac1cc86984e4ad6094451fbfabefd10c81edaa4d9479d7504663
+            - path: 1.6.4
+              level: 3
+              title: AC-004 — Terminal transitions
+              byte_offset: 13868
+              byte_count: 188
+              word_count: 28
+              content_hash: 736d2ea99b4c8d7588351d329e467df1e9ad69396a3589926c3c10aa85440e51
+            - path: 1.6.5
+              level: 3
+              title: AC-005 — Invalid transitions rejected
+              byte_offset: 14056
+              byte_count: 270
+              word_count: 41
+              content_hash: 68e1f61e54a45f83d0b520b5985b0fa4ec7de37d63ff5858ba10589c6eaa98ec
+            - path: 1.6.6
+              level: 3
+              title: 'AC-006 — Parent field: valid reference accepted'
+              byte_offset: 14326
+              byte_count: 200
+              word_count: 33
+              content_hash: 9e6fd8e0c6ced046c901a1ed7c8a2fac105fa7f84f286a0e3f7b0a842acb5f61
+            - path: 1.6.7
+              level: 3
+              title: 'AC-007 — Parent field: non-existent reference rejected'
+              byte_offset: 14526
+              byte_count: 169
+              word_count: 29
+              content_hash: c599a0d7a83f98a073033806b2b5c981b35dddf44d9dddf69b82fbe9027f2508
+            - path: 1.6.8
+              level: 3
+              title: 'AC-008 — Parent field: self-reference rejected'
+              byte_offset: 14695
+              byte_count: 131
+              word_count: 23
+              content_hash: c8f3d199b67a2e94b3646653c0603878c532d13f3b97bfcc8685c3cec457ac3b
+            - path: 1.6.9
+              level: 3
+              title: 'AC-009 — Cycle detection: direct cycle rejected'
+              byte_offset: 14826
+              byte_count: 181
+              word_count: 33
+              content_hash: 4161fbcb313dfcff07b0ead3c42bf78a1064ec71c4b9b010353308ee3a09e8ac
+            - path: 1.6.10
+              level: 3
+              title: 'AC-010 — Cycle detection: indirect cycle rejected'
+              byte_offset: 15007
+              byte_count: 163
+              word_count: 34
+              content_hash: 0c82af45835f606b70e61f8e35814bf26d6d0f2f4cd831f83ccb8eb91d54de63
+            - path: 1.6.11
+              level: 3
+              title: AC-011 — `order` field defaults to 0
+              byte_offset: 15170
+              byte_count: 166
+              word_count: 31
+              content_hash: 6f086f8358a62f1b5b6c00a664911463e1c535165c2a13312a94a412b316b0a0
+            - path: 1.6.12
+              level: 3
+              title: AC-012 — `depends_on` stored and returned
+              byte_offset: 15336
+              byte_count: 206
+              word_count: 30
+              content_hash: 035851b3b6c0fc05468c03d84769ddd63c3a035770b5c9aaa6f60025ff307901
+            - path: 1.6.13
+              level: 3
+              title: AC-013 — List with parent filter
+              byte_offset: 15542
+              byte_count: 230
+              word_count: 31
+              content_hash: c65e2b66043e0de42fff25a527e74a3cf0954408375688d20da8c945725d641e
+            - path: 1.6.14
+              level: 3
+              title: AC-014 — List top-level plans
+              byte_offset: 15772
+              byte_count: 150
+              word_count: 22
+              content_hash: e858219c9566652e72da8294c8e285a98ce8b7fde0167a0394908c2abaf859c6
+            - path: 1.6.15
+              level: 3
+              title: AC-015 — State file schema conformance
+              byte_offset: 15922
+              byte_count: 246
+              word_count: 38
+              content_hash: 98fa1d5c5f84bc4541585fc9f785b1281867ec7db559ec7cbc2073215ed978bb
+        - path: "1.7"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 16168
+          byte_count: 1676
+          word_count: 243
+          content_hash: 47d454310f89643212e2f0b1206d5e26d2ef5445ca08152de228ea2f9ae107c2
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Dependencies
+              byte_offset: 16201
+              byte_count: 830
+              word_count: 108
+              content_hash: 22efd0a9166f8a359021498b5e42cbe148da13fcc378b8c57fd705e4abd7f9af
+            - path: 1.7.2
+              level: 3
+              title: Assumptions
+              byte_offset: 17031
+              byte_count: 813
+              word_count: 131
+              content_hash: 0de150946eb25230705e2d295d8c8688035cdb80ebec49c1b283d999ff64b52a
+entity_refs:
+    - entity_id: FEAT-01KQ7YQKBDNAP
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 163
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.3.1
+      byte_offset: 2539
+    - entity_id: P1-social-platform
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 2014
+    - entity_id: P1-social-platform
+      entity_type: plan
+      section_path: 1.3.14
+      byte_offset: 10625
+    - entity_id: P2-other-plan
+      entity_type: plan
+      section_path: 1.6.12
+      byte_offset: 15419
+    - entity_id: P1-social-platform
+      entity_type: plan
+      section_path: 1.6.13
+      byte_offset: 15624
+cross_doc_links:
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: assumption
+      confidence: high
+    - section_path: 1.7.2
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T17:18:57.054362Z
+classified: false

@@ -1,0 +1,502 @@
+document_id: FEAT-01KQ7YQKWTBRP/specification-p38-f8-spec-documentation-skills-updates
+document_path: work/design/p38-f8-spec-documentation-skills-updates.md
+content_hash: 3ab9cedf6ff8749e4167d25d9baa3580587481e648f263282dbaa74a4c6316fb
+indexed_at: 2026-04-27T17:28:46.51607Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P38-F8: Documentation and Skills Updates — Specification'
+      byte_offset: 0
+      byte_count: 18670
+      word_count: 2576
+      content_hash: 3ab9cedf6ff8749e4167d25d9baa3580587481e648f263282dbaa74a4c6316fb
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 253
+          byte_count: 823
+          word_count: 96
+          content_hash: df19866d6f3e0f3795cfcbbf21bac7fa8c7ef032e37557e1ee50007876513eb3
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 1076
+          byte_count: 906
+          word_count: 132
+          content_hash: 60a47f1ab3699fe316fbc4f381e057a400ab9f4aeaf8140ad92490c78707befc
+        - path: "1.3"
+          level: 2
+          title: Vocabulary Rule
+          byte_offset: 1982
+          byte_count: 834
+          word_count: 130
+          content_hash: 0345b870617cd7b618c7c5530e2c4fca7c0987035a9eb6fa09b89985ff41b7b6
+        - path: "1.4"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2816
+          byte_count: 10864
+          word_count: 1503
+          content_hash: c8ceee20edc1b2ff9dc3ee94b9162c0a5d59162c8e987727f81881bdf2144ba9
+          children:
+            - path: 1.4.1
+              level: 3
+              title: FR-001 — Vocabulary rule enforcement
+              byte_offset: 2844
+              byte_count: 229
+              word_count: 35
+              content_hash: dd202abc3c3b38ca19129263fd3dac8bac84cb540cb929959db2c269978d2c05
+            - path: 1.4.2
+              level: 3
+              title: FR-002 — `.kbz/stage-bindings.yaml` stage key rename
+              byte_offset: 3073
+              byte_count: 370
+              word_count: 54
+              content_hash: 2e2550bb766f4d7d4f65fbb05c4008ff404be2c71e0ae0a67035579b2d1e4447
+            - path: 1.4.3
+              level: 3
+              title: FR-003 — `.kbz/skills/orchestrate-development/SKILL.md` Phase 0
+              byte_offset: 3443
+              byte_count: 346
+              word_count: 52
+              content_hash: 1e448a893dbf753c2284f89df132c9096031276fea8a5a4bad776c9120949d65
+            - path: 1.4.4
+              level: 3
+              title: FR-004 — `.kbz/skills/orchestrate-development/SKILL.md` Close-Out
+              byte_offset: 3789
+              byte_count: 210
+              word_count: 30
+              content_hash: 068cd654f04d98099212f36c0a2cb89551022b4da916fcd6def1cbafa866d5f7
+            - path: 1.4.5
+              level: 3
+              title: FR-005 — `.agents/skills/kanbanzai-workflow/SKILL.md` stage gates table
+              byte_offset: 3999
+              byte_count: 253
+              word_count: 35
+              content_hash: eb36e9e37cbbe562fb70c76bc7c9552332303a4b548669a8292a8e714731b10c
+            - path: 1.4.6
+              level: 3
+              title: FR-006 — `.agents/skills/kanbanzai-workflow/SKILL.md` resuming section
+              byte_offset: 4252
+              byte_count: 660
+              word_count: 97
+              content_hash: 5cc3f6d328357cd6173ceabae751bbb07356e87ed3d0ee6e8c3190df7c7eff21
+            - path: 1.4.7
+              level: 3
+              title: FR-007 — `.agents/skills/kanbanzai-workflow/SKILL.md` entity lifecycle reference
+              byte_offset: 4912
+              byte_count: 286
+              word_count: 39
+              content_hash: f2f21b0e84677a02ff468a4426ea6e3b402220648ca0dd3fb2d7d9318b0841e4
+            - path: 1.4.8
+              level: 3
+              title: FR-008 — `.agents/skills/kanbanzai-workflow/SKILL.md` Emergency Brake
+              byte_offset: 5198
+              byte_count: 237
+              word_count: 32
+              content_hash: 0800d46ae2169633c76a460efc224fe8ba33202db468be9cda329d372e68ac39
+            - path: 1.4.9
+              level: 3
+              title: FR-009 — `.agents/skills/kanbanzai-workflow/SKILL.md` example
+              byte_offset: 5435
+              byte_count: 340
+              word_count: 45
+              content_hash: b2fb0e13d5b577b3dcd4b0ab4caf8a77ef954c4371fe512fb96bb8c0b738d372
+            - path: 1.4.10
+              level: 3
+              title: FR-010 — `.agents/skills/kanbanzai-planning/SKILL.md` vocabulary table
+              byte_offset: 5775
+              byte_count: 812
+              word_count: 119
+              content_hash: a39a8c7d2e9f08e9dd746605b30c4c187a96dbec670dbfb3ed0cabe4bf707602
+            - path: 1.4.11
+              level: 3
+              title: FR-011 — `.agents/skills/kanbanzai-planning/SKILL.md` scope decisions section
+              byte_offset: 6587
+              byte_count: 757
+              word_count: 121
+              content_hash: 8f2d180559f8d446341b4d8646ddf16641b03cd48226f9c2bc48bf490a2bed21
+            - path: 1.4.12
+              level: 3
+              title: FR-012 — `.agents/skills/kanbanzai-planning/SKILL.md` entity creation guidance
+              byte_offset: 7344
+              byte_count: 237
+              word_count: 30
+              content_hash: 3d5322eebda08e6dd44174f48f7d128d30164615c90292c93ce3471a8b105c68
+            - path: 1.4.13
+              level: 3
+              title: FR-013 — `.agents/skills/kanbanzai-planning/SKILL.md` anti-patterns
+              byte_offset: 7581
+              byte_count: 637
+              word_count: 91
+              content_hash: 81da8bc9fda814e96cd8c3d86359999110b29b7f16c9bfdcfb16817031343e4a
+            - path: 1.4.14
+              level: 3
+              title: FR-014 — `.agents/skills/kanbanzai-planning/SKILL.md` examples
+              byte_offset: 8218
+              byte_count: 448
+              word_count: 64
+              content_hash: cf9310696cad825790582dd36ee12e52bf961008f9102c90de61bac3957e32b2
+            - path: 1.4.15
+              level: 3
+              title: FR-015 — `.agents/skills/kanbanzai-getting-started/SKILL.md` resuming section
+              byte_offset: 8666
+              byte_count: 636
+              word_count: 80
+              content_hash: 754aa485a12df730dc64afd6db7bf1e30bbf7e19f751c2cf9bcb7740dd556c31
+            - path: 1.4.16
+              level: 3
+              title: FR-016 — `.agents/skills/kanbanzai-getting-started/SKILL.md` vocabulary
+              byte_offset: 9302
+              byte_count: 416
+              word_count: 49
+              content_hash: d67c8ff407d55c571a0aebb935a466c6e85a32d8aef53fc8027a57b9b53e3380
+            - path: 1.4.17
+              level: 3
+              title: FR-017 — `.agents/skills/kanbanzai-agents/SKILL.md` entity names
+              byte_offset: 9718
+              byte_count: 427
+              word_count: 67
+              content_hash: 00efb89ce93a4bf7d0b467bb93a9cdbb49c5a0f16b76df7874e28f02c41bfecb
+            - path: 1.4.18
+              level: 3
+              title: FR-018 — `.github/copilot-instructions.md` stage bindings table
+              byte_offset: 10145
+              byte_count: 209
+              word_count: 27
+              content_hash: 3c96059b4450e42e4cf84c9f092707498a1116e17f70eea4f4a0c4cdbd73f3cf
+            - path: 1.4.19
+              level: 3
+              title: FR-019 — `.github/copilot-instructions.md` plan/batch distinction summary
+              byte_offset: 10354
+              byte_count: 572
+              word_count: 79
+              content_hash: 913bd4f0b52e6923e0e05a43ee7c46f2f34e867391a3011738e3ec5e30497e9f
+            - path: 1.4.20
+              level: 3
+              title: FR-020 — `AGENTS.md` repository structure
+              byte_offset: 10926
+              byte_count: 469
+              word_count: 64
+              content_hash: 060f7bd5134e26ff2319be94e6b179ffeb9d8c1d53b6357f7d93df339fd34135
+            - path: 1.4.21
+              level: 3
+              title: FR-021 — `refs/document-map.md` plan review skill entry
+              byte_offset: 11395
+              byte_count: 342
+              word_count: 47
+              content_hash: 55b9c4a31b68e12b1a65bd5d107a336426784456950b0ebfa7ded8f36b642e5d
+            - path: 1.4.22
+              level: 3
+              title: FR-022 — `refs/document-map.md` P38 design entry
+              byte_offset: 11737
+              byte_count: 254
+              word_count: 32
+              content_hash: 1f5b630f244a0767a45fc043c9f4bffc9c70e91bcdb1ba5e443659c4157c97e1
+            - path: 1.4.23
+              level: 3
+              title: FR-023 — Dual-write rule compliance
+              byte_offset: 11991
+              byte_count: 724
+              word_count: 60
+              content_hash: 5b7d13ac15c61b0aba5a03411b26c4f930c55ee6e59322f4a17fb815e2e9982e
+            - path: 1.4.24
+              level: 3
+              title: FR-024 — Preserve dev-plan terminology
+              byte_offset: 12715
+              byte_count: 432
+              word_count: 68
+              content_hash: 5aef21e1e950bb752257d47c6f37dd174e5215fef038e05659525d0808d70c92
+            - path: 1.4.25
+              level: 3
+              title: FR-025 — Preserve legitimate "plan" usage
+              byte_offset: 13147
+              byte_count: 533
+              word_count: 83
+              content_hash: 82923d80d370474fb0b20eb37f03dff62368d2a84b0c4d76c42a8b2f2c88f718
+        - path: "1.5"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 13680
+          byte_count: 859
+          word_count: 124
+          content_hash: 03390887b934932aaaa057326df2e705eb84796b65455ae97eb083c9071ab521
+          children:
+            - path: 1.5.1
+              level: 3
+              title: NFR-001 — Consistency within each file
+              byte_offset: 13712
+              byte_count: 196
+              word_count: 31
+              content_hash: 8fe9d47c176ea199cc2ecc4a123aa10fb774ff21ac6e4d64bf7e7afa62fe9c69
+            - path: 1.5.2
+              level: 3
+              title: NFR-002 — No new guidance invented
+              byte_offset: 13908
+              byte_count: 252
+              word_count: 32
+              content_hash: decfd8ba9573ab7974290ebe3ee58b7e84e8f0dc46dc1034dcd1488662bd81a8
+            - path: 1.5.3
+              level: 3
+              title: NFR-003 — Commit discipline
+              byte_offset: 14160
+              byte_count: 379
+              word_count: 58
+              content_hash: cdcbd1fc28215977daad980f3c41ec986365b5165da17cf46a3a91b2d5ae2d12
+        - path: "1.6"
+          level: 2
+          title: Scope
+          byte_offset: 14539
+          byte_count: 1347
+          word_count: 155
+          content_hash: 4dc5256ecc83df5138b2a16263beb65c9220e68b0c2dae8df11752693fc5424d
+        - path: "1.7"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 15886
+          byte_count: 1557
+          word_count: 223
+          content_hash: ae944b829950319566c61fddf04ae9f6ab92784128f37f9ae92f6e732537554a
+        - path: "1.8"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 17443
+          byte_count: 1227
+          word_count: 170
+          content_hash: 29483a731562442aaa88657b1bf815eb691ee6604f2dd90efd8f101d04a1202c
+          children:
+            - path: 1.8.1
+              level: 3
+              title: Dependencies
+              byte_offset: 17476
+              byte_count: 523
+              word_count: 77
+              content_hash: 2955518c48d52ad18babc5dd2e5d465526908ce137456df71f98b3b32a6b6e1a
+            - path: 1.8.2
+              level: 3
+              title: Assumptions
+              byte_offset: 17999
+              byte_count: 671
+              word_count: 89
+              content_hash: 27f389811370be3ea0f01c7d54bc15dd892bde199090f194f05fffff055eb07a
+entity_refs:
+    - entity_id: FEAT-01KQ7YQKWTBRP
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 159
+cross_doc_links:
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1.1"
+    - target_path: internal/kbzinit/skills/<name>/SKILL.md
+      link_text: internal/kbzinit/skills/<name>/SKILL.md
+      section_path: "1.1"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.4.3
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.4.4
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.4.5
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.4.6
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.4.7
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.4.8
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.4.9
+    - target_path: work/plan/feature-x-plan.md
+      link_text: work/plan/feature-x-plan.md
+      section_path: 1.4.9
+    - target_path: .agents/skills/kanbanzai-planning/SKILL.md
+      link_text: .agents/skills/kanbanzai-planning/SKILL.md
+      section_path: 1.4.10
+    - target_path: .agents/skills/kanbanzai-planning/SKILL.md
+      link_text: .agents/skills/kanbanzai-planning/SKILL.md
+      section_path: 1.4.11
+    - target_path: .agents/skills/kanbanzai-planning/SKILL.md
+      link_text: .agents/skills/kanbanzai-planning/SKILL.md
+      section_path: 1.4.12
+    - target_path: .agents/skills/kanbanzai-planning/SKILL.md
+      link_text: .agents/skills/kanbanzai-planning/SKILL.md
+      section_path: 1.4.13
+    - target_path: .agents/skills/kanbanzai-planning/SKILL.md
+      link_text: .agents/skills/kanbanzai-planning/SKILL.md
+      section_path: 1.4.14
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.4.15
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.4.16
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.4.17
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.4.18
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.4.19
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.20
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: 1.4.21
+    - target_path: .kbz/skills/review-plan/SKILL.md
+      link_text: .kbz/skills/review-plan/SKILL.md
+      section_path: 1.4.21
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: 1.4.22
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: 1.4.22
+    - target_path: .agents/skills/kanbanzai-<name>/SKILL.md
+      link_text: .agents/skills/kanbanzai-<name>/SKILL.md
+      section_path: 1.4.23
+    - target_path: internal/kbzinit/skills/<name>/SKILL.md
+      link_text: internal/kbzinit/skills/<name>/SKILL.md
+      section_path: 1.4.23
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.4.23
+    - target_path: internal/kbzinit/skills/workflow/SKILL.md
+      link_text: internal/kbzinit/skills/workflow/SKILL.md
+      section_path: 1.4.23
+    - target_path: .agents/skills/kanbanzai-planning/SKILL.md
+      link_text: .agents/skills/kanbanzai-planning/SKILL.md
+      section_path: 1.4.23
+    - target_path: internal/kbzinit/skills/planning/SKILL.md
+      link_text: internal/kbzinit/skills/planning/SKILL.md
+      section_path: 1.4.23
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.4.23
+    - target_path: internal/kbzinit/skills/getting-started/SKILL.md
+      link_text: internal/kbzinit/skills/getting-started/SKILL.md
+      section_path: 1.4.23
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.4.23
+    - target_path: internal/kbzinit/skills/agents/SKILL.md
+      link_text: internal/kbzinit/skills/agents/SKILL.md
+      section_path: 1.4.23
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: 1.5.2
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "1.6"
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: "1.6"
+    - target_path: .agents/skills/kanbanzai-planning/SKILL.md
+      link_text: .agents/skills/kanbanzai-planning/SKILL.md
+      section_path: "1.6"
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: "1.6"
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: "1.6"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.6"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.6"
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: "1.6"
+    - target_path: .kbz/skills/write-dev-plan/SKILL.md
+      link_text: .kbz/skills/write-dev-plan/SKILL.md
+      section_path: "1.6"
+    - target_path: .kbz/skills/decompose-feature/SKILL.md
+      link_text: .kbz/skills/decompose-feature/SKILL.md
+      section_path: "1.6"
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: "1.6"
+    - target_path: internal/kbzinit/skills/plan-review/SKILL.md
+      link_text: internal/kbzinit/skills/plan-review/SKILL.md
+      section_path: "1.6"
+    - target_path: kanbanzai-workflow/SKILL.md
+      link_text: kanbanzai-workflow/SKILL.md
+      section_path: "1.7"
+    - target_path: kanbanzai-planning/SKILL.md
+      link_text: kanbanzai-planning/SKILL.md
+      section_path: "1.7"
+    - target_path: kanbanzai-getting-started/SKILL.md
+      link_text: kanbanzai-getting-started/SKILL.md
+      section_path: "1.7"
+    - target_path: kanbanzai-agents/SKILL.md
+      link_text: kanbanzai-agents/SKILL.md
+      section_path: "1.7"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.7"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.7"
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: "1.7"
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: "1.7"
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: 1.8.1
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.8.2
+    - target_path: internal/kbzinit/skills/plan-review/SKILL.md
+      link_text: internal/kbzinit/skills/plan-review/SKILL.md
+      section_path: 1.8.2
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: 1.4.9
+      role: example
+      confidence: high
+    - section_path: 1.4.11
+      role: decision
+      confidence: high
+    - section_path: 1.4.14
+      role: example
+      confidence: high
+    - section_path: 1.4.19
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: constraint
+      confidence: high
+    - section_path: "1.7"
+      role: requirement
+      confidence: high
+    - section_path: "1.8"
+      role: assumption
+      confidence: high
+    - section_path: 1.8.2
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T17:28:47.169442Z
+classified: false

@@ -1,0 +1,367 @@
+document_id: FEAT-01KQ7YQKEEHFY/specification-p38-f3-spec-batch-entity-rename-b-prefix
+document_path: work/design/p38-f3-spec-batch-entity-rename-b-prefix.md
+content_hash: 95b0953101f6e542a292efa18bb572b3b9c8207e8c2b85f05754a1ab2c4098dd
+indexed_at: 2026-04-27T17:33:13.212712Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P38-F3: Batch Entity Rename and B-Prefix IDs — Specification'
+      byte_offset: 0
+      byte_count: 33789
+      word_count: 4194
+      content_hash: 95b0953101f6e542a292efa18bb572b3b9c8207e8c2b85f05754a1ab2c4098dd
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 265
+          byte_count: 1409
+          word_count: 129
+          content_hash: a86815c691c9db9b7e4baf13cb3f66c3c7670440bbd51f8b16f2e1654e4cc6ec
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 1674
+          byte_count: 1429
+          word_count: 210
+          content_hash: a51fd7e0e962d3b366e2113dbab606088479b3475415ba2d5662607f20efd917
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 3103
+          byte_count: 21634
+          word_count: 2735
+          content_hash: 747c05c2173bc7345b307d6ef490d65d9a833cac50e523f71f85098963a0bd9e
+          children:
+            - path: 1.3.1
+              level: 3
+              title: FR-001 — `EntityKindBatch` constant
+              byte_offset: 3131
+              byte_count: 289
+              word_count: 35
+              content_hash: b47fa61db6ed08112c554415eb5ce21728a2af0f5eebb29a75e878fe9f3c29bf
+            - path: 1.3.2
+              level: 3
+              title: FR-002 — `Batch` model struct
+              byte_offset: 3420
+              byte_count: 1115
+              word_count: 107
+              content_hash: 7d9fe639164a71bc06f66b688b13672c61f83e6cb2becba1653e23b0ce6e2f45
+            - path: 1.3.3
+              level: 3
+              title: FR-003 — `IsBatchID` and `ParseBatchID` functions
+              byte_offset: 4535
+              byte_count: 993
+              word_count: 142
+              content_hash: 66b982c9c52abf60433e4ad533cc1c55a634d25e413aca4000794f11c8d96a22
+            - path: 1.3.4
+              level: 3
+              title: FR-004 — Batch YAML field order
+              byte_offset: 5528
+              byte_count: 467
+              word_count: 66
+              content_hash: 6b38e2d249af52142fb19e272f548e0fcbef6d7315e57e8dce648cf52adab749
+            - path: 1.3.5
+              level: 3
+              title: FR-005 — Batch lifecycle
+              byte_offset: 5995
+              byte_count: 1379
+              word_count: 157
+              content_hash: 9c0fd4a5ede40d5581622b631b91bcff51a82ea5a015dd41ef0e61032f8d5a29
+            - path: 1.3.6
+              level: 3
+              title: FR-006 — Batch storage directory
+              byte_offset: 7374
+              byte_count: 478
+              word_count: 61
+              content_hash: fed71c7ccf638e44ea19b01c549ec913cd62127e83232908f7105286326fa252
+            - path: 1.3.7
+              level: 3
+              title: FR-007 — Batch ID format for new batches
+              byte_offset: 7852
+              byte_count: 800
+              word_count: 112
+              content_hash: 83df045eb6fb1466ac0482cd9551e475aa9f35b031240f415608789d7581a77f
+            - path: 1.3.8
+              level: 3
+              title: 'FR-008 — Backward-compatible loading: fallback to `plans/`'
+              byte_offset: 8652
+              byte_count: 837
+              word_count: 130
+              content_hash: a9a58107fb720489ebec40ec73fc8053acfe985528c5a502620c07b11552ceee
+            - path: 1.3.9
+              level: 3
+              title: 'FR-009 — Backward-compatible listing: scan both directories'
+              byte_offset: 9489
+              byte_count: 485
+              word_count: 68
+              content_hash: 26adbc84143ae8d8b814873fcf1931763aceafc56ae0fa6779c9995c133f0da1
+            - path: 1.3.10
+              level: 3
+              title: FR-010 — `CreateBatch` service method
+              byte_offset: 9974
+              byte_count: 1330
+              word_count: 193
+              content_hash: 1025a3aa154c35abda0285cf328ded73d435f2dc27854e6691b54299b0ba8b66
+            - path: 1.3.11
+              level: 3
+              title: FR-011 — `GetBatch` service method
+              byte_offset: 11304
+              byte_count: 428
+              word_count: 56
+              content_hash: 8b02da8a83f687f5193e8381900c993477d502fa670b977b209d4b1f85883a1b
+            - path: 1.3.12
+              level: 3
+              title: FR-012 — `ListBatches` service method
+              byte_offset: 11732
+              byte_count: 377
+              word_count: 48
+              content_hash: 5ce17979ad7e22ecf38ac1d417e99a20334648de53f6960b19a30a0cf071ebf2
+            - path: 1.3.13
+              level: 3
+              title: FR-013 — `UpdateBatch` and `UpdateBatchStatus` service methods
+              byte_offset: 12109
+              byte_count: 980
+              word_count: 123
+              content_hash: 1926d6990f9f8b527e0c19181d1f68dddc981dd186179bc70778bce3be63f526
+            - path: 1.3.14
+              level: 3
+              title: FR-014 — `MaybeAutoAdvanceBatch` service method
+              byte_offset: 13089
+              byte_count: 809
+              word_count: 118
+              content_hash: e60c65822c0acbdbde36e912f237f6256f285bd8a4ffd9a10cf28f9f7ad7e664
+            - path: 1.3.15
+              level: 3
+              title: 'FR-015 — Entity tool: `type: "batch"` support'
+              byte_offset: 13898
+              byte_count: 532
+              word_count: 75
+              content_hash: 65f37b1c83d1aae5e59afa5c332cb882158e064534c3d518ae8c959e6bbc27e1
+            - path: 1.3.16
+              level: 3
+              title: 'FR-016 — Entity tool: `type: "plan"` backward compatibility for batches'
+              byte_offset: 14430
+              byte_count: 398
+              word_count: 62
+              content_hash: 0fa2f124fc9c0fa2cfb51158defc6533742bd3cc7fd3fe67e424e84512283917
+            - path: 1.3.17
+              level: 3
+              title: FR-017 — Entity type inference from ID
+              byte_offset: 14828
+              byte_count: 1120
+              word_count: 156
+              content_hash: 3c10d425b94ee9605d74a92177fbe9b5cd86bad2226f5b73fea92f65919a9ca3
+            - path: 1.3.18
+              level: 3
+              title: 'FR-018 — Status tool: batch dashboard'
+              byte_offset: 15948
+              byte_count: 685
+              word_count: 84
+              content_hash: 98a6650261ce9446586e5a58b15e89cec1e406951037f777709a365c4dc02021
+            - path: 1.3.19
+              level: 3
+              title: 'FR-019 — Side effect: `batch_auto_advanced`'
+              byte_offset: 16633
+              byte_count: 372
+              word_count: 37
+              content_hash: 1f737579af7e78d04a83e7821fb7127b010df0c6dbfede9b4fd5f249fbbec3f7
+            - path: 1.3.20
+              level: 3
+              title: FR-020 — Feature parent validation for batches
+              byte_offset: 17005
+              byte_count: 691
+              word_count: 101
+              content_hash: 8201dcb6b8ef774413921e69acb8039c39aa0e12fe2c7ebfcd2b960dc5c139c1
+            - path: 1.3.21
+              level: 3
+              title: FR-021 — `entityExists` for batch type
+              byte_offset: 17696
+              byte_count: 366
+              word_count: 48
+              content_hash: 3f474fd183bb4498ae37de0d4f06f597051e5d2ffd8484481ac76433e66cacd7
+            - path: 1.3.22
+              level: 3
+              title: 'FR-022 — Validate layer: `EntityBatch` constant'
+              byte_offset: 18062
+              byte_count: 616
+              word_count: 65
+              content_hash: 25e9aceeb522891b1e14829e89779b4a9f411ec5a42d4150f0f7bd804da69393
+            - path: 1.3.23
+              level: 3
+              title: 'FR-023 — Health check: batch-child consistency'
+              byte_offset: 18678
+              byte_count: 655
+              word_count: 75
+              content_hash: 856a0d04f3c5ccd2c7faf88f5cb59c41d772dcc0a5405b148611f8dc4840300d
+            - path: 1.3.24
+              level: 3
+              title: 'FR-024 — ID allocator: batch kind support'
+              byte_offset: 19333
+              byte_count: 363
+              word_count: 38
+              content_hash: a9638008a70db196dc330a1b3bae37dd27857767f19dce26d3e592bf20923f42
+            - path: 1.3.25
+              level: 3
+              title: 'FR-025 — Display ID utilities: batch pass-through'
+              byte_offset: 19696
+              byte_count: 391
+              word_count: 51
+              content_hash: 842e25b2024f5d077154ceff23a45a1217a0f73fab07516936f5cf9bbcd9765f
+            - path: 1.3.26
+              level: 3
+              title: 'FR-026 — Docint extractor: batch ID recognition'
+              byte_offset: 20087
+              byte_count: 813
+              word_count: 115
+              content_hash: b855ecc33bc61d711cef8f7663e31fc9be4ef5de822b1fd5621c4045292df073
+            - path: 1.3.27
+              level: 3
+              title: 'FR-027 — `kbzschema` public package: Batch type and constants'
+              byte_offset: 20900
+              byte_count: 1212
+              word_count: 96
+              content_hash: 2cc4bd3b1dc471ebc1a6e6eb6cffa6d07bcccf0ad49b5ae581b19fe8406fa744
+            - path: 1.3.28
+              level: 3
+              title: 'FR-028 — `kbzschema` Reader: `GetBatch` and `ListBatches`'
+              byte_offset: 22112
+              byte_count: 437
+              word_count: 56
+              content_hash: 09cd2fa775c4f6f059cac67338bf0cfd1beea7c4be1445e7d998f110671bd870
+            - path: 1.3.29
+              level: 3
+              title: 'FR-029 — CLI: `entity create batch` command'
+              byte_offset: 22549
+              byte_count: 813
+              word_count: 75
+              content_hash: 1c83095ac7cae9d7d45632eb5986cf371828164de911e2188175569b7c4a2407
+            - path: 1.3.30
+              level: 3
+              title: FR-030 — `batch` accepted in type-polymorphic paths
+              byte_offset: 23362
+              byte_count: 1375
+              word_count: 182
+              content_hash: 0cdc2556bf6068f3adfefc0f41c53b7355fcfcc09fad9414dfc74f911774a268
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 24737
+          byte_count: 1358
+          word_count: 180
+          content_hash: fb4a33a448f7c508157956a6c086403c387178e92fe969e2af37acb44931e77d
+        - path: "1.5"
+          level: 2
+          title: Scope
+          byte_offset: 26095
+          byte_count: 2663
+          word_count: 252
+          content_hash: 67a217603a3ae88a7bf3747452b7439520d90233cfbf4d8c51e9bac808fbd975
+          children:
+            - path: 1.5.1
+              level: 3
+              title: In scope
+              byte_offset: 26105
+              byte_count: 1982
+              word_count: 160
+              content_hash: 8076ff633d8d53b577fc7a1d0d4bebcf4fd42454cbe697d829ff6636dd7dac07
+            - path: 1.5.2
+              level: 3
+              title: Out of scope
+              byte_offset: 28087
+              byte_count: 671
+              word_count: 90
+              content_hash: 09604a36d4588f1e5159603742e0d5134dbeb0aef7ff7afaab4243c92244e47c
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 28758
+          byte_count: 3177
+          word_count: 377
+          content_hash: 87cc3e78cfeb3305d4cf99e03b1c7e05af5f5c729123372d2b49eab619501019
+        - path: "1.7"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 31935
+          byte_count: 1854
+          word_count: 264
+          content_hash: 677ae2c1c92f80082e1da56c2db36a17dc34d12fb7b5b3bfe1fad277fc9e7c8f
+entity_refs:
+    - entity_id: FEAT-01KQ7YQKEEHFY
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 163
+    - entity_id: FEAT-01ABC
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 31568
+    - entity_id: B24-auth-system
+      entity_type: plan
+      section_path: 1.3.7
+      byte_offset: 8139
+    - entity_id: P1-auth-system
+      entity_type: plan
+      section_path: 1.3.8
+      byte_offset: 8977
+    - entity_id: B24-auth-system
+      entity_type: plan
+      section_path: 1.3.18
+      byte_offset: 16355
+    - entity_id: P1-social-platform
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 29317
+    - entity_id: P1-legacy
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 29554
+    - entity_id: B1-auth-system
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 30135
+    - entity_id: B24-auth-system
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 31478
+    - entity_id: P1-old-plan
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 31525
+cross_doc_links:
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1.1"
+    - target_path: work/design/p38-f1-spec-config-schema-project-singleton.md
+      link_text: work/design/p38-f1-spec-config-schema-project-singleton.md
+      section_path: "1.1"
+    - target_path: work/design/p38-f2-spec-plan-entity-data-model-lifecycle.md
+      link_text: work/design/p38-f2-spec-plan-entity-data-model-lifecycle.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+    - section_path: 1.5.1
+      role: constraint
+      confidence: high
+    - section_path: 1.5.2
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T17:33:13.713715Z
+classified: false

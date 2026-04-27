@@ -1,0 +1,112 @@
+document_id: FEAT-01KQ7YQK6DDDA/specification-p38-f1-spec-config-schema-project-singleton
+document_path: work/design/p38-f1-spec-config-schema-project-singleton.md
+content_hash: c055debdb2fe957c71b0921e29d5b0f5ecce96af4902a437d3e4826ed6ec6b44
+indexed_at: 2026-04-27T17:21:25.758533Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P38-F1: Config Schema and Project Singleton — Specification'
+      byte_offset: 0
+      byte_count: 14168
+      word_count: 1943
+      content_hash: c055debdb2fe957c71b0921e29d5b0f5ecce96af4902a437d3e4826ed6ec6b44
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 682
+          byte_count: 872
+          word_count: 128
+          content_hash: eecdadc67365cef4ce3bb3f78ed6d918f0f4e68ef90400387f515925867f54ac
+        - path: "1.2"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 1554
+          byte_count: 4186
+          word_count: 608
+          content_hash: 65fa979b3c7791013b5bfe2d08d8ab46d107e1964032fc7614d3c8b054188115
+        - path: "1.3"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 5740
+          byte_count: 1745
+          word_count: 240
+          content_hash: 6f3027804b3b7d69a0d78bdd3e4378347efb76b038110f91ec53e5d2e516e4ca
+        - path: "1.4"
+          level: 2
+          title: Scope
+          byte_offset: 7485
+          byte_count: 1533
+          word_count: 199
+          content_hash: 24ee5d1ef2ecb984f1722a3b44fc52027e2f88ac03a97c9ffb0420ec78512784
+          children:
+            - path: 1.4.1
+              level: 3
+              title: In Scope
+              byte_offset: 7495
+              byte_count: 710
+              word_count: 86
+              content_hash: 281a1f34369b37a1fe3b640bc84dc548d493527da754a6c26912b39041f0b8f8
+            - path: 1.4.2
+              level: 3
+              title: Explicitly Excluded
+              byte_offset: 8205
+              byte_count: 813
+              word_count: 111
+              content_hash: 7c2a0f0ee957263091a8d67d688d312c2be7d4f35e699f4692475bf033d23b2d
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 9018
+          byte_count: 3285
+          word_count: 468
+          content_hash: 9903ca6c678eebc80adc2845b3e6a538a88234aad4aae75dda9d2230f5b40fa0
+        - path: "1.6"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 12303
+          byte_count: 1865
+          word_count: 251
+          content_hash: cb124fde88acac7f967ded607a19fb8dcd419f74620e5987067671bc5c91c1c7
+entity_refs:
+    - entity_id: FEAT-01KQ7YQK6DDDA
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 512
+    - entity_id: P3-foo
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 10225
+    - entity_id: B3-bar
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 10258
+cross_doc_links:
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: constraint
+      confidence: high
+    - section_path: 1.4.1
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T17:21:26.341368Z
+classified: false

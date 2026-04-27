@@ -156,13 +156,13 @@ conventional_roles:
     - section_path: 1.4.3
       role: risk
       confidence: high
-access_count: 12
-last_accessed_at: 2026-04-27T16:33:17.940687Z
+access_count: 13
+last_accessed_at: 2026-04-27T18:41:47.818164Z
 section_access:
     "1.1":
         access_count: 3
         last_accessed_at: 2026-04-27T16:33:17.940687Z
     1.2.3:
-        access_count: 5
-        last_accessed_at: 2026-04-27T16:30:42.002947Z
+        access_count: 6
+        last_accessed_at: 2026-04-27T18:41:47.818164Z
 classified: false

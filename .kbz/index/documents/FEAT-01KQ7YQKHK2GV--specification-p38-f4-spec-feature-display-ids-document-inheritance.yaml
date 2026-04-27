@@ -1,0 +1,305 @@
+document_id: FEAT-01KQ7YQKHK2GV/specification-p38-f4-spec-feature-display-ids-document-inheritance
+document_path: work/design/p38-f4-spec-feature-display-ids-document-inheritance.md
+content_hash: c45b84a43068c2e43ffd428059b5e16fa3073a30b3684c2088ec7a28c44b6415
+indexed_at: 2026-04-27T17:30:49.456777Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P38-F4: Feature Display IDs and Document Inheritance — Specification'
+      byte_offset: 0
+      byte_count: 22390
+      word_count: 3295
+      content_hash: c45b84a43068c2e43ffd428059b5e16fa3073a30b3684c2088ec7a28c44b6415
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 270
+          byte_count: 2142
+          word_count: 308
+          content_hash: f84ab5b8a1f6ff34809c56902c1867dd7761c89c80a9b509078f5f75c1a6935d
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 2412
+          byte_count: 1457
+          word_count: 228
+          content_hash: 996a3f4565cb65582ba13dffc5553ec8fa4b921166e6180de9dc9e789fcf2132
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 3869
+          byte_count: 8194
+          word_count: 1244
+          content_hash: 4c1010330b7c6a7b6edc083c4673c6ec63444bd3b0977658d28f22d6f2689d80
+          children:
+            - path: 1.3.1
+              level: 3
+              title: FR-001 — Batch state file `next_feature_seq` counter
+              byte_offset: 3897
+              byte_count: 579
+              word_count: 87
+              content_hash: b04e15a58668148651146892625cfb17c9b62ea43542499e0fece3ee6ae1b72c
+            - path: 1.3.2
+              level: 3
+              title: FR-002 — Batch counter initialisation
+              byte_offset: 4476
+              byte_count: 129
+              word_count: 19
+              content_hash: cdcd0d5ea2300c6af98c6b7c1cb8eee899662b933cf7eff3a6f494df59207444
+            - path: 1.3.3
+              level: 3
+              title: FR-003 — Batch counter increment
+              byte_offset: 4605
+              byte_count: 165
+              word_count: 25
+              content_hash: e2e49467a3107177638e6168d57c55be83ac982cd0a7c6909ef09912cfece9b0
+            - path: 1.3.4
+              level: 3
+              title: FR-004 — Counter write ordering
+              byte_offset: 4770
+              byte_count: 422
+              word_count: 66
+              content_hash: 3a04170fab025a5ac03e633179611218a87e4606d7939d5ddd3e4297ea0a5afb
+            - path: 1.3.5
+              level: 3
+              title: FR-005 — Feature display ID format for batch parents
+              byte_offset: 5192
+              byte_count: 639
+              word_count: 93
+              content_hash: 682c452a811119ca5528d06f5a155faf095dc664de915672596fa80c02382ca4
+            - path: 1.3.6
+              level: 3
+              title: FR-006 — CreateFeature allocates display ID from batch counter
+              byte_offset: 5831
+              byte_count: 721
+              word_count: 114
+              content_hash: 4efa141863ee39c641c862534aa0c6f146069b2a49caa3b0ebf81db0d0a2c459
+            - path: 1.3.7
+              level: 3
+              title: 'FR-007 — Backward compatibility: legacy plan parents retain `P{n}-F{m}`'
+              byte_offset: 6552
+              byte_count: 581
+              word_count: 90
+              content_hash: 43811c972bf00b97e7efaa5cc389fc75072e150eef1cedf79cfbc3fc703a5dc4
+            - path: 1.3.8
+              level: 3
+              title: 'FR-008 — Display ID input resolution: `B{n}-F{m}` pattern'
+              byte_offset: 7133
+              byte_count: 324
+              word_count: 47
+              content_hash: 96f27a6048fa158ceb3861996a62c69770de8bbc206c0217d799d0bae6b18915
+            - path: 1.3.9
+              level: 3
+              title: FR-009 — Resolution is case-insensitive for both patterns
+              byte_offset: 7457
+              byte_count: 282
+              word_count: 37
+              content_hash: 10e7d28084ece1325745f3579dd39c5d3771b42b0a5a33af760e57aee33d06f4
+            - path: 1.3.10
+              level: 3
+              title: FR-010 — All entity operations accept `B{n}-F{m}` identifiers
+              byte_offset: 7739
+              byte_count: 507
+              word_count: 79
+              content_hash: cb20ac07a50e14bba8e88fab613479a9f8273fccaceb3f5d398ce095d8215998
+            - path: 1.3.11
+              level: 3
+              title: FR-011 — MCP output reflects batch-scoped display ID
+              byte_offset: 8246
+              byte_count: 362
+              word_count: 58
+              content_hash: a139c84cb907b10aa4164e408d79302dbecc5140cb776fe09a9c49f885416e7b
+            - path: 1.3.12
+              level: 3
+              title: FR-012 — Four-level document gate lookup chain
+              byte_offset: 8608
+              byte_count: 1212
+              word_count: 175
+              content_hash: 863cb9b59ff74870efcb6475256e7ce50e08f08c5d044a8a75bb7c7e8a7e56c5
+            - path: 1.3.13
+              level: 3
+              title: FR-013 — Grandparent plan lookup via batch parent field
+              byte_offset: 9820
+              byte_count: 439
+              word_count: 73
+              content_hash: 3595d2a4d736b26438366a561713aa8abcfac3c74ec619682bf6afe807c8ff91
+            - path: 1.3.14
+              level: 3
+              title: FR-014 — PrereqEvalContext carries a parent entity resolver
+              byte_offset: 10259
+              byte_count: 596
+              word_count: 86
+              content_hash: 453148b3744dcf10114177e9359e8876a616d680c3ab9fd684f662989abfbf5a
+            - path: 1.3.15
+              level: 3
+              title: FR-015 — Lookup chain terminates at first satisfied level
+              byte_offset: 10855
+              byte_count: 267
+              word_count: 44
+              content_hash: 7e715e1a4fff5ef3e301392807122560a380d5e32a7b10c65b59e2d834745035
+            - path: 1.3.16
+              level: 3
+              title: FR-016 — Standalone features use existing three-level lookup
+              byte_offset: 11122
+              byte_count: 467
+              word_count: 73
+              content_hash: 6e999e3e5bec8393990e091b574c151cecb36c18d27d6f47870425f2d25e123a
+            - path: 1.3.17
+              level: 3
+              title: FR-017 — Level 3 and Level 4 reason strings
+              byte_offset: 11589
+              byte_count: 474
+              word_count: 75
+              content_hash: 6acf3e31c19b44e659fb57272278224828c2d7ae5e2a16d4e235e59f2de7e546
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 12063
+          byte_count: 1624
+          word_count: 219
+          content_hash: 6c2263f444751a64faa5908a44308693fb5bbfe0b81b6a71354a743996816cc6
+        - path: "1.5"
+          level: 2
+          title: Scope
+          byte_offset: 13687
+          byte_count: 1533
+          word_count: 213
+          content_hash: ca8582c02833b60b021c73b0f40d90ba3fdc9084ffef95dc08a1757d311926d9
+          children:
+            - path: 1.5.1
+              level: 3
+              title: In scope
+              byte_offset: 13697
+              byte_count: 948
+              word_count: 121
+              content_hash: a1f121f23757914fdce8dd9a157c9cc8d6059ddd98766ba652529e9b9d4ef704
+            - path: 1.5.2
+              level: 3
+              title: Out of scope
+              byte_offset: 14645
+              byte_count: 575
+              word_count: 90
+              content_hash: a0748bacdc5c304029d31ec7a56109c87dd62f52aa5c6e13b8b546bcaf4c4d47
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 15220
+          byte_count: 4815
+          word_count: 689
+          content_hash: 74ebbe010751d843f28772759cc9263d709e78cfa51272f40a362ddec0a9a89b
+        - path: "1.7"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 20035
+          byte_count: 2355
+          word_count: 348
+          content_hash: 81715e2ce04ff6e3ee88c563a6eaeb12c61bf3f036ade74fba8e41e6a43faa2a
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Dependencies
+              byte_offset: 20068
+              byte_count: 1026
+              word_count: 157
+              content_hash: 6f72936fb07d5286a0445cda5ca80926a7a0b7e81bdb68b5f44844725b2cc55c
+            - path: 1.7.2
+              level: 3
+              title: Assumptions
+              byte_offset: 21094
+              byte_count: 1296
+              word_count: 187
+              content_hash: 6d2550e0aff8256183e6c0925dd6a350053695c648bf3bffed7ed16af89c8f72
+entity_refs:
+    - entity_id: FEAT-01KQ7YQKHK2GV
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 171
+    - entity_id: FEAT-01KMK
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 13085
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 16669
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.3.17
+      byte_offset: 11936
+    - entity_id: DOC-batch
+      entity_type: document
+      section_path: "1.6"
+      byte_offset: 18004
+    - entity_id: DOC-plan
+      entity_type: document
+      section_path: "1.6"
+      byte_offset: 18559
+    - entity_id: B24-auth-system
+      entity_type: plan
+      section_path: 1.3.5
+      byte_offset: 5452
+    - entity_id: B24-f3
+      entity_type: plan
+      section_path: 1.3.9
+      byte_offset: 7613
+    - entity_id: B24-auth-system
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 15734
+    - entity_id: P37-file-names-and-actions
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 16336
+    - entity_id: P1-social-platform
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 18477
+    - entity_id: B24-auth-system
+      entity_type: plan
+      section_path: 1.7.2
+      byte_offset: 21979
+cross_doc_links:
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1.1"
+    - target_path: work/design/p37-f1-spec-plan-scoped-feature-display-ids.md
+      link_text: work/design/p37-f1-spec-plan-scoped-feature-display-ids.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.11
+      role: constraint
+      confidence: high
+    - section_path: 1.3.14
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+    - section_path: 1.5.1
+      role: constraint
+      confidence: high
+    - section_path: 1.5.2
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: assumption
+      confidence: high
+    - section_path: 1.7.2
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T17:30:50.060462Z
+classified: false
