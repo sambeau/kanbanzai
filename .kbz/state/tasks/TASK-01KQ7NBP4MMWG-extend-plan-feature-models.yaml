@@ -3,8 +3,15 @@ parent_feature: FEAT-01KQ7JDSVMP4E
 slug: extend-plan-feature-models
 name: Extend Plan and Feature models
 summary: Add next_feature_seq (int) to model.Plan and display_id (string) to model.Feature. Update planFields() to always serialise next_feature_seq. Update featureFields() to serialise display_id when non-empty. Update CreatePlan to initialise NextFeatureSeq to 1.
-status: active
+status: done
+files_planned:
+  - internal/model/entities.go
+  - internal/service/entities.go
+  - internal/service/plans.go
+completed: "2026-04-27T15:11:43Z"
 claimed_at: "2026-04-27T15:01:51Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-27T15:01:51Z"
 dispatched_by: sambeau
+completion_summary: "Added NextFeatureSeq int (yaml: next_feature_seq) to model.Plan and DisplayID string (yaml: display_id,omitempty) to model.Feature. Updated CreatePlan to initialise NextFeatureSeq: 1. Updated planFields() to always serialise next_feature_seq. Updated featureFields() to serialise display_id when non-empty. All model and service tests pass."
+verification: go build ./... — clean. go test ./internal/model/... ./internal/service/... -count=1 — both pass.
