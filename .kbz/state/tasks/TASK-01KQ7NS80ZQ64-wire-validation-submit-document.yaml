@@ -1,0 +1,6 @@
+id: TASK-01KQ7NS80ZQ64
+parent_feature: FEAT-01KQ7JDSZARPC
+slug: wire-validation-submit-document
+name: Wire validation into SubmitDocument
+summary: "Update SubmitDocument to: normalise input type via NormaliseDocumentType; validate via ValidDocumentTypeForRegistration with error listing only 8 user-facing types; call validateDocumentFilename and validateDocumentFolder before writing the record; update entity hook switch to match DocumentTypeSpec instead of DocumentTypeSpecification."
+status: queued
