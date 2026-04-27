@@ -441,8 +441,8 @@ func TestAnalyzeGaps(t *testing.T) {
 	for _, g := range gaps {
 		gapSet[g] = true
 	}
-	if !gapSet["specification"] {
-		t.Error("expected 'specification' in gaps")
+	if !gapSet["spec"] {
+		t.Error("expected 'spec' in gaps")
 	}
 	if !gapSet["dev-plan"] {
 		t.Error("expected 'dev-plan' in gaps")
@@ -915,7 +915,6 @@ func TestGetImpact_SQLite(t *testing.T) {
 		t.Error("expected at least one edge pointing to test-doc#1")
 	}
 }
-
 
 func TestRebuildIndex_RoundTrip(t *testing.T) {
 	tmp := t.TempDir()

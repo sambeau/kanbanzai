@@ -885,7 +885,10 @@ func TestApproveDocument_TransitionsFeatureOnSpecApproval(t *testing.T) {
 	mock := &mockEntityHook{entityType: "feature", status: "specifying"}
 	svc.SetEntityHook(mock)
 
-	docPath := "spec.md"
+	docPath := "work/_project/spec.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/_project"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
 	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("spec content"), 0o644); err != nil {
 		t.Fatalf("write file: %v", err)
 	}
@@ -936,7 +939,10 @@ func TestApproveDocument_TransitionsPlanOnDesignApproval(t *testing.T) {
 	mock := &mockEntityHook{entityType: "plan", status: "designing"}
 	svc.SetEntityHook(mock)
 
-	docPath := "design.md"
+	docPath := "work/_project/design.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/_project"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
 	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("design content"), 0o644); err != nil {
 		t.Fatalf("write file: %v", err)
 	}
@@ -982,14 +988,17 @@ func TestSupersedeDocument_RevertsFeatureOnSpecSupersession(t *testing.T) {
 	mock := &mockEntityHook{entityType: "feature", status: "dev-planning"}
 	svc.SetEntityHook(mock)
 
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/_project"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
 	for _, name := range []string{"spec-v1.md", "spec-v2.md"} {
-		if err := os.WriteFile(filepath.Join(repoRoot, name), []byte("content"), 0o644); err != nil {
+		if err := os.WriteFile(filepath.Join(repoRoot, "work/_project", name), []byte("content"), 0o644); err != nil {
 			t.Fatalf("write file: %v", err)
 		}
 	}
 
 	submit1, err := svc.SubmitDocument(SubmitDocumentInput{
-		Path:      "spec-v1.md",
+		Path:      "work/_project/spec-v1.md",
 		Type:      "specification",
 		Title:     "Spec V1",
 		Owner:     "FEAT-123",
@@ -1008,7 +1017,7 @@ func TestSupersedeDocument_RevertsFeatureOnSpecSupersession(t *testing.T) {
 	}
 
 	submit2, err := svc.SubmitDocument(SubmitDocumentInput{
-		Path:      "spec-v2.md",
+		Path:      "work/_project/spec-v2.md",
 		Type:      "specification",
 		Title:     "Spec V2",
 		Owner:     "FEAT-123",
@@ -1088,7 +1097,10 @@ func TestSubmitDocument_TransitionsFeatureOnDesignCreation(t *testing.T) {
 	mock := &mockEntityHook{entityType: "feature", status: "proposed"}
 	svc.SetEntityHook(mock)
 
-	docPath := "design.md"
+	docPath := "work/_project/design.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/_project"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
 	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("design content"), 0o644); err != nil {
 		t.Fatalf("write file: %v", err)
 	}
@@ -1130,7 +1142,10 @@ func TestApproveDocument_ReportsEntityTransition(t *testing.T) {
 	mock := &mockEntityHook{entityType: "feature", status: "specifying"}
 	svc.SetEntityHook(mock)
 
-	docPath := "spec.md"
+	docPath := "work/_project/spec.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/_project"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
 	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("spec content"), 0o644); err != nil {
 		t.Fatalf("write file: %v", err)
 	}
@@ -1183,7 +1198,10 @@ func TestApproveDocument_NoEntityTransition_WhenAlreadyAtTargetStatus(t *testing
 	mock := &mockEntityHook{entityType: "feature", status: "dev-planning"}
 	svc.SetEntityHook(mock)
 
-	docPath := "spec.md"
+	docPath := "work/_project/spec.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/_project"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
 	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte("spec content"), 0o644); err != nil {
 		t.Fatalf("write file: %v", err)
 	}
@@ -1223,14 +1241,17 @@ func TestSupersedeDocument_ReportsEntityTransition(t *testing.T) {
 	mock := &mockEntityHook{entityType: "feature", status: "dev-planning"}
 	svc.SetEntityHook(mock)
 
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/_project"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
 	for _, name := range []string{"spec-v1.md", "spec-v2.md"} {
-		if err := os.WriteFile(filepath.Join(repoRoot, name), []byte("content"), 0o644); err != nil {
+		if err := os.WriteFile(filepath.Join(repoRoot, "work/_project", name), []byte("content"), 0o644); err != nil {
 			t.Fatalf("write file: %v", err)
 		}
 	}
 
 	v1, err := svc.SubmitDocument(SubmitDocumentInput{
-		Path: "spec-v1.md", Type: "specification", Title: "Spec V1",
+		Path: "work/_project/spec-v1.md", Type: "specification", Title: "Spec V1",
 		Owner: "FEAT-123", CreatedBy: "tester",
 	})
 	if err != nil {
@@ -1242,7 +1263,7 @@ func TestSupersedeDocument_ReportsEntityTransition(t *testing.T) {
 	}
 
 	v2, err := svc.SubmitDocument(SubmitDocumentInput{
-		Path: "spec-v2.md", Type: "specification", Title: "Spec V2",
+		Path: "work/_project/spec-v2.md", Type: "specification", Title: "Spec V2",
 		Owner: "FEAT-123", CreatedBy: "tester",
 	})
 	if err != nil {
@@ -1334,11 +1355,11 @@ func TestSubmitDocument_NewDocumentTypes(t *testing.T) {
 	t.Parallel()
 
 	cases := []struct {
-		docType string
-		dir     string
+		docType  string
+		dir      string
+		wantType string
 	}{
-		{"plan", "work/plan"},
-		{"retrospective", "work/retro"},
+		{"retrospective", "work/retro", "retro"},
 	}
 
 	for _, tc := range cases {
@@ -1365,8 +1386,8 @@ func TestSubmitDocument_NewDocumentTypes(t *testing.T) {
 			if err != nil {
 				t.Fatalf("SubmitDocument(type=%q) error = %v", tc.docType, err)
 			}
-			if result.Type != tc.docType {
-				t.Errorf("Type = %q, want %q", result.Type, tc.docType)
+			if result.Type != tc.wantType {
+				t.Errorf("Type = %q, want %q", result.Type, tc.wantType)
 			}
 		})
 	}
@@ -2126,7 +2147,7 @@ func TestSubmitDocument_SectionProvider_Warnings(t *testing.T) {
 
 	// Set a section provider that requires two sections.
 	svc.SetSectionProvider(func(docType string) []string {
-		if docType == "specification" {
+		if docType == "spec" {
 			return []string{"Overview", "Acceptance Criteria"}
 		}
 		return nil
@@ -2179,7 +2200,7 @@ func TestApproveDocument_SectionProvider_BlocksOnMissing(t *testing.T) {
 
 	// Set a section provider that requires two sections.
 	svc.SetSectionProvider(func(docType string) []string {
-		if docType == "specification" {
+		if docType == "spec" {
 			return []string{"Overview", "Acceptance Criteria"}
 		}
 		return nil
@@ -2235,7 +2256,7 @@ func TestApproveDocument_SectionProvider_PassesWhenAllPresent(t *testing.T) {
 	svc := NewDocumentService(stateRoot, repoRoot)
 
 	svc.SetSectionProvider(func(docType string) []string {
-		if docType == "specification" {
+		if docType == "spec" {
 			return []string{"Overview", "Acceptance Criteria"}
 		}
 		return nil

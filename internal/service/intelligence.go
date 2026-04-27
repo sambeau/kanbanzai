@@ -468,7 +468,8 @@ func (s *IntelligenceService) TraceEntity(entityID string) ([]EntityDocMatch, er
 	// Build a type-order map for sorting
 	typeOrder := map[string]int{
 		"design":        0,
-		"specification": 1,
+		"specification": 1, // legacy alias
+		"spec":          1,
 		"dev-plan":      2,
 		"research":      3,
 		"report":        4,
@@ -528,7 +529,7 @@ func (s *IntelligenceService) AnalyzeGaps(featureID string, docSvc *DocumentServ
 	}
 
 	// The expected document types for a feature
-	expected := []string{"design", "specification", "dev-plan"}
+	expected := []string{"design", "spec", "dev-plan"}
 	var gaps []string
 	for _, t := range expected {
 		if !existingTypes[t] {

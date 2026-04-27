@@ -324,9 +324,12 @@ func docApproveAction(docSvc *service.DocumentService, intelSvc *service.Intelli
 }
 
 // gatedDocTypes is the set of document types subject to the concept-tagging
-// approval gate (REQ-001).
+// approval gate (REQ-001). Both the normalised form ("spec") and the legacy
+// alias ("specification") are included so the gate fires for raw user input
+// as well as stored document types.
 var gatedDocTypes = map[string]bool{
-	"specification": true,
+	"spec":          true,
+	"specification": true, // alias — normalised to "spec" at storage time
 	"design":        true,
 	"dev-plan":      true,
 }
@@ -654,7 +657,7 @@ func docGapsAction(docSvc *service.DocumentService, entitySvc *service.EntitySer
 			}
 		}
 
-		expected := []string{"design", "specification", "dev-plan"}
+		expected := []string{"design", "spec", "dev-plan"}
 		gaps := make([]map[string]any, 0)
 		present := make([]map[string]any, 0)
 

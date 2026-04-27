@@ -232,10 +232,22 @@ func (s *DocumentService) SubmitDocument(input SubmitDocumentInput) (DocumentRes
 		return DocumentResult{}, err
 	}
 
-	// Validate document type
-	docType := model.DocumentType(strings.TrimSpace(input.Type))
-	if !model.ValidDocumentType(string(docType)) {
-		return DocumentResult{}, fmt.Errorf("invalid document type: %s", input.Type)
+	// Normalise legacy type synonyms (specification->spec, retrospective->retro).
+	docType := model.NormaliseDocumentType(model.DocumentType(strings.TrimSpace(input.Type)))
+	// Validate the normalised type -- only 8 user-facing types plus policy and rca are accepted.
+	if !model.ValidDocumentTypeForRegistration(string(docType)) {
+		return DocumentResult{}, fmt.Errorf(
+			"invalid document type %q: accepted types are design, spec, dev-plan, review, report, research, retro, proposal",
+			input.Type,
+		)
+	}
+
+	// Validate filename and folder placement (REQ-005 through REQ-010).
+	if err := validateDocumentFilename(strings.TrimSpace(input.Path)); err != nil {
+		return DocumentResult{}, err
+	}
+	if err := validateDocumentFolder(strings.TrimSpace(input.Path)); err != nil {
+		return DocumentResult{}, err
 	}
 
 	// Resolve document path
@@ -355,7 +367,7 @@ func (s *DocumentService) SubmitDocument(input SubmitDocumentInput) (DocumentRes
 		switch docType {
 		case model.DocumentTypeDesign:
 			docField = "design"
-		case model.DocumentTypeSpecification:
+		case model.DocumentTypeSpec:
 			docField = "spec"
 		case model.DocumentTypeDevPlan:
 			docField = "dev_plan"
@@ -369,7 +381,7 @@ func (s *DocumentService) SubmitDocument(input SubmitDocumentInput) (DocumentRes
 		switch docType {
 		case model.DocumentTypeDesign:
 			targetStatus = "designing"
-		case model.DocumentTypeSpecification:
+		case model.DocumentTypeSpec:
 			targetStatus = "specifying"
 		}
 		if targetStatus != "" {
@@ -544,7 +556,7 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 				targetStatus = "active"
 			case entityType == "feature" && doc.Type == model.DocumentTypeDesign:
 				targetStatus = "specifying"
-			case entityType == "feature" && doc.Type == model.DocumentTypeSpecification:
+			case entityType == "feature" && doc.Type == model.DocumentTypeSpec:
 				targetStatus = "dev-planning"
 				// FR-C01: dev-plan approval does NOT cascade the feature to developing.
 				// The transition from dev-planning → developing requires an explicit
@@ -648,7 +660,7 @@ func (s *DocumentService) SupersedeDocument(input SupersedeDocumentInput) (Docum
 			switch doc.Type {
 			case model.DocumentTypeDesign:
 				targetStatus = "designing"
-			case model.DocumentTypeSpecification:
+			case model.DocumentTypeSpec:
 				targetStatus = "specifying"
 			case model.DocumentTypeDevPlan:
 				targetStatus = "dev-planning"
@@ -1315,7 +1327,7 @@ func (s *DocumentService) DeleteDocument(input DeleteDocumentInput) (DocumentRes
 		switch doc.Type {
 		case model.DocumentTypeDesign:
 			docField = "design"
-		case model.DocumentTypeSpecification:
+		case model.DocumentTypeSpec:
 			docField = "spec"
 		case model.DocumentTypeDevPlan:
 			docField = "dev_plan"
@@ -1355,7 +1367,7 @@ func inferDocTypeFromPath(path string) string {
 	case strings.Contains(lower, "/design/"):
 		return string(model.DocumentTypeDesign)
 	case strings.Contains(lower, "/spec/"):
-		return string(model.DocumentTypeSpecification)
+		return string(model.DocumentTypeSpec)
 	case strings.Contains(lower, "/plan/"):
 		return string(model.DocumentTypeDevPlan)
 	case strings.Contains(lower, "/research/"):

@@ -21,7 +21,7 @@ type GateResult struct {
 // stageDocMapping maps feature lifecycle stages to their required document types.
 var stageDocMapping = map[string]string{
 	string(model.FeatureStatusDesigning):   string(model.DocumentTypeDesign),
-	string(model.FeatureStatusSpecifying):  string(model.DocumentTypeSpecification),
+	string(model.FeatureStatusSpecifying):  string(model.DocumentTypeSpec),
 	string(model.FeatureStatusDevPlanning): string(model.DocumentTypeDevPlan),
 }
 
@@ -188,7 +188,7 @@ func CheckTransitionGate(from, to string, feature *model.Feature, docSvc *Docume
 
 	case string(model.FeatureStatusSpecifying) + "→" + string(model.FeatureStatusDevPlanning):
 		// specifying→dev-planning: requires approved specification document (FR-005)
-		docResult := checkDocumentGate(string(model.FeatureStatusSpecifying), string(model.DocumentTypeSpecification), feature, docSvc)
+		docResult := checkDocumentGate(string(model.FeatureStatusSpecifying), string(model.DocumentTypeSpec), feature, docSvc)
 		if !docResult.Satisfied {
 			return docResult
 		}

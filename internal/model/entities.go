@@ -154,40 +154,83 @@ const (
 type DocumentType string
 
 const (
-	DocumentTypeDesign        DocumentType = "design"
+	// User-facing document types (REQ-001).
+	DocumentTypeDesign    DocumentType = "design"
+	DocumentTypeSpec      DocumentType = "spec"
+	DocumentTypeDevPlan   DocumentType = "dev-plan"
+	DocumentTypeReview    DocumentType = "review"
+	DocumentTypeReport    DocumentType = "report"
+	DocumentTypeResearch  DocumentType = "research"
+	DocumentTypeRetro     DocumentType = "retro"
+	DocumentTypeProposal  DocumentType = "proposal"
+
+	// Internal types accepted by doc register (REQ-004).
+	DocumentTypePolicy DocumentType = "policy"
+	DocumentTypeRCA    DocumentType = "rca"
+
+	// Legacy synonyms kept for backward compatibility (REQ-002, REQ-003).
 	DocumentTypeSpecification DocumentType = "specification"
-	DocumentTypeDevPlan       DocumentType = "dev-plan"
-	DocumentTypeResearch      DocumentType = "research"
-	DocumentTypeReport        DocumentType = "report"
-	DocumentTypePolicy        DocumentType = "policy"
-	DocumentTypeRCA           DocumentType = "rca"
-	DocumentTypePlan          DocumentType = "plan"
 	DocumentTypeRetrospective DocumentType = "retrospective"
+
+	// Legacy internal type kept for storage backward compatibility (REQ-014, C-005).
+	DocumentTypePlan DocumentType = "plan"
 )
 
-// AllDocumentTypes returns the ordered list of recognised document types.
+// AllDocumentTypes returns the eight user-facing document types in canonical order (REQ-001).
 func AllDocumentTypes() []DocumentType {
 	return []DocumentType{
 		DocumentTypeDesign,
-		DocumentTypeSpecification,
+		DocumentTypeSpec,
 		DocumentTypeDevPlan,
-		DocumentTypeResearch,
+		DocumentTypeReview,
 		DocumentTypeReport,
-		DocumentTypePolicy,
-		DocumentTypeRCA,
-		DocumentTypePlan,
-		DocumentTypeRetrospective,
+		DocumentTypeResearch,
+		DocumentTypeRetro,
+		DocumentTypeProposal,
 	}
 }
 
-// ValidDocumentType returns true if the given string is a recognised document type.
+// ValidDocumentType returns true if the string is any recognised type, including
+// legacy types (specification, retrospective, plan). Used in the storage layer for
+// backward compatibility.
 func ValidDocumentType(s string) bool {
-	for _, dt := range AllDocumentTypes() {
-		if string(dt) == s {
-			return true
-		}
+	switch DocumentType(s) {
+	case DocumentTypeDesign, DocumentTypeSpec, DocumentTypeDevPlan,
+		DocumentTypeReview, DocumentTypeReport, DocumentTypeResearch,
+		DocumentTypeRetro, DocumentTypeProposal,
+		DocumentTypePolicy, DocumentTypeRCA,
+		DocumentTypeSpecification, DocumentTypeRetrospective, DocumentTypePlan:
+		return true
 	}
 	return false
+}
+
+// ValidDocumentTypeForRegistration returns true if the string is a type accepted
+// by doc register: the eight user-facing types plus policy and rca (REQ-004).
+// Legacy synonyms (specification, retrospective) are NOT accepted here because
+// they are normalised before this check is called.
+func ValidDocumentTypeForRegistration(s string) bool {
+	switch DocumentType(s) {
+	case DocumentTypeDesign, DocumentTypeSpec, DocumentTypeDevPlan,
+		DocumentTypeReview, DocumentTypeReport, DocumentTypeResearch,
+		DocumentTypeRetro, DocumentTypeProposal,
+		DocumentTypePolicy, DocumentTypeRCA:
+		return true
+	}
+	return false
+}
+
+// NormaliseDocumentType maps legacy type synonyms to their canonical short forms.
+// specification → spec, retrospective → retro; all other types are returned unchanged.
+func NormaliseDocumentType(t DocumentType) DocumentType {
+	switch t {
+	case DocumentTypeSpecification:
+		return DocumentTypeSpec
+	case DocumentTypeRetrospective:
+		return DocumentTypeRetro
+	default:
+		return t
+	}
 }
 
 // DocumentStatus is the lifecycle state of a document record.

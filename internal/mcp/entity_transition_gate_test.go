@@ -197,7 +197,7 @@ func TestGate_SingleStep_ReviewingToDone_WithReport(t *testing.T) {
 	planID := createEntityTestPlan(t, entitySvc, "gate-rev2done-report")
 	featID := createEntityTestFeatureWithStatus(t, entitySvc, planID, "feat-rev2done-rep", "reviewing")
 	// Register a report (not necessarily approved).
-	submitAndApproveTestDoc(t, docSvc, repoRoot, "work/reports/review.md", "report", featID, false)
+	submitAndApproveTestDoc(t, docSvc, repoRoot, "work/_project/report-review.md", "report", featID, false)
 
 	result := callEntityToolWithDocSvcJSON(t, entitySvc, docSvc, map[string]any{
 		"action": "transition",
