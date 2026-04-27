@@ -3,10 +3,15 @@ parent_feature: FEAT-01KQ7JDSVMP4E
 slug: allocate-display-id-in-create-feature
 name: Allocate display_id in CreateFeature
 summary: "Update CreateFeature to perform the 4-step REQ-008 allocation sequence: load parent plan, read next_feature_seq, write plan with incremented counter (fail-abort if this write fails), then write feature with display_id set. Improve the missing-parent error message per REQ-007."
-status: active
+status: done
 depends_on:
   - TASK-01KQ7NBP4MMWG
+files_planned:
+  - internal/service/entities.go
+completed: "2026-04-27T15:30:54Z"
 claimed_at: "2026-04-27T15:23:17Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-27T15:23:17Z"
 dispatched_by: sambeau
+completion_summary: "Updated CreateFeature with REQ-008 4-step sequence: explicit empty-parent error (REQ-007); load parent plan via GetPlan; read next_feature_seq (intFromState helper, default 1); compute displayID as P{planNum}-F{seq}; write plan with incremented counter before feature write (REQ-006); create feature with DisplayID set. Added intFromState helper. All service tests pass."
+verification: go build ./... — clean. go test ./internal/service/... -count=1 — PASS.
