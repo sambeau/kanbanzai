@@ -1,0 +1,483 @@
+document_id: P38-plans-and-batches/design-meta-planning-plans-and-batches
+document_path: work/design/meta-planning-plans-and-batches.md
+content_hash: eee3a0cb3272dc547abe0b7cf1e816770a1baccb89dbf19b3e6416a84d458c14
+indexed_at: 2026-04-27T17:07:51.74676Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Meta-Planning: Plans and Batches — Design'
+      byte_offset: 0
+      byte_count: 35904
+      word_count: 5137
+      content_hash: eee3a0cb3272dc547abe0b7cf1e816770a1baccb89dbf19b3e6416a84d458c14
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 268
+          byte_count: 3563
+          word_count: 506
+          content_hash: c287e4e8ebe76dbb967eac99ad2d90290d59dd99d8cc9fdaf07cdbf154275328
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Prior documents consulted
+              byte_offset: 285
+              byte_count: 1820
+              word_count: 249
+              content_hash: d8f1d820b7b1328b8f40026a2e632cc293e28d7500da635dbed5461fdb763a5c
+            - path: 1.1.2
+              level: 3
+              title: Decisions that constrain this design
+              byte_offset: 2105
+              byte_count: 733
+              word_count: 102
+              content_hash: 7929826543fb6793a0b8d5b2bee72f16f3c5fc9b23a41a150c17979949d27b1f
+            - path: 1.1.3
+              level: 3
+              title: How this design extends prior work
+              byte_offset: 2838
+              byte_count: 993
+              word_count: 152
+              content_hash: 34ee585cbbc5670cca8a009af54a43b744a297d744feb0fc24bb13b87af71717
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 3831
+          byte_count: 650
+          word_count: 91
+          content_hash: 637a2842dfd64c057d993d1dc11a457d249f5751847b97b1f6dd168db2e81daf
+        - path: "1.3"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 4481
+          byte_count: 1437
+          word_count: 215
+          content_hash: 2db2efedc239aa16631a3760f326de0ce2c8d4c01480a8abda2da4cbb6b889a7
+        - path: "1.4"
+          level: 2
+          title: Problem and Motivation
+          byte_offset: 5918
+          byte_count: 3374
+          word_count: 497
+          content_hash: 49e2cdbb8bbaf63979fe01cc711c4e75671e79695011f84af111241ff67a2519
+          children:
+            - path: 1.4.1
+              level: 3
+              title: The overloaded plan entity
+              byte_offset: 5945
+              byte_count: 1122
+              word_count: 162
+              content_hash: 7080bee8a33d6ac7f673de3f158ec86124dd25ffea895b94b8b837a550a2b28f
+            - path: 1.4.2
+              level: 3
+              title: The missing strategic layer
+              byte_offset: 7067
+              byte_count: 763
+              word_count: 122
+              content_hash: 7c197ce057d522df3452a8b61929942b958c764e660f909484bdacfd17d35a19
+            - path: 1.4.3
+              level: 3
+              title: The cross-cutting execution problem
+              byte_offset: 7830
+              byte_count: 717
+              word_count: 109
+              content_hash: a07365daf0d52913a25c987fd1caf9aa92a005668a29ae7d5f69df047989909b
+            - path: 1.4.4
+              level: 3
+              title: Research context
+              byte_offset: 8547
+              byte_count: 745
+              word_count: 100
+              content_hash: d14f0fd52be5be783e3976d377338fea913eb5d849016ebc7e9145767894ba58
+        - path: "1.5"
+          level: 2
+          title: Design
+          byte_offset: 9292
+          byte_count: 14487
+          word_count: 2017
+          content_hash: 817735768a8309d967ee77428c96d24cd4122ce57f32000d2e431f3e96e3b50b
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 1. The project singleton
+              byte_offset: 9303
+              byte_count: 1215
+              word_count: 153
+              content_hash: a109750beacc3431b81da50eef5dbbf04808557a1cdc944b7377d2a48a1a1493
+            - path: 1.5.2
+              level: 3
+              title: 2. The plan entity (new)
+              byte_offset: 10518
+              byte_count: 4174
+              word_count: 638
+              content_hash: fc8e0cd73e5925d52319bffb64667890a5631dc3a68dcaea546643bdfaae9947
+            - path: 1.5.3
+              level: 3
+              title: 3. The batch entity (renamed from plan)
+              byte_offset: 14692
+              byte_count: 2428
+              word_count: 359
+              content_hash: 8497c7fffc63b3c4c3583bb899c1dc4f5817ce92aaf4143825a9f005ea4ff865
+            - path: 1.5.4
+              level: 3
+              title: 4. The relationship model
+              byte_offset: 17120
+              byte_count: 1564
+              word_count: 182
+              content_hash: fbf26df337cb9c1e4d82f07560af3e85ac18c3e9e99668444c5f3ae556c41059
+            - path: 1.5.5
+              level: 3
+              title: 5. Progress rollup
+              byte_offset: 18684
+              byte_count: 1019
+              word_count: 155
+              content_hash: 543c75c691e626a791b7179ee3043acb32e791f1df33e1a429752c1c00fcca9a
+            - path: 1.5.6
+              level: 3
+              title: 6. Impact on P37 file naming and folders
+              byte_offset: 19703
+              byte_count: 1275
+              word_count: 133
+              content_hash: d94fdeb8de0819136e35f913c82dcd2387bbdf190c5e5395b5112d6805a03d33
+            - path: 1.5.7
+              level: 3
+              title: 7. Migration strategy
+              byte_offset: 20978
+              byte_count: 1521
+              word_count: 210
+              content_hash: 3ce13ac42a3d87bb9ce340b4a97a483f2e6ed45aa0437e1c52e5ae3c7c227607
+            - path: 1.5.8
+              level: 3
+              title: 8. Interaction with existing features
+              byte_offset: 22499
+              byte_count: 1280
+              word_count: 185
+              content_hash: 54db55fe1fe65a7bad32eca6e1fed0de507419a7f78663b176238bf024b2f32c
+        - path: "1.6"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 23779
+          byte_count: 3118
+          word_count: 487
+          content_hash: 93d82d294fc25d6870217f568dbd5eb9af78d93b49c106500fad62509a0c8c6a
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Alternative A: Recursive plan only (no separate batch entity)'
+              byte_offset: 23807
+              byte_count: 983
+              word_count: 150
+              content_hash: ac962650906873e5493beb7837519567c737101d0b0c50d3150c3aeda31c8349
+            - path: 1.6.2
+              level: 3
+              title: 'Alternative B: Plan + Milestone (instead of Plan + Batch)'
+              byte_offset: 24790
+              byte_count: 635
+              word_count: 101
+              content_hash: f7b1132ec01cb6f009fbdc9793e13b60eaa2e80398661db12056c566e80d8596
+            - path: 1.6.3
+              level: 3
+              title: 'Alternative C: Plan + Sprint'
+              byte_offset: 25425
+              byte_count: 607
+              word_count: 97
+              content_hash: 5609f0bececeb1c561caa18af2e94d976f477c7f75ae8116a2a38a3a931eb5f2
+            - path: 1.6.4
+              level: 3
+              title: 'Alternative D: Keep "plan" for work, use "initiative" or "programme" above'
+              byte_offset: 26032
+              byte_count: 865
+              word_count: 136
+              content_hash: 94c465283ff91b6efa55c47541b4bc238fb7a51071349ee361e97e9b3732e3eb
+        - path: "1.7"
+          level: 2
+          title: Decisions
+          byte_offset: 26897
+          byte_count: 6792
+          word_count: 997
+          content_hash: 9cca614fbdc4a0f9ad80d783ebe8266fd2c40662405fbdfec05d17b767466d35
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 'D1: Separate planning and execution into two entity types'
+              byte_offset: 26911
+              byte_count: 1092
+              word_count: 165
+              content_hash: 0233de5bbe73fd1a45133ca303c90fcec906262749cdba47b261ddf6adaaf2ae
+            - path: 1.7.2
+              level: 3
+              title: 'D2: Plans are recursive with a planning-oriented lifecycle'
+              byte_offset: 28003
+              byte_count: 1026
+              word_count: 157
+              content_hash: 0a6c5901e2886e186089b33144dce38f38829b377b267db56a270959b088ab1d
+            - path: 1.7.3
+              level: 3
+              title: 'D3: Batches retain all current plan functionality'
+              byte_offset: 29029
+              byte_count: 797
+              word_count: 118
+              content_hash: 6afe5885b67ae92de1ed546230ec5fa31e3b8052d1c9f6611f726078d26b13c1
+            - path: 1.7.4
+              level: 3
+              title: 'D4: The `B` prefix for batch IDs'
+              byte_offset: 29826
+              byte_count: 775
+              word_count: 113
+              content_hash: 377e661cde26586926fc94d041e942e332950d4b25f9d201376a818fa4822563
+            - path: 1.7.5
+              level: 3
+              title: 'D5: Project singleton for persistent context'
+              byte_offset: 30601
+              byte_count: 830
+              word_count: 113
+              content_hash: ad62301e95311027b4badf4da65f50114b644ad086699d430685ada53e65a3d8
+            - path: 1.7.6
+              level: 3
+              title: 'D6: Design documents can live at any level'
+              byte_offset: 31431
+              byte_count: 842
+              word_count: 135
+              content_hash: aae7f0ba7c4c47d6262812d87e562ffec52ca2a6af6d867a3407a6ff9f882246
+            - path: 1.7.7
+              level: 3
+              title: 'D7: Separate prefix registries for plans and batches'
+              byte_offset: 32273
+              byte_count: 807
+              word_count: 109
+              content_hash: f45853f01eee8f6eba019646ce42155a6bf9d5ae331e291057fc96c1b72373a4
+            - path: 1.7.8
+              level: 3
+              title: 'D8: Independent sequence counters for plans and batches'
+              byte_offset: 33080
+              byte_count: 609
+              word_count: 85
+              content_hash: 60d62174504e28bb358d0abfb491cef0eedc6e8ee8cf5ef58de9d895d519e0f5
+        - path: "1.8"
+          level: 2
+          title: Open Questions
+          byte_offset: 33689
+          byte_count: 1041
+          word_count: 153
+          content_hash: d3eca0ee627d57343ff7c465e372dd92a4693f2de79b52c1c2a92fa9c75cb829
+        - path: "1.9"
+          level: 2
+          title: Dependencies
+          byte_offset: 34730
+          byte_count: 1174
+          word_count: 146
+          content_hash: a30a88d92c6508723d89a9dce7728ccb821bb08e6234fc62267b6a7ea7bdaed2
+entity_refs:
+    - entity_id: DEC-006
+      entity_type: decision
+      section_path: 1.1.2
+      byte_offset: 2155
+    - entity_id: DEC-021
+      entity_type: decision
+      section_path: 1.1.2
+      byte_offset: 2277
+    - entity_id: DEC-006
+      entity_type: decision
+      section_path: "1.9"
+      byte_offset: 35048
+    - entity_id: DEC-021
+      entity_type: decision
+      section_path: "1.9"
+      byte_offset: 35239
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.5.2
+      byte_offset: 11431
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.5.3
+      byte_offset: 15682
+    - entity_id: P1-slug
+      entity_type: plan
+      section_path: 1.4.1
+      byte_offset: 6003
+    - entity_id: P1-social-platform
+      entity_type: plan
+      section_path: 1.5.2
+      byte_offset: 10876
+    - entity_id: P1-test-plan
+      entity_type: plan
+      section_path: 1.5.2
+      byte_offset: 11077
+    - entity_id: B24-auth-system
+      entity_type: plan
+      section_path: 1.5.3
+      byte_offset: 15053
+    - entity_id: F3-spec-auth-flow
+      entity_type: plan
+      section_path: 1.5.3
+      byte_offset: 15148
+    - entity_id: P1-social-platform
+      entity_type: plan
+      section_path: 1.5.3
+      byte_offset: 15625
+    - entity_id: P1-social-platform
+      entity_type: plan
+      section_path: 1.5.4
+      byte_offset: 17368
+    - entity_id: P2-backend-infra
+      entity_type: plan
+      section_path: 1.5.4
+      byte_offset: 17524
+    - entity_id: B24-auth-system
+      entity_type: plan
+      section_path: 1.5.4
+      byte_offset: 17684
+    - entity_id: B25-api-gateway
+      entity_type: plan
+      section_path: 1.5.4
+      byte_offset: 18032
+    - entity_id: P3-web-frontend
+      entity_type: plan
+      section_path: 1.5.4
+      byte_offset: 18204
+    - entity_id: B24-auth-system
+      entity_type: plan
+      section_path: 1.5.6
+      byte_offset: 19901
+    - entity_id: B24-design-auth-system
+      entity_type: plan
+      section_path: 1.5.6
+      byte_offset: 19922
+    - entity_id: B24-spec-auth-system
+      entity_type: plan
+      section_path: 1.5.6
+      byte_offset: 19952
+    - entity_id: F1-spec-oauth-flow
+      entity_type: plan
+      section_path: 1.5.6
+      byte_offset: 19984
+    - entity_id: F2-spec-passcode-auth
+      entity_type: plan
+      section_path: 1.5.6
+      byte_offset: 20014
+    - entity_id: B24-review-auth-system
+      entity_type: plan
+      section_path: 1.5.6
+      byte_offset: 20043
+    - entity_id: B25-api-gateway
+      entity_type: plan
+      section_path: 1.5.6
+      byte_offset: 20071
+    - entity_id: F1-spec-rate-limiting
+      entity_type: plan
+      section_path: 1.5.6
+      byte_offset: 20096
+    - entity_id: P1-social-platform
+      entity_type: plan
+      section_path: 1.5.6
+      byte_offset: 20190
+    - entity_id: P1-design-social-platform
+      entity_type: plan
+      section_path: 1.5.6
+      byte_offset: 20214
+    - entity_id: P1-research-competitive-analysis
+      entity_type: plan
+      section_path: 1.5.6
+      byte_offset: 20247
+    - entity_id: P2-backend-infra
+      entity_type: plan
+      section_path: 1.5.6
+      byte_offset: 20285
+    - entity_id: P2-design-backend-infra
+      entity_type: plan
+      section_path: 1.5.6
+      byte_offset: 20307
+    - entity_id: F3-spec-auth-flow
+      entity_type: plan
+      section_path: 1.5.6
+      byte_offset: 20502
+    - entity_id: P2-research-scaling-options
+      entity_type: plan
+      section_path: 1.5.6
+      byte_offset: 20851
+    - entity_id: B24-auth-system
+      entity_type: plan
+      section_path: 1.7.4
+      byte_offset: 29924
+    - entity_id: F3-spec-auth-flow
+      entity_type: plan
+      section_path: 1.7.4
+      byte_offset: 30443
+cross_doc_links:
+    - target_path: work/design/p37-file-names-and-actions.md
+      link_text: work/design/p37-file-names-and-actions.md
+      section_path: 1.1.1
+    - target_path: work/design/workflow-design-basis.md
+      link_text: work/design/workflow-design-basis.md
+      section_path: 1.1.1
+    - target_path: work/design/estimation-and-progress-design.md
+      link_text: work/design/estimation-and-progress-design.md
+      section_path: 1.1.1
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: 1.1.1
+    - target_path: B24-F3-spec-auth-flow.md
+      link_text: B24-F3-spec-auth-flow.md
+      section_path: 1.5.3
+    - target_path: P24-F3-spec-auth-flow.md
+      link_text: P24-F3-spec-auth-flow.md
+      section_path: 1.5.6
+    - target_path: B24-F3-spec-auth-flow.md
+      link_text: B24-F3-spec-auth-flow.md
+      section_path: 1.5.6
+    - target_path: '{PlanID}-{type}-{slug}.md'
+      link_text: |4
+        {PlanID}-{type}-{slug}.md
+      section_path: 1.5.6
+    - target_path: P1-design-social-platform.md
+      link_text: P1-design-social-platform.md
+      section_path: 1.5.6
+    - target_path: P2-research-scaling-options.md
+      link_text: P2-research-scaling-options.md
+      section_path: 1.5.6
+    - target_path: B24-F3-spec-auth-flow.md
+      link_text: B24-F3-spec-auth-flow.md
+      section_path: 1.7.4
+    - target_path: work/design/p37-file-names-and-actions.md
+      link_text: work/design/p37-file-names-and-actions.md
+      section_path: "1.9"
+conventional_roles:
+    - section_path: 1.1.2
+      role: decision
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.4.4
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: alternative
+      confidence: high
+    - section_path: 1.6.1
+      role: alternative
+      confidence: high
+    - section_path: 1.6.2
+      role: alternative
+      confidence: high
+    - section_path: 1.6.3
+      role: alternative
+      confidence: high
+    - section_path: 1.6.4
+      role: alternative
+      confidence: high
+    - section_path: "1.7"
+      role: decision
+      confidence: high
+    - section_path: 1.7.5
+      role: narrative
+      confidence: high
+    - section_path: "1.8"
+      role: question
+      confidence: high
+classified: false
