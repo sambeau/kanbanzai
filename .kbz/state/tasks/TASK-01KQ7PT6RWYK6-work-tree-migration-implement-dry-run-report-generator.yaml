@@ -4,3 +4,5 @@ slug: work-tree-migration-implement-dry-run-report-generator
 name: Implement dry-run report generator
 summary: Implement dry-run report generator
 status: queued
+depends_on:
+  - TASK-01KQ7PT6RKW3P

@@ -2,9 +2,11 @@ id: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move
 path: work/design/p37-f3-spec-kbz-move.md
 type: specification
 title: "P37-F3: kbz move Command Specification"
-status: draft
+status: approved
 owner: FEAT-01KQ7JDT11MH6
-content_hash: d1840a3e6a0427cfa3785324e2e0b176e22a760abb9d4bbd3c36e5ac3e0e4b19
+approved_by: sambeau
+approved_at: "2026-04-27T14:52:37Z"
+content_hash: 717a545b5e68c7c000855915714485307236caf48a3486228ab9f3a13e60abb3
 created: "2026-04-27T13:59:16Z"
 created_by: sambeau
-updated: "2026-04-27T13:59:16Z"
+updated: "2026-04-27T14:52:37Z"
