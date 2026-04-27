@@ -3,6 +3,6 @@ parent_feature: FEAT-01KQ7JDSZARPC
 slug: normalise-legacy-types-deserialisation
 name: Normalise legacy types on deserialisation
 summary: "In RecordToDocument (storage/document_store.go), apply NormaliseDocumentType on the type field after reading from storage (specification→spec, retrospective→retro). Confirm ValidDocumentType(\"plan\") returns true. Audit all field-read paths for the type field to ensure normalisation is applied consistently."
-status: queued
+status: ready
 depends_on:
   - TASK-01KQ7NS7WDQ7C
