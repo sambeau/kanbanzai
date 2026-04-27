@@ -22,4 +22,4 @@ entries:
     required_sections/specification:
         mode: warning
         consecutive_clean: 0
-        false_positive_count: 8
+        false_positive_count: 9
