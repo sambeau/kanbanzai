@@ -1,0 +1,148 @@
+document_id: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids
+document_path: work/design/p37-f1-dev-plan-plan-scoped-feature-display-ids.md
+content_hash: 4e2d117e7ed42ab00c085e3beec032b33df43265463cfcc2644c9286ff727b0a
+indexed_at: 2026-04-27T14:18:02.102127Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P37-F1: Plan-scoped Feature Display IDs — Implementation Plan'
+      byte_offset: 0
+      byte_count: 15849
+      word_count: 2150
+      content_hash: 4e2d117e7ed42ab00c085e3beec032b33df43265463cfcc2644c9286ff727b0a
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 505
+          byte_count: 811
+          word_count: 107
+          content_hash: 6fa1f78527cfa0851d137c910e49cf3e91ea65a2fcae5ee7e5c21be47da5372e
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1316
+          byte_count: 10438
+          word_count: 1401
+          content_hash: 22195e550c87b8a74735f34676f1482dfc8f185f9193cf7d70f46e53ef7ea4dd
+          children:
+            - path: 1.2.1
+              level: 3
+              title: T1 — Extend Plan and Feature models
+              byte_offset: 1335
+              byte_count: 923
+              word_count: 103
+              content_hash: ea8a93d8c4a425edc323cbef3801b9386464b3d2ac07e64d3cb895db1c6c6b43
+            - path: 1.2.2
+              level: 3
+              title: T2 — Allocate display_id in CreateFeature
+              byte_offset: 2258
+              byte_count: 1374
+              word_count: 198
+              content_hash: 3948076f3d1ba4c47d01ea7a3e676d0b7d60898f34f80c058417729e8f38468f
+            - path: 1.2.3
+              level: 3
+              title: T3 — Add P{n}-F{m} input resolution
+              byte_offset: 3632
+              byte_count: 1803
+              word_count: 222
+              content_hash: fc931e91fee4e1300d0a61f5d5edc67e8bff23d7167d70d177fef0384239e353
+            - path: 1.2.4
+              level: 3
+              title: T4 — Update CLI output and MCP responses
+              byte_offset: 5435
+              byte_count: 1328
+              word_count: 179
+              content_hash: 75ccfdde51d72064257685c50bf88413d0196021b5caac6177c9748172e137c3
+            - path: 1.2.5
+              level: 3
+              title: 'T5 — Migration: backfill display_ids on existing features'
+              byte_offset: 6763
+              byte_count: 1900
+              word_count: 265
+              content_hash: b0f3e68a536cae4d75f589113e1d9d211be0debc7fd2cabff9e28b416e01c4ae
+            - path: 1.2.6
+              level: 3
+              title: T6 — Tests
+              byte_offset: 8663
+              byte_count: 3091
+              word_count: 431
+              content_hash: c81f73cd26aa2c0256a0d1dcabc58620f2e1b05f4110a905520e8e93bf944d7b
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 11754
+          byte_count: 479
+          word_count: 75
+          content_hash: 6c6672a77d2f7f83c1efbaec8192849d79e11c6e2d10e3df9b855346e47edd6a
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 12233
+          byte_count: 1954
+          word_count: 303
+          content_hash: c19c3065c49f0e302f02ecc03f83c70c86b7abb5de309d2dcce56a237dec964f
+          children:
+            - path: 1.4.1
+              level: 3
+              title: RISK-1 — Write ordering crash leaves orphaned counter advance
+              byte_offset: 12253
+              byte_count: 613
+              word_count: 98
+              content_hash: e2445fdd4bb3c772c00dc463ee239c95c6218bf7170a181ec4674b5d4152b71b
+            - path: 1.4.2
+              level: 3
+              title: RISK-2 — Migration safety on large repositories
+              byte_offset: 12866
+              byte_count: 638
+              word_count: 94
+              content_hash: 2ac3dd1a3d8fe7e5f9cb7d5ff7961d1c860787e17b10fdeb65b84c662cc3cbd0
+            - path: 1.4.3
+              level: 3
+              title: RISK-3 — Display ID cache index invalidation
+              byte_offset: 13504
+              byte_count: 683
+              word_count: 108
+              content_hash: 03355cdc6a8ca34a932e2207f31709658d494be4586c443dabfe9235cb22d06e
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 14187
+          byte_count: 1662
+          word_count: 228
+          content_hash: 29acbc8ac749bb5ecac07c86fe6a7d8b523bdcbab56dde307d79e2568edc62d7
+entity_refs:
+    - entity_id: FEAT-01KQ7JDSVMP4E
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 669
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: 1.2.6
+      byte_offset: 9695
+cross_doc_links:
+    - target_path: work/design/p37-f1-spec-plan-scoped-feature-display-ids.md
+      link_text: work/design/p37-f1-spec-plan-scoped-feature-display-ids.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T14:18:02.513208Z
+classified: false

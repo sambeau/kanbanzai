@@ -3,9 +3,25 @@
 | Field  | Value                                                      |
 |--------|------------------------------------------------------------|
 | Date   | 2026-04-27T14:11:10Z                                       |
-| Status | Draft                                                      |
+| Status | approved |
 | Author | orchestrator                                               |
 | Spec   | work/design/p37-f1-spec-plan-scoped-feature-display-ids.md |
+
+---
+
+## Overview
+
+This plan decomposes FEAT-01KQ7JDSVMP4E (Plan-scoped Feature Display IDs) into six
+implementation tasks. The feature adds a human-readable `P{n}-F{m}` display identifier to
+every feature, scoped to its parent plan. The implementation touches four layers: the data
+model, the creation and allocation logic, the entity resolution layer, and the output layer
+(CLI + MCP). A migration backfills all existing features.
+
+The tasks are designed to allow T2 and T3 to proceed in parallel once T1 is complete. T4
+depends only on T3. T5 depends on T1 and T2. T6 is the final integration and test pass.
+
+Implementers should read the full specification at
+`work/design/p37-f1-spec-plan-scoped-feature-display-ids.md` before beginning any task.
 
 ---
 
@@ -237,6 +253,57 @@ measure wall-clock time for `ResolveFeatureDisplayID` with the cache cold and wi
 
 ---
 
+## Interface Contracts
+
+The following interfaces are shared between tasks and must be implemented exactly as specified
+so that tasks proceeding in parallel can integrate without modification.
+
+### IC-1: display_id field in state maps (T1 → T2, T3, T4, T5)
+
+`featureFields(e model.Feature) map[string]any` (in `internal/service/entities.go`) MUST
+include `display_id` under the key `"display_id"` when `e.DisplayID != ""`. All downstream
+consumers (T2 allocation write, T3 resolution scan, T4 output, T5 migration write) read from
+and write to this key name.
+
+`planFields(p model.Plan) map[string]any` (in `internal/service/plans.go`) MUST always include
+`next_feature_seq` under the key `"next_feature_seq"` as an integer, even when zero. T2 and T5
+both read this key.
+
+### IC-2: ResolveFeatureDisplayID (T3 → T4)
+
+```
+func (s *EntityService) ResolveFeatureDisplayID(displayID string) (resolvedID, resolvedSlug string, err error)
+```
+
+- Input: a string already confirmed to match `IsFeatureDisplayID`.
+- Normalises `displayID` to uppercase before comparison.
+- Returns the canonical `FEAT-{TSID13}` ID and slug on success.
+- Returns a wrapped `ErrNotFound` (same sentinel used elsewhere in the service) when no match.
+- T4 does not call this function directly; T3 wires it into `Get`, `UpdateStatus`,
+  `UpdateEntity`, and `List` so that T4 only needs to read `state["display_id"]` from the
+  result.
+
+### IC-3: IsFeatureDisplayID (T3 → callsites)
+
+```
+func IsFeatureDisplayID(s string) bool
+```
+
+Compiled regexp: `(?i)^P\d+-F\d+$`. Package-level `var` using `regexp.MustCompile`.
+Used as the guard at each resolution callsite in T3.
+
+### IC-4: MigrateDisplayIDs signature (T5 → migration runner)
+
+```
+func (s *EntityService) MigrateDisplayIDs() error
+```
+
+Idempotent: features that already have a non-empty `display_id` are skipped. The plan counter
+is only written after all features for that plan are successfully updated. Returns the first
+error encountered and halts; re-running after a partial failure is safe.
+
+---
+
 ## Dependency Graph
 
 ```
@@ -250,6 +317,36 @@ T1 (models)
 
 Execution order for a single developer: T1 → T2 and T3 in parallel → T4 after T3 → T5 after
 T2 → T6 after all.
+
+---
+
+## Traceability Matrix
+
+Every specification requirement maps to at least one task. Every task maps back to at least one
+requirement.
+
+| Requirement  | Description (short)                      | Task(s)    |
+|--------------|------------------------------------------|------------|
+| REQ-001      | Plan state has next_feature_seq          | T1         |
+| REQ-002      | CreatePlan inits counter to 1            | T1         |
+| REQ-003      | Counter increments on feature creation   | T2         |
+| REQ-004      | Feature state has display_id field       | T1         |
+| REQ-005      | display_id format P{n}-F{m}              | T2         |
+| REQ-006      | Plan write before feature write          | T2         |
+| REQ-007      | CreateFeature requires parent plan       | T2         |
+| REQ-008      | Full 4-step allocation sequence          | T2         |
+| REQ-009      | P{n}-F{m} resolves to canonical ID       | T3         |
+| REQ-010      | Resolution is case-insensitive           | T3         |
+| REQ-011      | All entity ops accept P{n}-F{m}          | T3         |
+| REQ-012      | MCP responses include display_id         | T4         |
+| REQ-013      | CLI shows display_id as primary ID       | T4         |
+| REQ-014      | Migration backfills display_ids          | T5         |
+| REQ-015      | Migration sets plan counter to count+1   | T5         |
+| REQ-NF-001   | Resolution ≤ 100 ms / 1000 features      | T3         |
+| REQ-NF-002   | No duplicate display_ids within a plan   | T2         |
+| REQ-NF-003   | Canonical TSID input unchanged           | T3         |
+| REQ-NF-004   | Break-hyphen TSID input unchanged        | T3         |
+| REQ-NF-005   | No state filename changes                | T5         |
 
 ---
 

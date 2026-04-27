@@ -1,4 +1,4 @@
-updated_at: 2026-04-27T14:02:36.338276Z
+updated_at: 2026-04-27T14:41:35.21104Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -83743,5 +83743,510 @@ edges:
     - from: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration#1.5
       from_type: section
       to: work/dev-plans/feat-abc-cache.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement
+      from_type: document
+      to: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.5
+      from_type: section
+      to: P37-file-names-actions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.5
+      from_type: section
+      to: P37-spec-something
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.5
+      from_type: section
+      to: F2-spec-enforcement
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.5
+      from_type: section
+      to: P25-other-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.1
+      from_type: section
+      to: work/design/p37-f2-spec-doc-type-and-filename-enforcement.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.5
+      from_type: section
+      to: refs/testing.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.5
+      from_type: section
+      to: work/P37-file-names-actions/P37-spec-something.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.5
+      from_type: section
+      to: work/P37-file-names-actions/spec-something.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.5
+      from_type: section
+      to: work/P37-file-names-actions/P37-F2-spec-enforcement.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.5
+      from_type: section
+      to: work/p37-file-names-actions/p37-spec-something.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.5
+      from_type: section
+      to: work/P25-other-plan/P37-spec-something.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.5
+      from_type: section
+      to: work/_project/research-ai-orchestration.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.5
+      from_type: section
+      to: work/templates/my-template.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement#1.2.5
+      from_type: section
+      to: docs/architecture/overview.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids
+      from_type: document
+      to: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.2
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.4
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.4
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.4
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.1
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.2.6
+      from_type: section
+      to: FEAT-01KMKRQRRX3CC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids#1.1
+      from_type: section
+      to: work/design/p37-f1-spec-plan-scoped-feature-display-ids.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete
+      from_type: document
+      to: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.4
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.4
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.4
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1
+      from_type: section
+      to: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.1
+      from_type: section
+      to: FEAT-01KQ7JDT341E8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete#1.1
+      from_type: section
+      to: work/design/p37-f4-spec-kbz-delete.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration
+      from_type: document
+      to: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.4
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.4
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.4
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.1
+      from_type: section
+      to: FEAT-01KQ7JDT511BZ
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.1
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.1
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.1
+      from_type: section
+      to: FEAT-01KQ7JDT341E8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.2.3
+      from_type: section
+      to: FEAT-01KQ7JDSZARPC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.2.3
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.2.3
+      from_type: section
+      to: FEAT-01KQ7JDT341E8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration#1.1
+      from_type: section
+      to: work/design/p37-f5-spec-work-tree-migration.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move
+      from_type: document
+      to: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.2
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.4
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.4
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.4
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.1
+      from_type: section
+      to: FEAT-01KQ7JDT11MH6
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.1
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.2.4
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.3
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.4.2
+      from_type: section
+      to: FEAT-01KQ7JDSVMP4E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.1
+      from_type: section
+      to: P37-file-names-and-actions
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.3
+      from_type: section
+      to: T4-prep
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move#1.1
+      from_type: section
+      to: work/design/p37-f3-spec-kbz-move.md
       to_type: document
       edge_type: LINKS_TO

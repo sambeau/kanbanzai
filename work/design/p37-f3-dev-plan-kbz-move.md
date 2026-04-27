@@ -3,17 +3,43 @@
 | Field  | Value                                                    |
 |--------|----------------------------------------------------------|
 | Date   | 2026-04-27T14:11:10Z                                     |
-| Status | Draft                                                    |
+| Status | approved |
 | Author | orchestrator                                             |
 | Spec   | work/design/p37-f3-spec-kbz-move.md                     |
+
+---
+
+## Overview
+
+This plan implements `kbz move`, a new CLI command that safely relocates work
+documents and re-parents features while keeping Git history, document records,
+and entity metadata consistent.
+
+The command operates in two modes selected by argument shape:
+
+- **Mode 1 — File move** (`kbz move <work/path> <plan-id>`): moves a single
+  `work/` file to the canonical path in the target plan folder, executes
+  `git mv` to preserve history, and updates the document record's `path` and
+  `owner`. Unregistered files are moved with a warning.
+- **Mode 2 — Feature re-parent** (`kbz move <P{n}-F{m}> <plan-id>`): moves
+  an entire feature (and all its documents) from one plan to another,
+  reallocating the feature's display ID in the target plan.
+
+**Implementation scope:** one new file (`cmd/kanbanzai/move_cmd.go`), one new
+Git helper (`internal/git/git.go`), and a one-line addition to the command
+dispatcher (`cmd/kanbanzai/main.go`). No MCP changes.
+
+**Mode 2 dependency:** Mode 2 requires the display-ID index and
+`next_feature_seq` counter introduced by F1 (FEAT-01KQ7JDSVMP4E). Mode 1 has
+no such dependency and may ship independently.
 
 ---
 
 ## Scope
 
 This plan implements the requirements defined in
-`work/design/p37-f3-spec-kbz-move.md` for the `kbz move` CLI command
-(FEAT-01KQ7JDT11MH6, Plan P37-file-names-and-actions).
+`work/design/p37-f3-spec-kbz-move.md` (FEAT-01KQ7JDT11MH6,
+Plan P37-file-names-and-actions).
 
 It covers five tasks: adding the `GitMove` Git helper (T1), implementing Mode 1
 file-move logic (T2), wiring the dispatch entry point in `main.go` (T3),
@@ -214,6 +240,59 @@ Critical path (full): T1 → T2 → [F1 merge] → T4 → T5
 
 ---
 
+## Interface Contracts
+
+### `GitMove` — `internal/git/git.go`
+
+```go
+// GitMove executes "git mv <src> <dst>" in repoRoot.
+// src and dst are paths relative to repoRoot.
+// Returns a non-nil error if git mv exits non-zero, with stderr forwarded.
+func GitMove(repoRoot, src, dst string) error
+```
+
+This is the **sole** file-move primitive used by `kbz move`. No other function
+in the command may call `os.Rename` or `exec.Command("git", ...)` directly for
+file relocation (REQ-NF-002).
+
+---
+
+### `runMove` — `cmd/kanbanzai/move_cmd.go`
+
+```go
+// runMove implements the "kbz move" command.
+// args is the argument slice after "move" has been consumed by the dispatcher.
+// deps is the standard dependency bundle from main.go.
+func runMove(args []string, deps dependencies) error
+```
+
+Internally delegates to two unexported helpers:
+
+```go
+// runMoveFile implements Mode 1 (file move).
+func runMoveFile(repoRoot, src, targetPlanID string, deps dependencies) error
+
+// runMoveFeature implements Mode 2 (feature re-parent).
+// Requires F1 (display-ID index) to be present.
+func runMoveFeature(repoRoot, displayID, targetPlanID string, force bool, deps dependencies) error
+```
+
+Mode selection is determined entirely by the shape of `args[0]` (REQ-001,
+REQ-013). No `--mode` flag is used.
+
+---
+
+### Argument disambiguation rules
+
+| First argument pattern              | Mode selected |
+|-------------------------------------|---------------|
+| Contains `/`                        | Mode 1        |
+| Ends with `.md` or `.txt`           | Mode 1        |
+| Matches `P{digits}-F{digits}` only  | Mode 2        |
+| Anything else                       | Usage error   |
+
+---
+
 ## Risk Assessment
 
 ### Risk: Git history not preserved through `git mv`
@@ -260,6 +339,8 @@ Critical path (full): T1 → T2 → [F1 merge] → T4 → T5
 
 ## Verification Approach
 
+Map of all 18 acceptance criteria to verification methods:
+
 | Acceptance Criterion | Verification Method  | Producing Task |
 |----------------------|----------------------|----------------|
 | AC-001 (REQ-001)     | Unit test            | T5             |
@@ -280,3 +361,37 @@ Critical path (full): T1 → T2 → [F1 merge] → T4 → T5
 | AC-016 (REQ-017–018) | Integration test     | T5             |
 | AC-017 (REQ-019)     | Integration test (incl. `git log --follow`) | T5 |
 | AC-018 (REQ-020)     | Integration test     | T5             |
+
+---
+
+## Traceability Matrix
+
+Map of all functional and non-functional requirements to implementing tasks:
+
+| Requirement  | Description (short)                         | Task(s) |
+|--------------|---------------------------------------------|---------|
+| REQ-001      | Argument disambiguation — Mode 1            | T2      |
+| REQ-002      | Restrict to `work/`                         | T2      |
+| REQ-003      | Validate source file exists                 | T2      |
+| REQ-004      | Validate target plan exists                 | T2      |
+| REQ-005      | Determine document type                     | T2      |
+| REQ-006      | Construct canonical target path             | T2      |
+| REQ-007      | Reject existing target                      | T2      |
+| REQ-008      | Create target folder                        | T2      |
+| REQ-009      | Use `git mv` via `GitMove`                  | T1, T2  |
+| REQ-010      | Update document record after move           | T2      |
+| REQ-011      | Unregistered file handling                  | T2      |
+| REQ-012      | Print success summary (Mode 1)              | T2      |
+| REQ-013      | Argument disambiguation — Mode 2            | T4      |
+| REQ-014      | Resolve display ID to canonical FEAT-TSID   | T4      |
+| REQ-015      | Validate target differs from current parent | T4      |
+| REQ-016      | Confirm before executing / `--force`        | T4      |
+| REQ-017      | Allocate new display ID in target plan      | T4      |
+| REQ-018      | Update feature entity                       | T4      |
+| REQ-019      | Move all feature documents                  | T4      |
+| REQ-020      | Print re-parent summary                     | T4      |
+| REQ-NF-001   | Implementation location (`move_cmd.go`)     | T2, T3  |
+| REQ-NF-002   | `GitMove` as sole file-move primitive       | T1, T2  |
+| REQ-NF-003   | No MCP changes                              | —       |
+| REQ-NF-004   | Mode 2 not before F1 merges                 | T4      |
+| REQ-NF-005   | Errors to stderr, output to stdout          | T2, T4  |

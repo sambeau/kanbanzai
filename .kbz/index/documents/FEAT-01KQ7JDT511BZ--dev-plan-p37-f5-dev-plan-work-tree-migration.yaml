@@ -1,0 +1,161 @@
+document_id: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration
+document_path: work/design/p37-f5-dev-plan-work-tree-migration.md
+content_hash: 8c319c1df02fbd89bbf2a75784a477f5d25e558d1b1fa7cf39909460fb88223e
+indexed_at: 2026-04-27T14:40:43.823486Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P37-F5: Work Tree Migration — Implementation Plan'
+      byte_offset: 0
+      byte_count: 10136
+      word_count: 1396
+      content_hash: 8c319c1df02fbd89bbf2a75784a477f5d25e558d1b1fa7cf39909460fb88223e
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 476
+          byte_count: 918
+          word_count: 117
+          content_hash: de7cd6a35064d74d7597a9e12baf0f3497a3abb6ef7a05d1ceeeffa21ca1e44e
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1394
+          byte_count: 4881
+          word_count: 623
+          content_hash: 29cdbff185c552bdc6448514d45ab6d8f4c6617d15f3aca21421c00d6ad7cff9
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Implement target-path resolver'
+              byte_offset: 1413
+              byte_count: 1090
+              word_count: 128
+              content_hash: e4ec7dba6e070d061ef71e825d8eb982c8024feedd20bf9a79f2d6bd80195891
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Implement dry-run report generator'
+              byte_offset: 2503
+              byte_count: 1124
+              word_count: 139
+              content_hash: 6cc48cdc5cd183d57c75d09ee83e3df16b0616e24b463c9181fecd49bd3231cf
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Implement --execute mode'
+              byte_offset: 3627
+              byte_count: 1055
+              word_count: 145
+              content_hash: aeed8f1eac580ef38aaaf70024ba8091a616c6768e85e3595d47a8cde06f1643
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Implement --execute --cleanup mode'
+              byte_offset: 4682
+              byte_count: 709
+              word_count: 100
+              content_hash: 25134e53a675880e90727059bf40a4174361d38d3335c1227783502d185995df
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Tests — all 17 acceptance criteria'
+              byte_offset: 5391
+              byte_count: 884
+              word_count: 108
+              content_hash: 8fb57a7a566c6cd6a88bca0d825b1c58bac2f5f9a85f3d170b3e256d60653e03
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 6275
+          byte_count: 399
+          word_count: 79
+          content_hash: 832981add349c1adf54f174cae84e72d5d9d5b8c91d5a39c41fdb940f7ea245f
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 6674
+          byte_count: 1927
+          word_count: 293
+          content_hash: ae074d184d6dbdcd67145d1223722b4e3435db0032e5048b50d77edb2c11cd09
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: Dependency sequencing on F2, F3, and F4'
+              byte_offset: 6694
+              byte_count: 602
+              word_count: 96
+              content_hash: bb4f709df4b12b578382d5bc1b75e25d95f70ab3d3e6447ea9c681b414c94ed7
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: Orphaned records for missing files'
+              byte_offset: 7296
+              byte_count: 634
+              word_count: 93
+              content_hash: aeabbedeef7f7f3edd193a24d2266383c93990d57278759e32c3a6d3f17df966
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Atomic commit failure partway through 430 moves'
+              byte_offset: 7930
+              byte_count: 671
+              word_count: 101
+              content_hash: d5daf6efa0863312626a2f2f123d3a939fd40ec988666cb38d8fcbae505a950d
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 8601
+          byte_count: 1535
+          word_count: 250
+          content_hash: 350455b03fa060b81a0038cbb03a77afe19c9737e2a085694f859dd919f04604
+entity_refs:
+    - entity_id: FEAT-01KQ7JDT511BZ
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 585
+    - entity_id: FEAT-01KQ7JDSZARPC
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 973
+    - entity_id: FEAT-01KQ7JDT11MH6
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 1032
+    - entity_id: FEAT-01KQ7JDT341E8
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 1093
+    - entity_id: FEAT-01KQ7JDSZARPC
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 4455
+    - entity_id: FEAT-01KQ7JDT11MH6
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 4489
+    - entity_id: FEAT-01KQ7JDT341E8
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 4525
+cross_doc_links:
+    - target_path: work/design/p37-f5-spec-work-tree-migration.md
+      link_text: work/design/p37-f5-spec-work-tree-migration.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.5
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T14:40:44.365632Z
+classified: false

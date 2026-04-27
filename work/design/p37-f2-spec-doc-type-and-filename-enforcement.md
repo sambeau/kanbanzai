@@ -3,7 +3,7 @@
 | Field      | Value                                              |
 |------------|----------------------------------------------------|
 | Date       | 2026-04-27T12:34:44Z                               |
-| Status     | Draft                                              |
+| Status | approved |
 | Author     | sambeau                                            |
 | Feature    | FEAT-01KQ7JDSZARPC                                 |
 | Plan       | P37-file-names-and-actions                         |
@@ -11,7 +11,7 @@
 
 ---
 
-## Problem Statement
+## Overview
 
 The document type system has accumulated inconsistencies that impede consistent discovery,
 reference, and automation:
@@ -39,9 +39,17 @@ harder to navigate and requires bespoke workarounds in tooling and agent instruc
 
 ---
 
-## Requirements
+## Scope
 
-### Functional Requirements
+This specification covers the document type system and filename/folder enforcement for
+`doc register` in the Kanbanzai workflow system. It defines the canonical set of
+user-facing document types, synonym normalisation rules, filename template validation, and
+folder placement rules. It does not cover changes to any other document action, the
+storage layout, or the document record ID format.
+
+---
+
+## Functional Requirements
 
 **REQ-001:** The system SHALL recognise exactly eight user-facing document types: `design`,
 `spec`, `dev-plan`, `review`, `report`, `research`, `retro`, `proposal`.
@@ -118,7 +126,7 @@ disk SHALL NOT be modified.
 without error. The `plan` type SHALL be treated as a valid internal legacy type during
 deserialisation.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 **REQ-NF-001:** All type normalisation and filename/folder validation SHALL be implemented
 as in-memory string operations. They SHALL NOT invoke external processes, perform network

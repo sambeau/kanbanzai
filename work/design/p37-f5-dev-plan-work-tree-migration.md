@@ -3,11 +3,11 @@
 | Field  | Value                                                    |
 |--------|----------------------------------------------------------|
 | Date   | 2026-04-27T14:11:10Z                                     |
-| Status | Draft                                                    |
+| Status | approved |
 | Author | orchestrator                                             |
 | Spec   | work/design/p37-f5-spec-work-tree-migration.md           |
 
-## Scope
+## Overview
 
 This plan implements the requirements defined in
 `work/design/p37-f5-spec-work-tree-migration.md` (FEAT-01KQ7JDT511BZ). It covers
@@ -30,15 +30,15 @@ do not exist until those features land.
 
 ### Task 1: Implement target-path resolver
 
-- **Description:** Implement the pure function (or set of functions) that, given a
-  document record, resolves the canonical target path under the plan-first folder
-  structure. Handles three owner cases: Feature ID (load feature → parent plan),
-  Plan ID (use directly), and PROJECT/absent (→ `work/_project/`). Constructs the
-  target filename as `{PlanID}-{type}-{slug}.{ext}` (or `{type}-{slug}.{ext}` for
-  `_project`). Also implements legacy-folder type inference for triage (maps
-  `work/specs/` → `spec`, `work/dev-plans/` → `dev-plan`, `work/retros/` → `retro`,
+- **Description:** Implement the pure functions that, given a document record,
+  resolve the canonical target path under the plan-first folder structure. Handles
+  three owner cases: Feature ID (load feature → parent plan), Plan ID (use directly),
+  and PROJECT/absent (→ `work/_project/`). Constructs the target filename as
+  `{PlanID}-{type}-{slug}.{ext}` (or `{type}-{slug}.{ext}` for `_project`). Also
+  implements legacy-folder type inference for triage (maps `work/specs/` → `spec`,
+  `work/dev-plans/` → `dev-plan`, `work/retros/` → `retro`,
   `work/evaluation/`/`work/eval/` → `report`, `work/dev/` → `dev-plan`).
-- **Deliverable:** Functions `resolveMigrateTarget` and `inferTypeFromPath` in
+- **Deliverable:** `resolveMigrateTarget` and `inferTypeFromPath` functions in
   `cmd/kanbanzai/migrate_cmd.go`; they take document records and entity service
   references, return target path string and error.
 - **Depends on:** None (pure logic; entity/plan service interfaces already exist).
@@ -128,65 +128,100 @@ and three external merges; T4 and T5 follow T3/T4 respectively.
 
 Critical path: T1 → T2 → T3 (+ F2 + F3 + F4) → T4 → T5
 
-## Risk Assessment
+## Interface Contracts
 
-### Risk: Dependency sequencing on F2, F3, and F4
+The following function signatures define the boundaries between tasks and constrain
+how sub-agents must implement each deliverable.
+
+### `resolveMigrateTarget` (T1)
+
+```go
+// resolveMigrateTarget returns the canonical target path for a document record
+// under the plan-first folder structure. Returns the unchanged source path and
+// action SKIP if the file is already in the correct location, MISSING if the
+// source file does not exist on disk, or MOVE with the computed target path.
+func resolveMigrateTarget(
+    rec storage.DocumentRecord,
+    entitySvc *service.EntityService,
+    planSvc  *service.PlanService,
+) (action string, targetPath string, err error)
+```
+
+### `inferTypeFromPath` (T1)
+
+```go
+// inferTypeFromPath infers the document type from a file path using the
+// canonical folder name and legacy folder aliases defined in REQ-011.
+// Returns empty string if the type cannot be inferred.
+func inferTypeFromPath(path string) string
+```
+
+### `runMigrate` (T2, T3, T4)
+
+```go
+// runMigrate is the top-level entry point for the migrate subcommand.
+// Flags parsed from args:
+//   --execute   perform moves and commit
+//   --cleanup   (requires --execute) remove empty legacy folders in second commit
+//   --porcelain tab-separated output, no headers
+//   --resume    skip already-staged files when --execute is set
+func runMigrate(args []string, deps dependencies) error
+```
+
+### Risk Assessment
+
+#### Risk: Dependency sequencing on F2, F3, and F4
 
 - **Probability:** Medium
-- **Impact:** High — T3 cannot be implemented at all without `runMove` (F3) and
-  the delete service (F4). If those features slip, this entire feature is blocked.
-- **Mitigation:** Plan T1 and T2 to be developed and code-reviewed in parallel with
-  F2/F3/F4. Define stub interfaces or compile-time function references for `runMove`
-  and `runDelete` so T3 can be drafted and syntax-checked before the real
-  implementations land. Gate the merge of T3 on confirmed merge of F2, F3, and F4.
+- **Impact:** High — T3 cannot be implemented without `runMove` (F3) and the delete
+  service (F4). If those features slip, this feature is blocked.
+- **Mitigation:** Develop and review T1 and T2 in parallel with F2/F3/F4. Define
+  compile-time function references for `runMove` and `runDelete` so T3 can be
+  drafted before the real implementations land. Gate T3's merge on confirmed merge
+  of F2, F3, and F4.
 - **Affected tasks:** T3, T4, T5
 
-### Risk: Orphaned records for missing files
+#### Risk: Orphaned records for missing files
 
 - **Probability:** High (28+ unregistered files already known; orphaned records
   likely among the 430 registered docs)
-- **Impact:** Medium — `--execute` must not fail or skip silently when a source
-  file is absent; incorrect handling would leave the document registry inconsistent.
-- **Mitigation:** T2 explicitly classifies MISSING as a first-class action and emits
-  it in the dry-run report. T3 calls the delete service for MISSING entries before
-  attempting file moves. Integration tests in T5 explicitly exercise this path
-  (AC-006, AC-010).
+- **Impact:** Medium — `--execute` must not fail or skip silently when a source file
+  is absent; incorrect handling would leave the document registry inconsistent.
+- **Mitigation:** T2 classifies MISSING as a first-class action in the dry-run
+  report. T3 calls the delete service for MISSING entries before attempting file
+  moves. Integration tests in T5 explicitly exercise this path (AC-006, AC-010).
 - **Affected tasks:** T2, T3, T5
 
-### Risk: Atomic commit failure partway through 430 moves
+#### Risk: Atomic commit failure partway through 430 moves
 
 - **Probability:** Low
-- **Impact:** High — a partial commit would leave the work tree in an inconsistent
-  state with some records updated and some not.
+- **Impact:** High — a partial commit would leave the work tree inconsistent with
+  some records updated and some not.
 - **Mitigation:** T3 stages all moves before committing (never calls `git commit`
-  until all `runMove` calls succeed). On any failure, it halts with all prior moves
-  staged but not committed so the user can fix the issue and `--resume`. The
-  `--resume` flag detects already-staged files and skips them, enabling recovery
-  without re-running successful moves. Integration test AC-010 validates this
-  behaviour explicitly.
+  until all `runMove` calls succeed). On failure it halts with prior moves staged
+  but not committed. The `--resume` flag detects already-staged files and skips
+  them, enabling recovery without re-running successful moves. AC-010 validates
+  this behaviour.
 - **Affected tasks:** T3, T5
 
-## Verification Approach
+## Traceability Matrix
 
-| Acceptance Criterion | Verification Method       | Producing Task |
-|----------------------|---------------------------|----------------|
-| AC-001 (dry-run report, no moves)          | Integration test | T2, T5 |
-| AC-002 (feature-owner target path)         | Unit test        | T1, T5 |
-| AC-003 (plan-owner target path)            | Unit test        | T1, T5 |
-| AC-004 (PROJECT-owner target path)         | Unit test        | T1, T5 |
-| AC-005 (SKIP for already-canonical path)   | Integration test | T2, T5 |
-| AC-006 (MISSING: record deleted, no move)  | Integration test | T2, T3, T5 |
-| AC-007 (triage report for unregistered)    | Integration test | T2, T5 |
-| AC-008 (exit 0, no staged changes without --execute) | Integration test | T2, T5 |
-| AC-009 (--execute atomic commit)           | Integration test | T3, T5 |
-| AC-010 (--execute failure halts, moves staged) | Integration test | T3, T5 |
-| AC-011 (--execute --cleanup second commit) | Integration test | T4, T5 |
-| AC-012 (legacy folder type inference)      | Unit test        | T1, T5 |
-| AC-013 (idempotent second run → all SKIP)  | Integration test | T3, T5 |
-| AC-014 (work/templates/ always SKIP)       | Integration test | T2, T5 |
-| AC-015 (docs/ excluded from all output)    | Integration test | T2, T5 |
-| AC-016 (performance: 1,000 records < 10s)  | Benchmark test   | T5     |
-| AC-017 (--porcelain tab-separated output)  | Integration test | T2, T5 |
-```
-
-Now I'll register the plan, then advance the feature, then decompose:
+| Acceptance Criterion                                     | Verification Method  | Producing Task |
+|----------------------------------------------------------|----------------------|----------------|
+| AC-001 (dry-run report, no moves)                        | Integration test     | T2, T5         |
+| AC-002 (feature-owner target path)                       | Unit test            | T1, T5         |
+| AC-003 (plan-owner target path)                          | Unit test            | T1, T5         |
+| AC-004 (PROJECT-owner target path)                       | Unit test            | T1, T5         |
+| AC-005 (SKIP for already-canonical path)                 | Integration test     | T2, T5         |
+| AC-006 (MISSING: record deleted, no move)                | Integration test     | T2, T3, T5     |
+| AC-007 (triage report for unregistered files)            | Integration test     | T2, T5         |
+| AC-008 (exit 0, no staged changes without --execute)     | Integration test     | T2, T5         |
+| AC-009 (--execute atomic commit)                         | Integration test     | T3, T5         |
+| AC-010 (--execute failure halts, moves staged)           | Integration test     | T3, T5         |
+| AC-011 (--execute --cleanup second commit)               | Integration test     | T4, T5         |
+| AC-012 (legacy folder type inference)                    | Unit test            | T1, T5         |
+| AC-013 (idempotent second run → all SKIP)                | Integration test     | T3, T5         |
+| AC-014 (work/templates/ always SKIP)                     | Integration test     | T2, T5         |
+| AC-015 (docs/ excluded from all output)                  | Integration test     | T2, T5         |
+| AC-016 (performance: 1,000 records < 10s)                | Benchmark test       | T5             |
+| AC-017 (--porcelain tab-separated output)                | Integration test     | T2, T5         |

@@ -3,11 +3,28 @@
 | Field   | Value                                         |
 |---------|-----------------------------------------------|
 | Date    | 2026-04-27T12:34:44Z                          |
-| Status  | Draft                                         |
+| Status | approved |
 | Author  | sambeau                                       |
 | Feature | FEAT-01KQ7JDT11MH6 (kbz move command)         |
 | Plan    | P37-file-names-and-actions                    |
 | Design  | work/design/p37-file-names-and-actions.md §6.1, §6.3 |
+
+---
+
+## Overview
+
+`kbz move` is a CLI command that safely relocates work documents and
+re-parents features while keeping Git history, document records, and entity
+metadata consistent. It operates in two modes: Mode 1 (single file move) and
+Mode 2 (feature re-parent).
+
+## Scope
+
+This specification defines the requirements, constraints, and acceptance
+criteria for the `kbz move` command (FEAT-01KQ7JDT11MH6) in Plan
+P37-file-names-and-actions. It covers both Mode 1 (file move) and Mode 2
+(feature re-parent). Mode 2 has a hard dependency on F1
+(FEAT-01KQ7JDSVMP4E).
 
 ---
 
@@ -35,11 +52,9 @@ state-update logic. It operates in two modes:
 
 ---
 
-## Requirements
+## Functional Requirements
 
-### Functional Requirements
-
-#### Mode 1: File Move (`kbz move <file-path> <plan-id>`)
+### Mode 1: File Move (`kbz move <file-path> <plan-id>`)
 
 **REQ-001** — Argument disambiguation (Mode 1): When the first argument
 contains `/` or ends with `.md` or `.txt`, and the second argument matches
@@ -99,7 +114,7 @@ summary line to stdout: `Moved <source> → <target>`.
 
 ---
 
-#### Mode 2: Feature Re-parent (`kbz move <feature-display-id> <plan-id>`)
+### Mode 2: Feature Re-parent (`kbz move <feature-display-id> <plan-id>`)
 
 **REQ-013** — Argument disambiguation (Mode 2): When the first argument
 matches the pattern `P{n}-F{m}` (digits only; no `/`; no `.`), and the second
@@ -145,7 +160,7 @@ followed by one line per document moved (old path → new path).
 
 ---
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 **REQ-NF-001** — Implementation location: The command must be implemented as
 `runMove(args []string, deps dependencies) error` in a new file

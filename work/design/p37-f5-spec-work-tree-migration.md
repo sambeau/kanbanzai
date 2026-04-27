@@ -3,22 +3,20 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-04-27T12:34:44Z           |
-| Status | Draft                          |
+| Status | approved |
 | Author | sambeau                        |
 
-## Problem Statement
+## Overview
 
-This specification implements the migration strategy described in
-`work/design/p37-file-names-and-actions.md` (P37-file-names-and-actions/design-p37-file-names-and-actions),
-specifically §7 (Migration strategy) and the data from the migration audit.
+This specification defines the `kbz migrate` command: a safe, idempotent tool
+for reorganising the Kanbanzai project's 430 work files from the current
+type-first folder layout (`work/design/`, `work/spec/`, etc.) into a
+plan-first folder layout (`work/P{n}-{slug}/`). It implements the migration
+strategy described in `work/design/p37-file-names-and-actions.md`
+(P37-file-names-and-actions/design-p37-file-names-and-actions), specifically
+§7 (Migration strategy) and the data from the migration audit.
 
-The Kanbanzai project has 430 files spread across 18 type-first folders
-(`work/design/`, `work/spec/`, `work/dev-plan/`, etc.), including 4 duplicate
-folder pairs and one deprecated alias folder. This design decision D1 requires
-reorganising these files into plan-first folders (`work/P{n}-{slug}/`).
-
-This specification covers the tooling required to execute that migration safely
-and the process for completing it. It explicitly depends on:
+This feature explicitly depends on:
 
 - **F2** (`FEAT-01KQ7JDSZARPC`) — document type system and filename enforcement,
   which defines the canonical filename template used to compute target paths
@@ -27,16 +25,19 @@ and the process for completing it. It explicitly depends on:
 - **F4** (`FEAT-01KQ7JDT341E8`) — `kbz delete` command, which removes stale
   document records for files that no longer exist
 
-**In scope:** the migration script, the triage report, bulk execution, and old
-folder removal.
+## Scope
+
+**In scope:** the `kbz migrate` CLI subcommand, dry-run report generation,
+target-path resolution, triage report for unregistered files, `--execute` bulk
+move mode, `--execute --cleanup` empty-folder removal, `--porcelain` output,
+and `--resume` recovery support.
 
 **Out of scope:** the filename template validation (F2), the `kbz move`
 implementation (F3), the `kbz delete` implementation (F4), or any changes to
-`.kbz/state/` entity files.
+`.kbz/state/` entity files other than document records updated as a side effect
+of `kbz move`.
 
-## Requirements
-
-### Functional Requirements
+## Functional Requirements
 
 - **REQ-001:** The system must provide a `kbz migrate` command (or equivalent
   script) that reads all document records from `.kbz/state/documents/` and,
@@ -119,7 +120,7 @@ implementation (F3), the `kbz delete` implementation (F4), or any changes to
 - **REQ-014:** The `docs/` directory must be explicitly excluded from migration.
   Files in `docs/` must not appear in the dry-run report or the triage report.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 - **REQ-NF-001:** The dry-run report must complete in under 10 seconds for a
   repository with up to 1,000 document records and 1,000 work files.

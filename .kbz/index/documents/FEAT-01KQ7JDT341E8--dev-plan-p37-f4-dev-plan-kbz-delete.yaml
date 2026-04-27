@@ -1,0 +1,120 @@
+document_id: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete
+document_path: work/design/p37-f4-dev-plan-kbz-delete.md
+content_hash: ccd130dd739106a661db594605de58499779131269971170dcb6136f06021b71
+indexed_at: 2026-04-27T14:21:31.394202Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P37-F4: kbz delete Command — Implementation Plan'
+      byte_offset: 0
+      byte_count: 9139
+      word_count: 1320
+      content_hash: ccd130dd739106a661db594605de58499779131269971170dcb6136f06021b71
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 473
+          byte_count: 692
+          word_count: 83
+          content_hash: 0f63b457549a6dd2538e842039b83f88d33d7059143443792dad462a788da68f
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1165
+          byte_count: 4711
+          word_count: 633
+          content_hash: 6155a8e15cf18016573a3bc51511bee70bf6110bf1bd9bc086f3368a52fd2276
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Implement `runDelete` in `cmd/kanbanzai/delete_cmd.go`'
+              byte_offset: 1184
+              byte_count: 2315
+              word_count: 305
+              content_hash: dad55fd611fbbd8b808e3013f4c007151479d001376b3f1520657fdb9c9c81c7
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Wire dispatch in `cmd/kanbanzai/main.go`'
+              byte_offset: 3499
+              byte_count: 493
+              word_count: 63
+              content_hash: 00b8da5b4abc0abc853d04fc768c47fd9888b9b6ed927296dddbcba12dea3e67
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Tests'
+              byte_offset: 3992
+              byte_count: 1884
+              word_count: 262
+              content_hash: 596a9d46436e45a527f0a1041f4e5ee1b1cb4ec0028768275d50f5968216557e
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 5876
+          byte_count: 234
+          word_count: 46
+          content_hash: 31d45560d5fbc47dc91edbb2f9a7c2bb50e35988afc8a066ebd2dfcf236ba23b
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 6110
+          byte_count: 1604
+          word_count: 248
+          content_hash: 2b9b336ffa1981b9f2cd41fa1661aa5a21f0faf9e48268f1ad4f06c55d21095a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: git rm failure atomicity'
+              byte_offset: 6130
+              byte_count: 520
+              word_count: 83
+              content_hash: 26d99c2032a7f5ee7a2e577f1d2f0e119e9e9859d1dd53c62e97955a569f4e21
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: Approved document guard bypassable via flag order'
+              byte_offset: 6650
+              byte_count: 530
+              word_count: 77
+              content_hash: 06d5374365254e385bce54d72cd46f3a6d7612d4bf1c075e08b569b86cc8241d
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Partial state on record-delete failure'
+              byte_offset: 7180
+              byte_count: 534
+              word_count: 85
+              content_hash: 00863f060e6f894f9e2f527d64d4f4a724860a7ee8b8e46737642814bf2ca20f
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 7714
+          byte_count: 1425
+          word_count: 275
+          content_hash: f246141056fc91eb06ce8a2f238d16ed2bebc31809687719f825211518f92e18
+entity_refs:
+    - entity_id: FEAT-01KQ7JDT341E8
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 573
+cross_doc_links:
+    - target_path: work/design/p37-f4-spec-kbz-delete.md
+      link_text: work/design/p37-f4-spec-kbz-delete.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T14:21:31.866012Z
+classified: false

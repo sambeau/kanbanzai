@@ -3,10 +3,19 @@
 | Field   | Value                                                              |
 |---------|--------------------------------------------------------------------|
 | Date    | 2026-04-27T12:34:44Z                                               |
-| Status  | Draft                                                              |
+| Status | approved |
 | Author  | sambeau                                                            |
 | Feature | FEAT-01KQ7JDSVMP4E                                                 |
 | Design  | P37 File Names and Actions — D2: Plan-scoped feature display IDs   |
+
+---
+
+## Overview
+
+This specification defines a display ID layer for Kanbanzai features. Each feature receives a
+short sequential identifier (`P{n}-F{m}`) scoped to its parent plan. The canonical
+`FEAT-{TSID13}` identifier is preserved for all storage and cross-references. See Problem
+Statement below for full background.
 
 ---
 
@@ -29,7 +38,7 @@ breaking any existing integration.
 
 ## Requirements
 
-### Functional Requirements
+## Functional Requirements
 
 **REQ-001 — Plan counter field**
 The Plan state file (`.kbz/state/plans/P{n}-{slug}.yaml`) MUST contain a `next_feature_seq`
@@ -119,7 +128,7 @@ feature creation allocates the next unused sequence number.
 
 ---
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 **REQ-NF-001 — Resolution performance**
 Resolution of a `P{n}-F{m}` identifier to its canonical `FEAT-{TSID13}` MUST complete within
@@ -146,7 +155,7 @@ filename for a feature state file remains `FEAT-{TSID13}-{slug}.yaml`.
 
 ---
 
-## Constraints
+## Scope
 
 - The canonical feature identifier is `FEAT-{TSID13}`. The `display_id` is a human-facing
   convenience layer; it does not replace the TSID for storage, cross-references, or distributed

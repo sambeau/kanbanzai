@@ -1,0 +1,145 @@
+document_id: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement
+document_path: work/design/p37-f2-dev-plan-doc-type-and-filename-enforcement.md
+content_hash: 087a15f920ddeaf0939fa2eee18f8d6b8b2069cd1f05caa5486b3e9107703931
+indexed_at: 2026-04-27T14:17:52.568705Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P37-F2: Document Type System and Filename Enforcement — Implementation Plan'
+      byte_offset: 0
+      byte_count: 14130
+      word_count: 1778
+      content_hash: 087a15f920ddeaf0939fa2eee18f8d6b8b2069cd1f05caa5486b3e9107703931
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 627
+          byte_count: 1022
+          word_count: 123
+          content_hash: 111c63573e7312e889dd8789ac3c43347e0aa533f1338b777df5fcb3acc495ce
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1649
+          byte_count: 9410
+          word_count: 1183
+          content_hash: 06d952317ee2f4c2586fcddd6ec0287cffdbc4b2e2f332b494e3541180c366a2
+          children:
+            - path: 1.2.1
+              level: 3
+              title: T1 — Update document type model
+              byte_offset: 1668
+              byte_count: 1572
+              word_count: 170
+              content_hash: b5853f91b6beb6ccb4e0647ddc283c79da4c6b7d791780be5258903b74860ebe
+            - path: 1.2.2
+              level: 3
+              title: T2 — Implement filename and folder validation helpers
+              byte_offset: 3240
+              byte_count: 1791
+              word_count: 231
+              content_hash: 778be449348afd73933cc3c5c5fc3abdf7c02537333e0242ce5bd57befb70782
+            - path: 1.2.3
+              level: 3
+              title: T3 — Wire validation into SubmitDocument
+              byte_offset: 5031
+              byte_count: 1406
+              word_count: 166
+              content_hash: f441c75708245ce7c46677101be4801e85b4dced30cacf137568e80332a66cbe
+            - path: 1.2.4
+              level: 3
+              title: T4 — Normalise legacy types on deserialisation
+              byte_offset: 6437
+              byte_count: 1308
+              word_count: 155
+              content_hash: c7386b5987abcef647e3b90c316b9ede14374ff7673320f0fd2d3bb00e53e58a
+            - path: 1.2.5
+              level: 3
+              title: T5 — Tests covering all 23 acceptance criteria
+              byte_offset: 7745
+              byte_count: 3314
+              word_count: 458
+              content_hash: ad40930a720ed5a2fcb7f4ec6bb95f92cd360155303633d289f1e98d094ee5c2
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 11059
+          byte_count: 453
+          word_count: 78
+          content_hash: d12e1847ba3831b45139f187c45dde25da69c939cec71455c48d877704111cda
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 11512
+          byte_count: 1818
+          word_count: 230
+          content_hash: 6a908c100fe80add0d71df79dfc73b3f89d88f4895c81f9156375470feb4a263
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 13330
+          byte_count: 800
+          word_count: 126
+          content_hash: fa13d9ba0796774bc3b2292a910c6e7032ffb453332f596f20679ef012fc1c66
+entity_refs:
+    - entity_id: P37-file-names-actions
+      entity_type: plan
+      section_path: 1.2.5
+      byte_offset: 9093
+    - entity_id: P37-spec-something
+      entity_type: plan
+      section_path: 1.2.5
+      byte_offset: 9116
+    - entity_id: F2-spec-enforcement
+      entity_type: plan
+      section_path: 1.2.5
+      byte_offset: 9331
+    - entity_id: P25-other-plan
+      entity_type: plan
+      section_path: 1.2.5
+      byte_offset: 9542
+cross_doc_links:
+    - target_path: work/design/p37-f2-spec-doc-type-and-filename-enforcement.md
+      link_text: work/design/p37-f2-spec-doc-type-and-filename-enforcement.md
+      section_path: "1.1"
+    - target_path: refs/testing.md
+      link_text: refs/testing.md
+      section_path: 1.2.5
+    - target_path: work/P37-file-names-actions/P37-spec-something.md
+      link_text: work/P37-file-names-actions/P37-spec-something.md
+      section_path: 1.2.5
+    - target_path: work/P37-file-names-actions/spec-something.md
+      link_text: work/P37-file-names-actions/spec-something.md
+      section_path: 1.2.5
+    - target_path: work/P37-file-names-actions/P37-F2-spec-enforcement.md
+      link_text: work/P37-file-names-actions/P37-F2-spec-enforcement.md
+      section_path: 1.2.5
+    - target_path: work/p37-file-names-actions/p37-spec-something.md
+      link_text: work/p37-file-names-actions/p37-spec-something.md
+      section_path: 1.2.5
+    - target_path: work/P25-other-plan/P37-spec-something.md
+      link_text: work/P25-other-plan/P37-spec-something.md
+      section_path: 1.2.5
+    - target_path: work/_project/research-ai-orchestration.md
+      link_text: work/_project/research-ai-orchestration.md
+      section_path: 1.2.5
+    - target_path: work/templates/my-template.md
+      link_text: work/templates/my-template.md
+      section_path: 1.2.5
+    - target_path: docs/architecture/overview.md
+      link_text: docs/architecture/overview.md
+      section_path: 1.2.5
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.5
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-27T14:17:53.084694Z
+classified: false
