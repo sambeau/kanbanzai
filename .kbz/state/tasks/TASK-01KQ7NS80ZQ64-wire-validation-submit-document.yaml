@@ -3,7 +3,16 @@ parent_feature: FEAT-01KQ7JDSZARPC
 slug: wire-validation-submit-document
 name: Wire validation into SubmitDocument
 summary: "Update SubmitDocument to: normalise input type via NormaliseDocumentType; validate via ValidDocumentTypeForRegistration with error listing only 8 user-facing types; call validateDocumentFilename and validateDocumentFolder before writing the record; update entity hook switch to match DocumentTypeSpec instead of DocumentTypeSpecification."
-status: ready
+status: done
 depends_on:
   - TASK-01KQ7NS7WDQ7C
   - TASK-01KQ7NS7YWK8R
+files_planned:
+  - internal/service/documents.go
+  - internal/service/prereq.go
+completed: "2026-04-27T16:30:41Z"
+claimed_at: "2026-04-27T16:27:12Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-27T16:27:12Z"
+dispatched_by: sambeau
+completion_summary: "Updated SubmitDocument to: (1) normalise type via NormaliseDocumentType, (2) validate via ValidDocumentTypeForRegistration with error listing only 8 user-facing types, (3) call validateDocumentFilename and validateDocumentFolder before writing the record. Updated entity hook switch cases from DocumentTypeSpecification to DocumentTypeSpec. Also updated prereq.go stageDocMapping and CheckTransitionGate to use DocumentTypeSpec so gate checks work correctly after storage normalisation in T4."
