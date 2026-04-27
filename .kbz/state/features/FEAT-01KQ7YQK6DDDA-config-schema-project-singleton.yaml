@@ -4,5 +4,6 @@ name: Config Schema and Project Singleton
 parent: P38-plans-and-batches
 status: specifying
 summary: "Add separate plan_prefixes and batch_prefixes registries to config.yaml (D7), independent sequence counters for plans and batches (D8), and an optional project singleton section with name, vision, architecture, and constraints fields."
+spec: FEAT-01KQ7YQK6DDDA/specification-p38-f1-spec-config-schema-project-singleton
 created: "2026-04-27T17:10:30Z"
 created_by: sambeau
