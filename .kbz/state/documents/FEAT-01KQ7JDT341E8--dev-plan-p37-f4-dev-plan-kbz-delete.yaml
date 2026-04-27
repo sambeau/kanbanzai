@@ -2,9 +2,11 @@ id: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete
 path: work/design/p37-f4-dev-plan-kbz-delete.md
 type: dev-plan
 title: "P37-F4: kbz delete Command — Implementation Plan"
-status: draft
+status: approved
 owner: FEAT-01KQ7JDT341E8
-content_hash: ccd130dd739106a661db594605de58499779131269971170dcb6136f06021b71
+approved_by: sambeau
+approved_at: "2026-04-27T14:26:11Z"
+content_hash: 004f92720df598d295d5497f23c59c101d94286e5d41b74b29e6ccb57ab1eaca
 created: "2026-04-27T14:21:31Z"
 created_by: sambeau
-updated: "2026-04-27T14:21:31Z"
+updated: "2026-04-27T14:26:11Z"
