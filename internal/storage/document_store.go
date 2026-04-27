@@ -343,7 +343,7 @@ func RecordToDocument(record DocumentRecord) model.DocumentRecord {
 		doc.Path = v
 	}
 	if v, ok := record.Fields["type"].(string); ok {
-		doc.Type = model.DocumentType(v)
+		doc.Type = model.NormaliseDocumentType(model.DocumentType(v))
 	}
 	if v, ok := record.Fields["title"].(string); ok {
 		doc.Title = v
