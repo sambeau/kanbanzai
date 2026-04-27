@@ -2,9 +2,11 @@ id: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim
 path: work/reviews/review-FEAT-01KQ2E0RHSNP1-idempotent-task-claim.md
 type: report
 title: "Review: Next Tool UX Improvements"
-status: draft
+status: approved
 owner: FEAT-01KQ2E0RHSNP1
+approved_by: sambeau
+approved_at: "2026-04-27T02:32:32Z"
 content_hash: 064edc0a296985bf1246f6e1512f2fb0980bfe89292ff6295931745a3ee25d47
 created: "2026-04-27T02:31:34Z"
 created_by: sambeau
-updated: "2026-04-27T02:31:34Z"
+updated: "2026-04-27T02:32:32Z"
