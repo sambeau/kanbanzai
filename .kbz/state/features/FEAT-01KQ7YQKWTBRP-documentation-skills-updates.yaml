@@ -1,0 +1,8 @@
+id: FEAT-01KQ7YQKWTBRP
+slug: documentation-skills-updates
+name: Documentation and Skills Updates
+parent: P38-plans-and-batches
+status: proposed
+summary: "Update .kbz/roles/, .kbz/skills/, .kbz/stage-bindings.yaml, AGENTS.md, and copilot-instructions.md to reflect the plan/batch distinction, new lifecycle states, and updated entity vocabulary throughout all agent-facing materials."
+created: "2026-04-27T17:10:31Z"
+created_by: sambeau
