@@ -1,0 +1,8 @@
+id: P38-plans-and-batches
+slug: plans-and-batches
+name: Plans and Batches
+status: proposed
+summary: "Introduce a recursive plan entity for strategic planning and rename the existing plan entity to batch for operational work grouping. Adds a project singleton, migrates P-prefix IDs to B-prefix for batches, and coordinates with P37 file naming."
+created: "2026-04-27T17:07:31Z"
+created_by: sambeau
+updated: "2026-04-27T17:07:31Z"
