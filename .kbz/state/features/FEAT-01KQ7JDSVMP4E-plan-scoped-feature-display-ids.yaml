@@ -5,6 +5,7 @@ parent: P37-file-names-and-actions
 status: dev-planning
 summary: Add plan-scoped human-friendly display IDs for features (P24-F3 format). Plan state gains next_feature_seq counter; feature state gains display_id field. All tools accept P24-F3 as input and resolve to canonical FEAT-TSID13. CLI displays P24-F3 everywhere. Features must have a parent plan.
 spec: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids
+dev_plan: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids
 created: "2026-04-27T13:35:26Z"
 created_by: sambeau
 overrides:
