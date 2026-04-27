@@ -408,6 +408,19 @@ func TestReParentEntityUpdate(t *testing.T) {
 	if !strings.Contains(string(data), "P2-target-plan") {
 		t.Errorf("feature YAML does not contain new parent 'P2-target-plan':\n%s", string(data))
 	}
+	if !strings.Contains(string(data), "display_id: P2-F1") {
+		t.Errorf("feature YAML does not contain new display_id 'P2-F1':\n%s", string(data))
+	}
+
+	// Plan next_feature_seq must have been incremented (was 1, now 2).
+	planFile := filepath.Join(dir, ".kbz", "state", "plans", "P2-target-plan.yaml")
+	planData, err := os.ReadFile(planFile)
+	if err != nil {
+		t.Fatalf("read plan YAML after re-parent: %v", err)
+	}
+	if !strings.Contains(string(planData), "next_feature_seq: 2") {
+		t.Errorf("plan YAML does not contain incremented 'next_feature_seq: 2':\n%s", string(planData))
+	}
 }
 
 // TestReParentDocumentMoves covers AC-017:
@@ -452,6 +465,18 @@ func TestReParentDocumentMoves(t *testing.T) {
 	}
 	if len(strings.TrimSpace(string(out))) == 0 {
 		t.Error("git log --follow returned no commits — git mv was not used")
+	}
+
+	// AC-017: Document record owner must be updated to the target plan ID,
+	// not the feature's canonical ID.
+	docStateDir := filepath.Join(dir, ".kbz", "state", "documents")
+	docFile := filepath.Join(docStateDir, "FEAT-001--design-foo.yaml")
+	docData, err := os.ReadFile(docFile)
+	if err != nil {
+		t.Fatalf("read document record after re-parent: %v", err)
+	}
+	if !strings.Contains(string(docData), "owner: P2-target-plan") {
+		t.Errorf("document record does not contain owner 'P2-target-plan':\n%s", string(docData))
 	}
 }
 

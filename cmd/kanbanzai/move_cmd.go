@@ -238,7 +238,7 @@ func runMoveFeature(displayID, planArg string, force bool, stateRoot, repoRoot s
 		if err := igit.GitMove(repoRoot, doc.Path, newPath); err != nil {
 			return fmt.Errorf("git mv %s → %s: %w", doc.Path, newPath, err)
 		}
-		if _, err := docSvc.UpdateDocumentPathAndOwner(doc.ID, newPath, canonicalID); err != nil {
+		if _, err := docSvc.UpdateDocumentPathAndOwner(doc.ID, newPath, targetPlanID); err != nil {
 			return fmt.Errorf("update document record %s: %w", doc.ID, err)
 		}
 		moved = append(moved, movedDoc{doc.Path, newPath})
