@@ -3,6 +3,17 @@ parent_feature: FEAT-01KQ7JDT11MH6
 slug: kbz-move-implement-mode-1-file-move-in-cmd-kanbanzai-move-cmd-go
 name: "Implement Mode 1 file move in `cmd/kanbanzai/move_cmd.go`"
 summary: "Implement Mode 1 file move in `cmd/kanbanzai/move_cmd.go`"
-status: ready
+status: done
 depends_on:
   - TASK-01KQ7PWS50F6Y
+files_planned:
+  - cmd/kanbanzai/move_cmd.go
+  - cmd/kanbanzai/main.go
+  - internal/service/documents.go
+completed: "2026-04-27T20:06:34Z"
+claimed_at: "2026-04-27T19:41:04Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-27T19:41:04Z"
+dispatched_by: sambeau
+completion_summary: "Implemented Mode 1 file move in cmd/kanbanzai/move_cmd.go. Handles: work/ boundary check, source file validation, plan resolution (short P37 or full P37-slug), doc type from record or filename inference, canonical target path construction, target exists check, MkdirAll, git mv via GitMove, record update or no-record warning, success output. Mode 2 stub returns 'not yet implemented'. Also fixed documentToResult helper missing from documents.go."
+verification: "go build ./cmd/kanbanzai/... OK; go test ./cmd/kanbanzai/... OK (1.168s, all existing tests pass)"
