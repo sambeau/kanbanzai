@@ -1006,6 +1006,9 @@ func featureFields(e model.Feature) map[string]any {
 		"created":    e.Created.Format(time.RFC3339),
 		"created_by": e.CreatedBy,
 	}
+	if e.DisplayID != "" {
+		fields["display_id"] = e.DisplayID
+	}
 	if e.Estimate != nil {
 		fields["estimate"] = *e.Estimate
 	}

@@ -219,7 +219,8 @@ type Plan struct {
 	Tags      []string   `yaml:"tags,omitempty"`
 	Created   time.Time  `yaml:"created"`
 	CreatedBy string     `yaml:"created_by"`
-	Updated   time.Time  `yaml:"updated"`
+	Updated        time.Time  `yaml:"updated"`
+	NextFeatureSeq int        `yaml:"next_feature_seq"`
 
 	Supersedes   string `yaml:"supersedes,omitempty"`
 	SupersededBy string `yaml:"superseded_by,omitempty"`
@@ -257,6 +258,7 @@ type Feature struct {
 	ID            string        `yaml:"id"`
 	Slug          string        `yaml:"slug"`
 	Name          string        `yaml:"name"`
+	DisplayID     string        `yaml:"display_id,omitempty"`
 	Parent        string        `yaml:"parent,omitempty"` // Parent Plan ID (renamed from epic)
 	Status        FeatureStatus `yaml:"status"`
 	ReviewCycle   int           `yaml:"review_cycle,omitempty"`
