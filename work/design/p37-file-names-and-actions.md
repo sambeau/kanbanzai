@@ -3,7 +3,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-04-27T12:34:44Z           |
-| Status | Draft                          |
+| Status | approved |
 | Author | sambeau                        |
 | Plan   | P37-file-names-and-actions     |
 
@@ -32,6 +32,26 @@
 - **§12.1 "Art files, images, and document bundles"** — Partially resolved: per-plan `assets/` folder; detailed asset naming deferred until real assets are produced.
 
 ---
+
+## Overview
+
+This design standardises file names, folder structure, and IDs across the Kanbanzai project. It replaces the current type-first folder organisation (`work/design/`, `work/spec/`, etc.) with plan-first folders (`work/P24-ac-pattern/`), introduces plan-scoped human-friendly feature IDs (`P24-F3`), defines a canonical filename template, formalises eight document types, and specifies file operation tools (`kbz move`, `kbz delete`) for safe reorganisation. A migration strategy covers the transition of all 430 existing files.
+
+## Goals and Non-Goals
+
+**Goals:**
+- Standardise folder structure so AI agents and humans always know where files go
+- Make feature IDs speakable and memorable for multi-person teams
+- Define a canonical filename template that eliminates naming inconsistency
+- Provide safe file operations that maintain document record consistency
+- Migrate existing files with minimal human effort
+
+**Non-Goals:**
+- Changing the internal entity ID system (TSID13 remains canonical)
+- Changing `.kbz/state/` storage conventions (entity state files are unaffected)
+- Defining detailed asset naming conventions (deferred until real assets are produced)
+- Adding a meta-planning layer above plans (deferred)
+- Making structural conventions configurable per-project
 
 ## Problem and Motivation
 
@@ -280,21 +300,50 @@ This is a heavier operation than a simple file move. It changes entity relations
 
 ### 7. Migration strategy
 
-Adopting this system across 430 existing files requires a phased approach:
+Adopting this system across 430 existing files requires a phased approach. An audit of the current state shows that the migration is overwhelmingly scriptable.
+
+#### Migration audit (2026-04-27)
+
+| Category | Count | Effort |
+|----------|------:|--------|
+| Registered, feature-owned (feature has a parent plan) | 272 | 🤖 Fully automated — script resolves feature → plan → target folder |
+| Registered, plan-owned | 47 | 🤖 Fully automated — plan ID is in the document record |
+| Registered, project-owned | 2 | 🤖 Automated — moves to `_project/` |
+| Registered, pointing to missing file | 1 | 🤖 Automated — delete the orphan record |
+| Unregistered work files | 28 | 🧑 Human triage needed |
+| **Total** | **~430** | |
+
+All 145 features already have a parent plan — there are zero orphan features. The feature → plan resolution chain is complete for every registered document, making ~400 files fully scriptable.
+
+The 28 unregistered files break down as follows:
+
+| Sub-category | Count | Recommended action |
+|-------------|------:|-------------------|
+| Templates (`work/templates/`) | 3 | No action — stay in `work/templates/` |
+| Folder READMEs (`eval/`, `evaluation/`) | 2 | Delete — these folders are removed |
+| Evaluation results | 3 | Register as reports under their plan, or delete if stale |
+| `.txt` proposals (spaces, mixed case) | 6 | Register and move, or archive |
+| Unregistered research files | 5 | Register under the relevant plan and move |
+| Other (handoff, test docs, unregistered reviews) | 9 | Register or archive per human judgement |
+
+Human triage for these 28 files is primarily "which plan does this belong to?" or "is this still relevant?" — roughly 30 minutes of work, not days.
+
+#### Phased approach
 
 **Phase 1: Enforce naming on new files.** Immediately apply the filename template and plan-folder structure to all new documents. The `doc register` command validates filenames against the template and rejects non-conforming paths. Old files remain where they are.
 
 **Phase 2: Build `kbz move` and `kbz delete`.** These are prerequisites for safe migration. They must be working and tested before bulk moves.
 
-**Phase 3: Migrate existing files.** Write a migration script that:
+**Phase 3: Triage unregistered files.** Present the 28 unregistered files to the human for quick decisions: register-and-move, archive, or delete. This is a short interactive session, not a project.
+
+**Phase 4: Run the migration script.** The script:
 1. Reads all document records from `.kbz/state/documents/`
-2. Determines each document's plan, type, and current path
-3. Generates `kbz move` commands for each file
-4. Executes the moves in a single commit (atomic, reversible via `git revert`)
+2. Resolves each document's owner to a plan ID (feature owners look up their parent plan)
+3. Computes the target path using the canonical filename template
+4. Emits `kbz move` commands for each file
+5. Executes all moves in a single commit (atomic, reversible via `git revert`)
 
-Files without document records are flagged for manual triage — they may be orphaned, deprecated, or unregistered.
-
-**Phase 4: Remove empty old folders.** After migration, the old type-first folders (`design/`, `spec/`, etc.) should be empty. Remove them in a cleanup commit.
+**Phase 5: Remove empty old folders.** After migration, the old type-first folders (`design/`, `spec/`, `dev-plan/`, `dev-plans/`, `dev/`, `specs/`, `retro/`, `retros/`, `eval/`, `evaluation/`, `reviews/`, `reports/`, `research/`, `plan/`, `proposals/`) should be empty. Remove them in a cleanup commit.
 
 ---
 
@@ -478,12 +527,21 @@ Each developer gets a namespace: `sam-F1`, `sam-F2`, or single-letter: `Fs1`, `F
 
 ## Open Questions
 
-1. **Multiple documents of the same type per plan.** The one-document-per-(plan, type) constraint works for most cases, but a plan might legitimately have two research documents. Should the slug serve as a disambiguator in this case? If so, the system would identify documents by `{plan-id}-{type}-{slug}`, not just `{plan-id}-{type}`. This makes the slug load-bearing for identity, which contradicts the "slug is decoration" principle. A resolution: allow a numeric suffix (`P24-research-1-ai-orchestration.md`, `P24-research-2-naming-conventions.md`) where the number is part of the type identifier, not the slug.
+1. **Multiple documents of the same type per plan.** The one-document-per-(plan, type) constraint works for most cases, but a plan might legitimately have two research documents. Resolution: allow a numeric suffix (`P24-research-1-ai-orchestration.md`, `P24-research-2-naming-conventions.md`) where the number is part of the type identifier, not the slug. The slug remains decoration; the system identifies the document by `{plan-id}-{type}-{number}`.
 
-2. **Retrospective file naming.** A plan typically has one retro, but it could have multiple (mid-plan check-in, final retro). Same resolution as above applies.
+2. **Retrospective file naming.** A plan typically has one retro, but it could have multiple (mid-plan check-in, final retro). Same numeric suffix resolution as above applies.
 
 3. **What about `docs/` directory?** Some documents (getting-started, configuration-reference) currently live in `docs/` and are registered to features. Should published user documentation follow the same plan-folder convention, or does `docs/` remain separate as the public-facing documentation tree? Recommendation: `docs/` stays separate — it's the output of the system, not a working document. But this needs confirming.
 
 4. **Meta-planning IDs.** If a layer above plans is added in the future, plan IDs might need a programme prefix (e.g. `A-P24` for programme A). The current design doesn't preclude this — it would be an extension to the plan ID format. Deferred.
 
 5. **Asset naming conventions.** Detailed conventions for `assets/` subfolders and file naming are deferred until real assets are produced. The design accommodates assets without constraining their naming.
+
+---
+
+## Dependencies
+
+- **Document-centric interface design** (`work/design/document-centric-interface.md`) — this design resolves open questions §12.1 and §12.2 from that document. The document type taxonomy defined there (§4) is extended with `proposal` and refined with the `review`/`report` split.
+- **P1-DEC-006 (canonical file layout)** — the `.kbz/state/` vs `work/` separation is preserved. Entity state filenames are unchanged.
+- **P1-DEC-021 (compact time-sorted IDs)** — TSID13 remains the canonical feature ID. The plan-scoped display ID (`P24-F3`) is a layer on top, not a replacement.
+- **`git mv` / `git rm`** — the `kbz move` and `kbz delete` commands depend on Git's file operations to preserve history.
