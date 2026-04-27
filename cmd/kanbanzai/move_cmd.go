@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -34,7 +35,12 @@ func runMove(args []string, deps dependencies) error {
 
 	// Mode 2: first arg matches P{n}-F{m} pattern
 	if isMode2Arg(args[0]) {
-		return fmt.Errorf("kbz move Mode 2 (feature re-parent) is not yet implemented")
+		if len(args) != 2 {
+			return fmt.Errorf("expected exactly 2 arguments for Mode 2: <feature-ref> <plan-id>\n\n%s", moveUsageText)
+		}
+		stateRoot := core.StatePath()
+		repoRoot := "."
+		return runMoveFeature(args[0], args[1], false, stateRoot, repoRoot, deps)
 	}
 
 	// Mode 1: requires exactly <src-path> <plan-id>
@@ -131,6 +137,121 @@ func runMove(args []string, deps dependencies) error {
 	// REQ-012: Success output
 	fmt.Fprintf(deps.stdout, "Moved %s → %s\n", srcPath, dstPath)
 	return nil
+}
+
+// runMoveFeature implements Mode 2: re-parents a feature to a different plan.
+func runMoveFeature(displayID, planArg string, force bool, stateRoot, repoRoot string, deps dependencies) error {
+	entitySvc := service.NewEntityService(stateRoot)
+	docSvc := service.NewDocumentService(stateRoot, repoRoot)
+
+	// REQ-014: Resolve display ID to canonical ID and slug.
+	canonicalID, slug, err := entitySvc.ResolveFeatureDisplayID(displayID)
+	if err != nil {
+		return fmt.Errorf("feature %q not found: %w", displayID, err)
+	}
+
+	// REQ-004: Validate target plan.
+	targetPlanID, targetShortID, targetSlug, err := resolvePlanArg(planArg, stateRoot)
+	if err != nil {
+		return err
+	}
+
+	// Load feature entity to get current parent.
+	result, err := entitySvc.Get("feature", canonicalID, slug)
+	if err != nil {
+		return fmt.Errorf("load feature %s: %w", canonicalID, err)
+	}
+	var currentParent string
+	if v, ok := result.State["parent"].(string); ok {
+		currentParent = v
+	}
+
+	// REQ-015: Already in target plan — nothing to do.
+	if currentParent == targetPlanID {
+		return fmt.Errorf("feature %q is already in plan %q — nothing to do", displayID, planArg)
+	}
+
+	// Get docs owned by this feature.
+	docs, err := docSvc.ListDocuments(service.DocumentFilters{Owner: canonicalID})
+	if err != nil {
+		return fmt.Errorf("list documents: %w", err)
+	}
+
+	// REQ-016: Print planned changes and prompt user unless --force.
+	if !force {
+		fmt.Fprintf(deps.stdout, "Re-parent feature %s → %s\n", displayID, targetPlanID)
+		if len(docs) > 0 {
+			fmt.Fprintf(deps.stdout, "Documents to move:\n")
+			for _, doc := range docs {
+				newPath := buildDocTargetPath(doc.Path, doc.Type, targetShortID, targetSlug)
+				fmt.Fprintf(deps.stdout, "  %s → %s\n", doc.Path, newPath)
+			}
+		}
+		fmt.Fprintf(deps.stdout, "Proceed? [y/N]: ")
+		reader := bufio.NewReader(deps.stdin)
+		line, _ := reader.ReadString('\n')
+		line = strings.TrimSpace(strings.ToLower(line))
+		if line != "y" && line != "yes" {
+			return nil
+		}
+	}
+
+	// REQ-017: Allocate a new display ID in the target plan.
+	newDisplayID, err := entitySvc.AllocateFeatureDisplayIDInPlan(targetPlanID)
+	if err != nil {
+		return fmt.Errorf("allocate display ID in plan %s: %w", targetPlanID, err)
+	}
+
+	// REQ-018: Update the feature entity with new parent and display ID.
+	if _, err := entitySvc.UpdateEntity(service.UpdateEntityInput{
+		Type: "feature",
+		ID:   canonicalID,
+		Slug: slug,
+		Fields: map[string]string{
+			"parent":     targetPlanID,
+			"display_id": newDisplayID,
+		},
+	}); err != nil {
+		return fmt.Errorf("update feature entity: %w", err)
+	}
+
+	// REQ-019: Move each document file and update its record.
+	type movedDoc struct{ from, to string }
+	var moved []movedDoc
+	for _, doc := range docs {
+		newPath := buildDocTargetPath(doc.Path, doc.Type, targetShortID, targetSlug)
+		if err := os.MkdirAll(filepath.Dir(newPath), 0o755); err != nil {
+			return fmt.Errorf("create directory for %s: %w", newPath, err)
+		}
+		if err := igit.GitMove(repoRoot, doc.Path, newPath); err != nil {
+			return fmt.Errorf("git mv %s → %s: %w", doc.Path, newPath, err)
+		}
+		if _, err := docSvc.UpdateDocumentPathAndOwner(doc.ID, newPath, canonicalID); err != nil {
+			return fmt.Errorf("update document record %s: %w", doc.ID, err)
+		}
+		moved = append(moved, movedDoc{doc.Path, newPath})
+	}
+
+	// REQ-020: Print results.
+	fmt.Fprintf(deps.stdout, "Moved feature %s → %s\n", displayID, newDisplayID)
+	for _, m := range moved {
+		fmt.Fprintf(deps.stdout, "Moved %s → %s\n", m.from, m.to)
+	}
+
+	return nil
+}
+
+// buildDocTargetPath builds the canonical destination path for a document
+// being moved as part of a feature re-parent operation.
+func buildDocTargetPath(oldPath, docType, targetShortID, targetPlanSlug string) string {
+	ext := filepath.Ext(oldPath)
+	if ext == "" {
+		ext = ".md"
+	}
+	stem := extractFileStem(oldPath, docType, nil)
+	targetFolder := filepath.Join("work", targetShortID+"-"+targetPlanSlug)
+	targetFile := targetShortID + "-" + docType + "-" + stem + ext
+	return filepath.Join(targetFolder, targetFile)
 }
 
 // resolvePlanArg resolves a plan argument (short ID like "P37" or full ID like
