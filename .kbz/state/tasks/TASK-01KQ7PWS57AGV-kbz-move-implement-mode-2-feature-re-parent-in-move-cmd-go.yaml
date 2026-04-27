@@ -4,3 +4,5 @@ slug: kbz-move-implement-mode-2-feature-re-parent-in-move-cmd-go
 name: "Implement Mode 2 feature re-parent in `move_cmd.go`"
 summary: "Implement Mode 2 feature re-parent in `move_cmd.go`"
 status: queued
+depends_on:
+  - TASK-01KQ7PWS52VG3

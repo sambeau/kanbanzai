@@ -4,3 +4,5 @@ slug: kbz-move-implement-mode-1-file-move-in-cmd-kanbanzai-move-cmd-go
 name: "Implement Mode 1 file move in `cmd/kanbanzai/move_cmd.go`"
 summary: "Implement Mode 1 file move in `cmd/kanbanzai/move_cmd.go`"
 status: queued
+depends_on:
+  - TASK-01KQ7PWS50F6Y

@@ -4,3 +4,8 @@ slug: kbz-move-tests-covering-all-18-acceptance-criteria
 name: Tests covering all 18 acceptance criteria
 summary: Tests covering all 18 acceptance criteria
 status: queued
+depends_on:
+  - TASK-01KQ7PWS50F6Y
+  - TASK-01KQ7PWS52VG3
+  - TASK-01KQ7PWS55NWM
+  - TASK-01KQ7PWS57AGV
