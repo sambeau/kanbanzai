@@ -3,6 +3,14 @@ parent_feature: FEAT-01KQ7YQKBDNAP
 slug: wire-plan-entity-tool
 name: Wire plan type into entity MCP tool
 summary: "Extend internal/mcp/entity_tool.go to handle type: plan for create, get, list, update, and transition actions with parent filtering and document expectations metadata."
-status: ready
+status: done
 depends_on:
   - TASK-01KQ8WPMKCW26
+files_planned:
+  - internal/mcp/entity_tool.go
+completed: "2026-04-28T08:33:31Z"
+claimed_at: "2026-04-28T08:33:27Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-28T08:33:27Z"
+dispatched_by: sambeau
+completion_summary: "Extended internal/mcp/entity_tool.go to support type: \"strategic-plan\" for create, get, list, update, and transition actions with parent filtering, cycle detection, and explicit type disambiguation"
