@@ -3,12 +3,19 @@ parent_feature: FEAT-01KQ7YQKMCM6T
 slug: wire-estimate-status-tools
 name: Wire estimate and status tools
 summary: "Update MCP estimate tool with batch dispatch, update plan dispatch to recursive rollup. Update status tool plan dashboard. Add batch entity type inference."
-status: active
+status: done
 estimate: "3"
 depends_on:
   - TASK-01KQ8X04HKJJ6
   - TASK-01KQ8X04KXZB9
+files_planned:
+  - internal/mcp/estimate_tool.go
+  - internal/mcp/status_tool.go
+  - internal/mcp/status_tool_test.go
+completed: "2026-04-28T09:32:08Z"
 claimed_at: "2026-04-28T09:27:23Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-28T09:27:23Z"
 dispatched_by: sambeau
+completion_summary: "Updated estimate tool to dispatch P... IDs to recursive ComputePlanRollup and B... IDs to ComputeBatchRollup. Added idTypeBatch to status tool inferIDType, added synthesiseBatch function with progress block, added batch dashboard type. Updated tests."
+verification: go build ./... and TestInferIDType tests pass
