@@ -2,9 +2,11 @@ id: FEAT-01KQ7YQKEEHFY/spec-p38-spec-p38-f3-batch-entity-rename-b-prefix
 path: work/P38-plans-and-batches/P38-spec-p38-f3-batch-entity-rename-b-prefix.md
 type: spec
 title: "P38-F3: Batch Entity Rename and B-Prefix IDs — Specification"
-status: draft
+status: approved
 owner: FEAT-01KQ7YQKEEHFY
+approved_by: sambeau
+approved_at: "2026-04-28T01:40:30Z"
 content_hash: 3d721c3ee4445b44695ca4f2092a6e9f0576c44baa5c6114702460f9fb247acb
 created: "2026-04-28T01:40:18Z"
 created_by: sambeau
-updated: "2026-04-28T01:40:18Z"
+updated: "2026-04-28T01:40:30Z"
