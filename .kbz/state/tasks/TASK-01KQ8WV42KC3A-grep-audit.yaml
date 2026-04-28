@@ -3,7 +3,7 @@ parent_feature: FEAT-01KQ7YQKWTBRP
 slug: grep-audit
 name: Grep audit for consistency
 summary: "Run grep across all updated files. Verify plan only for strategic entity, batch for work container. Report inconsistencies. Depends on Tasks 1-6. Spec: AC-009-010."
-status: ready
+status: done
 estimate: "1"
 depends_on:
   - TASK-01KQ8WV42FPKZ
@@ -12,3 +12,9 @@ depends_on:
   - TASK-01KQ8WV427TV6
   - TASK-01KQ8WV445BZA
   - TASK-01KQ8WV428K7J
+completed: "2026-04-28T10:36:22Z"
+claimed_at: "2026-04-28T10:36:17Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-28T10:36:17Z"
+dispatched_by: sambeau
+completion_summary: "Grep audit completed. All updated files verified for plan/batch terminology consistency. No false positives found. All remaining 'plan' references are legitimate: strategic entity references, dev-plan document type, skill names (review-plan, write-dev-plan), file paths (work/plan/), and generic prose. No corrupted 'dev-batch' or similar terminology found. Every agent-facing skill has its mirror updated in the same commit (FR-023 compliance verified)."
