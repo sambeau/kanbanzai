@@ -2,9 +2,11 @@ id: FEAT-01KQ7YQKMCM6T/spec-p38-spec-p38-f5-recursive-progress-rollup
 path: work/P38-plans-and-batches/P38-spec-p38-f5-recursive-progress-rollup.md
 type: spec
 title: "P38-F5: Recursive Progress Rollup — Specification"
-status: draft
+status: approved
 owner: FEAT-01KQ7YQKMCM6T
+approved_by: sambeau
+approved_at: "2026-04-28T01:40:30Z"
 content_hash: 77383da554acc1eed32e3fcff15d2a20980bdb891da5dc366583fecfcd8fd5fe
 created: "2026-04-28T01:40:18Z"
 created_by: sambeau
-updated: "2026-04-28T01:40:18Z"
+updated: "2026-04-28T01:40:30Z"
