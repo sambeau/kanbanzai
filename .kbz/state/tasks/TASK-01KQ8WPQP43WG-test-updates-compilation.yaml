@@ -1,0 +1,6 @@
+id: TASK-01KQ8WPQP43WG
+parent_feature: FEAT-01KQ7YQKEEHFY
+slug: test-updates-compilation
+name: Test Updates and Compilation Verification
+summary: "Update all test files to reference Batch, verify go build and go test pass, verify external compilation."
+status: queued
