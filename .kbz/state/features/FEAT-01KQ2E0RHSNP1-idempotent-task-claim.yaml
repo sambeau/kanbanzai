@@ -1,7 +1,7 @@
 id: FEAT-01KQ2E0RHSNP1
 slug: idempotent-task-claim
 name: Next Tool UX Improvements
-parent: P34-agent-workflow-ergonomics
+parent: B34-agent-workflow-ergonomics
 status: done
 review_cycle: "1"
 summary: "Two small improvements to next_tool.go: (1) Idempotent claim — return the assembled context packet with reclaimed: true instead of an error when next(id: TASK-...) is called for a task already in active status, recovering gracefully from timeout-induced double-claims. (2) Worktree path — add a worktree_path field to the nextContextToMap response when an active worktree exists; the value is already computed in assembleContext (actx.worktreePath) but never written to the response."

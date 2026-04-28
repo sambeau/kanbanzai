@@ -1,7 +1,7 @@
 id: FEAT-01KMT40GZSMHB
 slug: server-info-tool
 name: Server info tool
-parent: P7-developer-experience
+parent: B7-developer-experience
 status: done
 summary: "Add server_info MCP tool (core group, always registered) returning version, git_sha, build_time, go_version, binary_path, dirty, install_record, and in_sync. Introduce .kbz/last-install.yaml written after every build and a post-merge auto-install hook in the merge tool. Eliminates the stale-binary problem surfaced in the P6 retrospective."
 design: PROJECT/design-server-info-tool

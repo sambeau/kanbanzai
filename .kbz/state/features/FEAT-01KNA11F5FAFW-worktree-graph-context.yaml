@@ -1,7 +1,7 @@
 id: FEAT-01KNA11F5FAFW
 slug: worktree-graph-context
 name: Worktree Graph Context
-parent: P21-codebase-memory-integration
+parent: B21-codebase-memory-integration
 status: done
 review_cycle: "1"
 estimate: "3"

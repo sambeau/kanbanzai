@@ -1,7 +1,7 @@
 id: FEAT-01KQ7JDT341E8
 slug: kbz-delete
 name: kbz delete command
-parent: P37-file-names-and-actions
+parent: B37-file-names-and-actions
 status: done
 review_cycle: "1"
 summary: "New CLI/MCP command: kbz delete file deletes a work file and its document record using git rm. --force required for approved documents. Reports what was deleted. 17 AC tests, all passing."

@@ -1,7 +1,7 @@
 id: FEAT-01KPQ08YKHNS9
 slug: orchestration-docs
 name: Sub-agent orchestration documentation improvements
-parent: P25-agent-tooling-pipeline-quality
+parent: B25-agent-tooling-pipeline-quality
 status: done
 review_cycle: "1"
 summary: "Documentation-only changes: (1) add always-use-handoff rule to orchestrate-development/SKILL.md; (2) add dual-write requirement for skill changes to AGENTS.md; (3) fix entity tool description ambiguity for the parent field. Addresses proposal items P8, P9, P11."

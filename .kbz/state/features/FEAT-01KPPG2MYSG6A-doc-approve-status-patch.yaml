@@ -1,7 +1,7 @@
 id: FEAT-01KPPG2MYSG6A
 slug: doc-approve-status-patch
 name: doc approve patches Status in source file
-parent: P24-retro-recommendations
+parent: B24-retro-recommendations
 status: done
 review_cycle: "1"
 summary: "Make doc(action: approve) patch the Status field in the document's own Markdown file as a side effect of approval, so the file and the .kbz/state/ record stay in sync. Source: REC-03."

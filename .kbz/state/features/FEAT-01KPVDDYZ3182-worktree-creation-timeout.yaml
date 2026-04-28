@@ -1,7 +1,7 @@
 id: FEAT-01KPVDDYZ3182
 slug: worktree-creation-timeout
 name: Worktree creation timeout under load
-parent: P28-doc-intel-polish-workflow-reliability
+parent: B28-doc-intel-polish-workflow-reliability
 status: done
 review_cycle: "1"
 summary: "worktree(action: create) times out when the repository has many existing worktrees (~34+), likely due to git lock contention or git worktree list serialisation overhead. Profile the issue, add retry-with-backoff, and document the terminal + manual-wiring fallback as an explicit escape hatch. Sources: P27 Issue 3."

@@ -1,9 +1,0 @@
-id: P21-codebase-memory-integration
-slug: codebase-memory-integration
-name: Codebase Memory Integration
-status: done
-summary: "Integrate codebase_memory_mcp into the Kanbanzai workflow through a phased approach: Phase 1 adds portable role-scoped tool hints (config-driven, no external dependencies); Phase 2 adds worktree-aware graph project context (GraphProject field on worktree records, structured Code Graph section in handoff/next). Together these make graph-based code navigation the default for agents on feature branches without creating a hard dependency on codebase_memory_mcp."
-created: "2026-04-03T15:56:50Z"
-created_by: sambeau
-updated: "2026-04-15T11:16:19Z"
-next_feature_seq: 3

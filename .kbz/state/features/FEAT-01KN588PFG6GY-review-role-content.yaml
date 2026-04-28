@@ -1,7 +1,7 @@
 id: FEAT-01KN588PFG6GY
 slug: review-role-content
 name: Review role content
-parent: P16-skills-and-roles-3.0
+parent: B16-skills-and-roles-3.0
 status: done
 review_cycle: "1"
 summary: "Author role YAML files for the review hierarchy: reviewer (base), reviewer-conformance, reviewer-quality, reviewer-security, reviewer-testing. 5 files with inheritance, vocabulary, and anti-patterns. Design §4.3."

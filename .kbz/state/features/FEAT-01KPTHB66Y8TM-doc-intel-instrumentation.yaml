@@ -1,7 +1,7 @@
 id: FEAT-01KPTHB66Y8TM
 slug: doc-intel-instrumentation
 name: Doc intel access instrumentation
-parent: P27-doc-intel-adoption
+parent: B27-doc-intel-adoption
 status: done
 summary: "Add LastAccessedAt and RecentUseCount fields to KnowledgeEntry, AccessCount and LastAccessedAt to DocumentIndex and SectionIndex, increment counters on all read paths, add sort-by-recent to knowledge list, and extend doc audit with a Most Accessed table. Implements Fix 5."
 spec: FEAT-01KPTHB66Y8TM/specification-doc-intel-access-instrumentation

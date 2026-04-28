@@ -1,7 +1,7 @@
 id: FEAT-01KMKRQRRX3CC
 slug: init-command
 name: Init command
-parent: P3-kanbanzai-1.0
+parent: B3-kanbanzai-1.0
 status: done
 summary: "The kanbanzai init command: creates .kbz/config.yaml, installs Kanbanzai-managed skill files into .agents/skills/, records document roots, handles both new and existing projects without touching pre-existing files. Skill file content is authored by FEAT-01KMKRQSD1TKK (skills-content) — init embeds those files and writes them to the target project."
 design: FEAT-01KMKRQRRX3CC/design-init-command

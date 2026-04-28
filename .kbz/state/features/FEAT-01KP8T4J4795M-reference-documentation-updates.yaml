@@ -1,7 +1,7 @@
 id: FEAT-01KP8T4J4795M
 slug: reference-documentation-updates
 name: Reference Documentation Updates
-parent: P22-documentation-for-public-release
+parent: B22-documentation-for-public-release
 status: done
 review_cycle: "1"
 summary: "Update four existing reference documents through the editorial pipeline's Check → Style → Copyedit stages (skip Write and Edit — structure is sound). Documents: Schema Reference, MCP Tool Reference, Configuration Reference, Viewer Agents Guide. Defined in design §11. Can run in parallel with new document production."

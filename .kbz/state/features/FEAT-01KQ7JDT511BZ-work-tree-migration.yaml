@@ -1,7 +1,7 @@
 id: FEAT-01KQ7JDT511BZ
 slug: work-tree-migration
 name: Work tree migration
-parent: P38-plans-and-batches
+parent: B38-plans-and-batches
 status: developing
 summary: "Migration tooling for the 430 existing work files. Script reads document records, resolves owner to plan, computes target path using canonical template, emits kbz move commands. Triage report lists 28 unregistered files with recommended actions. Bulk migration executed in one atomic commit. Cleanup commit removes now-empty old type-first folders. Depends on F2 doc-type-and-filename-enforcement, F3 kbz-move, F4 kbz-delete."
 spec: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration

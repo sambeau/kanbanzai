@@ -3,7 +3,7 @@ path: work/design/p31-lifecycle-gate-hardening.md
 type: design
 title: "Design: Lifecycle Gate Hardening (P31)"
 status: approved
-owner: P31-lifecycle-gate-hardening
+owner: B31-lifecycle-gate-hardening
 approved_by: sambeau
 approved_at: "2026-04-23T15:53:19Z"
 content_hash: 3495c8d8119dfb0e09098d5ee4399547a721f26bfc21691df284d3d2d371d7d3

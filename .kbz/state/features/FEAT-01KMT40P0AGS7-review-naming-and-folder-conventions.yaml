@@ -1,7 +1,7 @@
 id: FEAT-01KMT40P0AGS7
 slug: review-naming-and-folder-conventions
 name: Review naming and folder conventions
-parent: P7-developer-experience
+parent: B7-developer-experience
 status: done
 summary: "Standardise review report naming to review-{id}-{slug}.md; establish work/reviews/ as the canonical folder for review artifacts distinct from work/reports/; migrate 5 existing review reports to the new convention."
 design: PROJECT/design-human-friendly-ids

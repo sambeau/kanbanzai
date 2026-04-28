@@ -1,7 +1,7 @@
 id: FEAT-01KN588PCVN4Y
 slug: role-system
 name: Role system
-parent: P16-skills-and-roles-3.0
+parent: B16-skills-and-roles-3.0
 status: done
 review_cycle: "1"
 summary: "YAML schema for roles with vocabulary, anti_patterns, tools, identity, and inherits fields. Extend inheritance resolution to merge vocabulary and anti-pattern lists. Storage in .kbz/roles/. Extends internal/context/ package. Design §3.1, §4."

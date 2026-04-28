@@ -1,7 +1,7 @@
 id: FEAT-01KMR8R4KCY5J
 slug: review-feature-group-tools
 name: Review feature group tools
-parent: P4-kanbanzai-2.0
+parent: B4-kanbanzai-2.0
 status: cancelled
 summary: "Review Track J (feature group tools) implementation against spec §17–§22, §30.10. Verify all consolidated feature group tools: planning (decompose, estimate, conflict), knowledge, git (worktree, merge, pr, branch, cleanup), documents (doc_intel), incidents, and checkpoints."
 tags:

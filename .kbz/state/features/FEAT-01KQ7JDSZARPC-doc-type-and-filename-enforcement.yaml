@@ -1,7 +1,7 @@
 id: FEAT-01KQ7JDSZARPC
 slug: doc-type-and-filename-enforcement
 name: Document type system and filename enforcement
-parent: P37-file-names-and-actions
+parent: B37-file-names-and-actions
 status: done
 review_cycle: "1"
 summary: "Document type system enforcement: type normalisation (specification→spec, retrospective→retro), filename and folder validation in SubmitDocument, legacy deserialisation. 23 AC tests, all passing."

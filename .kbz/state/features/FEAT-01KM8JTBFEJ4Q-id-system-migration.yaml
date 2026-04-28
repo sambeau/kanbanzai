@@ -1,7 +1,7 @@
 id: FEAT-01KM8JTBFEJ4Q
 slug: id-system-migration
 name: ID system migration
-parent: P2-phase-1-kernel
+parent: B2-phase-1-kernel
 status: in-progress
 summary: Replace sequential IDs with TSID13 and epic slugs
 created: "2026-03-21T16:14:26Z"

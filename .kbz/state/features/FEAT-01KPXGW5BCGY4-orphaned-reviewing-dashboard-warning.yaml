@@ -1,7 +1,7 @@
 id: FEAT-01KPXGW5BCGY4
 slug: orphaned-reviewing-dashboard-warning
 name: Orphaned reviewing feature dashboard warning
-parent: P31-lifecycle-gate-hardening
+parent: B31-lifecycle-gate-hardening
 status: done
 summary: "Add OrphanedReviewingFeatureCheck to the status tool's attention item assembler, surfacing features in reviewing status with no registered review report as warning-severity items at project, plan, and feature scope."
 spec: FEAT-01KPXGW5BCGY4/specification-spec-feat-orphaned-reviewing-dashboard-warning

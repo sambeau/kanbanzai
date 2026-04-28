@@ -1,9 +1,0 @@
-id: P36-kbz-cli-and-status
-slug: kbz-cli-and-status
-name: kbz CLI and Status Command
-status: proposed
-summary: "Rename the kanbanzai binary to kbz and extend kbz status to accept file paths and entity IDs, producing human-readable and machine-readable workflow summaries."
-created: "2026-04-25T17:35:28Z"
-created_by: sambeau
-updated: "2026-04-25T17:35:28Z"
-next_feature_seq: 5

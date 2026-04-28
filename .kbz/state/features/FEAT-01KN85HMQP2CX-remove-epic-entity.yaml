@@ -1,7 +1,7 @@
 id: FEAT-01KN85HMQP2CX
 slug: remove-epic-entity
 name: Remove Epic entity
-parent: P20-deprecation-cleanup
+parent: B20-deprecation-cleanup
 status: done
 review_cycle: "1"
 summary: "Delete all code, tests, and supporting structures for the deprecated Epic entity type, which was replaced by Plan in Phase 2. No live state exists; this is a pure code cleanup."

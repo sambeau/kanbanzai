@@ -1,7 +1,7 @@
 id: FEAT-01KQ7JDT11MH6
 slug: kbz-move
 name: kbz move command
-parent: P37-file-names-and-actions
+parent: B37-file-names-and-actions
 status: done
 review_cycle: "1"
 summary: "New CLI/MCP command: kbz move <file> <plan-id> relocates a file into a plan folder, renames to template, updates document record. kbz move <feature-display-id> <plan-id> re-parents a feature, moving all its documents, updating entity owner, and reallocating display ID in target plan. Uses git mv to preserve history."

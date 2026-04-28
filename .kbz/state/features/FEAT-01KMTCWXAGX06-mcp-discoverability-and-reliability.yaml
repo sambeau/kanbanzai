@@ -1,7 +1,7 @@
 id: FEAT-01KMTCWXAGX06
 slug: mcp-discoverability-and-reliability
 name: MCP discoverability and reliability
-parent: P9-mcp-discoverability
+parent: B9-mcp-discoverability
 status: done
 review_cycle: "1"
 summary: "Six improvements to the MCP server to make agent interactions more reliable: tool annotations (readOnly/destructive/idempotent/openWorld hints on all 22 tools + canary test), human-readable tool titles, revised descriptions that steer agents away from shell commands and toward MCP tools, response nudges in finish when retro signals or knowledge entries are absent, doc refresh action (fix stale content hash without re-registering), and doc chain action (expose existing SupersessionChain service method)."

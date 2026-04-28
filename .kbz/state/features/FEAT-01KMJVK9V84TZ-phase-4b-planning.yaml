@@ -1,7 +1,7 @@
 id: FEAT-01KMJVK9V84TZ
 slug: phase-4b-planning
 name: Phase 4b planning
-parent: P1-phase-4-orchestration
+parent: B1-phase-4-orchestration
 status: done
 review_cycle: "1"
 summary: "Write the Phase 4b specification and implementation plan, using Phase 4a orchestration tools to manage the work."

@@ -1,7 +1,7 @@
 id: FEAT-01KN588PDPE8V
 slug: binding-registry
 name: Binding registry
-parent: P16-skills-and-roles-3.0
+parent: B16-skills-and-roles-3.0
 status: done
 review_cycle: "1"
 summary: "stage-bindings.yaml schema with stage-to-role-to-skill mappings, orchestration patterns, prerequisites, effort_budget, document_template, human_gate, max_review_cycles, sub_agents config. Loader and stage lookup API. Design §3.3."

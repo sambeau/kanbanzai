@@ -1,7 +1,7 @@
 id: FEAT-01KN588PF5P5Y
 slug: base-and-authoring-role-content
 name: Base and authoring role content
-parent: P16-skills-and-roles-3.0
+parent: B16-skills-and-roles-3.0
 status: done
 review_cycle: "1"
 summary: "Author role YAML files for base, architect, spec-author, implementer (abstract), implementer-go, researcher, documenter, and orchestrator. 8 files with vocabulary, anti-patterns, tools, and identity fields. Design §4.1, §4.2, §4.4."

@@ -1,7 +1,7 @@
 id: FEAT-01KMTJH8ZDG2W
 slug: plan-doc-naming-convention
 name: Plan doc naming convention
-parent: P10-review-and-doc-currency
+parent: B10-review-and-doc-currency
 status: done
 summary: "Establish P{N}- prefix naming convention for plan document filenames. Rename existing plan documents and update all cross-references."
 created: "2026-03-28T15:55:49Z"

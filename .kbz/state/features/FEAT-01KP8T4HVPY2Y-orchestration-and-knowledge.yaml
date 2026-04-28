@@ -1,7 +1,7 @@
 id: FEAT-01KP8T4HVPY2Y
 slug: orchestration-and-knowledge
 name: Orchestration and Knowledge
-parent: P22-documentation-for-public-release
+parent: B22-documentation-for-public-release
 status: done
 review_cycle: "1"
 summary: "Produce the Orchestration and Knowledge document (docs/orchestration-and-knowledge.md) — technical depth for agentic developers. Covers roles, skills, context assembly, task dispatch, conflict awareness, knowledge system, merge gates, concurrency. Purpose, audience, structure defined in design §9. Full editorial pipeline with advisory checkpoints. Depends on: Workflow Overview."

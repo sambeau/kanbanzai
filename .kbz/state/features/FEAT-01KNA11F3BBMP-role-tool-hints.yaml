@@ -1,7 +1,7 @@
 id: FEAT-01KNA11F3BBMP
 slug: role-tool-hints
 name: Role-Scoped Tool Hints
-parent: P21-codebase-memory-integration
+parent: B21-codebase-memory-integration
 status: done
 review_cycle: "1"
 estimate: "3"

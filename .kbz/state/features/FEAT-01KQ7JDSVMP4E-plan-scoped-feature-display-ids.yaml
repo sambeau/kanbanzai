@@ -1,7 +1,7 @@
 id: FEAT-01KQ7JDSVMP4E
 slug: plan-scoped-feature-display-ids
 name: Plan-scoped feature display IDs
-parent: P37-file-names-and-actions
+parent: B37-file-names-and-actions
 status: done
 review_cycle: "1"
 summary: "Add plan-scoped human-friendly display IDs for features (P24-F3 format). Plan state gains next_feature_seq counter; feature state gains display_id field. All tools accept P24-F3 as input and resolve to canonical FEAT-TSID13. CLI displays P24-F3 everywhere. Features must have a parent plan. 20 AC tests, all passing."

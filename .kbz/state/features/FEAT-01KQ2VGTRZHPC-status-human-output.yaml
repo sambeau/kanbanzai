@@ -1,7 +1,7 @@
 id: FEAT-01KQ2VGTRZHPC
 slug: status-human-output
 name: Status command human output
-parent: P36-kbz-cli-and-status
+parent: B36-kbz-cli-and-status
 status: proposed
 summary: "Implement the human-readable output for kbz status. Includes: TTY detection (colour and Unicode symbols when TTY, ASCII fallbacks when piped), and all five entity views — unregistered document, registered document with owner, feature, plan, and project overview. Replaces the current thin stub with the full prose layout described in the design (§5.5)."
 design: work/design/kbz-cli-and-binary-rename.md

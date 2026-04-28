@@ -1,7 +1,7 @@
 id: FEAT-01KMKRQV025FA
 slug: public-schema-interface
 name: Public schema interface
-parent: P3-kanbanzai-1.0
+parent: B3-kanbanzai-1.0
 status: done
 summary: "Make the .kbz schema a stable public interface: exportable Go types and parsing for external consumers, generated JSON Schema for non-Go consumers, schema versioning and compatibility policy. Needs its own design document."
 design: FEAT-01KMKRQV025FA/design-public-schema-interface

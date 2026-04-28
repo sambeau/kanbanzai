@@ -1,7 +1,7 @@
 id: FEAT-01KMT58TV8V9C
 slug: decompose-precondition-gates
 name: Decompose precondition gates
-parent: P8-decompose-reliability
+parent: B8-decompose-reliability
 status: done
 summary: Add spec approval status check to decompose propose (hard error if spec is draft). Add document intelligence index content check and remove the section-header fallback path (hard error with index_repository instruction if index has no content for the spec). Tests for both error paths.
 design: PROJECT/design-decompose-reliability

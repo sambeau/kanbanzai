@@ -1,7 +1,7 @@
 id: FEAT-01KN588PETZQE
 slug: freshness-tracking
 name: Freshness tracking
-parent: P16-skills-and-roles-3.0
+parent: B16-skills-and-roles-3.0
 status: done
 review_cycle: "1"
 summary: "last_verified metadata field for role and skill files. Health tool integration to flag stale content (configurable window, default 30 days). Staleness warnings in assembled context metadata. Design §6.4."

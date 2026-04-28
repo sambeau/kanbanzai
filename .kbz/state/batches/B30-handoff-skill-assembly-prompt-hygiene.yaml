@@ -1,0 +1,10 @@
+id: B30-handoff-skill-assembly-prompt-hygiene
+slug: handoff-skill-assembly-prompt-hygiene
+name: Handoff Skill Assembly and Prompt Hygiene
+status: done
+summary: "Fix the handoff pipeline to load sub-agent skills (implement-task) when a sub-agent role is passed, rather than always loading the orchestrator skill (orchestrate-development). Update implement-task SKILL.md to replace heredoc with write_file as the sole recommended file-write method."
+design: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene
+created: "2026-04-23T11:45:55Z"
+created_by: sambeau
+updated: "2026-04-25T12:11:00Z"
+next_feature_seq: 2

@@ -1,7 +1,7 @@
 id: FEAT-01KMZA33G1FFR
 slug: specification-skill
 name: Specification skill
-parent: P12-agent-onboarding
+parent: B12-agent-onboarding
 status: done
 summary: "New kanbanzai-specification skill covering the specification stage: roles, process, quality bar, acceptance criteria guidance."
 created: "2026-03-30T12:04:28Z"

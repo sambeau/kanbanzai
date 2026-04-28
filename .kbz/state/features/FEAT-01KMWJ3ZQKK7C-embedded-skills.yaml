@@ -1,7 +1,7 @@
 id: FEAT-01KMWJ3ZQKK7C
 slug: embedded-skills
 name: Embedded skills
-parent: P11-fresh-install-experience
+parent: B11-fresh-install-experience
 status: done
 review_cycle: "1"
 summary: "Add kanbanzai-review and kanbanzai-plan-review as two new embedded skills installed by kbz init. Update kanbanzai-workflow to cover reviewing/needs-rework lifecycle states. Update kanbanzai-documents to reflect the new document layout. Update doc-currency health checker to scan .agents/skills/kanbanzai-*/ instead of .skills/."

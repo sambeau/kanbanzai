@@ -1,7 +1,7 @@
 id: FEAT-01KPVDDYSEK8P
 slug: doc-intel-register-workflow
 name: Doc-intel register workflow friction
-parent: P28-doc-intel-polish-workflow-reliability
+parent: B28-doc-intel-polish-workflow-reliability
 status: done
 review_cycle: "1"
 summary: "Two improvements to reduce round-trips in the classify-on-register workflow. (1) Include content_hash and section outline directly in the classification_nudge returned by doc register, shrinking the workflow from 3 tool calls to 2 (§5.4). (2) Audit all MCP parameter structs that are decoded via json.Unmarshal to ensure they have explicit json: tags alongside any yaml: tags; add a test or vet check to prevent future drift (§5.5). Sources: Pilot §5.4, §5.5."

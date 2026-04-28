@@ -3,7 +3,7 @@ path: work/design/p33-cohort-merge-checkpoints.md
 type: design
 title: Cohort-Based Merge Checkpoints Design
 status: approved
-owner: P33-cohort-merge-checkpoints
+owner: B33-cohort-merge-checkpoints
 approved_by: sambeau
 approved_at: "2026-04-23T14:55:59Z"
 content_hash: 5f7c49867a22ea24992244f8cb20fe441fa9524df57064dac540b9ea22851e21

@@ -3,7 +3,7 @@ path: work/design/p32-doc-intel-classification-pipeline-hardening.md
 type: design
 title: "P32: Doc-Intel Classification Pipeline Hardening — Pipeline Enrichment and Approval Gate"
 status: approved
-owner: P32-doc-intel-classification-pipeline-hardening
+owner: B32-doc-intel-classification-pipeline-hardening
 approved_by: sambeau
 approved_at: "2026-04-23T14:53:35Z"
 content_hash: a1f832f00cbc84d18f6425aa6f5961612a96e69611a411da92c8584265ccb38d

@@ -1,0 +1,9 @@
+id: B10-review-and-doc-currency
+slug: review-and-doc-currency
+name: Review and doc currency
+status: done
+summary: "Close the review workflow gap and detect documentation drift. Three coordinated improvements: (A) plan-level review SKILL to capture the improvised review procedure as a repeatable checklist routed through Kanbanzai tools; (B) review tasks as first-class workflow entities so reviews get context assembly, nudges, and retro signal capture; (C) documentation currency health check to detect stale tool references in SKILL files and missing AGENTS.md updates after plan completion. Motivated by post-P9 feedback analysis (work/research/post-p9-feedback-analysis.md)."
+created: "2026-03-28T15:39:53Z"
+created_by: sambeau
+updated: "2026-03-28T16:30:02Z"
+next_feature_seq: 5

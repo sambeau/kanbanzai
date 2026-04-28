@@ -1,9 +1,0 @@
-id: P9-mcp-discoverability
-slug: mcp-discoverability
-name: MCP discoverability
-status: done
-summary: "Improve MCP server discoverability and agent reliability: tool annotations (readOnly/destructive/idempotent/openWorld hints) on all 22 tools, human-readable titles, revised descriptions that steer agents toward MCP tools, response nudges in finish, doc refresh action, and doc chain action."
-created: "2026-03-28T14:14:29Z"
-created_by: sambeau
-updated: "2026-04-02T18:12:29Z"
-next_feature_seq: 2

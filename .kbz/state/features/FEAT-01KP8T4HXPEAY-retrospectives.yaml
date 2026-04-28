@@ -1,7 +1,7 @@
 id: FEAT-01KP8T4HXPEAY
 slug: retrospectives
 name: Retrospectives
-parent: P22-documentation-for-public-release
+parent: B22-documentation-for-public-release
 status: done
 review_cycle: "1"
 summary: "Produce the Retrospectives document (docs/retrospectives.md) — standalone guide to the retrospective system. Covers signal categories, recording, synthesis, report generation. Purpose, audience, structure defined in design §10. Full editorial pipeline with advisory checkpoints. Can run in parallel with Orchestration and Knowledge."

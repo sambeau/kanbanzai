@@ -3,7 +3,7 @@ path: work/design/p29-state-store-read-performance.md
 type: design
 title: "Design: State Store Read Path Performance (P29)"
 status: approved
-owner: P29-state-store-read-performance
+owner: B29-state-store-read-performance
 approved_by: sambeau
 approved_at: "2026-04-23T15:51:53Z"
 content_hash: 106c270689e3a15b4b12ca13c9b5ff19719fb7dc7998b6dc05c986bda01ac358

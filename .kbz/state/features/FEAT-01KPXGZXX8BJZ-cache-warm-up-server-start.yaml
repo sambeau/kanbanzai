@@ -1,7 +1,7 @@
 id: FEAT-01KPXGZXX8BJZ
 slug: cache-warm-up-server-start
 name: Cache warm-up at server start
-parent: P29-state-store-read-performance
+parent: B29-state-store-read-performance
 status: done
 review_cycle: "1"
 summary: "Call RebuildCache() immediately after SetCache() in internal/mcp/server.go so the SQLite cache is always warm before the first tool call is handled. Failure is best-effort: log and continue without cache rather than aborting startup."

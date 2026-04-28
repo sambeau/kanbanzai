@@ -1,7 +1,7 @@
 id: FEAT-01KPPG1MF4DAT
 slug: ac-pattern-and-decompose
 name: AC pattern recognition and decompose hardening
-parent: P24-retro-recommendations
+parent: B24-retro-recommendations
 status: done
 review_cycle: "1"
 summary: "Teach internal/docint to recognise the **AC-NN.** and - [ ] **AC-NN.** acceptance-criteria patterns used in every project spec, and make decompose propose fail with a clear diagnostic (rather than silently generating heading-based tasks) when the spec is indexed but contains no AC fragments. Source: REC-01."

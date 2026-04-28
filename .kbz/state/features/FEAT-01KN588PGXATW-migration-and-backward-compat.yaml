@@ -1,7 +1,7 @@
 id: FEAT-01KN588PGXATW
 slug: migration-and-backward-compat
 name: Migration and backward compat
-parent: P16-skills-and-roles-3.0
+parent: B16-skills-and-roles-3.0
 status: done
 review_cycle: "1"
 summary: "File restructuring from current locations (.skills/, .kbz/context/roles/) to new (.kbz/skills/, .kbz/roles/). Backward compatibility during transition. Profile and handoff tool extensions to support both paths. Design §7."

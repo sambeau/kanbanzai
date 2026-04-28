@@ -1,7 +1,7 @@
 id: FEAT-01KN4ZPXXEG1F
 slug: evaluation-baseline
 name: Evaluation baseline
-parent: P15-kanbanzai-25-infrastructure-hardening
+parent: B15-kanbanzai-25-infrastructure-hardening
 status: done
 review_cycle: "1"
 summary: Create 15-20 structured workflow scenario files in work/eval/ as a measurement baseline for comparing pre- and post-V3.0 agent behaviour.

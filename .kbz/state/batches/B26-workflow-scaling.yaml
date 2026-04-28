@@ -1,0 +1,15 @@
+id: B26-workflow-scaling
+slug: workflow-scaling
+name: Workflow Scaling
+status: done
+summary: Investigations and improvements to keep the Kanbanzai workflow healthy as plans grow larger and more parallel.
+created: "2026-04-21T16:53:49Z"
+created_by: sambeau
+updated: "2026-04-23T14:59:05Z"
+next_feature_seq: 2
+overrides:
+  -
+    from_status: proposed
+    reason: "proposed → active shortcut: 1 feature(s) in post-designing state at transition time"
+    timestamp: "2026-04-23T14:57:33Z"
+    to_status: active

@@ -1,7 +1,7 @@
 id: FEAT-01KN588PGJNM0
 slug: review-skill-content
 name: Review skill content
-parent: P16-skills-and-roles-3.0
+parent: B16-skills-and-roles-3.0
 status: done
 review_cycle: "1"
 summary: "Author SKILL.md files for review-code, orchestrate-review, and review-plan. Includes specialist composition model, finding classification, evidence-backed verdicts, and review collation. Design §5.3, §5.4."

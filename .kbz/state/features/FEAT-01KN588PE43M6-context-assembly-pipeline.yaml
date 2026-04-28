@@ -1,7 +1,7 @@
 id: FEAT-01KN588PE43M6
 slug: context-assembly-pipeline
 name: Context assembly pipeline
-parent: P16-skills-and-roles-3.0
+parent: B16-skills-and-roles-3.0
 status: done
 review_cycle: "1"
 summary: "10-step assembly pipeline integrating roles, skills, and bindings into attention-curve-ordered context. Token budget estimation (warn 40%, refuse 60%, progressive disclosure layers). Tool subset soft filtering. Extends handoff tool. Design §6.1, §6.2, §3.4."

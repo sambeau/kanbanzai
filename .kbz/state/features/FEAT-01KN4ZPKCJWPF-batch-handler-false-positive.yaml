@@ -1,7 +1,7 @@
 id: FEAT-01KN4ZPKCJWPF
 slug: batch-handler-false-positive
 name: Batch handler false positive
-parent: P15-kanbanzai-25-infrastructure-hardening
+parent: B15-kanbanzai-25-infrastructure-hardening
 status: done
 review_cycle: "1"
 summary: "Fix ExecuteBatch to detect tool-result errors returned as (data, nil) and count them as failures rather than successes."

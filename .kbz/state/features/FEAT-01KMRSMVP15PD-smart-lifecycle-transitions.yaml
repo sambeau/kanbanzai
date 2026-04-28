@@ -1,7 +1,7 @@
 id: FEAT-01KMRSMVP15PD
 slug: smart-lifecycle-transitions
 name: Smart lifecycle transitions
-parent: P6-workflow-quality-and-review
+parent: B6-workflow-quality-and-review
 status: done
 summary: "Add opt-in 'advance' parameter to feature status updates that walks through intermediate lifecycle states when document prerequisites are satisfied. Add ValidNextStates function and include valid transitions in all lifecycle error messages. Design: work/design/smart-lifecycle-transitions.md"
 design: P6-workflow-quality-and-review/design-smart-lifecycle-transitions

@@ -1,7 +1,7 @@
 id: FEAT-01KN588PDBW85
 slug: skill-system
 name: Skill system
-parent: P16-skills-and-roles-3.0
+parent: B16-skills-and-roles-3.0
 status: done
 review_cycle: "1"
 summary: "SKILL.md format with attention-curve section ordering. Frontmatter schema (name, description.expert/natural, triggers, roles, stage, constraint_level). Directory structure .kbz/skills/*/SKILL.md with references/ and scripts/ subdirectories. Skill loader. Design §3.2, §5."
