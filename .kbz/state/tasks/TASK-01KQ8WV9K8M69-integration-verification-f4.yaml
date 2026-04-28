@@ -1,0 +1,6 @@
+id: TASK-01KQ8WV9K8M69
+parent_feature: FEAT-01KQ7YQKHK2GV
+slug: integration-verification-f4
+name: Integration Verification F4
+summary: "Write integration tests verifying both P38-F4 features work together end-to-end: B-prefix display IDs and four-level gate lookup. Verify all 13 ACs pass."
+status: queued
