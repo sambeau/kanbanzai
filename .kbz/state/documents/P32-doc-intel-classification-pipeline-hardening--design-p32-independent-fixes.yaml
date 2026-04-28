@@ -1,5 +1,5 @@
 id: P32-doc-intel-classification-pipeline-hardening/design-p32-independent-fixes
-path: work/design/p32-independent-fixes.md
+path: work/B32-doc-intel-classification-pipeline-hardening/B32-design-p32-independent-fixes.md
 type: design
 title: "P32: Doc-Intel Classification Pipeline Hardening — Independent Fixes (CLI Identity + JSON Tag Audit)"
 status: approved

@@ -1,5 +1,5 @@
 id: P32-doc-intel-classification-pipeline-hardening/design-p32-doc-intel-classification-pipeline-hardening
-path: work/design/p32-doc-intel-classification-pipeline-hardening.md
+path: work/B32-doc-intel-classification-pipeline-hardening/B32-design-p32-doc-intel-classification-pipeline-hardening.md
 type: design
 title: "P32: Doc-Intel Classification Pipeline Hardening — Pipeline Enrichment and Approval Gate"
 status: approved

@@ -1,5 +1,5 @@
 id: P29-state-store-read-performance/design-p29-state-store-read-performance
-path: work/design/p29-state-store-read-performance.md
+path: work/B29-state-store-read-performance/B29-design-p29-state-store-read-performance.md
 type: design
 title: "Design: State Store Read Path Performance (P29)"
 status: approved

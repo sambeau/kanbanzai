@@ -1,5 +1,5 @@
 id: FEAT-01KPXH0WSTHAM/specification-feat-01kpxh0wstham-cache-eviction-on-delete
-path: work/specs/feat-01kpxh0wstham-cache-eviction-on-delete.md
+path: work/B29-state-store-read-performance/B29-F3-spec-feat-01kpxh0wstham-cache-eviction-on-delete.md
 type: specification
 title: "Specification: Cache Eviction on Entity Delete (FEAT-01KPXH0WSTHAM)"
 status: approved

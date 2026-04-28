@@ -1,5 +1,5 @@
 id: FEAT-01KPXH0F5GFNV/specification-feat-01kpxh0f5gfnv-cache-first-read-path
-path: work/specs/feat-01kpxh0f5gfnv-cache-first-read-path.md
+path: work/B29-state-store-read-performance/B29-F2-spec-feat-01kpxh0f5gfnv-cache-first-read-path.md
 type: specification
 title: "Specification: Cache-First Read Path in EntityService (FEAT-01KPXH0F5GFNV)"
 status: approved

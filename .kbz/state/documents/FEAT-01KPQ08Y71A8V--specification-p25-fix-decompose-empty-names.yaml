@@ -1,5 +1,5 @@
 id: FEAT-01KPQ08Y71A8V/specification-p25-fix-decompose-empty-names
-path: work/spec/p25-fix-decompose-empty-names.md
+path: work/B25-agent-tooling-pipeline-quality/B25-F2-spec-p25-fix-decompose-empty-names.md
 type: specification
 title: "Specification: Fix empty task names in decompose propose"
 status: approved
