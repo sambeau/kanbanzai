@@ -3,4 +3,9 @@ parent_feature: FEAT-01KQ7YQKPT8HF
 slug: terminology-consistency-sweep
 name: Terminology Consistency Sweep
 summary: "Audit and correct all MCP tool response messages, error strings, commit messages, and side-effect type names. Rename SideEffectPlanAutoAdvanced to SideEffectBatchAutoAdvanced, add new SideEffectPlanAutoAdvanced for plan auto-advance. Verify zero false plan references to batch entities."
-status: ready
+status: done
+files_planned:
+  - internal/mcp/status_tool.go
+  - internal/mcp/sideeffect.go
+completed: "2026-04-28T10:15:57Z"
+completion_summary: "Terminology consistency sweep across all MCP tools — batch for execution containers, plan for strategic entities."

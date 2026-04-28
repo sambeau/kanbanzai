@@ -3,4 +3,9 @@ parent_feature: FEAT-01KQ7YQKPT8HF
 slug: status-batch-dashboard
 name: Status Dashboard — Batch Dashboard
 summary: "Extend status(B{n}-slug) to render batch dashboard with batch status, feature statuses, task counts, doc gaps, attention items, and B{n}-F{n} feature display IDs. Equivalent to pre-P38 plan dashboard shape with batch terminology."
-status: ready
+status: done
+files_planned:
+  - internal/mcp/status_tool.go
+  - internal/mcp/status_tool_test.go
+completed: "2026-04-28T10:15:57Z"
+completion_summary: Implemented batch dashboard with renamed terminology and correct rollup dispatch.
