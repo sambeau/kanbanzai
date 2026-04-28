@@ -3,9 +3,14 @@ parent_feature: FEAT-01KQ7YQKHK2GV
 slug: four-level-doc-gate-inheritance
 name: Four-Level Document Gate Inheritance
 summary: "Extend document gate evaluator from three to four lookup levels: feature → batch → grandparent plan. Add GetEntity to gate.EntityService interface. Covers REQ-007 through REQ-013 and AC-007 through AC-013."
-status: active
+status: done
 estimate: "5"
+files_planned:
+  - internal/service/prereq.go
+  - internal/service/prereq_test.go
+completed: "2026-04-28T09:32:39Z"
 claimed_at: "2026-04-28T09:29:41Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-28T09:29:41Z"
 dispatched_by: sambeau
+completion_summary: "Extended document gate evaluation from three to four lookup levels. Updated checkDocumentGate in prereq.go to accept entitySvc parameter and add Level 4 (grandparent plan documents). Added grandparentPlanID helper that resolves a batch's parent plan from its state. Updated all callers. Added tests for grandparent plan gate inheritance, standalone batch fallback, dangling parent ref, and all three document types."
