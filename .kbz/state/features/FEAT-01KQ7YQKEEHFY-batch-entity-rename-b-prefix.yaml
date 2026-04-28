@@ -2,7 +2,7 @@ id: FEAT-01KQ7YQKEEHFY
 slug: batch-entity-rename-b-prefix
 name: Batch Entity Rename and B-Prefix IDs
 parent: P38-plans-and-batches
-status: dev-planning
+status: developing
 summary: "Rename the existing plan entity to batch throughout the codebase (model, service, state store). Introduce B{n}-{slug} IDs for new batches and backward-compatible resolution of legacy P{n} references to batch IDs during a transition period."
 spec: FEAT-01KQ7YQKEEHFY/spec-p38-spec-p38-f3-batch-entity-rename-b-prefix
 dev_plan: FEAT-01KQ7YQKEEHFY/dev-plan-p38-dev-plan-p38-f3-batch-entity-rename-b-prefix

@@ -4,3 +4,6 @@ slug: batch-rollup-tests
 name: Unit tests for ComputeBatchRollup
 summary: "Test basic aggregation, not-planned/duplicate exclusion, standalone batch parity with legacy plan rollup, empty batch zero-value."
 status: queued
+estimate: "3"
+depends_on:
+  - TASK-01KQ8X04HKJJ6

@@ -4,3 +4,6 @@ slug: recursive-plan-rollup-tests
 name: Unit tests for recursive ComputePlanRollup
 summary: "Test two-child-batch aggregation, deep tree, mixed children, three-level tree, empty plan, sibling isolation, and verify ComputeFeatureRollup unchanged."
 status: queued
+estimate: "3"
+depends_on:
+  - TASK-01KQ8X04KXZB9

@@ -4,3 +4,4 @@ slug: rename-plan-to-batch-rollup
 name: Rename ComputePlanRollup to ComputeBatchRollup
 summary: Rename existing ComputePlanRollup to ComputeBatchRollup with identical logic. Introduce BatchRollup struct with same fields as current PlanRollup. Update internal callers in estimate_tool.go and status_tool.go.
 status: queued
+estimate: "2"
