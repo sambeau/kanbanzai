@@ -3,5 +3,22 @@ parent_feature: FEAT-01KQ7YQKEEHFY
 slug: model-validation-rename
 name: Model and Validation Layer Rename
 summary: "Rename Plan struct to Batch, PlanStatus to BatchStatus, add IsBatchID/ParseBatchID, add EntityKindBatch, rename EntityPlan to EntityBatch in validate package."
-status: ready
+status: done
 estimate: "3"
+files_planned:
+  - internal/model/entities.go
+  - internal/validate/lifecycle.go
+  - internal/storage/entity_store.go
+  - internal/service/plans.go
+  - internal/service/entities.go
+  - internal/service/strategic_plans.go
+  - internal/health/entity_consistency.go
+  - internal/mcp/entity_tool.go
+  - kbzschema/types.go
+completed: "2026-04-28T09:05:00Z"
+claimed_at: "2026-04-28T08:38:09Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-28T08:38:09Z"
+dispatched_by: sambeau
+completion_summary: "Renamed Plan struct to Batch, PlanStatus to BatchStatus, added EntityKindBatch, added IsBatchID/ParseBatchID functions, updated validate/lifecycle.go with EntityBatch, kbzschema/types.go with Batch struct, storage entity_store.go with batches/ directory. All backward compat aliases kept (EntityKindPlan, PlanStatus, Plan, IsPlanID, ParsePlanID, EntityPlan)."
+verification: go build ./... compiles successfully
