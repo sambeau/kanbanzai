@@ -1,0 +1,6 @@
+id: TASK-01KQ8X04S4ACH
+parent_feature: FEAT-01KQ7YQKMCM6T
+slug: batch-rollup-tests
+name: Unit tests for ComputeBatchRollup
+summary: "Test basic aggregation, not-planned/duplicate exclusion, standalone batch parity with legacy plan rollup, empty batch zero-value."
+status: queued
