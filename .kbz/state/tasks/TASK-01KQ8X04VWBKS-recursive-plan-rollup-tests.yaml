@@ -1,0 +1,6 @@
+id: TASK-01KQ8X04VWBKS
+parent_feature: FEAT-01KQ7YQKMCM6T
+slug: recursive-plan-rollup-tests
+name: Unit tests for recursive ComputePlanRollup
+summary: "Test two-child-batch aggregation, deep tree, mixed children, three-level tree, empty plan, sibling isolation, and verify ComputeFeatureRollup unchanged."
+status: queued
