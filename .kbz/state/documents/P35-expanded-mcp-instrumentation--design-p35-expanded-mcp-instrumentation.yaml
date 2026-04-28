@@ -2,9 +2,11 @@ id: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation
 path: work/design/p35-expanded-mcp-instrumentation.md
 type: design
 title: Expanded MCP Instrumentation
-status: draft
+status: approved
 owner: P35-expanded-mcp-instrumentation
-content_hash: 237c2a2f29a188d871c46951594d83bfa6569df7391d9888c4ab0463bb1c657c
+approved_by: sambeau
+approved_at: "2026-04-28T12:00:42Z"
+content_hash: 161f83279b24b50f3df16063be84fce2933745938f259a344f42daaecd8e751a
 created: "2026-04-25T15:41:25Z"
 created_by: sambeau
-updated: "2026-04-25T15:41:25Z"
+updated: "2026-04-28T12:00:42Z"
