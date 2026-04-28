@@ -4,3 +4,4 @@ slug: update-agents
 name: Update AGENTS.md
 summary: "Update entity hierarchy to Plan to Batch to Feature to Task. Update repo structure. Add plan-vs-batch guidance. Spec: REQ-013-014."
 status: ready
+estimate: "2"

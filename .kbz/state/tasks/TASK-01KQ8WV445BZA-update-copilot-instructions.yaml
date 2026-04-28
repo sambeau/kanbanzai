@@ -4,3 +4,4 @@ slug: update-copilot-instructions
 name: Update copilot-instructions.md
 summary: "Update .github/copilot-instructions.md skills/roles tables and Planning skill entry. Spec: REQ-015-016."
 status: ready
+estimate: "1"

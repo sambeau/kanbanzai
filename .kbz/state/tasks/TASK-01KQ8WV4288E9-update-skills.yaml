@@ -4,3 +4,4 @@ slug: update-skills
 name: Update skill SKILL.md files
 summary: "Review all 18 .kbz/skills/**/SKILL.md files. Update write-design, write-spec, orchestrate-development, orchestrate-review, decompose-feature. Spec: REQ-005-010."
 status: ready
+estimate: "3"

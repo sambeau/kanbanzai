@@ -4,3 +4,4 @@ slug: update-stage-bindings
 name: Update stage bindings
 summary: "Update .kbz/stage-bindings.yaml entity type refs. Verify plan-reviewing stage stays as plan (strategic). Spec: REQ-011-012."
 status: ready
+estimate: "1"
