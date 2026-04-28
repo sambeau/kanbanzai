@@ -3,11 +3,16 @@ parent_feature: FEAT-01KQ7YQKMCM6T
 slug: batch-rollup-tests
 name: Unit tests for ComputeBatchRollup
 summary: "Test basic aggregation, not-planned/duplicate exclusion, standalone batch parity with legacy plan rollup, empty batch zero-value."
-status: active
+status: done
 estimate: "3"
 depends_on:
   - TASK-01KQ8X04HKJJ6
+files_planned:
+  - internal/service/estimation_rollup_test.go
+completed: "2026-04-28T09:40:47Z"
 claimed_at: "2026-04-28T09:32:12Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-28T09:32:12Z"
 dispatched_by: sambeau
+completion_summary: "Added unit tests for ComputeBatchRollup: empty batch (nil FeatureTotal/0 Progress), task total with estimate fallback, progress with not-planned task exclusion."
+verification: All 3 ComputeBatchRollup tests pass
