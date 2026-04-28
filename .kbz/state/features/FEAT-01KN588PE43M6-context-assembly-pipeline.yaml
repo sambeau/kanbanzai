@@ -10,7 +10,7 @@ spec: FEAT-01KN5-88PE43M6/specification-30-context-assembly-pipeline
 dev_plan: FEAT-01KN588PE43M6/dev-plan-30-context-assembly-pipeline
 created: "2026-04-01T19:28:00Z"
 created_by: sambeau
-display_id: P16-F4
+display_id: B16-F4
 overrides:
   -
     from_status: reviewing

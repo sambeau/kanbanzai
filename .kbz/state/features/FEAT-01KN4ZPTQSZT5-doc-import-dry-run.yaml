@@ -9,7 +9,7 @@ spec: FEAT-01KN4ZPTQSZT5/specification-doc-import-dry-run
 dev_plan: FEAT-01KN4ZPTQSZT5/dev-plan-doc-import-dry-run-plan
 created: "2026-04-01T16:58:26Z"
 created_by: sambeau
-display_id: P15-F5
+display_id: B15-F5
 overrides:
   -
     from_status: reviewing

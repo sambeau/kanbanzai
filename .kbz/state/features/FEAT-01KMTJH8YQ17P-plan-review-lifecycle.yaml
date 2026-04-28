@@ -6,4 +6,4 @@ status: done
 summary: "Add a reviewing state to the Plan lifecycle state machine (active → reviewing → done), removing the active → done shortcut. Plans must pass through review."
 created: "2026-03-28T15:55:49Z"
 created_by: sambeau
-display_id: P10-F2
+display_id: B10-F2

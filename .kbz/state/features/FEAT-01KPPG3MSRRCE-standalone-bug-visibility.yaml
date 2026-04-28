@@ -10,7 +10,7 @@ spec: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility
 dev_plan: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility
 created: "2026-04-20T22:27:51Z"
 created_by: sambeau
-display_id: P24-F3
+display_id: B24-F3
 overrides:
   -
     from_status: reviewing

@@ -7,7 +7,7 @@ review_cycle: "1"
 summary: "Update four existing reference documents through the editorial pipeline's Check → Style → Copyedit stages (skip Write and Edit — structure is sound). Documents: Schema Reference, MCP Tool Reference, Configuration Reference, Viewer Agents Guide. Defined in design §11. Can run in parallel with new document production."
 created: "2026-04-15T14:53:44Z"
 created_by: sambeau
-display_id: P22-F7
+display_id: B22-F7
 overrides:
   -
     from_status: specifying

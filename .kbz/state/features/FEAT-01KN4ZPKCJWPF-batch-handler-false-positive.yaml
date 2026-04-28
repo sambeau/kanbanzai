@@ -9,7 +9,7 @@ spec: FEAT-01KN4ZPKCJWPF/specification-batch-handler-false-positive
 dev_plan: FEAT-01KN4ZPKCJWPF/dev-plan-batch-handler-false-positive-plan
 created: "2026-04-01T16:58:19Z"
 created_by: sambeau
-display_id: P15-F3
+display_id: B15-F3
 overrides:
   -
     from_status: reviewing

@@ -10,7 +10,7 @@ spec: FEAT-01KN5-88PDPE8V/specification-30-binding-registry
 dev_plan: FEAT-01KN588PDPE8V/dev-plan-30-binding-registry
 created: "2026-04-01T19:28:00Z"
 created_by: sambeau
-display_id: P16-F3
+display_id: B16-F3
 overrides:
   -
     from_status: reviewing

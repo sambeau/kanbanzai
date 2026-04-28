@@ -9,7 +9,7 @@ spec: FEAT-01KN4ZPG44T5B/specification-sub-agent-state-isolation
 dev_plan: FEAT-01KN4ZPG44T5B/dev-plan-sub-agent-state-isolation-plan
 created: "2026-04-01T16:58:16Z"
 created_by: sambeau
-display_id: P15-F2
+display_id: B15-F2
 overrides:
   -
     from_status: reviewing

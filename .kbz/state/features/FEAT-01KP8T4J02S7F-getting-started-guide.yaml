@@ -7,7 +7,7 @@ review_cycle: "1"
 summary: "Produce the Getting Started Guide (docs/getting-started.md) — hands-on walkthrough from install to first completed feature. Show-don't-tell approach, assumes novice to agentic development. Purpose, audience, structure defined in design §8. Full editorial pipeline with advisory checkpoints. Depends on: User Guide, Workflow Overview, Orchestration and Knowledge, Retrospectives."
 created: "2026-04-15T14:53:44Z"
 created_by: sambeau
-display_id: P22-F5
+display_id: B22-F5
 overrides:
   -
     from_status: specifying

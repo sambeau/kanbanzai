@@ -10,7 +10,7 @@ spec: FEAT-01KPQ08Y989P8/specification-p25-propagate-task-verification
 dev_plan: FEAT-01KPQ08Y989P8/dev-plan-p25-propagate-task-verification
 created: "2026-04-21T03:10:21Z"
 created_by: sambeau
-display_id: P25-F3
+display_id: B25-F3
 overrides:
   -
     from_status: reviewing

@@ -7,4 +7,4 @@ review_cycle: "1"
 summary: "Fix stepLoadSkill to route sub-agent skill selection through the binding's sub_agents block, and replace heredoc with write_file in implement-task/SKILL.md."
 created: "2026-04-24T16:13:49Z"
 created_by: sambeau
-display_id: P30-F1
+display_id: B30-F1

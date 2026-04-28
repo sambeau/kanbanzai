@@ -9,7 +9,7 @@ spec: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete
 dev_plan: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete
 created: "2026-04-27T13:35:26Z"
 created_by: sambeau
-display_id: P37-F4
+display_id: B37-F4
 overrides:
   -
     from_status: specifying

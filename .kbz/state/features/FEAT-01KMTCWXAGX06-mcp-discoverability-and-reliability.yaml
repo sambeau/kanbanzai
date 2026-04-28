@@ -10,7 +10,7 @@ spec: FEAT-01KMTCWXAGX06/specification-mcp-discoverability-and-reliability
 dev_plan: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability
 created: "2026-03-28T14:17:18Z"
 created_by: sambeau
-display_id: P9-F1
+display_id: B9-F1
 overrides:
   -
     from_status: reviewing

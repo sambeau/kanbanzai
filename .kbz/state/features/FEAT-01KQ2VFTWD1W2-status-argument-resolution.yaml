@@ -7,4 +7,4 @@ summary: "Extend kbz status to accept a file path or entity ID as its argument. 
 design: work/design/kbz-cli-and-binary-rename.md
 created: "2026-04-25T17:37:38Z"
 created_by: sambeau
-display_id: P36-F2
+display_id: B36-F2

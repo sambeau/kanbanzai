@@ -10,7 +10,7 @@ spec: FEAT-01KPQ08YH16WZ/specification-p25-impl-workflow-docs
 dev_plan: FEAT-01KPQ08YH16WZ/dev-plan-p25-impl-workflow-docs
 created: "2026-04-21T03:10:22Z"
 created_by: sambeau
-display_id: P25-F6
+display_id: B25-F6
 overrides:
   -
     from_status: reviewing

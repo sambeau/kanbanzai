@@ -10,7 +10,7 @@ spec: FEAT-01KPQ08YE4399/specification-p25-agentic-review-auto-advance
 dev_plan: FEAT-01KPQ08YE4399/dev-plan-p25-agentic-review-auto-advance
 created: "2026-04-21T03:10:22Z"
 created_by: sambeau
-display_id: P25-F5
+display_id: B25-F5
 overrides:
   -
     from_status: reviewing

@@ -8,7 +8,7 @@ summary: "Add plan-level document inheritance for gap checks — a feature belon
 spec: FEAT-01KN07T66SAH3/specification-document-inheritance
 created: "2026-03-30T20:43:53Z"
 created_by: sambeau
-display_id: P13-F4
+display_id: B13-F4
 overrides:
   -
     from_status: reviewing

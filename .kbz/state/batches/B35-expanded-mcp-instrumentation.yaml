@@ -3,7 +3,7 @@ slug: expanded-mcp-instrumentation
 name: Expanded MCP Instrumentation
 status: active
 summary: "Expand actionlog instrumentation to record server version, per-action result quality signals, and knowledge rejection events. Improve ComputeMetrics aggregations to surface tool action distribution and document approval funnels — enabling data-driven identification of underused features and workflow bottlenecks."
-design: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation
+design: B35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation
 created: "2026-04-25T15:35:40Z"
 created_by: sambeau
 updated: "2026-04-28T12:00:42Z"

@@ -7,7 +7,7 @@ summary: "Update .kbz/roles/, .kbz/skills/, .kbz/stage-bindings.yaml, AGENTS.md,
 spec: FEAT-01KQ7YQKWTBRP/spec-p38-spec-p38-f7-documentation-skills-updates
 created: "2026-04-27T17:10:31Z"
 created_by: sambeau
-display_id: P38-F8
+display_id: B38-F8
 overrides:
   -
     from_status: specifying

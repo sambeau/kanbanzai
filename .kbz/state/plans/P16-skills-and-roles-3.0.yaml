@@ -1,0 +1,10 @@
+ id: P16-skills-and-roles-3.0
+slug: skills-and-roles-3.0
+name: Skills and roles 3.0
+status: done
+summary: "Redesign the skills and context profile system to implement evidence-based agent steering: vocabulary-routed roles, attention-curve-optimized skills, explicit stage bindings, and a context assembly pipeline. Replaces current .skills/ and .kbz/context/roles/ with a composed system where roles carry domain vocabulary and anti-patterns, skills carry procedures and evaluation criteria, and a binding registry maps workflow stages to role+skill combinations. Design: work/design/skills-system-redesign-v2.md. Note: Role scaffolding tool (kanbanzai scaffold-roles) deferred to a follow-up plan."
+created: "2026-04-01T19:27:34Z"
+created_by: sambeau
+updated: "2026-04-02T18:12:31Z"
+next_feature_seq: 14
+title: Kanbanzai 3.0 — Evidence-Based Skills and Roles System

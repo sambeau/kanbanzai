@@ -7,7 +7,7 @@ summary: "Add a mandatory session-start corpus integrity check to kanbanzai-gett
 spec: FEAT-01KPTHB61WPT0/specification-doc-intel-corpus-hygiene
 created: "2026-04-22T12:06:24Z"
 created_by: sambeau
-display_id: P27-F2
+display_id: B27-F2
 overrides:
   -
     from_status: designing

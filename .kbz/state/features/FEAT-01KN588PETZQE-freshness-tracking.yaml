@@ -10,7 +10,7 @@ spec: FEAT-01KN5-88PETZQE/specification-30-freshness-tracking
 dev_plan: FEAT-01KN588PETZQE/dev-plan-30-freshness-tracking
 created: "2026-04-01T19:28:00Z"
 created_by: sambeau
-display_id: P16-F6
+display_id: B16-F6
 overrides:
   -
     from_status: reviewing

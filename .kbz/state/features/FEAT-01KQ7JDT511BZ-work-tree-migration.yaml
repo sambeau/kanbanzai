@@ -8,7 +8,7 @@ spec: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration
 dev_plan: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration
 created: "2026-04-27T13:35:26Z"
 created_by: sambeau
-display_id: P38-F9
+display_id: B38-F9
 overrides:
   -
     from_status: specifying

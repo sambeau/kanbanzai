@@ -7,7 +7,7 @@ summary: "Add mandatory knowledge retrieval before implementation tasks and mand
 spec: FEAT-01KPTHB649DPK/specification-doc-intel-knowledge-lifecycle
 created: "2026-04-22T12:06:24Z"
 created_by: sambeau
-display_id: P27-F3
+display_id: B27-F3
 overrides:
   -
     from_status: designing

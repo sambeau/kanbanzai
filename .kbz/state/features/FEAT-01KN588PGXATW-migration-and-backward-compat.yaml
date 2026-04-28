@@ -10,7 +10,7 @@ spec: FEAT-01KN5-88PGXATW/specification-30-migration
 dev_plan: FEAT-01KN588PGXATW/dev-plan-30-migration
 created: "2026-04-01T19:28:01Z"
 created_by: sambeau
-display_id: P16-F12
+display_id: B16-F12
 overrides:
   -
     from_status: reviewing

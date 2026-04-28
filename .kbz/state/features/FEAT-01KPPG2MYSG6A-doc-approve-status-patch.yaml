@@ -10,7 +10,7 @@ spec: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch
 dev_plan: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch
 created: "2026-04-20T22:27:18Z"
 created_by: sambeau
-display_id: P24-F2
+display_id: B24-F2
 overrides:
   -
     from_status: reviewing

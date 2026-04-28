@@ -9,7 +9,7 @@ spec: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforce
 dev_plan: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement
 created: "2026-04-27T13:35:26Z"
 created_by: sambeau
-display_id: P37-F2
+display_id: B37-F2
 overrides:
   -
     from_status: specifying

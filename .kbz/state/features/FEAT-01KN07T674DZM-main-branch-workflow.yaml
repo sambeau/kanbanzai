@@ -8,7 +8,7 @@ summary: "Support direct-to-main workflows where no worktree/branch exists. When
 spec: FEAT-01KN07T674DZM/specification-direct-to-main-workflow
 created: "2026-03-30T20:43:53Z"
 created_by: sambeau
-display_id: P13-F5
+display_id: B13-F5
 overrides:
   -
     from_status: reviewing

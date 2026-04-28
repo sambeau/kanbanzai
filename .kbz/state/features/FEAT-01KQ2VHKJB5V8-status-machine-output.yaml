@@ -7,4 +7,4 @@ summary: "Implement --format plain and --format json for kbz status. Plain: stab
 design: work/design/kbz-cli-and-binary-rename.md
 created: "2026-04-25T17:38:36Z"
 created_by: sambeau
-display_id: P36-F4
+display_id: B36-F4

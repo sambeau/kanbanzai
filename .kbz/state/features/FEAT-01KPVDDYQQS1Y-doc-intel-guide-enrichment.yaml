@@ -9,6 +9,6 @@ spec: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment
 dev_plan: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment
 created: "2026-04-22T20:17:15Z"
 created_by: sambeau
-display_id: P28-F2
+display_id: B28-F2
 verification: "TASK-01KPVFJSRP9X6: go build ./... passes cleanly. Existing TestGetPendingClassification test updated to use new struct accessor.\nTASK-01KPVFJV74YA4: go build ./... passes cleanly. Taxonomy block verified in doc_intel_tool.go at the guide handler return statement.\nTASK-01KPVFJW8CGJK: go build ./... passes cleanly.\nTASK-01KPVFKEH5G9N: go test ./internal/docint/... ./internal/service/... -timeout 120s -count=1 all pass. New MCP handler tests all pass."
 verification_status: passed

@@ -9,6 +9,6 @@ spec: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit
 dev_plan: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan
 created: "2026-04-23T12:35:20Z"
 created_by: sambeau
-display_id: P32-F5
+display_id: B32-F5
 verification: "TASK-01KPXE335QXD7: grep -rn 'yaml:' internal/mcp/ --include='*.go' — only string literals found, no struct field tags\nTASK-01KPXE3361ANK: go test ./internal/mcp/... -run TestJSONTagRoundTrip: PASS\nTASK-01KPXE3VRGBQF: Inspection confirmed no exported fields in internal/mcp/ have yaml: struct tags\nTASK-01KPXE45XV5A5: go test ./internal/mcp/... -run TestJSONTagRoundTrip -v: PASS in 0.53s\nTASK-01KPXE4CR77A7: go test ./... — only pre-existing flaky test fails; all other packages pass"
 verification_status: passed

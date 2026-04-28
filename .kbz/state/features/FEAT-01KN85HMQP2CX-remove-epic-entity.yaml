@@ -10,7 +10,7 @@ spec: FEAT-01KN85HMQP2CX/specification-remove-epic-entity
 dev_plan: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan
 created: "2026-04-02T22:38:11Z"
 created_by: sambeau
-display_id: P20-F1
+display_id: B20-F1
 overrides:
   -
     from_status: reviewing

@@ -8,7 +8,7 @@ summary: "Rename title→name on all entity types, add name to Feature/Task/Deci
 design: PROJECT/design-entity-names
 created: "2026-04-01T10:12:06Z"
 created_by: sambeau
-display_id: P14-F1
+display_id: B14-F1
 overrides:
   -
     from_status: designing

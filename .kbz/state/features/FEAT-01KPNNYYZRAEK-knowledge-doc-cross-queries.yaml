@@ -10,7 +10,7 @@ spec: FEAT-01KPNNYYZRAEK/specification-doc-intel-knowledge-cross-queries
 dev_plan: FEAT-01KPNNYYZRAEK/dev-plan-doc-intel-knowledge-cross-queries-plan
 created: "2026-04-20T14:50:54Z"
 created_by: sambeau
-display_id: P23-F3
+display_id: B23-F3
 overrides:
   -
     from_status: designing

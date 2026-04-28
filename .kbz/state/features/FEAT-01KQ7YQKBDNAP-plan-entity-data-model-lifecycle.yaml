@@ -8,7 +8,7 @@ spec: FEAT-01KQ7YQKBDNAP/spec-p38-spec-p38-f2-plan-entity-data-model-lifecycle
 dev_plan: FEAT-01KQ7YQKBDNAP/dev-plan-p38-dev-plan-p38-f2-plan-entity-data-model-lifecycle
 created: "2026-04-27T17:10:30Z"
 created_by: sambeau
-display_id: P38-F2
+display_id: B38-F2
 overrides:
   -
     from_status: specifying

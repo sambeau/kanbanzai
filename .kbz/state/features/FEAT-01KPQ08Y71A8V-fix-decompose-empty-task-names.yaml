@@ -10,7 +10,7 @@ spec: FEAT-01KPQ08Y71A8V/specification-p25-fix-decompose-empty-names
 dev_plan: FEAT-01KPQ08Y71A8V/dev-plan-p25-fix-decompose-empty-names
 created: "2026-04-21T03:10:21Z"
 created_by: sambeau
-display_id: P25-F2
+display_id: B25-F2
 overrides:
   -
     from_status: reviewing

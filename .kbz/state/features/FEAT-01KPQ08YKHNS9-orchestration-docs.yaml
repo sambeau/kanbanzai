@@ -10,7 +10,7 @@ spec: FEAT-01KPQ08YKHNS9/specification-p25-orchestration-docs
 dev_plan: FEAT-01KPQ08YKHNS9/dev-plan-p25-orchestration-docs
 created: "2026-04-21T03:10:22Z"
 created_by: sambeau
-display_id: P25-F7
+display_id: B25-F7
 overrides:
   -
     from_status: reviewing

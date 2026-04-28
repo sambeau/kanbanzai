@@ -10,7 +10,7 @@ spec: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs
 dev_plan: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs
 created: "2026-04-20T22:28:29Z"
 created_by: sambeau
-display_id: P24-F4
+display_id: B24-F4
 overrides:
   -
     from_status: reviewing

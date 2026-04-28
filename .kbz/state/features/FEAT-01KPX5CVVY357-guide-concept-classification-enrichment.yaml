@@ -9,6 +9,6 @@ spec: FEAT-01KPX5CVVY357/specification-p32-guide-concept-enrichment
 dev_plan: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed
 created: "2026-04-23T12:35:20Z"
 created_by: sambeau
-display_id: P32-F1
+display_id: B32-F1
 verification: "TASK-01KPXE61RS3YH: go test ./internal/mcp/... - all guide tests pass\nTASK-01KPXE61RX6S2: go test ./internal/mcp/... - AC-104 stop word test passes\nTASK-01KPXE61RYD8D: go test ./internal/mcp/... - AC-103 tokens are title-cased\nTASK-01KPXE61RZ5BP: go test ./internal/mcp/... - AC-103 no duplicate tokens\nTASK-01KPXE61S0WS8: go test ./internal/mcp/... - all tests pass\nTASK-01KPXE61S1007: go test ./internal/mcp/... - AC-101 through AC-104 pass\nTASK-01KPXE61S58NR: go test ./internal/docint/... - all taxonomy tests pass including existing partial_match_no_entry test\nTASK-01KPXE61S5QMQ: go test ./internal/mcp/... -run 'Guide|Concepts' - all 14 new tests pass"
 verification_status: passed

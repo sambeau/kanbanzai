@@ -10,7 +10,7 @@ spec: FEAT-01KPNNYYXQSYW/specification-doc-intel-batch-classification
 dev_plan: FEAT-01KPNNYYXQSYW/dev-plan-doc-intel-batch-classification-plan
 created: "2026-04-20T14:50:54Z"
 created_by: sambeau
-display_id: P23-F2
+display_id: B23-F2
 overrides:
   -
     from_status: designing

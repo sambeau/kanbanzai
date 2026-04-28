@@ -8,7 +8,7 @@ summary: "Add section-based AC grouping to decompose — when ACs under the same
 spec: FEAT-01KN07T660VVM/specification-decomposition-grouping
 created: "2026-03-30T20:43:53Z"
 created_by: sambeau
-display_id: P13-F2
+display_id: B13-F2
 overrides:
   -
     from_status: reviewing

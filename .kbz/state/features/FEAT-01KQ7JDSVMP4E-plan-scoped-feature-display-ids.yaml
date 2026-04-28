@@ -9,7 +9,7 @@ spec: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-i
 dev_plan: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids
 created: "2026-04-27T13:35:26Z"
 created_by: sambeau
-display_id: P37-F1
+display_id: B37-F1
 overrides:
   -
     from_status: specifying

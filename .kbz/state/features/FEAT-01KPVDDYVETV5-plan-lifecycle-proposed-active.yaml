@@ -9,6 +9,6 @@ spec: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active
 dev_plan: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active
 created: "2026-04-22T20:17:15Z"
 created_by: sambeau
-display_id: P28-F4
+display_id: B28-F4
 verification: "TASK-01KPVFY051XFC: go test ./internal/validate/... ./internal/service/... -count=1: all pass.\nTASK-01KPVFY053ED8: go test ./internal/validate/... ./internal/service/... -count=1: all pass.\nTASK-01KPVFY054NQ9: go test ./internal/service/... -run TestPlanShortcut -v -count=1 — all 10 pass\nTASK-01KPVFY055NRX: go test ./internal/service/... -run TestPlanShortcutIntegration -v -count=1 — all 3 pass in under 2s"
 verification_status: passed

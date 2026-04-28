@@ -8,7 +8,7 @@ summary: "Surface completion signals and document the close-out procedure. (1) A
 spec: FEAT-01KN07T66DZ68/specification-completion-detection
 created: "2026-03-30T20:43:53Z"
 created_by: sambeau
-display_id: P13-F3
+display_id: B13-F3
 overrides:
   -
     from_status: reviewing

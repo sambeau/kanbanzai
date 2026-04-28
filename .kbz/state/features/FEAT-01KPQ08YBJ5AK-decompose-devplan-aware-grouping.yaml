@@ -10,7 +10,7 @@ spec: FEAT-01KPQ08YBJ5AK/specification-p25-decompose-devplan-aware
 dev_plan: FEAT-01KPQ08YBJ5AK/dev-plan-p25-decompose-devplan-aware
 created: "2026-04-21T03:10:22Z"
 created_by: sambeau
-display_id: P25-F4
+display_id: B25-F4
 overrides:
   -
     from_status: reviewing

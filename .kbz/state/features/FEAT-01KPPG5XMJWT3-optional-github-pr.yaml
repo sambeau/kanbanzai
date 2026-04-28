@@ -10,7 +10,7 @@ spec: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr
 dev_plan: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr
 created: "2026-04-20T22:29:05Z"
 created_by: sambeau
-display_id: P24-F5
+display_id: B24-F5
 overrides:
   -
     from_status: reviewing

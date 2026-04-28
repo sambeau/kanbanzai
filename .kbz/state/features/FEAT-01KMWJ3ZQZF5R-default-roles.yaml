@@ -9,7 +9,7 @@ spec: FEAT-01KMWJ3ZQZF5R/specification-spec-default-roles
 dev_plan: FEAT-01KMWJ3ZQZF5R/dev-plan-p11-dev-default-roles
 created: "2026-03-29T10:27:02Z"
 created_by: sambeau
-display_id: P11-F3
+display_id: B11-F3
 overrides:
   -
     from_status: reviewing

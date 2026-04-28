@@ -9,6 +9,6 @@ spec: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration
 dev_plan: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration
 created: "2026-04-22T20:17:15Z"
 created_by: sambeau
-display_id: P28-F5
+display_id: B28-F5
 verification: "TASK-01KPVFTD2MKYN: go build ./internal/service/... passes\nTASK-01KPVFTD550JX: go test ./... -count=1 passes, all packages green\nTASK-01KPVFTD711VC: go test ./internal/service/... -run TestBuildSkeleton|TestWriteSkeleton -v -count=1: 10/10 PASS; go test ./... -count=1: all green\nTASK-01KPVFTD93B53: go test ./internal/service/... -run TestDecomposeIntegration -v -count=1: all 4 pass. Full suite ok 1.157s."
 verification_status: passed

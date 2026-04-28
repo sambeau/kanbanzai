@@ -10,7 +10,7 @@ spec: FEAT-01KPQ08Y47522/specification-p25-write-file-tool
 dev_plan: FEAT-01KPQ08Y47522/dev-plan-p25-write-file-tool
 created: "2026-04-21T03:10:21Z"
 created_by: sambeau
-display_id: P25-F1
+display_id: B25-F1
 overrides:
   -
     from_status: reviewing

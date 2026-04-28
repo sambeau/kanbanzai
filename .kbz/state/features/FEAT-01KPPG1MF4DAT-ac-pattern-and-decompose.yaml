@@ -10,7 +10,7 @@ spec: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose
 dev_plan: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose
 created: "2026-04-20T22:26:45Z"
 created_by: sambeau
-display_id: P24-F1
+display_id: B24-F1
 overrides:
   -
     from_status: reviewing

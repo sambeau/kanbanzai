@@ -8,7 +8,7 @@ summary: "Add active → ready task transition for crash recovery / unclaim. Whe
 spec: FEAT-01KN07T65HDZM/specification-task-crash-recovery
 created: "2026-03-30T20:43:53Z"
 created_by: sambeau
-display_id: P13-F1
+display_id: B13-F1
 overrides:
   -
     from_status: reviewing
