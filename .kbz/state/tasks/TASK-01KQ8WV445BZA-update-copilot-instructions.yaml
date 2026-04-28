@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQ7YQKWTBRP
 slug: update-copilot-instructions
 name: Update copilot-instructions.md
 summary: "Update .github/copilot-instructions.md skills/roles tables and Planning skill entry. Spec: REQ-015-016."
-status: queued
+status: ready

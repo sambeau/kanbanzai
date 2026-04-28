@@ -4,3 +4,10 @@ slug: grep-audit
 name: Grep audit for consistency
 summary: "Run grep across all updated files. Verify plan only for strategic entity, batch for work container. Report inconsistencies. Depends on Tasks 1-6. Spec: AC-009-010."
 status: queued
+depends_on:
+  - TASK-01KQ8WV42FPKZ
+  - TASK-01KQ8WV4288E9
+  - TASK-01KQ8WV448K5C
+  - TASK-01KQ8WV427TV6
+  - TASK-01KQ8WV445BZA
+  - TASK-01KQ8WV428K7J
