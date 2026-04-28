@@ -177,6 +177,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		service.NewCompositeTransitionHook(
 			service.NewWorktreeTransitionHook(worktreeStore, gitOps, entitySvc),
 			service.NewDependencyUnblockingHook(entitySvc),
+			service.NewFeaturePromotionHook(entitySvc),
 		),
 	)
 
