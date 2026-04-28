@@ -1,0 +1,11 @@
+id: BUG-01KQB54280HDP
+slug: health-check-batch-false-positives
+name: Health check false batch errors
+status: reported
+severity: high
+priority: high
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-04-28T22:59:53Z"
+observed: "status() returns 159 errors: feature references non-existent batch B{n}-slug. Batches exist on disk."
+expected: Health check should find batches in .kbz/state/batches/ and report 0 errors.
