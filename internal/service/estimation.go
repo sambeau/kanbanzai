@@ -75,13 +75,27 @@ type FeatureRollup struct {
 	ExcludedTaskCount  int // not-planned or duplicate
 }
 
-// PlanRollup holds computed rollup values for a Plan.
-type PlanRollup struct {
+// BatchRollup holds computed rollup values for a Batch.
+type BatchRollup struct {
 	FeatureTotal          *float64
 	Progress              float64
 	Delta                 *float64
 	FeatureCount          int
 	EstimatedFeatureCount int
+}
+
+// maxPlanRollupDepth is the maximum recursion depth for ComputePlanRollup.
+// When exceeded, the function returns an error rather than looping indefinitely.
+// This is a defensive measure; the plan tree is guaranteed acyclic by F2's
+// no-cycle enforcement rule.
+const maxPlanRollupDepth = 50
+
+// PlanRollup holds computed recursive rollup values for a StrategicPlan.
+type PlanRollup struct {
+	Total      *float64 // recursive sum of all child batch and child plan totals; nil when no child carries an estimate
+	Progress   float64  // recursive sum of progress from child batches and child plans
+	BatchCount int      // number of direct child batches
+	PlanCount  int      // number of direct child plans
 }
 
 // SetEstimate loads an entity, sets its estimate, and saves it.
@@ -188,21 +202,21 @@ func (s *EntityService) ComputeFeatureRollup(featureID string) (FeatureRollup, e
 	return rollup, nil
 }
 
-// ComputePlanRollup computes rollup statistics for a Plan.
-func (s *EntityService) ComputePlanRollup(planID string) (PlanRollup, error) {
-	// Load all features for this plan
+// ComputeBatchRollup computes rollup statistics for a Batch.
+func (s *EntityService) ComputeBatchRollup(batchID string) (BatchRollup, error) {
+	// Load all features for this batch
 	allFeatures, err := s.List("feature")
 	if err != nil {
-		return PlanRollup{}, fmt.Errorf("list features: %w", err)
+		return BatchRollup{}, fmt.Errorf("list features: %w", err)
 	}
 
-	var rollup PlanRollup
+	var rollup BatchRollup
 	var featureTotal float64
 	hasEstimatedFeatures := false
 
 	for _, f := range allFeatures {
 		parent, _ := f.State["parent"].(string)
-		if parent != planID {
+		if parent != batchID {
 			continue
 		}
 
@@ -237,6 +251,69 @@ func (s *EntityService) ComputePlanRollup(planID string) (PlanRollup, error) {
 	return rollup, nil
 }
 
+// ComputePlanRollup computes recursive rollup statistics for a StrategicPlan.
+// It aggregates progress across direct child batches (via ComputeBatchRollup)
+// and direct child plans (via recursive self-invocation).
+// A depth guard is included as a defensive measure against corrupt states;
+// cycle-freedom is guaranteed by F2's no-cycle enforcement rule.
+func (s *EntityService) ComputePlanRollup(planID string) (PlanRollup, error) {
+	return s.computePlanRollupRecursive(planID, 0)
+}
+
+// computePlanRollupRecursive is the internal recursive implementation.
+// depth tracks the current recursion level for the depth guard.
+func (s *EntityService) computePlanRollupRecursive(planID string, depth int) (PlanRollup, error) {
+	if depth > maxPlanRollupDepth {
+		return PlanRollup{}, fmt.Errorf("plan rollup depth limit exceeded at plan %s", planID)
+	}
+
+	var rollup PlanRollup
+	var total float64
+	hasEstimate := false
+
+	// Aggregate direct child batches.
+	childBatches, err := s.ListBatches(BatchFilters{Parent: planID})
+	if err != nil {
+		return PlanRollup{}, fmt.Errorf("list child batches for plan %s: %w", planID, err)
+	}
+	for _, b := range childBatches {
+		rollup.BatchCount++
+		batchRollup, err := s.ComputeBatchRollup(b.ID)
+		if err != nil {
+			continue
+		}
+		if batchRollup.FeatureTotal != nil {
+			total += *batchRollup.FeatureTotal
+			hasEstimate = true
+		}
+		rollup.Progress += batchRollup.Progress
+	}
+
+	// Aggregate direct child plans recursively.
+	childPlans, err := s.ListStrategicPlans(StrategicPlanFilters{Parent: planID})
+	if err != nil {
+		return PlanRollup{}, fmt.Errorf("list child plans for plan %s: %w", planID, err)
+	}
+	for _, p := range childPlans {
+		rollup.PlanCount++
+		childRollup, err := s.computePlanRollupRecursive(p.ID, depth+1)
+		if err != nil {
+			return PlanRollup{}, err
+		}
+		if childRollup.Total != nil {
+			total += *childRollup.Total
+			hasEstimate = true
+		}
+		rollup.Progress += childRollup.Progress
+	}
+
+	if hasEstimate {
+		rollup.Total = &total
+	}
+
+	return rollup, nil
+}
+
 // GetEstimationReferences returns all knowledge entries tagged "estimation-reference".
 func (s *KnowledgeService) GetEstimationReferences() ([]storage.KnowledgeRecord, error) {
 	return s.List(KnowledgeFilters{
@@ -250,7 +327,7 @@ func (s *KnowledgeService) GetEstimationReferences() ([]storage.KnowledgeRecord,
 func (s *KnowledgeService) AddEstimationReference(entityID, content, createdBy string) (storage.KnowledgeRecord, error) {
 	topic := "estimation-ref-" + entityID
 
-	// Contribute as Tier 2 knowledge with ttl_days=0 (exempt from TTL)
+	// Contribute as Tier 2 knowledge with ttl_days=0 (exempt from TTL pruning)
 	input := ContributeInput{
 		Topic:       topic,
 		Content:     content,

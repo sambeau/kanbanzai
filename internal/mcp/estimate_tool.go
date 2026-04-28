@@ -3,6 +3,7 @@ package mcp
 import (
 	"context"
 	"fmt"
+	"math"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
@@ -248,29 +249,29 @@ func estimateQueryAction(entitySvc *service.EntityService) ActionHandler {
 				"excluded_task_count":  rollup.ExcludedTaskCount,
 			}
 
-		case "plan":
+		case "strategic-plan":
 			rollup, err := entitySvc.ComputePlanRollup(result.ID)
 			if err != nil {
-				return nil, fmt.Errorf("Cannot query estimate for %s %s: rollup computation failed: %w.\n\nTo resolve:\n  Check that the child features are in a valid state", entityType, result.ID, err)
+				return nil, fmt.Errorf("Cannot query estimate for %s %s: rollup computation failed: %w.\n\nTo resolve:\n  Check that the plan's child batches and child plans are in a valid state", entityType, result.ID, err)
 			}
 
-			var delta any
-			if rollup.FeatureTotal != nil && ownEstimate != nil {
-				d := *rollup.FeatureTotal - *ownEstimate
-				delta = d
+			var totalVal any
+			if rollup.Total != nil {
+				totalVal = *rollup.Total
 			}
 
-			var featureTotalVal any
-			if rollup.FeatureTotal != nil {
-				featureTotalVal = *rollup.FeatureTotal
+			var progressPct any
+			if rollup.Total != nil && *rollup.Total > 0 {
+				pct := math.Round(rollup.Progress / *rollup.Total * 100 * 10) / 10
+				progressPct = pct
 			}
 
 			resp["rollup"] = map[string]any{
-				"feature_total":           featureTotalVal,
-				"progress":                rollup.Progress,
-				"delta":                   delta,
-				"feature_count":           rollup.FeatureCount,
-				"estimated_feature_count": rollup.EstimatedFeatureCount,
+				"total":        totalVal,
+				"progress":     rollup.Progress,
+				"progress_pct": progressPct,
+				"batch_count":  rollup.BatchCount,
+				"plan_count":   rollup.PlanCount,
 			}
 		}
 

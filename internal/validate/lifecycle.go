@@ -132,6 +132,16 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 		},
 	},
 	// Feature lifecycle
+	//
+	// During the Phase 1 to Phase 2 transition, feature statuses interleave two
+	// parallel lifecycle entry points:
+	//
+	//   Phase 1 (legacy): Draft -> InReview -> Approved -> InProgress -> Review -> Done
+	//   Phase 2 (current): Proposed -> Designing -> Specifying -> DevPlanning -> Developing -> Reviewing -> Done
+	//
+	// NeedsRework bridges both: from Review/Reviewing/InReview/InProgress/Developing
+	// back to InReview/InProgress/Developing/Reviewing respectively.
+	// Superseded and Cancelled are terminal-abort paths reachable from most statuses.
 	EntityFeature: {
 		string(model.FeatureStatusDraft): {
 			string(model.FeatureStatusInReview): {},

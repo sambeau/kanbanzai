@@ -1,7 +1,7 @@
 | Field  | Value                                      |
 |--------|--------------------------------------------|
 | Date   | 2026-04-25                                 |
-| Status | Draft                                      |
+| Status | approved |
 | Author | architect (Claude Sonnet 4.6)              |
 | Plan   | P35-expanded-mcp-instrumentation           |
 
@@ -272,11 +272,15 @@ const (
 ```
 
 **Why not add typed fields to `Entry` directly?** The existing `Entry` struct
-has six fields, all of which are populated for every call by the outer hook. A
+has seven fields, all of which are populated for every call by the outer hook. A
 typed field for `result_count` would be set for three handlers and zero for the
 remaining thirty-plus. The `extra` map preserves the lean schema for the common
 case (most entries have no payload annotation) while allowing sparse, typed
 annotation where it adds value.
+
+The `extra` map is bounded in practice: only handler code (trusted, not user input) writes
+to it, and the set of keys is limited to the constants defined in this package. No size cap
+or validation is needed at the `Hook.Wrap` level.
 
 ### Component 3: Initial annotation callers
 
@@ -306,6 +310,15 @@ hook sees the side effects after the handler returns but before writing the entr
 **Scope:** Only `SideEffectKnowledgeRejected` is captured this way. Other side
 effect types remain response-only. The log is not a side-effect mirror.
 
+**Failure mode — annotation loss on log write failure:** If the log writer fails (disk full,
+permission error), the `Entry` including any drained annotations is discarded per FR-018.
+Annotations are fire-and-forget; this silent loss is acceptable because log writes are
+best-effort and the annotation data has no correctness impact on tool responses.
+
+**Version string safety:** The `version` variable is set at link time via
+. Semver strings contain only alphanumerics, dots, and
+hyphens — all safe in JSON without escaping. No validation is required.
+
 ### Component 5: New `ComputeMetrics` aggregations
 
 Three new aggregations are added to `MetricsResult`. All three are computed
@@ -333,7 +346,7 @@ pattern.
 
 ```go
 type DocTypeFunnel struct {
-    DocType    string  `json:"doc_type"`   // derived from entity_id prefix
+    DocType    string  `json:"doc_type"`   // resolved via StageFeatureLookup.DocType
     Registered int     `json:"registered"`
     Approved   int     `json:"approved"`
     Rate       float64 `json:"rate"`
@@ -344,9 +357,10 @@ Computed by finding all `doc` entries with `action == "register"` and all with
 `action == "approve"`, grouping by `entity_id`. For each registered document,
 check whether an approval entry exists for the same `entity_id` within the time
 window. The `doc_type` field is not in the log today; it is inferred from the
-entity record at aggregation time via the existing `StageFeatureLookup` interface
-(extended with a document type lookup, or derived from the entity ID prefix
-pattern).
+it is resolved at aggregation time by extending the existing `StageFeatureLookup`
+interface with a `DocType(entityID string) (string, error)` method. This keeps
+document type resolution behind the same lookup abstraction already used for
+stage resolution, avoiding a second mechanism.
 
 **5c. Task completion gap**
 
@@ -494,14 +508,12 @@ attached. The cost of remaining blind is higher than the cost of the change.
   on the same context). Counting `SideEffectKnowledgeRejected` entries in
   `Hook.Wrap` before writing the log entry avoids any change to the `finish`
   handler.
-- **Consequences:** The hook's `Wrap` method gains a dependency on the
-  side-effect type constants. This is a shallow coupling — the constants are
-  defined in `internal/mcp` and the hook is in `internal/actionlog`. The hook
-  must import the side-effect constants, or the constants must be moved to a
-  shared package. The preferred resolution is to define a small interface or
-  pass the rejection count as part of the context annotation, keeping the hook
-  free of `internal/mcp` imports. Exact coupling boundary is a specification
-  concern.
+- **Consequences:** The hook's `Wrap` method needs the count of
+  `SideEffectKnowledgeRejected` events. The design intent is to count them
+  via a type-assertion against the side-effect interface from the context
+  collector, using only the string constant `"SideEffectKnowledgeRejected"`
+  (already public as a side-effect type name). This avoids importing
+  `internal/mcp` into `internal/actionlog`
 
 **Decision 5: Task completion gap computed from existing log data**
 - **Context:** `next(id)` and `finish(task_id)` both produce log entries with

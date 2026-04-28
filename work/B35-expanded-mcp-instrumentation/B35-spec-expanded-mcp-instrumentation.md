@@ -1,7 +1,7 @@
 | Field  | Value                                      |
 |--------|--------------------------------------------|
 | Date   | 2026-04-28                                 |
-| Status | Draft                                      |
+| Status | approved |
 | Author | spec-author (Claude)                       |
 | Design | `work/design/p35-expanded-mcp-instrumentation.md` |
 

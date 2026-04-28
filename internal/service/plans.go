@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"log"
 	"path/filepath"
 	"strings"
 	"time"
@@ -17,6 +18,7 @@ type CreateBatchInput struct {
 	Slug      string
 	Name      string
 	Summary   string
+	Parent    string
 	CreatedBy string
 	Tags      []string
 }
@@ -29,6 +31,7 @@ type UpdateBatchInput struct {
 	Name    *string
 	Summary *string
 	Design  *string
+	Parent  *string
 	Tags    []string
 }
 
@@ -76,6 +79,7 @@ func (s *EntityService) CreateBatch(input CreateBatchInput) (CreateResult, error
 		Name:           batchName,
 		Status:         model.BatchStatusProposed,
 		Summary:        strings.TrimSpace(input.Summary),
+		Parent:         strings.TrimSpace(input.Parent),
 		Tags:           normalizeTags(input.Tags),
 		Created:        now,
 		CreatedBy:      strings.TrimSpace(input.CreatedBy),
@@ -106,8 +110,8 @@ func (s *EntityService) AllocateFeatureDisplayIDInBatch(batchID string) (string,
 	}
 
 	seq := intFromState(batchResult.State, "next_feature_seq", 1)
-	_, batchNum, _ := model.ParseBatchID(batchID)
-	displayID := fmt.Sprintf("P%s-F%d", batchNum, seq)
+	batchPrefix, batchNum, _ := model.ParseBatchID(batchID)
+	displayID := fmt.Sprintf("%s%s-F%d", batchPrefix, batchNum, seq)
 
 	batchResult.State["next_feature_seq"] = seq + 1
 	batchRecord := storage.EntityRecord{
@@ -179,6 +183,7 @@ func (s *EntityService) ListPlans(filters PlanFilters) ([]ListResult, error) {
 	return s.ListBatches(BatchFilters{
 		Status: filters.Status,
 		Prefix: filters.Prefix,
+		Parent: filters.Parent,
 		Tags:   filters.Tags,
 	})
 }
@@ -186,6 +191,7 @@ func (s *EntityService) ListPlans(filters PlanFilters) ([]ListResult, error) {
 type BatchFilters struct {
 	Status string
 	Prefix string
+	Parent string // filter by parent plan ID; empty means no filter
 	Tags   []string
 }
 
@@ -217,8 +223,8 @@ func (s *EntityService) UpdateBatchStatus(id, slug, newStatus string) (ListResul
 		}
 		if n == 0 {
 			return ListResult{}, fmt.Errorf(
-				"proposed → active shortcut requires at least one feature in post-designing state "+
-					"(specifying, dev-planning, developing, reviewing, or done); "+
+				"proposed → active shortcut requires at least one feature in post-designing state " +
+					"(specifying, dev-planning, developing, reviewing, or done); " +
 					"use proposed → designing instead",
 			)
 		}
@@ -279,6 +285,13 @@ func (s *EntityService) UpdateBatch(input UpdateBatchInput) (ListResult, error) 
 	}
 	if input.Summary != nil {
 		result.State["summary"] = strings.TrimSpace(*input.Summary)
+	}
+	if input.Parent != nil {
+		if *input.Parent == "" {
+			delete(result.State, "parent")
+		} else {
+			result.State["parent"] = strings.TrimSpace(*input.Parent)
+		}
 	}
 	if input.Design != nil {
 		if *input.Design == "" {
@@ -346,8 +359,11 @@ func (s *EntityService) writeBatch(entity model.Batch) (CreateResult, error) {
 
 func (s *EntityService) loadBatch(id, slug string) (ListResult, error) {
 	record, err := s.store.Load(string(model.EntityKindBatch), id, slug)
+	fallbackDir := "batches"
 	if err != nil {
-		record, err = s.store.Load("plan", id, slug)
+		log.Printf("INFO: batch %s not found in batches/ directory, falling back to plans/ (deprecated legacy path)", id)
+		record, err = s.store.Load(string(model.EntityKindStrategicPlan), id, slug)
+		fallbackDir = "plans"
 		if err != nil {
 			return ListResult{}, fmt.Errorf("load batch %s: %w", id, err)
 		}
@@ -357,7 +373,7 @@ func (s *EntityService) loadBatch(id, slug string) (ListResult, error) {
 		Type:  string(model.EntityKindBatch),
 		ID:    id,
 		Slug:  slug,
-		Path:  filepath.Join(s.root, "batches", id+".yaml"),
+		Path:  filepath.Join(s.root, fallbackDir, id+".yaml"),
 		State: record.Fields,
 	}, nil
 }
@@ -482,6 +498,9 @@ func batchFields(b model.Batch) map[string]any {
 		"updated":          b.Updated.Format(time.RFC3339),
 		"next_feature_seq": b.NextFeatureSeq,
 	}
+	if b.Parent != "" {
+		fields["parent"] = b.Parent
+	}
 	if b.Design != "" {
 		fields["design"] = b.Design
 	}
@@ -507,6 +526,12 @@ func matchesBatchFilters(result ListResult, filters BatchFilters) bool {
 	if filters.Prefix != "" {
 		prefix, _, _ := model.ParseBatchID(result.ID)
 		if prefix != filters.Prefix {
+			return false
+		}
+	}
+	if filters.Parent != "" {
+		parent := stringFromState(result.State, "parent")
+		if parent != filters.Parent {
 			return false
 		}
 	}

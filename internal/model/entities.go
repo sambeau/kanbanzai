@@ -290,6 +290,7 @@ type Batch struct {
 	Name           string      `yaml:"name"`
 	Status         BatchStatus `yaml:"status"`
 	Summary        string      `yaml:"summary"`
+	Parent         string      `yaml:"parent,omitempty"`
 	Design         string      `yaml:"design,omitempty"`
 	Tags           []string    `yaml:"tags,omitempty"`
 	Created        time.Time   `yaml:"created"`

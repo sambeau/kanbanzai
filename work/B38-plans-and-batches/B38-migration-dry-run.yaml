@@ -1,0 +1,2120 @@
+entries:
+    - source: work/design/Kanbanzai-3.0-proposal.txt
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/design/PLAN vs DEV-PLAN proposal.txt
+      target: work/_project/design-LAN vs DEV-PLAN proposal.txt
+      doc_id: PROJECT/design-plan-vs-dev-plan-proposal
+      status: resolved
+    - source: work/design/agent-instructions-consolidation.md
+      target: work/B16-skills-and-roles-3.0/B16-F13-design-agent-instructions-consolidation.md
+      doc_id: FEAT-01KN6-ZA4NYJ25/design-agent-instructions-consolidation
+      status: resolved
+    - source: work/design/agent-interaction-protocol.md
+      target: work/_project/design-agent-interaction-protocol.md
+      doc_id: PROJECT/design-agent-interaction-protocol
+      status: resolved
+    - source: work/design/agent-onboarding.md
+      target: work/B12-agent-onboarding/B12-design-agent-onboarding.md
+      doc_id: P12-agent-onboarding/design-agent-onboarding
+      status: resolved
+    - source: work/design/centralized-state-server.md
+      target: work/_project/design-centralized-state-server.md
+      doc_id: PROJECT/design-centralized-state-server
+      status: resolved
+    - source: work/design/code-review-workflow.md
+      target: work/_project/design-code-review-workflow.md
+      doc_id: PROJECT/design-code-review-workflow
+      status: resolved
+    - source: work/design/codebase-memory-integration.md
+      target: work/_project/design-codebase-memory-integration.md
+      doc_id: PROJECT/design-codebase-memory-integration
+      status: resolved
+    - source: work/design/consistent-front-matter-proposal.txt
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/design/consistent-front-matter.md
+      target: work/_project/design-consistent-front-matter.md
+      doc_id: PROJECT/design-consistent-front-matter
+      status: resolved
+    - source: work/design/decompose-reliability.md
+      target: work/_project/design-decompose-reliability.md
+      doc_id: PROJECT/design-decompose-reliability
+      status: resolved
+    - source: work/design/design-p34-agent-workflow-ergonomics.md
+      target: work/B34-agent-workflow-ergonomics/B34-design-p34-agent-workflow-ergonomics.md
+      doc_id: P34-agent-workflow-ergonomics/design-design-p34-agent-workflow-ergonomics
+      status: resolved
+    - source: work/design/doc-intel-adoption-design.md
+      target: work/_project/design-doc-intel-adoption-design.md
+      doc_id: PROJECT/design-doc-intel-adoption-design
+      status: resolved
+    - source: work/design/doc-intel-enhancement-design.md
+      target: work/_project/design-doc-intel-enhancement-design.md
+      doc_id: PROJECT/design-doc-intel-enhancement-design
+      status: resolved
+    - source: work/design/docs-memory-mcp-design.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/design/document-centric-interface.md
+      target: work/_project/design-document-centric-interface.md
+      doc_id: PROJECT/design-document-centric-interface
+      status: resolved
+    - source: work/design/document-intelligence-design.md
+      target: work/_project/design-document-intelligence-design.md
+      doc_id: PROJECT/design-document-intelligence-design
+      status: resolved
+    - source: work/design/documentation-for-public-release-proposal.txt
+      target: work/_project/design-documentation-for-public-release-proposal.txt
+      doc_id: PROJECT/design-documentation-for-public-release-proposal
+      status: resolved
+    - source: work/design/documentation-pipeline.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/design/entity-names.md
+      target: work/_project/design-entity-names.md
+      doc_id: PROJECT/design-entity-names
+      status: resolved
+    - source: work/design/entity-structure-and-document-pipeline.md
+      target: work/_project/design-entity-structure-and-document-pipeline.md
+      doc_id: PROJECT/design-entity-structure-and-document-pipeline
+      status: resolved
+    - source: work/design/estimation-and-progress-design.md
+      target: work/_project/design-estimation-and-progress-design.md
+      doc_id: PROJECT/design-estimation-and-progress-design
+      status: resolved
+    - source: work/design/fresh-install-experience.md
+      target: work/_project/design-fresh-install-experience.md
+      doc_id: PROJECT/design-fresh-install-experience
+      status: resolved
+    - source: work/design/git-commit-policy.md
+      target: work/_project/design-git-commit-policy.md
+      doc_id: PROJECT/design-git-commit-policy
+      status: resolved
+    - source: work/design/human-friendly-ids.md
+      target: work/_project/design-human-friendly-ids.md
+      doc_id: PROJECT/design-human-friendly-ids
+      status: resolved
+    - source: work/design/id-system-design.md
+      target: work/_project/design-id-system-design.md
+      doc_id: PROJECT/design-id-system-design
+      status: resolved
+    - source: work/design/init-command.md
+      target: work/B3-kanbanzai-1.0/B3-F1-design-init-command.md
+      doc_id: FEAT-01KMKRQRRX3CC/design-init-command
+      status: resolved
+    - source: work/design/interactive-help-system.md
+      target: work/_project/design-interactive-help-system.md
+      doc_id: PROJECT/design-interactive-help-system
+      status: resolved
+    - source: work/design/kanbanzai-1.0.md
+      target: work/_project/design-kanbanzai-1.0.md
+      doc_id: PROJECT/design-kanbanzai-10
+      status: resolved
+    - source: work/design/kanbanzai-2.0-design-vision.md
+      target: work/_project/design-kanbanzai-2.0-design-vision.md
+      doc_id: PROJECT/design-kanbanzai-20-design-vision
+      status: resolved
+    - source: work/design/kanbanzai-2.5-infrastructure-hardening.md
+      target: work/_project/design-kanbanzai-2.5-infrastructure-hardening.md
+      doc_id: PROJECT/design-kanbanzai-25-infrastructure-hardening
+      status: resolved
+    - source: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      target: work/B17-workflow-and-tooling-3.0/B17-design-kanbanzai-3.0-workflow-and-tooling-v2.md
+      doc_id: P17-workflow-and-tooling-3.0/design-kanbanzai-30-workflow-and-tooling-v2
+      status: resolved
+    - source: work/design/kanbanzai-3.0-workflow-and-tooling.md
+      target: work/_project/design-kanbanzai-3.0-workflow-and-tooling.md
+      doc_id: PROJECT/design-kanbanzai-30-workflow-and-tooling
+      status: resolved
+    - source: work/design/kbz-cli-and-binary-rename.md
+      target: work/_project/design-kbz-cli-and-binary-rename.md
+      doc_id: PROJECT/design-kbz-cli-and-binary-rename
+      status: resolved
+    - source: work/design/lifecycle-integrity.md
+      target: work/B19-workflow-lifecycle-integrity/B19-F1-design-lifecycle-integrity.md
+      doc_id: FEAT-01KN83QN0VAFG/design-lifecycle-integrity
+      status: resolved
+    - source: work/design/machine-context-design.md
+      target: work/_project/design-machine-context-design.md
+      doc_id: PROJECT/design-machine-context-design
+      status: resolved
+    - source: work/design/mcp-discoverability-and-reliability.md
+      target: work/_project/design-mcp-discoverability-and-reliability.md
+      doc_id: PROJECT/design-mcp-discoverability-and-reliability
+      status: resolved
+    - source: work/design/meta-planning-plans-and-batches.md
+      target: work/B38-plans-and-batches/B38-design-meta-planning-plans-and-batches.md
+      doc_id: P38-plans-and-batches/design-meta-planning-plans-and-batches
+      status: resolved
+    - source: work/design/orchestration-recommendations.md
+      target: work/_project/design-orchestration-recommendations.md
+      doc_id: PROJECT/design-orchestration-recommendations
+      status: resolved
+    - source: work/design/p24-ac-pattern-and-decompose.md
+      target: work/B24-retro-recommendations/B24-F1-design-p24-ac-pattern-and-decompose.md
+      doc_id: FEAT-01KPPG1MF4DAT/design-p24-ac-pattern-and-decompose
+      status: resolved
+    - source: work/design/p24-doc-approve-status-patch.md
+      target: work/B24-retro-recommendations/B24-F2-design-p24-doc-approve-status-patch.md
+      doc_id: FEAT-01KPPG2MYSG6A/design-p24-doc-approve-status-patch
+      status: resolved
+    - source: work/design/p24-optional-github-pr.md
+      target: work/B24-retro-recommendations/B24-F5-design-p24-optional-github-pr.md
+      doc_id: FEAT-01KPPG5XMJWT3/design-p24-optional-github-pr
+      status: resolved
+    - source: work/design/p24-standalone-bug-visibility.md
+      target: work/B24-retro-recommendations/B24-F3-design-p24-standalone-bug-visibility.md
+      doc_id: FEAT-01KPPG3MSRRCE/design-p24-standalone-bug-visibility
+      status: resolved
+    - source: work/design/p24-workflow-hygiene-docs.md
+      target: work/B24-retro-recommendations/B24-F4-design-p24-workflow-hygiene-docs.md
+      doc_id: FEAT-01KPPG4SXY6T0/design-p24-workflow-hygiene-docs
+      status: resolved
+    - source: work/design/p25-agentic-review-auto-advance.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F5-design-p25-agentic-review-auto-advance.md
+      doc_id: FEAT-01KPQ08YE4399/design-p25-agentic-review-auto-advance
+      status: resolved
+    - source: work/design/p25-decompose-devplan-aware.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F4-design-p25-decompose-devplan-aware.md
+      doc_id: FEAT-01KPQ08YBJ5AK/design-p25-decompose-devplan-aware
+      status: resolved
+    - source: work/design/p25-fix-decompose-empty-names.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F2-design-p25-fix-decompose-empty-names.md
+      doc_id: FEAT-01KPQ08Y71A8V/design-p25-fix-decompose-empty-names
+      status: resolved
+    - source: work/design/p25-impl-workflow-docs.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F6-design-p25-impl-workflow-docs.md
+      doc_id: FEAT-01KPQ08YH16WZ/design-p25-impl-workflow-docs
+      status: resolved
+    - source: work/design/p25-orchestration-docs.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F7-design-p25-orchestration-docs.md
+      doc_id: FEAT-01KPQ08YKHNS9/design-p25-orchestration-docs
+      status: resolved
+    - source: work/design/p25-propagate-task-verification.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F3-design-p25-propagate-task-verification.md
+      doc_id: FEAT-01KPQ08Y989P8/design-p25-propagate-task-verification
+      status: resolved
+    - source: work/design/p25-write-file-tool.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F1-design-p25-write-file-tool.md
+      doc_id: FEAT-01KPQ08Y47522/design-p25-write-file-tool
+      status: resolved
+    - source: work/design/p28-doc-intel-polish-workflow-reliability.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-design-p28-doc-intel-polish-workflow-reliability.md
+      doc_id: P28-doc-intel-polish-workflow-reliability/design-p28-doc-intel-polish-workflow-reliability
+      status: resolved
+    - source: work/design/p29-state-store-read-performance.md
+      target: work/B29-state-store-read-performance/B29-design-p29-state-store-read-performance.md
+      doc_id: P29-state-store-read-performance/design-p29-state-store-read-performance
+      status: resolved
+    - source: work/design/p30-handoff-skill-assembly-prompt-hygiene.md
+      target: work/B30-handoff-skill-assembly-prompt-hygiene/B30-design-p30-handoff-skill-assembly-prompt-hygiene.md
+      doc_id: P30-handoff-skill-assembly-prompt-hygiene/design-p30-handoff-skill-assembly-prompt-hygiene
+      status: resolved
+    - source: work/design/p31-lifecycle-gate-hardening.md
+      target: work/B31-lifecycle-gate-hardening/B31-design-p31-lifecycle-gate-hardening.md
+      doc_id: P31-lifecycle-gate-hardening/design-p31-lifecycle-gate-hardening
+      status: resolved
+    - source: work/design/p32-doc-intel-classification-pipeline-hardening.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-design-p32-doc-intel-classification-pipeline-hardening.md
+      doc_id: P32-doc-intel-classification-pipeline-hardening/design-p32-doc-intel-classification-pipeline-hardening
+      status: resolved
+    - source: work/design/p32-independent-fixes.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-design-p32-independent-fixes.md
+      doc_id: P32-doc-intel-classification-pipeline-hardening/design-p32-independent-fixes
+      status: resolved
+    - source: work/design/p33-cohort-merge-checkpoints.md
+      target: work/B33-cohort-merge-checkpoints/B33-design-p33-cohort-merge-checkpoints.md
+      doc_id: P33-cohort-merge-checkpoints/design-p33-cohort-merge-checkpoints
+      status: resolved
+    - source: work/design/p35-expanded-mcp-instrumentation.md
+      target: work/B35-expanded-mcp-instrumentation/B35-design-p35-expanded-mcp-instrumentation.md
+      doc_id: P35-expanded-mcp-instrumentation/design-p35-expanded-mcp-instrumentation
+      status: resolved
+    - source: work/design/p35-knowledge-system-effectiveness.md
+      target: work/_project/design-p35-knowledge-system-effectiveness.md
+      doc_id: PROJECT/design-p35-knowledge-system-effectiveness
+      status: resolved
+    - source: work/design/p37-f1-dev-plan-plan-scoped-feature-display-ids.md
+      target: work/B37-file-names-and-actions/B37-F1-dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids.md
+      doc_id: FEAT-01KQ7JDSVMP4E/dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids
+      status: resolved
+    - source: work/design/p37-f1-spec-plan-scoped-feature-display-ids.md
+      target: work/B37-file-names-and-actions/B37-F1-spec-p37-f1-spec-plan-scoped-feature-display-ids.md
+      doc_id: FEAT-01KQ7JDSVMP4E/specification-p37-f1-spec-plan-scoped-feature-display-ids
+      status: resolved
+    - source: work/design/p37-f2-dev-plan-doc-type-and-filename-enforcement.md
+      target: work/B37-file-names-and-actions/B37-F2-dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement.md
+      doc_id: FEAT-01KQ7JDSZARPC/dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement
+      status: resolved
+    - source: work/design/p37-f2-spec-doc-type-and-filename-enforcement.md
+      target: work/B37-file-names-and-actions/B37-F2-spec-p37-f2-spec-doc-type-and-filename-enforcement.md
+      doc_id: FEAT-01KQ7JDSZARPC/specification-p37-f2-spec-doc-type-and-filename-enforcement
+      status: resolved
+    - source: work/design/p37-f3-dev-plan-kbz-move.md
+      target: work/B37-file-names-and-actions/B37-F3-dev-plan-p37-f3-dev-plan-kbz-move.md
+      doc_id: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move
+      status: resolved
+    - source: work/design/p37-f3-spec-kbz-move.md
+      target: work/B37-file-names-and-actions/B37-F3-spec-p37-f3-spec-kbz-move.md
+      doc_id: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move
+      status: resolved
+    - source: work/design/p37-f4-dev-plan-kbz-delete.md
+      target: work/B37-file-names-and-actions/B37-F4-dev-plan-p37-f4-dev-plan-kbz-delete.md
+      doc_id: FEAT-01KQ7JDT341E8/dev-plan-p37-f4-dev-plan-kbz-delete
+      status: resolved
+    - source: work/design/p37-f4-spec-kbz-delete.md
+      target: work/B37-file-names-and-actions/B37-F4-spec-p37-f4-spec-kbz-delete.md
+      doc_id: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete
+      status: resolved
+    - source: work/design/p37-file-names-and-actions.md
+      target: work/B37-file-names-and-actions/B37-design-p37-file-names-and-actions.md
+      doc_id: P37-file-names-and-actions/design-p37-file-names-and-actions
+      status: resolved
+    - source: work/design/p37-handoff.md
+      target: work/B37-file-names-and-actions/B37-report-p37-handoff.md
+      doc_id: P37-file-names-and-actions/report-p37-handoff
+      status: resolved
+    - source: work/design/p38-f1-spec-config-schema-project-singleton.md
+      target: work/B38-plans-and-batches/B38-F1-spec-p38-f1-spec-config-schema-project-singleton.md
+      doc_id: FEAT-01KQ7YQK6DDDA/specification-p38-f1-spec-config-schema-project-singleton
+      status: resolved
+    - source: work/design/p38-f3-spec-batch-entity-rename-b-prefix.md
+      target: work/B38-plans-and-batches/B38-F3-spec-p38-f3-spec-batch-entity-rename-b-prefix.md
+      doc_id: FEAT-01KQ7YQKEEHFY/specification-p38-f3-spec-batch-entity-rename-b-prefix
+      status: resolved
+    - source: work/design/p38-f4-spec-feature-display-ids-document-inheritance.md
+      target: work/B38-plans-and-batches/B38-F4-spec-p38-f4-spec-feature-display-ids-document-inheritance.md
+      doc_id: FEAT-01KQ7YQKHK2GV/specification-p38-f4-spec-feature-display-ids-document-inheritance
+      status: resolved
+    - source: work/design/p38-f5-spec-recursive-progress-rollup.md
+      target: work/B38-plans-and-batches/B38-F5-spec-p38-f5-spec-recursive-progress-rollup.md
+      doc_id: FEAT-01KQ7YQKMCM6T/specification-p38-f5-spec-recursive-progress-rollup
+      status: resolved
+    - source: work/design/p38-f6-spec-mcp-tools-status-dashboard.md
+      target: work/B38-plans-and-batches/B38-F6-spec-p38-f6-spec-mcp-tools-status-dashboard.md
+      doc_id: FEAT-01KQ7YQKPT8HF/specification-p38-f6-spec-mcp-tools-status-dashboard
+      status: resolved
+    - source: work/design/p38-f8-spec-documentation-skills-updates.md
+      target: work/B38-plans-and-batches/B38-F8-spec-p38-f8-spec-documentation-skills-updates.md
+      doc_id: FEAT-01KQ7YQKWTBRP/specification-p38-f8-spec-documentation-skills-updates
+      status: resolved
+    - source: work/design/product-installation-audit-proposal.txt
+      target: work/_project/design-product-installation-audit-proposal.txt
+      doc_id: PROJECT/design-product-installation-audit-proposal
+      status: resolved
+    - source: work/design/product-instance-boundary.md
+      target: work/_project/design-product-instance-boundary.md
+      doc_id: PROJECT/design-product-instance-boundary
+      status: resolved
+    - source: work/design/public-release-documentation.md
+      target: work/_project/design-public-release-documentation.md
+      doc_id: PROJECT/design-public-release-documentation
+      status: resolved
+    - source: work/design/public-schema-interface.md
+      target: work/B3-kanbanzai-1.0/B3-F4-design-public-schema-interface.md
+      doc_id: FEAT-01KMKRQV025FA/design-public-schema-interface
+      status: resolved
+    - source: work/design/quality-gates-and-review-policy.md
+      target: work/_project/design-quality-gates-and-review-policy.md
+      doc_id: PROJECT/design-quality-gates-and-review-policy
+      status: resolved
+    - source: work/design/remove-epic-entity.md
+      target: work/B20-deprecation-cleanup/B20-F1-design-remove-epic-entity.md
+      doc_id: FEAT-01KN85HMQP2CX/design-remove-epic-entity
+      status: resolved
+    - source: work/design/role-tool-hints.md
+      target: work/_project/design-role-tool-hints.md
+      doc_id: PROJECT/design-role-tool-hints
+      status: resolved
+    - source: work/design/server-info-tool.md
+      target: work/_project/design-server-info-tool.md
+      doc_id: PROJECT/design-server-info-tool
+      status: resolved
+    - source: work/design/skills-content.md
+      target: work/B3-kanbanzai-1.0/B3-F2-design-skills-content.md
+      doc_id: FEAT-01KMKRQSD1TKK/design-skills-content
+      status: resolved
+    - source: work/design/skills-system-redesign-v2.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/design/skills-system-redesign.md
+      target: work/_project/design-skills-system-redesign.md
+      doc_id: PROJECT/design-skills-system-redesign
+      status: resolved
+    - source: work/design/smart-lifecycle-transitions.md
+      target: work/B6-workflow-quality-and-review/B6-design-smart-lifecycle-transitions.md
+      doc_id: P6-workflow-quality-and-review/design-smart-lifecycle-transitions
+      status: resolved
+    - source: work/design/titles-proposal.txt
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/design/transition-history-storage.md
+      target: work/_project/design-transition-history-storage.md
+      doc_id: PROJECT/design-transition-history-storage
+      status: resolved
+    - source: work/design/transition-log-design.md
+      target: work/_project/design-transition-log-design.md
+      doc_id: PROJECT/design-transition-log-design
+      status: resolved
+    - source: work/design/workflow-automation-design.md
+      target: work/B18-workflow-automation/B18-F1-design-workflow-automation-design.md
+      doc_id: FEAT-01KN73BFK4M4Z/design-workflow-automation-design
+      status: resolved
+    - source: work/design/workflow-completeness.md
+      target: work/B13-workflow-flexibility/B13-design-workflow-completeness.md
+      doc_id: P13-workflow-flexibility/design-workflow-completeness
+      status: resolved
+    - source: work/design/workflow-design-basis.md
+      target: work/_project/design-workflow-design-basis.md
+      doc_id: PROJECT/design-workflow-design-basis
+      status: resolved
+    - source: work/design/workflow-retrospective.md
+      target: work/_project/design-workflow-retrospective.md
+      doc_id: PROJECT/design-workflow-retrospective
+      status: resolved
+    - source: work/design/workflow-system-design.md
+      target: work/_project/design-workflow-system-design.md
+      doc_id: PROJECT/design-workflow-system-design
+      status: resolved
+    - source: work/spec/3.0-action-pattern-logging.md
+      target: work/B17-workflow-and-tooling-3.0/B17-F7-spec-3.0-action-pattern-logging.md
+      doc_id: FEAT-01KN58J275BWJ/specification-30-action-pattern-logging
+      status: resolved
+    - source: work/spec/3.0-base-and-authoring-role-content.md
+      target: work/B16-skills-and-roles-3.0/B16-F7-spec-3.0-base-and-authoring-role-content.md
+      doc_id: FEAT-01KN588PF5P5Y/specification-30-base-and-authoring-role-content
+      status: resolved
+    - source: work/spec/3.0-binding-registry-gate-integration.md
+      target: work/B17-workflow-and-tooling-3.0/B17-F8-spec-3.0-binding-registry-gate-integration.md
+      doc_id: FEAT-01KN58J27H83N/specification-30-binding-registry-gate-integration
+      status: resolved
+    - source: work/spec/3.0-binding-registry.md
+      target: work/B16-skills-and-roles-3.0/B16-F3-spec-3.0-binding-registry.md
+      doc_id: FEAT-01KN588PDPE8V/specification-30-binding-registry
+      status: resolved
+    - source: work/spec/3.0-context-assembly-pipeline.md
+      target: work/B16-skills-and-roles-3.0/B16-F4-spec-3.0-context-assembly-pipeline.md
+      doc_id: FEAT-01KN588PE43M6/specification-30-context-assembly-pipeline
+      status: resolved
+    - source: work/spec/3.0-decomposition-quality-validation.md
+      target: work/B17-workflow-and-tooling-3.0/B17-F5-spec-3.0-decomposition-quality-validation.md
+      doc_id: FEAT-01KN58J26CH63/specification-30-decomposition-quality-validation
+      status: resolved
+    - source: work/spec/3.0-document-authoring-skill-content.md
+      target: work/B16-skills-and-roles-3.0/B16-F9-spec-3.0-document-authoring-skill-content.md
+      doc_id: FEAT-01KN588PFWADY/specification-30-document-authoring-skill-content
+      status: resolved
+    - source: work/spec/3.0-document-structural-checks.md
+      target: work/B17-workflow-and-tooling-3.0/B17-F6-spec-3.0-document-structural-checks.md
+      doc_id: FEAT-01KN58J26RSB6/specification-30-document-structural-checks
+      status: resolved
+    - source: work/spec/3.0-freshness-tracking.md
+      target: work/B16-skills-and-roles-3.0/B16-F6-spec-3.0-freshness-tracking.md
+      doc_id: FEAT-01KN588PETZQE/specification-30-freshness-tracking
+      status: resolved
+    - source: work/spec/3.0-implementation-skill-content.md
+      target: work/B16-skills-and-roles-3.0/B16-F10-spec-3.0-implementation-skill-content.md
+      doc_id: FEAT-01KN588PG7HA3/specification-30-implementation-skill-content
+      status: resolved
+    - source: work/spec/3.0-knowledge-auto-surfacing.md
+      target: work/B16-skills-and-roles-3.0/B16-F5-spec-3.0-knowledge-auto-surfacing.md
+      doc_id: FEAT-01KN588PEF817/specification-30-knowledge-auto-surfacing
+      status: resolved
+    - source: work/spec/3.0-mandatory-stage-gates.md
+      target: work/B17-workflow-and-tooling-3.0/B17-F1-spec-3.0-mandatory-stage-gates.md
+      doc_id: FEAT-01KN58J24S2XW/specification-30-mandatory-stage-gates
+      status: resolved
+    - source: work/spec/3.0-migration.md
+      target: work/B16-skills-and-roles-3.0/B16-F12-spec-3.0-migration.md
+      doc_id: FEAT-01KN588PGXATW/specification-30-migration
+      status: resolved
+    - source: work/spec/3.0-review-rework-loop.md
+      target: work/B17-workflow-and-tooling-3.0/B17-F4-spec-3.0-review-rework-loop.md
+      doc_id: FEAT-01KN58J2606B0/specification-30-review-rework-loop
+      status: resolved
+    - source: work/spec/3.0-review-role-content.md
+      target: work/B16-skills-and-roles-3.0/B16-F8-spec-3.0-review-role-content.md
+      doc_id: FEAT-01KN588PFG6GY/specification-30-review-role-content
+      status: resolved
+    - source: work/spec/3.0-review-skill-content.md
+      target: work/B16-skills-and-roles-3.0/B16-F11-spec-3.0-review-skill-content.md
+      doc_id: FEAT-01KN588PGJNM0/specification-30-review-skill-content
+      status: resolved
+    - source: work/spec/3.0-role-system.md
+      target: work/B16-skills-and-roles-3.0/B16-F1-spec-3.0-role-system.md
+      doc_id: FEAT-01KN588PCVN4Y/specification-30-role-system
+      status: resolved
+    - source: work/spec/3.0-skill-system.md
+      target: work/B16-skills-and-roles-3.0/B16-F2-spec-3.0-skill-system.md
+      doc_id: FEAT-01KN588PDBW85/specification-30-skill-system
+      status: resolved
+    - source: work/spec/3.0-stage-aware-context-assembly.md
+      target: work/B17-workflow-and-tooling-3.0/B17-F3-spec-3.0-stage-aware-context-assembly.md
+      doc_id: FEAT-01KN58J25K4QD/specification-30-stage-aware-context-assembly
+      status: resolved
+    - source: work/spec/3.0-tool-description-audit.md
+      target: work/B17-workflow-and-tooling-3.0/B17-F2-spec-3.0-tool-description-audit.md
+      doc_id: FEAT-01KN58J257X02/specification-30-tool-description-audit
+      status: resolved
+    - source: work/spec/agent-instructions-consolidation.md
+      target: work/B16-skills-and-roles-3.0/B16-F13-spec-agent-instructions-consolidation.md
+      doc_id: FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation
+      status: resolved
+    - source: work/spec/agent-onboarding.md
+      target: work/B12-agent-onboarding/B12-spec-agent-onboarding.md
+      doc_id: P12-agent-onboarding/specification-agent-onboarding
+      status: resolved
+    - source: work/spec/agents-md-cleanup.md
+      target: work/B3-kanbanzai-1.0/B3-F7-spec-agents-md-cleanup.md
+      doc_id: FEAT-01KMTSPAV34HR/specification-agents-md-cleanup
+      status: resolved
+    - source: work/spec/agents-md-decompose-rule.md
+      target: work/B8-decompose-reliability/B8-F1-spec-agents-md-decompose-rule.md
+      doc_id: FEAT-01KMT58SKYM5C/specification-agents-md-decompose-rule
+      status: resolved
+    - source: work/spec/batch-handler-false-positive.md
+      target: work/B15-kanbanzai-25-infrastructure-hardening/B15-F3-spec-batch-handler-false-positive.md
+      doc_id: FEAT-01KN4ZPKCJWPF/specification-batch-handler-false-positive
+      status: resolved
+    - source: work/spec/binary-distribution.md
+      target: work/B3-kanbanzai-1.0/B3-F3-spec-binary-distribution.md
+      doc_id: FEAT-01KMKRQT9QCPR/specification-binary-distribution
+      status: resolved
+    - source: work/spec/bootstrap-specification.md
+      target: work/_project/spec-bootstrap-specification.md
+      doc_id: PROJECT/specification-bootstrap-specification
+      status: resolved
+    - source: work/spec/completion-detection.md
+      target: work/B13-workflow-flexibility/B13-F3-spec-completion-detection.md
+      doc_id: FEAT-01KN07T66DZ68/specification-completion-detection
+      status: resolved
+    - source: work/spec/consistent-front-matter.md
+      target: work/_project/spec-consistent-front-matter.md
+      doc_id: PROJECT/specification-consistent-front-matter
+      status: resolved
+    - source: work/spec/decompose-precondition-gates.md
+      target: work/B8-decompose-reliability/B8-F2-spec-decompose-precondition-gates.md
+      doc_id: FEAT-01KMT58TV8V9C/specification-decompose-precondition-gates
+      status: resolved
+    - source: work/spec/decomposition-grouping.md
+      target: work/B13-workflow-flexibility/B13-F2-spec-decomposition-grouping.md
+      doc_id: FEAT-01KN07T660VVM/specification-decomposition-grouping
+      status: resolved
+    - source: work/spec/direct-to-main-workflow.md
+      target: work/B13-workflow-flexibility/B13-F5-spec-direct-to-main-workflow.md
+      doc_id: FEAT-01KN07T674DZM/specification-direct-to-main-workflow
+      status: resolved
+    - source: work/spec/doc-audit.md
+      target: work/B15-kanbanzai-25-infrastructure-hardening/B15-F4-spec-doc-audit.md
+      doc_id: FEAT-01KN4ZPQFQN1C/specification-doc-audit
+      status: resolved
+    - source: work/spec/doc-currency-health-check.md
+      target: work/B10-review-and-doc-currency/B10-spec-doc-currency-health-check.md
+      doc_id: P10-review-and-doc-currency/specification-doc-currency-health-check
+      status: resolved
+    - source: work/spec/doc-import-dry-run.md
+      target: work/B15-kanbanzai-25-infrastructure-hardening/B15-F5-spec-doc-import-dry-run.md
+      doc_id: FEAT-01KN4ZPTQSZT5/specification-doc-import-dry-run
+      status: resolved
+    - source: work/spec/doc-intel-access-instrumentation.md
+      target: work/B27-doc-intel-adoption/B27-F4-spec-doc-intel-access-instrumentation.md
+      doc_id: FEAT-01KPTHB66Y8TM/specification-doc-intel-access-instrumentation
+      status: resolved
+    - source: work/spec/doc-intel-batch-classification.md
+      target: work/B23-doc-intel-enhancement/B23-F2-spec-doc-intel-batch-classification.md
+      doc_id: FEAT-01KPNNYYXQSYW/specification-doc-intel-batch-classification
+      status: resolved
+    - source: work/spec/doc-intel-concept-aliases.md
+      target: work/B23-doc-intel-enhancement/B23-F4-spec-doc-intel-concept-aliases.md
+      doc_id: FEAT-01KPNNYZ1ZSS6/specification-doc-intel-concept-aliases
+      status: resolved
+    - source: work/spec/doc-intel-corpus-hygiene.md
+      target: work/B27-doc-intel-adoption/B27-F2-spec-doc-intel-corpus-hygiene.md
+      doc_id: FEAT-01KPTHB61WPT0/specification-doc-intel-corpus-hygiene
+      status: resolved
+    - source: work/spec/doc-intel-design-stage-consultation.md
+      target: work/B27-doc-intel-adoption/B27-F1-spec-doc-intel-design-stage-consultation.md
+      doc_id: FEAT-01KPTHB5Z1H7T/specification-doc-intel-design-stage-consultation
+      status: resolved
+    - source: work/spec/doc-intel-knowledge-cross-queries.md
+      target: work/B23-doc-intel-enhancement/B23-F3-spec-doc-intel-knowledge-cross-queries.md
+      doc_id: FEAT-01KPNNYYZRAEK/specification-doc-intel-knowledge-cross-queries
+      status: resolved
+    - source: work/spec/doc-intel-knowledge-lifecycle.md
+      target: work/B27-doc-intel-adoption/B27-F3-spec-doc-intel-knowledge-lifecycle.md
+      doc_id: FEAT-01KPTHB649DPK/specification-doc-intel-knowledge-lifecycle
+      status: resolved
+    - source: work/spec/doc-intel-sqlite-fts-search.md
+      target: work/B23-doc-intel-enhancement/B23-F1-spec-doc-intel-sqlite-fts-search.md
+      doc_id: FEAT-01KPNNYYSQTA7/specification-doc-intel-sqlite-fts-search
+      status: resolved
+    - source: work/spec/docint-ac-pattern-recognition.md
+      target: work/B15-kanbanzai-25-infrastructure-hardening/B15-F1-spec-docint-ac-pattern-recognition.md
+      doc_id: FEAT-01KN4ZPCMJ1FP/specification-docint-ac-pattern-recognition
+      status: resolved
+    - source: work/spec/document-inheritance.md
+      target: work/B13-workflow-flexibility/B13-F4-spec-document-inheritance.md
+      doc_id: FEAT-01KN07T66SAH3/specification-document-inheritance
+      status: resolved
+    - source: work/spec/entity-names.md
+      target: work/_project/spec-entity-names.md
+      doc_id: PROJECT/specification-entity-names
+      status: resolved
+    - source: work/spec/evaluation-baseline.md
+      target: work/B15-kanbanzai-25-infrastructure-hardening/B15-F6-spec-evaluation-baseline.md
+      doc_id: FEAT-01KN4ZPXXEG1F/specification-evaluation-baseline
+      status: resolved
+    - source: work/spec/feat-01kpxgvqy3kqc-merge-gate-review-report.md
+      target: work/B31-lifecycle-gate-hardening/B31-F1-spec-feat-01kpxgvqy3kqc-merge-gate-review-report.md
+      doc_id: FEAT-01KPXGVQY3KQC/specification-feat-01kpxgvqy3kqc-merge-gate-review-report
+      status: resolved
+    - source: work/spec/feat-01kpxgw5bcgy4-orphaned-reviewing-dashboard-warning.md
+      target: work/B31-lifecycle-gate-hardening/B31-F2-spec-feat-01kpxgw5bcgy4-orphaned-reviewing-dashboard-warning.md
+      doc_id: FEAT-01KPXGW5BCGY4/specification-feat-01kpxgw5bcgy4-orphaned-reviewing-dashboard-warning
+      status: resolved
+    - source: work/spec/feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md
+      target: work/B34-agent-workflow-ergonomics/B34-F1-spec-feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md
+      doc_id: FEAT-01KQ2E0RB4P8A/specification-feat-01kq2e0rb4p8a-plan-id-prefix-resolution
+      status: resolved
+    - source: work/spec/feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md
+      target: work/B34-agent-workflow-ergonomics/B34-F2-spec-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md
+      doc_id: FEAT-01KQ2E0RFNBWZ/specification-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing
+      status: resolved
+    - source: work/spec/feat-01kq2e0rhsnp1-next-tool-ux-improvements.md
+      target: work/B34-agent-workflow-ergonomics/B34-F3-spec-feat-01kq2e0rhsnp1-next-tool-ux-improvements.md
+      doc_id: FEAT-01KQ2E0RHSNP1/specification-feat-01kq2e0rhsnp1-next-tool-ux-improvements
+      status: resolved
+    - source: work/spec/feat-01kq2e0rny261-decompose-paired-test-tasks.md
+      target: work/B34-agent-workflow-ergonomics/B34-F5-spec-feat-01kq2e0rny261-decompose-paired-test-tasks.md
+      doc_id: FEAT-01KQ2E0RNY261/specification-feat-01kq2e0rny261-decompose-paired-test-tasks
+      status: resolved
+    - source: work/spec/feat-01kq2e0rr40cd-decompose-apply-supersession.md
+      target: work/B34-agent-workflow-ergonomics/B34-F6-spec-feat-01kq2e0rr40cd-decompose-apply-supersession.md
+      doc_id: FEAT-01KQ2E0RR40CD/specification-feat-01kq2e0rr40cd-decompose-apply-supersession
+      status: resolved
+    - source: work/spec/hardening.md
+      target: work/B3-kanbanzai-1.0/B3-F6-spec-hardening.md
+      doc_id: FEAT-01KMKRQWF0FCH/specification-hardening
+      status: resolved
+    - source: work/spec/human-friendly-id-display.md
+      target: work/B7-developer-experience/B7-F2-spec-human-friendly-id-display.md
+      doc_id: FEAT-01KMT40KKZZR5/specification-human-friendly-id-display
+      status: resolved
+    - source: work/spec/id-system-specification.md
+      target: work/_project/spec-id-system-specification.md
+      doc_id: PROJECT/specification-id-system-specification
+      status: resolved
+    - source: work/spec/init-command.md
+      target: work/B3-kanbanzai-1.0/B3-F1-spec-init-command.md
+      doc_id: FEAT-01KMKRQRRX3CC/specification-init-command
+      status: resolved
+    - source: work/spec/kanbanzai-2.0-specification.md
+      target: work/_project/spec-kanbanzai-2.0-specification.md
+      doc_id: PROJECT/specification-kanbanzai-20-specification
+      status: resolved
+    - source: work/spec/lifecycle-integrity.md
+      target: work/B19-workflow-lifecycle-integrity/B19-F1-spec-lifecycle-integrity.md
+      doc_id: FEAT-01KN83QN0VAFG/specification-lifecycle-integrity
+      status: resolved
+    - source: work/spec/mcp-discoverability-and-reliability.md
+      target: work/B9-mcp-discoverability/B9-spec-mcp-discoverability-and-reliability.md
+      doc_id: P9-mcp-discoverability/specification-mcp-discoverability-and-reliability
+      status: resolved
+    - source: work/spec/p24-ac-pattern-and-decompose.md
+      target: work/B24-retro-recommendations/B24-F1-spec-p24-ac-pattern-and-decompose.md
+      doc_id: FEAT-01KPPG1MF4DAT/specification-p24-ac-pattern-and-decompose
+      status: resolved
+    - source: work/spec/p24-doc-approve-status-patch.md
+      target: work/B24-retro-recommendations/B24-F2-spec-p24-doc-approve-status-patch.md
+      doc_id: FEAT-01KPPG2MYSG6A/specification-p24-doc-approve-status-patch
+      status: resolved
+    - source: work/spec/p24-optional-github-pr.md
+      target: work/B24-retro-recommendations/B24-F5-spec-p24-optional-github-pr.md
+      doc_id: FEAT-01KPPG5XMJWT3/specification-p24-optional-github-pr
+      status: resolved
+    - source: work/spec/p24-standalone-bug-visibility.md
+      target: work/B24-retro-recommendations/B24-F3-spec-p24-standalone-bug-visibility.md
+      doc_id: FEAT-01KPPG3MSRRCE/specification-p24-standalone-bug-visibility
+      status: resolved
+    - source: work/spec/p24-workflow-hygiene-docs.md
+      target: work/B24-retro-recommendations/B24-F4-spec-p24-workflow-hygiene-docs.md
+      doc_id: FEAT-01KPPG4SXY6T0/specification-p24-workflow-hygiene-docs
+      status: resolved
+    - source: work/spec/p25-agentic-review-auto-advance.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F5-spec-p25-agentic-review-auto-advance.md
+      doc_id: FEAT-01KPQ08YE4399/specification-p25-agentic-review-auto-advance
+      status: resolved
+    - source: work/spec/p25-decompose-devplan-aware.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F4-spec-p25-decompose-devplan-aware.md
+      doc_id: FEAT-01KPQ08YBJ5AK/specification-p25-decompose-devplan-aware
+      status: resolved
+    - source: work/spec/p25-fix-decompose-empty-names.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F2-spec-p25-fix-decompose-empty-names.md
+      doc_id: FEAT-01KPQ08Y71A8V/specification-p25-fix-decompose-empty-names
+      status: resolved
+    - source: work/spec/p25-impl-workflow-docs.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F6-spec-p25-impl-workflow-docs.md
+      doc_id: FEAT-01KPQ08YH16WZ/specification-p25-impl-workflow-docs
+      status: resolved
+    - source: work/spec/p25-orchestration-docs.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F7-spec-p25-orchestration-docs.md
+      doc_id: FEAT-01KPQ08YKHNS9/specification-p25-orchestration-docs
+      status: resolved
+    - source: work/spec/p25-propagate-task-verification.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F3-spec-p25-propagate-task-verification.md
+      doc_id: FEAT-01KPQ08Y989P8/specification-p25-propagate-task-verification
+      status: resolved
+    - source: work/spec/p25-write-file-tool.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F1-spec-p25-write-file-tool.md
+      doc_id: FEAT-01KPQ08Y47522/specification-p25-write-file-tool
+      status: resolved
+    - source: work/spec/p28-decompose-dev-plan-registration.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F5-spec-p28-decompose-dev-plan-registration.md
+      doc_id: FEAT-01KPVDDYX73WB/specification-p28-decompose-dev-plan-registration
+      status: resolved
+    - source: work/spec/p28-doc-intel-guide-enrichment.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F2-spec-p28-doc-intel-guide-enrichment.md
+      doc_id: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment
+      status: resolved
+    - source: work/spec/p28-doc-intel-register-workflow.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F3-spec-p28-doc-intel-register-workflow.md
+      doc_id: FEAT-01KPVDDYSEK8P/specification-p28-doc-intel-register-workflow
+      status: resolved
+    - source: work/spec/p28-plan-lifecycle-proposed-active.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F4-spec-p28-plan-lifecycle-proposed-active.md
+      doc_id: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active
+      status: resolved
+    - source: work/spec/p28-skill-doc-updates.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F1-spec-p28-skill-doc-updates.md
+      doc_id: FEAT-01KPVDDYN855F/specification-p28-skill-doc-updates
+      status: resolved
+    - source: work/spec/p28-worktree-creation-timeout.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F6-spec-p28-worktree-creation-timeout.md
+      doc_id: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout
+      status: resolved
+    - source: work/spec/p30-handoff-skill-assembly-prompt-hygiene.md
+      target: work/B30-handoff-skill-assembly-prompt-hygiene/B30-spec-p30-handoff-skill-assembly-prompt-hygiene.md
+      doc_id: P30-handoff-skill-assembly-prompt-hygiene/specification-p30-handoff-skill-assembly-prompt-hygiene
+      status: resolved
+    - source: work/spec/p32-cli-doc-register-identity-fix.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-F4-spec-p32-cli-doc-register-identity-fix.md
+      doc_id: FEAT-01KPX5CW2PTMD/specification-p32-cli-doc-register-identity-fix
+      status: resolved
+    - source: work/spec/p32-concept-tagging-approval-gate.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-F3-spec-p32-concept-tagging-approval-gate.md
+      doc_id: FEAT-01KPX5CW0QSM7/specification-p32-concept-tagging-approval-gate
+      status: resolved
+    - source: work/spec/p32-guide-concept-enrichment.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-F1-spec-p32-guide-concept-enrichment.md
+      doc_id: FEAT-01KPX5CVVY357/specification-p32-guide-concept-enrichment
+      status: resolved
+    - source: work/spec/p32-mcp-json-tag-audit.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-F5-spec-p32-mcp-json-tag-audit.md
+      doc_id: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit
+      status: resolved
+    - source: work/spec/p32-pending-register-nudge-enrichment.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-F2-spec-p32-pending-register-nudge-enrichment.md
+      doc_id: FEAT-01KPX5CVYWDFF/specification-p32-pending-register-nudge-enrichment
+      status: resolved
+    - source: work/spec/p33-cohort-merge-checkpoints.md
+      target: work/B33-cohort-merge-checkpoints/B33-F1-spec-p33-cohort-merge-checkpoints.md
+      doc_id: FEAT-01KPXE8T8QWRB/specification-p33-cohort-merge-checkpoints
+      status: resolved
+    - source: work/spec/phase-1-specification.md
+      target: work/_project/spec-phase-1-specification.md
+      doc_id: PROJECT/specification-phase-1-specification
+      status: resolved
+    - source: work/spec/phase-2-specification.md
+      target: work/_project/spec-phase-2-specification.md
+      doc_id: PROJECT/specification-phase-2-specification
+      status: resolved
+    - source: work/spec/phase-2b-specification.md
+      target: work/_project/spec-phase-2b-specification.md
+      doc_id: PROJECT/specification-phase-2b-specification
+      status: resolved
+    - source: work/spec/phase-3-specification.md
+      target: work/_project/spec-phase-3-specification.md
+      doc_id: PROJECT/specification-phase-3-specification
+      status: resolved
+    - source: work/spec/phase-4a-specification.md
+      target: work/_project/spec-phase-4a-specification.md
+      doc_id: PROJECT/specification-phase-4a-specification
+      status: resolved
+    - source: work/spec/phase-4b-specification.md
+      target: work/_project/spec-phase-4b-specification.md
+      doc_id: PROJECT/specification-phase-4b-specification
+      status: resolved
+    - source: work/spec/plan-review-lifecycle.md
+      target: work/B10-review-and-doc-currency/B10-spec-review-lifecycle.md
+      doc_id: P10-review-and-doc-currency/specification-plan-review-lifecycle
+      status: resolved
+    - source: work/spec/policy-and-documentation-updates.md
+      target: work/B6-workflow-quality-and-review/B6-F7-spec-policy-and-documentation-updates.md
+      doc_id: FEAT-01KMRX1SEQV49/specification-policy-and-documentation-updates
+      status: resolved
+    - source: work/spec/public-schema-interface.md
+      target: work/B3-kanbanzai-1.0/B3-F4-spec-public-schema-interface.md
+      doc_id: FEAT-01KMKRQV025FA/specification-public-schema-interface
+      status: resolved
+    - source: work/spec/release-infrastructure.md
+      target: work/B3-kanbanzai-1.0/B3-F8-spec-release-infrastructure.md
+      doc_id: FEAT-01KMTSPEE6BXS/specification-release-infrastructure
+      status: resolved
+    - source: work/spec/remove-epic-entity.md
+      target: work/B20-deprecation-cleanup/B20-F1-spec-remove-epic-entity.md
+      doc_id: FEAT-01KN85HMQP2CX/specification-remove-epic-entity
+      status: resolved
+    - source: work/spec/review-lifecycle-states.md
+      target: work/B6-workflow-quality-and-review/B6-F4-spec-review-lifecycle-states.md
+      doc_id: FEAT-01KMRX1F47Z94/specification-review-lifecycle-states
+      status: resolved
+    - source: work/spec/review-naming-and-folder-conventions.md
+      target: work/B7-developer-experience/B7-F3-spec-review-naming-and-folder-conventions.md
+      doc_id: FEAT-01KMT40P0AGS7/specification-review-naming-and-folder-conventions
+      status: resolved
+    - source: work/spec/review-orchestration-pattern.md
+      target: work/B6-workflow-quality-and-review/B6-F6-spec-review-orchestration-pattern.md
+      doc_id: FEAT-01KMRX1QPN3CB/specification-review-orchestration-pattern
+      status: resolved
+    - source: work/spec/reviewer-context-profile-and-skill.md
+      target: work/B6-workflow-quality-and-review/B6-F5-spec-reviewer-context-profile-and-skill.md
+      doc_id: FEAT-01KMRX1HG8BAX/specification-reviewer-context-profile-and-skill
+      status: resolved
+    - source: work/spec/role-tool-hints.md
+      target: work/B21-codebase-memory-integration/B21-F1-spec-role-tool-hints.md
+      doc_id: FEAT-01KNA11F3BBMP/specification-role-tool-hints
+      status: resolved
+    - source: work/spec/server-info-tool.md
+      target: work/B7-developer-experience/B7-F1-spec-server-info-tool.md
+      doc_id: FEAT-01KMT40GZSMHB/specification-server-info-tool
+      status: resolved
+    - source: work/spec/skills-content.md
+      target: work/B3-kanbanzai-1.0/B3-F2-spec-skills-content.md
+      doc_id: FEAT-01KMKRQSD1TKK/specification-skills-content
+      status: resolved
+    - source: work/spec/spec-default-roles.md
+      target: work/B11-fresh-install-experience/B11-F3-spec-default-roles.md
+      doc_id: FEAT-01KMWJ3ZQZF5R/specification-spec-default-roles
+      status: resolved
+    - source: work/spec/spec-document-layout.md
+      target: work/B11-fresh-install-experience/B11-F4-spec-document-layout.md
+      doc_id: FEAT-01KMWJ3ZRBYFH/specification-spec-document-layout
+      status: resolved
+    - source: work/spec/spec-embedded-skills.md
+      target: work/B11-fresh-install-experience/B11-F2-spec-embedded-skills.md
+      doc_id: FEAT-01KMWJ3ZQKK7C/specification-spec-embedded-skills
+      status: resolved
+    - source: work/spec/spec-mcp-connection.md
+      target: work/B11-fresh-install-experience/B11-F1-spec-mcp-connection.md
+      doc_id: FEAT-01KMWJ3ZQ57ZY/specification-spec-mcp-connection
+      status: resolved
+    - source: work/spec/sub-agent-state-isolation.md
+      target: work/B15-kanbanzai-25-infrastructure-hardening/B15-F2-spec-sub-agent-state-isolation.md
+      doc_id: FEAT-01KN4ZPG44T5B/specification-sub-agent-state-isolation
+      status: resolved
+    - source: work/spec/task-crash-recovery.md
+      target: work/B13-workflow-flexibility/B13-F1-spec-task-crash-recovery.md
+      doc_id: FEAT-01KN07T65HDZM/specification-task-crash-recovery
+      status: resolved
+    - source: work/spec/user-documentation.md
+      target: work/B3-kanbanzai-1.0/B3-F5-spec-user-documentation.md
+      doc_id: FEAT-01KMKRQVKBPRX/specification-user-documentation
+      status: resolved
+    - source: work/spec/user-guide.md
+      target: work/B22-documentation-for-public-release/B22-F1-spec-user-guide.md
+      doc_id: FEAT-01KP8T4HQMEA3/specification-user-guide
+      status: resolved
+    - source: work/spec/workflow-automation-spec.md
+      target: work/B18-workflow-automation/B18-F1-spec-workflow-automation-spec.md
+      doc_id: FEAT-01KN73BFK4M4Z/specification-workflow-automation-spec
+      status: resolved
+    - source: work/spec/workflow-retrospective.md
+      target: work/B5-workflow-retrospective/B5-spec-workflow-retrospective.md
+      doc_id: P5-workflow-retrospective/specification-workflow-retrospective
+      status: resolved
+    - source: work/spec/worktree-graph-context.md
+      target: work/B21-codebase-memory-integration/B21-F2-spec-worktree-graph-context.md
+      doc_id: FEAT-01KNA11F5FAFW/specification-worktree-graph-context
+      status: resolved
+    - source: work/dev-plan/cli-doc-register-identity-fix-decomposed.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-F4-dev-plan-cli-doc-register-identity-fix-decomposed.md
+      doc_id: FEAT-01KPX5CW2PTMD/dev-plan-cli-doc-register-identity-fix-decomposed
+      status: resolved
+    - source: work/dev-plan/concept-tagging-approval-gate-decomposed.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-F3-dev-plan-concept-tagging-approval-gate-decomposed.md
+      doc_id: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed
+      status: resolved
+    - source: work/dev-plan/guide-concept-classification-enrichment-decomposed.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-F1-dev-plan-guide-concept-classification-enrichment-decomposed.md
+      doc_id: FEAT-01KPX5CVVY357/dev-plan-guide-concept-classification-enrichment-decomposed
+      status: resolved
+    - source: work/dev-plan/mcp-json-tag-audit-dev-plan.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-F5-dev-plan-mcp-json-tag-audit-dev-plan.md
+      doc_id: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan
+      status: resolved
+    - source: work/dev-plan/p13-workflow-flexibility.md
+      target: work/B13-workflow-flexibility/B13-dev-plan-p13-workflow-flexibility.md
+      doc_id: P13-workflow-flexibility/dev-plan-p13-workflow-flexibility
+      status: resolved
+    - source: work/dev-plan/p24-ac-pattern-and-decompose.md
+      target: work/B24-retro-recommendations/B24-F1-dev-plan-p24-ac-pattern-and-decompose.md
+      doc_id: FEAT-01KPPG1MF4DAT/dev-plan-p24-ac-pattern-and-decompose
+      status: resolved
+    - source: work/dev-plan/p24-doc-approve-status-patch.md
+      target: work/B24-retro-recommendations/B24-F2-dev-plan-p24-doc-approve-status-patch.md
+      doc_id: FEAT-01KPPG2MYSG6A/dev-plan-p24-doc-approve-status-patch
+      status: resolved
+    - source: work/dev-plan/p24-optional-github-pr.md
+      target: work/B24-retro-recommendations/B24-F5-dev-plan-p24-optional-github-pr.md
+      doc_id: FEAT-01KPPG5XMJWT3/dev-plan-p24-optional-github-pr
+      status: resolved
+    - source: work/dev-plan/p24-standalone-bug-visibility.md
+      target: work/B24-retro-recommendations/B24-F3-dev-plan-p24-standalone-bug-visibility.md
+      doc_id: FEAT-01KPPG3MSRRCE/dev-plan-p24-standalone-bug-visibility
+      status: resolved
+    - source: work/dev-plan/p24-workflow-hygiene-docs.md
+      target: work/B24-retro-recommendations/B24-F4-dev-plan-p24-workflow-hygiene-docs.md
+      doc_id: FEAT-01KPPG4SXY6T0/dev-plan-p24-workflow-hygiene-docs
+      status: resolved
+    - source: work/dev-plan/p25-agentic-review-auto-advance.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F5-dev-plan-p25-agentic-review-auto-advance.md
+      doc_id: FEAT-01KPQ08YE4399/dev-plan-p25-agentic-review-auto-advance
+      status: resolved
+    - source: work/dev-plan/p25-decompose-devplan-aware.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F4-dev-plan-p25-decompose-devplan-aware.md
+      doc_id: FEAT-01KPQ08YBJ5AK/dev-plan-p25-decompose-devplan-aware
+      status: resolved
+    - source: work/dev-plan/p25-fix-decompose-empty-names.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F2-dev-plan-p25-fix-decompose-empty-names.md
+      doc_id: FEAT-01KPQ08Y71A8V/dev-plan-p25-fix-decompose-empty-names
+      status: resolved
+    - source: work/dev-plan/p25-impl-workflow-docs.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F6-dev-plan-p25-impl-workflow-docs.md
+      doc_id: FEAT-01KPQ08YH16WZ/dev-plan-p25-impl-workflow-docs
+      status: resolved
+    - source: work/dev-plan/p25-orchestration-docs.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F7-dev-plan-p25-orchestration-docs.md
+      doc_id: FEAT-01KPQ08YKHNS9/dev-plan-p25-orchestration-docs
+      status: resolved
+    - source: work/dev-plan/p25-propagate-task-verification.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F3-dev-plan-p25-propagate-task-verification.md
+      doc_id: FEAT-01KPQ08Y989P8/dev-plan-p25-propagate-task-verification
+      status: resolved
+    - source: work/dev-plan/p25-write-file-tool.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-F1-dev-plan-p25-write-file-tool.md
+      doc_id: FEAT-01KPQ08Y47522/dev-plan-p25-write-file-tool
+      status: resolved
+    - source: work/dev-plan/p28-decompose-dev-plan-registration.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F5-dev-plan-p28-decompose-dev-plan-registration.md
+      doc_id: FEAT-01KPVDDYX73WB/dev-plan-p28-decompose-dev-plan-registration
+      status: resolved
+    - source: work/dev-plan/p28-doc-intel-guide-enrichment.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F2-dev-plan-p28-doc-intel-guide-enrichment.md
+      doc_id: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment
+      status: resolved
+    - source: work/dev-plan/p28-doc-intel-register-workflow.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F3-dev-plan-p28-doc-intel-register-workflow.md
+      doc_id: FEAT-01KPVDDYSEK8P/dev-plan-p28-doc-intel-register-workflow
+      status: resolved
+    - source: work/dev-plan/p28-plan-lifecycle-proposed-active.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F4-dev-plan-p28-plan-lifecycle-proposed-active.md
+      doc_id: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active
+      status: resolved
+    - source: work/dev-plan/p28-skill-doc-updates.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F1-dev-plan-p28-skill-doc-updates.md
+      doc_id: FEAT-01KPVDDYN855F/dev-plan-p28-skill-doc-updates
+      status: resolved
+    - source: work/dev-plan/p28-worktree-creation-timeout.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F6-dev-plan-p28-worktree-creation-timeout.md
+      doc_id: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout
+      status: resolved
+    - source: work/dev-plan/p30-handoff-skill-assembly-prompt-hygiene.md
+      target: work/B30-handoff-skill-assembly-prompt-hygiene/B30-dev-plan-p30-handoff-skill-assembly-prompt-hygiene.md
+      doc_id: P30-handoff-skill-assembly-prompt-hygiene/dev-plan-p30-handoff-skill-assembly-prompt-hygiene
+      status: resolved
+    - source: work/dev-plan/p33-cohort-merge-checkpoints.md
+      target: work/B33-cohort-merge-checkpoints/B33-F1-dev-plan-p33-cohort-merge-checkpoints.md
+      doc_id: FEAT-01KPXE8T8QWRB/dev-plan-p33-cohort-merge-checkpoints
+      status: resolved
+    - source: work/dev-plan/pending-register-nudge-enrichment-decomposed.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-F2-dev-plan-pending-register-nudge-enrichment-decomposed.md
+      doc_id: FEAT-01KPX5CVYWDFF/dev-plan-pending-register-nudge-enrichment-decomposed
+      status: resolved
+    - source: work/dev-plan/role-tool-hints.md
+      target: work/B21-codebase-memory-integration/B21-F1-dev-plan-role-tool-hints.md
+      doc_id: FEAT-01KNA11F3BBMP/dev-plan-role-tool-hints
+      status: resolved
+    - source: work/dev-plan/worktree-graph-context.md
+      target: work/B21-codebase-memory-integration/B21-F2-dev-plan-worktree-graph-context.md
+      doc_id: FEAT-01KNA11F5FAFW/dev-plan-worktree-graph-context
+      status: resolved
+    - source: work/dev-plans/dev-plan-feat-merge-gate-review-report.md
+      target: work/B31-lifecycle-gate-hardening/B31-F1-dev-plan-feat-merge-gate-review-report.md
+      doc_id: FEAT-01KPXGVQY3KQC/dev-plan-dev-plan-feat-merge-gate-review-report
+      status: resolved
+    - source: work/dev-plans/dev-plan-feat-orphaned-reviewing-dashboard-warning.md
+      target: work/B31-lifecycle-gate-hardening/B31-F2-dev-plan-feat-orphaned-reviewing-dashboard-warning.md
+      doc_id: FEAT-01KPXGW5BCGY4/dev-plan-dev-plan-feat-orphaned-reviewing-dashboard-warning
+      status: resolved
+    - source: work/dev-plans/feat-01kpxgzxx8bjz-cache-warm-up-server-start.md
+      target: work/B29-state-store-read-performance/B29-F1-dev-plan-feat-01kpxgzxx8bjz-cache-warm-up-server-start.md
+      doc_id: FEAT-01KPXGZXX8BJZ/dev-plan-feat-01kpxgzxx8bjz-cache-warm-up-server-start
+      status: resolved
+    - source: work/dev-plans/feat-01kpxh0f5gfnv-cache-first-read-path.md
+      target: work/B29-state-store-read-performance/B29-F2-dev-plan-feat-01kpxh0f5gfnv-cache-first-read-path.md
+      doc_id: FEAT-01KPXH0F5GFNV/dev-plan-feat-01kpxh0f5gfnv-cache-first-read-path
+      status: resolved
+    - source: work/dev-plans/feat-01kpxh0wstham-cache-eviction-on-delete.md
+      target: work/B29-state-store-read-performance/B29-F3-dev-plan-feat-01kpxh0wstham-cache-eviction-on-delete.md
+      doc_id: FEAT-01KPXH0WSTHAM/dev-plan-feat-01kpxh0wstham-cache-eviction-on-delete
+      status: resolved
+    - source: work/dev-plans/p29-implementation-handover.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/3.0-action-pattern-logging.md
+      target: work/B17-workflow-and-tooling-3.0/B17-F7-dev-plan-3.0-action-pattern-logging.md
+      doc_id: FEAT-01KN58J275BWJ/dev-plan-30-action-pattern-logging
+      status: resolved
+    - source: work/plan/3.0-base-and-authoring-role-content.md
+      target: work/B16-skills-and-roles-3.0/B16-F7-dev-plan-3.0-base-and-authoring-role-content.md
+      doc_id: FEAT-01KN588PF5P5Y/dev-plan-30-base-and-authoring-role-content
+      status: resolved
+    - source: work/plan/3.0-binding-registry-gate-integration.md
+      target: work/B17-workflow-and-tooling-3.0/B17-F8-dev-plan-3.0-binding-registry-gate-integration.md
+      doc_id: FEAT-01KN58J27H83N/dev-plan-30-binding-registry-gate-integration
+      status: resolved
+    - source: work/plan/3.0-binding-registry.md
+      target: work/B16-skills-and-roles-3.0/B16-F3-dev-plan-3.0-binding-registry.md
+      doc_id: FEAT-01KN588PDPE8V/dev-plan-30-binding-registry
+      status: resolved
+    - source: work/plan/3.0-context-assembly-pipeline.md
+      target: work/B16-skills-and-roles-3.0/B16-F4-dev-plan-3.0-context-assembly-pipeline.md
+      doc_id: FEAT-01KN588PE43M6/dev-plan-30-context-assembly-pipeline
+      status: resolved
+    - source: work/plan/3.0-decomposition-quality-validation.md
+      target: work/B17-workflow-and-tooling-3.0/B17-F5-dev-plan-3.0-decomposition-quality-validation.md
+      doc_id: FEAT-01KN58J26CH63/dev-plan-30-decomposition-quality-validation
+      status: resolved
+    - source: work/plan/3.0-document-authoring-skill-content.md
+      target: work/B16-skills-and-roles-3.0/B16-F9-dev-plan-3.0-document-authoring-skill-content.md
+      doc_id: FEAT-01KN588PFWADY/dev-plan-30-document-authoring-skill-content
+      status: resolved
+    - source: work/plan/3.0-document-structural-checks.md
+      target: work/B17-workflow-and-tooling-3.0/B17-F6-dev-plan-3.0-document-structural-checks.md
+      doc_id: FEAT-01KN58J26RSB6/dev-plan-30-document-structural-checks
+      status: resolved
+    - source: work/plan/3.0-freshness-tracking.md
+      target: work/B16-skills-and-roles-3.0/B16-F6-dev-plan-3.0-freshness-tracking.md
+      doc_id: FEAT-01KN588PETZQE/dev-plan-30-freshness-tracking
+      status: resolved
+    - source: work/plan/3.0-implementation-skill-content.md
+      target: work/B16-skills-and-roles-3.0/B16-F10-dev-plan-3.0-implementation-skill-content.md
+      doc_id: FEAT-01KN588PG7HA3/dev-plan-30-implementation-skill-content
+      status: resolved
+    - source: work/plan/3.0-knowledge-auto-surfacing.md
+      target: work/B16-skills-and-roles-3.0/B16-F5-dev-plan-3.0-knowledge-auto-surfacing.md
+      doc_id: FEAT-01KN588PEF817/dev-plan-30-knowledge-auto-surfacing
+      status: resolved
+    - source: work/plan/3.0-mandatory-stage-gates.md
+      target: work/B17-workflow-and-tooling-3.0/B17-F1-dev-plan-3.0-mandatory-stage-gates.md
+      doc_id: FEAT-01KN58J24S2XW/dev-plan-30-mandatory-stage-gates
+      status: resolved
+    - source: work/plan/3.0-migration.md
+      target: work/B16-skills-and-roles-3.0/B16-F12-dev-plan-3.0-migration.md
+      doc_id: FEAT-01KN588PGXATW/dev-plan-30-migration
+      status: resolved
+    - source: work/plan/3.0-review-rework-loop.md
+      target: work/B17-workflow-and-tooling-3.0/B17-F4-dev-plan-3.0-review-rework-loop.md
+      doc_id: FEAT-01KN58J2606B0/dev-plan-30-review-rework-loop
+      status: resolved
+    - source: work/plan/3.0-review-role-content.md
+      target: work/B16-skills-and-roles-3.0/B16-F8-dev-plan-3.0-review-role-content.md
+      doc_id: FEAT-01KN588PFG6GY/dev-plan-30-review-role-content
+      status: resolved
+    - source: work/plan/3.0-review-skill-content.md
+      target: work/B16-skills-and-roles-3.0/B16-F11-dev-plan-3.0-review-skill-content.md
+      doc_id: FEAT-01KN588PGJNM0/dev-plan-30-review-skill-content
+      status: resolved
+    - source: work/plan/3.0-role-system.md
+      target: work/B16-skills-and-roles-3.0/B16-F1-dev-plan-3.0-role-system.md
+      doc_id: FEAT-01KN588PCVN4Y/dev-plan-30-role-system
+      status: resolved
+    - source: work/plan/3.0-skill-system.md
+      target: work/B16-skills-and-roles-3.0/B16-F2-dev-plan-3.0-skill-system.md
+      doc_id: FEAT-01KN588PDBW85/dev-plan-30-skill-system
+      status: resolved
+    - source: work/plan/3.0-stage-aware-context-assembly.md
+      target: work/B17-workflow-and-tooling-3.0/B17-F3-dev-plan-3.0-stage-aware-context-assembly.md
+      doc_id: FEAT-01KN58J25K4QD/dev-plan-30-stage-aware-context-assembly
+      status: resolved
+    - source: work/plan/3.0-tool-description-audit.md
+      target: work/B17-workflow-and-tooling-3.0/B17-F2-dev-plan-3.0-tool-description-audit.md
+      doc_id: FEAT-01KN58J257X02/dev-plan-30-tool-description-audit
+      status: resolved
+    - source: work/plan/P10-review-and-doc-currency-plan.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P11-dev-default-roles.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P11-dev-document-layout.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P11-dev-embedded-skills.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P11-dev-mcp-connection.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P17-handoff-summary.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P4-kanbanzai-2.0-implementation-plan.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P6-workflow-quality-and-review-plan.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P9-handoff-2026-03-28-mcp-discoverability.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/agent-instructions-consolidation.md
+      target: work/B16-skills-and-roles-3.0/B16-F13-dev-plan-agent-instructions-consolidation.md
+      doc_id: FEAT-01KN6-ZA4NYJ25/dev-plan-agent-instructions-consolidation
+      status: resolved
+    - source: work/plan/batch-handler-false-positive-plan.md
+      target: work/B15-kanbanzai-25-infrastructure-hardening/B15-F3-dev-plan-batch-handler-false-positive-plan.md
+      doc_id: FEAT-01KN4ZPKCJWPF/dev-plan-batch-handler-false-positive-plan
+      status: resolved
+    - source: work/plan/consistent-front-matter-plan.md
+      target: work/_project/dev-plan-consistent-front-matter-plan.md
+      doc_id: PROJECT/dev-plan-consistent-front-matter-plan
+      status: resolved
+    - source: work/plan/doc-audit-plan.md
+      target: work/B15-kanbanzai-25-infrastructure-hardening/B15-F4-dev-plan-doc-audit-plan.md
+      doc_id: FEAT-01KN4ZPQFQN1C/dev-plan-doc-audit-plan
+      status: resolved
+    - source: work/plan/doc-import-dry-run-plan.md
+      target: work/B15-kanbanzai-25-infrastructure-hardening/B15-F5-dev-plan-doc-import-dry-run-plan.md
+      doc_id: FEAT-01KN4ZPTQSZT5/dev-plan-doc-import-dry-run-plan
+      status: resolved
+    - source: work/plan/doc-intel-batch-classification-plan.md
+      target: work/B23-doc-intel-enhancement/B23-F2-dev-plan-doc-intel-batch-classification-plan.md
+      doc_id: FEAT-01KPNNYYXQSYW/dev-plan-doc-intel-batch-classification-plan
+      status: resolved
+    - source: work/plan/doc-intel-concept-aliases-plan.md
+      target: work/B23-doc-intel-enhancement/B23-F4-dev-plan-doc-intel-concept-aliases-plan.md
+      doc_id: FEAT-01KPNNYZ1ZSS6/dev-plan-doc-intel-concept-aliases-plan
+      status: resolved
+    - source: work/plan/doc-intel-knowledge-cross-queries-plan.md
+      target: work/B23-doc-intel-enhancement/B23-F3-dev-plan-doc-intel-knowledge-cross-queries-plan.md
+      doc_id: FEAT-01KPNNYYZRAEK/dev-plan-doc-intel-knowledge-cross-queries-plan
+      status: resolved
+    - source: work/plan/doc-intel-sqlite-fts-search-plan.md
+      target: work/B23-doc-intel-enhancement/B23-F1-dev-plan-doc-intel-sqlite-fts-search-plan.md
+      doc_id: FEAT-01KPNNYYSQTA7/dev-plan-doc-intel-sqlite-fts-search-plan
+      status: resolved
+    - source: work/plan/docint-ac-pattern-recognition-plan.md
+      target: work/B15-kanbanzai-25-infrastructure-hardening/B15-F1-dev-plan-docint-ac-pattern-recognition-plan.md
+      doc_id: FEAT-01KN4ZPCMJ1FP/dev-plan-docint-ac-pattern-recognition-plan
+      status: resolved
+    - source: work/plan/entity-names-implementation-plan.md
+      target: work/_project/dev-plan-entity-names-implementation-plan.md
+      doc_id: PROJECT/dev-plan-entity-names-implementation-plan
+      status: resolved
+    - source: work/plan/entity-names-remediation.md
+      target: work/_project/dev-plan-entity-names-remediation.md
+      doc_id: PROJECT/dev-plan-entity-names-remediation
+      status: resolved
+    - source: work/plan/evaluation-baseline-plan.md
+      target: work/B15-kanbanzai-25-infrastructure-hardening/B15-F6-dev-plan-evaluation-baseline-plan.md
+      doc_id: FEAT-01KN4ZPXXEG1F/dev-plan-evaluation-baseline-plan
+      status: resolved
+    - source: work/plan/feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md
+      target: work/B34-agent-workflow-ergonomics/B34-F1-dev-plan-feat-01kq2e0rb4p8a-plan-id-prefix-resolution.md
+      doc_id: FEAT-01KQ2E0RB4P8A/dev-plan-feat-01kq2e0rb4p8a-plan-id-prefix-resolution
+      status: resolved
+    - source: work/plan/feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md
+      target: work/B34-agent-workflow-ergonomics/B34-F2-dev-plan-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing.md
+      doc_id: FEAT-01KQ2E0RFNBWZ/dev-plan-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing
+      status: resolved
+    - source: work/plan/feat-01kq2e0rhsnp1-next-tool-ux-improvements.md
+      target: work/B34-agent-workflow-ergonomics/B34-F3-dev-plan-feat-01kq2e0rhsnp1-next-tool-ux-improvements.md
+      doc_id: FEAT-01KQ2E0RHSNP1/dev-plan-feat-01kq2e0rhsnp1-next-tool-ux-improvements
+      status: resolved
+    - source: work/plan/feat-01kq2e0rny261-decompose-paired-test-tasks.md
+      target: work/B34-agent-workflow-ergonomics/B34-F5-dev-plan-feat-01kq2e0rny261-decompose-paired-test-tasks.md
+      doc_id: FEAT-01KQ2E0RNY261/dev-plan-feat-01kq2e0rny261-decompose-paired-test-tasks
+      status: resolved
+    - source: work/plan/feat-01kq2e0rr40cd-decompose-apply-supersession.md
+      target: work/B34-agent-workflow-ergonomics/B34-F6-dev-plan-feat-01kq2e0rr40cd-decompose-apply-supersession.md
+      doc_id: FEAT-01KQ2E0RR40CD/dev-plan-feat-01kq2e0rr40cd-decompose-apply-supersession
+      status: resolved
+    - source: work/plan/lifecycle-integrity-plan.md
+      target: work/B19-workflow-lifecycle-integrity/B19-F1-dev-plan-lifecycle-integrity-plan.md
+      doc_id: FEAT-01KN83QN0VAFG/dev-plan-lifecycle-integrity-plan
+      status: resolved
+    - source: work/plan/p3-handoff-2026-03-28.md
+      target: work/B3-kanbanzai-1.0/B3-report-p3-handoff-2026-03-28.md
+      doc_id: P3-kanbanzai-1.0/report-p3-handoff-2026-03-28
+      status: resolved
+    - source: work/plan/phase-1-audit-2-remediation.md
+      target: work/_project/dev-plan-phase-1-audit-2-remediation.md
+      doc_id: PROJECT/dev-plan-phase-1-audit-2-remediation
+      status: resolved
+    - source: work/plan/phase-1-audit-remediation.md
+      target: work/_project/dev-plan-phase-1-audit-remediation.md
+      doc_id: PROJECT/dev-plan-phase-1-audit-remediation
+      status: resolved
+    - source: work/plan/phase-1-decision-log.md
+      target: work/_project/dev-plan-phase-1-decision-log.md
+      doc_id: PROJECT/dev-plan-phase-1-decision-log
+      status: resolved
+    - source: work/plan/phase-1-implementation-plan.md
+      target: work/_project/dev-plan-phase-1-implementation-plan.md
+      doc_id: PROJECT/dev-plan-phase-1-implementation-plan
+      status: resolved
+    - source: work/plan/phase-1-remaining-work.md
+      target: work/_project/dev-plan-phase-1-remaining-work.md
+      doc_id: PROJECT/dev-plan-phase-1-remaining-work
+      status: resolved
+    - source: work/plan/phase-1-review-remediation.md
+      target: work/_project/dev-plan-phase-1-review-remediation.md
+      doc_id: PROJECT/dev-plan-phase-1-review-remediation
+      status: resolved
+    - source: work/plan/phase-2-decision-log.md
+      target: work/_project/dev-plan-phase-2-decision-log.md
+      doc_id: PROJECT/dev-plan-phase-2-decision-log
+      status: resolved
+    - source: work/plan/phase-2-scope.md
+      target: work/_project/dev-plan-phase-2-scope.md
+      doc_id: PROJECT/dev-plan-phase-2-scope
+      status: resolved
+    - source: work/plan/phase-2a-audit-report.md
+      target: work/_project/dev-plan-phase-2a-audit-report.md
+      doc_id: PROJECT/dev-plan-phase-2a-audit-report
+      status: resolved
+    - source: work/plan/phase-2a-progress.md
+      target: work/_project/dev-plan-phase-2a-progress.md
+      doc_id: PROJECT/dev-plan-phase-2a-progress
+      status: resolved
+    - source: work/plan/phase-2b-implementation-plan.md
+      target: work/_project/dev-plan-phase-2b-implementation-plan.md
+      doc_id: PROJECT/dev-plan-phase-2b-implementation-plan
+      status: resolved
+    - source: work/plan/phase-2b-progress.md
+      target: work/_project/dev-plan-phase-2b-progress.md
+      doc_id: PROJECT/dev-plan-phase-2b-progress
+      status: resolved
+    - source: work/plan/phase-3-decision-log.md
+      target: work/_project/dev-plan-phase-3-decision-log.md
+      doc_id: PROJECT/dev-plan-phase-3-decision-log
+      status: resolved
+    - source: work/plan/phase-3-implementation-plan.md
+      target: work/_project/dev-plan-phase-3-implementation-plan.md
+      doc_id: PROJECT/dev-plan-phase-3-implementation-plan
+      status: resolved
+    - source: work/plan/phase-3-progress.md
+      target: work/_project/dev-plan-phase-3-progress.md
+      doc_id: PROJECT/dev-plan-phase-3-progress
+      status: resolved
+    - source: work/plan/phase-3-scope.md
+      target: work/_project/dev-plan-phase-3-scope.md
+      doc_id: PROJECT/dev-plan-phase-3-scope
+      status: resolved
+    - source: work/plan/phase-4-decision-log.md
+      target: work/_project/dev-plan-phase-4-decision-log.md
+      doc_id: PROJECT/dev-plan-phase-4-decision-log
+      status: resolved
+    - source: work/plan/phase-4-scope.md
+      target: work/_project/dev-plan-phase-4-scope.md
+      doc_id: PROJECT/dev-plan-phase-4-scope
+      status: resolved
+    - source: work/plan/phase-4a-implementation-plan.md
+      target: work/_project/dev-plan-phase-4a-implementation-plan.md
+      doc_id: PROJECT/dev-plan-phase-4a-implementation-plan
+      status: resolved
+    - source: work/plan/phase-4a-progress.md
+      target: work/_project/dev-plan-phase-4a-progress.md
+      doc_id: PROJECT/dev-plan-phase-4a-progress
+      status: resolved
+    - source: work/plan/phase-4b-implementation-plan.md
+      target: work/_project/dev-plan-phase-4b-implementation-plan.md
+      doc_id: PROJECT/dev-plan-phase-4b-implementation-plan
+      status: resolved
+    - source: work/plan/phase-4b-review.md
+      target: work/_project/dev-plan-phase-4b-review.md
+      doc_id: PROJECT/dev-plan-phase-4b-review
+      status: resolved
+    - source: work/plan/remove-epic-entity-plan.md
+      target: work/B20-deprecation-cleanup/B20-F1-dev-plan-remove-epic-entity-plan.md
+      doc_id: FEAT-01KN85HMQP2CX/dev-plan-remove-epic-entity-plan
+      status: resolved
+    - source: work/plan/sub-agent-state-isolation-plan.md
+      target: work/B15-kanbanzai-25-infrastructure-hardening/B15-F2-dev-plan-sub-agent-state-isolation-plan.md
+      doc_id: FEAT-01KN4ZPG44T5B/dev-plan-sub-agent-state-isolation-plan
+      status: resolved
+    - source: work/plan/user-guide-dev-plan.md
+      target: work/B22-documentation-for-public-release/B22-F1-dev-plan-user-guide-dev-plan.md
+      doc_id: FEAT-01KP8T4HQMEA3/dev-plan-user-guide-dev-plan
+      status: resolved
+    - source: work/plan/workflow-automation-plan.md
+      target: work/B18-workflow-automation/B18-F1-dev-plan-workflow-automation-plan.md
+      doc_id: FEAT-01KN73BFK4M4Z/dev-plan-workflow-automation-plan
+      status: resolved
+    - source: work/research/AI-agent-orchestration-research-proposal.txt
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/research/agent-orchestration-research.md
+      target: work/_project/research-agent-orchestration-research.md
+      doc_id: PROJECT/research-agent-orchestration-research
+      status: resolved
+    - source: work/research/agent-skills-research.md
+      target: work/_project/research-agent-skills-research.md
+      doc_id: PROJECT/research-agent-skills-research
+      status: resolved
+    - source: work/research/ai-agent-best-practices-research.md
+      target: work/_project/research-ai-agent-best-practices-research.md
+      doc_id: PROJECT/research-ai-agent-best-practices-research
+      status: resolved
+    - source: work/research/cohort-merge-checkpoints.md
+      target: work/B26-workflow-scaling/B26-F1-research-cohort-merge-checkpoints.md
+      doc_id: FEAT-01KPRFCXNMNKM/research-cohort-merge-checkpoints
+      status: resolved
+    - source: work/research/doc-intel-recurring-issues-investigation-prompt.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/research/doc-intel-recurring-issues-investigation.md
+      target: work/_project/research-doc-intel-recurring-issues-investigation.md
+      doc_id: PROJECT/research-doc-intel-recurring-issues-investigation
+      status: resolved
+    - source: work/research/document-retrieval-for-ai-agents.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/research/initial-workflow-analysis-review.md
+      target: work/_project/research-initial-workflow-analysis-review.md
+      doc_id: PROJECT/research-initial-workflow-analysis-review
+      status: resolved
+    - source: work/research/initial-workflow-analysis.md
+      target: work/_project/research-initial-workflow-analysis.md
+      doc_id: PROJECT/research-initial-workflow-analysis
+      status: resolved
+    - source: work/research/orchestration-landscape-2025.md
+      target: work/_project/research-orchestration-landscape-2025.md
+      doc_id: PROJECT/research-orchestration-landscape-2025
+      status: resolved
+    - source: work/research/p28-issues-investigation.md
+      target: work/_project/research-p28-issues-investigation.md
+      doc_id: PROJECT/research-p28-issues-investigation
+      status: resolved
+    - source: work/research/post-p9-feedback-analysis.md
+      target: work/_project/research-post-p9-feedback-analysis.md
+      doc_id: PROJECT/research-post-p9-feedback-analysis
+      status: resolved
+    - source: work/research/prompts/p28-issues-investigation.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/research/release-readiness-assessment.md
+      target: work/_project/research-release-readiness-assessment.md
+      doc_id: PROJECT/research-release-readiness-assessment
+      status: resolved
+    - source: work/research/research-AI-agent-modern-advice-proposal.txt
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/research/skill-authoring-best-practices.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/research/state-backend-comparison.md
+      target: work/_project/research-state-backend-comparison.md
+      doc_id: PROJECT/research-state-backend-comparison
+      status: resolved
+    - source: work/research/storage-architecture-and-progress-visibility.md
+      target: work/_project/research-storage-architecture-and-progress-visibility.md
+      doc_id: PROJECT/research-storage-architecture-and-progress-visibility
+      status: resolved
+    - source: work/research/sub-agent-context-propagation.md
+      target: work/_project/research-sub-agent-context-propagation.md
+      doc_id: PROJECT/research-sub-agent-context-propagation
+      status: resolved
+    - source: work/research/workflow-system-design-review.md
+      target: work/_project/research-workflow-system-design-review.md
+      doc_id: PROJECT/research-workflow-system-design-review
+      status: resolved
+    - source: work/reports/Kanbanzai user feedback report.txt
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/reports/agent-instructions-review.md
+      target: work/_project/report-agent-instructions-review.md
+      doc_id: PROJECT/report-agent-instructions-review
+      status: resolved
+    - source: work/reports/automation-opportunities-analysis.md
+      target: work/_project/report-automation-opportunities-analysis.md
+      doc_id: PROJECT/report-automation-opportunities-analysis
+      status: resolved
+    - source: work/reports/decompose-feature-workflow-friction.md
+      target: work/_project/report-decompose-feature-workflow-friction.md
+      doc_id: PROJECT/report-decompose-feature-workflow-friction
+      status: resolved
+    - source: work/reports/doc-intel-layer3-classification-pilot.md
+      target: work/_project/report-doc-intel-layer3-classification-pilot.md
+      doc_id: PROJECT/report-doc-intel-layer3-classification-pilot
+      status: resolved
+    - source: work/reports/doc-intel-p27-retrospective.md
+      target: work/_project/report-doc-intel-p27-retrospective.md
+      doc_id: PROJECT/report-doc-intel-p27-retrospective
+      status: resolved
+    - source: work/reports/doc-intel-usage-report.md
+      target: work/_project/report-doc-intel-usage-report.md
+      doc_id: PROJECT/report-doc-intel-usage-report
+      status: resolved
+    - source: work/reports/document-intelligence-usage-report.md
+      target: work/_project/report-document-intelligence-usage-report.md
+      doc_id: PROJECT/report-document-intelligence-usage-report
+      status: resolved
+    - source: work/reports/feat-01kn7-3bfk4m4z-review.md
+      target: work/B18-workflow-automation/B18-F1-report-feat-01kn7-3bfk4m4z-review.md
+      doc_id: FEAT-01KN73BFK4M4Z/report-feat-01kn7-3bfk4m4z-review
+      status: resolved
+    - source: work/reports/kanbanzai-2.0-migration-audit.md
+      target: work/_project/report-kanbanzai-2.0-migration-audit.md
+      doc_id: PROJECT/report-kanbanzai-20-migration-audit
+      status: resolved
+    - source: work/reports/kanbanzai-2.0-workflow-retrospective.md
+      target: work/_project/report-kanbanzai-2.0-workflow-retrospective.md
+      doc_id: PROJECT/report-kanbanzai-20-workflow-retrospective
+      status: resolved
+    - source: work/reports/layer-1-track-a-review.md
+      target: work/_project/report-layer-1-track-a-review.md
+      doc_id: PROJECT/report-layer-1-track-a-review
+      status: resolved
+    - source: work/reports/mcp-server-design-issues.md
+      target: work/_project/report-mcp-server-design-issues.md
+      doc_id: PROJECT/report-mcp-server-design-issues
+      status: resolved
+    - source: work/reports/p24-implementation-retro.md
+      target: work/_project/report-p24-implementation-retro.md
+      doc_id: PROJECT/report-p24-implementation-retro
+      status: resolved
+    - source: work/reports/p7-implementation-retrospective.md
+      target: work/B7-developer-experience/B7-report-p7-implementation-retrospective.md
+      doc_id: P7-developer-experience/report-p7-implementation-retrospective
+      status: resolved
+    - source: work/reports/phase-2a-implementation-review.md
+      target: work/_project/report-phase-2a-implementation-review.md
+      doc_id: PROJECT/report-phase-2a-implementation-review
+      status: resolved
+    - source: work/reports/retro-p28-doc-intel-polish-workflow-reliability.md
+      target: work/_project/report-p28-doc-intel-polish-workflow-reliability.md
+      doc_id: PROJECT/report-retro-p28-doc-intel-polish-workflow-reliability
+      status: resolved
+    - source: work/reports/retro-recommendations-2026-04-20.md
+      target: work/_project/report-recommendations-2026-04-20.md
+      doc_id: PROJECT/report-retro-recommendations-2026-04-20
+      status: resolved
+    - source: work/reports/retro-session-2026-04-20.md
+      target: work/_project/report-session-2026-04-20.md
+      doc_id: PROJECT/report-retro-session-2026-04-20
+      status: resolved
+    - source: work/reports/review-feat-01kpvddyn855f-skill-doc-updates.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F1-report-review-feat-01kpvddyn855f-skill-doc-updates.md
+      doc_id: FEAT-01KPVDDYN855F/report-review-feat-01kpvddyn855f-skill-doc-updates
+      status: resolved
+    - source: work/reports/review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F2-report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment.md
+      doc_id: FEAT-01KPVDDYQQS1Y/report-review-feat-01kpvddyqqs1y-doc-intel-guide-enrichment
+      status: resolved
+    - source: work/reports/review-feat-01kpvddysek8p-doc-intel-register-workflow.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F3-report-review-feat-01kpvddysek8p-doc-intel-register-workflow.md
+      doc_id: FEAT-01KPVDDYSEK8P/report-review-feat-01kpvddysek8p-doc-intel-register-workflow
+      status: resolved
+    - source: work/reports/review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F4-report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active.md
+      doc_id: FEAT-01KPVDDYVETV5/report-review-feat-01kpvddyvetv5-plan-lifecycle-proposed-active
+      status: resolved
+    - source: work/reports/review-feat-01kpvddyx73wb-decompose-dev-plan-registration.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F5-report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration.md
+      doc_id: FEAT-01KPVDDYX73WB/report-review-feat-01kpvddyx73wb-decompose-dev-plan-registration
+      status: resolved
+    - source: work/reports/review-feat-01kpvddyz3182-worktree-creation-timeout.md
+      target: work/B28-doc-intel-polish-workflow-reliability/B28-F6-report-review-feat-01kpvddyz3182-worktree-creation-timeout.md
+      doc_id: FEAT-01KPVDDYZ3182/report-review-feat-01kpvddyz3182-worktree-creation-timeout
+      status: resolved
+    - source: work/reports/review-feat-01kpx5cvvy357-guide-concept-classification-enrichment.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-F1-report-review-feat-01kpx5cvvy357-guide-concept-classification-enrichment.md
+      doc_id: FEAT-01KPX5CVVY357/report-review-feat-01kpx5cvvy357-guide-concept-classification-enrichment
+      status: resolved
+    - source: work/reports/review-feat-01kpx5cvywdff-pending-register-nudge-enrichment.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-F2-report-review-feat-01kpx5cvywdff-pending-register-nudge-enrichment.md
+      doc_id: FEAT-01KPX5CVYWDFF/report-review-feat-01kpx5cvywdff-pending-register-nudge-enrichment
+      status: resolved
+    - source: work/reports/review-feat-01kpx5cw0qsm7-concept-tagging-approval-gate.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-F3-report-review-feat-01kpx5cw0qsm7-concept-tagging-approval-gate.md
+      doc_id: FEAT-01KPX5CW0QSM7/report-review-feat-01kpx5cw0qsm7-concept-tagging-approval-gate
+      status: resolved
+    - source: work/reports/review-feat-01kpx5cw2ptmd-cli-doc-register-identity-fix.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-F4-report-review-feat-01kpx5cw2ptmd-cli-doc-register-identity-fix.md
+      doc_id: FEAT-01KPX5CW2PTMD/report-review-feat-01kpx5cw2ptmd-cli-doc-register-identity-fix
+      status: resolved
+    - source: work/reports/review-feat-01kpx5cw4r82p-mcp-parameter-struct-json-audit.md
+      target: work/B32-doc-intel-classification-pipeline-hardening/B32-F5-report-review-feat-01kpx5cw4r82p-mcp-parameter-struct-json-audit.md
+      doc_id: FEAT-01KPX5CW4R82P/report-review-feat-01kpx5cw4r82p-mcp-parameter-struct-json-audit
+      status: resolved
+    - source: work/reports/user-guide-review.md
+      target: work/B22-documentation-for-public-release/B22-F1-report-user-guide-review.md
+      doc_id: FEAT-01KP8T4HQMEA3/report-user-guide-review
+      status: resolved
+    - source: work/reports/v3-feedback-gap-analysis.md
+      target: work/_project/report-v3-feedback-gap-analysis.md
+      doc_id: PROJECT/report-v3-feedback-gap-analysis
+      status: resolved
+    - source: work/reports/workflow-ux-gaps.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/reviews/3.0-design-cross-document-alignment.md
+      target: work/_project/report-3.0-design-cross-document-alignment.md
+      doc_id: PROJECT/report-30-design-cross-document-alignment
+      status: resolved
+    - source: work/reviews/audit-codebase-2026-04.md
+      target: work/_project/report-audit-codebase-2026-04.md
+      doc_id: PROJECT/report-audit-codebase-2026-04
+      status: resolved
+    - source: work/reviews/lifecycle-integrity-review.md
+      target: work/B19-workflow-lifecycle-integrity/B19-F1-report-lifecycle-integrity-review.md
+      doc_id: FEAT-01KN83QN0VAFG/report-lifecycle-integrity-review
+      status: resolved
+    - source: work/reviews/review-FEAT-01KMKRQSD1TKK-skills-content.md
+      target: work/B3-kanbanzai-1.0/B3-F2-report-review-FEAT-01KMKRQSD1TKK-skills-content.md
+      doc_id: FEAT-01KMKRQSD1TKK/report-review-feat-01kmkrqsd1tkk
+      status: resolved
+    - source: work/reviews/review-FEAT-01KMR8QW7A3A8-review-batch-operations.md
+      target: work/B4-kanbanzai-2.0/B4-F1-report-review-FEAT-01KMR8QW7A3A8-review-batch-operations.md
+      doc_id: FEAT-01KMR8QW7A3A8/report-track-c-batch-operations-review
+      status: resolved
+    - source: work/reviews/review-FEAT-01KMRX1F47Z94-review-lifecycle-states.md
+      target: work/B6-workflow-quality-and-review/B6-F4-report-review-FEAT-01KMRX1F47Z94-review-lifecycle-states.md
+      doc_id: FEAT-01KMRX1F47Z94/report-review-feat-01kmrx1f47z94
+      status: resolved
+    - source: work/reviews/review-FEAT-01KMRX1HG8BAX-reviewer-context-profile-and-skill.md
+      target: work/B6-workflow-quality-and-review/B6-F5-report-review-FEAT-01KMRX1HG8BAX-reviewer-context-profile-and-skill.md
+      doc_id: FEAT-01KMRX1HG8BAX/report-review-feat-01kmrx1hg8bax
+      status: resolved
+    - source: work/reviews/review-FEAT-01KMRX1QPN3CB-review-orchestration-pattern.md
+      target: work/B6-workflow-quality-and-review/B6-F6-report-review-FEAT-01KMRX1QPN3CB-review-orchestration-pattern.md
+      doc_id: FEAT-01KMRX1QPN3CB/report-review-feat-01kmrx1qpn3cb
+      status: resolved
+    - source: work/reviews/review-FEAT-01KMRX1SEQV49-policy-and-documentation-updates.md
+      target: work/B6-workflow-quality-and-review/B6-F7-report-review-FEAT-01KMRX1SEQV49-policy-and-documentation-updates.md
+      doc_id: FEAT-01KMRX1SEQV49/report-review-feat-01kmrx1seqv49
+      status: resolved
+    - source: work/reviews/review-FEAT-01KN48ET59G8R-entity-names.md
+      target: work/B14-entity-names/B14-F1-report-review-FEAT-01KN48ET59G8R-entity-names.md
+      doc_id: FEAT-01KN48ET59G8R/report-review-feat-01kn48et59g8r-entity-names
+      status: resolved
+    - source: work/reviews/review-FEAT-01KNA11F3BBMP-role-tool-hints.md
+      target: work/B21-codebase-memory-integration/B21-F1-report-review-FEAT-01KNA11F3BBMP-role-tool-hints.md
+      doc_id: FEAT-01KNA11F3BBMP/report-review-feat-01kna11f3bbmp-role-tool-hints
+      status: resolved
+    - source: work/reviews/review-FEAT-01KNA11F5FAFW-worktree-graph-context.md
+      target: work/B21-codebase-memory-integration/B21-F2-report-review-FEAT-01KNA11F5FAFW-worktree-graph-context.md
+      doc_id: FEAT-01KNA11F5FAFW/report-review-feat-01kna11f5fafw-worktree-graph-context
+      status: resolved
+    - source: work/reviews/review-FEAT-01KPTHB5Z1H7T-design-stage-consultation.md
+      target: work/_project/report-review-FEAT-01KPTHB5Z1H7T-design-stage-consultation.md
+      doc_id: PROJECT/report-review-feat-01kpthb5z1h7t-design-stage-consultation
+      status: resolved
+    - source: work/reviews/review-FEAT-01KPTHB61WPT0-corpus-hygiene-classification.md
+      target: work/_project/report-review-FEAT-01KPTHB61WPT0-corpus-hygiene-classification.md
+      doc_id: PROJECT/report-review-feat-01kpthb61wpt0-corpus-hygiene-classification
+      status: resolved
+    - source: work/reviews/review-FEAT-01KPTHB649DPK-knowledge-lifecycle-mandate.md
+      target: work/_project/report-review-FEAT-01KPTHB649DPK-knowledge-lifecycle-mandate.md
+      doc_id: PROJECT/report-review-feat-01kpthb649dpk-knowledge-lifecycle-mandate
+      status: resolved
+    - source: work/reviews/review-FEAT-01KPTHB66Y8TM-doc-intel-instrumentation.md
+      target: work/_project/report-review-FEAT-01KPTHB66Y8TM-doc-intel-instrumentation.md
+      doc_id: PROJECT/report-review-feat-01kpthb66y8tm-doc-intel-instrumentation
+      status: resolved
+    - source: work/reviews/review-FEAT-01KPXGVQY3KQC-merge-gate-review-report.md
+      target: work/B31-lifecycle-gate-hardening/B31-F1-report-review-FEAT-01KPXGVQY3KQC-merge-gate-review-report.md
+      doc_id: FEAT-01KPXGVQY3KQC/report-review-feat-01kpxgvqy3kqc-merge-gate-review-report
+      status: resolved
+    - source: work/reviews/review-FEAT-01KPXGW5BCGY4-orphaned-reviewing-dashboard-warning.md
+      target: work/B31-lifecycle-gate-hardening/B31-F2-report-review-FEAT-01KPXGW5BCGY4-orphaned-reviewing-dashboard-warning.md
+      doc_id: FEAT-01KPXGW5BCGY4/report-review-feat-01kpxgw5bcgy4-orphaned-reviewing-dashboard-warning
+      status: resolved
+    - source: work/reviews/review-FEAT-01KQ049NBSQAR-handoff-skill-assembly-fix.md
+      target: work/B30-handoff-skill-assembly-prompt-hygiene/B30-F1-report-review-FEAT-01KQ049NBSQAR-handoff-skill-assembly-fix.md
+      doc_id: FEAT-01KQ049NBSQAR/report-review-feat-01kq049nbsqar-handoff-skill-assembly-fix
+      status: resolved
+    - source: work/reviews/review-FEAT-01KQ2E0RB4P8A-plan-id-prefix-resolution.md
+      target: work/B34-agent-workflow-ergonomics/B34-F1-report-review-FEAT-01KQ2E0RB4P8A-plan-id-prefix-resolution.md
+      doc_id: FEAT-01KQ2E0RB4P8A/report-review-feat-01kq2e0rb4p8a-plan-id-prefix-resolution
+      status: resolved
+    - source: work/reviews/review-FEAT-01KQ2E0RFNBWZ-task-auto-promotion-on-developing.md
+      target: work/B34-agent-workflow-ergonomics/B34-F2-report-review-FEAT-01KQ2E0RFNBWZ-task-auto-promotion-on-developing.md
+      doc_id: FEAT-01KQ2E0RFNBWZ/report-review-feat-01kq2e0rfnbwz-task-auto-promotion-on-developing
+      status: resolved
+    - source: work/reviews/review-FEAT-01KQ2E0RHSNP1-idempotent-task-claim.md
+      target: work/B34-agent-workflow-ergonomics/B34-F3-report-review-FEAT-01KQ2E0RHSNP1-idempotent-task-claim.md
+      doc_id: FEAT-01KQ2E0RHSNP1/report-review-feat-01kq2e0rhsnp1-idempotent-task-claim
+      status: resolved
+    - source: work/reviews/review-FEAT-01KQ2E0RNY261-decompose-paired-test-tasks.md
+      target: work/B34-agent-workflow-ergonomics/B34-F5-report-review-FEAT-01KQ2E0RNY261-decompose-paired-test-tasks.md
+      doc_id: FEAT-01KQ2E0RNY261/report-review-feat-01kq2e0rny261-decompose-paired-test-tasks
+      status: resolved
+    - source: work/reviews/review-FEAT-01KQ2E0RR40CD-decompose-apply-supersession.md
+      target: work/B34-agent-workflow-ergonomics/B34-F6-report-review-FEAT-01KQ2E0RR40CD-decompose-apply-supersession.md
+      doc_id: FEAT-01KQ2E0RR40CD/report-review-feat-01kq2e0rr40cd-decompose-apply-supersession
+      status: resolved
+    - source: work/reviews/review-P10-review-and-doc-currency.md
+      target: work/B10-review-and-doc-currency/B10-report-review-P10-review-and-doc-currency.md
+      doc_id: P10-review-and-doc-currency/report-review-p10-review-and-doc-currency
+      status: resolved
+    - source: work/reviews/review-P13-workflow-flexibility.md
+      target: work/B13-workflow-flexibility/B13-report-review-P13-workflow-flexibility.md
+      doc_id: P13-workflow-flexibility/report-review-p13-workflow-flexibility
+      status: resolved
+    - source: work/reviews/review-P15-kanbanzai-25-infrastructure-hardening.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/reviews/review-P16-skills-and-roles-3.0.md
+      target: work/B16-skills-and-roles-3.0/B16-report-review-P16-skills-and-roles-3.0.md
+      doc_id: P16-skills-and-roles-3.0/report-review-p16-skills-and-roles-30
+      status: resolved
+    - source: work/reviews/review-P17-workflow-and-tooling-3.0.md
+      target: work/B17-workflow-and-tooling-3.0/B17-report-review-P17-workflow-and-tooling-3.0.md
+      doc_id: P17-workflow-and-tooling-3.0/report-review-p17-workflow-and-tooling-30
+      status: resolved
+    - source: work/reviews/review-P24-retro-recommendations.md
+      target: work/B24-retro-recommendations/B24-report-review-P24-retro-recommendations.md
+      doc_id: P24-retro-recommendations/report-review-p24-retro-recommendations
+      status: resolved
+    - source: work/reviews/review-P25-agent-tooling-pipeline-quality.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-report-review-P25-agent-tooling-pipeline-quality.md
+      doc_id: P25-agent-tooling-pipeline-quality/report-review-p25-agent-tooling-pipeline-quality
+      status: resolved
+    - source: work/reviews/review-P3-git-integration-knowledge-lifecycle.md
+      target: work/B3-kanbanzai-1.0/B3-report-review-P3-git-integration-knowledge-lifecycle.md
+      doc_id: P3-kanbanzai-1.0/report-review-p3-git-integration-knowledge-lifecycle
+      status: resolved
+    - source: work/reviews/review-P34-agent-workflow-ergonomics.md
+      target: work/B34-agent-workflow-ergonomics/B34-report-review-P34-agent-workflow-ergonomics.md
+      doc_id: P34-agent-workflow-ergonomics/report-review-p34-agent-workflow-ergonomics
+      status: resolved
+    - source: work/reviews/review-P7-developer-experience.md
+      target: work/B7-developer-experience/B7-report-review-P7-developer-experience.md
+      doc_id: P7-developer-experience/report-review-p7-developer-experience
+      status: resolved
+    - source: work/reviews/review-P8-decompose-reliability.md
+      target: work/B8-decompose-reliability/B8-report-review-P8-decompose-reliability.md
+      doc_id: P8-decompose-reliability/report-p8-decompose-reliability-review
+      status: resolved
+    - source: work/reviews/review-P9-mcp-discoverability.md
+      target: work/B9-mcp-discoverability/B9-report-review-P9-mcp-discoverability.md
+      doc_id: P9-mcp-discoverability/report-review-p9-mcp-discoverability
+      status: resolved
+    - source: work/reviews/review-doc-intel-adoption.md
+      target: work/B27-doc-intel-adoption/B27-report-review-doc-intel-adoption.md
+      doc_id: P27-doc-intel-adoption/report-review-doc-intel-adoption
+      status: resolved
+    - source: work/reviews/review-feat-01kpxe8t8qwrb-cohort-merge-checkpoints.md
+      target: work/B33-cohort-merge-checkpoints/B33-F1-report-review-feat-01kpxe8t8qwrb-cohort-merge-checkpoints.md
+      doc_id: FEAT-01KPXE8T8QWRB/report-review-feat-01kpxe8t8qwrb-cohort-merge-checkpoints
+      status: resolved
+    - source: work/reviews/review-p12-agent-onboarding.md
+      target: work/B12-agent-onboarding/B12-report-review-p12-agent-onboarding.md
+      doc_id: P12-agent-onboarding/report-review-p12-agent-onboarding
+      status: resolved
+    - source: work/reviews/review-p29-state-store-read-performance.md
+      target: work/B29-state-store-read-performance/B29-report-review-p29-state-store-read-performance.md
+      doc_id: P29-state-store-read-performance/report-review-p29-state-store-read-performance
+      status: resolved
+    - source: work/reviews/review-p33-cohort-merge-checkpoints.md
+      target: work/B33-cohort-merge-checkpoints/B33-report-review-p33-cohort-merge-checkpoints.md
+      doc_id: P33-cohort-merge-checkpoints/report-review-p33-cohort-merge-checkpoints
+      status: resolved
+    - source: work/retro/p25-retrospective.md
+      target: work/B25-agent-tooling-pipeline-quality/B25-report-p25-retrospective.md
+      doc_id: P25-agent-tooling-pipeline-quality/report-p25-retrospective
+      status: resolved
+    - source: work/retro/p27-retrospective.md
+      target: work/_project/report-p27-retrospective.md
+      doc_id: PROJECT/report-p27-retrospective
+      status: resolved
+    - source: work/retro/retro-P11-fresh-install-experience.md
+      target: work/B11-fresh-install-experience/B11-retro-P11-fresh-install-experience.md
+      doc_id: P11-fresh-install-experience/retrospective-retro-p11-fresh-install-experience
+      status: resolved
+    - source: work/retros/retro-2026-04-25.md
+      target: work/_project/report-2026-04-25.md
+      doc_id: PROJECT/report-retro-2026-04-25
+      status: resolved
+    - source: work/eval/README.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/baseline-eval-001-20260401.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/baseline-eval-004-20260401.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/baseline-eval-008-20260401.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/baseline-eval-015-20260401.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/baseline-eval-018-20260401.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-001.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-002.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-003.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-004.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-005.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-006.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-007.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-008.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-009.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-010.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-011.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-012.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-013.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-014.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-015.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-016.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-017.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-018.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-019.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-020.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/README.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/results/tier-p1-results.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/results/tier-p2-results.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/results/tier-p3-results.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/01-happy-path-proposed-to-reviewing.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/02-happy-path-task-lifecycle.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/03-happy-path-document-approval-cascade.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/04-gate-failure-recovery-missing-design.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/05-gate-failure-recovery-missing-spec.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/06-gate-failure-recovery-incomplete-tasks.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/07-review-rework-loop-single-cycle.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/08-review-rework-loop-document-refresh.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/09-review-rework-loop-multiple-cycles.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/10-multi-feature-parallel-development.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/11-multi-feature-dependency-ordering.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/12-edge-case-empty-work-queue.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/13-edge-case-unknown-entity-id.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/14-gate-failure-recovery-dev-plan-missing.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/15-review-rework-loop-doc-flagged-stale.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/16-happy-path-knowledge-contribution.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/17-multi-feature-conflict-check.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/18-edge-case-batch-entity-create.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/19-edge-case-worktree-auto-create.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/20-happy-path-checkpoint-and-respond.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/21-happy-path-handoff-and-status.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/22-happy-path-pr-and-merge.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/23-happy-path-full-lifecycle-with-merge.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/dev/agent-onboarding.md
+      target: work/B12-agent-onboarding/B12-dev-plan-agent-onboarding.md
+      doc_id: P12-agent-onboarding/dev-plan-agent-onboarding
+      status: resolved
+    - source: work/dev/agents-md-cleanup.md
+      target: work/B3-kanbanzai-1.0/B3-F7-dev-plan-agents-md-cleanup.md
+      doc_id: FEAT-01KMTSPAV34HR/dev-plan-agents-md-cleanup
+      status: resolved
+    - source: work/dev/binary-distribution.md
+      target: work/B3-kanbanzai-1.0/B3-F3-dev-plan-binary-distribution.md
+      doc_id: FEAT-01KMKRQT9QCPR/dev-plan-binary-distribution
+      status: resolved
+    - source: work/dev/hardening.md
+      target: work/B3-kanbanzai-1.0/B3-F6-dev-plan-hardening.md
+      doc_id: FEAT-01KMKRQWF0FCH/dev-plan-hardening
+      status: resolved
+    - source: work/dev/init-command.md
+      target: work/B3-kanbanzai-1.0/B3-F1-dev-plan-init-command.md
+      doc_id: FEAT-01KMKRQRRX3CC/dev-plan-init-command
+      status: resolved
+    - source: work/dev/kanbanzai-1.0.md
+      target: work/B3-kanbanzai-1.0/B3-dev-plan-kanbanzai-1.0.md
+      doc_id: P3-kanbanzai-1.0/dev-plan-kanbanzai-10
+      status: resolved
+    - source: work/dev/mcp-discoverability-and-reliability.md
+      target: work/B9-mcp-discoverability/B9-F1-dev-plan-mcp-discoverability-and-reliability.md
+      doc_id: FEAT-01KMTCWXAGX06/dev-plan-mcp-discoverability-and-reliability
+      status: resolved
+    - source: work/dev/public-schema-interface.md
+      target: work/B3-kanbanzai-1.0/B3-F4-dev-plan-public-schema-interface.md
+      doc_id: FEAT-01KMKRQV025FA/dev-plan-public-schema-interface
+      status: resolved
+    - source: work/dev/release-infrastructure.md
+      target: work/B3-kanbanzai-1.0/B3-F8-dev-plan-release-infrastructure.md
+      doc_id: FEAT-01KMTSPEE6BXS/dev-plan-release-infrastructure
+      status: resolved
+    - source: work/dev/skills-content.md
+      target: work/B3-kanbanzai-1.0/B3-F2-dev-plan-skills-content.md
+      doc_id: FEAT-01KMKRQSD1TKK/dev-plan-skills-content
+      status: resolved
+    - source: work/dev/user-documentation.md
+      target: work/B3-kanbanzai-1.0/B3-F5-dev-plan-user-documentation.md
+      doc_id: FEAT-01KMKRQVKBPRX/dev-plan-user-documentation
+      status: resolved
+    - source: work/specs/feat-01kpxgzxx8bjz-cache-warm-up-server-start.md
+      target: work/B29-state-store-read-performance/B29-F1-spec-feat-01kpxgzxx8bjz-cache-warm-up-server-start.md
+      doc_id: FEAT-01KPXGZXX8BJZ/specification-feat-01kpxgzxx8bjz-cache-warm-up-server-start
+      status: resolved
+    - source: work/specs/feat-01kpxh0f5gfnv-cache-first-read-path.md
+      target: work/B29-state-store-read-performance/B29-F2-spec-feat-01kpxh0f5gfnv-cache-first-read-path.md
+      doc_id: FEAT-01KPXH0F5GFNV/specification-feat-01kpxh0f5gfnv-cache-first-read-path
+      status: resolved
+    - source: work/specs/feat-01kpxh0wstham-cache-eviction-on-delete.md
+      target: work/B29-state-store-read-performance/B29-F3-spec-feat-01kpxh0wstham-cache-eviction-on-delete.md
+      doc_id: FEAT-01KPXH0WSTHAM/specification-feat-01kpxh0wstham-cache-eviction-on-delete
+      status: resolved
+    - source: work/specs/spec-feat-merge-gate-review-report.md
+      target: work/B31-lifecycle-gate-hardening/B31-F1-spec-feat-merge-gate-review-report.md
+      doc_id: FEAT-01KPXGVQY3KQC/specification-spec-feat-merge-gate-review-report
+      status: resolved
+    - source: work/specs/spec-feat-orphaned-reviewing-dashboard-warning.md
+      target: work/B31-lifecycle-gate-hardening/B31-F2-spec-feat-orphaned-reviewing-dashboard-warning.md
+      doc_id: FEAT-01KPXGW5BCGY4/specification-spec-feat-orphaned-reviewing-dashboard-warning
+      status: resolved
+unresolvable: []
+unregistered:
+    - source: work/design/Kanbanzai-3.0-proposal.txt
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/design/consistent-front-matter-proposal.txt
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/design/docs-memory-mcp-design.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/design/documentation-pipeline.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/design/skills-system-redesign-v2.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/design/titles-proposal.txt
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/dev-plans/p29-implementation-handover.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P10-review-and-doc-currency-plan.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P11-dev-default-roles.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P11-dev-document-layout.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P11-dev-embedded-skills.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P11-dev-mcp-connection.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P17-handoff-summary.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P4-kanbanzai-2.0-implementation-plan.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P6-workflow-quality-and-review-plan.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/plan/P9-handoff-2026-03-28-mcp-discoverability.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/research/AI-agent-orchestration-research-proposal.txt
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/research/doc-intel-recurring-issues-investigation-prompt.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/research/document-retrieval-for-ai-agents.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/research/prompts/p28-issues-investigation.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/research/research-AI-agent-modern-advice-proposal.txt
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/research/skill-authoring-best-practices.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/reports/Kanbanzai user feedback report.txt
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/reports/workflow-ux-gaps.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/reviews/review-P15-kanbanzai-25-infrastructure-hardening.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/README.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/baseline-eval-001-20260401.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/baseline-eval-004-20260401.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/baseline-eval-008-20260401.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/baseline-eval-015-20260401.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/baseline-eval-018-20260401.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-001.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-002.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-003.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-004.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-005.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-006.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-007.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-008.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-009.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-010.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-011.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-012.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-013.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-014.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-015.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-016.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-017.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-018.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-019.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/eval/eval-020.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/README.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/results/tier-p1-results.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/results/tier-p2-results.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/results/tier-p3-results.md
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/01-happy-path-proposed-to-reviewing.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/02-happy-path-task-lifecycle.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/03-happy-path-document-approval-cascade.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/04-gate-failure-recovery-missing-design.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/05-gate-failure-recovery-missing-spec.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/06-gate-failure-recovery-incomplete-tasks.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/07-review-rework-loop-single-cycle.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/08-review-rework-loop-document-refresh.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/09-review-rework-loop-multiple-cycles.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/10-multi-feature-parallel-development.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/11-multi-feature-dependency-ordering.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/12-edge-case-empty-work-queue.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/13-edge-case-unknown-entity-id.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/14-gate-failure-recovery-dev-plan-missing.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/15-review-rework-loop-doc-flagged-stale.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/16-happy-path-knowledge-contribution.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/17-multi-feature-conflict-check.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/18-edge-case-batch-entity-create.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/19-edge-case-worktree-auto-create.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/20-happy-path-checkpoint-and-respond.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/21-happy-path-handoff-and-status.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/22-happy-path-pr-and-merge.yaml
+      status: unregistered
+      reason: no document record found for this file
+    - source: work/evaluation/scenarios/23-happy-path-full-lifecycle-with-merge.yaml
+      status: unregistered
+      reason: no document record found for this file
+conflicts: []
+already_done: []
+summary:
+    total: 488
+    resolved: 410
+    unresolvable: 0
+    unregistered: 78
+    conflicts: 0
+    already_done: 0

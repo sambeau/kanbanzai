@@ -103,18 +103,20 @@ const (CheckpointStatusPending = "pending"; CheckpointStatusResponded = "respond
 
 // Batch represents a Batch entity record stored in .kbz/state/batches/.
 type Batch struct {
-	ID           string   `yaml:"id" json:"id"`
-	Slug         string   `yaml:"slug" json:"slug"`
-	Title        string   `yaml:"title" json:"title"`
-	Status       string   `yaml:"status" json:"status"`
-	Summary      string   `yaml:"summary" json:"summary"`
-	Design       string   `yaml:"design,omitempty" json:"design,omitempty"`
-	Tags         []string `yaml:"tags,omitempty" json:"tags,omitempty"`
-	Created      string   `yaml:"created" json:"created"`
-	CreatedBy    string   `yaml:"created_by" json:"created_by"`
-	Updated      string   `yaml:"updated" json:"updated"`
-	Supersedes   string   `yaml:"supersedes,omitempty" json:"supersedes,omitempty"`
-	SupersededBy string   `yaml:"superseded_by,omitempty" json:"superseded_by,omitempty"`
+	ID             string   `yaml:"id" json:"id"`
+	Slug           string   `yaml:"slug" json:"slug"`
+	Name           string   `yaml:"name" json:"name"`
+	Status         string   `yaml:"status" json:"status"`
+	Summary        string   `yaml:"summary" json:"summary"`
+	Parent         string   `yaml:"parent,omitempty" json:"parent,omitempty"`
+	Design         string   `yaml:"design,omitempty" json:"design,omitempty"`
+	Tags           []string `yaml:"tags,omitempty" json:"tags,omitempty"`
+	Created        string   `yaml:"created" json:"created"`
+	CreatedBy      string   `yaml:"created_by" json:"created_by"`
+	Updated        string   `yaml:"updated" json:"updated"`
+	NextFeatureSeq int      `yaml:"next_feature_seq" json:"next_feature_seq"`
+	Supersedes     string   `yaml:"supersedes,omitempty" json:"supersedes,omitempty"`
+	SupersededBy   string   `yaml:"superseded_by,omitempty" json:"superseded_by,omitempty"`
 }
 
 // Deprecated: use Batch.
@@ -138,6 +140,7 @@ type Feature struct {
 	Created      string   `yaml:"created" json:"created"`
 	CreatedBy    string   `yaml:"created_by" json:"created_by"`
 	Updated      string   `yaml:"updated" json:"updated"`
+	NextFeatureSeq int      `yaml:"next_feature_seq" json:"next_feature_seq"`
 	Supersedes   string   `yaml:"supersedes,omitempty" json:"supersedes,omitempty"`
 	SupersededBy string   `yaml:"superseded_by,omitempty" json:"superseded_by,omitempty"`
 }
@@ -196,6 +199,7 @@ type Decision struct {
 	ID           string   `yaml:"id" json:"id"`
 	Slug         string   `yaml:"slug" json:"slug"`
 	Summary      string   `yaml:"summary" json:"summary"`
+	Parent       string   `yaml:"parent,omitempty" json:"parent,omitempty"`
 	Rationale    string   `yaml:"rationale" json:"rationale"`
 	DecidedBy    string   `yaml:"decided_by" json:"decided_by"`
 	Date         string   `yaml:"date" json:"date"`
@@ -211,7 +215,7 @@ type DocumentRecord struct {
 	ID           string   `yaml:"id" json:"id"`
 	Path         string   `yaml:"path" json:"path"`
 	Type         string   `yaml:"type" json:"type"`
-	Title        string   `yaml:"title" json:"title"`
+	Name         string   `yaml:"name" json:"name"`
 	Status       string   `yaml:"status" json:"status"`
 	Owner        string   `yaml:"owner,omitempty" json:"owner,omitempty"`
 	ApprovedBy   string   `yaml:"approved_by,omitempty" json:"approved_by,omitempty"`
@@ -222,6 +226,7 @@ type DocumentRecord struct {
 	Created      string   `yaml:"created" json:"created"`
 	CreatedBy    string   `yaml:"created_by" json:"created_by"`
 	Updated      string   `yaml:"updated" json:"updated"`
+	NextFeatureSeq int      `yaml:"next_feature_seq" json:"next_feature_seq"`
 	Tags         []string `yaml:"tags,omitempty" json:"tags,omitempty"`
 }
 

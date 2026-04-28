@@ -34,6 +34,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"math"
 	"strings"
 	"time"
 
@@ -90,8 +91,16 @@ func statusTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		switch inferIDType(id) {
 		case idTypeNone:
 			result, err = synthesiseProject(entitySvc, docSvc, worktreeStore, repoPath)
-		case idTypePlan:
-			result, err = synthesisePlan(id, entitySvc, docSvc)
+		case idTypeStrategicPlan:
+			// Try strategic plan first; fall back to old plan (batch) for backward compatibility.
+			spResult, spErr := synthesisePlanEntity(id, entitySvc, docSvc)
+			if spErr == nil {
+				result = spResult
+			} else {
+				result, err = synthesisePlan(id, entitySvc, docSvc)
+			}
+		case idTypeBatch:
+			result, err = synthesiseBatch(id, entitySvc, docSvc)
 		case idTypeFeature:
 			result, err = synthesiseFeature(id, entitySvc, docSvc, worktreeStore, repoPath, staleReviewingDays)
 		case idTypeTask:
@@ -133,12 +142,13 @@ func statusTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 type idType int
 
 const (
-	idTypeNone    idType = iota // no ID provided
-	idTypePlan                  // plan prefix + number + slug (e.g. P1-foo)
-	idTypeFeature               // FEAT-...
-	idTypeTask                  // TASK-... or T-...
-	idTypeBug                   // BUG-...
-	idTypeUnknown               // non-empty but unrecognised format
+	idTypeNone          idType = iota // no ID provided
+	idTypeStrategicPlan               // strategic plan prefix + number + slug (e.g. P1-foo)
+	idTypeBatch                       // batch prefix + number + slug (e.g. B24-auth-system)
+	idTypeFeature                     // FEAT-...
+	idTypeTask                        // TASK-... or T-...
+	idTypeBug                         // BUG-...
+	idTypeUnknown                     // non-empty but unrecognised format
 )
 
 // inferIDType returns the entity type implied by the ID string.
@@ -155,7 +165,12 @@ func inferIDType(id string) idType {
 	case strings.HasPrefix(upper, "BUG-"):
 		return idTypeBug
 	case model.IsPlanID(id):
-		return idTypePlan
+		// Distinguish batch (B...) from strategic plan (P...) by prefix.
+		prefix, _, _ := model.ParseBatchID(id)
+		if prefix == "B" {
+			return idTypeBatch
+		}
+		return idTypeStrategicPlan
 	default:
 		return idTypeUnknown
 	}
@@ -243,17 +258,19 @@ type orientationInfo struct {
 }
 
 type projectOverview struct {
-	Scope       string               `json:"scope"`
-	Plans       []planSummary        `json:"plans"`
-	Total       planAggregate        `json:"total"`
-	Health      *statusHealthSummary `json:"health,omitempty"`
-	Attention   []AttentionItem      `json:"attention,omitempty"`
-	Orientation *orientationInfo     `json:"orientation,omitempty"`
-	GeneratedAt string               `json:"generated_at"`
+	Scope       string                 `json:"scope"`
+	Plans       []strategicPlanSummary `json:"plans,omitempty"`
+	Batches     []batchSummary         `json:"batches,omitempty"`
+	Total       planAggregate          `json:"total"`
+	Health      *statusHealthSummary   `json:"health,omitempty"`
+	Attention   []AttentionItem        `json:"attention,omitempty"`
+	Orientation *orientationInfo       `json:"orientation,omitempty"`
+	GeneratedAt string                 `json:"generated_at"`
 }
 
 type planAggregate struct {
 	Plans    int `json:"plans"`
+	Batches  int `json:"batches"`
 	Features int `json:"features"`
 	Tasks    struct {
 		Ready  int `json:"ready"`
@@ -263,15 +280,32 @@ type planAggregate struct {
 	} `json:"tasks"`
 }
 
-type planSummary struct {
+type strategicPlanSummary struct {
 	DisplayID           string `json:"display_id"`
 	ID                  string `json:"id"`
 	Slug                string `json:"slug"`
 	Name                string `json:"name,omitempty"`
 	Status              string `json:"status"`
 	Features            int    `json:"features"`
+	Batches             int    `json:"batches,omitempty"`
 	AllFeaturesFinished bool   `json:"-"` // used for project-level attention only
 	Tasks               struct {
+		Ready  int `json:"ready"`
+		Active int `json:"active"`
+		Done   int `json:"done"`
+		Total  int `json:"total"`
+	} `json:"tasks"`
+}
+
+type batchSummary struct {
+	DisplayID string `json:"display_id"`
+	ID        string `json:"id"`
+	Slug      string `json:"slug"`
+	Name      string `json:"name,omitempty"`
+	Status    string `json:"status"`
+	Parent    string `json:"parent,omitempty"`
+	Features  int    `json:"features"`
+	Tasks     struct {
 		Ready  int `json:"ready"`
 		Active int `json:"active"`
 		Done   int `json:"done"`
@@ -333,7 +367,7 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 		}
 	}
 
-	summaries := make([]planSummary, 0, len(plans))
+	summaries := make([]strategicPlanSummary, 0, len(plans))
 	var agg planAggregate
 	agg.Plans = len(plans)
 
@@ -367,7 +401,7 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 			}
 		}
 
-		ps := planSummary{
+		ps := strategicPlanSummary{
 			DisplayID:           id.FormatFullDisplay(p.ID),
 			ID:                  p.ID,
 			Slug:                p.Slug,
@@ -442,6 +476,44 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 		}
 	}
 
+	// List standalone batches (batches with no parent plan).
+	allBatches, batchErr := entitySvc.ListBatches(service.BatchFilters{})
+	var batchSummaries []batchSummary
+	if batchErr == nil {
+		for _, b := range allBatches {
+			bStatus, _ := b.State["status"].(string)
+			bName, _ := b.State["name"].(string)
+			bParent, _ := b.State["parent"].(string)
+
+			bFeatures := featuresByPlan[b.ID]
+			var bTasks struct{Ready, Active, Done, Total int}
+			for _, f := range bFeatures {
+				tc := tasksByFeature[f.ID]
+				bTasks.Ready += tc.ready
+				bTasks.Active += tc.active
+				bTasks.Done += tc.done
+				bTasks.Total += tc.total
+			}
+
+			bs := batchSummary{
+				DisplayID: id.FormatFullDisplay(b.ID),
+				ID:        b.ID,
+				Slug:      b.Slug,
+				Name:      bName,
+				Status:    bStatus,
+				Parent:    bParent,
+				Features:  len(bFeatures),
+			}
+			bs.Tasks.Ready = bTasks.Ready
+			bs.Tasks.Active = bTasks.Active
+			bs.Tasks.Done = bTasks.Done
+			bs.Tasks.Total = bTasks.Total
+			batchSummaries = append(batchSummaries, bs)
+
+			agg.Batches++
+		}
+	}
+
 	// Orphaned reviewing check (FEAT-01KPXGW5BCGY4): surface features stuck in
 	// reviewing with no report document.
 	var reviewingCandidates []reviewingCandidate
@@ -460,6 +532,7 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 	return &projectOverview{
 		Scope:     "project",
 		Plans:     summaries,
+		Batches:   batchSummaries,
 		Total:     agg,
 		Health:    health,
 		Attention: attention,
@@ -477,6 +550,8 @@ type planDashboard struct {
 	Scope       string               `json:"scope"`
 	Plan        planHeader           `json:"plan"`
 	Features    []featureSummary     `json:"features"`
+	Progress    *progressBlock       `json:"progress,omitempty"`
+	Summary     string               `json:"summary,omitempty"`
 	DocGaps     []string             `json:"doc_gaps,omitempty"`
 	Health      *statusHealthSummary `json:"health,omitempty"`
 	Attention   []AttentionItem      `json:"attention,omitempty"`
@@ -489,6 +564,7 @@ type planHeader struct {
 	Slug      string `json:"slug"`
 	Name      string `json:"name,omitempty"`
 	Status    string `json:"status"`
+	Summary   string `json:"summary,omitempty"`
 }
 
 type featureSummary struct {
@@ -507,6 +583,66 @@ type featureSummary struct {
 	} `json:"tasks"`
 	HasSpec    bool `json:"has_spec"`
 	HasDevPlan bool `json:"has_dev_plan"`
+}
+
+// synthesisePlanEntity builds a dashboard for a strategic plan (P... ID).
+// Shows recursive progress and attention items.
+func synthesisePlanEntity(planID string, entitySvc *service.EntityService, docSvc *service.DocumentService) (*planDashboard, error) {
+	plan, err := entitySvc.GetStrategicPlan(planID)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot show status for plan %s: plan not found or unreadable: %w.\n\nTo resolve:\n  Verify the plan ID with status() (no arguments) to list all plans.", planID, err)
+	}
+
+	planName, _ := plan.State["name"].(string)
+	planStatus, _ := plan.State["status"].(string)
+	planSummaryStr, _ := plan.State["summary"].(string)
+	planDisplayID := id.FormatFullDisplay(plan.ID)
+
+	// Compute recursive progress via ComputePlanRollup.
+	var progress *progressBlock
+	var summaryStr string
+	if rollup, rollupErr := entitySvc.ComputePlanRollup(planID); rollupErr == nil {
+		pb := &progressBlock{
+			Progress: rollup.Progress,
+			Total:    rollup.Total,
+		}
+		if rollup.Total != nil && *rollup.Total > 0 {
+			pct := math.Round(rollup.Progress / *rollup.Total * 100 * 10) / 10
+			pb.ProgressPct = &pct
+		}
+		progress = pb
+
+		// Build child-entity summary string.
+		summaryStr = fmt.Sprintf("%d batches, %d plans", rollup.BatchCount, rollup.PlanCount)
+		if rollup.Total != nil && *rollup.Total > 0 {
+			pct := math.Round(rollup.Progress / *rollup.Total * 100 * 10) / 10
+			summaryStr += fmt.Sprintf(" — %.1f%% complete", pct)
+		} else {
+			summaryStr += " — 0% complete"
+		}
+	} else {
+		summaryStr = "progress unavailable"
+	}
+
+	attention := generatePlanAttention(nil, nil, planDisplayID, planStatus, false, 0)
+	health := buildHealthSummary(entitySvc)
+
+	return &planDashboard{
+		Scope: "strategic_plan",
+		Plan: planHeader{
+			DisplayID: planDisplayID,
+			ID:        plan.ID,
+			Slug:      plan.Slug,
+			Name:      planName,
+			Status:    planStatus,
+			Summary:   planSummaryStr,
+		},
+		Progress:    progress,
+		Summary:     summaryStr,
+		Health:      health,
+		Attention:   attention,
+		GeneratedAt: time.Now().UTC().Format(time.RFC3339),
+	}, nil
 }
 
 func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *service.DocumentService) (*planDashboard, error) {
@@ -664,6 +800,202 @@ func synthesisePlan(planID string, entitySvc *service.EntityService, docSvc *ser
 			Status:    planStatus,
 		},
 		Features:    featureSummaries,
+		DocGaps:     docGaps,
+		Health:      health,
+		Attention:   attention,
+		GeneratedAt: time.Now().UTC().Format(time.RFC3339),
+	}, nil
+}
+
+// ─── Batch dashboard synthesis ────────────────────────────────────────────────
+
+type batchDashboard struct {
+	Scope       string               `json:"scope"`
+	Batch       planHeader           `json:"batch"`
+	Features    []featureSummary     `json:"features"`
+	Progress    *progressBlock       `json:"progress,omitempty"`
+	DocGaps     []string             `json:"doc_gaps,omitempty"`
+	Health      *statusHealthSummary `json:"health,omitempty"`
+	Attention   []AttentionItem      `json:"attention,omitempty"`
+	GeneratedAt string               `json:"generated_at"`
+}
+
+type progressBlock struct {
+	Progress    float64  `json:"progress"`
+	Total       *float64 `json:"total"`
+	ProgressPct *float64 `json:"progress_pct"`
+}
+
+// synthesiseBatch builds a dashboard for a batch (B... ID).
+// Mirrors the existing plan dashboard structure with scope "batch" and a
+// progress block derived from ComputeBatchRollup.
+func synthesiseBatch(batchID string, entitySvc *service.EntityService, docSvc *service.DocumentService) (*batchDashboard, error) {
+	plan, err := entitySvc.GetBatch(batchID)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot show status for batch %s: batch not found or unreadable: %w.\n\nTo resolve:\n  Verify the batch ID with status() (no arguments) to list all plans.", batchID, err)
+	}
+
+	allFeatures, err := entitySvc.List("feature")
+	if err != nil {
+		return nil, fmt.Errorf("Cannot show status for batch %s: failed to list features: %w.\n\nTo resolve:\n  Check that the .kbz/state/ directory exists and is readable.", batchID, err)
+	}
+	allTasks, err := entitySvc.List("task")
+	if err != nil {
+		return nil, fmt.Errorf("Cannot show status for batch %s: failed to list tasks: %w.\n\nTo resolve:\n  Check that the .kbz/state/ directory exists and is readable.", batchID, err)
+	}
+
+	// Filter features owned by this batch (stored as "parent" field on feature records).
+	var features []service.ListResult
+	for _, f := range allFeatures {
+		parent, _ := f.State["parent"].(string)
+		if parent == batchID {
+			features = append(features, f)
+		}
+	}
+
+	// Build task status index.
+	type taskCounts struct{ queued, ready, active, done, total int }
+	tasksByFeature := make(map[string]taskCounts)
+	for _, t := range allTasks {
+		pf, _ := t.State["parent_feature"].(string)
+		status, _ := t.State["status"].(string)
+		tc := tasksByFeature[pf]
+		tc.total++
+		switch status {
+		case "queued":
+			tc.queued++
+		case "ready":
+			tc.ready++
+		case "active":
+			tc.active++
+		case "done":
+			tc.done++
+		}
+		tasksByFeature[pf] = tc
+	}
+
+	// Collect document info per feature.
+	docsPerFeature := make(map[string][]service.DocumentResult)
+	if docSvc != nil {
+		for _, f := range features {
+			docs, _ := docSvc.ListDocumentsByOwner(f.ID)
+			docsPerFeature[f.ID] = docs
+		}
+	}
+
+	// Load batch-level approved docs for inheritance fallback.
+	var batchApprovedSpec, batchApprovedDevPlan bool
+	if docSvc != nil {
+		batchDocs, _ := docSvc.ListDocumentsByOwner(batchID)
+		for _, d := range batchDocs {
+			if d.Status == "approved" {
+				switch d.Type {
+				case "spec":
+					batchApprovedSpec = true
+				case "dev-plan":
+					batchApprovedDevPlan = true
+				}
+			}
+		}
+	}
+
+	// Determine whether all features are in a finished state.
+	allFeaturesFinished := len(features) > 0
+	for _, f := range features {
+		fstatus, _ := f.State["status"].(string)
+		if fstatus != "done" && fstatus != "superseded" && fstatus != "cancelled" {
+			allFeaturesFinished = false
+			break
+		}
+	}
+
+	var docGaps []string
+	featureSummaries := make([]featureSummary, 0, len(features))
+
+	for _, f := range features {
+		fstatus, _ := f.State["status"].(string)
+		fsummary, _ := f.State["summary"].(string)
+		tc := tasksByFeature[f.ID]
+
+		docs := docsPerFeature[f.ID]
+		hasSpec := hasDocType(docs, "spec")
+		hasDevPlan := hasDocType(docs, "dev-plan")
+
+		// Apply batch-level inheritance.
+		effectiveHasSpec := hasSpec || batchApprovedSpec
+		effectiveHasDevPlan := hasDevPlan || batchApprovedDevPlan
+
+		fname, _ := f.State["name"].(string)
+
+		fs := featureSummary{
+			DisplayID:  id.FormatFullDisplay(f.ID),
+			ID:         f.ID,
+			Slug:       f.Slug,
+			Summary:    fsummary,
+			Status:     fstatus,
+			Name:       fname,
+			HasSpec:    effectiveHasSpec,
+			HasDevPlan: effectiveHasDevPlan,
+		}
+		fs.Tasks.Queued = tc.queued
+		fs.Tasks.Ready = tc.ready
+		fs.Tasks.Active = tc.active
+		fs.Tasks.Done = tc.done
+		fs.Tasks.Total = tc.total
+
+		featureSummaries = append(featureSummaries, fs)
+
+		if !effectiveHasSpec {
+			docGaps = append(docGaps, fmt.Sprintf("%s (%s): missing specification", f.ID, f.Slug))
+		}
+	}
+
+	batchName, _ := plan.State["name"].(string)
+	batchStatus, _ := plan.State["status"].(string)
+	batchDisplayID := id.FormatFullDisplay(plan.ID)
+
+	attention := generatePlanAttention(featureSummaries, docGaps, batchDisplayID, batchStatus, allFeaturesFinished, len(features))
+	health := buildHealthSummary(entitySvc)
+
+	// Orphaned reviewing check.
+	var reviewingCandidates []reviewingCandidate
+	for _, f := range features {
+		fstatus, _ := f.State["status"].(string)
+		if fstatus == "reviewing" {
+			reviewingCandidates = append(reviewingCandidates, reviewingCandidate{
+				ID:        f.ID,
+				DisplayID: id.FormatFullDisplay(f.ID),
+				Slug:      f.Slug,
+			})
+		}
+	}
+	attention = append(attention, generateOrphanedReviewingAttention(reviewingCandidates, docSvc)...)
+
+	// Compute batch progress via ComputeBatchRollup.
+	var progress *progressBlock
+	if batchRollup, rollupErr := entitySvc.ComputeBatchRollup(batchID); rollupErr == nil {
+		pb := &progressBlock{
+			Progress: batchRollup.Progress,
+			Total:    batchRollup.FeatureTotal,
+		}
+		if batchRollup.FeatureTotal != nil && *batchRollup.FeatureTotal > 0 {
+			pct := math.Round(batchRollup.Progress / *batchRollup.FeatureTotal * 100 * 10) / 10
+			pb.ProgressPct = &pct
+		}
+		progress = pb
+	}
+
+	return &batchDashboard{
+		Scope: "batch",
+		Batch: planHeader{
+			DisplayID: batchDisplayID,
+			ID:        plan.ID,
+			Slug:      plan.Slug,
+			Name:      batchName,
+			Status:    batchStatus,
+		},
+		Features:    featureSummaries,
+		Progress:    progress,
 		DocGaps:     docGaps,
 		Health:      health,
 		Attention:   attention,
@@ -1100,7 +1432,7 @@ func synthesiseBug(bugID string, entitySvc *service.EntityService) (*bugDetail, 
 
 const maxAttentionItems = 5
 
-func generateProjectAttention(plans []planSummary, allTasks []service.ListResult, worktreeBranches map[string]string, repoPath string) []AttentionItem {
+func generateProjectAttention(plans []strategicPlanSummary, allTasks []service.ListResult, worktreeBranches map[string]string, repoPath string) []AttentionItem {
 	var items []AttentionItem
 
 	// Count active plans.

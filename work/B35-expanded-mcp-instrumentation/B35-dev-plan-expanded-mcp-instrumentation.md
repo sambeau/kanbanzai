@@ -1,11 +1,18 @@
 | Field  | Value                                      |
 |--------|--------------------------------------------|
 | Date   | 2026-04-28                                 |
-| Status | Draft                                      |
+| Status | approved |
 | Author | architect (Claude)                         |
 | Spec   | `work/P35-expanded-mcp-instrumentation/P35-spec-expanded-mcp-instrumentation.md` |
 
 ---
+
+## Overview
+
+Seven tasks decompose the specification into independent, parallelisable units.
+Tasks 1-3 establish the schema and API foundation; Tasks 4-5 instrument handlers;
+Task 6 adds aggregations; Task 7 provides end-to-end verification. Three
+tasks (2, 4-5, 6) can run in parallel after Task 1 completes.
 
 ## Scope
 
@@ -201,3 +208,89 @@ Critical path: Task 1 → Task 3 → Task 4 → Task 7
 | AC-015: `TaskCompletionGap` from paired `next`/`finish` entries | Unit test | Task 7 |
 | AC-016: Log write failure does not affect tool response | Unit test | Task 7 |
 | AC-017: Single `ReadEntries` call in `ComputeMetrics` | Unit test | Task 7 |
+
+
+## Interface Contracts
+
+### Entry schema (Task 1 -> Tasks 2, 3, 6)
+
+The `Entry` struct in `internal/actionlog/entry.go` gains two fields:
+
+```
+ServerVersion string            `json:"server_version,omitempty"`
+Extra         map[string]string `json:"extra,omitempty"`
+```
+
+Tasks 2, 3, and 6 read or write these fields. The JSON tags are the contract -
+no code in Tasks 2-6 accesses `Entry` internals beyond these exported fields.
+
+### AnnotateEntry API (Task 3 -> Tasks 4, 5)
+
+The annotation function in `internal/actionlog/annotate.go`:
+
+```
+func AnnotateEntry(ctx context.Context, key, value string)
+```
+
+Tasks 4 and 5 call this function. The contract is: call with a context that
+has an annotation collector (placed by `Hook.Wrap`); the key-value pair
+appears in `Entry.Extra` after the handler returns. No return value, no
+error - fire-and-forget.
+
+### Annotation key constants (Task 3 -> Tasks 4, 5)
+
+```
+const (
+    AnnotationResultCount  = "result_count"
+    AnnotationKBRejections = "kb_rejections"
+    AnnotationEntityType   = "entity_type"
+    AnnotationDocType      = "doc_type"
+)
+```
+
+Tasks 4 and 5 use `AnnotationResultCount` and `AnnotationKBRejections`.
+`AnnotationEntityType` and `AnnotationDocType` are defined but unused in
+this feature.
+
+### StageFeatureLookup.DocType (Task 6)
+
+```
+type StageFeatureLookup interface {
+    ListFeaturesInRange(since, until time.Time, featureID string) ([]FeatureMetricsData, error)
+    DocType(entityID string) (string, error)
+}
+```
+
+Task 6 extends the interface and updates the `entityStageLookup`
+implementation in `internal/mcp/server.go`.
+
+### NewServer signature (Task 2 -> Task 7)
+
+```
+func NewServer(entityRoot, version string) *server.MCPServer
+```
+
+Task 7 and all existing tests must call `NewServer` with two arguments.
+The version argument for tests is the literal string `"test"`.
+
+## Traceability Matrix
+
+| Spec Requirement | Task(s) |
+|-----------------|---------|
+| FR-001 | Task 1 |
+| FR-002 | Task 2 |
+| FR-003 | Task 1 |
+| FR-004 | Task 3 |
+| FR-005 | Task 3 |
+| FR-006 | Task 3 |
+| FR-007 | Task 4 |
+| FR-008 | Task 4 |
+| FR-009 | Task 4 |
+| FR-010 | Task 5 |
+| FR-011 | Task 5 |
+| FR-012 | Task 6 |
+| FR-013 | Task 6 |
+| FR-014 | Task 6 |
+| FR-NF-001 | Task 1, Task 7 |
+| FR-NF-002 | Task 3, Task 7 |
+| FR-NF-003 | Task 6, Task 7 |

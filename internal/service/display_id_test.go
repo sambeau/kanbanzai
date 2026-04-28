@@ -139,6 +139,55 @@ func TestDisplayID_AC003_FeatureDisplayIDFormat(t *testing.T) {
 	}
 }
 
+// ── B{n}-F{n}: Feature display ID with batch parent ──────────────────────────
+
+func TestDisplayID_BatchParentUsesBPrefix(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-01-01T00:00:00Z")
+
+	batchID := "B24-auth-system"
+	writeTestPlanWithSeq(t, svc, batchID, 1)
+
+	first, err := svc.CreateFeature(CreateFeatureInput{
+		Parent:    batchID,
+		Slug:      "first-feature",
+		Name:      "First Feature",
+		Summary:   "AC-001 test under batch",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature (first): %v", err)
+	}
+
+	did := readFeatureDisplayID(t, svc, first.ID, first.Slug)
+	if did != "B24-F1" {
+		t.Errorf("first feature display_id = %q, want B24-F1", did)
+	}
+
+	second, err := svc.CreateFeature(CreateFeatureInput{
+		Parent:    batchID,
+		Slug:      "second-feature",
+		Name:      "Second Feature",
+		Summary:   "AC-002 test under batch",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature (second): %v", err)
+	}
+
+	did = readFeatureDisplayID(t, svc, second.ID, second.Slug)
+	if did != "B24-F2" {
+		t.Errorf("second feature display_id = %q, want B24-F2", did)
+	}
+
+	// Verify next_feature_seq incremented to 3.
+	seq := readPlanSeq(t, svc, batchID)
+	if seq != 3 {
+		t.Errorf("batch next_feature_seq = %d, want 3", seq)
+	}
+}
+
 // ── AC-004: fault after plan write → no duplicate display_id ─────────────────
 
 func TestDisplayID_AC004_FaultAfterPlanWriteNoFeatureFile(t *testing.T) {
@@ -194,8 +243,8 @@ func TestDisplayID_AC005_CreateFeatureRequiresParent(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected error for missing parent, got nil")
 	}
-	if !strings.Contains(err.Error(), "parent plan is required") {
-		t.Errorf("error = %q; want message containing 'parent plan is required'", err.Error())
+	if !strings.Contains(err.Error(), "parent plan or batch is required") {
+		t.Errorf("error = %q; want message containing 'parent plan or batch is required'", err.Error())
 	}
 
 	// Verify no feature file was written.
@@ -510,15 +559,23 @@ func TestDisplayID_AC014_IsFeatureDisplayID(t *testing.T) {
 	}{
 		{"P37-F1", true},
 		{"P1-F100", true},
-		{"p37-f1", true},   // lowercase
-		{"P37-f1", true},   // mixed
-		{"P0-F1", true},    // zero plan
+		{"B24-F1", true},
+		{"B99-F100", true},
+		{"b24-f1", true}, // lowercase
+		{"B24-f1", true}, // mixed
+		{"p37-f1", true}, // lowercase
+		{"P37-f1", true}, // mixed
+		{"P0-F1", true},  // zero plan
 		{"FEAT-01ABC", false},
 		{"P37", false},
+		{"B24", false},
 		{"F1", false},
 		{"P-F1", false},
+		{"B-F1", false},
 		{"P37-F", false},
+		{"B24-F", false},
 		{"P37-F0", true},
+		{"B24-F0", true},
 	}
 	for _, tc := range cases {
 		got := IsFeatureDisplayID(tc.id)
@@ -607,7 +664,7 @@ func TestDisplayID_AC016_MigrationSetsPlanCounter(t *testing.T) {
 				"id": id, "slug": slug,
 				"parent": planID, "name": slug,
 				"status": "proposed", "summary": "test",
-				"created": fmt.Sprintf("2026-01-%02dT00:00:00Z", i),
+				"created":    fmt.Sprintf("2026-01-%02dT00:00:00Z", i),
 				"created_by": "test",
 			},
 		}); err != nil {

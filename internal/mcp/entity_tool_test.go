@@ -936,8 +936,8 @@ func TestEntityInferType(t *testing.T) {
 
 		{"DEC-01JX123", "decision", true},
 		{"INC-01JX123", "incident", true},
-		{"P1-my-plan", "plan", true},
-		{"P2-another-plan", "plan", true},
+		{"P1-my-plan", "strategic-plan", true},
+		{"P2-another-plan", "strategic-plan", true},
 		{"", "", false},
 		{"random-string", "", false},
 		{"UNKNOWN-123", "", false},

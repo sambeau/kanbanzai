@@ -4,6 +4,7 @@ package mcp
 import (
 	"context"
 	"fmt"
+	"log"
 
 	"sort"
 	"strings"
@@ -99,7 +100,9 @@ func entityCreateAction(entitySvc *service.EntityService) ActionHandler {
 				r, e := entityCreateOne(entityType, m, entitySvc)
 				return entityArgStr(m, "slug"), r, e
 			})
-			entityCommitFunc(".", fmt.Sprintf("workflow: create %d %s entities", len(items), entityType))
+			if _, err := entityCommitFunc(".", fmt.Sprintf("workflow: create %d %s entities", len(items), entityType)); err != nil {
+				log.Printf("WARNING: commit after batch create failed: %v", err)
+			}
 			return result, err
 		}
 		return entityCreateOne(entityType, args, entitySvc)
@@ -139,7 +142,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 		result, err = entitySvc.CreateBatch(service.CreateBatchInput{
 			Prefix: entityArgStr(args, "prefix"), Slug: entityArgStr(args, "slug"),
 			Name: name, Summary: entityArgStr(args, "summary"),
-			Tags: entityArgStringSlice(args, "tags"), CreatedBy: createdBy,
+			Parent: entityArgStr(args, "parent"), Tags: entityArgStringSlice(args, "tags"), CreatedBy: createdBy,
 		})
 	case "strategic-plan":
 		var order int
@@ -182,7 +185,9 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 	if len(advisory) > 0 {
 		out["duplicate_advisory"] = advisory
 	}
-	entityCommitFunc(".", fmt.Sprintf("workflow(%s): create %s", result.ID, result.Type))
+	if _, err := entityCommitFunc(".", fmt.Sprintf("workflow(%s): create %s", result.ID, result.Type)); err != nil {
+		log.Printf("WARNING: commit after create %s failed: %v", result.ID, err)
+	}
 	return out, nil
 }
 
@@ -506,7 +511,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			return entityAdvanceFeature(ctx, entitySvc, docSvc, entityID, newStatus, override, overrideReason, gateRouter, checkpointStore, requiresHumanReview)
 		}
 		if entityType == "strategic-plan" {
-			_, _, slug := model.ParseBatchID(entityID)
+			_, _, slug := model.ParsePlanID(entityID)
 			var fromStatus string
 			if pre, preErr := entitySvc.GetStrategicPlan(entityID); preErr == nil {
 				fromStatus, _ = pre.State["status"].(string)
@@ -515,7 +520,9 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			if err != nil {
 				return entityTransitionError(entitySvc, "strategic-plan", entityID, newStatus, err), nil
 			}
-			entityCommitFunc(".", fmt.Sprintf("workflow(%s): transition %s → %s", entityID, fromStatus, newStatus))
+			if _, err := entityCommitFunc(".", fmt.Sprintf("workflow(%s): transition %s → %s", entityID, fromStatus, newStatus)); err != nil {
+				log.Printf("WARNING: commit after strategic-plan transition failed: %v", err)
+			}
 			return map[string]any{"entity": entityFullRecord(r.ID, r.Type, r.Slug, r.State)}, nil
 		}
 		if entityType == "batch" {
@@ -537,7 +544,9 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			if err != nil {
 				return entityTransitionError(entitySvc, "batch", entityID, newStatus, err), nil
 			}
-			entityCommitFunc(".", fmt.Sprintf("workflow(%s): transition %s → %s", entityID, batchFromStatus, newStatus))
+			if _, err := entityCommitFunc(".", fmt.Sprintf("workflow(%s): transition %s → %s", entityID, batchFromStatus, newStatus)); err != nil {
+				log.Printf("WARNING: commit after batch transition failed: %v", err)
+			}
 			return map[string]any{"entity": entityFullRecord(r.ID, r.Type, r.Slug, r.State)}, nil
 		}
 		var structuralChecks interface{}
@@ -646,7 +655,9 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			}
 		}
 		if entityType == "feature" && newStatus == string(model.FeatureStatusReviewing) {
-			entitySvc.IncrementFeatureReviewCycle(entityID, "")
+			if err := entitySvc.IncrementFeatureReviewCycle(entityID, ""); err != nil {
+				log.Printf("ERROR: failed to increment review cycle for %s: %v", entityID, err)
+			}
 		}
 		resp := map[string]any{"entity": entityFullRecord(r.ID, r.Type, r.Slug, r.State)}
 		if structuralChecks != nil {
@@ -689,7 +700,9 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 				}
 			}
 		}
-		entityCommitFunc(".", fmt.Sprintf("workflow(%s): transition %s → %s", entityID, fromStatus, newStatus))
+		if _, err := entityCommitFunc(".", fmt.Sprintf("workflow(%s): transition %s → %s", entityID, fromStatus, newStatus)); err != nil {
+			log.Printf("WARNING: commit after transition failed: %v", err)
+		}
 		return resp, nil
 	}
 }
@@ -929,6 +942,11 @@ func entityInferType(entityID string) (entityType string, ok bool) {
 	case strings.HasPrefix(upper, "INC-"):
 		return "incident", true
 	case model.IsBatchID(entityID):
+		// Distinguish strategic plans (P...) from batches (B...).
+		prefix, _, _ := model.ParseBatchID(entityID)
+		if prefix == "P" {
+			return "strategic-plan", true
+		}
 		return "batch", true
 	default:
 		return "", false

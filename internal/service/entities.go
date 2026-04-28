@@ -190,32 +190,32 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 
 	parentID := strings.TrimSpace(input.Parent)
 	if parentID == "" {
-		return CreateResult{}, fmt.Errorf("parent plan is required: feature must belong to a plan")
+		return CreateResult{}, fmt.Errorf("parent plan or batch is required: feature must belong to a plan or batch")
 	}
 
-	// Load parent plan — provides existence check, next_feature_seq, and plan number.
+	// Load parent — provides existence check, next_feature_seq, and number.
 	planResult, err := s.GetPlan(parentID)
 	if err != nil {
-		return CreateResult{}, fmt.Errorf("parent plan %s: %w", parentID, ErrReferenceNotFound)
+		return CreateResult{}, fmt.Errorf("parent %s: %w", parentID, ErrReferenceNotFound)
 	}
 
 	// Read next_feature_seq (default 1 if absent).
 	seq := intFromState(planResult.State, "next_feature_seq", 1)
 
-	// Compute display_id: P{number}-F{seq}.
-	_, planNum, _ := model.ParsePlanID(parentID)
-	displayID := fmt.Sprintf("P%s-F%d", planNum, seq)
+	// Compute display_id: {Prefix}{number}-F{seq} (e.g. "B24-F1" for batch, "P37-F5" for legacy plan).
+	parentPrefix, planNum, _ := model.ParsePlanID(parentID)
+	displayID := fmt.Sprintf("%s%s-F%d", parentPrefix, planNum, seq)
 
-	// Write plan with incremented counter BEFORE writing feature (REQ-006).
+	// Write parent with incremented counter BEFORE writing feature (REQ-006).
 	planResult.State["next_feature_seq"] = seq + 1
 	planRecord := storage.EntityRecord{
-		Type:   string(model.EntityKindPlan),
+		Type:   string(model.EntityKindBatch),
 		ID:     planResult.ID,
 		Slug:   planResult.Slug,
 		Fields: planResult.State,
 	}
 	if _, err := s.store.Write(planRecord); err != nil {
-		return CreateResult{}, fmt.Errorf("increment plan sequence for %s: %w", parentID, err)
+		return CreateResult{}, fmt.Errorf("increment sequence for %s: %w", parentID, err)
 	}
 
 	idValue, err := s.allocateID(model.EntityKindFeature)
@@ -1285,16 +1285,14 @@ func stringFromState(state map[string]any, key string) string {
 	return s
 }
 
+var featureDisplayIDPattern = regexp.MustCompile(`(?i)^([BP])(\d+)-F(\d+)$`)
 
-
-var featureDisplayIDPattern = regexp.MustCompile(`(?i)^P(\d+)-F(\d+)$`)
-
-// IsFeatureDisplayID reports whether id matches the P{n}-F{m} display ID pattern.
+// IsFeatureDisplayID reports whether id matches the B{n}-F{m} or P{n}-F{m} display ID pattern.
 func IsFeatureDisplayID(id string) bool {
 	return featureDisplayIDPattern.MatchString(id)
 }
 
-// ResolveFeatureDisplayID resolves a P{n}-F{m} display ID to (canonicalID, slug).
+// ResolveFeatureDisplayID resolves a B{n}-F{m} or P{n}-F{m} display ID to (canonicalID, slug).
 // Uses the SQLite cache when warm (O(1)); falls back to a filesystem scan.
 func (s *EntityService) ResolveFeatureDisplayID(displayID string) (string, string, error) {
 	if s.cache != nil && s.cache.IsWarm("feature") {

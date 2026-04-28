@@ -93,7 +93,7 @@ func TestGetPlan_RoundTrip(t *testing.T) {
 
 	planYAML := `id: P1-my-plan
 slug: my-plan
-title: My Plan
+name: My Plan
 status: active
 summary: A test plan
 created: "2024-01-15T10:00:00Z"
@@ -114,8 +114,8 @@ updated: "2024-01-15T10:00:00Z"
 	if plan.Slug != "my-plan" {
 		t.Errorf("Slug = %q, want %q", plan.Slug, "my-plan")
 	}
-	if plan.Title != "My Plan" {
-		t.Errorf("Title = %q, want %q", plan.Title, "My Plan")
+	if plan.Name != "My Plan" {
+		t.Errorf("Name = %q, want %q", plan.Name, "My Plan")
 	}
 	if plan.Status != kbzschema.PlanStatusActive {
 		t.Errorf("Status = %q, want %q", plan.Status, kbzschema.PlanStatusActive)
@@ -136,7 +136,7 @@ func TestListPlans(t *testing.T) {
 		slug := strings.SplitN(id, "-", 2)[1]
 		yaml := fmt.Sprintf(`id: %s
 slug: %s
-title: Title
+name: Title
 status: proposed
 summary: summary
 created: "2024-01-01T00:00:00Z"

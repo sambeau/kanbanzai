@@ -68,7 +68,7 @@
 **[B-3] `loadBatch` directory mismatch with `ListBatches` fallback**
 - Dimension: implementation_quality
 - Location: `internal/service/plans.go:148-153`, `internal/service/plans.go:262-274`, `internal/storage/entity_store.go:117-125`
-- Description: `loadBatch` always loads from the "batches" directory (hardcoded), but `ListBatches` has a fallback that reads filenames from a "plans" directory when "batches" doesn't exist. The `loadBatch` fallback also resolves to "batches" directory via `entityDirectory("plan") = "batches"`. Result: when "batches" directory does not exist, `ListBatches` silently returns empty results even though entries are visible in the "plans" directory.
+- Description: `loadBatch` always loads from the "batches" directory (hardcoded), but `ListBatches` has a fallback that reads filenames from a "plans" directory when "batches" doesn't exist. The `loadBatch` fallback (`s.store.Load("plan", ...)`) also resolves to "batches" directory via `entityDirectory("plan") = "batches"`. Result: when "batches" directory does not exist, `ListBatches` silently returns empty results even though entries are visible in the "plans" directory.
 - Recommendation: Either remove the "plans" directory fallback from `ListBatches` (if no legacy data uses it), or make `loadBatch` also try loading from the "plans" directory when the "batches" load fails.
 - Reported by: reviewer-quality
 
@@ -78,149 +78,154 @@
 - Dimension: spec_conformance
 - Location: `internal/service/entities.go:216-217`
 - Spec ref: F4 REQ-001
-- Description: `CreateFeature` computes display ID using `model.ParsePlanID`, producing `P{n}-F{n}` for legacy P-prefix batches not yet migrated to B-prefix (F8 pending). New batches created with B-prefix work correctly. Acceptable transitional behavior per F4 AC-005.
+- Description: `CreateFeature` computes display ID using `model.ParsePlanID`, producing `P{n}-F{n}` for legacy P-prefix batches not yet migrated to B-prefix (F8 pending). New batches created with B-prefix work correctly. This is acceptable transitional behavior per F4 AC-005 but noted for completeness.
 - Reported by: reviewer-conformance
 
 **[NB-2] StrategicPlan.Order `omitempty` suppresses 0-value serialization**
 - Dimension: spec_conformance
 - Location: `internal/model/entities.go:334`
 - Spec ref: F2 REQ-004
-- Description: The `Order` field is tagged `yaml:"order,omitempty"`. Value of 0 is dropped from YAML on round-trip.
+- Description: The `Order` field is tagged `yaml:"order,omitempty"`. Since the field type is `int` with default 0, the `omitempty` tag causes a value of 0 to be dropped from YAML output on round-trip. The spec says the default is 0 but doesn't prescribe omitempty behavior.
 - Reported by: reviewer-conformance
 
 **[NB-3] Status project overview doesn't list standalone batches**
 - Dimension: spec_conformance
 - Location: `internal/mcp/status_tool.go:320-321`
 - Spec ref: F6 REQ-008
-- Description: `synthesiseProject` calls `entitySvc.ListPlans`. The `Batches` field in `projectOverview` is declared but never populated with standalone batches.
+- Description: `synthesiseProject` calls `entitySvc.ListPlans` which delegates to `ListBatches`. The `Batches` field in `projectOverview` (L261-269) is declared but never populated with standalone batches. Standalone batches would appear in the `Plans` list but not in the `Batches` list.
 - Reported by: reviewer-conformance
 
 **[NB-4] Plan dashboard lacks child-entity summary string**
 - Dimension: spec_conformance
 - Location: `internal/mcp/status_tool.go:550-593`
 - Spec ref: F6 AC-012
-- Description: `synthesisePlanEntity` renders recursive progress but does not include a child-entity summary string.
+- Description: `synthesisePlanEntity` renders recursive progress but does not include a child-entity summary string like "3 batches, 2 plans — 65% complete". The `ComputePlanRollup` returns `BatchCount` and `PlanCount`, and the progress percentage is computed, but these are never combined into a summary string.
 - Reported by: reviewer-conformance
 
 **[NB-5] Estimate query doesn't handle "strategic-plan" entity type**
 - Dimension: spec_conformance
 - Location: `internal/mcp/estimate_tool.go:228-285`
 - Spec ref: F5 AC-011, F6 AC-015
-- Description: The `estimateQueryAction` switch doesn't handle `case "strategic-plan"`. Result: `estimate(action: "query", entity_id: "P1-test")` returns no rollup data.
+- Description: The `estimateQueryAction` switch handles `case "feature"` and `case "batch"` but not `case "strategic-plan"`. When `entityInferType` returns "strategic-plan" for a P-prefix ID, the entity type falls through to default. The "batch" case has fallback logic checking `prefix == "P"` to route to `ComputePlanRollup`, but this code path is unreachable because the entity type never reaches the "batch" case for strategic plans. Result: `estimate(action: "query", entity_id: "P1-test")` returns no rollup data.
 - Reported by: reviewer-conformance
 
 **[NB-6] No INFO log on legacy P{n}→B{n} resolution**
 - Dimension: spec_conformance
 - Location: `internal/service/plans.go:292-300`
 - Spec ref: F3 REQ-011
-- Description: The `loadBatch` function falls back from batches/ to plans/ directory but does not emit the required INFO-level deprecation notice.
+- Description: The `loadBatch` function falls back from batches/ to plans/ directory when loading a batch, but does not emit any log line. The spec requires an INFO-level deprecation notice.
 - Reported by: reviewer-conformance
 
 **[NB-7] AGENTS.md lacks entity hierarchy and plan-vs-batch guidance**
 - Dimension: spec_conformance
 - Location: `AGENTS.md`
 - Spec ref: F7 REQ-013, F7 REQ-014
-- Description: AGENTS.md does not document the new entity hierarchy (Plan → Batch → Feature → Task) nor include guidance on when to create a plan vs a batch.
+- Description: AGENTS.md does not document the new entity hierarchy (Plan → Batch → Feature → Task) nor include guidance on when to create a plan vs a batch. The Key Terms table contains no entries for "Plan" or "Batch". The Repository Structure shows `.kbz/state/plans/` but not `.kbz/state/batches/`.
 - Reported by: reviewer-conformance
 
 **[NB-8] orchestrate-development skill uses "plan" instead of "batch"**
 - Dimension: spec_conformance
 - Location: `.kbz/skills/orchestrate-development/SKILL.md:119-131`
 - Spec ref: F7 REQ-008
-- Description: The skill references "plan" as a feature-owning work container instead of using "batch" terminology.
+- Description: The skill says "Skip this phase entirely if the plan has 3 or fewer features" and "all features in the plan" — references to "plan" as a feature-owning work container should use "batch" terminology.
 - Reported by: reviewer-conformance
 
 **[NB-9] write-design skill doesn't document plan-level vs batch-level design ownership**
 - Dimension: spec_conformance
 - Location: `.kbz/skills/write-design/SKILL.md`
 - Spec ref: F7 REQ-006
-- Description: The write-design SKILL.md does not mention that design documents can be owned by either a plan or a batch.
+- Description: The write-design SKILL.md does not mention that design documents can be owned by either a plan (strategic design) or a batch (operational design).
 - Reported by: reviewer-conformance
 
 **[NB-10] Batch JSON dashboard key labeled "plan" instead of "batch"**
 - Dimension: spec_conformance
 - Location: `internal/mcp/status_tool.go:761`
 - Spec ref: F6 REQ-007, F3 AC-014
-- Description: The `batchDashboard` struct uses JSON field name "plan" instead of "batch".
+- Description: The `batchDashboard` struct uses `Plan planHeader json:"plan"` — the JSON field name "plan" should use batch terminology to match the scope field value of "batch".
 - Reported by: reviewer-conformance
 
 **[NB-11] kbzschema.Batch missing fields**
 - Dimension: spec_conformance
 - Location: `kbzschema/types.go:94-106`
 - Spec ref: F3 REQ-003
-- Description: The exported `kbzschema.Batch` does not include `NextFeatureSeq`, uses `Title` instead of `Name`, and is missing `CreatedBy` and `Updated`.
+- Description: The exported `kbzschema.Batch` does not include `NextFeatureSeq`, and uses `Title` instead of `Name` as the field name. Also missing `CreatedBy` and `Updated`. The internal model has all fields but the exported schema is incomplete.
 - Reported by: reviewer-conformance
 
 **[NB-12] ListPlans doesn't propagate Parent filter to ListBatches**
 - Dimension: implementation_quality
 - Location: `internal/service/plans.go:179-183`
-- Description: `ListPlans` does not propagate `BatchFilters.Parent` to `ListBatches`, despite the filter type including the field.
+- Description: `ListPlans` does not propagate `BatchFilters.Parent` to `ListBatches`, despite `PlanFilters = BatchFilters` including the `Parent` field. No current callers pass `Parent` through `ListPlans`, but the contract gap could cause silent incorrect results.
+- Recommendation: Propagate `filters.Parent` or document the limitation.
 - Reported by: reviewer-quality
 
 **[NB-13] entityCommitFunc errors silently swallowed without logging**
 - Dimension: implementation_quality
 - Location: `internal/mcp/entity_tool.go:103,187,516,540,692`
-- Description: `entityCommitFunc` return values are discarded at all MCP tool call sites without even logging.
+- Description: `entityCommitFunc` return values `(bool, error)` are discarded at all MCP tool call sites. A transient git failure that persists could result in many uncommitted state mutations.
+- Recommendation: Log the commit error at minimum. Consider surfacing a warning in the tool response.
 - Reported by: reviewer-quality
 
 **[NB-14] entityTransitionAction uses deprecated ParseBatchID for strategic-plan**
 - Dimension: implementation_quality
 - Location: `internal/mcp/entity_tool.go:509`
-- Description: The strategic-plan path uses `model.ParseBatchID` (deprecated alias).
+- Description: The strategic-plan path uses `model.ParseBatchID` (deprecated alias for `ParsePlanID`). Functionally correct but reads oddly.
+- Recommendation: Use `model.ParsePlanID` or add a comment noting intentional dual-use.
 - Reported by: reviewer-quality
 
 **[NB-15] Lifecycle interleaves Phase 1 and Phase 2 feature statuses**
 - Dimension: implementation_quality
 - Location: `internal/validate/lifecycle.go:131-198`
-- Description: `allowedTransitions` for features interleaves Phase 1 and Phase 2 statuses, creating two parallel lifecycle entry points.
+- Description: `allowedTransitions` for features interleaves Phase 1 statuses (Draft, InReview, Approved, InProgress) with Phase 2 statuses (Proposed, Designing, etc.), creating two parallel lifecycle entry points.
+- Recommendation: Document the relationship between Phase 1 and Phase 2 feature lifecycles, or consider full deprecation of Phase 1 statuses.
 - Reported by: reviewer-quality
 
 **[NB-16] Coexistence test doesn't verify List results**
 - Dimension: test_adequacy
 - Location: `internal/service/strategic_plans_test.go:443-452`
-- Description: `TestStrategicPlan_CoexistenceWithBatch` discards List results without checking they're disjoint.
+- Description: `TestStrategicPlan_CoexistenceWithBatch` discards List results with `_ = batchPlans` and `_ = spPlans`. If `ListPlans` returned strategic plans or `ListStrategicPlans` returned batch plans, this test would not catch it.
+- Recommendation: Assert that batchPlans contains P99-batch-plan (len ≥ 1) and spPlans contains P1-strategic-plan (len ≥ 1), and that the two lists are disjoint.
 - Reported by: reviewer-testing
 
 **[NB-17] No CreateStrategicPlan success-path-with-valid-parent test**
 - Dimension: test_adequacy
 - Location: `internal/service/strategic_plans_test.go:314-339`
-- Description: Only the error path is tested.
+- Description: Only the error path (nonexistent parent) is tested. No test verifies the success path where a strategic plan is created with a valid, existing parent.
 - Reported by: reviewer-testing
 
 **[NB-18] No UpdateStrategicPlan parent-change cycle detection via public API**
 - Dimension: test_adequacy
 - Location: `internal/service/strategic_plans_test.go:343-371`
-- Description: Cycle detection tested only via private function, not public UpdateStrategicPlan.
+- Description: Cycle detection is tested via the private `detectStrategicPlanCycle` directly, but the public `UpdateStrategicPlan` path that triggers it is not covered.
 - Reported by: reviewer-testing
 
 **[NB-19] No ComputePlanRollup depth-limit-exceeded test**
 - Dimension: test_adequacy
 - Location: `internal/service/estimation_rollup_test.go`
-- Description: `maxPlanRollupDepth` guard is untested.
+- Description: `maxPlanRollupDepth` is 50 but the defensive guard is untested.
 - Reported by: reviewer-testing
 
 **[NB-20] Status tool lacks strategic plan scope integration test**
 - Dimension: test_adequacy
 - Location: `internal/mcp/status_tool_test.go`
-- Description: No test validates status tool response for a strategic plan ID.
+- Description: Tests cover feature, task, plan (batch), and project scopes, but no test validates the status tool response when given a strategic plan ID.
 - Reported by: reviewer-testing
 
 **[NB-21] SetEstimate doesn't test invalid entity type or non-existent entity**
 - Dimension: test_adequacy
 - Location: `internal/service/estimation_rollup_test.go:575-669`
-- Description: Error paths for invalid entity type and non-existent entity are untested.
+- Description: Tests cover valid/invalid estimate values and soft-limit warnings, but not the error path where entityType is "nonexistent" or the entity ID doesn't resolve.
 - Reported by: reviewer-testing
 
 **[NB-22] GetEstimateFromFields string representation branch not unit-tested**
 - Dimension: test_adequacy
 - Location: `internal/service/estimation.go:135-150`
-- Description: String parsing path has no direct test.
+- Description: The string parsing path for estimate values is a YAML round-trip concern but has no direct test.
 - Reported by: reviewer-testing
 
 **[NB-23] EntityStore Write conflict path needs verification**
 - Dimension: test_adequacy
 - Location: `internal/storage/entity_store_test.go:1082-1128`
-- Description: Confirm `TestEntityStore_Write_ReturnsErrConflictOnStaleFileHash` exists with correct assertions.
+- Description: `TestEntityStore_Write_ReturnsErrConflictOnStaleFileHash` is listed in the outline but its body was not fully verified. Confirm it exists and asserts `ErrConflict` specifically.
 - Reported by: reviewer-testing
 
 ---
@@ -235,12 +240,11 @@
 
 ### Follow-up Items (non-blocking, 23 items)
 
-Priority items:
+See NB-1 through NB-23 above. Priority items:
 - NB-5: Fix estimate tool "strategic-plan" dispatch (user-facing gap)
 - NB-3/NB-4: Complete project overview and plan dashboard (user-facing gap)
 - NB-7/NB-8/NB-9: Documentation gaps in AGENTS.md, skills, and roles
 - NB-10: Fix JSON key naming in batch dashboard
-- NB-1: Resolved by F8 migration
 
 ---
 

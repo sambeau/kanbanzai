@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/sambeau/kanbanzai/internal/model"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 // Helper to create a document file, submit it, and optionally approve it.
@@ -44,6 +45,36 @@ func submitAndApproveDoc(t *testing.T, docSvc *DocumentService, repoRoot, relPat
 	}
 
 	return result.ID
+}
+
+// writeTestBatchWithParent creates a batch state file with an optional parent field.
+// If parentID is empty, no parent field is written.
+func writeTestBatchWithParent(t *testing.T, svc *EntityService, batchID, parentID string) {
+	t.Helper()
+	_, _, slug := model.ParseBatchID(batchID)
+	fields := map[string]any{
+		"id":               batchID,
+		"slug":             slug,
+		"name":             "Test Batch",
+		"status":           "active",
+		"summary":          "Test batch for gate tests",
+		"created":          "2026-04-01T00:00:00Z",
+		"created_by":       "test",
+		"updated":          "2026-04-01T00:00:00Z",
+		"next_feature_seq": 1,
+	}
+	if parentID != "" {
+		fields["parent"] = parentID
+	}
+	_, err := svc.store.Write(storage.EntityRecord{
+		Type:   string(model.EntityKindBatch),
+		ID:     batchID,
+		Slug:   slug,
+		Fields: fields,
+	})
+	if err != nil {
+		t.Fatalf("writeTestBatchWithParent(%s): %v", batchID, err)
+	}
 }
 
 func TestCheckFeatureGate_Designing_FeatureFieldRef(t *testing.T) {
@@ -507,6 +538,135 @@ func TestCheckFeatureGate_LookupOrder_FeatureFieldFirst(t *testing.T) {
 	// Reason should mention the feature field reference, not the plan doc.
 	if result.Reason == "" {
 		t.Fatal("expected non-empty reason")
+	}
+}
+
+// ── Four-level gate inheritance (P38-F4) ────────────────────────────────────
+
+func TestCheckFeatureGate_GrandparentPlanDoc_SatisfiesGate(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	batchID := "B24-test-batch"
+	planID := "P1-grandparent"
+
+	// Create a batch state file with a parent field pointing to the plan.
+	writeTestBatchWithParent(t, entitySvc, batchID, planID)
+
+	// Submit and approve a design doc owned by the grandparent plan.
+	submitAndApproveDoc(t, docSvc, repoRoot, "work/design/plan-design.md", "design", planID, true)
+
+	feature := &model.Feature{
+		ID:     "FEAT-01KKKKKKKKKK01",
+		Design: "",
+		Parent: batchID,
+	}
+
+	result := CheckFeatureGate("designing", feature, docSvc, entitySvc)
+	if !result.Satisfied {
+		t.Fatalf("expected designing gate satisfied via grandparent plan doc, got reason: %s", result.Reason)
+	}
+	if !strings.Contains(result.Reason, "grandparent plan") {
+		t.Errorf("reason = %q, want substring %q", result.Reason, "grandparent plan")
+	}
+}
+
+func TestCheckFeatureGate_GrandparentPlan_AllDocTypes(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	batchID := "B24-test-all-docs"
+	planID := "P1-all-docs-gp"
+
+	// Create batch with parent plan.
+	writeTestBatchWithParent(t, entitySvc, batchID, planID)
+
+	// Create approved documents at the plan level for all three types.
+	submitAndApproveDoc(t, docSvc, repoRoot, "work/design/gp-design.md", "design", planID, true)
+	submitAndApproveDoc(t, docSvc, repoRoot, "work/spec/gp-spec.md", "specification", planID, true)
+	submitAndApproveDoc(t, docSvc, repoRoot, "work/plan/gp-plan.md", "dev-plan", planID, true)
+
+	feature := &model.Feature{
+		ID:     "FEAT-01KKKKKKKKKK02",
+		Parent: batchID,
+	}
+
+	// Design gate
+	result := CheckFeatureGate("designing", feature, docSvc, entitySvc)
+	if !result.Satisfied {
+		t.Errorf("designing gate: expected satisfied via grandparent plan, got: %s", result.Reason)
+	}
+
+	// Specifying gate
+	result = CheckFeatureGate("specifying", feature, docSvc, entitySvc)
+	if !result.Satisfied {
+		t.Errorf("specifying gate: expected satisfied via grandparent plan, got: %s", result.Reason)
+	}
+
+	// Dev-planning gate
+	result = CheckFeatureGate("dev-planning", feature, docSvc, entitySvc)
+	if !result.Satisfied {
+		t.Errorf("dev-planning gate: expected satisfied via grandparent plan, got: %s", result.Reason)
+	}
+}
+
+func TestCheckFeatureGate_StandaloneBatch_NoGrandparentLookup(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	batchID := "B99-standalone"
+
+	// Create a batch with NO parent field.
+	writeTestBatchWithParent(t, entitySvc, batchID, "")
+
+	feature := &model.Feature{
+		ID:     "FEAT-01KKKKKKKKKK03",
+		Parent: batchID,
+	}
+
+	// No documents exist at any level — gate should be unsatisfied.
+	result := CheckFeatureGate("designing", feature, docSvc, entitySvc)
+	if result.Satisfied {
+		t.Fatalf("expected designing gate unsatisfied for standalone batch with no docs, got reason: %s", result.Reason)
+	}
+}
+
+func TestCheckFeatureGate_GrandparentPlan_DanglingParentRef(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	docSvc := NewDocumentService(stateRoot, repoRoot)
+	entitySvc := NewEntityService(stateRoot)
+
+	batchID := "B24-dangling"
+	planID := "P99-nonexistent"
+
+	// Create a batch whose parent references a non-existent plan.
+	writeTestBatchWithParent(t, entitySvc, batchID, planID)
+
+	feature := &model.Feature{
+		ID:     "FEAT-01KKKKKKKKKK04",
+		Parent: batchID,
+	}
+
+	// Gate should still be unsatisfied — the dangling parent ref
+	// must not cause an error; it should just skip Level 4 (REQ-NF-002).
+	result := CheckFeatureGate("designing", feature, docSvc, entitySvc)
+	if result.Satisfied {
+		t.Fatal("expected designing gate unsatisfied when grandparent plan does not exist")
 	}
 }
 

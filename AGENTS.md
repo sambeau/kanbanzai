@@ -36,6 +36,9 @@ Examples:
 | **skill** | A `SKILL.md` file defining the procedure, checklist, and evaluation criteria for a specific task type |
 | **lifecycle gate** | A prerequisite check that must pass before a feature can advance to the next workflow stage |
 | **context packet** | The assembled bundle of role instructions, spec sections, knowledge entries, and file paths delivered to an agent via `next` or `handoff` |
+| **Plan** | A strategic planning container for multi-batch initiatives, with `P{n}-slug` IDs (e.g., `P1-core-platform`). Owns batches and can own design documents. |
+| **Batch** | An operational work container for a group of related features, with `B{n}-slug` IDs (e.g., `B1-data-model`). Owns features and their documents. |
+| **entity hierarchy** | Plan → Batch → Feature → Task. Plans contain batches; batches contain features; features break down into tasks. |
 
 ## Task-Execution Skills and Stage Bindings
 
@@ -86,7 +89,8 @@ kanbanzai/
     ├── config.yaml        ← project configuration including prefix registry
     ├── local.yaml         ← per-machine settings, not committed
     ├── state/             ← canonical entity records (plans, features, tasks, etc.)
-    │   ├── plans/         ← Plan entity files
+    │   ├── plans/         ← StrategicPlan entity files
+    │   ├── batches/       ← Batch entity files
     │   ├── documents/     ← document metadata records
     │   ├── knowledge/     ← KnowledgeEntry records
     │   ├── worktrees/     ← worktree tracking records
@@ -96,6 +100,12 @@ kanbanzai/
     ├── index/             ← document intelligence index (structural, graph, concepts)
     └── cache/             ← derived local cache (not committed)
 ```
+
+## Plans vs Batches
+
+- **Plan** (`P{n}-slug`): A strategic planning container for multi-batch initiatives. Create a plan when work spans multiple batches, when there are cross-batch architectural decisions to track, or when you need strategic rollup of progress across batches.
+- **Batch** (`B{n}-slug`): An operational work container for a group of related features. Create a batch for a single coherent unit of work — this is the default container for features.
+- **Legacy compatibility:** Legacy P-prefix batch IDs (e.g., `P1-my-batch`) are resolved to batches at runtime. New batches should use the `B{n}-slug` format.
 
 ## Before Every Task — Required Checklist
 

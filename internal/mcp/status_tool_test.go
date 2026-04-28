@@ -55,6 +55,33 @@ func createTestPlan(t *testing.T, entitySvc *service.EntityService, slug, name s
 	return id
 }
 
+// createTestStrategicPlan creates a strategic plan record directly via the storage layer,
+// bypassing the config-dependent CreateStrategicPlan path.
+func createTestStrategicPlan(t *testing.T, entitySvc *service.EntityService, slug, name string) string {
+	t.Helper()
+	now := time.Now().UTC().Format(time.RFC3339)
+	id := "P1-" + slug
+	record := storage.EntityRecord{
+		Type: "strategic-plan",
+		ID:   id,
+		Slug: slug,
+		Fields: map[string]any{
+			"id":         id,
+			"slug":       slug,
+			"name":       name,
+			"status":     "idea",
+			"summary":    "Test strategic plan " + slug,
+			"created":    now,
+			"created_by": "tester",
+			"updated":    now,
+		},
+	}
+	if _, err := entitySvc.Store().Write(record); err != nil {
+		t.Fatalf("createTestStrategicPlan(%s): %v", slug, err)
+	}
+	return id
+}
+
 // createStatusTestFeature creates a feature for status tests.
 func createStatusTestFeature(t *testing.T, entitySvc *service.EntityService, parentPlanID, slug, summary string) string {
 	t.Helper()
@@ -129,8 +156,18 @@ func TestInferIDType_Plan(t *testing.T) {
 	t.Parallel()
 	cases := []string{"P1-my-plan", "X42-something"}
 	for _, id := range cases {
-		if got := inferIDType(id); got != idTypePlan {
-			t.Errorf("inferIDType(%q) = %v, want idTypePlan", id, got)
+		if got := inferIDType(id); got != idTypeStrategicPlan {
+			t.Errorf("inferIDType(%q) = %v, want idTypeStrategicPlan", id, got)
+		}
+	}
+}
+
+func TestInferIDType_Batch(t *testing.T) {
+	t.Parallel()
+	cases := []string{"B24-auth-system", "B1-test-batch"}
+	for _, id := range cases {
+		if got := inferIDType(id); got != idTypeBatch {
+			t.Errorf("inferIDType(%q) = %v, want idTypeBatch", id, got)
 		}
 	}
 }
@@ -756,7 +793,43 @@ func TestStatusTool_PlanDashboard(t *testing.T) {
 	}
 }
 
+// TestStatusTool_StrategicPlanDashboard verifies that status() with a
+// strategic plan ID returns a dashboard with scope "strategic_plan" and
+// the expected plan header fields.
+func TestStatusTool_StrategicPlanDashboard(t *testing.T) {
+	t.Parallel()
+	entitySvc, docSvc := setupStatusTest(t)
+	planID := createTestStrategicPlan(t, entitySvc, "strat-dashboard", "Strategic Dashboard Plan")
+
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
+	req := makeRequest(map[string]any{"id": planID})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+	if parsed["scope"] != "strategic_plan" {
+		t.Errorf("scope = %v, want strategic_plan", parsed["scope"])
+	}
+	planField, ok := parsed["plan"].(map[string]any)
+	if !ok {
+		t.Fatalf("plan field missing or wrong type: %v", parsed)
+	}
+	if planField["id"] != planID {
+		t.Errorf("plan.id = %v, want %v", planField["id"], planID)
+	}
+	// Verify progress block is present (may be null/omitted if no children).
+	_, hasProgress := parsed["progress"]
+	if !hasProgress {
+		t.Error("strategic plan dashboard should include progress field")
+	}
+}
 func TestStatusTool_FeatureDetail(t *testing.T) {
+
 	t.Parallel()
 	entitySvc, docSvc := setupStatusTest(t)
 	planID := createTestPlan(t, entitySvc, "feat-detail-p", "Plan")
@@ -1469,7 +1542,7 @@ func TestPlanAttention_ZeroFeatures_NoItem(t *testing.T) {
 
 func TestProjectAttention_PlanAllFeaturesDone_NotClosed_Fires(t *testing.T) {
 	t.Parallel()
-	plans := []planSummary{
+	plans := []strategicPlanSummary{
 		{DisplayID: "P99-test", Status: "reviewing", Features: 3, AllFeaturesFinished: true},
 	}
 	items := generateProjectAttention(plans, nil, nil, "")
@@ -1486,7 +1559,7 @@ func TestProjectAttention_PlanAllFeaturesDone_NotClosed_Fires(t *testing.T) {
 
 func TestProjectAttention_PlanAlreadyDone_NoCloseItem(t *testing.T) {
 	t.Parallel()
-	plans := []planSummary{
+	plans := []strategicPlanSummary{
 		{DisplayID: "P99-done", Status: "done", Features: 3, AllFeaturesFinished: true},
 	}
 	items := generateProjectAttention(plans, nil, nil, "")
@@ -1499,7 +1572,7 @@ func TestProjectAttention_PlanAlreadyDone_NoCloseItem(t *testing.T) {
 
 func TestProjectAttention_PlanNotAllFeaturesDone_NoCloseItem(t *testing.T) {
 	t.Parallel()
-	plans := []planSummary{
+	plans := []strategicPlanSummary{
 		{DisplayID: "P99-partial", Status: "active", Features: 3, AllFeaturesFinished: false},
 	}
 	items := generateProjectAttention(plans, nil, nil, "")

@@ -115,10 +115,10 @@ func validateRecord(record EntityRecord) error {
 
 func entityDirectory(entityType string) string {
 	lower := strings.ToLower(strings.TrimSpace(entityType))
-	if lower == string(model.EntityKindStrategicPlan) {
+	if lower == string(model.EntityKindStrategicPlan) || lower == "plan" {
 		return "plans"
 	}
-	if lower == string(model.EntityKindBatch) || lower == "plan" {
+	if lower == string(model.EntityKindBatch) {
 		return "batches"
 	}
 	return lower + "s"
@@ -131,7 +131,6 @@ func entityFileName(record EntityRecord) string {
 	}
 	return fmt.Sprintf("%s-%s.yaml", record.ID, record.Slug)
 }
-
 
 func MarshalCanonicalYAML(entityType string, fields map[string]any) (string, error) {
 	if len(fields) == 0 {
