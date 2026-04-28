@@ -1,0 +1,6 @@
+id: TASK-01KQ8WV428K7J
+parent_feature: FEAT-01KQ7YQKWTBRP
+slug: update-refs
+name: Update reference files
+summary: "Review and update all refs/*.md files for plan/batch consistency. Key files: document-map.md, sub-agents.md. Spec: REQ-017-021."
+status: queued

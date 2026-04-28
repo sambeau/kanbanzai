@@ -1,0 +1,6 @@
+id: TASK-01KQ8WV42KC3A
+parent_feature: FEAT-01KQ7YQKWTBRP
+slug: grep-audit
+name: Grep audit for consistency
+summary: "Run grep across all updated files. Verify plan only for strategic entity, batch for work container. Report inconsistencies. Depends on Tasks 1-6. Spec: AC-009-010."
+status: queued
