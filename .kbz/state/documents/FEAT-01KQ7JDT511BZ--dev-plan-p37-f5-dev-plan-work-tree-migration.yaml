@@ -1,12 +1,12 @@
 id: FEAT-01KQ7JDT511BZ/dev-plan-p37-f5-dev-plan-work-tree-migration
-path: work/design/p37-f5-dev-plan-work-tree-migration.md
+path: work/P38-plans-and-batches/P38-dev-plan-p37-f5-dev-plan-work-tree-migration.md
 type: dev-plan
 title: "P37-F5: Work Tree Migration — Implementation Plan"
 status: approved
-owner: FEAT-01KQ7JDT511BZ
+owner: P38-plans-and-batches
 approved_by: sambeau
 approved_at: "2026-04-27T14:45:19Z"
 content_hash: 64350d96b4e899d1fd3cf4c07e2936f4603d91fa85e0745fdd25c195243e42ad
 created: "2026-04-27T14:40:43Z"
 created_by: sambeau
-updated: "2026-04-27T14:45:19Z"
+updated: "2026-04-28T00:32:47Z"
