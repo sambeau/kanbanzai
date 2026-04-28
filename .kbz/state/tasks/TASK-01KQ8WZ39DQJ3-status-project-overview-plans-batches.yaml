@@ -1,0 +1,6 @@
+id: TASK-01KQ8WZ39DQJ3
+parent_feature: FEAT-01KQ7YQKPT8HF
+slug: status-project-overview-plans-batches
+name: Status Dashboard — Project Overview
+summary: "Extend status() project overview to render top-level plans with recursive progress, standalone batches, and summary counts (total plans, batches, features, tasks)."
+status: queued

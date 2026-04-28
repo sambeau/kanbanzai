@@ -1,0 +1,6 @@
+id: TASK-01KQ8WZ39DR8J
+parent_feature: FEAT-01KQ7YQKPT8HF
+slug: entity-plan-batch-type-support
+name: Entity Tool — Plan and Batch Type Support
+summary: "Extend entity tool to accept type:plan and type:batch for CRUD operations. Wire plan operations to plan lifecycle (P38-F2). Wire batch operations to batch CRUD (P38-F3). Accept type:plan as deprecated synonym for type:batch. All batch entity responses use batch terminology."
+status: queued
