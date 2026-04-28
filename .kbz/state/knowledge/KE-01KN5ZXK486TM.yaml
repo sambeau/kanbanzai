@@ -1,20 +1,20 @@
-id: KE-01KN5ZXK486TM
-tier: 2
-topic: retro-commit-discipline-workflow-actions
-scope: project
-content: "[significant] workflow-friction: Commit discipline is not being followed for workflow/management actions (doc registration, feature transitions, state file changes). The kanbanzai-agents skill's commit checklist is only visible when a task is claimed via next(id:...) — sessions that do management work without claiming a task never see it. State changes accumulate silently across a session and are only caught at the start of the next session via the git status pre-task check. Suggestion: Add an explicit 'commit workflow state changes' step to the kanbanzai-agents SKILL.md checklist that covers non-code changes (doc registration, entity transitions, knowledge contributions). Consider adding a note that any tool call writing to .kbz/state/ or .kbz/index/ should be followed by a commit before moving to a different concern."
-status: confirmed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 90
+content: "[significant] workflow-friction: Commit discipline is not being followed for workflow/management actions (doc registration, feature transitions, state file changes). The kanbanzai-agents skill's commit checklist is only visible when a task is claimed via next(id:...) — sessions that do management work without claiming a task never see it. State changes accumulate silently across a session and are only caught at the start of the next session via the git status pre-task check. Suggestion: Add an explicit 'commit workflow state changes' step to the kanbanzai-agents SKILL.md checklist that covers non-code changes (doc registration, entity transitions, knowledge contributions). Consider adding a note that any tool call writing to .kbz/state/ or .kbz/index/ should be followed by a commit before moving to a different concern."
+created: "2026-04-02T02:21:22Z"
+created_by: sambeau
+id: KE-01KN5ZXK486TM
+last_accessed_at: "2026-04-28T23:36:25Z"
+miss_count: 0
+recent_use_count: 154
+scope: project
+status: confirmed
 tags:
   - retrospective
   - workflow-friction
   - commit-discipline
   - kanbanzai-agents-skill
-created: "2026-04-02T02:21:22Z"
-created_by: sambeau
+tier: 2
+topic: retro-commit-discipline-workflow-actions
+ttl_days: 90
 updated: "2026-04-23T12:45:30Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 152
+use_count: 0

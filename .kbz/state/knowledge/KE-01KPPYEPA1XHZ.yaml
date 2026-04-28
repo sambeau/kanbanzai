@@ -1,19 +1,19 @@
-id: KE-01KPPYEPA1XHZ
-tier: 3
-topic: retro-task-01kppjs62de5v
-scope: project
-content: "[moderate] workflow-friction: Shell string escaping in python3 -c with embedded YAML/Go code required multiple workaround attempts; heredoc (cat << EOF) was more reliable Suggestion: Use cat with heredoc for writing complete Go source files rather than python3 -c with embedded string literals"
-learned_from: TASK-01KPPJS62DE5V
-status: contributed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 30
+content: "[moderate] workflow-friction: Shell string escaping in python3 -c with embedded YAML/Go code required multiple workaround attempts; heredoc (cat << EOF) was more reliable Suggestion: Use cat with heredoc for writing complete Go source files rather than python3 -c with embedded string literals"
+created: "2026-04-21T02:38:33Z"
+created_by: unknown
+id: KE-01KPPYEPA1XHZ
+last_accessed_at: "2026-04-28T23:36:25Z"
+learned_from: TASK-01KPPJS62DE5V
+miss_count: 0
+recent_use_count: 155
+scope: project
+status: contributed
 tags:
   - retrospective
   - workflow-friction
-created: "2026-04-21T02:38:33Z"
-created_by: unknown
+tier: 3
+topic: retro-task-01kppjs62de5v
+ttl_days: 30
 updated: "2026-04-21T02:38:33Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 153
+use_count: 0

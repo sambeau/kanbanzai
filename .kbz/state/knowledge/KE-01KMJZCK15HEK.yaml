@@ -1,20 +1,20 @@
-id: KE-01KMJZCK15HEK
-tier: 2
-topic: phase-4b-document-store-deprecation
-scope: project
-content: "The Phase 1 document store (internal/document/, .kbz/docs/) is deprecated. New documents are registered as Phase 2a DocumentRecords (path reference + content_hash in .kbz/state/documents/). No content is copied. Removal is gated on the Phase 4b spec and impl plan being registered via the Phase 2a path. See P4-DES-007."
-learned_from: TASK-01KMJVK9V8YTT
-status: confirmed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 90
+content: "The Phase 1 document store (internal/document/, .kbz/docs/) is deprecated. New documents are registered as Phase 2a DocumentRecords (path reference + content_hash in .kbz/state/documents/). No content is copied. Removal is gated on the Phase 4b spec and impl plan being registered via the Phase 2a path. See P4-DES-007."
+created: "2026-03-25T17:06:31Z"
+created_by: unknown
+id: KE-01KMJZCK15HEK
+last_accessed_at: "2026-04-28T23:36:25Z"
+learned_from: TASK-01KMJVK9V8YTT
+miss_count: 0
+recent_use_count: 135
+scope: project
+status: confirmed
 tags:
   - document-pipeline
   - phase-4b
   - technical-debt
-created: "2026-03-25T17:06:31Z"
-created_by: unknown
+tier: 2
+topic: phase-4b-document-store-deprecation
+ttl_days: 90
 updated: "2026-04-23T12:44:12Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 133
+use_count: 0

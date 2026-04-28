@@ -1,20 +1,20 @@
-id: KE-01KMT4T26W1VZ
-tier: 2
-topic: decompose-propose-stale-index-fallback
-scope: project
-content: "decompose propose falls back to one-task-per-section-header generation when the document intelligence index has not yet processed a newly registered spec. The warning message \"No acceptance criteria found in spec\" is ambiguous — it conflates \"the spec has no ACs\" (content problem) with \"the index cannot see the ACs yet\" (infrastructure problem). Root cause: spec files registered in the same session are in .kbz/state/documents/ but may not yet be in .kbz/index/. Workaround: call index_repository before decompose propose whenever specs were written in the same session. Fix direction: decompose should read spec content directly from disk as a fallback when the index returns empty content, or emit a clearer \"spec not yet indexed\" diagnostic instead of the generic AC-not-found warning."
-status: confirmed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 90
+content: "decompose propose falls back to one-task-per-section-header generation when the document intelligence index has not yet processed a newly registered spec. The warning message \"No acceptance criteria found in spec\" is ambiguous — it conflates \"the spec has no ACs\" (content problem) with \"the index cannot see the ACs yet\" (infrastructure problem). Root cause: spec files registered in the same session are in .kbz/state/documents/ but may not yet be in .kbz/index/. Workaround: call index_repository before decompose propose whenever specs were written in the same session. Fix direction: decompose should read spec content directly from disk as a fallback when the index returns empty content, or emit a clearer \"spec not yet indexed\" diagnostic instead of the generic AC-not-found warning."
+created: "2026-03-28T11:55:57Z"
+created_by: sambeau
+id: KE-01KMT4T26W1VZ
+last_accessed_at: "2026-04-28T23:36:25Z"
+miss_count: 0
+recent_use_count: 145
+scope: project
+status: confirmed
 tags:
   - decompose
   - document-intelligence
   - index
   - tool-gap
-created: "2026-03-28T11:55:57Z"
-created_by: sambeau
+tier: 2
+topic: decompose-propose-stale-index-fallback
+ttl_days: 90
 updated: "2026-04-23T12:45:25Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 143
+use_count: 0

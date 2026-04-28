@@ -1,19 +1,19 @@
-id: KE-01KP8Z8QKM27J
-tier: 3
-topic: retro-task-01kp8v5ehm1ne
-scope: project
-content: "[moderate] worked-well: Sub-agent delegation per editorial pipeline stage was effective — each stage produced focused, non-overlapping changes. The Write stage did not need rework from later stages."
-learned_from: TASK-01KP8V5EHM1NE
-status: contributed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 30
+content: "[moderate] worked-well: Sub-agent delegation per editorial pipeline stage was effective — each stage produced focused, non-overlapping changes. The Write stage did not need rework from later stages."
+created: "2026-04-15T16:23:24Z"
+created_by: unknown
+id: KE-01KP8Z8QKM27J
+last_accessed_at: "2026-04-28T23:36:25Z"
+learned_from: TASK-01KP8V5EHM1NE
+miss_count: 0
+recent_use_count: 157
+scope: project
+status: contributed
 tags:
   - retrospective
   - worked-well
-created: "2026-04-15T16:23:24Z"
-created_by: unknown
+tier: 3
+topic: retro-task-01kp8v5ehm1ne
+ttl_days: 30
 updated: "2026-04-15T16:23:24Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 155
+use_count: 0

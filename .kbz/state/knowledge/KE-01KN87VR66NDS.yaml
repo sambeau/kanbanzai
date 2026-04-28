@@ -1,21 +1,21 @@
-id: KE-01KN87VR66NDS
-tier: 2
-topic: pr-creation-in-agentic-workflows
-scope: project
-content: "In a typical agentic setup, creating a GitHub PR is unnecessary overhead. Code reviews are performed by AI reviewer agents working directly on the worktree, not by humans reviewing a GitHub PR. The `pr(action: \"create\")` step in the merge workflow should be treated as optional — skip it when all reviewers are AI agents. A future improvement should make the PR step configurable (e.g. a flag in `.kbz/local.yaml` or project config to opt in/out of GitHub PR creation)."
-status: confirmed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 90
+content: "In a typical agentic setup, creating a GitHub PR is unnecessary overhead. Code reviews are performed by AI reviewer agents working directly on the worktree, not by humans reviewing a GitHub PR. The `pr(action: \"create\")` step in the merge workflow should be treated as optional — skip it when all reviewers are AI agents. A future improvement should make the PR step configurable (e.g. a flag in `.kbz/local.yaml` or project config to opt in/out of GitHub PR creation)."
+created: "2026-04-02T23:18:40Z"
+created_by: sambeau
+id: KE-01KN87VR66NDS
+last_accessed_at: "2026-04-28T23:36:25Z"
+miss_count: 0
+recent_use_count: 148
+scope: project
+status: confirmed
 tags:
   - pr
   - workflow
   - agentic
   - review
   - github
-created: "2026-04-02T23:18:40Z"
-created_by: sambeau
+tier: 2
+topic: pr-creation-in-agentic-workflows
+ttl_days: 90
 updated: "2026-04-23T12:46:07Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 146
+use_count: 0

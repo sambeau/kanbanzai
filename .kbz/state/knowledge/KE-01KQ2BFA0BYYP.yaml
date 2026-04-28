@@ -1,20 +1,20 @@
-id: KE-01KQ2BFA0BYYP
-tier: 2
-topic: retro-version-tracking
-scope: project
-content: "Retrospective entries should record the plan version context to distinguish active bugs from already-fixed ones. Convention: (1) \"First seen: PNN\" — the plan sprint when the issue was first observed. (2) \"Fixed in: PNN\" — the plan that resolved it, with a note on whether it requires a binary rebuild or takes effect from the repo immediately (SKILL.md / doc changes need no rebuild; Go code changes do). Use the installed binary's git SHA from server_info to cross-check which plan's Go code is actually live. The install record's git_sha field is the source of truth; compare against known merge-commit SHAs for each plan to determine what's in the binary vs what's only in the repo."
-status: contributed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 90
+content: "Retrospective entries should record the plan version context to distinguish active bugs from already-fixed ones. Convention: (1) \"First seen: PNN\" — the plan sprint when the issue was first observed. (2) \"Fixed in: PNN\" — the plan that resolved it, with a note on whether it requires a binary rebuild or takes effect from the repo immediately (SKILL.md / doc changes need no rebuild; Go code changes do). Use the installed binary's git SHA from server_info to cross-check which plan's Go code is actually live. The install record's git_sha field is the source of truth; compare against known merge-commit SHAs for each plan to determine what's in the binary vs what's only in the repo."
+created: "2026-04-25T12:57:43Z"
+created_by: sambeau
+id: KE-01KQ2BFA0BYYP
+last_accessed_at: "2026-04-28T23:36:25Z"
+miss_count: 0
+recent_use_count: 65
+scope: project
+status: contributed
 tags:
   - retrospective
   - versioning
   - workflow
   - retro
-created: "2026-04-25T12:57:43Z"
-created_by: sambeau
+tier: 2
+topic: retro-version-tracking
+ttl_days: 90
 updated: "2026-04-25T12:57:43Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 63
+use_count: 0

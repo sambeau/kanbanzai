@@ -1,19 +1,19 @@
-id: KE-01KQ6D0MR2SFK
-tier: 2
-topic: p34-review-retrospective
-scope: project
-content: "P34 Agent Workflow Ergonomics review (2026-04-27): 5 features reviewed, all passed. Key observations: (1) additive-only design discipline enabled zero cross-feature conflicts across 5 parallel branches; (2) untracked internal/mcp/doc_intel_find_limit_test.go was causing 6 persistent test failures on main before P34 started — pre-existing issue but complicates cross-cutting checks; (3) 44/44 ACs had individually-named test functions, demonstrating the paired-test-tasks feature working in the very plan that delivered it."
-status: contributed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 90
+content: "P34 Agent Workflow Ergonomics review (2026-04-27): 5 features reviewed, all passed. Key observations: (1) additive-only design discipline enabled zero cross-feature conflicts across 5 parallel branches; (2) untracked internal/mcp/doc_intel_find_limit_test.go was causing 6 persistent test failures on main before P34 started — pre-existing issue but complicates cross-cutting checks; (3) 44/44 ACs had individually-named test functions, demonstrating the paired-test-tasks feature working in the very plan that delivered it."
+created: "2026-04-27T02:41:38Z"
+created_by: sambeau
+id: KE-01KQ6D0MR2SFK
+last_accessed_at: "2026-04-28T23:36:25Z"
+miss_count: 0
+recent_use_count: 44
+scope: project
+status: contributed
 tags:
   - retrospective
   - P34
   - review
-created: "2026-04-27T02:41:38Z"
-created_by: sambeau
+tier: 2
+topic: p34-review-retrospective
+ttl_days: 90
 updated: "2026-04-27T02:41:38Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 42
+use_count: 0

@@ -1,19 +1,19 @@
-id: KE-01KPYJ4TZ56RZ
-tier: 3
-topic: retro-task-01kpyevmxg632
-scope: project
-content: "[minor] worked-well: Sub-agent parallelism for disjoint file sets (gate.go vs status_tool.go) worked well — no conflicts, both features implemented independently without coordination overhead."
-learned_from: TASK-01KPYEVMXG632
-status: contributed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 30
+content: "[minor] worked-well: Sub-agent parallelism for disjoint file sets (gate.go vs status_tool.go) worked well — no conflicts, both features implemented independently without coordination overhead."
+created: "2026-04-24T01:37:22Z"
+created_by: unknown
+id: KE-01KPYJ4TZ56RZ
+last_accessed_at: "2026-04-28T23:36:25Z"
+learned_from: TASK-01KPYEVMXG632
+miss_count: 0
+recent_use_count: 75
+scope: project
+status: contributed
 tags:
   - retrospective
   - worked-well
-created: "2026-04-24T01:37:22Z"
-created_by: unknown
+tier: 3
+topic: retro-task-01kpyevmxg632
+ttl_days: 30
 updated: "2026-04-24T01:37:22Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 73
+use_count: 0

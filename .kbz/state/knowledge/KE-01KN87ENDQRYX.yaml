@@ -1,20 +1,20 @@
-id: KE-01KN87ENDQRYX
-tier: 2
-topic: flaky-test-dismissal-antipattern
-scope: project
-content: "Agents have been observed dismissing race-detected or flaky test failures with the phrase \"pre-existing flaky tests\" and continuing without filing a bug. This is a workflow anti-pattern. The agent behaviour is: observe failure → classify as pre-existing → proceed as if green. The correct behaviour is: observe failure → file a BUG entity → block task completion (or explicitly note the pre-existing bug ID in the task summary). The \"pre-existing\" classification does not reduce urgency — it increases it, because it means the failure has been ignored at least once before."
-status: confirmed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 90
+content: "Agents have been observed dismissing race-detected or flaky test failures with the phrase \"pre-existing flaky tests\" and continuing without filing a bug. This is a workflow anti-pattern. The agent behaviour is: observe failure → classify as pre-existing → proceed as if green. The correct behaviour is: observe failure → file a BUG entity → block task completion (or explicitly note the pre-existing bug ID in the task summary). The \"pre-existing\" classification does not reduce urgency — it increases it, because it means the failure has been ignored at least once before."
+created: "2026-04-02T23:11:31Z"
+created_by: sambeau
+id: KE-01KN87ENDQRYX
+last_accessed_at: "2026-04-28T23:36:25Z"
+miss_count: 0
+recent_use_count: 146
+scope: project
+status: confirmed
 tags:
   - agent-behaviour
   - ci
   - testing
   - anti-pattern
-created: "2026-04-02T23:11:31Z"
-created_by: sambeau
+tier: 2
+topic: flaky-test-dismissal-antipattern
+ttl_days: 90
 updated: "2026-04-23T12:46:07Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 144
+use_count: 0

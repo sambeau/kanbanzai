@@ -1,20 +1,20 @@
-id: KE-01KMKF0P11CNQ
-tier: 2
-topic: conflict-domain-analysis-for-parallel-work
-scope: project
-content: "Conflict detection (conflict_domain_check) analyzes file overlap and architectural boundary crossing between tasks. Returns per-pair risk (none/low/medium/high) and recommendations (safe_to_parallelise, serialise, checkpoint_required). Use work_queue --conflict-check to annotate ready tasks with conflict risk against active tasks before dispatch. Prevents merge conflicts and rework."
-learned_from: P1-phase-4-orchestration
-status: confirmed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 90
+content: "Conflict detection (conflict_domain_check) analyzes file overlap and architectural boundary crossing between tasks. Returns per-pair risk (none/low/medium/high) and recommendations (safe_to_parallelise, serialise, checkpoint_required). Use work_queue --conflict-check to annotate ready tasks with conflict risk against active tasks before dispatch. Prevents merge conflicts and rework."
+created: "2026-03-25T21:39:38Z"
+created_by: sambeau
+id: KE-01KMKF0P11CNQ
+last_accessed_at: "2026-04-28T23:36:25Z"
+learned_from: P1-phase-4-orchestration
+miss_count: 0
+recent_use_count: 147
+scope: project
+status: confirmed
 tags:
   - conflict-detection
   - parallel-work
   - orchestration
-created: "2026-03-25T21:39:38Z"
-created_by: sambeau
+tier: 2
+topic: conflict-domain-analysis-for-parallel-work
+ttl_days: 90
 updated: "2026-04-23T12:44:50Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 145
+use_count: 0

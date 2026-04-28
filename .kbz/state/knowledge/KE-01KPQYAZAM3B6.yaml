@@ -1,21 +1,21 @@
-id: KE-01KPQYAZAM3B6
-tier: 2
-topic: review-bug-filing-policy
-scope: project
-content: "Reviews and agents should NOT proactively file bug reports for issues they encounter that are outside their current task scope — this is a scope decision for the human. The correct action is to note the issue in the review report (or task completion summary) and let the human decide whether to file a bug. Exceptions: (1) the implement-task skill explicitly requires filing a BUG entity for any intermittent test failure observed during that task's own test run, because the agent has direct evidence and the cost of not recording it is high; (2) if a human explicitly asks the agent to file a bug (as in this case), do so. The default posture is: surface findings, defer filing to the human."
-status: confirmed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 90
+content: "Reviews and agents should NOT proactively file bug reports for issues they encounter that are outside their current task scope — this is a scope decision for the human. The correct action is to note the issue in the review report (or task completion summary) and let the human decide whether to file a bug. Exceptions: (1) the implement-task skill explicitly requires filing a BUG entity for any intermittent test failure observed during that task's own test run, because the agent has direct evidence and the cost of not recording it is high; (2) if a human explicitly asks the agent to file a bug (as in this case), do so. The default posture is: surface findings, defer filing to the human."
+created: "2026-04-21T11:55:45Z"
+created_by: sambeau
+id: KE-01KPQYAZAM3B6
+last_accessed_at: "2026-04-28T23:36:25Z"
+miss_count: 0
+recent_use_count: 153
+scope: project
+status: confirmed
 tags:
   - retrospective
   - workflow
   - review
   - bug-filing
   - policy
-created: "2026-04-21T11:55:45Z"
-created_by: sambeau
+tier: 2
+topic: review-bug-filing-policy
+ttl_days: 90
 updated: "2026-04-23T12:46:10Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 151
+use_count: 0

@@ -1,19 +1,19 @@
-id: KE-01KMKF0A464GQ
-tier: 2
-topic: estimation-scale-and-guidelines
-scope: project
-content: "Estimation uses Modified Fibonacci scale: 0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100 story points. Tasks should be 1-5 points (< 1 day). Features 5-20 points (< 1 week). Larger estimates signal need for decomposition. Use estimate_reference_add to anchor future estimates with completed work examples. Estimation improves work queue ordering and capacity planning."
-learned_from: P1-phase-4-orchestration
-status: confirmed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 90
+content: "Estimation uses Modified Fibonacci scale: 0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100 story points. Tasks should be 1-5 points (< 1 day). Features 5-20 points (< 1 week). Larger estimates signal need for decomposition. Use estimate_reference_add to anchor future estimates with completed work examples. Estimation improves work queue ordering and capacity planning."
+created: "2026-03-25T21:39:26Z"
+created_by: sambeau
+id: KE-01KMKF0A464GQ
+last_accessed_at: "2026-04-28T23:36:25Z"
+learned_from: P1-phase-4-orchestration
+miss_count: 0
+recent_use_count: 147
+scope: project
+status: confirmed
 tags:
   - estimation
   - planning
-created: "2026-03-25T21:39:26Z"
-created_by: sambeau
+tier: 2
+topic: estimation-scale-and-guidelines
+ttl_days: 90
 updated: "2026-04-23T12:44:48Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 145
+use_count: 0

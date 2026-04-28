@@ -1,19 +1,19 @@
-id: KE-01KMKEZF89H02
-tier: 2
-topic: error-handling-conventions
-scope: developer
-content: "Error handling convention: service layer returns (result, error). MCP tools convert errors to mcp.NewToolResultError() or mcp.NewToolResultErrorFromErr(). Never panic. Use fmt.Errorf(\"context: %w\", err) for error wrapping. CLI commands print error.Error() to stderr and return non-zero exit code. No stack traces to end users."
-learned_from: P2-phase-1-kernel
-status: confirmed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 90
+content: "Error handling convention: service layer returns (result, error). MCP tools convert errors to mcp.NewToolResultError() or mcp.NewToolResultErrorFromErr(). Never panic. Use fmt.Errorf(\"context: %w\", err) for error wrapping. CLI commands print error.Error() to stderr and return non-zero exit code. No stack traces to end users."
+created: "2026-03-25T21:38:58Z"
+created_by: sambeau
+id: KE-01KMKEZF89H02
+last_accessed_at: "2026-04-28T23:36:25Z"
+learned_from: P2-phase-1-kernel
+miss_count: 0
+recent_use_count: 143
+scope: developer
+status: confirmed
 tags:
   - error-handling
   - conventions
-created: "2026-03-25T21:38:58Z"
-created_by: sambeau
+tier: 2
+topic: error-handling-conventions
+ttl_days: 90
 updated: "2026-04-23T12:44:14Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 141
+use_count: 0

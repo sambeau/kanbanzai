@@ -1,20 +1,20 @@
-id: KE-01KMT93GM5MGF
-tier: 2
-topic: p7-retro-git-stash-destroys-mcp-state
-scope: project
-content: "During P7 implementation, a sub-agent followed AGENTS.md instructions to \"stash uncommitted changes before starting new work.\" The stash captured .kbz/state/ changes made by MCP tool calls (doc approve, entity transition, next) from the main agent, reverting feature statuses from developing→specifying, spec statuses from approved→draft, and task statuses from ready→queued. The stash was never popped, so the state was permanently lost. Root cause: .kbz/state/ is tracked in git for this project, MCP tool calls modify these files without committing, and the AGENTS.md stash instruction doesn't exclude .kbz/state/. The main agent's in-session explanation (\"stale MCP binary\" / \"sub-agents writing state\") was wrong — it was the git stash that caused the reversion."
-status: confirmed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 90
+content: "During P7 implementation, a sub-agent followed AGENTS.md instructions to \"stash uncommitted changes before starting new work.\" The stash captured .kbz/state/ changes made by MCP tool calls (doc approve, entity transition, next) from the main agent, reverting feature statuses from developing→specifying, spec statuses from approved→draft, and task statuses from ready→queued. The stash was never popped, so the state was permanently lost. Root cause: .kbz/state/ is tracked in git for this project, MCP tool calls modify these files without committing, and the AGENTS.md stash instruction doesn't exclude .kbz/state/. The main agent's in-session explanation (\"stale MCP binary\" / \"sub-agents writing state\") was wrong — it was the git stash that caused the reversion."
+created: "2026-03-28T13:11:00Z"
+created_by: sambeau
+id: KE-01KMT93GM5MGF
+last_accessed_at: "2026-04-28T23:36:25Z"
+miss_count: 0
+recent_use_count: 153
+scope: project
+status: confirmed
 tags:
   - workflow-friction
   - retrospective
   - git-stash
   - mcp-state
-created: "2026-03-28T13:11:00Z"
-created_by: sambeau
+tier: 2
+topic: p7-retro-git-stash-destroys-mcp-state
+ttl_days: 90
 updated: "2026-04-23T12:45:27Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 151
+use_count: 0

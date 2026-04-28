@@ -1,19 +1,19 @@
-id: KE-01KMS0EE97M2P
-tier: 3
-topic: retro-task-01kmrxk1g474p
-scope: project
-content: "[moderate] tool-friction: The stale MCP binary issue wasted significant verification time — 3 of 9 ACs appeared to fail when the code was correct. There's no built-in way to query the running server's build timestamp or source version. Suggestion: Add a server_info or version MCP tool that reports build timestamp, git commit SHA, and binary path. This would make stale-binary issues immediately diagnosable."
-learned_from: TASK-01KMRXK1G474P
-status: contributed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 30
+content: "[moderate] tool-friction: The stale MCP binary issue wasted significant verification time — 3 of 9 ACs appeared to fail when the code was correct. There's no built-in way to query the running server's build timestamp or source version. Suggestion: Add a server_info or version MCP tool that reports build timestamp, git commit SHA, and binary path. This would make stale-binary issues immediately diagnosable."
+created: "2026-03-28T01:20:27Z"
+created_by: unknown
+id: KE-01KMS0EE97M2P
+last_accessed_at: "2026-04-28T23:36:25Z"
+learned_from: TASK-01KMRXK1G474P
+miss_count: 0
+recent_use_count: 153
+scope: project
+status: contributed
 tags:
   - retrospective
   - tool-friction
-created: "2026-03-28T01:20:27Z"
-created_by: unknown
+tier: 3
+topic: retro-task-01kmrxk1g474p
+ttl_days: 30
 updated: "2026-03-28T01:20:27Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 151
+use_count: 0

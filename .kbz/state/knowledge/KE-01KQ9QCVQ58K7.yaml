@@ -1,16 +1,16 @@
-id: KE-01KQ9QCVQ58K7
-tier: 3
-topic: test-file-persistence
-scope: project
-content: Edit_file tool diffs may not persist. Verify changes with grep after edits.
-learned_from: TASK-01KQ8X04S4ACH
-status: contributed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 30
+content: Edit_file tool diffs may not persist. Verify changes with grep after edits.
 created: "2026-04-28T09:40:47Z"
 created_by: unknown
+id: KE-01KQ9QCVQ58K7
+last_accessed_at: "2026-04-28T23:36:25Z"
+learned_from: TASK-01KQ8X04S4ACH
+miss_count: 0
+recent_use_count: 10
+scope: project
+status: contributed
+tier: 3
+topic: test-file-persistence
+ttl_days: 30
 updated: "2026-04-28T09:40:47Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 8
+use_count: 0

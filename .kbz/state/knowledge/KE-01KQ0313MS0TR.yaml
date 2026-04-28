@@ -1,20 +1,20 @@
-id: KE-01KQ0313MS0TR
-tier: 2
-topic: bug-lifecycle-transition-friction
-scope: project
-content: "Closing a bug that has been stuck in a non-standard terminal state (e.g. cannot-reproduce) requires walking the full lifecycle sequentially — cannot-reproduce → triaged → reproduced → planned → in-progress → needs-review → verified → closed — which took 9 separate entity(action: transition) calls. A bulk-advance capability similar to entity(action: transition, advance: true) on features (which steps through multiple lifecycle states toward a target) would significantly reduce friction for bugs. Worth considering as a future enhancement to the entity tool."
-status: contributed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 90
+content: "Closing a bug that has been stuck in a non-standard terminal state (e.g. cannot-reproduce) requires walking the full lifecycle sequentially — cannot-reproduce → triaged → reproduced → planned → in-progress → needs-review → verified → closed — which took 9 separate entity(action: transition) calls. A bulk-advance capability similar to entity(action: transition, advance: true) on features (which steps through multiple lifecycle states toward a target) would significantly reduce friction for bugs. Worth considering as a future enhancement to the entity tool."
+created: "2026-04-24T15:51:40Z"
+created_by: sambeau
+id: KE-01KQ0313MS0TR
+last_accessed_at: "2026-04-28T23:36:25Z"
+miss_count: 0
+recent_use_count: 67
+scope: project
+status: contributed
 tags:
   - workflow-friction
   - entity-tool
   - bug-lifecycle
   - retro
-created: "2026-04-24T15:51:40Z"
-created_by: sambeau
+tier: 2
+topic: bug-lifecycle-transition-friction
+ttl_days: 90
 updated: "2026-04-24T15:51:40Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 65
+use_count: 0

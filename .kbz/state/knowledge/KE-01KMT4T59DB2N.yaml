@@ -1,19 +1,19 @@
-id: KE-01KMT4T59DB2N
-tier: 2
-topic: decompose-propose-misleading-fallback-output
-scope: project
-content: "When decompose propose cannot parse acceptance criteria, its fallback output looks superficially correct (task list, dependency hints, estimates) while being functionally wrong (tasks named \"Implement 1. Purpose\", \"Implement 3. Scope\" etc.). The plausibility of the output makes it easy to miss the warning buried in the proposal object. The fallback should either refuse to produce a proposal (\"cannot decompose — spec not indexed\") or clearly mark every generated task as \"derived from heading, not from AC\" at the task level, not just as a single top-level warning."
-status: confirmed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 90
+content: "When decompose propose cannot parse acceptance criteria, its fallback output looks superficially correct (task list, dependency hints, estimates) while being functionally wrong (tasks named \"Implement 1. Purpose\", \"Implement 3. Scope\" etc.). The plausibility of the output makes it easy to miss the warning buried in the proposal object. The fallback should either refuse to produce a proposal (\"cannot decompose — spec not indexed\") or clearly mark every generated task as \"derived from heading, not from AC\" at the task level, not just as a single top-level warning."
+created: "2026-03-28T11:56:00Z"
+created_by: sambeau
+id: KE-01KMT4T59DB2N
+last_accessed_at: "2026-04-28T23:36:25Z"
+miss_count: 0
+recent_use_count: 147
+scope: project
+status: confirmed
 tags:
   - decompose
   - tool-friction
   - fallback-quality
-created: "2026-03-28T11:56:00Z"
-created_by: sambeau
+tier: 2
+topic: decompose-propose-misleading-fallback-output
+ttl_days: 90
 updated: "2026-04-23T12:45:26Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 145
+use_count: 0

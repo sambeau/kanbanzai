@@ -1,19 +1,19 @@
-id: KE-01KPQJ0W5EMBP
-tier: 3
-topic: retro-task-01kpq2wym75hy
-scope: project
-content: "[minor] spec-ambiguity: AC-07 describes 'needs-review task blocks auto-advance' but needs-review is non-terminal so it blocks developing→reviewing before the auto-advance check runs. Integration test reflects actual behavior; unit test covers the checkAllTasksHaveVerification code path directly. Suggestion: Clarify in specs whether AC-07 covers the unit function or end-to-end advance behavior."
-learned_from: TASK-01KPQ2WYM75HY
-status: contributed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 30
+content: "[minor] spec-ambiguity: AC-07 describes 'needs-review task blocks auto-advance' but needs-review is non-terminal so it blocks developing→reviewing before the auto-advance check runs. Integration test reflects actual behavior; unit test covers the checkAllTasksHaveVerification code path directly. Suggestion: Clarify in specs whether AC-07 covers the unit function or end-to-end advance behavior."
+created: "2026-04-21T08:20:32Z"
+created_by: unknown
+id: KE-01KPQJ0W5EMBP
+last_accessed_at: "2026-04-28T23:36:25Z"
+learned_from: TASK-01KPQ2WYM75HY
+miss_count: 0
+recent_use_count: 152
+scope: project
+status: contributed
 tags:
   - retrospective
   - spec-ambiguity
-created: "2026-04-21T08:20:32Z"
-created_by: unknown
+tier: 3
+topic: retro-task-01kpq2wym75hy
+ttl_days: 30
 updated: "2026-04-21T08:20:32Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 150
+use_count: 0

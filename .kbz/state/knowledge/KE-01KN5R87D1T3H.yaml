@@ -1,19 +1,19 @@
-id: KE-01KN5R87D1T3H
-tier: 3
-topic: retro-task-01kn5ajkpdw6f
-scope: project
-content: "[moderate] worked-well: Sub-agent parallelism for disjoint file edits (description rewrites and error message audits) was extremely effective — 4 sub-agents editing different tool files simultaneously with zero conflicts. The key enabler was clear file ownership boundaries in the task delegation."
-learned_from: TASK-01KN5AJKPDW6F
-status: contributed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 30
+content: "[moderate] worked-well: Sub-agent parallelism for disjoint file edits (description rewrites and error message audits) was extremely effective — 4 sub-agents editing different tool files simultaneously with zero conflicts. The key enabler was clear file ownership boundaries in the task delegation."
+created: "2026-04-02T00:07:22Z"
+created_by: unknown
+id: KE-01KN5R87D1T3H
+last_accessed_at: "2026-04-28T23:36:25Z"
+learned_from: TASK-01KN5AJKPDW6F
+miss_count: 0
+recent_use_count: 153
+scope: project
+status: contributed
 tags:
   - retrospective
   - worked-well
-created: "2026-04-02T00:07:22Z"
-created_by: unknown
+tier: 3
+topic: retro-task-01kn5ajkpdw6f
+ttl_days: 30
 updated: "2026-04-02T00:07:22Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 151
+use_count: 0

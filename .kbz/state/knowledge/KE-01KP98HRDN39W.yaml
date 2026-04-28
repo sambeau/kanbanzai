@@ -1,19 +1,19 @@
-id: KE-01KP98HRDN39W
-tier: 3
-topic: retro-task-01kp97ffvdy2e
-scope: project
-content: "[minor] worked-well: Retrospectives doc required only 1 factual correction (scope hardcoded vs inherited) — the source material gathering was thorough enough that the Write stage produced highly accurate content."
-learned_from: TASK-01KP97FFVDY2E
-status: contributed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 30
+content: "[minor] worked-well: Retrospectives doc required only 1 factual correction (scope hardcoded vs inherited) — the source material gathering was thorough enough that the Write stage produced highly accurate content."
+created: "2026-04-15T19:05:37Z"
+created_by: unknown
+id: KE-01KP98HRDN39W
+last_accessed_at: "2026-04-28T23:36:25Z"
+learned_from: TASK-01KP97FFVDY2E
+miss_count: 0
+recent_use_count: 155
+scope: project
+status: contributed
 tags:
   - retrospective
   - worked-well
-created: "2026-04-15T19:05:37Z"
-created_by: unknown
+tier: 3
+topic: retro-task-01kp97ffvdy2e
+ttl_days: 30
 updated: "2026-04-15T19:05:37Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 153
+use_count: 0

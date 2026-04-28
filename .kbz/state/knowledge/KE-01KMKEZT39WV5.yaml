@@ -1,20 +1,20 @@
-id: KE-01KMKEZT39WV5
-tier: 2
-topic: mcp-thin-adapter-pattern
-scope: developer
-content: "MCP tools should be thin adapters: extract and validate parameters, delegate to service layer, return jsonResult(). Never put business logic in MCP handlers. Service layer (internal/service/) contains all domain logic. This separation enables CLI, MCP, and future interfaces to share identical business rules and makes testing straightforward."
-learned_from: P2-phase-1-kernel
-status: confirmed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 90
+content: "MCP tools should be thin adapters: extract and validate parameters, delegate to service layer, return jsonResult(). Never put business logic in MCP handlers. Service layer (internal/service/) contains all domain logic. This separation enables CLI, MCP, and future interfaces to share identical business rules and makes testing straightforward."
+created: "2026-03-25T21:39:10Z"
+created_by: sambeau
+id: KE-01KMKEZT39WV5
+last_accessed_at: "2026-04-28T23:36:25Z"
+learned_from: P2-phase-1-kernel
+miss_count: 0
+recent_use_count: 145
+scope: developer
+status: confirmed
 tags:
   - mcp
   - architecture
   - conventions
-created: "2026-03-25T21:39:10Z"
-created_by: sambeau
+tier: 2
+topic: mcp-thin-adapter-pattern
+ttl_days: 90
 updated: "2026-04-23T12:44:47Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 143
+use_count: 0

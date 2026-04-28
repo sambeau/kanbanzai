@@ -1,20 +1,20 @@
-id: KE-01KQ275RER55A
-tier: 3
-topic: short-plan-identifiers-in-agent-workflows
-scope: project
-content: "Agents cannot use shortened references like \"P30\" with `status(id: ...)` or `entity(action: \"get\", id: ...)` because those tools require canonical entity IDs such as `P30-handoff-skill-assembly-prompt-hygiene`. This creates friction in human-agent collaboration because humans naturally use the short form. The system should support resolving shortened plan identifiers like `P30` to the canonical plan ID in agent-facing workflows."
-status: contributed
-use_count: 0
-miss_count: 0
 confidence: "0.5"
-ttl_days: 30
+content: "Agents cannot use shortened references like \"P30\" with `status(id: ...)` or `entity(action: \"get\", id: ...)` because those tools require canonical entity IDs such as `P30-handoff-skill-assembly-prompt-hygiene`. This creates friction in human-agent collaboration because humans naturally use the short form. The system should support resolving shortened plan identifiers like `P30` to the canonical plan ID in agent-facing workflows."
+created: "2026-04-25T11:42:36Z"
+created_by: sambeau
+id: KE-01KQ275RER55A
+last_accessed_at: "2026-04-28T23:36:25Z"
+miss_count: 0
+recent_use_count: 62
+scope: project
+status: contributed
 tags:
   - retro
   - agent-ux
   - entity-ids
   - plan-workflow
-created: "2026-04-25T11:42:36Z"
-created_by: sambeau
+tier: 3
+topic: short-plan-identifiers-in-agent-workflows
+ttl_days: 30
 updated: "2026-04-25T11:42:36Z"
-last_accessed_at: "2026-04-28T10:36:17Z"
-recent_use_count: 60
+use_count: 0
