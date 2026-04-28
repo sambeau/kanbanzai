@@ -1,10 +1,12 @@
-content_hash: 7f3c6277f2f4f8d7385cf273c723a1431a8d6ee2bf53fa850c2d3a13ffbef6a3
+approved_at: "2026-04-28T16:59:02Z"
+approved_by: sambeau
+content_hash: 3cf414e4e5943832684091ca705d6113cbc43218ab4f58ffd47d4a169a434b6f
 created: "2026-04-28T16:57:00Z"
 created_by: sambeau
 id: B38-plans-and-batches/dev-plan-b38-dev-plan-p38-f9-full-combined-migration
 owner: B38-plans-and-batches
 path: work/B38-plans-and-batches/B38-dev-plan-p38-f9-full-combined-migration.md
-status: draft
+status: approved
 title: "B38-F9: Full Combined Migration — Dev Plan"
 type: dev-plan
-updated: "2026-04-28T16:57:00Z"
+updated: "2026-04-28T16:59:02Z"
