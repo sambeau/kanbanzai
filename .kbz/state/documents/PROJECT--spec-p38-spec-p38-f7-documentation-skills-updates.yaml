@@ -2,8 +2,10 @@ id: PROJECT/spec-p38-spec-p38-f7-documentation-skills-updates
 path: work/P38-plans-and-batches/P38-spec-p38-f7-documentation-skills-updates.md
 type: spec
 title: "P38-F7: Documentation and Skills Updates — Specification"
-status: draft
-content_hash: b27ddb1b4bfc55a205762e99811a0809b4f9f5e5bfcd6f82233cc421ef62932e
+status: approved
+approved_by: sambeau
+approved_at: "2026-04-28T01:35:26Z"
+content_hash: 742fd654344555cea73dd31fd4846d4b7e1aca6a855f442b5826e032cba0f7b0
 created: "2026-04-28T01:31:11Z"
 created_by: sambeau
-updated: "2026-04-28T01:31:11Z"
+updated: "2026-04-28T01:35:26Z"
