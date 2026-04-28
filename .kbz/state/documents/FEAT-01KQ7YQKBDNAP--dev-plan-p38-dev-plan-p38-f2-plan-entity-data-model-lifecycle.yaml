@@ -2,9 +2,11 @@ id: FEAT-01KQ7YQKBDNAP/dev-plan-p38-dev-plan-p38-f2-plan-entity-data-model-lifec
 path: work/P38-plans-and-batches/P38-dev-plan-p38-f2-plan-entity-data-model-lifecycle.md
 type: dev-plan
 title: "P38-F2: Plan Entity Data Model and Lifecycle — Dev Plan"
-status: draft
+status: approved
 owner: FEAT-01KQ7YQKBDNAP
-content_hash: e5a59c71d2f00c0196d73587872de8f7e1b8615ad42144323e815ff160ab53d7
+approved_by: sambeau
+approved_at: "2026-04-28T01:53:10Z"
+content_hash: df308291434b14b273a2cb4ffe5d2dc00860025d9629a8937490205eb4710371
 created: "2026-04-28T01:48:25Z"
 created_by: sambeau
-updated: "2026-04-28T01:48:25Z"
+updated: "2026-04-28T01:53:10Z"
