@@ -2,9 +2,15 @@ id: FEAT-01KQ7YQKHK2GV
 slug: feature-display-ids-document-inheritance
 name: Feature Display IDs and Document Inheritance
 parent: P38-plans-and-batches
-status: specifying
+status: dev-planning
 summary: "Update feature display IDs from P{n}-F{n} to B{n}-F{n}. Extend the document gate four-level lookup chain (feature → feature-owned docs → parent batch docs → grandparent plan docs) to support batch-to-plan design inheritance."
 spec: FEAT-01KQ7YQKHK2GV/specification-p38-f4-spec-feature-display-ids-document-inheritance
 created: "2026-04-27T17:10:30Z"
 created_by: sambeau
 display_id: P38-F4
+overrides:
+  -
+    from_status: specifying
+    reason: Spec approved but registered under PROJECT/ scope. Spec is PROJECT/spec-p38-spec-p38-f4-feature-display-ids-doc-inheritance.
+    timestamp: "2026-04-28T02:38:57+01:00"
+    to_status: dev-planning
