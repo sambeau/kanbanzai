@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQ7YQKPT8HF
 slug: status-plan-dashboard-recursive-progress
 name: Status Dashboard — Plan Dashboard
 summary: "Extend status(P{n}-slug) to render plan dashboard with recursive progress from ComputePlanRollup, direct child plans and batches, document references, child-entity summary string, and attention items."
-status: queued
+status: ready
