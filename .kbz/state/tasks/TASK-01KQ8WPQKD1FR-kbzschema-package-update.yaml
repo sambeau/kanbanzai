@@ -1,0 +1,6 @@
+id: TASK-01KQ8WPQKD1FR
+parent_feature: FEAT-01KQ7YQKEEHFY
+slug: kbzschema-package-update
+name: kbzschema Package Update
+summary: "Export Batch struct and BatchStatus* constants, deprecate Plan as alias, update Reader methods to GetBatch/ListBatches."
+status: queued
