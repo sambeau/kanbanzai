@@ -1,4 +1,4 @@
-content_hash: 8e78a8b80cfd8ebc8d29627852f0caf226cabbbaf350c1e77574263ff6731630
+content_hash: bd723f04704d116ddcab7b0abbde9a6bce84a28b480663d423d1d677e53fe7d6
 created: "2026-04-28T23:38:27Z"
 created_by: sambeau
 id: PROJECT/design-design-performance-follow-up
@@ -6,4 +6,4 @@ path: work/_project/design-performance-follow-up.md
 status: draft
 title: "Performance Follow-Up: Cache Gaps and Cascade Optimisation"
 type: design
-updated: "2026-04-28T23:38:27Z"
+updated: "2026-04-28T23:39:12Z"
