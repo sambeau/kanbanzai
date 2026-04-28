@@ -1,4 +1,4 @@
-updated_at: 2026-04-28T22:57:27.865056Z
+updated_at: 2026-04-28T23:40:39.863894Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -88893,5 +88893,135 @@ edges:
     - from: PROJECT/design-proposal-sprint-next#1.5.2
       from_type: section
       to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/design-design-performance-follow-up
+      from_type: document
+      to: PROJECT/design-design-performance-follow-up#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-design-performance-follow-up
+      from_type: document
+      to: PROJECT/design-design-performance-follow-up#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-design-performance-follow-up#2
+      from_type: section
+      to: PROJECT/design-design-performance-follow-up#2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-design-performance-follow-up#2
+      from_type: section
+      to: PROJECT/design-design-performance-follow-up#2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-design-performance-follow-up#2
+      from_type: section
+      to: PROJECT/design-design-performance-follow-up#2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-design-performance-follow-up#2
+      from_type: section
+      to: PROJECT/design-design-performance-follow-up#2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-design-performance-follow-up
+      from_type: document
+      to: PROJECT/design-design-performance-follow-up#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-design-performance-follow-up#3
+      from_type: section
+      to: PROJECT/design-design-performance-follow-up#3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-design-performance-follow-up#3
+      from_type: section
+      to: PROJECT/design-design-performance-follow-up#3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-design-performance-follow-up#3
+      from_type: section
+      to: PROJECT/design-design-performance-follow-up#3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-design-performance-follow-up#3
+      from_type: section
+      to: PROJECT/design-design-performance-follow-up#3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-design-performance-follow-up
+      from_type: document
+      to: PROJECT/design-design-performance-follow-up#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-design-performance-follow-up
+      from_type: document
+      to: PROJECT/design-design-performance-follow-up#5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-design-performance-follow-up#5
+      from_type: section
+      to: PROJECT/design-design-performance-follow-up#5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/design-design-performance-follow-up#5
+      from_type: section
+      to: PROJECT/design-design-performance-follow-up#5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/dev-plan-dev-plan-performance-follow-up
+      from_type: document
+      to: PROJECT/dev-plan-dev-plan-performance-follow-up#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/dev-plan-dev-plan-performance-follow-up
+      from_type: document
+      to: PROJECT/dev-plan-dev-plan-performance-follow-up#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/dev-plan-dev-plan-performance-follow-up#2
+      from_type: section
+      to: PROJECT/dev-plan-dev-plan-performance-follow-up#2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/dev-plan-dev-plan-performance-follow-up#2
+      from_type: section
+      to: PROJECT/dev-plan-dev-plan-performance-follow-up#2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/dev-plan-dev-plan-performance-follow-up#2
+      from_type: section
+      to: PROJECT/dev-plan-dev-plan-performance-follow-up#2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/dev-plan-dev-plan-performance-follow-up
+      from_type: document
+      to: PROJECT/dev-plan-dev-plan-performance-follow-up#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/dev-plan-dev-plan-performance-follow-up
+      from_type: document
+      to: PROJECT/dev-plan-dev-plan-performance-follow-up#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/dev-plan-dev-plan-performance-follow-up#4
+      from_type: section
+      to: PROJECT/dev-plan-dev-plan-performance-follow-up#4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/dev-plan-dev-plan-performance-follow-up#4
+      from_type: section
+      to: PROJECT/dev-plan-dev-plan-performance-follow-up#4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/dev-plan-dev-plan-performance-follow-up
+      from_type: document
+      to: PROJECT/dev-plan-dev-plan-performance-follow-up#5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/dev-plan-dev-plan-performance-follow-up#1
+      from_type: section
+      to: work/_project/design-performance-follow-up.md
       to_type: document
       edge_type: LINKS_TO
