@@ -5,6 +5,7 @@ parent: P38-plans-and-batches
 status: dev-planning
 summary: "Update feature display IDs from P{n}-F{n} to B{n}-F{n}. Extend the document gate four-level lookup chain (feature → feature-owned docs → parent batch docs → grandparent plan docs) to support batch-to-plan design inheritance."
 spec: FEAT-01KQ7YQKHK2GV/spec-p38-spec-p38-f4-feature-display-ids-doc-inheritance
+dev_plan: FEAT-01KQ7YQKHK2GV/dev-plan-p38-dev-plan-p38-f4-feature-display-ids-doc-inheritance
 created: "2026-04-27T17:10:30Z"
 created_by: sambeau
 display_id: P38-F4
