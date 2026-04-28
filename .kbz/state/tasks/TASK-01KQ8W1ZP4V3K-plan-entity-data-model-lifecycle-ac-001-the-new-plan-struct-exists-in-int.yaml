@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQ7YQKBDNAP
 slug: plan-entity-data-model-lifecycle-ac-001-the-new-plan-struct-exists-in-int
 name: "The new `Plan` struct exists in"
 summary: "AC-001: The new `Plan` struct exists in `internal/model/entities.go` with"
-status: queued
+status: ready

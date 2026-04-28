@@ -3,7 +3,7 @@ parent_feature: FEAT-01KQ7YQKBDNAP
 slug: implement-plan-crud
 name: Implement plan CRUD in entity service
 summary: "Add CreatePlan, GetPlan, UpdatePlan, UpdatePlanStatus, and ListPlans to the entity service with parent existence validation, cycle detection, and prefix-based ID generation."
-status: queued
+status: ready
 depends_on:
   - TASK-01KQ8WPMKCXQH
   - TASK-01KQ8WPMK0JTP

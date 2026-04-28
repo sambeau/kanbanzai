@@ -3,7 +3,7 @@ parent_feature: FEAT-01KQ7YQKMCM6T
 slug: recursive-plan-rollup
 name: Implement recursive ComputePlanRollup
 summary: Add ChildBatchCount and ChildPlanCount to PlanRollup. Implement recursive ComputePlanRollup aggregating child batches via ComputeBatchRollup and child plans via recursive call.
-status: queued
+status: ready
 estimate: "3"
 depends_on:
   - TASK-01KQ8X04HKJJ6

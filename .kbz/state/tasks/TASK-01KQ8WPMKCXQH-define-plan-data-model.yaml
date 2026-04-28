@@ -3,4 +3,15 @@ parent_feature: FEAT-01KQ7YQKBDNAP
 slug: define-plan-data-model
 name: Define plan data model and status
 summary: Introduce the new Plan struct alongside the existing Plan struct in internal/model/entities.go with PlanStatus type and seven lifecycle constants. Excludes next_feature_seq.
-status: ready
+status: done
+files_planned:
+  - internal/model/entities.go
+  - internal/validate/lifecycle.go
+  - internal/storage/entity_store.go
+  - internal/service/entities.go
+completed: "2026-04-28T08:33:00Z"
+claimed_at: "2026-04-28T08:25:51Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-28T08:25:51Z"
+dispatched_by: sambeau
+completion_summary: "Added StrategicPlan struct, PlanningStatus type with 7 constants (Idea, Shaping, Ready, Active, Done, Superseded, Cancelled), EntityKindStrategicPlan, and lifecycle validation with entry state idea and all required transitions"

@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQ7YQKPT8HF
 slug: integration-compatibility-verification
 name: Integration and Compatibility Verification
 summary: "End-to-end integration tests for AC-001 through AC-020. Verify plan/batch CRUD, status dashboard output shapes, B{n}-F{n} display IDs, recursive progress, backward compatibility, and terminology correctness."
-status: queued
+status: ready
