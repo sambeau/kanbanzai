@@ -475,6 +475,22 @@ func executeMerge(
 		}
 	}
 
+	// Auto-advance the feature lifecycle after successful merge.
+	// Transitions from reviewing (or developing) to done so the lifecycle is
+	// always consistent — merging IS the final step (FR-MERGE-001).
+	if entityType == string(model.EntityKindFeature) {
+		currentStatus, _ := entity.State["status"].(string)
+		if currentStatus != string(model.FeatureStatusDone) {
+			if _, advErr := entitySvc.UpdateStatus(service.UpdateStatusInput{
+				Type:   entityType,
+				ID:     entityID,
+				Status: string(model.FeatureStatusDone),
+			}); advErr != nil {
+				warnings = append(warnings, fmt.Sprintf("auto-advance feature %s to done after merge: %v", entityID, advErr))
+			}
+		}
+	}
+
 	// Auto-commit the worktree record update after merge and branch cleanup (FR-A09).
 	// Best-effort: commit failure is logged but does not prevent the merge result.
 	mergeStateMsg := fmt.Sprintf("workflow(%s): mark worktree merged", entityID)

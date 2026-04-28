@@ -357,12 +357,12 @@ func (g EntityDoneGate) Check(ctx GateContext) GateResult {
 
 	switch {
 	case strings.HasPrefix(ctx.EntityID, "FEAT-"):
-		if status != "done" {
+		if status != "done" && status != "reviewing" {
 			result.Status = GateStatusFailed
 			if status == "" {
 				result.Message = "feature status not set"
 			} else {
-				result.Message = fmt.Sprintf("feature status is %q, expected \"done\"", status)
+				result.Message = fmt.Sprintf("feature status is %q, expected \"done\" or \"reviewing\"", status)
 			}
 		}
 	case strings.HasPrefix(ctx.EntityID, "BUG-"):
