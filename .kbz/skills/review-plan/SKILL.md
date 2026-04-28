@@ -1,406 +1,269 @@
 ---
 name: review-plan
 description:
-  expert: "Plan-level conformance review verifying feature delivery status,
+  expert: "Batch-level conformance review verifying feature delivery status,
     specification approval audit, and documentation currency across all
-    features within a plan"
-  natural: "Check whether all the work in a plan is actually done — features
+    features within a batch"
+  natural: "Check whether all the work in a batch is actually done — features
     shipped, specs approved, docs up to date — and produce a structured
     report of what's complete and what's not"
 triggers:
-  - review plan completion
-  - check plan delivery status
-  - verify plan readiness
-  - audit plan conformance
+  - review batch completion
+  - check batch delivery status
+  - verify batch readiness
+  - audit batch conformance
 roles: [reviewer-conformance]
-stage: plan-reviewing
+stage: batch-reviewing
 constraint_level: low
 ---
 
 ## Vocabulary
 
-- **feature delivery status** — the lifecycle state of a feature within the plan (done,
+- **feature delivery status** — the lifecycle state of a feature within the batch (done,
   cancelled, superseded, or still in progress); terminal states are the only acceptable
-  outcomes for a completed plan
+  outcomes for a completed batch
 - **specification approval status** — whether the specification document backing a feature
   has been formally approved; draft or superseded specs indicate incomplete governance
 - **documentation currency** — whether project-level documentation (AGENTS.md, bootstrap
-  workflow, SKILL files) reflects the work delivered by the plan
-- **plan completeness** — the aggregate assessment of whether all features, specs, and
+  workflow, SKILL files) reflects the work delivered by the batch
+- **batch completeness** — the aggregate assessment of whether all features, specs, and
   documentation meet their terminal-state requirements
 - **conformance gap** — a specific discrepancy between expected terminal state and actual
-  state for any plan artifact (feature, spec, or document)
+  state for any batch artifact (feature, spec, or document)
 - **delivery verification** — the act of checking each feature against its expected
   terminal state, distinct from evaluating implementation quality
 - **terminal state** — a lifecycle state from which no further work is expected (done,
   cancelled, superseded for features; approved for specs)
-- **plan verdict** — the aggregate pass/fail assessment produced by this review
-- **scope guard** — the section of project documentation that tracks which plans are
+- **batch verdict** — the aggregate pass/fail assessment produced by this review
+- **scope guard** — the section of project documentation that tracks which batches are
   complete and which are active
-- **feature census** — the enumeration of all features within a plan, including their
-  current status and any scope changes (cancellation, supersession)
-- **spec audit trail** — the chain of document records showing specification registration,
-  approval, and any supersession events
-- **documentation drift** — the gap between what the plan delivered and what project
-  documentation describes, typically caused by updates made during development that
-  were not propagated to aggregate docs
-- **conformance-only review** — a review that verifies completeness and approval status
-  without evaluating code quality, security, or implementation approach
-- **plan scope reduction** — features that were cancelled or superseded during execution,
-  which must be acknowledged in the review rather than silently ignored
-- **stale document** — a document whose content no longer reflects the current state of
-  the codebase or workflow it describes
+- **feature census** — the enumeration of all features within a batch, including their
+  lifecycle states and document statuses
 
 ## Anti-Patterns
 
 ### Rubber-Stamp Plan Review
 
-- **Detect:** Plan verdict is "pass" without evidence of checking each feature's status
-  individually, or the review report lists features without per-feature verification
-- **BECAUSE:** Plan-level rubber-stamping hides incomplete features behind an aggregate
-  "looks done" assessment; a single unverified feature can leave the plan in an
-  inconsistent state where the plan is marked done but work remains open
-- **Resolve:** Check each feature individually using `status()` or `entity()` calls;
-  record per-feature status in the review output; every feature must have an explicit
-  terminal-state confirmation or a documented conformance gap
+- **Detect:** The review concludes "all features are done" without enumerating feature
+  counts, verifying spec statuses, or checking documentation currency
+- **BECAUSE:** A non-enumerated pass verdict is indistinguishable from a skipped review.
+  It provides no evidence that the reviewer actually examined the batch's artifacts.
+- **Resolve:** Produce a full feature census. Verify each feature's status and spec
+  approval individually. Check documentation currency against the batch's scope.
 
 ### Scope Confusion
 
-- **Detect:** The review evaluates code quality, security posture, test adequacy, or
-  implementation approach instead of (or in addition to) plan conformance
-- **BECAUSE:** Plan review and code review are different activities with different
-  evaluation criteria; plan review checks "did we ship everything we said we would?"
-  while code review checks "is what we shipped correct?"; mixing them produces a
-  review that does neither well
-- **Resolve:** Restrict evaluation to delivery status, spec approval status, and
-  documentation currency; if code quality concerns surface during plan review, note
-  them as out-of-scope observations but do not let them influence the plan verdict
+- **Detect:** The review includes features from a different batch, or evaluates features
+  against criteria not established during the batch's specification
+- **BECAUSE:** Each batch has a defined set of features with approved specifications.
+  Reviewing against unapproved criteria or including out-of-scope features invalidates
+  the conformance assessment and creates ungoverned scope.
+- **Resolve:** Derive the feature list exclusively from the batch's entity records.
+  Evaluate each feature against its own approved specification only.
 
 ### Silent Scope Reduction
 
-- **Detect:** Cancelled or superseded features are omitted from the review report
-  entirely, or counted as "done" without noting the scope change
-- **BECAUSE:** Scope reduction is a legitimate outcome but must be explicitly
-  acknowledged; silently dropping features from the census makes the review report
-  an inaccurate record and hides planning gaps from retrospective analysis
-- **Resolve:** Include every feature from the original plan in the feature census;
-  mark cancelled/superseded features with their actual status and note whether the
-  scope change was intentional
+- **Detect:** Features are marked as delivery-complete without verifying that their specs
+  were actually implemented, or specs were silently cut during implementation
+- **BECAUSE:** A feature can reach `done` status without fulfilling all its requirements
+  if the spec was never checked during review. This creates a gap between what was
+  specified and what was delivered that the review is supposed to catch.
+- **Resolve:** For each feature, verify that the implementation covers the approved spec's
+  requirements. If scope was cut, it should be visible as a cancelled or superseded
+  feature, not hidden inside a done feature.
 
 ## Prerequisites
 
-Before starting a plan review, verify these inputs are available:
+Before starting this review, confirm:
 
-1. **Plan ID** — the plan to review (e.g., `P10-review-and-doc-currency`).
-2. **Plan document** — the implementation plan that defines features, acceptance
-   criteria, and sequencing.
-3. **Specification document(s)** — the binding contracts for each feature. May be
-   a single spec covering the whole plan or per-feature specs.
-4. **All features in terminal state** — features must be in done, cancelled, or
-   superseded state. If any feature is still active, the plan is not ready for
-   delivery verification.
-
-IF any of these are missing or unclear → STOP. Ask before proceeding. Do not
-begin a plan review with incomplete inputs.
+1. The batch entity exists and its feature list is stable — no new features are being
+   added during review
+2. All features in the batch have reachable entity records
+3. If a report from a prior review cycle exists, read it to scope the re-review:
+   only re-examine the findings from the prior review rather than re-reviewing every
+   feature from scratch
 
 ## Checklist
 
-```
 Copy this checklist and track your progress:
-- [ ] Retrieved plan dashboard via status()
-- [ ] Enumerated all features in the plan (feature census)
-- [ ] Verified each feature is in a terminal state
-- [ ] Verified all tasks under each feature are in terminal state
-- [ ] Checked specification approval status for each feature
-- [ ] Verified each acceptance criterion against the implementation (spec conformance)
-- [ ] Checked documentation currency (AGENTS.md, scope guard, SKILL files)
-- [ ] Ran cross-cutting checks (go test, health, git status)
+- [ ] Enumerated all features in this batch
+- [ ] Verified each feature's delivery status
+- [ ] Verified each feature's spec approval status
+- [ ] Checked project documentation currency
 - [ ] Contributed retrospective observations
-- [ ] Recorded all conformance gaps
-- [ ] Wrote review report and registered as document record
-```
+- [ ] Wrote and registered review report
 
 ## Procedure
 
-### Step 1: Enumerate plan scope
+### Step 1: Enumerate batch scope
 
-1. Call `status(id: "<plan-id>")` to retrieve the full plan dashboard.
-2. Record the complete feature census — every feature in the plan, including
-   its current lifecycle state.
-3. IF the plan dashboard is unavailable or returns errors → STOP. Report the
-   missing context. Do not proceed with partial information.
+1. Call `entity(action: "list", type: "feature", parent: "B<n>-<slug>")`. Confirm the
+   feature list matches expectations — no extra features, none missing.
+2. For each feature, record: ID, name, current lifecycle status, spec document ID (if
+   applicable), and dev-plan document ID (if applicable).
+3. Cross-reference against the batch's dev-plan or scope document. Flag any feature that
+   appears in the document but not in the entity list, or vice versa, as a conformance
+   gap.
 
 ### Step 2: Verify feature delivery
 
-For each feature in the census:
-
-1. Confirm the feature is in a terminal state (done, cancelled, or superseded).
-2. IF any feature is in a non-terminal state (active, developing, reviewing,
-   needs-rework, blocked) → record a conformance gap. The plan is not ready
-   for completion.
-3. For each feature in terminal state, check that all tasks under the feature
-   are also in terminal state. Use `entity(action: "list", type: "task",
-   parent: "<feature-id>")` if the dashboard does not show task-level detail.
-4. For cancelled or superseded features, note the scope reduction explicitly.
-   Do not silently omit them from the census.
+1. For each feature in the batch:
+   - IF the feature is `done`: verify all tasks under it are terminal (`done`,
+     `cancelled`, `duplicate`). If the dev-plan specified certain acceptance criteria,
+     verify they are satisfied by the implementation.
+   - IF the feature is `cancelled` or `superseded`: confirm the decision log exists and
+     the rationale is documented. If not, flag as a conformance gap.
+   - IF the feature is NOT in a terminal state: flag as incomplete. The batch cannot be
+     conformance-passed if any feature is still in development.
+2. If any feature violated its dependency constraints (e.g., a dependent feature was
+   merged before its dependency), flag as a conformance gap.
 
 ### Step 3: Verify spec conformance
 
-For each feature that reached done:
+For each feature that is `done`, verify:
 
-1. Locate the specification document via the plan document or
-   `doc(action: "list", owner: "<plan-id>")`.
-2. Confirm the spec is in approved status. IF any spec is in draft status →
-   record a conformance gap.
-3. Read the acceptance criteria from the spec document. Use
-   `doc(action: "content", id: "<spec-doc-id>")` or read the file directly.
-4. Verify each criterion against the actual implementation. For code changes,
-   read the relevant source files. For documentation changes, check that the
-   files exist and contain what the spec requires. Do not treat approval
-   status alone as proof of conformance — check the work itself.
-5. Record pass/fail per criterion using the conformance table:
-
-   | # | Criterion | Result | Notes |
-   |---|-----------|--------|-------|
-   | 1 | ...       | ✅     |       |
-   | 2 | ...       | ⚠️     | ...   |
-
-6. IF a feature has no associated spec (e.g., documentation-only work where
-   the plan's acceptance criteria served as the spec), verify against the
-   plan document's criteria instead and note this explicitly.
+1. The specification document exists and is `approved` — not `draft` or `superseded`.
+2. The acceptance criteria in the spec are satisfied by the implementation.
+3. The design document referenced by the spec is `approved` (design-approval propagates
+   through the spec gate; an unapproved design behind an approved spec is a governance
+   hole).
 
 ### Step 4: Check documentation currency
 
-1. Check that project documentation reflects what the plan delivered:
-   - AGENTS.md project status and scope guard sections
-   - Specification documents in approved status (check with
-     `doc(action: "list", owner: "<plan-id>", status: "draft")` — should
-     return no results)
-   - SKILL files (if the plan added or modified any)
-   - Bootstrap workflow (if the plan changed conventions)
-2. IF documentation does not reflect the delivered work → record a
-   conformance gap with the specific document and section that needs updating.
+1. Check whether project-level documentation (`AGENTS.md`, workflow skills, reference
+   files) references the features delivered by this batch. If the documentation describes
+   behaviour that contradicts what was implemented, flag as a documentation gap.
+2. Verify that any knowledge entries contributed during the batch's features are confirmed
+   (not still `contributed`).
+3. Check whether new capabilities delivered by this batch would change existing skills
+   or procedures. If so, flag for documented future work.
 
 ### Step 5: Cross-cutting checks
 
-Run three specific cross-cutting checks:
-
-1. **Test suite** — run `go test -race ./...`. All tests must pass. Record
-   any failures as conformance gaps.
-2. **System health** — call `health()`. Check for new errors or warnings:
-   entity consistency issues, knowledge staleness, worktree cleanup items.
-   New warnings introduced by the plan's work are conformance gaps.
-3. **Clean working tree** — run `git status`. There should be no uncommitted
-   changes from the plan's work. Uncommitted changes indicate incomplete
-   delivery.
+1. Run `health()` and verify no errors or warnings related to the batch's entities.
+2. Check for orphaned worktrees (`worktree(action: "list", status: "active")`) that
+   belong to features in this batch — they should be `merged` or `abandoned`.
+3. If the batch had an advance plan with cohorts, verify all cohort merge checkpoints
+   were confirmed clean.
 
 ### Step 6: Retrospective contribution
 
-Before writing the review report, contribute observations about the plan:
+Call `retro(action: "synthesise", scope: "B<n>-<slug>")` to surface the batch's
+workflow signals — what worked, what didn't, what to improve. Include the synthesised
+findings in the review report.
 
-- What worked well? (spec quality, test coverage, smooth tooling)
-- What caused friction? (unclear specs, stale docs, tooling gaps,
-  documentation drift)
-- What would you change for next time?
-
-Contribute signals using `finish(retrospective: [...])` when completing a
-review task, or `knowledge(action: "contribute", tags: ["retrospective"])`
-for standalone observations.
-
-Do not skip this step. Retrospective signals captured at review time are
-the primary input for process improvement.
+Do not skip this step. Retrospective synthesis is the primary mechanism for turning
+per-task observations into actionable project-level improvements.
 
 ### Step 7: Write and register review report
 
-1. IF any conformance gaps were recorded → the plan verdict is fail or
-   pass with findings, depending on severity.
-2. IF the plan state is contradictory (e.g., features reference specs that
-   don't exist, or the dashboard shows inconsistencies) → STOP. Report the
-   contradiction. Do not produce a verdict on contradictory data.
-3. Write findings to `work/reviews/review-<plan-slug>.md` using the output
-   format below.
-4. Register the document:
-   `doc(action: "register", path: "work/reviews/review-<plan-slug>.md", type: "report", title: "Review: <Plan Title>")`
+1. Compile all findings into a review report.
+2. Register the report: `doc(action: "register", path: "work/reviews/batch-review-<slug>-<date>.md", type: "report", owner: "B<n>-<slug>")`.
+3. Await human approval. The conformance review has a human gate — the report must be
+   approved before the batch can be closed.
 
 ## Output Format
 
 ```
-# Plan Review: <plan-id> — <plan-title>
+# Batch Conformance Review: B<n>-<slug>
 
-| Field    | Value          |
-|----------|----------------|
-| Plan     | <plan-id>      |
-| Reviewer | <name>         |
-| Date     | <ISO 8601 UTC> |
-| Verdict  | Pass / Pass with findings / Fail |
+## Scope
+- Batch: B<n>-<slug>
+- Features: N total (N done, N cancelled/superseded, N incomplete)
+- Review date: YYYY-MM-DD
+- Reviewer: reviewer-conformance
 
 ## Feature Census
-
-| Feature   | Slug | Status     | Terminal | Notes              |
-|-----------|------|------------|----------|--------------------|
-| FEAT-...  | ...  | done       | ✅       |                    |
-| FEAT-...  | ...  | cancelled  | ✅       | Scope reduction: <reason> |
-| FEAT-...  | ...  | developing | ❌       | Conformance gap    |
-
-## Specification Approval
-
-| Feature   | Spec Document          | Status   |
-|-----------|------------------------|----------|
-| FEAT-...  | work/spec/...          | approved ✅ |
-| FEAT-...  | work/spec/...          | draft ❌    |
-| FEAT-...  | (plan criteria used)   | N/A      |
-
-## Spec Conformance Detail
-
-### Feature: <slug>
-
-| # | Criterion | Result | Notes |
-|---|-----------|--------|-------|
-| 1 | ...       | ✅     |       |
-| 2 | ...       | ⚠️     | ...   |
-
-<Repeat per feature>
-
-## Documentation Currency
-
-| Check                      | Result    | Notes |
-|----------------------------|-----------|-------|
-| AGENTS.md project status   | ✅ / ❌  |       |
-| AGENTS.md scope guard      | ✅ / ❌  |       |
-| Spec documents approved    | ✅ / ❌  |       |
-| SKILL files current        | ✅ / ❌ / N/A |  |
-| Bootstrap workflow current | ✅ / ❌ / N/A |  |
-
-## Cross-Cutting Checks
-
-| Check | Result |
-|-------|--------|
-| `go test -race ./...` | ✅ Pass / ❌ Failures |
-| `health()` | ✅ Clean / ⚠️ Warnings |
-| `git status` clean | ✅ / ❌ |
+| Feature | Status | Spec Approved | Dev-Plan | Notes |
+|---------|--------|---------------|----------|-------|
+| FEAT-xxx | done | yes | yes | All 5 tasks done |
+| FEAT-xxx | done | yes | yes | 2 known spec gaps (non-blocking) |
+| FEAT-xxx | done | no | yes | **Spec is draft** — blocking |
 
 ## Conformance Gaps
+| # | Feature | Type | Description | Severity |
+|---|---------|------|-------------|----------|
+| CG-1 | FEAT-xxx | spec-status | Spec FEAT-xxx is draft, not approved | blocking |
+| CG-2 | FEAT-xxx | doc-currency | AGENTS.md references old terminology | non-blocking |
 
-| # | Category      | Location             | Description          |
-|---|---------------|----------------------|----------------------|
-| 1 | feature-status / spec-approval / documentation | ... | ... |
+## Documentation Currency
+- AGENTS.md: [current / needs update]
+- Workflow skills: [current / needs update]
+- Knowledge entries: N contributed, N confirmed, N flagged
 
-## Verdict
+## Retrospective Summary
+<2-3 sentence synthesis from retro synthesise>
 
-<Final assessment. Conditions for approval if verdict is not Pass.>
+## Batch Verdict
+<pass | pass-with-notes | fail>
+
+## Evidence
+- Batch entity: entity(action: "get", id: "B<n>-<slug>")
+- Feature list: entity(action: "list", type: "feature", parent: "B<n>-<slug>")
+- Health check: health()
+- Retro synthesis: retro(action: "synthesise", scope: "B<n>-<slug>")
 ```
 
 ## Examples
 
-### BAD: Rubber-stamp plan review
+### BAD: Rubber-stamp batch review
 
 ```
-Plan P8 looks complete. All features appear to be done.
-The code quality is good and tests are passing.
-Verdict: Pass.
-```
+Feature: Webhooks
+Status: done (appears done)
 
-WHY BAD: No feature census — "all features appear to be done" without listing
-them individually. No spec approval check. No documentation currency check.
-Includes code quality commentary (scope confusion — that belongs in code review,
-not plan review). No structured output. A reader cannot verify what was actually
-checked.
+**Problem:** The reviewer accepted "done" at face value without checking
+feature statuses, spec approvals, or documentation currency. This is indistinguishable
+from skipping the review — no conformance assessment was actually performed.
+```
 
 ### GOOD: Structured conformance review with gap
 
 ```
-# Plan Review: P8-skills-system — Skills System Redesign
+# Batch Conformance Review: B42-webhook-system
 
-| Field    | Value                  |
-|----------|------------------------|
-| Plan     | P8-skills-system       |
-| Reviewer | agent-reviewer         |
-| Date     | 2025-07-14T10:30:00Z   |
-| Verdict  | Pass with findings     |
+## Scope
+- Batch: B42-webhook-system
+- Features: 3 total (2 done, 0 cancelled, 1 incomplete)
+- Review date: 2026-03-15
+- Reviewer: reviewer-conformance
 
 ## Feature Census
+| Feature | Status | Spec Approved | Notes |
+|---------|--------|---------------|-------|
+| FEAT-050 | done | yes | All 4 tasks done ✓ |
+| FEAT-051 | done | yes | All 3 tasks done ✓ |
+| FEAT-052 | developing | no | Feature not in terminal state — blocking |
 
-| Feature   | Slug              | Status | Terminal | Notes |
-|-----------|-------------------|--------|----------|-------|
-| FEAT-041  | skill-format      | done   | ✅       |       |
-| FEAT-042  | role-format       | done   | ✅       |       |
-| FEAT-043  | binding-registry  | done   | ✅       |       |
-| FEAT-044  | context-assembly  | cancelled | ✅  | Scope reduction: deferred to P9 per decision DEC-012 |
+## Batch Verdict
+fail — FEAT-052 is still developing
 
-## Specification Approval
-
-| Feature   | Spec Document                       | Status      |
-|-----------|-------------------------------------|-------------|
-| FEAT-041  | work/spec/skills-system-spec-v2.md  | approved ✅ |
-| FEAT-042  | work/spec/skills-system-spec-v2.md  | approved ✅ |
-| FEAT-043  | work/spec/skills-system-spec-v2.md  | approved ✅ |
-| FEAT-044  | (cancelled — no spec required)      | N/A         |
-
-## Documentation Currency
-
-| Check                      | Result | Notes |
-|----------------------------|--------|-------|
-| AGENTS.md project status   | ✅     | Updated in commit abc1234 |
-| AGENTS.md scope guard      | ⚠️     | Lists P8 as active, not complete |
-| Spec documents approved    | ✅     |       |
-| SKILL files current        | ✅     | New SKILL files verified |
-| Bootstrap workflow current | N/A    | No convention changes |
-
-## Conformance Gaps
-
-| # | Category      | Location                  | Description |
-|---|---------------|---------------------------|-------------|
-| 1 | documentation | AGENTS.md scope guard     | P8 still listed as active; should be marked complete |
-
-## Verdict
-
-Pass with findings. One documentation gap: AGENTS.md scope guard
-needs updating to reflect P8 completion. All features verified
-individually. FEAT-044 cancellation documented with decision reference.
+## Evidence
+- Batch entity: entity(action: "get", id: "B42-webhook-system") → 2/3 features done
+- Feature list: entity(action: "list", type: "feature", parent: "B42-webhook-system")
 ```
-
-WHY GOOD: Every feature checked individually with explicit terminal-state
-confirmation. Cancelled feature acknowledged with decision reference instead
-of silently omitted. Spec approval verified per feature. Documentation currency
-checked with specific gap identified. Structured output that a reader can verify
-claim by claim. Conformance-focused — no code quality commentary.
 
 ## Evaluation Criteria
 
-1. Does the review include a complete feature census with per-feature status?
-   Weight: required.
-2. Is every feature individually verified against terminal state?
-   Weight: required.
-3. Does the review check specification approval status for each feature?
-   Weight: required.
-4. Does the review verify each acceptance criterion against the implementation
-   (not just approval status)? Weight: required.
-5. Does the review check documentation currency?
-   Weight: high.
-6. Does the review include cross-cutting checks (tests, health, git status)?
-   Weight: high.
-7. Are cancelled or superseded features explicitly acknowledged with reasons?
-   Weight: high.
-8. Does the review stay conformance-focused without scope creep into code quality?
-   Weight: high.
-9. Does the review include retrospective observations?
-   Weight: medium.
-10. Is the review report registered as a document record?
-    Weight: medium.
-11. Can a reader verify each claim in the review without re-running the checks?
-    Weight: medium.
+| # | Criterion | Weight |
+|---|----------|--------|
+| 1 | Every feature in the batch is enumerated and its status verified individually | required |
+| 2 | Spec approval is checked for every done feature | required |
+| 3 | Documentation currency is checked against the batch's scope | high |
+| 4 | Retrospective synthesis is included in the review report | high |
+| 5 | The review report is registered as a document | required |
+| 6 | Conformance gaps are classified by severity (blocking vs non-blocking) | required |
 
 ## Questions This Skill Answers
 
-- How do I review a plan for completion?
-- What should I check before closing a plan?
-- How do I verify all specs in a plan are approved?
-- How do I check spec conformance criterion by criterion?
-- What is the difference between plan review and code review?
-- How do I handle cancelled features in a plan review?
-- What documentation should I check during plan review?
-- What does a conformance gap look like in a plan review?
-- When should I stop a plan review because of contradictory state?
-- What cross-cutting checks should I run during plan review?
-- How do I contribute retrospective observations during review?
-- Where do I write and register the review report?
+- How do I know if a batch is complete?
+- What counts as a conformance gap?
+- How do I verify whether a feature's specification was actually implemented?
+- What documentation should I check for currency?
+- How do I write a batch conformance review report?
+
+## Related
+
+- `review-code` — checks individual features against their specifications
+- `orchestrate-development` — generates the work this review examines
+- `kanbanzai-workflow` — lifecycle transitions and stage gates

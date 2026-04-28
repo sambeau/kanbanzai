@@ -21,6 +21,7 @@ constraint_level: low
 
 ## Vocabulary
 
+- **parent batch** — the batch entity that owns the feature being decomposed; tasks are created under the feature but the batch provides the execution context and dependency ordering across features
 - **dependency edge** — an explicit declaration that task B requires task A's output before it can start
 - **dependency declaration** — recording a dependency in the task's `depends_on` field so the orchestrator respects ordering
 - **circular dependency** — two or more tasks that directly or transitively depend on each other, making dispatch impossible
