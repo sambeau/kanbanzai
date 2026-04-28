@@ -1,0 +1,279 @@
+document_id: B38-plans-and-batches/dev-plan-b38-dev-plan-p38-f9-full-combined-migration
+document_path: work/B38-plans-and-batches/B38-dev-plan-p38-f9-full-combined-migration.md
+content_hash: 7f3c6277f2f4f8d7385cf273c723a1431a8d6ee2bf53fa850c2d3a13ffbef6a3
+indexed_at: 2026-04-28T16:57:00.10889Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'B38-F9: Full Combined Migration — Dev Plan'
+      byte_offset: 0
+      byte_count: 11833
+      word_count: 1689
+      content_hash: 7f3c6277f2f4f8d7385cf273c723a1431a8d6ee2bf53fa850c2d3a13ffbef6a3
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 404
+          byte_count: 887
+          word_count: 101
+          content_hash: fdbe0b9d1aea32f45a0d0aabc96ac9df9d5a96fa0027c83b1831155af334abec
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1291
+          byte_count: 4353
+          word_count: 539
+          content_hash: 0eb3b07a2d484a2b2cbd5f77b9f23f3fc855e0e79f3584ae2ef73865524217f0
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Corpus Audit Script'
+              byte_offset: 1310
+              byte_count: 531
+              word_count: 69
+              content_hash: 0f662049226a006eac2e7aefeb04f1d9ba72986598dabffd11004991b870c2fc
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Dry-Run Report Generator'
+              byte_offset: 1841
+              byte_count: 601
+              word_count: 75
+              content_hash: 16412c00cba6b2ee1b88877ea393849367ea9a6e2b7e94bc438e1aa83c422554
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Target Path Resolver'
+              byte_offset: 2442
+              byte_count: 527
+              word_count: 62
+              content_hash: f5efbf29571105062d7d28d69b8639151114577e425cd83d5890b486fa4a0cbe
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Migration Execution Engine'
+              byte_offset: 2969
+              byte_count: 585
+              word_count: 73
+              content_hash: da0c2e34f78710a5a45c36784299f659956ab90ab934a9b7366a72166b21e3f1
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Directory Cleanup'
+              byte_offset: 3554
+              byte_count: 473
+              word_count: 52
+              content_hash: 3156031c099ad649c55151211b6927bca192042575538e89a6ff8460d394c707
+            - path: 1.2.6
+              level: 3
+              title: 'Task 6: Idempotency and Rollback Tests'
+              byte_offset: 4027
+              byte_count: 498
+              word_count: 61
+              content_hash: 0f11f800cba1356e6391d8787c681b629ad7c230f8ade719044181e53fd44f9b
+            - path: 1.2.7
+              level: 3
+              title: 'Task 7: Logging and Error Handling'
+              byte_offset: 4525
+              byte_count: 523
+              word_count: 66
+              content_hash: 9478fd7c1f2a72e15f9b5472276d841dc7bcd9c46ae7af861b49e741daca0147
+            - path: 1.2.8
+              level: 3
+              title: 'Task 8: Execution and Verification'
+              byte_offset: 5048
+              byte_count: 596
+              word_count: 78
+              content_hash: afb5509e32887405f88082db3a73a88282d844db3ac609266f7c6b3c7161efe4
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 5644
+          byte_count: 499
+          word_count: 111
+          content_hash: 5a94d520c18a40d7d6479421d369cc4b223fa3257e69b3ff143b3de00755efb6
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 6143
+          byte_count: 1241
+          word_count: 130
+          content_hash: 6fb4ecc7dba4e570bdb04aa64c3b12514de95b8861ed2a50d732e15229707f6f
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Contract 1: Audit Snapshot Format (Task 1 → Task 2, Task 3)'
+              byte_offset: 6167
+              byte_count: 421
+              word_count: 39
+              content_hash: aad364d956e6643528e46c5598483c2ddcd03ac3afe0d311be9e52d047288df2
+            - path: 1.4.2
+              level: 3
+              title: 'Contract 2: Dry-Run Report Format (Task 2 → Task 4)'
+              byte_offset: 6588
+              byte_count: 503
+              word_count: 47
+              content_hash: 86a786cf8d762e87e8833885c4ebc7ad0429bd92203b3c6746824c104b186359
+            - path: 1.4.3
+              level: 3
+              title: 'Contract 3: Migration Executor (Task 4)'
+              byte_offset: 7091
+              byte_count: 293
+              word_count: 41
+              content_hash: befff09a5231bcb2eb1e7486c49526c67d2f6fd7af332ff9d3d6dc1cdea7a34c
+        - path: "1.5"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 7384
+          byte_count: 2444
+          word_count: 367
+          content_hash: b039e933f2a9c738e0c6068623213f60fc2521558a9a75b03ad542d1cbbbce71
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'Risk: Human Triage Delays Migration'
+              byte_offset: 7404
+              byte_count: 365
+              word_count: 49
+              content_hash: 36c95c9880ea99b7151b50b9ed2e302d01be6dde1250ff809a804a04d4740da0
+            - path: 1.5.2
+              level: 3
+              title: 'Risk: Document Record Owner Resolution Failure'
+              byte_offset: 7769
+              byte_count: 424
+              word_count: 62
+              content_hash: 1d64ff736207c0fd0144571821c21f41f638dda60709a365cfb1f5ac1911bb02
+            - path: 1.5.3
+              level: 3
+              title: 'Risk: Filename Collision After Rename'
+              byte_offset: 8193
+              byte_count: 389
+              word_count: 57
+              content_hash: a77ec83fd945601b4b0215387f1301ae796ea7dcbfa47e76c6d38650d5d2e62e
+            - path: 1.5.4
+              level: 3
+              title: 'Risk: Git Index Corruption During Bulk Move'
+              byte_offset: 8582
+              byte_count: 444
+              word_count: 68
+              content_hash: f7d5685a1ccb2951596b5812f5225b3930e047cad840cf5a91197db7295e77ba
+            - path: 1.5.5
+              level: 3
+              title: 'Risk: Migration Script Bug Causes Partial State'
+              byte_offset: 9026
+              byte_count: 430
+              word_count: 66
+              content_hash: b40a78f5f2c17f4e03ab1956c408b35d8dd8775a22c72a0063332d9b12e7e963
+            - path: 1.5.6
+              level: 3
+              title: 'Risk: Performance Exceeds Time Budget'
+              byte_offset: 9456
+              byte_count: 372
+              word_count: 62
+              content_hash: 50837fbddb7ce6b2438974a31f4d7e62eb8e9531db6f35bccb93601b678d296e
+        - path: "1.6"
+          level: 2
+          title: Verification Approach
+          byte_offset: 9828
+          byte_count: 1108
+          word_count: 223
+          content_hash: 6f01b218089fe83ffb36087706553a98d2045be91289738d42c2c09c7ed77ae6
+        - path: "1.7"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 10936
+          byte_count: 897
+          word_count: 176
+          content_hash: ee4ae97aa7499ffaa98902aa7d0729f4442bde2885c19bc6b7bdec33d346cca6
+entity_refs:
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 330
+    - entity_id: B38-spec-p38-f9-full-combined-migration
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 352
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 480
+    - entity_id: B38-spec-p38-f9-full-combined-migration
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 502
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: 1.2.1
+      byte_offset: 1605
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: 1.2.2
+      byte_offset: 2174
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: 1.2.8
+      byte_offset: 5464
+    - entity_id: B38-report-migration-verification
+      entity_type: plan
+      section_path: 1.2.8
+      byte_offset: 5486
+    - entity_id: B1-phase-4-orchestration
+      entity_type: plan
+      section_path: 1.4.1
+      byte_offset: 6282
+    - entity_id: P12-agent-onboarding
+      entity_type: plan
+      section_path: 1.4.1
+      byte_offset: 6447
+    - entity_id: B12-agent-onboarding
+      entity_type: plan
+      section_path: 1.4.1
+      byte_offset: 6503
+    - entity_id: B12-agent-onboarding
+      entity_type: plan
+      section_path: 1.4.2
+      byte_offset: 6750
+    - entity_id: B12-design-agent-onboarding
+      entity_type: plan
+      section_path: 1.4.2
+      byte_offset: 6771
+    - entity_id: P12-agent-onboarding
+      entity_type: plan
+      section_path: 1.4.2
+      byte_offset: 6814
+cross_doc_links:
+    - target_path: work/B38-plans-and-batches/B38-spec-p38-f9-full-combined-migration.md
+      link_text: work/B38-plans-and-batches/B38-spec-p38-f9-full-combined-migration.md
+      section_path: "1"
+    - target_path: work/B38-plans-and-batches/B38-spec-p38-f9-full-combined-migration.md
+      link_text: work/B38-plans-and-batches/B38-spec-p38-f9-full-combined-migration.md
+      section_path: "1.1"
+    - target_path: work/B38-plans-and-batches/B38-report-migration-verification.md
+      link_text: work/B38-plans-and-batches/B38-report-migration-verification.md
+      section_path: 1.2.8
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: risk
+      confidence: high
+    - section_path: 1.5.1
+      role: risk
+      confidence: high
+    - section_path: 1.5.2
+      role: risk
+      confidence: high
+    - section_path: 1.5.3
+      role: risk
+      confidence: high
+    - section_path: 1.5.4
+      role: risk
+      confidence: high
+    - section_path: 1.5.5
+      role: risk
+      confidence: high
+    - section_path: 1.5.6
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-28T16:57:00.660214Z
+classified: false

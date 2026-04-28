@@ -1,0 +1,148 @@
+document_id: FEAT-01KQ7YQKBDNAP/dev-plan-p38-dev-plan-p38-f2-plan-entity-data-model-lifecycle
+document_path: work/P38-plans-and-batches/P38-dev-plan-p38-f2-plan-entity-data-model-lifecycle.md
+content_hash: e5a59c71d2f00c0196d73587872de8f7e1b8615ad42144323e815ff160ab53d7
+indexed_at: 2026-04-28T01:48:25.893778Z
+sections:
+    - path: "1"
+      level: 2
+      title: Scope
+      byte_offset: 221
+      byte_count: 895
+      word_count: 101
+      content_hash: af7b9154a01ad62f51b558179bd1edfa7936aa8edb16c767ae3ac07eee4ebf71
+    - path: "2"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 1116
+      byte_count: 5491
+      word_count: 686
+      content_hash: 6c2daac8049f79c4169d8fa5672c120d8fbecfc43277a26c9b6f238a5cc170b3
+      children:
+        - path: "2.1"
+          level: 3
+          title: 'Task 1: Define New Plan Data Model and PlanStatus Constants'
+          byte_offset: 1135
+          byte_count: 1259
+          word_count: 159
+          content_hash: 11d14ad2cfc97e4482de1b81b98f3771ddc4a1f10567c9c780fa16d7a4c866b8
+        - path: "2.2"
+          level: 3
+          title: 'Task 2: Implement Plan Lifecycle Validation'
+          byte_offset: 2394
+          byte_count: 1019
+          word_count: 127
+          content_hash: f3bf439a62959b9e57d902c26659233b0743cd542b11e6a41621945d963fede5
+        - path: "2.3"
+          level: 3
+          title: 'Task 3: Implement Plan CRUD in Entity Service'
+          byte_offset: 3413
+          byte_count: 1290
+          word_count: 152
+          content_hash: 42e446b34ab94b4f6489225708ad954aea5067748979674ee9ababe7ff59783e
+        - path: "2.4"
+          level: 3
+          title: 'Task 4: Wire Plan Type into Entity MCP Tool'
+          byte_offset: 4703
+          byte_count: 916
+          word_count: 123
+          content_hash: 5f5597619ea020b6424e7012446473faacb70b13ea237a4f144c49295232d329
+        - path: "2.5"
+          level: 3
+          title: 'Task 5: Comprehensive Unit and Integration Tests'
+          byte_offset: 5619
+          byte_count: 988
+          word_count: 122
+          content_hash: 14da5f1b6e6239429fa9db02094c9656c2bd5868b3de949da9674474be7b7881
+    - path: "3"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 6607
+      byte_count: 540
+      word_count: 104
+      content_hash: 1094a83d450c33c4c1743161ff60023e47f6f110cdc13d33750279761b2af762
+    - path: "4"
+      level: 2
+      title: Risk Assessment
+      byte_offset: 7147
+      byte_count: 2178
+      word_count: 323
+      content_hash: 2db797b12c99923fbed7b9c6d186472f3a34fb61f703d7a97ffba8f4372225bf
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Risk: Namespace Collision with Existing Plan Struct'
+          byte_offset: 7167
+          byte_count: 592
+          word_count: 89
+          content_hash: f5b01b342053fefe7a9614ac69a2345e926eeb9983c31d5e11d46cd4acd5d39f
+        - path: "4.2"
+          level: 3
+          title: 'Risk: P38-F1 Plan Prefix Registry Not Ready'
+          byte_offset: 7759
+          byte_count: 581
+          word_count: 81
+          content_hash: 524f9362d6310788e9c77b71d61c821d0ede9629ea5d5bbc8eee73040b98e030
+        - path: "4.3"
+          level: 3
+          title: 'Risk: Cycle Detection Edge Cases at Depth'
+          byte_offset: 8340
+          byte_count: 414
+          word_count: 61
+          content_hash: 0cf25c7a05541ca3a95b49a7f337f9a0613a10f4d0ef98e981bab847d989b8b3
+        - path: "4.4"
+          level: 3
+          title: 'Risk: Existing Plan Operations Break After Changes'
+          byte_offset: 8754
+          byte_count: 571
+          word_count: 89
+          content_hash: 4a9097d0e825e0f99870006c10502b853ee47023d36d8c8f794dc833b25d836c
+    - path: "5"
+      level: 2
+      title: Verification Approach
+      byte_offset: 9325
+      byte_count: 1431
+      word_count: 271
+      content_hash: da9839ca199dfd33cd1c5b390af0ee2a2b3a39287e3c6a9b6e78e899b1d2d000
+entity_refs:
+    - entity_id: FEAT-01KQ7YQKBDNAP
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 368
+    - entity_id: P38-plans-and-batches
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 287
+    - entity_id: P38-spec-p38-f2-plan-entity-data-model-lifecycle
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 309
+cross_doc_links:
+    - target_path: work/P38-plans-and-batches/P38-spec-p38-f2-plan-entity-data-model-lifecycle.md
+      link_text: work/P38-plans-and-batches/P38-spec-p38-f2-plan-entity-data-model-lifecycle.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: risk
+      confidence: high
+    - section_path: "4.1"
+      role: risk
+      confidence: high
+    - section_path: "4.2"
+      role: risk
+      confidence: high
+    - section_path: "4.3"
+      role: risk
+      confidence: high
+    - section_path: "4.4"
+      role: risk
+      confidence: high
+access_count: 11
+last_accessed_at: 2026-04-28T08:36:32.437774Z
+section_access:
+    "1":
+        access_count: 4
+        last_accessed_at: 2026-04-28T08:36:32.436077Z
+classified: false

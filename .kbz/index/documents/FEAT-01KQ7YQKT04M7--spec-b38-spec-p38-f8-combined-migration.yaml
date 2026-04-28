@@ -1,0 +1,157 @@
+document_id: FEAT-01KQ7YQKT04M7/spec-b38-spec-p38-f8-combined-migration
+document_path: work/B38-plans-and-batches/B38-spec-p38-f8-combined-migration.md
+content_hash: 14b4f6a6cca798f4ecc48c5f8d1972c80e4de0928985fa516b8aef10958df38b
+indexed_at: 2026-04-28T16:13:52.968593Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P38-F8: Combined State File and Work Tree Migration — Specification'
+      byte_offset: 0
+      byte_count: 9108
+      word_count: 1173
+      content_hash: 14b4f6a6cca798f4ecc48c5f8d1972c80e4de0928985fa516b8aef10958df38b
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 691
+          byte_count: 857
+          word_count: 113
+          content_hash: 56a7cceb3023a1f6a354b17e26460e227da4fda17f211d1f770c0da0c0e2432f
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 1548
+          byte_count: 1153
+          word_count: 147
+          content_hash: 2e0d96c7c95f1af80ec0b55d7548b6eefa5aff103d9cd6a4df2b83f7d203c7b6
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2701
+          byte_count: 1999
+          word_count: 261
+          content_hash: 92d1d3501eb94ab608190e18cac1fe59d854a4be3b52ed1cf993bf8acdfc7413
+          children:
+            - path: 1.3.1
+              level: 3
+              title: State File Migration
+              byte_offset: 2729
+              byte_count: 642
+              word_count: 90
+              content_hash: c07c522aa275bc014a8ebc46442cc0a331bbbe308b94747d58a094e24f55460d
+            - path: 1.3.2
+              level: 3
+              title: Cross-Reference Updates
+              byte_offset: 3371
+              byte_count: 531
+              word_count: 65
+              content_hash: 9ee08608106a6cdd950746563598a094c3e28d97184be79b563bd025a0a9fb53
+            - path: 1.3.3
+              level: 3
+              title: Work Directory Migration
+              byte_offset: 3902
+              byte_count: 537
+              word_count: 66
+              content_hash: b8a5f1629cf5b72663a03d6ee527d8fb983fdfcae8c8bac3f9c843541247083b
+            - path: 1.3.4
+              level: 3
+              title: Document Record Path Updates
+              byte_offset: 4439
+              byte_count: 261
+              word_count: 37
+              content_hash: ef4f4d16dbb8681cc2958c8fedd21929049ca082c27cbcaf6763f35f277a795a
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 4700
+          byte_count: 574
+          word_count: 85
+          content_hash: 301325ac1d6580b27d3ff7972fa394e86553fa895b966d4f8540c324a78c2578
+        - path: "1.5"
+          level: 2
+          title: Constraints
+          byte_offset: 5274
+          byte_count: 697
+          word_count: 101
+          content_hash: 4033b141f88aa32a698498fb1dd49fb43e97c03cc609ef9004aced17ed1fa55b
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 5971
+          byte_count: 1427
+          word_count: 161
+          content_hash: 4c7f563035589ea9b3d01d706c1ae739acb3390c78c2df15d4f59dc771bc7a8d
+        - path: "1.7"
+          level: 2
+          title: Verification Plan
+          byte_offset: 7398
+          byte_count: 887
+          word_count: 152
+          content_hash: f8d6f1a1f463b6e175a6e0244054267a490b68925d92963f18e3c460be331fa1
+        - path: "1.8"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 8285
+          byte_count: 823
+          word_count: 108
+          content_hash: 72deccfc30f4776c94411a6cd1e919b7e920c01acffd246fcb8635e1d7848277
+entity_refs:
+    - entity_id: FEAT-01KQ7YQKT04M7
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 520
+    - entity_id: B1-phase-4-orchestration
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 6056
+    - entity_id: P1-phase-4-orchestration
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 6575
+    - entity_id: P38-plans-and-batches
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 6763
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 6803
+cross_doc_links:
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1"
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1.1"
+    - target_path: work/design/*.md
+      link_text: work/design/*.md
+      section_path: 1.3.3
+    - target_path: work/spec/*.md
+      link_text: work/spec/*.md
+      section_path: 1.3.3
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.8"
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-28T16:13:53.686566Z
+classified: false

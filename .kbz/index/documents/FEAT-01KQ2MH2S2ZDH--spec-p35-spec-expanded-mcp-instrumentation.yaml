@@ -1,0 +1,151 @@
+document_id: FEAT-01KQ2MH2S2ZDH/spec-p35-spec-expanded-mcp-instrumentation
+document_path: work/P35-expanded-mcp-instrumentation/P35-spec-expanded-mcp-instrumentation.md
+content_hash: 3585c9ec9644f21623c82199c5162740799006573f3827a4b35e57a05938cceb
+indexed_at: 2026-04-28T12:06:52.725782Z
+sections:
+    - path: "1"
+      level: 2
+      title: Related Work
+      byte_offset: 349
+      byte_count: 1626
+      word_count: 204
+      content_hash: eb6122fc24a1294f028ab915f172a50971cce796939a2c62959c8a4d533681a6
+      children:
+        - path: "1.1"
+          level: 3
+          title: Prior designs consulted
+          byte_offset: 366
+          byte_count: 813
+          word_count: 91
+          content_hash: d332f718c43495f209a451d743eaf581a94d82de8ac8df7b6acddd68f0b0bcef
+        - path: "1.2"
+          level: 3
+          title: Constraining decisions
+          byte_offset: 1179
+          byte_count: 553
+          word_count: 79
+          content_hash: d129f5c059e53f87c819156cfc0444acc5bd04414aefe1b763d62f32cd23451e
+        - path: "1.3"
+          level: 3
+          title: Concept and entity search
+          byte_offset: 1732
+          byte_count: 243
+          word_count: 31
+          content_hash: 9d2ef5eb2374d45fc755f411aa4812c8993a9e0bea4d25a445081afd689bf811
+    - path: "2"
+      level: 2
+      title: Overview
+      byte_offset: 1975
+      byte_count: 559
+      word_count: 58
+      content_hash: 1ad7c9dd7b9b5a4e30e8653ccf0ccdea9d9803c7da773d5ff0ea63825ea64dd3
+    - path: "3"
+      level: 2
+      title: Scope
+      byte_offset: 2534
+      byte_count: 858
+      word_count: 122
+      content_hash: a76ffc64453d03c8f0bc6e3249477a16dd97be14b5dca8e7f4214c2ddc88776d
+    - path: "4"
+      level: 2
+      title: Functional Requirements
+      byte_offset: 3392
+      byte_count: 3393
+      word_count: 442
+      content_hash: 7aae4e9c703330ed45dc6594c98e1b3726f05e7b5d197e648edd7a0aef6e407e
+    - path: "5"
+      level: 2
+      title: Non-Functional Requirements
+      byte_offset: 6785
+      byte_count: 736
+      word_count: 106
+      content_hash: fc1164a105513fde31194333c11c273d34e5f25d2dd3d6ffba4690da2cd67c6a
+    - path: "6"
+      level: 2
+      title: Acceptance Criteria
+      byte_offset: 7521
+      byte_count: 3695
+      word_count: 502
+      content_hash: d1654a5631cae79ad254275ca8211c25a194af1ac29cdaaef259c7e2796d52fe
+    - path: "7"
+      level: 2
+      title: Verification Plan
+      byte_offset: 11216
+      byte_count: 1961
+      word_count: 305
+      content_hash: 645e6914af2073c2861672267f370660b41ff584111d72c0eeec93e9b88c5785
+    - path: "8"
+      level: 2
+      title: Dependencies and Assumptions
+      byte_offset: 13177
+      byte_count: 1769
+      word_count: 230
+      content_hash: c2d6ba570eba22bc893a07644a24426792222eb970bab3e4b03d7de223688399
+      children:
+        - path: "8.1"
+          level: 3
+          title: Dependencies on existing code
+          byte_offset: 13210
+          byte_count: 1022
+          word_count: 122
+          content_hash: 077c4fd80198fb7caf1a40be99ece8bbefae0927011e90bf4d09e6a9d8381fb9
+        - path: "8.2"
+          level: 3
+          title: Assumptions
+          byte_offset: 14232
+          byte_count: 714
+          word_count: 104
+          content_hash: b2e0bc5e6ea356a4fbbeaee30421ca00f969fc32152bb1977bf2168f06ccdc64
+entity_refs:
+    - entity_id: TASK-001
+      entity_type: task
+      section_path: "6"
+      byte_offset: 10551
+    - entity_id: P35-expanded-mcp-instrumentation
+      entity_type: plan
+      section_path: "2"
+      byte_offset: 2093
+cross_doc_links:
+    - target_path: work/design/p35-expanded-mcp-instrumentation.md
+      link_text: work/design/p35-expanded-mcp-instrumentation.md
+      section_path: ""
+    - target_path: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "1.1"
+    - target_path: work/design/doc-intel-enhancement-design.md
+      link_text: work/design/doc-intel-enhancement-design.md
+      section_path: "1.1"
+    - target_path: work/design/transition-log-design.md
+      link_text: work/design/transition-log-design.md
+      section_path: "1.1"
+    - target_path: work/design/p35-expanded-mcp-instrumentation.md
+      link_text: work/design/p35-expanded-mcp-instrumentation.md
+      section_path: "2"
+conventional_roles:
+    - section_path: "1.2"
+      role: decision
+      confidence: high
+    - section_path: "2"
+      role: narrative
+      confidence: high
+    - section_path: "3"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: requirement
+      confidence: high
+    - section_path: "5"
+      role: requirement
+      confidence: high
+    - section_path: "6"
+      role: requirement
+      confidence: high
+    - section_path: "8"
+      role: assumption
+      confidence: high
+    - section_path: "8.2"
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-28T12:06:53.407453Z
+classified: false

@@ -3,10 +3,20 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-04-28T16:55:00Z           |
-| Status | Draft                          |
+| Status | approved |
 | Author | architect                      |
 | Feature | (to be created)                |
 | Spec   | `work/B38-plans-and-batches/B38-spec-p38-f9-full-combined-migration.md` |
+
+---
+
+## Overview
+
+This plan breaks the full combined migration into 8 tasks across 4 phases:
+audit (Tasks 1–2), resolution (Task 3), execution (Tasks 4–5, 7), and
+verification (Tasks 6, 8). The plan is designed to fail safely at every
+stage: the dry-run previews all changes before any file is touched, every
+move is committed atomically, and rollback is a single `git revert`.
 
 ---
 

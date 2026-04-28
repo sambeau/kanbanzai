@@ -3,7 +3,7 @@
 | Field   | Value                                                                    |
 |---------|--------------------------------------------------------------------------|
 | Date    | 2026-04-28T16:53:03Z                                                     |
-| Status  | Draft                                                                    |
+| Status | approved |
 | Author  | spec-author                                                              |
 | Feature | (to be created)                                                          |
 | Design  | `work/design/p37-file-names-and-actions.md` — §7                          |

@@ -182,7 +182,7 @@ The Related Work section must take one of two forms:
 
 ### Step 5: Present for Review
 
-1. Register the document with `doc(action: register, type: "design")`.
+1. Register the document with `doc(action: register, type: "design")`. Design documents can be owned by either a **plan** (P{n}-slug ID, for cross-batch architectural decisions) or a **batch** (B{n}-slug ID, for feature-level design within a batch).
 2. Present the draft to the human reviewer.
 3. Open questions are acceptable in a draft — flag them explicitly.
 4. An approved design must have zero unresolved design-level questions.

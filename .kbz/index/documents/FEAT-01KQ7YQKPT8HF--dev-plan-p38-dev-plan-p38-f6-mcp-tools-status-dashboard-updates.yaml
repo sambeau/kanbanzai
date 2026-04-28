@@ -1,0 +1,165 @@
+document_id: FEAT-01KQ7YQKPT8HF/dev-plan-p38-dev-plan-p38-f6-mcp-tools-status-dashboard-updates
+document_path: work/P38-plans-and-batches/P38-dev-plan-p38-f6-mcp-tools-status-dashboard-updates.md
+content_hash: 87af0e2c32d6b03560ce962a8675a63e1f30d8ddd2cf0bdda5b0286006b11e5d
+indexed_at: 2026-04-28T01:52:51.012121Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P38-F6: MCP Tools and Status Dashboard Updates — Dev Plan'
+      byte_offset: 0
+      byte_count: 12340
+      word_count: 1698
+      content_hash: 87af0e2c32d6b03560ce962a8675a63e1f30d8ddd2cf0bdda5b0286006b11e5d
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 289
+          byte_count: 1182
+          word_count: 155
+          content_hash: 49eb7d6736289ea7c17c4bdc0837af0688da427ba279c6c193b12ade32486179
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1471
+          byte_count: 6288
+          word_count: 790
+          content_hash: d00b81934673e01bd96b29670cd4bca5410c9c6c2ddefd7b45df68a59ea76d51
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Entity Tool — Plan and Batch Type Support'
+              byte_offset: 1490
+              byte_count: 937
+              word_count: 128
+              content_hash: 35b62ce40baed48fd633fcfd1be683501dfd2dbf62b0bee939c3a82b63df3436
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Status Dashboard — Project Overview with Plans and Standalone Batches'
+              byte_offset: 2427
+              byte_count: 637
+              word_count: 79
+              content_hash: ee582363b674405ca99edf4398f46bda3ed3f8fd666027b859541a67561d42a0
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Status Dashboard — Plan Dashboard with Recursive Progress'
+              byte_offset: 3064
+              byte_count: 936
+              word_count: 116
+              content_hash: 4a67449d9b33e5fc1da09d0bd701e063cfa22030f5a2e21738d19e5336f8d200
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Status Dashboard — Batch Dashboard'
+              byte_offset: 4000
+              byte_count: 820
+              word_count: 100
+              content_hash: 2eb4570c897b092272449def6fe51a611a402060cbd81625ff28521f2433aff3
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Decompose, Next, Estimate, Knowledge, and Doc Tool Updates'
+              byte_offset: 4820
+              byte_count: 1114
+              word_count: 134
+              content_hash: 695dae1b1db4c75518812360c483a679608f1b4663157f29447f128045bd7638
+            - path: 1.2.6
+              level: 3
+              title: 'Task 6: Terminology Consistency Sweep'
+              byte_offset: 5934
+              byte_count: 906
+              word_count: 124
+              content_hash: 8da4aa5852e827ee3975056145781ebb69d7bc592b97f04aa28222cdd851c2a2
+            - path: 1.2.7
+              level: 3
+              title: 'Task 7: Integration and Compatibility Verification'
+              byte_offset: 6840
+              byte_count: 919
+              word_count: 106
+              content_hash: 1ccfec2f0e5e2418c834612749cc142712f0f5cbeb314693108334376606cf66
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 7759
+          byte_count: 859
+          word_count: 98
+          content_hash: 08f874377f42376202f19cba78f7bbb231c564d3879b25b39ce0a31de9e4d1d7
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 8618
+          byte_count: 2187
+          word_count: 330
+          content_hash: 2d4903559d55b62ac568d02901effcfba78817944df9f7c4a2689698f9980634
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: ID Type Collision Between Old Plan (Batch) and New Plan Entity'
+              byte_offset: 8638
+              byte_count: 575
+              word_count: 88
+              content_hash: 5141d2e2bae7ae360b4be05005afc5501bb41e75b45c08089a2aa115ac6a6a1e
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: Status Dashboard Response Shape Breakage'
+              byte_offset: 9213
+              byte_count: 494
+              word_count: 71
+              content_hash: d57de4cc66bb98cbf0f6074ba57321a37d733c4f0eceaf7f1317d638afd8cc4c
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Stale Plan/Batch Typing Across Dependent Features'
+              byte_offset: 9707
+              byte_count: 625
+              word_count: 94
+              content_hash: 090c8e48a5b66a256d860479edc3c34be793306d3c2648e780502a297b549520
+            - path: 1.4.4
+              level: 3
+              title: 'Risk: Terminology Sweep Misses Dynamic Strings'
+              byte_offset: 10332
+              byte_count: 473
+              word_count: 74
+              content_hash: d861ba42b1e69181a0de1bb504739eee8dfed24c6e4645a16acd55ba58d7de21
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 10805
+          byte_count: 1535
+          word_count: 292
+          content_hash: a29b1c36aaa3dd338e3f49d3fb61069038e747f14e271c51416338d3acf886d5
+entity_refs:
+    - entity_id: P38-plans-and-batches
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 348
+    - entity_id: P38-spec-p38-f6-mcp-tools-status-dashboard-updates
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 370
+cross_doc_links:
+    - target_path: work/P38-plans-and-batches/P38-spec-p38-f6-mcp-tools-status-dashboard-updates.md
+      link_text: work/P38-plans-and-batches/P38-spec-p38-f6-mcp-tools-status-dashboard-updates.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+    - section_path: 1.4.4
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-28T01:52:51.559428Z
+classified: false

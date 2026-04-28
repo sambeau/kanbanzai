@@ -1,0 +1,121 @@
+document_id: P38-plans-and-batches/report-p38-report-review-f2-f7
+document_path: work/P38-plans-and-batches/P38-report-review-f2-f7.md
+content_hash: 647d309cb280fa4ef66f71a0b4922ac2c06d37cca9caaecd71f695eb60ada7f6
+indexed_at: 2026-04-28T11:01:35.941602Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: P38 F2-F7 — Plans and Batches Implementation'
+      byte_offset: 0
+      byte_count: 13829
+      word_count: 1546
+      content_hash: 647d309cb280fa4ef66f71a0b4922ac2c06d37cca9caaecd71f695eb60ada7f6
+      children:
+        - path: "1.1"
+          level: 2
+          title: Per-Reviewer Summary
+          byte_offset: 250
+          byte_count: 2028
+          word_count: 243
+          content_hash: edbc7b4eb725d9d13eb11e1052fd976da224ba8aedcdc6c444f040c9e4d7dda4
+          children:
+            - path: 1.1.1
+              level: 3
+              title: 'Reviewer: reviewer-conformance'
+              byte_offset: 275
+              byte_count: 891
+              word_count: 115
+              content_hash: 81d881809d31cf8ab0f28c86da48a7f247588b1358b6a05ad2fc74f104f0a9f5
+            - path: 1.1.2
+              level: 3
+              title: 'Reviewer: reviewer-quality'
+              byte_offset: 1166
+              byte_count: 494
+              word_count: 54
+              content_hash: 7167ed1ea09e481314ebc346a969ee1c7215deaa22785f471cb9938f3b3fd34a
+            - path: 1.1.3
+              level: 3
+              title: 'Reviewer: reviewer-testing'
+              byte_offset: 1660
+              byte_count: 618
+              word_count: 71
+              content_hash: 76af9dd941d94d55f5d8b581b858a56c5f4adb867b09e67e45e4c19881cd04e2
+        - path: "1.2"
+          level: 2
+          title: Collated Findings (deduplicated)
+          byte_offset: 2278
+          byte_count: 9673
+          word_count: 1109
+          content_hash: 5f8b78f6f3542bbf78c7c0e07b3a3100b886f9eeea82532b90f2a958144f9b6f
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Blocking
+              byte_offset: 2315
+              byte_count: 2294
+              word_count: 275
+              content_hash: 59f535607b332aeeaae823f402f17727dc5b06679c0863914d1e28a981fa1199
+            - path: 1.2.2
+              level: 3
+              title: Non-Blocking
+              byte_offset: 4609
+              byte_count: 7342
+              word_count: 830
+              content_hash: 9f46218ce5caa1a3408f196eb61e1a0740268a207e76065b8061f8dfa3e69c39
+        - path: "1.3"
+          level: 2
+          title: 'Aggregate Verdict: **rejected**'
+          byte_offset: 11951
+          byte_count: 807
+          word_count: 107
+          content_hash: 8b9ba6ada8e841e3eedb184fa20d380b4c89d726cd4b56dbc2b8c35c0bd6376c
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Remediation Plan
+              byte_offset: 11987
+              byte_count: 407
+              word_count: 51
+              content_hash: ba05f0cad8c75abcd3c805c2d610f25279e0d9c757c84e0ba9f016e4159e6443
+            - path: 1.3.2
+              level: 3
+              title: Follow-up Items (non-blocking, 23 items)
+              byte_offset: 12394
+              byte_count: 364
+              word_count: 52
+              content_hash: bd83d38b331016c5b2e83728339ae312cfe24fe38f8980b5895f0c931ca77d6e
+        - path: "1.4"
+          level: 2
+          title: Review Unit Breakdown
+          byte_offset: 12758
+          byte_count: 1071
+          word_count: 60
+          content_hash: cfa7f1c9deaed32e6f4870d9b736c9aa3352266f05b944ff8a571ceb8861e91f
+entity_refs:
+    - entity_id: P1-test
+      entity_type: plan
+      section_path: 1.2.2
+      byte_offset: 6440
+cross_doc_links:
+    - target_path: .kbz/skills/write-design/SKILL.md
+      link_text: .kbz/skills/write-design/SKILL.md
+      section_path: 1.2.2
+    - target_path: .kbz/skills/**/SKILL.md
+      link_text: .kbz/skills/**/SKILL.md
+      section_path: "1.4"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.4"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.4"
+    - target_path: refs/*.md
+      link_text: refs/*.md
+      section_path: "1.4"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-28T11:01:36.614221Z
+classified: false

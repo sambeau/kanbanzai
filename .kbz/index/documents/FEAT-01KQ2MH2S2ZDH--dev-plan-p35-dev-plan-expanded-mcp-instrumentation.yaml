@@ -1,0 +1,169 @@
+document_id: FEAT-01KQ2MH2S2ZDH/dev-plan-p35-dev-plan-expanded-mcp-instrumentation
+document_path: work/P35-expanded-mcp-instrumentation/P35-dev-plan-expanded-mcp-instrumentation.md
+content_hash: 4e0965846ce0e2a126c20091eb49741fcdade02695633acdff3fbf30cea64c7b
+indexed_at: 2026-04-28T12:10:45.258183Z
+sections:
+    - path: "1"
+      level: 2
+      title: Scope
+      byte_offset: 380
+      byte_count: 578
+      word_count: 60
+      content_hash: 363ba098593a7714b3ee7f3c7e152f919040d5ada04219d496076b4d40da128a
+    - path: "2"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 958
+      byte_count: 4616
+      word_count: 521
+      content_hash: a2ac080d406f3751942c4c89a83208c5d586d04b484c3a8670b26ebb738a0148
+      children:
+        - path: "2.1"
+          level: 3
+          title: 'Task 1: Entry schema — ServerVersion and Extra fields'
+          byte_offset: 977
+          byte_count: 421
+          word_count: 52
+          content_hash: 576d1277c5091b3e90d57cb18433075a2b6c7f0d9997a4e50bbf4ebd6962b49f
+        - path: "2.2"
+          level: 3
+          title: 'Task 2: Version threading through server init'
+          byte_offset: 1398
+          byte_count: 559
+          word_count: 60
+          content_hash: ce60114c6981b7858fdf03550e0cdfcb6c7f666cbc96a21f1283df50a6a4a503
+        - path: "2.3"
+          level: 3
+          title: 'Task 3: Annotation API and Hook.Wrap integration'
+          byte_offset: 1957
+          byte_count: 790
+          word_count: 94
+          content_hash: d243cca004745211e37d08158eda5a24537a323611cdd0094a7c0e4cef6521ed
+        - path: "2.4"
+          level: 3
+          title: 'Task 4: Handler instrumentation'
+          byte_offset: 2747
+          byte_count: 509
+          word_count: 55
+          content_hash: 3f7b18354b3edd34f5e380fb778c8466ecb14dc83c90598d3239e503a960c099
+        - path: "2.5"
+          level: 3
+          title: 'Task 5: Knowledge rejection capture'
+          byte_offset: 3256
+          byte_count: 648
+          word_count: 70
+          content_hash: 104773b34044a4d80dc2eaa6d57a1e498b160f0bc2e71483cf520402011aab3a
+        - path: "2.6"
+          level: 3
+          title: 'Task 6: ComputeMetrics aggregations'
+          byte_offset: 3904
+          byte_count: 898
+          word_count: 92
+          content_hash: 71791f23ead31b54ed693b6ae2959dcb2b4ef5799c668bab598551bcb2a72431
+        - path: "2.7"
+          level: 3
+          title: 'Task 7: End-to-end tests and verification'
+          byte_offset: 4802
+          byte_count: 772
+          word_count: 95
+          content_hash: 70d21b29f0bf2b0ab75f460f82f6e6026d3300d95c39163182f5c5dca3b6d909
+    - path: "3"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 5574
+      byte_count: 439
+      word_count: 92
+      content_hash: 42783b1a52898ac453f69376b69d50d8f2140fb5a5c09224c5a4a8f08f7b55e2
+    - path: "4"
+      level: 2
+      title: Risk Assessment
+      byte_offset: 6013
+      byte_count: 2232
+      word_count: 307
+      content_hash: 99a3de823f02082d663b9a57b48da40b39f854202b9d676d5aba163bc0fa696e
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Risk: Hook.Wrap side-effect inspection breaks existing handlers'
+          byte_offset: 6033
+          byte_count: 477
+          word_count: 68
+          content_hash: 8486026ee7894a4dddf0de310da78a4feebbffb777e24d28264b80bf629cda0f
+        - path: "4.2"
+          level: 3
+          title: 'Risk: StageFeatureLookup.DocType breaks the entityStageLookup implementation'
+          byte_offset: 6510
+          byte_count: 488
+          word_count: 65
+          content_hash: ddc112340c79fe3ddcc72f0cd3b95a645fc352d0c9817eede0128d945eaf522e
+        - path: "4.3"
+          level: 3
+          title: 'Risk: NewServer signature change breaks test setup'
+          byte_offset: 6998
+          byte_count: 487
+          word_count: 68
+          content_hash: 74790ebdd9976e6c916d0e6c3ff28ecf5bdffddf8bb1ee2967698edf6041a264
+        - path: "4.4"
+          level: 3
+          title: 'Risk: Single-pass aggregation constraint conflicts with clean separation'
+          byte_offset: 7485
+          byte_count: 760
+          word_count: 103
+          content_hash: 841195cb3f195eb3a2cbaa75009a0adaa62ce7129d4745f7c778dead502c4eb2
+    - path: "5"
+      level: 2
+      title: Verification Approach
+      byte_offset: 8245
+      byte_count: 1625
+      word_count: 266
+      content_hash: 03961cbf9633c1031d5da73764606c201cec8350a147ca34749c5d712acd4bfa
+entity_refs:
+    - entity_id: FEAT-01KQ2MH2S2ZDH
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 521
+    - entity_id: P35-expanded-mcp-instrumentation
+      entity_type: plan
+      section_path: ""
+      byte_offset: 297
+    - entity_id: P35-spec-expanded-mcp-instrumentation
+      entity_type: plan
+      section_path: ""
+      byte_offset: 330
+    - entity_id: P35-expanded-mcp-instrumentation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 445
+    - entity_id: P35-spec-expanded-mcp-instrumentation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 478
+cross_doc_links:
+    - target_path: work/P35-expanded-mcp-instrumentation/P35-spec-expanded-mcp-instrumentation.md
+      link_text: work/P35-expanded-mcp-instrumentation/P35-spec-expanded-mcp-instrumentation.md
+      section_path: ""
+    - target_path: work/P35-expanded-mcp-instrumentation/P35-spec-expanded-mcp-instrumentation.md
+      link_text: work/P35-expanded-mcp-instrumentation/P35-spec-expanded-mcp-instrumentation.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: risk
+      confidence: high
+    - section_path: "4.1"
+      role: risk
+      confidence: high
+    - section_path: "4.2"
+      role: risk
+      confidence: high
+    - section_path: "4.3"
+      role: risk
+      confidence: high
+    - section_path: "4.4"
+      role: constraint
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-28T12:10:46.068862Z
+classified: false

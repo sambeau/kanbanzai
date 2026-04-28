@@ -1,0 +1,212 @@
+document_id: PROJECT/dev-plan-p38-dev-plan-p38-f7-documentation-skills-updates
+document_path: work/P38-plans-and-batches/P38-dev-plan-p38-f7-documentation-skills-updates.md
+content_hash: 511960d2d3ebf5d97066239a9c276a62963ce3ace8fece430b469953a47fd9b6
+indexed_at: 2026-04-28T01:50:36.694898Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P38-F7: Documentation and Skills Updates — Dev Plan'
+      byte_offset: 0
+      byte_count: 9981
+      word_count: 1406
+      content_hash: 511960d2d3ebf5d97066239a9c276a62963ce3ace8fece430b469953a47fd9b6
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 283
+          byte_count: 611
+          word_count: 59
+          content_hash: ab7b43d99a3d83c2edeff4bff47c879b22f1420e9e29ad036e80b38b7a35a33a
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 894
+          byte_count: 4937
+          word_count: 653
+          content_hash: e004a043fc5977307128b0fd4e68ba52cc1f1ccf467c3e020ff038a7792fad03
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Update Role YAML Files'
+              byte_offset: 913
+              byte_count: 664
+              word_count: 86
+              content_hash: 5bb86d719696df156a6d4ed7bf30b52b7bd681c1afccb8d48f6820f3b57347e8
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Update Skill SKILL.md Files'
+              byte_offset: 1577
+              byte_count: 713
+              word_count: 85
+              content_hash: 501c909fa8b5927d9726529ea81b8c87404a0b0cf9c2c5ca19fe3fb0eb1c1bc8
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Update Stage Bindings'
+              byte_offset: 2290
+              byte_count: 706
+              word_count: 91
+              content_hash: 76c9f436b386a36abe3a2a112a4090d2ddcc2f1b19fdb5626d34dc1f28da45ad
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Update AGENTS.md'
+              byte_offset: 2996
+              byte_count: 759
+              word_count: 109
+              content_hash: 38e322f0c3ede22759abb59b09bd624a0090eaa13ab426078028319d9a12964d
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Update copilot-instructions.md'
+              byte_offset: 3755
+              byte_count: 748
+              word_count: 95
+              content_hash: 2c0e52e10acce8b0210655592c94d06cc297e9e950a390b2d590670cda35b1cf
+            - path: 1.2.6
+              level: 3
+              title: 'Task 6: Update Reference Files'
+              byte_offset: 4503
+              byte_count: 634
+              word_count: 74
+              content_hash: d890592269dbe6adc0ae38eecaf1b7af218667d44ed745ebed6703884d9b4b04
+            - path: 1.2.7
+              level: 3
+              title: 'Task 7: Grep Audit for Consistency'
+              byte_offset: 5137
+              byte_count: 694
+              word_count: 110
+              content_hash: ebf2a83535ae39fcd2bfd61e3883b78dc2cca4907497dc184a9655641016747c
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 5831
+          byte_count: 656
+          word_count: 108
+          content_hash: b8c7c15d3caf0e46de933b231ec6537d62cca56bb2417421043838c0fa819e21
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 6487
+          byte_count: 1287
+          word_count: 200
+          content_hash: 00a01dc53b4fb51d9c09c5d974c9e97160f6e5b541233b92ed171261ecd1732f
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: Inconsistent Terminology Across Parallel Tasks'
+              byte_offset: 6507
+              byte_count: 535
+              word_count: 82
+              content_hash: c2b7ba5d498d967cb101bf81f732385fee952568df35f00e6cee395a0ab2766b
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: File Conflicts Between Parallel Tasks'
+              byte_offset: 7042
+              byte_count: 321
+              word_count: 49
+              content_hash: 514d20fb2474ea5563bafdf6f40f6aea3a6234d8f405f8dc2f088dbbe0b74e5b
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Missing "Plan" References in Roles/Skills'
+              byte_offset: 7363
+              byte_count: 411
+              word_count: 66
+              content_hash: 9c34cb37735a11698aacb73303076544b257e064d18f5adc3085c4f75f680022
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 7774
+          byte_count: 1016
+          word_count: 157
+          content_hash: ba21c517fd8d7e709850cea83d86aead7820bbb39ea353121f80a5a07ebc3ad9
+        - path: "1.6"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 8790
+          byte_count: 1191
+          word_count: 198
+          content_hash: e0085c2c682ea03337a8efc7b1995eeea1c6062241052aed374b6da5f15f2327
+entity_refs:
+    - entity_id: FEAT-01KQ7YQKWTBRP
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 432
+    - entity_id: P38-plans-and-batches
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 360
+    - entity_id: P38-spec-p38-f7-documentation-skills-updates
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 382
+cross_doc_links:
+    - target_path: work/P38-plans-and-batches/P38-spec-p38-f7-documentation-skills-updates.md
+      link_text: work/P38-plans-and-batches/P38-spec-p38-f7-documentation-skills-updates.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: "1.1"
+    - target_path: .kbz/skills/**/SKILL.md
+      link_text: .kbz/skills/**/SKILL.md
+      section_path: 1.2.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.4
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.2.5
+    - target_path: refs/*.md
+      link_text: refs/*.md
+      section_path: 1.2.6
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: 1.2.6
+    - target_path: refs/sub-agents.md
+      link_text: refs/sub-agents.md
+      section_path: 1.2.6
+    - target_path: refs/testing.md
+      link_text: refs/testing.md
+      section_path: 1.2.6
+    - target_path: refs/go-style.md
+      link_text: refs/go-style.md
+      section_path: 1.2.6
+    - target_path: refs/knowledge-graph.md
+      link_text: refs/knowledge-graph.md
+      section_path: 1.2.6
+    - target_path: .kbz/skills/**/SKILL.md
+      link_text: .kbz/skills/**/SKILL.md
+      section_path: "1.3"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.3"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.3"
+    - target_path: refs/*.md
+      link_text: refs/*.md
+      section_path: "1.3"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+access_count: 11
+last_accessed_at: 2026-04-28T10:36:17.358552Z
+section_access:
+    "1.1":
+        access_count: 4
+        last_accessed_at: 2026-04-28T10:36:17.358552Z
+classified: false
