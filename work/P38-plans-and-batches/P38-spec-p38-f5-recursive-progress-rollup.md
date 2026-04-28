@@ -3,7 +3,7 @@
 | Field   | Value                                                                    |
 |---------|--------------------------------------------------------------------------|
 | Date    | 2026-04-28T01:19:36Z                                                     |
-| Status  | draft                                                                    |
+| Status | approved |
 | Author  | spec-author                                                              |
 | Feature | FEAT-01KQ7YQKMCM6T                                                       |
 | Design  | `work/design/meta-planning-plans-and-batches.md` — §5                    |
@@ -149,48 +149,48 @@ recursively across child batches and child plans.
 
 ## Acceptance Criteria
 
-- **AC-001 (REQ-001):** `ComputeBatchRollup` for a batch with two features, each having
+**AC-001.** `ComputeBatchRollup` for a batch with two features, each having
   one task estimated at 3 points, one task done: returns `TaskTotal=6`, `Progress=3`,
   `FeatureCount=2`.
 
-- **AC-002 (REQ-001):** `ComputeBatchRollup` excludes not-planned and duplicate tasks
+**AC-002.** `ComputeBatchRollup` excludes not-planned and duplicate tasks
   from all counts. A batch with one active task (3 points) and one not-planned task (5
   points) returns `TaskTotal=3`, `ExcludedTaskCount=1`.
 
-- **AC-003 (REQ-003):** A standalone batch produces identical results to what
+**AC-003.** A standalone batch produces identical results to what
   `ComputePlanRollup` would have produced before the rename.
 
-- **AC-004 (REQ-005):** Plan `P1` with child batch `B1` (total 8, progress 5) and child
+**AC-004.** Plan `P1` with child batch `B1` (total 8, progress 5) and child
   batch `B2` (total 5, progress 0): `ComputePlanRollup(P1)` returns `Total=13`,
   `Progress=5`.
 
-- **AC-005 (REQ-006):** Plan `P1` with child plan `P2` (which has child batch `B3` with
+**AC-005.** Plan `P1` with child plan `P2` (which has child batch `B3` with
   total 3, progress 3): `ComputePlanRollup(P1)` returns `Total=3`, `Progress=3`.
 
-- **AC-006 (REQ-007):** Plan `P1` with child batch `B1` (total 5, progress 5) and child
+**AC-006.** Plan `P1` with child batch `B1` (total 5, progress 5) and child
   plan `P2` (which has child batch `B2` with total 3, progress 0):
   `ComputePlanRollup(P1)` returns `Total=8`, `Progress=5`.
 
-- **AC-007 (REQ-008):** Three-level tree: P1 → P2 → B1 (total 3, progress 3).
+**AC-007.** Three-level tree: P1 → P2 → B1 (total 3, progress 3).
   `ComputePlanRollup(P1)` returns `Total=3`, `Progress=3`.
 
-- **AC-008 (REQ-009):** Plan with no children returns zero-value rollup (all counts and
+**AC-008.** Plan with no children returns zero-value rollup (all counts and
   totals are zero).
 
-- **AC-009 (REQ-010):** In the tree P1 → [B1(total 3), B2(total 3)], P2 → [B3(total 3)],
+**AC-009.** In the tree P1 → [B1(total 3), B2(total 3)], P2 → [B3(total 3)],
   `ComputePlanRollup(P1)` returns `Total=6` (B1 + B2, not B3 which belongs to P2).
 
-- **AC-010 (REQ-011):** `estimation.ComputeBatchRollup` and
+**AC-010.** `estimation.ComputeBatchRollup` and
   `estimation.ComputePlanRollup` are both accessible methods on `EntityService`.
 
-- **AC-011 (REQ-012):** `estimate(action: "query", entity_id: "B1-test")` uses
+**AC-011.** `estimate(action: "query", entity_id: "B1-test")` uses
   `ComputeBatchRollup`. `estimate(action: "query", entity_id: "P1-test")` uses
   `ComputePlanRollup`.
 
-- **AC-012 (REQ-013):** `status(id: "B1-test")` renders batch progress correctly.
+**AC-012.** `status(id: "B1-test")` renders batch progress correctly.
   `status(id: "P1-test")` renders plan progress with recursive aggregation.
 
-- **AC-013 (REQ-014):** `ComputeFeatureRollup` behaviour is unchanged by this feature.
+**AC-013.** `ComputeFeatureRollup` behaviour is unchanged by this feature.
 
 ---
 

@@ -3,7 +3,7 @@
 | Field   | Value                     |
 |---------|---------------------------|
 | Date    | 2026-04-27T12:34:44Z      |
-| Status  | Draft                     |
+| Status | approved |
 | Author  | sambeau                   |
 | Feature | FEAT-01KQ7JDT341E8        |
 | Plan    | P37-file-names-and-actions |

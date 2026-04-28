@@ -157,36 +157,36 @@ documented alongside the renamed "batch" entity, with clear guidance on when to 
 
 ## Acceptance Criteria
 
-- **AC-001 (REQ-001):** Every `.kbz/roles/*.yaml` file has been reviewed. "Plan" as
+**AC-001.** Every `.kbz/roles/*.yaml` file has been reviewed. "Plan" as
   work container is replaced with "batch." The term "plan" appears only in the context
   of the strategic planning entity.
 
-- **AC-002 (REQ-005):** Every `.kbz/skills/**/SKILL.md` file has been reviewed and
+**AC-002.** Every `.kbz/skills/**/SKILL.md` file has been reviewed and
   updated consistently.
 
-- **AC-003 (REQ-006):** `write-design/SKILL.md` documents that design docs can live at
+**AC-003.** `write-design/SKILL.md` documents that design docs can live at
   either the plan level or batch level.
 
-- **AC-004 (REQ-011):** `.kbz/stage-bindings.yaml` references correct entity types for
+**AC-004.** `.kbz/stage-bindings.yaml` references correct entity types for
   document ownership and gate prerequisites.
 
-- **AC-005 (REQ-013):** `AGENTS.md` entity hierarchy section shows:
+**AC-005.** `AGENTS.md` entity hierarchy section shows:
   Plan → Batch → Feature → Task (with descriptions of each).
 
-- **AC-006 (REQ-014):** `AGENTS.md` includes guidance distinguishing when to use a plan
+**AC-006.** `AGENTS.md` includes guidance distinguishing when to use a plan
   vs a batch.
 
-- **AC-007 (REQ-015):** `.github/copilot-instructions.md` skills and roles tables use
+**AC-007.** `.github/copilot-instructions.md` skills and roles tables use
   correct plan/batch terminology.
 
-- **AC-008 (REQ-017–REQ-021):** All reference files in `refs/` use consistent
+**AC-008.** All reference files in `refs/` use consistent
   plan/batch terminology.
 
-- **AC-009 (REQ-NF-002):** A grep for `\bplan\b` (case-insensitive) in the updated files
+**AC-009.** A grep for `\bplan\b` (case-insensitive) in the updated files
   returns only references to the strategic planning entity, not the work-grouping
   entity.
 
-- **AC-010 (REQ-NF-003):** No single file uses both "plan" and "batch" to refer to the
+**AC-010.** No single file uses both "plan" and "batch" to refer to the
   same entity type.
 
 ---

@@ -1,0 +1,50 @@
+document_id: FEAT-01KQ7JDT11MH6/report-p37-report-feat-kbz-move
+document_path: work/P37-file-names-and-actions/P37-report-feat-kbz-move.md
+content_hash: b814ffaef0af4a0bf5c011217c9698061d3379044321d60515aba77c61fa69ab
+indexed_at: 2026-04-28T00:28:15.967566Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Feature Review: P37-F3 — kbz move command (FEAT-01KQ7JDT11MH6)'
+      byte_offset: 0
+      byte_count: 1292
+      word_count: 203
+      content_hash: b814ffaef0af4a0bf5c011217c9698061d3379044321d60515aba77c61fa69ab
+      children:
+        - path: "1.1"
+          level: 2
+          title: Review Summary
+          byte_offset: 68
+          byte_count: 169
+          word_count: 21
+          content_hash: d384371a15ba3a14de14f3e3ad6f519fde9cab06603e924b67204f8db1a418db
+        - path: "1.2"
+          level: 2
+          title: Review Findings
+          byte_offset: 237
+          byte_count: 884
+          word_count: 149
+          content_hash: d9d8cce05c4df7a273a6faf923f4d48b4b527ae4fe579ae86a162989177df8bb
+        - path: "1.3"
+          level: 2
+          title: Verification
+          byte_offset: 1121
+          byte_count: 171
+          word_count: 24
+          content_hash: 337cb08cc0eb81b30711f202694c6d3da0b110248c20307560f831a9e8ce9ecf
+entity_refs:
+    - entity_id: FEAT-01KQ7JDT11MH6
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 47
+    - entity_id: FEAT-01KQ7JDT11MH6
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 1215
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-28T00:28:16.482218Z
+classified: false

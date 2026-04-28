@@ -1,0 +1,158 @@
+document_id: FEAT-01KQ7YQKBDNAP/spec-p38-spec-p38-f2-plan-entity-data-model-lifecycle
+document_path: work/P38-plans-and-batches/P38-spec-p38-f2-plan-entity-data-model-lifecycle.md
+content_hash: 1677bc65c61872e8e2951c64145752a5218c40a23f676d84eb4417afd3fee34a
+indexed_at: 2026-04-28T01:40:18.217412Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P38-F2: Plan Entity Data Model and Lifecycle — Specification'
+      byte_offset: 0
+      byte_count: 15518
+      word_count: 2183
+      content_hash: 1677bc65c61872e8e2951c64145752a5218c40a23f676d84eb4417afd3fee34a
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 620
+          byte_count: 862
+          word_count: 115
+          content_hash: 837af1cce4ebf6bcc935b208a69955e92b0e8def0265fdeaa4e2d649c5cb6d2c
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 1482
+          byte_count: 1162
+          word_count: 172
+          content_hash: b58ae64524ca4a4f20bbfd61f2b1a5bdd76f6a8279cef66bc7ebfb0fe66cdeab
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2644
+          byte_count: 4760
+          word_count: 689
+          content_hash: fc81329cf660e8bd1e83ef383e4110f39679dcdd2087bf9993552dc64e97dd2e
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Data Model
+              byte_offset: 2672
+              byte_count: 1359
+              word_count: 194
+              content_hash: 88cc9e8b52746d9fed84cb00741ffde3e561ff3d46db6e9c37a0dc6c6ae3f42a
+            - path: 1.3.2
+              level: 3
+              title: Lifecycle
+              byte_offset: 4031
+              byte_count: 1250
+              word_count: 171
+              content_hash: 6be63dee0690a8ac26de6da2b175e7bf4b7fed705342d698ea548871f75dbf59
+            - path: 1.3.3
+              level: 3
+              title: Nesting and Cyclic Dependency
+              byte_offset: 5281
+              byte_count: 546
+              word_count: 95
+              content_hash: 6aae12cb5769ff4bca1cb3b195b47e3a5d6b098eeccb815311366be4863df607
+            - path: 1.3.4
+              level: 3
+              title: CRUD Operations
+              byte_offset: 5827
+              byte_count: 1067
+              word_count: 152
+              content_hash: 40b29d6c74370ad5e94bbe63dc0ed274fdd8ab9e2344bd681fd9a4cddfbfe4a5
+            - path: 1.3.5
+              level: 3
+              title: Document Expectations (Guidance, Not Gates)
+              byte_offset: 6894
+              byte_count: 510
+              word_count: 74
+              content_hash: 307e3ded56dc090467edc02ec2a5a2ddacb4b1ac3427f70e98c65a198263e412
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 7404
+          byte_count: 829
+          word_count: 112
+          content_hash: ac48792b8d63b93b030161ba6c3398063fcba9ae40ad24ad7d8690473c5de8de
+        - path: "1.5"
+          level: 2
+          title: Constraints
+          byte_offset: 8233
+          byte_count: 822
+          word_count: 122
+          content_hash: f2776eb2497d2257db2d99a84ed02757740ad39f968dd0145663b7e19abe38da
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 9055
+          byte_count: 3328
+          word_count: 444
+          content_hash: 58c79dd3daf356a42cd51dcb8932ea6d87fb4f5f521570adf507675251f19db7
+        - path: "1.7"
+          level: 2
+          title: Verification Plan
+          byte_offset: 12383
+          byte_count: 1979
+          word_count: 329
+          content_hash: b82e55b5b60d5de7f05df7b00c5f9003e5f80cccab4ada648404859353e7d42b
+        - path: "1.8"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 14362
+          byte_count: 1156
+          word_count: 155
+          content_hash: a275cdadb4e5c2d038dc3e7c66752ba482dd57a2be0f3e62303a77845dbe45b4
+entity_refs:
+    - entity_id: FEAT-01KQ7YQKBDNAP
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 448
+    - entity_id: P1-social-platform
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 3822
+    - entity_id: P1-parent
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 9309
+    - entity_id: P1-nonexistent
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 10931
+    - entity_id: P1-my-plan
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 11669
+cross_doc_links:
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1"
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.8"
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-28T01:40:19.088466Z
+classified: false

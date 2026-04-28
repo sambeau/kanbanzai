@@ -3,7 +3,7 @@
 | Field   | Value                                                                    |
 |---------|--------------------------------------------------------------------------|
 | Date    | 2026-04-28T01:19:36Z                                                     |
-| Status  | draft                                                                    |
+| Status | approved |
 | Author  | spec-author                                                              |
 | Feature | FEAT-01KQ7YQKPT8HF                                                       |
 | Design  | `work/design/meta-planning-plans-and-batches.md` — §2, §3, §4, §5       |
@@ -176,64 +176,64 @@ and batch structure in status dashboards.
 
 ## Acceptance Criteria
 
-- **AC-001 (REQ-001):** `entity(action: "create", type: "plan", name: "My Plan", slug:
+**AC-001.** `entity(action: "create", type: "plan", name: "My Plan", slug:
   "my-plan")` returns a plan ID and status `idea`.
 
-- **AC-002 (REQ-002):** `entity(action: "create", type: "batch", name: "My Batch", slug:
+**AC-002.** `entity(action: "create", type: "batch", name: "My Batch", slug:
   "my-batch")` creates a batch. `entity(action: "create", type: "plan", name: "Old",
   slug: "old")` also creates a batch (deprecated synonym).
 
-- **AC-003 (REQ-003):** Plan create responds with `{"id": "P{n}-my-plan", "status":
+**AC-003.** Plan create responds with `{"id": "P{n}-my-plan", "status":
   "idea", ...}`.
 
-- **AC-004 (REQ-004):** `entity(action: "transition", id: "P1-...", status: "shaping")`
+**AC-004.** `entity(action: "transition", id: "P1-...", status: "shaping")`
   succeeds. `entity(action: "transition", id: "P1-...", status: "done")` from `idea`
   fails with a descriptive error.
 
-- **AC-005 (REQ-005, REQ-006):** `entity(action: "list", type: "plan")` returns plans.
+**AC-005.** `entity(action: "list", type: "plan")` returns plans.
   `entity(action: "list", type: "plan", parent: "P1")` returns only P1's child plans.
   `entity(action: "list", type: "batch", parent: "P1")` returns P1's child batches.
 
-- **AC-006 (REQ-007):** Entity responses for batch operations use "batch" in all display
+**AC-006.** Entity responses for batch operations use "batch" in all display
   fields. Commit messages say "create batch" not "create plan".
 
-- **AC-007 (REQ-008):** `status` (no ID) renders top-level plans and standalone batches
+**AC-007.** `status` (no ID) renders top-level plans and standalone batches
   with summary counts.
 
-- **AC-008 (REQ-009):** `status(id: "P1-platform")` renders child plans, child batches,
+**AC-008.** `status(id: "P1-platform")` renders child plans, child batches,
   recursive progress percentage, and document references.
 
-- **AC-009 (REQ-010):** `status(id: "B24-auth")` renders features, task counts, document
+**AC-009.** `status(id: "B24-auth")` renders features, task counts, document
   gaps, and attention items — equivalent to pre-P38 plan dashboard.
 
-- **AC-010 (REQ-011):** Feature display IDs in status output use `B{n}-F{n}` format.
+**AC-010.** Feature display IDs in status output use `B{n}-F{n}` format.
 
-- **AC-011 (REQ-012):** Plan status dashboard shows recursive progress from
+**AC-011.** Plan status dashboard shows recursive progress from
   `ComputePlanRollup`. Batch status shows progress from `ComputeBatchRollup`.
 
-- **AC-012 (REQ-013):** Plan dashboard includes a child-entity summary string like
+**AC-012.** Plan dashboard includes a child-entity summary string like
   "3 batches, 2 plans — 65% complete".
 
-- **AC-013 (REQ-014):** `decompose(action: "propose", feature_id: "<FEAT-id>")` where
+**AC-013.** `decompose(action: "propose", feature_id: "<FEAT-id>")` where
   the feature's parent is a batch succeeds and produces tasks.
 
-- **AC-014 (REQ-015):** `next(id: "<TASK-id>")` for a task under a batch-owned feature
+**AC-014.** `next(id: "<TASK-id>")` for a task under a batch-owned feature
   uses "batch" terminology in the context packet.
 
-- **AC-015 (REQ-016):** Estimate query dispatches correctly per entity type.
+**AC-015.** Estimate query dispatches correctly per entity type.
 
-- **AC-016 (REQ-017):** Knowledge entries scoped to a batch ID are queryable.
+**AC-016.** Knowledge entries scoped to a batch ID are queryable.
 
-- **AC-017 (REQ-018):** `doc(action: "register", owner: "B24-auth", ...)` registers a
+**AC-017.** `doc(action: "register", owner: "B24-auth", ...)` registers a
   document under a batch.
 
-- **AC-018 (REQ-019):** A project-wide grep for "plan" in MCP tool response strings
+**AC-018.** A project-wide grep for "plan" in MCP tool response strings
   returns zero false references to the batch entity.
 
-- **AC-019 (REQ-020):** Plan auto-advance side effects use the correct side effect type.
+**AC-019.** Plan auto-advance side effects use the correct side effect type.
   Batch auto-advance uses `SideEffectBatchAutoAdvanced`.
 
-- **AC-020 (REQ-NF-002):** An existing MCP client calling `status(id: "<batch-id>")`
+**AC-020.** An existing MCP client calling `status(id: "<batch-id>")`
   receives a response with existing fields at their expected paths.
 
 ---

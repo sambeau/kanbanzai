@@ -3,7 +3,7 @@
 | Field   | Value                                                                    |
 |---------|--------------------------------------------------------------------------|
 | Date    | 2026-04-28T01:19:36Z                                                     |
-| Status  | draft                                                                    |
+| Status | approved |
 | Author  | spec-author                                                              |
 | Feature | FEAT-01KQ7YQKEEHFY                                                       |
 | Design  | `work/design/meta-planning-plans-and-batches.md` — §3, D4               |
@@ -178,58 +178,58 @@ function.
 
 ## Acceptance Criteria
 
-- **AC-001 (REQ-001, REQ-002):** The `Batch` struct and `BatchStatus` type/constants
+**AC-001.** The `Batch` struct and `BatchStatus` type/constants
   exist in `internal/model/entities.go`. A project-wide search for `model.Plan` (the old
   struct name) returns zero non-deprecated results.
 
-- **AC-002 (REQ-003):** The `Batch` struct has all fields currently on the `Plan` struct,
+**AC-002.** The `Batch` struct has all fields currently on the `Plan` struct,
   plus `parent`. A batch can be serialised to YAML and deserialised back without data
   loss.
 
-- **AC-003 (REQ-004):** Transitioning a batch `proposed → designing → active → reviewing
+**AC-003.** Transitioning a batch `proposed → designing → active → reviewing
   → done` succeeds. The shortcut `proposed → active` succeeds. Transitioning
   `active → cancelled` succeeds. All gates and overrides function as before.
 
-- **AC-004 (REQ-005):** Creating a batch with slug `auth-system` produces an ID matching
+**AC-004.** Creating a batch with slug `auth-system` produces an ID matching
   `B{n}-auth-system` where `n` is the next number for the `B` prefix.
 
-- **AC-005 (REQ-006):** After creating batch `B1-foo` and plan `P1-bar`, creating another
+**AC-005.** After creating batch `B1-foo` and plan `P1-bar`, creating another
   batch produces `B2-{slug}` (does NOT collide with plan numbering).
 
-- **AC-006 (REQ-007):** A feature created under batch `B24-auth-system` has a display ID
+**AC-006.** A feature created under batch `B24-auth-system` has a display ID
   of `B24-F{n}`, not `P24-F{n}`.
 
-- **AC-007 (REQ-008):** `entity(action: "create", type: "plan", name: "Test", slug:
+**AC-007.** `entity(action: "create", type: "plan", name: "Test", slug:
   "test")` creates a batch entity successfully. The response uses "batch" terminology.
 
-- **AC-008 (REQ-009):** Given a batch stored as `B5-my-batch`, calling
+**AC-008.** Given a batch stored as `B5-my-batch`, calling
   `entity(action: "get", id: "P5-my-batch")` returns the batch. Calling
   `entity(action: "transition", id: "P5-my-batch", status: "active")` transitions it.
 
-- **AC-009 (REQ-010):** After resolving `P5-my-batch` → `B5-my-batch`, the batch record's
+**AC-009.** After resolving `P5-my-batch` → `B5-my-batch`, the batch record's
   stored ID remains `B5-my-batch`. The legacy format is not persisted.
 
-- **AC-010 (REQ-011):** When `P{n}` resolution occurs, a log line at INFO level is
+**AC-010.** When `P{n}` resolution occurs, a log line at INFO level is
   emitted containing the legacy reference and the resolved batch ID.
 
-- **AC-011 (REQ-012):** Creating a feature with `parent: "B5-my-batch"` succeeds.
+**AC-011.** Creating a feature with `parent: "B5-my-batch"` succeeds.
   Creating a feature with `parent: "P5-my-batch"` also succeeds and stores
   `B5-my-batch` as the canonical parent.
 
-- **AC-012 (REQ-013):** All service method names use "Batch" terminology. Calling
+**AC-012.** All service method names use "Batch" terminology. Calling
   `CreateBatch`, `GetBatch`, `UpdateBatchStatus`, `ListBatches` compiles and functions.
 
-- **AC-013 (REQ-014):** `entity(action: "get", type: "batch", id: "B1-test")` returns the
+**AC-013.** `entity(action: "get", type: "batch", id: "B1-test")` returns the
   batch. `entity(action: "list", type: "batch")` returns all batches.
 
-- **AC-014 (REQ-015):** The status dashboard for a batch renders with "Batch" heading
+**AC-014.** The status dashboard for a batch renders with "Batch" heading
   labels, not "Plan".
 
-- **AC-015 (REQ-016):** `kbzschema.Batch` is an exported type identical to the previous
+**AC-015.** `kbzschema.Batch` is an exported type identical to the previous
   `kbzschema.Plan`. `kbzschema.Plan` is an alias for `kbzschema.Batch` with a `Deprecated`
   comment.
 
-- **AC-016 (REQ-NF-001):** The project compiles without errors. All tests that referenced
+**AC-016.** The project compiles without errors. All tests that referenced
   `Plan` are updated to reference `Batch`.
 
 ---

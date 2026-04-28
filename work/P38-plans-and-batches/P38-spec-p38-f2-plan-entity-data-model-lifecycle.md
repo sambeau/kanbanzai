@@ -193,67 +193,67 @@ fields for recursive nesting (`parent`, `order`) and inter-plan dependencies
 
 ## Acceptance Criteria
 
-- **AC-001 (REQ-001):** The new `Plan` struct exists in `internal/model/entities.go` with
+**AC-001.** The new `Plan` struct exists in `internal/model/entities.go` with
   all fields enumerated in REQ-001. The struct is YAML-serialisable.
 
-- **AC-002 (REQ-002, REQ-004):** A plan can be created with `parent: "P1-parent"` and
+**AC-002.** A plan can be created with `parent: "P1-parent"` and
   `order: 3`. Both fields are optional. A plan created without them has `parent: ""` and
   `order: 0`.
 
-- **AC-003 (REQ-005):** The plan struct does NOT have a `next_feature_seq` field.
+**AC-003.** The plan struct does NOT have a `next_feature_seq` field.
   Accessing that conceptual field on a plan entity produces a zero value or compile error.
 
-- **AC-004 (REQ-006):** Creating a plan with slug `social-platform` produces an ID
+**AC-004.** Creating a plan with slug `social-platform` produces an ID
   matching the pattern `P{prefix}{n}-social-platform` where the number is the next in
   sequence for the plan prefix.
 
-- **AC-005 (REQ-007):** After creating a plan, a YAML file exists at
+**AC-005.** After creating a plan, a YAML file exists at
   `.kbz/state/plans/{planID}.yaml` containing all serialised fields.
 
-- **AC-006 (REQ-008, REQ-009):** A newly created plan has status `idea`.
+**AC-006.** A newly created plan has status `idea`.
   `PlanStatusIdea`, `PlanStatusShaping`, `PlanStatusReady`, `PlanStatusActive`,
   `PlanStatusDone`, `PlanStatusSuperseded`, and `PlanStatusCancelled` are all defined as
   distinct constants.
 
-- **AC-007 (REQ-010):** Transitioning `idea → shaping` succeeds. Transitioning
+**AC-007.** Transitioning `idea → shaping` succeeds. Transitioning
   `shaping → ready` succeeds. Transitioning `shaping → idea` (backward reshape)
   succeeds. Transitioning `ready → active` succeeds. Transitioning `active → done`
   succeeds. Transitioning `active → shaping` (backward scope change) succeeds.
 
-- **AC-008 (REQ-011):** Transitioning from `idea`, `shaping`, `ready`, `active`, or
+**AC-008.** Transitioning from `idea`, `shaping`, `ready`, `active`, or
   `done` to `superseded` succeeds. Same for `cancelled`.
 
-- **AC-009 (REQ-012):** Transitioning `idea → done` fails. Transitioning
+**AC-009.** Transitioning `idea → done` fails. Transitioning
   `done → shaping` fails. Transitioning `superseded → idea` fails. Each failure returns a
   descriptive error.
 
-- **AC-010 (REQ-014):** Creating a plan with `parent: "P1-nonexistent"` fails with a
+**AC-010.** Creating a plan with `parent: "P1-nonexistent"` fails with a
   descriptive error that the parent plan does not exist.
 
-- **AC-011 (REQ-015):** Given plans P1 (parent of P2) and P2 (parent of P3), updating
+**AC-011.** Given plans P1 (parent of P2) and P2 (parent of P3), updating
   P1's parent to P3 fails with a cycle detection error. Direct self-reference (`parent`
   set to own ID) also fails.
 
-- **AC-012 (REQ-016):** Creating a plan tree of depth 5 succeeds without depth-limit
+**AC-012.** Creating a plan tree of depth 5 succeeds without depth-limit
   errors. All plans are retrievable and maintain correct parent relationships.
 
-- **AC-013 (REQ-017):** Calling `entity(action: "create", type: "plan", name: "My Plan",
+**AC-013.** Calling `entity(action: "create", type: "plan", name: "My Plan",
   slug: "my-plan")` via the MCP entity tool creates a plan with status `idea` and returns
   the plan ID and full details.
 
-- **AC-014 (REQ-018, REQ-020):** Calling `entity(action: "get", id: "P1-my-plan")`
+**AC-014.** Calling `entity(action: "get", id: "P1-my-plan")`
   returns the plan with all fields. Calling `entity(action: "transition", id:
   "P1-my-plan", status: "shaping")` advances the plan.
 
-- **AC-015 (REQ-021):** Calling `entity(action: "list", type: "plan")` returns all
+**AC-015.** Calling `entity(action: "list", type: "plan")` returns all
   top-level plans. Calling with a parent filter returns only direct children of that
   parent.
 
-- **AC-016 (REQ-NF-001):** After introducing the new plan struct, existing batch (current
+**AC-016.** After introducing the new plan struct, existing batch (current
   plan) CRUD operations continue to work: creating a feature under a batch, transitioning
   batch status, etc.
 
-- **AC-017 (REQ-NF-003):** An invalid plan transition (e.g. `done → shaping`) does not
+**AC-017.** An invalid plan transition (e.g. `done → shaping`) does not
   modify the plan's state on disk. The status remains unchanged after the failed attempt.
 
 ---

@@ -141,49 +141,49 @@ batch's parent plan, enabling design inheritance across the plan/batch hierarchy
 
 ## Acceptance Criteria
 
-- **AC-001 (REQ-001):** Creating a feature under batch `B24-auth-system` produces a display
+**AC-001.** Creating a feature under batch `B24-auth-system` produces a display
   ID of `B24-F1` (first feature). Creating a second feature under the same batch produces
   `B24-F2`.
 
-- **AC-002 (REQ-002):** After creating feature `B24-F1`, the batch's `next_feature_seq`
+**AC-002.** After creating feature `B24-F1`, the batch's `next_feature_seq`
   increments to 2. Creating the next feature produces `B24-F2`.
 
-- **AC-003 (REQ-003):** `FormatFullDisplay` for a feature with parent batch `B24-auth`
+**AC-003.** `FormatFullDisplay` for a feature with parent batch `B24-auth`
   returns a string containing `B24-F{n}`.
 
-- **AC-004 (REQ-004):** `entity(action: "get", id: "<feature-id>")` response includes
+**AC-004.** `entity(action: "get", id: "<feature-id>")` response includes
   `display_id` in `B{n}-F{n}` format. `status` dashboard renders features with the `B`
   prefix.
 
-- **AC-005 (REQ-005):** An existing feature created before P38-F3 retains its current
+**AC-005.** An existing feature created before P38-F3 retains its current
   display ID. Only newly created features after P38-F3 use the `B{n}-F{n}` format.
 
-- **AC-006 (REQ-006):** Creating a feature under standalone batch `B99-standalone` (no
+**AC-006.** Creating a feature under standalone batch `B99-standalone` (no
   parent plan) produces display ID `B99-F1`.
 
-- **AC-007 (REQ-007, REQ-008):** Given plan `P1-platform` → batch `B24-auth` →
+**AC-007.** Given plan `P1-platform` → batch `B24-auth` →
   feature `FEAT-xxx`, and an approved specification owned by `P1-platform`:
   the specification gate check for the feature passes using the plan's specification.
 
-- **AC-008 (REQ-009):** The four-level lookup works for design, specification, and dev-plan
+**AC-008.** The four-level lookup works for design, specification, and dev-plan
   gate types. Each gate type looks for its corresponding document type at each level.
 
-- **AC-009 (REQ-010):** A feature under a standalone batch (no parent plan) gates exactly
+**AC-009.** A feature under a standalone batch (no parent plan) gates exactly
   as before: feature docs → batch docs. No error or extra lookup occurs for the missing
   plan level.
 
-- **AC-010 (REQ-011):** An approved design document owned by plan `P1` satisfies the design
+**AC-010.** An approved design document owned by plan `P1` satisfies the design
   gate for a feature in child batch `B24` when neither the feature nor the batch has its
   own design document.
 
-- **AC-011 (REQ-012):** When a feature has its own approved design doc, and the batch also
+**AC-011.** When a feature has its own approved design doc, and the batch also
   has an approved design doc, the gate returns the feature's document (nearest level
   wins).
 
-- **AC-012 (REQ-NF-001):** Gate evaluation completes in three state store lookups or fewer
+**AC-012.** Gate evaluation completes in three state store lookups or fewer
   for the four-level case (feature, batch, plan).
 
-- **AC-013 (REQ-NF-002):** A batch with `parent: "P99-nonexistent"` (deleted plan) gates
+**AC-013.** A batch with `parent: "P99-nonexistent"` (deleted plan) gates
   correctly at the batch level without errors from the missing plan.
 
 ---

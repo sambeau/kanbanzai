@@ -1,0 +1,214 @@
+document_id: FEAT-01KQ7YQKWTBRP/spec-p38-spec-p38-f7-documentation-skills-updates
+document_path: work/P38-plans-and-batches/P38-spec-p38-f7-documentation-skills-updates.md
+content_hash: 742fd654344555cea73dd31fd4846d4b7e1aca6a855f442b5826e032cba0f7b0
+indexed_at: 2026-04-28T01:40:18.212521Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P38-F7: Documentation and Skills Updates — Specification'
+      byte_offset: 0
+      byte_count: 9654
+      word_count: 1277
+      content_hash: 742fd654344555cea73dd31fd4846d4b7e1aca6a855f442b5826e032cba0f7b0
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 616
+          byte_count: 608
+          word_count: 80
+          content_hash: 5d95018a7745528f7b2a752a204aa2a2dd9f309fff1cf53f7f92e68f9765a276
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 1224
+          byte_count: 875
+          word_count: 117
+          content_hash: a6e905dcaebfa7dd654e88536fbfce7ad9649fd799de4098268e7ecc403b9e74
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2099
+          byte_count: 3345
+          word_count: 437
+          content_hash: a75ec6744a10a70255733f80c6f25151a6921d78e9095bc419714abae0328259
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Roles (`.kbz/roles/`)
+              byte_offset: 2127
+              byte_count: 714
+              word_count: 97
+              content_hash: 6a1e6b8ce7b3e5e0a421151ef94eab46bc0d1383b64f765dca79eb6f4ebe2366
+            - path: 1.3.2
+              level: 3
+              title: Skills (`.kbz/skills/`)
+              byte_offset: 2841
+              byte_count: 821
+              word_count: 111
+              content_hash: b44feb854e3bbe3ca687e9efbe8d3dff4e352b466628f7e010c671f56329bbab
+            - path: 1.3.3
+              level: 3
+              title: Stage Bindings (`.kbz/stage-bindings.yaml`)
+              byte_offset: 3662
+              byte_count: 380
+              word_count: 50
+              content_hash: c38a08ccce7b55077089138f4c63cf75173b641db0462fae81e9e83f0a3b2cec
+            - path: 1.3.4
+              level: 3
+              title: Agent Instructions (`AGENTS.md`, `copilot-instructions.md`)
+              byte_offset: 4042
+              byte_count: 778
+              word_count: 103
+              content_hash: ec5ba06f6d6d12e39c46de09c361156162be3c737a04c78975386093fa082657
+            - path: 1.3.5
+              level: 3
+              title: Reference Files (`refs/`)
+              byte_offset: 4820
+              byte_count: 624
+              word_count: 73
+              content_hash: 2871eb21bf1df00f7ad2cb6cd236e53595e9ae0870384b10cea93424d8fa371d
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 5444
+          byte_count: 687
+          word_count: 101
+          content_hash: c15dfa42faa14b5d0ba606f59ac30ea126434fb53a6fe4a90106ad39b1b3f2b5
+        - path: "1.5"
+          level: 2
+          title: Constraints
+          byte_offset: 6131
+          byte_count: 556
+          word_count: 84
+          content_hash: 5b5a68b67eae918ced6c9dbeab7fabb411eb6ba8f18d9f67f1846fbb5d9e2c2e
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 6687
+          byte_count: 1363
+          word_count: 178
+          content_hash: accf29d77486c19834aa1d1026b381d46e431742a25404289553502684261f8d
+        - path: "1.7"
+          level: 2
+          title: Verification Plan
+          byte_offset: 8050
+          byte_count: 899
+          word_count: 136
+          content_hash: 4533def4010bdffb47abc1729e21f3f4fbd6fed7f7d12d9860cbf95671a775f0
+        - path: "1.8"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 8949
+          byte_count: 705
+          word_count: 98
+          content_hash: c1c70482339742ff9bbbf11dd8597e2bb5c1fb1f5f407ee4ec2df35dbcf862cc
+entity_refs:
+    - entity_id: FEAT-01KQ7YQKWTBRP
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 444
+cross_doc_links:
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: "1.1"
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.2"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.2"
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.3.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.4
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: 1.3.4
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.3.4
+    - target_path: refs/go-style.md
+      link_text: refs/go-style.md
+      section_path: 1.3.5
+    - target_path: refs/testing.md
+      link_text: refs/testing.md
+      section_path: 1.3.5
+    - target_path: refs/sub-agents.md
+      link_text: refs/sub-agents.md
+      section_path: 1.3.5
+    - target_path: refs/document-map.md
+      link_text: refs/document-map.md
+      section_path: 1.3.5
+    - target_path: refs/knowledge-graph.md
+      link_text: refs/knowledge-graph.md
+      section_path: 1.3.5
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.5"
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: "1.5"
+    - target_path: .kbz/skills/**/SKILL.md
+      link_text: .kbz/skills/**/SKILL.md
+      section_path: "1.6"
+    - target_path: write-design/SKILL.md
+      link_text: write-design/SKILL.md
+      section_path: "1.6"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.6"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.6"
+    - target_path: .kbz/skills/**/SKILL.md
+      link_text: .kbz/skills/**/SKILL.md
+      section_path: "1.7"
+    - target_path: write-design/SKILL.md
+      link_text: write-design/SKILL.md
+      section_path: "1.7"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.7"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.7"
+    - target_path: refs/*.md
+      link_text: refs/*.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.8"
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-28T01:40:19.307946Z
+classified: false

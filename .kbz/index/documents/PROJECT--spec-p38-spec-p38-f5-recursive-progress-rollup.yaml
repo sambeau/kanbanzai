@@ -1,0 +1,136 @@
+document_id: PROJECT/spec-p38-spec-p38-f5-recursive-progress-rollup
+document_path: work/P38-plans-and-batches/P38-spec-p38-f5-recursive-progress-rollup.md
+content_hash: d5710bac40bda3c1cfdb7f7cce853f8c65282529936f1566bbdf0f0cb79e6ba6
+indexed_at: 2026-04-28T01:28:04.356829Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P38-F5: Recursive Progress Rollup — Specification'
+      byte_offset: 0
+      byte_count: 11100
+      word_count: 1487
+      content_hash: d5710bac40bda3c1cfdb7f7cce853f8c65282529936f1566bbdf0f0cb79e6ba6
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 673
+          byte_count: 626
+          word_count: 79
+          content_hash: 7cd02d0d6d717d3c8d7bf21f46e4b7cacb606530c8165b6599ef806939517765
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 1299
+          byte_count: 1108
+          word_count: 158
+          content_hash: 20fc507e213e919b7779c1612f6f6d95d549d98d7ed7467ba203bfcd153863f4
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2407
+          byte_count: 3022
+          word_count: 421
+          content_hash: 45a81699a8f4acf3ce8febd4d653f4cb62ec8c8873353052e283faf7faa38a90
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Batch Rollup
+              byte_offset: 2435
+              byte_count: 835
+              word_count: 117
+              content_hash: 6eb9256be4d4462e9775c7053cfeb22c75397d17596da4dd3c38f0b528b09e4a
+            - path: 1.3.2
+              level: 3
+              title: Plan Rollup (Recursive)
+              byte_offset: 3270
+              byte_count: 1449
+              word_count: 214
+              content_hash: 25a7c5037191c8418c8d7b0748cd3fe63839c3302922ba3a47160abf9f52fa5b
+            - path: 1.3.3
+              level: 3
+              title: Service Integration
+              byte_offset: 4719
+              byte_count: 710
+              word_count: 87
+              content_hash: c87b38bbfec0ad6fb716863e85861293b82e0c0d409617c57ed2c11646fb27f1
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 5429
+          byte_count: 531
+          word_count: 79
+          content_hash: 290f5785b5b1928dbc7dacdee96de6b013c55cff85e62638899f9cc76fc817c0
+        - path: "1.5"
+          level: 2
+          title: Constraints
+          byte_offset: 5960
+          byte_count: 740
+          word_count: 101
+          content_hash: 1045729d48692e60aca140e4f777ac2017d8fc4334729c4c5660c94cd475d896
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 6700
+          byte_count: 2163
+          word_count: 271
+          content_hash: d2fcfcd74837a2ee2bb45754cd73822a753dbba78db1b2670b92505067bc48cb
+        - path: "1.7"
+          level: 2
+          title: Verification Plan
+          byte_offset: 8863
+          byte_count: 1343
+          word_count: 221
+          content_hash: c21fb5f238a67742e1cf0b18201847794b1d08a6e69b6f62c59858f879912bf1
+        - path: "1.8"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 10206
+          byte_count: 894
+          word_count: 116
+          content_hash: 74e15ecc698d6be58b08499f2de7d304ada770e1db0921356555179185fc0c22
+entity_refs:
+    - entity_id: FEAT-01KQ7YQKMCM6T
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 502
+    - entity_id: B1-test
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 8492
+    - entity_id: P1-test
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 8571
+cross_doc_links:
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1"
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.8"
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-28T01:28:04.877953Z
+classified: false

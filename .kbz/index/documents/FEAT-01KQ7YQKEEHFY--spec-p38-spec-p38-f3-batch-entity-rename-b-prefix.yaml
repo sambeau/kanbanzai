@@ -1,0 +1,163 @@
+document_id: FEAT-01KQ7YQKEEHFY/spec-p38-spec-p38-f3-batch-entity-rename-b-prefix
+document_path: work/P38-plans-and-batches/P38-spec-p38-f3-batch-entity-rename-b-prefix.md
+content_hash: 3d721c3ee4445b44695ca4f2092a6e9f0576c44baa5c6114702460f9fb247acb
+indexed_at: 2026-04-28T01:40:18.216758Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P38-F3: Batch Entity Rename and B-Prefix IDs — Specification'
+      byte_offset: 0
+      byte_count: 13803
+      word_count: 1871
+      content_hash: 3d721c3ee4445b44695ca4f2092a6e9f0576c44baa5c6114702460f9fb247acb
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 618
+          byte_count: 939
+          word_count: 132
+          content_hash: 72310fb30e4630033312148efd2efd8ad6283909584300a143f429192f49e048
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 1557
+          byte_count: 1519
+          word_count: 205
+          content_hash: 911a20d91e4f2cb571fcf25d3c22b86cc892c59fd07763e4df95cbe12c8dfcec
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 3076
+          byte_count: 3809
+          word_count: 492
+          content_hash: 1c3b279d7d42a587c9d3b3a0a3a57c7499769981ef2f41eacd514ab4754157a8
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Struct and Type Renames
+              byte_offset: 3104
+              byte_count: 1263
+              word_count: 147
+              content_hash: 3dcda862b319a1726d4c4d8c77b0ab0154d40e70c41a48331d51b94cf7b9e99d
+            - path: 1.3.2
+              level: 3
+              title: ID Format and Prefix
+              byte_offset: 4367
+              byte_count: 503
+              word_count: 68
+              content_hash: a234c7e678272774d2504859d68798f57ba4ab556dd00f0fa33c5e6015fa88c3
+            - path: 1.3.3
+              level: 3
+              title: Backward Compatibility
+              byte_offset: 4870
+              byte_count: 1087
+              word_count: 158
+              content_hash: b280efa39d86266b86c0e5204983fef7260cb9cc5c92605b0ddaeba7f6687939
+            - path: 1.3.4
+              level: 3
+              title: Service and Tool Updates
+              byte_offset: 5957
+              byte_count: 928
+              word_count: 116
+              content_hash: 374e3f31aa3829d6615e58079f473c425d990743ca018e06604567e70a22a16e
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 6885
+          byte_count: 764
+          word_count: 103
+          content_hash: e30578798b8ecfbcf92ee5a8ac2bab677640236c6a22136d6b2ce4abbbe3df8f
+        - path: "1.5"
+          level: 2
+          title: Constraints
+          byte_offset: 7649
+          byte_count: 720
+          word_count: 108
+          content_hash: f1c2f3cfaa532e9447a53994906c76aa1e05e9740712077b21715c30644a873b
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 8369
+          byte_count: 2824
+          word_count: 366
+          content_hash: 295ca0984d0c630744f8fda142e26e5313a2acdaa41044c1c4ce258943e6efcb
+        - path: "1.7"
+          level: 2
+          title: Verification Plan
+          byte_offset: 11193
+          byte_count: 1671
+          word_count: 281
+          content_hash: a97054416363fa3083c271e374881622a151eabd6f2d93d88c704dc163928624
+        - path: "1.8"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 12864
+          byte_count: 939
+          word_count: 139
+          content_hash: 97a664e5632906a6a78525d6f2c0d80dadc4478649fb28497fd0515c1a2b187d
+entity_refs:
+    - entity_id: FEAT-01KQ7YQKEEHFY
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 448
+    - entity_id: B24-auth-system
+      entity_type: plan
+      section_path: 1.3.2
+      byte_offset: 4474
+    - entity_id: B1-foo
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 9267
+    - entity_id: P1-bar
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 9285
+    - entity_id: B24-auth-system
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 9436
+    - entity_id: B5-my-batch
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 9725
+    - entity_id: P5-my-batch
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 9777
+    - entity_id: B1-test
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 10660
+cross_doc_links:
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1"
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.8"
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-28T01:40:19.209866Z
+classified: false

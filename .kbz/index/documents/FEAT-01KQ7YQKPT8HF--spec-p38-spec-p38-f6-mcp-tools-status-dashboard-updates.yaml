@@ -1,0 +1,151 @@
+document_id: FEAT-01KQ7YQKPT8HF/spec-p38-spec-p38-f6-mcp-tools-status-dashboard-updates
+document_path: work/P38-plans-and-batches/P38-spec-p38-f6-mcp-tools-status-dashboard-updates.md
+content_hash: 0c702695f6165c093b3df871f1e13352fdc5ff4d7010ce17675d5f2a8ceceace
+indexed_at: 2026-04-28T01:40:18.215459Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P38-F6: MCP Tools and Status Dashboard Updates — Specification'
+      byte_offset: 0
+      byte_count: 13365
+      word_count: 1843
+      content_hash: 0c702695f6165c093b3df871f1e13352fdc5ff4d7010ce17675d5f2a8ceceace
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 623
+          byte_count: 520
+          word_count: 73
+          content_hash: 638ca4ca29744837ed3eef817992789a2ab5698c21f602438b5fc55bab630aa5
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 1143
+          byte_count: 966
+          word_count: 139
+          content_hash: 15f3ba43dd7d8a057305d538353da97a09493f1362e2cc73eac59fbeb1905b3d
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2109
+          byte_count: 4601
+          word_count: 639
+          content_hash: 4e202757bf77d8ee5623839cd423aef766d4c913a2a86405862e1dee53d7e4d1
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Entity Tool
+              byte_offset: 2137
+              byte_count: 1349
+              word_count: 190
+              content_hash: beef234e752d6ff0a3c57054ab9978022ca6d7d3858051137ae6a8948435d434
+            - path: 1.3.2
+              level: 3
+              title: Status Dashboard
+              byte_offset: 3486
+              byte_count: 1604
+              word_count: 225
+              content_hash: 0c9906a1258577735cbf4be9b6cad8f43ae98065231fd392cdc5ce0c397411a4
+            - path: 1.3.3
+              level: 3
+              title: Other MCP Tools
+              byte_offset: 5090
+              byte_count: 972
+              word_count: 132
+              content_hash: e1a5147b2be9f496e96c01b3f53c71704fcc5f1a7a02643be3ae4597a348d150
+            - path: 1.3.4
+              level: 3
+              title: Terminology Consistency
+              byte_offset: 6062
+              byte_count: 648
+              word_count: 89
+              content_hash: 8470e7e97e0d080eb854e6ec5b92dc1e01d1c3688c65adca455218c48202ebdd
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 6710
+          byte_count: 720
+          word_count: 100
+          content_hash: 8140dab7dbf19fdd02cf809adbed7b51e16d0178dd5ddf8a32e2f0ee654a71f2
+        - path: "1.5"
+          level: 2
+          title: Constraints
+          byte_offset: 7430
+          byte_count: 574
+          word_count: 87
+          content_hash: 5786e7a16184952df58c43cb2ccc492715638c6b10fc67752b3eaaa6c262af5c
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 8004
+          byte_count: 2906
+          word_count: 369
+          content_hash: c1c064eab29c7f2923c7a28b869bb8d6d51f108fc52beab7dacd16d96ba60302
+        - path: "1.7"
+          level: 2
+          title: Verification Plan
+          byte_offset: 10910
+          byte_count: 1607
+          word_count: 275
+          content_hash: 0e8a1393206d8004648aa4cca98e11cddd48ba5e226d6522a6def7263b75d3cc
+        - path: "1.8"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 12517
+          byte_count: 848
+          word_count: 114
+          content_hash: 3503288517c44164c4edeaa09f1763dbe6b902f316bb001d23a8a79675fa5311
+entity_refs:
+    - entity_id: FEAT-01KQ7YQKPT8HF
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 450
+    - entity_id: FEAT-id
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 9976
+    - entity_id: TASK-id
+      entity_type: task
+      section_path: "1.6"
+      byte_offset: 10094
+    - entity_id: P1-platform
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 9272
+    - entity_id: B24-auth
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 9419
+cross_doc_links:
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1"
+    - target_path: work/design/meta-planning-plans-and-batches.md
+      link_text: work/design/meta-planning-plans-and-batches.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.8"
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-28T01:40:19.209803Z
+classified: false
