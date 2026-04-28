@@ -1,0 +1,11 @@
+id: BUG-01KQB6TKSABJJ
+slug: cli-status-no-cache
+name: "CLI status command doesn't use SQLite cache"
+status: reported
+severity: medium
+priority: high
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-04-28T23:29:41Z"
+observed: "kanbanzai status takes ~4 seconds for 898 entities. The CLI creates EntityService without attaching the SQLite cache, so every List() call does a full directory scan + YAML parse. The MCP server correctly opens and warms the cache at startup and benefits from O(1) reads."
+expected: "CLI commands (status, next, finish, handoff, health, validate) should open the SQLite cache and attach it to EntityService, matching the MCP server startup behaviour. status should complete in well under 1 second."
