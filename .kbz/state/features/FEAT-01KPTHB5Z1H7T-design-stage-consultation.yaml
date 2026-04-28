@@ -7,6 +7,7 @@ summary: "Add a mandatory Phase 0 corpus discovery to the write-design skill, a 
 spec: FEAT-01KPTHB5Z1H7T/specification-doc-intel-design-stage-consultation
 created: "2026-04-22T12:06:24Z"
 created_by: sambeau
+display_id: P27-F1
 overrides:
   -
     from_status: designing

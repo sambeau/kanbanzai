@@ -3,11 +3,12 @@ slug: worktree-creation-timeout
 name: Worktree creation timeout under load
 parent: P28-doc-intel-polish-workflow-reliability
 status: done
-review_cycle: 1
+review_cycle: "1"
 summary: "worktree(action: create) times out when the repository has many existing worktrees (~34+), likely due to git lock contention or git worktree list serialisation overhead. Profile the issue, add retry-with-backoff, and document the terminal + manual-wiring fallback as an explicit escape hatch. Sources: P27 Issue 3."
 spec: FEAT-01KPVDDYZ3182/specification-p28-worktree-creation-timeout
 dev_plan: FEAT-01KPVDDYZ3182/dev-plan-p28-worktree-creation-timeout
 created: "2026-04-22T20:17:15Z"
 created_by: sambeau
+display_id: P28-F6
 verification: "TASK-01KPVFTDB71F7: go test ./internal/mcp/... -run TestWorktree: 10/10 pass. TestToolDescriptions_TokenBudget: pass. go build ./internal/...: clean.\nTASK-01KPVFTDD5A58: go build ./internal/...: clean. go test ./internal/mcp/... -run TestWorktree|TestToolDescriptions: all pass.\nTASK-01KPVFTDF8T8C: TestToolDescriptions_TokenBudget pass. TestWorktree* all pass.\nTASK-01KPVFTDH4JWS: go test ./internal/mcp/... -run TestWorktreeRetry -v -count=1 → 9/9 PASS in 0.438s. No live git repo required for retry unit tests; schema tests use t.TempDir()."
 verification_status: passed

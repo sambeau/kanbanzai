@@ -6,3 +6,4 @@ status: done
 summary: "Add a documentation currency health check that detects stale tool references in SKILL files and AGENTS.md, and verifies AGENTS.md mentions completed plans."
 created: "2026-03-28T15:55:49Z"
 created_by: sambeau
+display_id: P10-F3

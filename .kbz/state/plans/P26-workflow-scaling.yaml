@@ -6,6 +6,7 @@ summary: Investigations and improvements to keep the Kanbanzai workflow healthy 
 created: "2026-04-21T16:53:49Z"
 created_by: sambeau
 updated: "2026-04-23T14:59:05Z"
+next_feature_seq: 2
 overrides:
   -
     from_status: proposed

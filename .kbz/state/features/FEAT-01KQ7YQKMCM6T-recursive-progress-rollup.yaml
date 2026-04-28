@@ -7,3 +7,4 @@ summary: Introduce ComputeBatchRollup mirroring current plan rollup logic. Add r
 spec: FEAT-01KQ7YQKMCM6T/specification-p38-f5-spec-recursive-progress-rollup
 created: "2026-04-27T17:10:30Z"
 created_by: sambeau
+display_id: P38-F5

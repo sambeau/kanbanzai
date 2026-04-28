@@ -3,11 +3,12 @@ slug: doc-intel-guide-enrichment
 name: Doc-intel guide enrichment
 parent: P28-doc-intel-polish-workflow-reliability
 status: done
-review_cycle: 1
+review_cycle: "1"
 summary: "Three related enhancements to the doc_intel guide response. (1) Embed the full role taxonomy and valid confidence values in the guide response so classify calls are self-contained without needing the skill file (§5.2). (2) Include section count or size bucket per document in the pending response to enable right-sized batch planning (§5.1). (3) Add suggested_classifications to the guide response for sections where heading pattern gives unambiguous high-confidence role assignment, reducing read_file calls (§5.3). Sources: Pilot §5.1, §5.2, §5.3."
 spec: FEAT-01KPVDDYQQS1Y/specification-p28-doc-intel-guide-enrichment
 dev_plan: FEAT-01KPVDDYQQS1Y/dev-plan-p28-doc-intel-guide-enrichment
 created: "2026-04-22T20:17:15Z"
 created_by: sambeau
+display_id: P28-F2
 verification: "TASK-01KPVFJSRP9X6: go build ./... passes cleanly. Existing TestGetPendingClassification test updated to use new struct accessor.\nTASK-01KPVFJV74YA4: go build ./... passes cleanly. Taxonomy block verified in doc_intel_tool.go at the guide handler return statement.\nTASK-01KPVFJW8CGJK: go build ./... passes cleanly.\nTASK-01KPVFKEH5G9N: go test ./internal/docint/... ./internal/service/... -timeout 120s -count=1 all pass. New MCP handler tests all pass."
 verification_status: passed

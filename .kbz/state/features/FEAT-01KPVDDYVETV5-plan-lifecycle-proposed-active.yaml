@@ -3,11 +3,12 @@ slug: plan-lifecycle-proposed-active
 name: Plan lifecycle proposed-to-active gap
 parent: P28-doc-intel-polish-workflow-reliability
 status: done
-review_cycle: 1
+review_cycle: "1"
 summary: "Fix the gap where a plan at `proposed` cannot jump to `active` when its features are already mid-lifecycle from a prior session. Either add a direct proposed → active transition to the state machine, or — if a hard state-machine change is undesirable — document the step-through-designing workaround with override justification in kanbanzai-workflow. Sources: P27 Issue 1."
 spec: FEAT-01KPVDDYVETV5/specification-p28-plan-lifecycle-proposed-active
 dev_plan: FEAT-01KPVDDYVETV5/dev-plan-p28-plan-lifecycle-proposed-active
 created: "2026-04-22T20:17:15Z"
 created_by: sambeau
+display_id: P28-F4
 verification: "TASK-01KPVFY051XFC: go test ./internal/validate/... ./internal/service/... -count=1: all pass.\nTASK-01KPVFY053ED8: go test ./internal/validate/... ./internal/service/... -count=1: all pass.\nTASK-01KPVFY054NQ9: go test ./internal/service/... -run TestPlanShortcut -v -count=1 — all 10 pass\nTASK-01KPVFY055NRX: go test ./internal/service/... -run TestPlanShortcutIntegration -v -count=1 — all 3 pass in under 2s"
 verification_status: passed

@@ -3,10 +3,11 @@ slug: strategic-merge-checkpoints
 name: Strategic Merge Checkpoint Research
 parent: P26-workflow-scaling
 status: done
-review_cycle: 1
+review_cycle: "1"
 summary: "Investigate whether cohort-based merge checkpoints during development would prevent drift and reduce merge complexity at plan completion, and design what first-class tooling support would look like."
 created: "2026-04-21T16:53:55Z"
 created_by: sambeau
+display_id: P26-F1
 overrides:
   -
     from_status: designing

@@ -3,11 +3,12 @@ slug: lifecycle-override-and-recovery
 name: Lifecycle override and recovery
 parent: P13-workflow-flexibility
 status: done
-review_cycle: 1
+review_cycle: "1"
 summary: "Add active → ready task transition for crash recovery / unclaim. When an agent crashes mid-task, the task is stuck in active with no clean escape. Surface stuck active tasks (>24h, no git activity) as attention items in status. NOTE: The override + override_reason half of the original scope was implemented in P17 and is complete."
 spec: FEAT-01KN07T65HDZM/specification-task-crash-recovery
 created: "2026-03-30T20:43:53Z"
 created_by: sambeau
+display_id: P13-F1
 overrides:
   -
     from_status: reviewing

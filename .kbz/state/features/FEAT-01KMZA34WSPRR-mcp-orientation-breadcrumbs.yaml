@@ -6,3 +6,4 @@ status: done
 summary: Add orientation field to status (project overview) and next (empty queue) responses pointing agents to the getting-started skill.
 created: "2026-03-30T12:04:29Z"
 created_by: sambeau
+display_id: P12-F5

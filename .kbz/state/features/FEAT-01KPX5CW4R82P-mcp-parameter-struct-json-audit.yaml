@@ -3,11 +3,12 @@ slug: mcp-parameter-struct-json-audit
 name: MCP Parameter Struct JSON Tag Audit
 parent: P32-doc-intel-classification-pipeline-hardening
 status: done
-review_cycle: 2
+review_cycle: "2"
 summary: "Audit all MCP parameter structs that (a) have yaml: tags and (b) are decoded from JSON tool parameters via json.Unmarshal. Any exported field missing an explicit json: tag is a silent deserialization vulnerability — the same class of bug as the Classification struct fix in the Layer 3 pilot. Add a Go test or go vet check to prevent regression. Classification and ConceptIntroEntry are already fixed; this audits the remainder."
 spec: FEAT-01KPX5CW4R82P/specification-p32-mcp-json-tag-audit
 dev_plan: FEAT-01KPX5CW4R82P/dev-plan-mcp-json-tag-audit-dev-plan
 created: "2026-04-23T12:35:20Z"
 created_by: sambeau
+display_id: P32-F5
 verification: "TASK-01KPXE335QXD7: grep -rn 'yaml:' internal/mcp/ --include='*.go' — only string literals found, no struct field tags\nTASK-01KPXE3361ANK: go test ./internal/mcp/... -run TestJSONTagRoundTrip: PASS\nTASK-01KPXE3VRGBQF: Inspection confirmed no exported fields in internal/mcp/ have yaml: struct tags\nTASK-01KPXE45XV5A5: go test ./internal/mcp/... -run TestJSONTagRoundTrip -v: PASS in 0.53s\nTASK-01KPXE4CR77A7: go test ./... — only pre-existing flaky test fails; all other packages pass"
 verification_status: passed

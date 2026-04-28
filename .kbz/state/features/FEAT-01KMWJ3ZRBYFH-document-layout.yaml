@@ -3,12 +3,13 @@ slug: document-layout
 name: Document layout
 parent: P11-fresh-install-experience
 status: done
-review_cycle: 1
+review_cycle: "1"
 summary: "New DefaultDocumentRoots creates eight work/ directories plus work/README.md. Two new document types (plan, retrospective) added to model. InferDocType updated with new cases, backwards-compatible old cases retained. kanbanzai-documents skill type table updated."
 spec: FEAT-01KMWJ3ZRBYFH/specification-spec-document-layout
 dev_plan: FEAT-01KMWJ3ZRBYFH/dev-plan-p11-dev-document-layout
 created: "2026-03-29T10:27:02Z"
 created_by: sambeau
+display_id: P11-F4
 overrides:
   -
     from_status: reviewing

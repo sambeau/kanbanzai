@@ -6,3 +6,4 @@ status: done
 summary: "Establish P{N}- prefix naming convention for plan document filenames. Rename existing plan documents and update all cross-references."
 created: "2026-03-28T15:55:49Z"
 created_by: sambeau
+display_id: P10-F4

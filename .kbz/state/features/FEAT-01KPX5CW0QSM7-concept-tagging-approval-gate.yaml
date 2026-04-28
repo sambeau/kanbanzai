@@ -3,11 +3,12 @@ slug: concept-tagging-approval-gate
 name: Concept Tagging Approval Gate
 parent: P32-doc-intel-classification-pipeline-hardening
 status: done
-review_cycle: 2
+review_cycle: "2"
 summary: "Add a server-side check to doc approve that requires at least one classified section with concepts_intro populated for specification, design, and dev-plan document types. Escalates concept tagging from soft constraint (advisory nudge, currently ignored) to hard constraint (ℋ — approval blocked until met). Small server-side change, no new tool actions. Answers RG-2: enforce at approve time, not classify time, to avoid disrupting backlog batch runs."
 spec: FEAT-01KPX5CW0QSM7/specification-p32-concept-tagging-approval-gate
 dev_plan: FEAT-01KPX5CW0QSM7/dev-plan-concept-tagging-approval-gate-decomposed
 created: "2026-04-23T12:35:20Z"
 created_by: sambeau
+display_id: P32-F3
 verification: "TASK-01KPXEE1VSDJ4: go test ./internal/mcp/ -run TestApproveGate: all 11 AC tests pass\nTASK-01KPXEE1VVSW2: (no verification recorded)\nTASK-01KPXEE1VWA2W: (no verification recorded)\nTASK-01KPXEE1VXY0Q: (no verification recorded)\nTASK-01KPXEE1VY40H: (no verification recorded)\nTASK-01KPXEE1VZQ5G: (no verification recorded)\nTASK-01KPXEE1W0RMG: (no verification recorded)\nTASK-01KPXEE1W1XAV: (no verification recorded)\nTASK-01KPXEE1W2ZBF: (no verification recorded)\nTASK-01KPXEE1W3PPC: (no verification recorded)\nTASK-01KPXEE1W4T24: (no verification recorded)\nTASK-01KPXEE1W5ZF5: (no verification recorded)\nTASK-01KPXEE1W67G9: All 11 gate tests pass"
 verification_status: partial

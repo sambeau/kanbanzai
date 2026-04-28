@@ -3,13 +3,14 @@ slug: implementation-skill-content
 name: Implementation skill content
 parent: P16-skills-and-roles-3.0
 status: done
-review_cycle: 1
+review_cycle: "1"
 summary: "Author SKILL.md files for implement-task, orchestrate-development, and decompose-feature. Includes context compaction guidance, decomposition validation, and dependency ordering procedures. Design §5.2."
 design: work/design/skills-system-redesign-v2.md
 spec: FEAT-01KN5-88PG7HA3/specification-30-implementation-skill-content
 dev_plan: FEAT-01KN588PG7HA3/dev-plan-30-implementation-skill-content
 created: "2026-04-01T19:28:01Z"
 created_by: sambeau
+display_id: P16-F10
 overrides:
   -
     from_status: reviewing

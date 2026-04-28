@@ -3,13 +3,14 @@ slug: document-authoring-skill-content
 name: Document authoring skill content
 parent: P16-skills-and-roles-3.0
 status: done
-review_cycle: 1
+review_cycle: "1"
 summary: "Author SKILL.md files for write-design, write-spec, write-dev-plan, write-research, and update-docs. Attention-curve-optimized format with vocabulary, anti-patterns, procedures, examples, evaluation criteria. Design §5.1."
 design: work/design/skills-system-redesign-v2.md
 spec: FEAT-01KN5-88PFWADY/specification-30-document-authoring-skill-content
 dev_plan: FEAT-01KN588PFWADY/dev-plan-30-document-authoring-skill-content
 created: "2026-04-01T19:28:01Z"
 created_by: sambeau
+display_id: P16-F9
 overrides:
   -
     from_status: reviewing

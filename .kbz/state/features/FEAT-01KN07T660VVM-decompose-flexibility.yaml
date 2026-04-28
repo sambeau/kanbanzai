@@ -3,11 +3,12 @@ slug: decompose-flexibility
 name: Decompose flexibility
 parent: P13-workflow-flexibility
 status: done
-review_cycle: 1
+review_cycle: "1"
 summary: "Add section-based AC grouping to decompose — when ACs under the same spec section are tightly coupled, propose a single task covering all of them instead of one-per-AC. Add a covers field to ProposedTask for traceability. Optionally add table-row format parsing. NOTE: Three of five originally-requested formats (checkboxes, numbered lists, bold-identifiers) are already supported. Given/When/Then is deferred."
 spec: FEAT-01KN07T660VVM/specification-decomposition-grouping
 created: "2026-03-30T20:43:53Z"
 created_by: sambeau
+display_id: P13-F2
 overrides:
   -
     from_status: reviewing

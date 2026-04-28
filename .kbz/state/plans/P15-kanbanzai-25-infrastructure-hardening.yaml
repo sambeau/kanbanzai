@@ -1,9 +1,10 @@
 id: P15-kanbanzai-25-infrastructure-hardening
 slug: kanbanzai-25-infrastructure-hardening
 name: Kanbanzai 25 infrastructure hardening
-title: Kanbanzai 2.5 — Infrastructure Hardening
 status: done
 summary: "Bug fixes, document management enhancements, and evaluation baseline infrastructure before the V3.0 redesign."
 created: "2026-04-01T16:57:51Z"
 created_by: sambeau
 updated: "2026-04-01T18:06:59Z"
+next_feature_seq: 7
+title: Kanbanzai 2.5 — Infrastructure Hardening

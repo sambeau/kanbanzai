@@ -3,11 +3,12 @@ slug: cache-warm-up-server-start
 name: Cache warm-up at server start
 parent: P29-state-store-read-performance
 status: done
-review_cycle: 1
+review_cycle: "1"
 summary: "Call RebuildCache() immediately after SetCache() in internal/mcp/server.go so the SQLite cache is always warm before the first tool call is handled. Failure is best-effort: log and continue without cache rather than aborting startup."
 spec: FEAT-01KPXGZXX8BJZ/specification-feat-01kpxgzxx8bjz-cache-warm-up-server-start
 dev_plan: FEAT-01KPXGZXX8BJZ/dev-plan-feat-01kpxgzxx8bjz-cache-warm-up-server-start
 created: "2026-04-23T15:57:59Z"
 created_by: sambeau
+display_id: P29-F1
 verification: "TASK-01KPYF49K4BGH: go test ./internal/mcp/... passed (cached on second run; first run had a pre-existing flaky TempDir cleanup race in TestFinish_RetroStoredAsKnowledgeEntry, unrelated to this change)\nTASK-01KPYF4Z4T23K: go test ./internal/mcp/... ./internal/service/... -run TestRebuildCache|TestEntityService_NoCache passed (all 5 new tests PASS). Full suite: service package clean; mcp package has pre-existing flaky TempDir cleanup races unrelated to these changes."
 verification_status: passed

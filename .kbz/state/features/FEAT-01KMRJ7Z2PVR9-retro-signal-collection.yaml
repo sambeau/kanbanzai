@@ -3,13 +3,14 @@ slug: retro-signal-collection
 name: Retro signal collection
 parent: P5-workflow-retrospective
 status: done
-review_cycle: 1
+review_cycle: "1"
 summary: "Phase 1: Add optional `retrospective` parameter to `finish` (and `complete_task`). Validate and store each signal as a tier-3 project-scoped knowledge entry per the storage convention in the spec. Extend the `finish` response with a `retrospective` section and a new `retrospective_signal_contributed` side-effect type. Support batch mode. Update the `kanbanzai-agents` skill with retrospective guidance."
 design: P5-workflow-retrospective/specification-workflow-retrospective
 tags:
   - "phase:1"
 created: "2026-03-27T21:12:15Z"
 created_by: sambeau
+display_id: P5-F1
 overrides:
   -
     from_status: dev-planning

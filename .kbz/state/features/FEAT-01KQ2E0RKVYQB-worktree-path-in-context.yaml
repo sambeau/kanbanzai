@@ -6,3 +6,4 @@ status: cancelled
 summary: "Surface the worktree filesystem path in the next() context packet (worktree_path field) so agents do not need a separate worktree(action: get) call. The value is already computed in assembleContext (actx.worktreePath = wt.Path) but never written to the nextContextToMap response. Field is omitted when no active worktree exists."
 created: "2026-04-25T13:42:12Z"
 created_by: sambeau
+display_id: P34-F4

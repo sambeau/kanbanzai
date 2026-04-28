@@ -3,10 +3,11 @@ slug: phase-4b-remediation
 name: Phase 4b remediation
 parent: P1-phase-4-orchestration
 status: done
-review_cycle: 1
+review_cycle: "1"
 summary: Resolve all post-implementation review findings for Phase 4b and declare the Phase 5 gate open
 created: "2026-03-25T20:13:06Z"
 created_by: sambeau
+display_id: P1-F2
 overrides:
   -
     from_status: designing

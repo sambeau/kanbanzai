@@ -6,3 +6,4 @@ summary: "Fix two silent-failure modes in decompose propose: add a spec approval
 created: "2026-03-28T12:03:46Z"
 created_by: sambeau
 updated: "2026-03-28T12:31:13Z"
+next_feature_seq: 3

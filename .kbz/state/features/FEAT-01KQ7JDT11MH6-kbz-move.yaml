@@ -3,12 +3,13 @@ slug: kbz-move
 name: kbz move command
 parent: P37-file-names-and-actions
 status: reviewing
-review_cycle: 1
+review_cycle: "1"
 summary: "New CLI/MCP command: kbz move <file> <plan-id> relocates a file into a plan folder, renames to template, updates document record. kbz move <feature-display-id> <plan-id> re-parents a feature, moving all its documents, updating entity owner, and reallocating display ID in target plan. Uses git mv to preserve history."
 spec: FEAT-01KQ7JDT11MH6/specification-p37-f3-spec-kbz-move
 dev_plan: FEAT-01KQ7JDT11MH6/dev-plan-p37-f3-dev-plan-kbz-move
 created: "2026-04-27T13:35:26Z"
 created_by: sambeau
+display_id: P37-F3
 overrides:
   -
     from_status: specifying

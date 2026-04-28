@@ -6,3 +6,4 @@ status: done
 summary: Generate .github/copilot-instructions.md on kbz init as a thin pointer to AGENTS.md. Same managed-marker pattern.
 created: "2026-03-30T12:04:23Z"
 created_by: sambeau
+display_id: P12-F2

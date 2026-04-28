@@ -7,3 +7,4 @@ summary: "Add separate plan_prefixes and batch_prefixes registries to config.yam
 spec: FEAT-01KQ7YQK6DDDA/specification-p38-f1-spec-config-schema-project-singleton
 created: "2026-04-27T17:10:30Z"
 created_by: sambeau
+display_id: P38-F1

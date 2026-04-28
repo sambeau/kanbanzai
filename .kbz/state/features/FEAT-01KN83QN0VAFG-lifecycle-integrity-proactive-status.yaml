@@ -3,10 +3,11 @@ slug: lifecycle-integrity-proactive-status
 name: Lifecycle integrity and proactive status
 parent: P19-workflow-lifecycle-integrity
 status: done
-review_cycle: 1
+review_cycle: "1"
 summary: "Eight coordinated improvements across three pillars:\n\nPILLAR A — LIFECYCLE GATES\nA1. Feature→done gate: block entity(transition→done) on a feature if any child tasks are non-terminal. Override with reason permitted for state repair. Applies symmetrically to superseded and cancelled transitions.\nA2. Plan→done gate: same constraint one level up — block plan closure if any child features are non-terminal.\n\nPILLAR B — AUTO-ADVANCE\nB1. Feature auto-advance: when all tasks on a feature in developing or needs-rework reach terminal state, automatically advance the feature to reviewing. Guard: requires at least one task in done state — if all tasks are not-planned or duplicate, treat as abandonment and do not advance.\nB2. Plan auto-advance: when all features on a plan reach a finished state (done, superseded, or cancelled), automatically advance the plan to done. Same guard: at least one feature must be done.\n\nPILLAR C — PROACTIVE STATUS\nC1. Structured attention items: upgrade attention from []string to []AttentionItem{type, severity, entity_id, display_id, message} across all status response objects (projectOverview, planDashboard, featureDetail, taskDetail, bugDetail). Agents read message; external tools can filter by type/severity and link by entity_id.\nC2. Health findings in status: surface health check findings as attention items rather than bare error/warning counts. The health field becomes the structured detail, not just {errors: N, warnings: N}.\nC3. Stale reviewing detection: feature in reviewing status for longer than a configurable threshold (default 7 days, config.yaml) emits a stale_reviewing attention item. Threshold of 0 disables the check.\nC4. Bug warnings: open bugs with severity critical or high against a feature that is not done/superseded/cancelled emit an open_critical_bug attention item on that feature's status response."
 design: FEAT-01KN83QN0VAFG/design-lifecycle-integrity
 spec: FEAT-01KN83QN0VAFG/specification-lifecycle-integrity
 dev_plan: FEAT-01KN83QN0VAFG/dev-plan-lifecycle-integrity-plan
 created: "2026-04-02T22:06:31Z"
 created_by: sambeau
+display_id: P19-F1
