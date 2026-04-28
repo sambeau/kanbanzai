@@ -2,9 +2,11 @@ id: FEAT-01KQ2MH2S2ZDH/dev-plan-p35-dev-plan-expanded-mcp-instrumentation
 path: work/P35-expanded-mcp-instrumentation/P35-dev-plan-expanded-mcp-instrumentation.md
 type: dev-plan
 title: Expanded MCP Instrumentation Dev Plan
-status: draft
+status: approved
 owner: FEAT-01KQ2MH2S2ZDH
-content_hash: 4e0965846ce0e2a126c20091eb49741fcdade02695633acdff3fbf30cea64c7b
+approved_by: sambeau
+approved_at: "2026-04-28T12:13:04Z"
+content_hash: 30e486a167186bf044d9d661d2584ced291af5de855f025c59e4b0f3e02b7001
 created: "2026-04-28T12:10:45Z"
 created_by: sambeau
-updated: "2026-04-28T12:10:45Z"
+updated: "2026-04-28T12:13:04Z"
