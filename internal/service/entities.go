@@ -450,20 +450,7 @@ func (s *EntityService) HealthCheck() (*validate.HealthReport, error) {
 	}
 
 	entityExists := func(entityType, id string) bool {
-		// Plans use different storage, check via file directly.
-		if entityType == string(model.EntityKindPlan) {
-			return s.entityExists(entityType, id)
-		}
-		results, err := s.List(entityType)
-		if err != nil {
-			return false
-		}
-		for _, r := range results {
-			if r.ID == id {
-				return true
-			}
-		}
-		return false
+		return s.entityExists(entityType, id)
 	}
 
 	return validate.CheckHealth(loadAll, entityExists)
