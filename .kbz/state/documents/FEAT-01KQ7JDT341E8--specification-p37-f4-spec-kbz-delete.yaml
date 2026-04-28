@@ -1,10 +1,12 @@
 id: FEAT-01KQ7JDT341E8/specification-p37-f4-spec-kbz-delete
 path: work/design/p37-f4-spec-kbz-delete.md
-type: specification
+type: spec
 title: "P37-F4: kbz delete Command Specification"
-status: draft
+status: approved
 owner: FEAT-01KQ7JDT341E8
-content_hash: 34f525c9646ed24ed5d580e4b34d8285524ab9dc3400ae52d58da7bc67bdf9f4
+approved_by: sambeau
+approved_at: "2026-04-28T00:25:43Z"
+content_hash: 168a8bfaa965282acbe7af3d75fea99385e48ad0f22a54bfa4daa93525686874
 created: "2026-04-27T13:56:25Z"
 created_by: sambeau
-updated: "2026-04-27T13:56:25Z"
+updated: "2026-04-28T00:25:43Z"
