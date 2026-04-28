@@ -2,8 +2,10 @@ id: PROJECT/spec-p38-spec-p38-f4-feature-display-ids-doc-inheritance
 path: work/P38-plans-and-batches/P38-spec-p38-f4-feature-display-ids-doc-inheritance.md
 type: spec
 title: "P38-F4: Feature Display IDs and Document Inheritance — Specification"
-status: draft
-content_hash: ec0d2a576a3d49a55082b4b8d27a90b5e6b7e0d9d8ebccab64bc7c8ece680f2f
+status: approved
+approved_by: sambeau
+approved_at: "2026-04-28T01:35:26Z"
+content_hash: 2138dcfb855528a872a40aa3a85bfe158dd43351d74f41597e07c674654a7353
 created: "2026-04-28T01:26:36Z"
 created_by: sambeau
-updated: "2026-04-28T01:26:36Z"
+updated: "2026-04-28T01:35:26Z"
