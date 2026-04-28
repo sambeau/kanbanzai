@@ -1,0 +1,9 @@
+id: FEAT-01KQAGMVQABXH
+slug: full-combined-migration
+name: Full Combined Migration
+parent: B38-plans-and-batches
+status: proposed
+summary: "Migrate all ~400 work files from type-first directories to plan-first B{n} directories with canonical filenames, combined with P{n}->B{n} rename throughout."
+created: "2026-04-28T17:02:04Z"
+created_by: sambeau
+display_id: B38-F10
