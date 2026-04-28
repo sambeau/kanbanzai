@@ -646,18 +646,29 @@ func generateProposal(spec specStructure, featureSlug, context string, maxTasksP
 					covers = append(covers, ac.text)
 					rationaleLines = append(rationaleLines, "- "+ac.text)
 				}
-				tasks = append(tasks, ProposedTask{
+				implTask := ProposedTask{
 					Slug:      slug,
 					Name:      deriveTaskName("Implement "+sectionTitle, "Implement grouped tasks"),
 					Summary:   summary,
 					Rationale: "Covers " + strconv.Itoa(n) + " acceptance criteria:\n" + strings.Join(rationaleLines, "\n"),
 					Covers:    covers,
-				})
+				}
+				tasks = append(tasks, implTask)
+				if !allCoversContainTest(implTask.Covers) {
+					tasks = append(tasks, ProposedTask{
+						Slug:      implTask.Slug + "-tests",
+						Name:      deriveTaskName("Test "+implTask.Name, "Test "+implTask.Slug),
+						Summary:   "Write tests covering: " + implTask.Summary,
+						Rationale: "Paired test task for " + implTask.Slug + ".",
+						DependsOn: []string{implTask.Slug},
+						Covers:    implTask.Covers,
+					})
+				}
 			} else {
 				// Individual tasks: 1 AC or 5+ ACs per section.
 				for i, ac := range g.acs {
 					slug := buildTaskSlug(featureSlug, ac.text, taskIndex+i)
-					tasks = append(tasks, ProposedTask{
+					implTask := ProposedTask{
 						Slug:    slug,
 						Name:    deriveTaskName(ac.text, fmt.Sprintf("Implement AC-%03d", taskIndex+i+1)),
 						Summary: ac.text,
@@ -666,30 +677,22 @@ func generateProposal(spec specStructure, featureSlug, context string, maxTasksP
 							ac.text, sectionOrDefault(ac.section),
 						),
 						Covers: []string{ac.text},
-					})
+					}
+					tasks = append(tasks, implTask)
+					if !allCoversContainTest(implTask.Covers) {
+						tasks = append(tasks, ProposedTask{
+							Slug:      implTask.Slug + "-tests",
+							Name:      deriveTaskName("Test "+implTask.Name, "Test "+implTask.Slug),
+							Summary:   "Write tests covering: " + implTask.Summary,
+							Rationale: "Paired test task for " + implTask.Slug + ".",
+							DependsOn: []string{implTask.Slug},
+							Covers:    implTask.Covers,
+						})
+					}
 				}
 			}
 			taskIndex += n
 		}
-	}
-
-	// Check if any tasks need a test companion (guidance rule 6).
-	hasTestTask := false
-	for _, t := range tasks {
-		lower := strings.ToLower(t.Summary)
-		if strings.Contains(lower, "test") {
-			hasTestTask = true
-			break
-		}
-	}
-	if len(tasks) > 0 && !hasTestTask {
-		tasks = append(tasks, ProposedTask{
-			Slug:      featureSlug + "-tests",
-			Name:      "Write tests",
-			Summary:   "Write tests for " + featureSlug,
-			Rationale: "Guidance rule: test tasks are explicit. No test task was found among proposed tasks.",
-		})
-		appliedGuidance = append(appliedGuidance, "test-tasks-explicit")
 	}
 
 	// Size soft limit is always applied (guidance rule 3) — we note it as
@@ -737,6 +740,17 @@ func generateProposal(spec specStructure, featureSlug, context string, maxTasksP
 		Slices:         slices,
 		Warnings:       warnings,
 	}, deduplicateStrings(appliedGuidance)
+}
+
+// allCoversContainTest reports whether every entry in covers contains the
+// word "test" (case-insensitive). Returns false for an empty slice.
+func allCoversContainTest(covers []string) bool {
+	for _, c := range covers {
+		if !strings.Contains(strings.ToLower(c), "test") {
+			return false
+		}
+	}
+	return len(covers) > 0
 }
 
 // identifySlices extracts vertical slice names from level-2 section headers,

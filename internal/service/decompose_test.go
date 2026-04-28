@@ -221,7 +221,6 @@ func TestDecomposeFeature_GuidanceApplied(t *testing.T) {
 		"size-soft-limit-8",
 		"explicit-dependencies",
 		"role-assignment",
-		"test-tasks-explicit",
 	}
 	for _, rule := range expectedRules {
 		found := false
@@ -1655,7 +1654,7 @@ func TestGrouping_Thresholds(t *testing.T) {
 			// Count AC tasks (exclude the auto-added test-companion task).
 			var acTasks []ProposedTask
 			for _, task := range proposal.Tasks {
-				if task.Slug != featureSlug+"-tests" {
+				if !strings.HasSuffix(task.Slug, "-tests") {
 					acTasks = append(acTasks, task)
 				}
 			}
@@ -1733,7 +1732,7 @@ func TestGrouping_MixedSections(t *testing.T) {
 	// Expect: 1 grouped (Section A) + 7 individual (Section B) = 8 AC tasks + test task.
 	acTaskCount := 0
 	for _, task := range proposal.Tasks {
-		if task.Slug != featureSlug+"-tests" {
+		if !strings.HasSuffix(task.Slug, "-tests") {
 			acTaskCount++
 		}
 	}
@@ -1782,7 +1781,7 @@ func TestGrouping_MixedSections(t *testing.T) {
 
 	// Section B tasks should each have exactly 1 Covers entry.
 	for _, task := range proposal.Tasks {
-		if task.Slug == featureSlug+"-tests" || task.Slug == featureSlug+"-section-a" {
+		if strings.HasSuffix(task.Slug, "-tests") || task.Slug == featureSlug+"-section-a" {
 			continue
 		}
 		if len(task.Covers) != 1 {
@@ -1792,7 +1791,8 @@ func TestGrouping_MixedSections(t *testing.T) {
 }
 
 // TestGrouping_TestCompanionHasNoCovers verifies that the automatically added
-// test-companion task has nil/empty Covers.
+// paired test task has Covers matching the impl task's Covers (no global
+// "feat-tests" task is generated; instead each impl task gets its own paired test).
 func TestGrouping_TestCompanionHasNoCovers(t *testing.T) {
 	t.Parallel()
 
@@ -1803,20 +1803,287 @@ func TestGrouping_TestCompanionHasNoCovers(t *testing.T) {
 	}
 	proposal, _ := generateProposal(spec, "feat", "", 0)
 
+	// No global "feat-tests" task should exist.
 	for _, task := range proposal.Tasks {
 		if task.Slug == "feat-tests" {
-			if len(task.Covers) != 0 {
-				t.Errorf("test-companion task Covers = %v, want nil/empty", task.Covers)
-			}
+			t.Error("unexpected global test task 'feat-tests'; paired test tasks should use impl-slug-tests pattern")
 			return
 		}
 	}
-	t.Error("test-companion task 'feat-tests' not found in proposal")
+
+	// The paired test task should have Covers matching the impl task.
+	var implTask, testTask *ProposedTask
+	for i := range proposal.Tasks {
+		if strings.HasSuffix(proposal.Tasks[i].Slug, "-tests") {
+			testTask = &proposal.Tasks[i]
+		} else {
+			implTask = &proposal.Tasks[i]
+		}
+	}
+	if implTask == nil {
+		t.Fatal("impl task not found in proposal")
+	}
+	if testTask == nil {
+		t.Fatal("paired test task not found in proposal")
+	}
+	if len(testTask.Covers) == 0 || len(testTask.Covers) != len(implTask.Covers) {
+		t.Errorf("paired test task Covers = %v, want to match impl task Covers %v", testTask.Covers, implTask.Covers)
+	}
 }
 
 // TestProposedTask_CoversOmittedFromJSON verifies that a nil Covers slice is
 // omitted from JSON encoding (json:"covers,omitempty"), and that a non-empty
 // Covers slice is included.
+
+// ---------------------------------------------------------------------------
+// AC-001 through AC-008: paired test task generation
+// ---------------------------------------------------------------------------
+
+// TestPairedTestTasks_AC001_ThreeImplACs verifies that 3 impl-generating ACs
+// (none containing "test") produce 6 tasks: 3 impl + 3 paired test.
+func TestPairedTestTasks_AC001_ThreeImplACs(t *testing.T) {
+	t.Parallel()
+
+	// 3 ACs, each in a separate section → individual tasks (1 AC per section).
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "user can register", section: "Auth", parentL2: "Auth"},
+			{text: "user can log in", section: "Login", parentL2: "Login"},
+			{text: "user can log out", section: "Logout", parentL2: "Logout"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0)
+
+	if len(proposal.Tasks) != 6 {
+		t.Errorf("task count = %d, want 6 (3 impl + 3 test)", len(proposal.Tasks))
+	}
+
+	implCount := 0
+	testCount := 0
+	for _, task := range proposal.Tasks {
+		if strings.HasSuffix(task.Slug, "-tests") {
+			testCount++
+		} else {
+			implCount++
+		}
+	}
+	if implCount != 3 {
+		t.Errorf("impl task count = %d, want 3", implCount)
+	}
+	if testCount != 3 {
+		t.Errorf("test task count = %d, want 3", testCount)
+	}
+}
+
+// TestPairedTestTasks_AC002_TestTaskFields verifies that the paired test task
+// has slug, name, summary, and DependsOn derived from the impl task.
+func TestPairedTestTasks_AC002_TestTaskFields(t *testing.T) {
+	t.Parallel()
+
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "user can log in", section: "S", parentL2: "S"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0)
+
+	var implTask, testTask *ProposedTask
+	for i := range proposal.Tasks {
+		if strings.HasSuffix(proposal.Tasks[i].Slug, "-tests") {
+			testTask = &proposal.Tasks[i]
+		} else {
+			implTask = &proposal.Tasks[i]
+		}
+	}
+	if implTask == nil {
+		t.Fatal("impl task not found")
+	}
+	if testTask == nil {
+		t.Fatal("paired test task not found")
+	}
+
+	if testTask.Slug != implTask.Slug+"-tests" {
+		t.Errorf("test task Slug = %q, want %q", testTask.Slug, implTask.Slug+"-tests")
+	}
+	wantName := deriveTaskName("Test "+implTask.Name, "Test "+implTask.Slug)
+	if testTask.Name != wantName {
+		t.Errorf("test task Name = %q, want %q", testTask.Name, wantName)
+	}
+	wantSummary := "Write tests covering: " + implTask.Summary
+	if testTask.Summary != wantSummary {
+		t.Errorf("test task Summary = %q, want %q", testTask.Summary, wantSummary)
+	}
+	if len(testTask.DependsOn) != 1 || testTask.DependsOn[0] != implTask.Slug {
+		t.Errorf("test task DependsOn = %v, want [%q]", testTask.DependsOn, implTask.Slug)
+	}
+}
+
+// TestPairedTestTasks_AC003_TestCoversMatchImpl verifies that the paired test
+// task's Covers slice equals the impl task's Covers slice.
+func TestPairedTestTasks_AC003_TestCoversMatchImpl(t *testing.T) {
+	t.Parallel()
+
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "user can log in", section: "S", parentL2: "S"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0)
+
+	var implTask, testTask *ProposedTask
+	for i := range proposal.Tasks {
+		if strings.HasSuffix(proposal.Tasks[i].Slug, "-tests") {
+			testTask = &proposal.Tasks[i]
+		} else {
+			implTask = &proposal.Tasks[i]
+		}
+	}
+	if implTask == nil {
+		t.Fatal("impl task not found")
+	}
+	if testTask == nil {
+		t.Fatal("paired test task not found")
+	}
+	if len(testTask.Covers) != len(implTask.Covers) {
+		t.Fatalf("test task Covers length = %d, want %d", len(testTask.Covers), len(implTask.Covers))
+	}
+	for i, c := range implTask.Covers {
+		if testTask.Covers[i] != c {
+			t.Errorf("test task Covers[%d] = %q, want %q", i, testTask.Covers[i], c)
+		}
+	}
+}
+
+// TestPairedTestTasks_AC004_ImplACWithTestKeyword verifies that an impl task
+// whose sole AC text contains "test" does NOT get a paired test task.
+func TestPairedTestTasks_AC004_ImplACWithTestKeyword(t *testing.T) {
+	t.Parallel()
+
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "write tests for user login", section: "S", parentL2: "S"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0)
+
+	for _, task := range proposal.Tasks {
+		if strings.HasSuffix(task.Slug, "-tests") {
+			t.Errorf("unexpected paired test task %q; AC contains 'test' so none should be generated", task.Slug)
+		}
+	}
+	if len(proposal.Tasks) != 1 {
+		t.Errorf("task count = %d, want 1 (impl only, no paired test)", len(proposal.Tasks))
+	}
+}
+
+// TestPairedTestTasks_AC005_GroupedACsOneContainsTest verifies that a grouped
+// task whose Covers have mixed "test" membership still gets a paired test task
+// (because not ALL covers contain "test").
+func TestPairedTestTasks_AC005_GroupedACsOneContainsTest(t *testing.T) {
+	t.Parallel()
+
+	// 2 ACs in the same section → grouped. One contains "test", one does not.
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "implement auth", section: "Auth", parentL2: "Auth"},
+			{text: "test auth flow", section: "Auth", parentL2: "Auth"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0)
+
+	var testTaskFound bool
+	for _, task := range proposal.Tasks {
+		if strings.HasSuffix(task.Slug, "-tests") {
+			testTaskFound = true
+			break
+		}
+	}
+	if !testTaskFound {
+		t.Error("expected paired test task when not all covers contain 'test'")
+	}
+}
+
+// TestPairedTestTasks_AC006_NoGenericWriteTestsTask verifies that no task in
+// the proposal has the generic name "Write tests".
+func TestPairedTestTasks_AC006_NoGenericWriteTestsTask(t *testing.T) {
+	t.Parallel()
+
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "user can register", section: "Auth", parentL2: "Auth"},
+			{text: "user can log in", section: "Login", parentL2: "Login"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0)
+
+	for _, task := range proposal.Tasks {
+		if task.Name == "Write tests" {
+			t.Errorf("found task with generic name %q, slug %q", task.Name, task.Slug)
+		}
+	}
+}
+
+// TestPairedTestTasks_AC007_ACWithoutTestGetsPairedTest verifies that an impl
+// task from an AC that does NOT contain "test" gets a paired test task.
+func TestPairedTestTasks_AC007_ACWithoutTestGetsPairedTest(t *testing.T) {
+	t.Parallel()
+
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "user registration works", section: "S", parentL2: "S"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0)
+
+	var testTaskFound bool
+	for _, task := range proposal.Tasks {
+		if strings.HasSuffix(task.Slug, "-tests") {
+			testTaskFound = true
+			break
+		}
+	}
+	if !testTaskFound {
+		t.Error("expected paired test task for AC that does not contain 'test'")
+	}
+}
+
+// TestPairedTestTasks_AC008_FourImplACsOneIsTestException verifies the count
+// when 4 individual ACs are present: 1 AC contains "test" (no paired test),
+// the other 3 do not (each gets a paired test) → 4 impl + 3 test = 7 total.
+func TestPairedTestTasks_AC008_FourImplACsOneIsTestException(t *testing.T) {
+	t.Parallel()
+
+	// 4 ACs in 4 separate sections so each produces an individual impl task.
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "do something useful", section: "Sec1", parentL2: "Sec1"},
+			{text: "test validation rules", section: "Sec2", parentL2: "Sec2"},
+			{text: "configure settings", section: "Sec3", parentL2: "Sec3"},
+			{text: "handle errors gracefully", section: "Sec4", parentL2: "Sec4"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0)
+
+	implCount := 0
+	testCount := 0
+	for _, task := range proposal.Tasks {
+		if strings.HasSuffix(task.Slug, "-tests") {
+			testCount++
+		} else {
+			implCount++
+		}
+	}
+	if implCount != 4 {
+		t.Errorf("impl task count = %d, want 4", implCount)
+	}
+	if testCount != 3 {
+		t.Errorf("test task count = %d, want 3 (AC with 'test' has no paired test)", testCount)
+	}
+	if len(proposal.Tasks) != 7 {
+		t.Errorf("total task count = %d, want 7 (4 impl + 3 test)", len(proposal.Tasks))
+	}
+}
+
 func TestProposedTask_CoversOmittedFromJSON(t *testing.T) {
 	t.Parallel()
 
