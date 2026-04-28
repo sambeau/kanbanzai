@@ -1,0 +1,6 @@
+id: TASK-01KQ8WZKFWBMF
+parent_feature: FEAT-01KQ7YQKPT8HF
+slug: other-tools-plan-batch-updates
+name: Decompose Next Estimate Knowledge Doc Tool Updates
+summary: "Update decompose, next, estimate, knowledge, and doc tools to accept batch/plan IDs. Decompose accepts batch as feature_id parent. Next uses batch terminology in context packets. Estimate dispatches to correct rollup function. Knowledge scopes to batch IDs. Doc accepts batch as owner."
+status: queued
