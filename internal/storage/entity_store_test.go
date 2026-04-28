@@ -185,7 +185,7 @@ func TestEntityStore_WriteAndLoad_Plan(t *testing.T) {
 
 	// Plan files must use {id}.yaml, not {id}-{slug}.yaml, because the
 	// Plan ID already contains the slug (spec §15.1).
-	wantPath := filepath.Join(root, "plans", "P1-basic-ui.yaml")
+	wantPath := filepath.Join(root, "batches", "P1-basic-ui.yaml")
 	if path != wantPath {
 		t.Fatalf("Write() path = %q, want %q", path, wantPath)
 	}
@@ -337,7 +337,7 @@ func TestEntityStore_Load_FixtureFiles(t *testing.T) {
 				"created_by": "sam",
 				"updated":    "2026-03-20T10:00:00Z",
 			},
-			wantFilePath: filepath.Join(root, "plans", "P1-initial-kernel.yaml"),
+			wantFilePath: filepath.Join(root, "batches", "P1-initial-kernel.yaml"),
 		},
 
 		{
@@ -917,7 +917,7 @@ func TestEntityStore_Load_CorruptYAML(t *testing.T) {
 	root := t.TempDir()
 	store := NewEntityStore(root)
 
-	dir := filepath.Join(root, "plans")
+	dir := filepath.Join(root, "batches")
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		t.Fatalf("MkdirAll() error = %v", err)
 	}
@@ -988,7 +988,7 @@ func TestEntityStore_Load_EmptyFile(t *testing.T) {
 	root := t.TempDir()
 	store := NewEntityStore(root)
 
-	dir := filepath.Join(root, "plans")
+	dir := filepath.Join(root, "batches")
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		t.Fatalf("MkdirAll() error = %v", err)
 	}

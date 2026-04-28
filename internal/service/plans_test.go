@@ -176,8 +176,8 @@ func TestGetPlan_InvalidIDFormat(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected error for invalid Plan ID format")
 	}
-	if !strings.Contains(err.Error(), "invalid Plan ID format") {
-		t.Errorf("error = %q, want to contain 'invalid Plan ID format'", err.Error())
+	if !strings.Contains(err.Error(), "invalid Batch ID format") {
+		t.Errorf("error = %q, want to contain 'invalid Batch ID format'", err.Error())
 	}
 }
 
