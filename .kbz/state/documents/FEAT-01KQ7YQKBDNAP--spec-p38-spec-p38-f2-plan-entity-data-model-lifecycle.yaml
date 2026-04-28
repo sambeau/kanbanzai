@@ -2,9 +2,11 @@ id: FEAT-01KQ7YQKBDNAP/spec-p38-spec-p38-f2-plan-entity-data-model-lifecycle
 path: work/P38-plans-and-batches/P38-spec-p38-f2-plan-entity-data-model-lifecycle.md
 type: spec
 title: "P38-F2: Plan Entity Data Model and Lifecycle — Specification"
-status: draft
+status: approved
 owner: FEAT-01KQ7YQKBDNAP
+approved_by: sambeau
+approved_at: "2026-04-28T01:40:29Z"
 content_hash: 1677bc65c61872e8e2951c64145752a5218c40a23f676d84eb4417afd3fee34a
 created: "2026-04-28T01:40:18Z"
 created_by: sambeau
-updated: "2026-04-28T01:40:18Z"
+updated: "2026-04-28T01:40:29Z"
