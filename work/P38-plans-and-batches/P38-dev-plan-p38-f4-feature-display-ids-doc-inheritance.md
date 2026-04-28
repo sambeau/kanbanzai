@@ -3,10 +3,19 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-04-28T01:45:03Z           |
-| Status | Draft                          |
+| Status | approved |
 | Author | architect                      |
 
 ---
+
+## Overview
+
+This dev-plan covers the two changes specified for FEAT-01KQ7YQKHK2GV: switching
+feature display IDs from the plan-scoped `P{n}-F{n}` to the batch-scoped `B{n}-F{n}`,
+and extending the document gate lookup chain from three levels to four to support
+plan-level document inheritance through the batch→plan parent hierarchy. Both changes
+follow from the P38 batch entity rename (P38-F3) and the plan entity data model
+(P38-F2).
 
 ## Scope
 
@@ -90,6 +99,52 @@ Both Task 1 and Task 2 are independent — display ID formatting and gate evalua
 touch different packages (`internal/service/` vs `internal/gate/`). They can be
 implemented in parallel by separate sub-agents. Task 3 integrates and verifies
 both together.
+
+---
+
+## Interface Contracts
+
+### Batch entity shape (from P38-F3)
+
+Task 1 and Task 2 both consume the batch entity. After P38-F3, the batch entity
+exposes:
+
+- `id`: string in `B{n}-{slug}` format (e.g. `B24-auth-system`)
+- `parent`: optional string referencing a plan ID (e.g. `P1-platform`)
+- `next_feature_seq`: int counter for feature display ID allocation
+- `Model.ParseBatchID(id)` → `(prefix, number, slug)` for extracting the batch number
+
+### Gate EntityService interface extension
+
+Task 2 extends `gate.EntityService` with a `GetEntity` method:
+
+```go
+type EntityService interface {
+    List(entityType string) ([]EntityResult, error)
+    GetEntity(entityType string, id string) (*EntityResult, error) // new
+}
+```
+
+The `gateEntityAdapter` in `internal/mcp/entity_tool.go` delegates to the concrete
+`service.EntityService`. The concrete service already has entity lookup methods
+(`Get`, `GetPlan`, `GetBatch`); the adapter maps `GetEntity("batch", id)` to the
+appropriate call.
+
+### buildGateEvalContext — no signature change
+
+The `buildGateEvalContext` function signature remains unchanged. The four-level
+lookup is handled internally by `evalOneDocument` using the `EntitySvc` available
+on the context. No new fields are added to `PrereqEvalContext`.
+
+---
+
+## Traceability Matrix
+
+| Task | REQs Covered | ACs Covered |
+|------|-------------|-------------|
+| Task 1: Feature Display IDs | REQ-001, REQ-002, REQ-003, REQ-004, REQ-005, REQ-006 | AC-001, AC-002, AC-003, AC-004, AC-005, AC-006 |
+| Task 2: Four-Level Gate | REQ-007, REQ-008, REQ-009, REQ-010, REQ-011, REQ-012, REQ-NF-001, REQ-NF-002 | AC-007, AC-008, AC-009, AC-010, AC-011, AC-012, AC-013 |
+| Task 3: Integration | All REQs (verification) | AC-001–AC-013 (pass confirmation) |
 
 ---
 
