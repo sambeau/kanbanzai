@@ -55,7 +55,16 @@ func defaultDependencies() dependencies {
 		stdin:   os.Stdin,
 		version: version,
 		newEntityService: func(root string) entityService {
-			return service.NewEntityService(root)
+			svc := service.NewEntityService(root)
+			cacheDir := filepath.Join(core.InstanceRootDir, cache.CacheDir)
+			if c, err := cache.Open(cacheDir); err == nil {
+				svc.SetCache(c)
+				if _, err := svc.RebuildCache(); err != nil {
+					// Cache warm-up failed; continue without cache.
+					// Reads will fall back to filesystem scans.
+				}
+			}
+			return svc
 		},
 	}
 }
