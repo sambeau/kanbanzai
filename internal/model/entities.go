@@ -9,26 +9,58 @@ import (
 type EntityKind string
 
 const (
-	EntityKindPlan     EntityKind = "plan"
-	EntityKindFeature  EntityKind = "feature"
-	EntityKindTask     EntityKind = "task"
-	EntityKindBug      EntityKind = "bug"
-	EntityKindDecision EntityKind = "decision"
-	EntityKindDocument EntityKind = "document"
-	EntityKindIncident EntityKind = "incident"
+	EntityKindBatch         EntityKind = "batch"
+	EntityKindFeature       EntityKind = "feature"
+	EntityKindTask          EntityKind = "task"
+	EntityKindBug           EntityKind = "bug"
+	EntityKindDecision      EntityKind = "decision"
+	EntityKindDocument      EntityKind = "document"
+	EntityKindIncident      EntityKind = "incident"
+	EntityKindStrategicPlan EntityKind = "strategic-plan"
+
+	// Deprecated: use EntityKindBatch.
+	EntityKindPlan EntityKind = EntityKindBatch
 )
 
-// PlanStatus is the lifecycle state for a Plan.
-type PlanStatus string
+// BatchStatus is the lifecycle state for a Batch (execution-level plan).
+type BatchStatus string
 
 const (
-	PlanStatusProposed   PlanStatus = "proposed"
-	PlanStatusDesigning  PlanStatus = "designing"
-	PlanStatusActive     PlanStatus = "active"
-	PlanStatusReviewing  PlanStatus = "reviewing"
-	PlanStatusDone       PlanStatus = "done"
-	PlanStatusSuperseded PlanStatus = "superseded"
-	PlanStatusCancelled  PlanStatus = "cancelled"
+	BatchStatusProposed   BatchStatus = "proposed"
+	BatchStatusDesigning  BatchStatus = "designing"
+	BatchStatusActive     BatchStatus = "active"
+	BatchStatusReviewing  BatchStatus = "reviewing"
+	BatchStatusDone       BatchStatus = "done"
+	BatchStatusSuperseded BatchStatus = "superseded"
+	BatchStatusCancelled  BatchStatus = "cancelled"
+)
+
+// Deprecated: use BatchStatus.
+type PlanStatus = BatchStatus
+
+// Deprecated constants.
+const (
+	PlanStatusProposed   = BatchStatusProposed
+	PlanStatusDesigning  = BatchStatusDesigning
+	PlanStatusActive     = BatchStatusActive
+	PlanStatusReviewing  = BatchStatusReviewing
+	PlanStatusDone       = BatchStatusDone
+	PlanStatusSuperseded = BatchStatusSuperseded
+	PlanStatusCancelled  = BatchStatusCancelled
+)
+
+// PlanningStatus is the lifecycle state for a strategic Plan entity.
+// After P38-F3 renames PlanStatus to BatchStatus, this type will become PlanStatus.
+type PlanningStatus string
+
+const (
+	PlanningStatusIdea       PlanningStatus = "idea"
+	PlanningStatusShaping    PlanningStatus = "shaping"
+	PlanningStatusReady      PlanningStatus = "ready"
+	PlanningStatusActive     PlanningStatus = "active"
+	PlanningStatusDone       PlanningStatus = "done"
+	PlanningStatusSuperseded PlanningStatus = "superseded"
+	PlanningStatusCancelled  PlanningStatus = "cancelled"
 )
 
 // FeatureStatus is the lifecycle state for a Feature.
@@ -155,14 +187,14 @@ type DocumentType string
 
 const (
 	// User-facing document types (REQ-001).
-	DocumentTypeDesign    DocumentType = "design"
-	DocumentTypeSpec      DocumentType = "spec"
-	DocumentTypeDevPlan   DocumentType = "dev-plan"
-	DocumentTypeReview    DocumentType = "review"
-	DocumentTypeReport    DocumentType = "report"
-	DocumentTypeResearch  DocumentType = "research"
-	DocumentTypeRetro     DocumentType = "retro"
-	DocumentTypeProposal  DocumentType = "proposal"
+	DocumentTypeDesign   DocumentType = "design"
+	DocumentTypeSpec     DocumentType = "spec"
+	DocumentTypeDevPlan  DocumentType = "dev-plan"
+	DocumentTypeReview   DocumentType = "review"
+	DocumentTypeReport   DocumentType = "report"
+	DocumentTypeResearch DocumentType = "research"
+	DocumentTypeRetro    DocumentType = "retro"
+	DocumentTypeProposal DocumentType = "proposal"
 
 	// Internal types accepted by doc register (REQ-004).
 	DocumentTypePolicy DocumentType = "policy"
@@ -249,38 +281,77 @@ type Entity interface {
 	GetSlug() string
 }
 
-// Plan is the canonical representation of a Plan (replaces Epic in Phase 2).
-// A Plan coordinates a body of work, provides direction through its design
+// Batch is the canonical representation of a Batch (execution-level plan).
+// A Batch coordinates a body of work, provides direction through its design
 // document, and organises Features.
-type Plan struct {
-	ID        string     `yaml:"id"`
-	Slug      string     `yaml:"slug"`
-	Name      string     `yaml:"name"`
-	Status    PlanStatus `yaml:"status"`
-	Summary   string     `yaml:"summary"`
-	Design    string     `yaml:"design,omitempty"`
-	Tags      []string   `yaml:"tags,omitempty"`
-	Created   time.Time  `yaml:"created"`
-	CreatedBy string     `yaml:"created_by"`
-	Updated        time.Time  `yaml:"updated"`
-	NextFeatureSeq int        `yaml:"next_feature_seq"`
+type Batch struct {
+	ID             string      `yaml:"id"`
+	Slug           string      `yaml:"slug"`
+	Name           string      `yaml:"name"`
+	Status         BatchStatus `yaml:"status"`
+	Summary        string      `yaml:"summary"`
+	Design         string      `yaml:"design,omitempty"`
+	Tags           []string    `yaml:"tags,omitempty"`
+	Created        time.Time   `yaml:"created"`
+	CreatedBy      string      `yaml:"created_by"`
+	Updated        time.Time   `yaml:"updated"`
+	NextFeatureSeq int         `yaml:"next_feature_seq"`
 
 	Supersedes   string `yaml:"supersedes,omitempty"`
 	SupersededBy string `yaml:"superseded_by,omitempty"`
 }
 
+// Deprecated: use Batch.
+type Plan = Batch
+
 // GetKind returns the entity kind.
-func (Plan) GetKind() EntityKind {
-	return EntityKindPlan
+func (Batch) GetKind() EntityKind {
+	return EntityKindBatch
 }
 
 // GetID returns the canonical ID.
-func (p Plan) GetID() string {
+func (b Batch) GetID() string {
+	return b.ID
+}
+
+// GetSlug returns the human-readable slug.
+func (b Batch) GetSlug() string {
+	return b.Slug
+}
+
+// StrategicPlan is the recursive entity for strategic planning.
+// A StrategicPlan represents what needs to be built — a strategic direction, system decomposition,
+// or themed group of work. Plans can contain child plans, batches, or both.
+type StrategicPlan struct {
+	ID           string         `yaml:"id"`
+	Slug         string         `yaml:"slug"`
+	Name         string         `yaml:"name"`
+	Status       PlanningStatus `yaml:"status"`
+	Summary      string         `yaml:"summary"`
+	Parent       string         `yaml:"parent,omitempty"`
+	Design       string         `yaml:"design,omitempty"`
+	DependsOn    []string       `yaml:"depends_on,omitempty"`
+	Order        int            `yaml:"order,omitempty"`
+	Tags         []string       `yaml:"tags,omitempty"`
+	Created      time.Time      `yaml:"created"`
+	CreatedBy    string         `yaml:"created_by"`
+	Updated      time.Time      `yaml:"updated"`
+	Supersedes   string         `yaml:"supersedes,omitempty"`
+	SupersededBy string         `yaml:"superseded_by,omitempty"`
+}
+
+// GetKind returns the entity kind.
+func (StrategicPlan) GetKind() EntityKind {
+	return EntityKindStrategicPlan
+}
+
+// GetID returns the canonical ID.
+func (p StrategicPlan) GetID() string {
 	return p.ID
 }
 
 // GetSlug returns the human-readable slug.
-func (p Plan) GetSlug() string {
+func (p StrategicPlan) GetSlug() string {
 	return p.Slug
 }
 
@@ -302,7 +373,7 @@ type Feature struct {
 	Slug          string        `yaml:"slug"`
 	Name          string        `yaml:"name"`
 	DisplayID     string        `yaml:"display_id,omitempty"`
-	Parent        string        `yaml:"parent,omitempty"` // Parent Plan ID (renamed from epic)
+	Parent        string        `yaml:"parent,omitempty"` // Parent Batch/Plan ID
 	Status        FeatureStatus `yaml:"status"`
 	ReviewCycle   int           `yaml:"review_cycle,omitempty"`
 	BlockedReason string        `yaml:"blocked_reason,omitempty"`
@@ -315,7 +386,7 @@ type Feature struct {
 	// Document references (Phase 2)
 	Design  string `yaml:"design,omitempty"`   // Reference to design document record
 	Spec    string `yaml:"spec,omitempty"`     // Reference to specification document record
-	DevPlan string `yaml:"dev_plan,omitempty"` // Reference to dev plan document record (renamed from plan)
+	DevPlan string `yaml:"dev_plan,omitempty"` // Reference to dev plan document record
 
 	// Tags for cross-cutting organisational metadata
 	Tags []string `yaml:"tags,omitempty"`
@@ -549,10 +620,10 @@ func (i Incident) GetSlug() string {
 	return i.Slug
 }
 
-// IsPlanID returns true if the given ID matches the Plan ID pattern.
-// Plan IDs have the format: {X}{n}-{slug} where {X} is a single non-digit
+// IsBatchID returns true if the given ID matches the Batch/Plan ID pattern.
+// IDs have the format: {X}{n}-{slug} where {X} is a single non-digit
 // Unicode rune, {n} is one or more digits, and {slug} is a lowercase slug.
-func IsPlanID(id string) bool {
+func IsBatchID(id string) bool {
 	if len(id) < 4 { // Minimum: X1-a
 		return false
 	}
@@ -593,10 +664,15 @@ func IsPlanID(id string) bool {
 	return true
 }
 
-// ParsePlanID extracts the prefix, number, and slug from a Plan ID.
-// Returns empty strings if the ID is not a valid Plan ID.
-func ParsePlanID(id string) (prefix string, number string, slug string) {
-	if !IsPlanID(id) {
+// Deprecated: use IsBatchID.
+func IsPlanID(id string) bool {
+	return IsBatchID(id)
+}
+
+// ParseBatchID extracts the prefix, number, and slug from a Batch/Plan ID.
+// Returns empty strings if the ID is not a valid Batch/Plan ID.
+func ParseBatchID(id string) (prefix string, number string, slug string) {
+	if !IsBatchID(id) {
 		return "", "", ""
 	}
 
@@ -613,4 +689,9 @@ func ParsePlanID(id string) (prefix string, number string, slug string) {
 	slug = string(runes[digitEnd+1:]) // Skip the hyphen
 
 	return prefix, number, slug
+}
+
+// Deprecated: use ParseBatchID.
+func ParsePlanID(id string) (prefix string, number string, slug string) {
+	return ParseBatchID(id)
 }

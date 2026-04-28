@@ -11,30 +11,39 @@ import (
 type EntityKind = model.EntityKind
 
 const (
-	EntityPlan     = model.EntityKindPlan
-	EntityFeature  = model.EntityKindFeature
-	EntityTask     = model.EntityKindTask
-	EntityBug      = model.EntityKindBug
-	EntityDecision = model.EntityKindDecision
-	EntityIncident = model.EntityKindIncident
+	EntityBatch         = model.EntityKindBatch
+	EntityFeature       = model.EntityKindFeature
+	EntityTask          = model.EntityKindTask
+	EntityBug           = model.EntityKindBug
+	EntityDecision      = model.EntityKindDecision
+	EntityIncident      = model.EntityKindIncident
+	EntityStrategicPlan = model.EntityKindStrategicPlan
+
+	// Deprecated: use EntityBatch.
+	EntityPlan = EntityBatch
 )
 
 var entryStates = map[EntityKind]string{
-	EntityPlan:     string(model.PlanStatusProposed),
-	EntityFeature:  phase2FeatureEntryState, // Phase 2 entry state (document-driven lifecycle)
-	EntityTask:     string(model.TaskStatusQueued),
-	EntityBug:      string(model.BugStatusReported),
-	EntityDecision: string(model.DecisionStatusProposed),
-	EntityIncident: string(model.IncidentStatusReported),
+	EntityBatch:         string(model.BatchStatusProposed),
+	EntityFeature:       phase2FeatureEntryState, // Phase 2 entry state (document-driven lifecycle)
+	EntityTask:          string(model.TaskStatusQueued),
+	EntityBug:           string(model.BugStatusReported),
+	EntityDecision:      string(model.DecisionStatusProposed),
+	EntityIncident:      string(model.IncidentStatusReported),
+	EntityStrategicPlan: string(model.PlanningStatusIdea),
 }
 
 // phase2FeatureEntryState is the entry state for Phase 2 features (document-driven lifecycle).
 const phase2FeatureEntryState = "proposed"
 
 var terminalStates = map[EntityKind]map[string]struct{}{
-	EntityPlan: {
-		string(model.PlanStatusSuperseded): {},
-		string(model.PlanStatusCancelled):  {},
+	EntityBatch: {
+		string(model.BatchStatusSuperseded): {},
+		string(model.BatchStatusCancelled):  {},
+	},
+	EntityStrategicPlan: {
+		string(model.PlanningStatusSuperseded): {},
+		string(model.PlanningStatusCancelled):  {},
 	},
 	EntityFeature: {
 		string(model.FeatureStatusSuperseded): {},
@@ -59,46 +68,71 @@ var terminalStates = map[EntityKind]map[string]struct{}{
 	},
 }
 
+// Deprecated aliases for backward compatibility.
+var _ = terminalStates[EntityPlan]
+
 var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
-	// Plan lifecycle: proposed → designing → active → reviewing → done
-	// Shortcut: proposed → active (guarded by precondition in service layer — at least one
-	// feature must be in a post-designing state; the service layer enforces this and writes
-	// a system-generated override record on success).
-	// Terminal: superseded, cancelled (from any non-terminal)
-	EntityPlan: {
-		string(model.PlanStatusProposed): {
-			string(model.PlanStatusDesigning):  {},
-			string(model.PlanStatusActive):     {}, // shortcut: precondition enforced in service layer
-			string(model.PlanStatusSuperseded): {},
-			string(model.PlanStatusCancelled):  {},
+	// StrategicPlan lifecycle: idea → shaping → ready → active → done
+	EntityStrategicPlan: {
+		string(model.PlanningStatusIdea): {
+			string(model.PlanningStatusShaping):    {},
+			string(model.PlanningStatusSuperseded): {},
+			string(model.PlanningStatusCancelled):  {},
 		},
-		string(model.PlanStatusDesigning): {
-			string(model.PlanStatusActive):     {},
-			string(model.PlanStatusSuperseded): {},
-			string(model.PlanStatusCancelled):  {},
+		string(model.PlanningStatusShaping): {
+			string(model.PlanningStatusReady):      {},
+			string(model.PlanningStatusIdea):       {},
+			string(model.PlanningStatusSuperseded): {},
+			string(model.PlanningStatusCancelled):  {},
 		},
-		string(model.PlanStatusActive): {
-			string(model.PlanStatusReviewing):  {},
-			string(model.PlanStatusSuperseded): {},
-			string(model.PlanStatusCancelled):  {},
+		string(model.PlanningStatusReady): {
+			string(model.PlanningStatusActive):     {},
+			string(model.PlanningStatusShaping):    {},
+			string(model.PlanningStatusSuperseded): {},
+			string(model.PlanningStatusCancelled):  {},
 		},
-		string(model.PlanStatusReviewing): {
-			string(model.PlanStatusDone):       {},
-			string(model.PlanStatusActive):     {},
-			string(model.PlanStatusSuperseded): {},
-			string(model.PlanStatusCancelled):  {},
+		string(model.PlanningStatusActive): {
+			string(model.PlanningStatusDone):       {},
+			string(model.PlanningStatusShaping):    {},
+			string(model.PlanningStatusSuperseded): {},
+			string(model.PlanningStatusCancelled):  {},
 		},
-		string(model.PlanStatusDone): {
-			string(model.PlanStatusSuperseded): {},
-			string(model.PlanStatusCancelled):  {},
+		string(model.PlanningStatusDone): {
+			string(model.PlanningStatusSuperseded): {},
+			string(model.PlanningStatusCancelled):  {},
 		},
 	},
-	// Feature lifecycle supports both Phase 1 and Phase 2 states for backward compatibility.
-	//
-	// Phase 1 (legacy): draft → in-review → approved → in-progress → review → done
-	// Phase 2 (document-driven): proposed → designing → specifying → dev-planning → developing → reviewing → done
+	// Batch lifecycle: proposed → designing → active → reviewing → done
+	EntityBatch: {
+		string(model.BatchStatusProposed): {
+			string(model.BatchStatusDesigning):  {},
+			string(model.BatchStatusActive):     {},
+			string(model.BatchStatusSuperseded): {},
+			string(model.BatchStatusCancelled):  {},
+		},
+		string(model.BatchStatusDesigning): {
+			string(model.BatchStatusActive):     {},
+			string(model.BatchStatusSuperseded): {},
+			string(model.BatchStatusCancelled):  {},
+		},
+		string(model.BatchStatusActive): {
+			string(model.BatchStatusReviewing):  {},
+			string(model.BatchStatusSuperseded): {},
+			string(model.BatchStatusCancelled):  {},
+		},
+		string(model.BatchStatusReviewing): {
+			string(model.BatchStatusDone):       {},
+			string(model.BatchStatusActive):     {},
+			string(model.BatchStatusSuperseded): {},
+			string(model.BatchStatusCancelled):  {},
+		},
+		string(model.BatchStatusDone): {
+			string(model.BatchStatusSuperseded): {},
+			string(model.BatchStatusCancelled):  {},
+		},
+	},
+	// Feature lifecycle
 	EntityFeature: {
-		// Phase 1 transitions (backward compatibility)
 		string(model.FeatureStatusDraft): {
 			string(model.FeatureStatusInReview): {},
 		},
@@ -121,16 +155,14 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 		string(model.FeatureStatusNeedsRework): {
 			string(model.FeatureStatusInReview):   {},
 			string(model.FeatureStatusInProgress): {},
-			// Phase 2 targets
 			string(model.FeatureStatusDeveloping): {},
 			string(model.FeatureStatusReviewing):  {},
 			string(model.FeatureStatusSuperseded): {},
 			string(model.FeatureStatusCancelled):  {},
 		},
-		// Phase 2 transitions (document-driven lifecycle)
 		string(model.FeatureStatusProposed): {
 			string(model.FeatureStatusDesigning):  {},
-			string(model.FeatureStatusSpecifying): {}, // Shortcut: spec without design
+			string(model.FeatureStatusSpecifying): {},
 			string(model.FeatureStatusSuperseded): {},
 			string(model.FeatureStatusCancelled):  {},
 		},
@@ -141,19 +173,19 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 		},
 		string(model.FeatureStatusSpecifying): {
 			string(model.FeatureStatusDevPlanning): {},
-			string(model.FeatureStatusDesigning):   {}, // Backward: design superseded
+			string(model.FeatureStatusDesigning):   {},
 			string(model.FeatureStatusSuperseded):  {},
 			string(model.FeatureStatusCancelled):   {},
 		},
 		string(model.FeatureStatusDevPlanning): {
 			string(model.FeatureStatusDeveloping): {},
-			string(model.FeatureStatusSpecifying): {}, // Backward: spec superseded
+			string(model.FeatureStatusSpecifying): {},
 			string(model.FeatureStatusSuperseded): {},
 			string(model.FeatureStatusCancelled):  {},
 		},
 		string(model.FeatureStatusDeveloping): {
 			string(model.FeatureStatusReviewing):   {},
-			string(model.FeatureStatusDevPlanning): {}, // Backward: dev plan superseded
+			string(model.FeatureStatusDevPlanning): {},
 			string(model.FeatureStatusSuperseded):  {},
 			string(model.FeatureStatusCancelled):   {},
 		},
@@ -163,7 +195,6 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 			string(model.FeatureStatusSuperseded):  {},
 			string(model.FeatureStatusCancelled):   {},
 		},
-		// Shared terminal states
 		string(model.FeatureStatusDone): {
 			string(model.FeatureStatusSuperseded): {},
 			string(model.FeatureStatusCancelled):  {},
@@ -181,11 +212,11 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 			string(model.TaskStatusDuplicate):  {},
 		},
 		string(model.TaskStatusActive): {
-			string(model.TaskStatusReady):       {}, // unclaim / crash recovery
+			string(model.TaskStatusReady):       {},
 			string(model.TaskStatusBlocked):     {},
 			string(model.TaskStatusNeedsReview): {},
-			string(model.TaskStatusNeedsRework): {}, // review_task_output fail from active
-			string(model.TaskStatusDone):        {}, // direct completion via complete_task
+			string(model.TaskStatusNeedsRework): {},
+			string(model.TaskStatusDone):        {},
 			string(model.TaskStatusNotPlanned):  {},
 			string(model.TaskStatusDuplicate):   {},
 		},
@@ -248,11 +279,11 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 	EntityIncident: {
 		string(model.IncidentStatusReported): {
 			string(model.IncidentStatusTriaged): {},
-			string(model.IncidentStatusClosed):  {}, // trivial / false alarm
+			string(model.IncidentStatusClosed):  {},
 		},
 		string(model.IncidentStatusTriaged): {
 			string(model.IncidentStatusInvestigating): {},
-			string(model.IncidentStatusClosed):        {}, // not reproducible
+			string(model.IncidentStatusClosed):        {},
 		},
 		string(model.IncidentStatusInvestigating): {
 			string(model.IncidentStatusRootCauseIdentified): {},
@@ -260,28 +291,29 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 		},
 		string(model.IncidentStatusRootCauseIdentified): {
 			string(model.IncidentStatusMitigated):     {},
-			string(model.IncidentStatusInvestigating): {}, // root cause revised
+			string(model.IncidentStatusInvestigating): {},
 			string(model.IncidentStatusClosed):        {},
 		},
 		string(model.IncidentStatusMitigated): {
 			string(model.IncidentStatusResolved):      {},
-			string(model.IncidentStatusInvestigating): {}, // mitigation incomplete
+			string(model.IncidentStatusInvestigating): {},
 			string(model.IncidentStatusClosed):        {},
 		},
 		string(model.IncidentStatusResolved): {
-			string(model.IncidentStatusClosed): {}, // after RCA approved
+			string(model.IncidentStatusClosed): {},
 		},
 	},
 }
 
-// EntryState returns the required initial lifecycle state for the entity kind.
+// EntryState, EntryStateOrPanic, IsTerminalState, IsKnownState, CanTransition,
+// ValidateInitialState, ValidateTransition, ValidNextStates, DependencyTerminalStates,
+// IsTaskDependencySatisfied, NextStates, ValidateTaskQueuedToReady
+
 func EntryState(kind EntityKind) (string, bool) {
 	state, ok := entryStates[kind]
 	return state, ok
 }
 
-// EntryStateOrPanic returns the required initial lifecycle state for the entity
-// kind and panics if the kind is unknown.
 func EntryStateOrPanic(kind EntityKind) string {
 	state, ok := EntryState(kind)
 	if !ok {
@@ -290,101 +322,79 @@ func EntryStateOrPanic(kind EntityKind) string {
 	return state
 }
 
-// IsTerminalState reports whether the given state is terminal for the entity kind.
 func IsTerminalState(kind EntityKind, state string) bool {
 	states, ok := terminalStates[kind]
 	if !ok {
 		return false
 	}
-
 	_, ok = states[state]
 	return ok
 }
 
-// IsKnownState reports whether the given state exists anywhere in the lifecycle
-// definition for the entity kind.
 func IsKnownState(kind EntityKind, state string) bool {
 	if entry, ok := entryStates[kind]; ok && entry == state {
 		return true
 	}
-
 	transitions, ok := allowedTransitions[kind]
 	if !ok {
 		return false
 	}
-
 	if _, ok := transitions[state]; ok {
 		return true
 	}
-
 	for _, nextStates := range transitions {
 		if _, ok := nextStates[state]; ok {
 			return true
 		}
 	}
-
 	return IsTerminalState(kind, state)
 }
 
-// CanTransition reports whether a lifecycle transition is legal.
 func CanTransition(kind EntityKind, from, to string) bool {
 	if from == to {
 		return false
 	}
-
 	if !IsKnownState(kind, from) || !IsKnownState(kind, to) {
 		return false
 	}
-
 	if IsTerminalState(kind, from) {
 		return false
 	}
-
 	nextStates, ok := allowedTransitions[kind][from]
 	if !ok {
 		return false
 	}
-
 	_, ok = nextStates[to]
 	return ok
 }
 
-// ValidateInitialState checks that a new entity starts in its required entry state.
 func ValidateInitialState(kind EntityKind, state string) error {
 	entry, ok := EntryState(kind)
 	if !ok {
 		return fmt.Errorf("unknown entity kind %q", kind)
 	}
-
 	if state != entry {
 		return fmt.Errorf("invalid initial state %q for %s: must be %q", state, kind, entry)
 	}
-
 	return nil
 }
 
-// ValidateTransition checks whether a proposed lifecycle transition is valid.
 func ValidateTransition(kind EntityKind, from, to string) error {
 	if from == to {
 		return fmt.Errorf("invalid %s transition: self-transition %q is not allowed", kind, from)
 	}
-
 	if _, ok := entryStates[kind]; !ok {
 		return fmt.Errorf("unknown entity kind %q", kind)
 	}
-
 	if !IsKnownState(kind, from) {
 		return fmt.Errorf("unknown %s state %q", kind, from)
 	}
-
 	if !IsKnownState(kind, to) {
 		return fmt.Errorf("unknown %s state %q", kind, to)
 	}
-
 	if IsTerminalState(kind, from) {
 		return fmt.Errorf("invalid %s transition from terminal state %q", kind, from)
 	}
-
 	if !CanTransition(kind, from, to) {
 		valid := ValidNextStates(kind, from)
 		if len(valid) > 0 {
@@ -392,19 +402,14 @@ func ValidateTransition(kind EntityKind, from, to string) error {
 		}
 		return fmt.Errorf("invalid %s transition %q -> %q", kind, from, to)
 	}
-
 	return nil
 }
 
-// ValidNextStates returns the sorted list of states reachable from the given
-// state via a single valid transition. Returns nil if the state is terminal,
-// unknown, or has no outgoing transitions.
 func ValidNextStates(kind EntityKind, from string) []string {
 	nextStates, ok := allowedTransitions[kind][from]
 	if !ok {
 		return nil
 	}
-
 	states := make([]string, 0, len(nextStates))
 	for s := range nextStates {
 		states = append(states, s)
@@ -413,8 +418,6 @@ func ValidNextStates(kind EntityKind, from string) []string {
 	return states
 }
 
-// DependencyTerminalStates returns the set of task states that satisfy a dependency.
-// A task in one of these states is considered "resolved" as a dependency.
 func DependencyTerminalStates() map[string]struct{} {
 	return map[string]struct{}{
 		string(model.TaskStatusDone):       {},
@@ -423,23 +426,19 @@ func DependencyTerminalStates() map[string]struct{} {
 	}
 }
 
-// IsTaskDependencySatisfied returns true if the given task status satisfies a dependency.
 func IsTaskDependencySatisfied(status string) bool {
 	_, ok := DependencyTerminalStates()[status]
 	return ok
 }
 
-// NextStates returns the valid next states from the given state for the entity kind.
 func NextStates(kind EntityKind, from string) []string {
 	if IsTerminalState(kind, from) {
 		return nil
 	}
-
 	nextMap, ok := allowedTransitions[kind][from]
 	if !ok {
 		return nil
 	}
-
 	var states []string
 	for state := range nextMap {
 		states = append(states, state)
@@ -447,10 +446,6 @@ func NextStates(kind EntityKind, from string) []string {
 	return states
 }
 
-// ValidateTaskQueuedToReady validates the dependency gate for queued→ready task transitions.
-// dependsOn is the list of task IDs this task depends on.
-// depStatuses maps dependency task IDs to their current status strings.
-// Returns an error if any dependency is not in a terminal state.
 func ValidateTaskQueuedToReady(dependsOn []string, depStatuses map[string]string) error {
 	for _, depID := range dependsOn {
 		status, ok := depStatuses[depID]

@@ -393,7 +393,7 @@ func TestCheckFeatureParentRefs_ValidParent(t *testing.T) {
 	}
 	loadAll := func() ([]EntityInfo, error) { return features, nil }
 	entityExists := func(typ, id string) bool {
-		return typ == "plan" && id == "P1-test"
+		return typ == "batch" && id == "P1-test"
 	}
 
 	report, err := CheckFeatureParentRefs(loadAll, entityExists)
@@ -500,7 +500,7 @@ func TestCheckFeatureParentRefs_MultipleFeatures(t *testing.T) {
 	}
 	loadAll := func() ([]EntityInfo, error) { return features, nil }
 	entityExists := func(typ, id string) bool {
-		return typ == "plan" && id == "P1-good"
+		return typ == "batch" && id == "P1-good"
 	}
 
 	report, err := CheckFeatureParentRefs(loadAll, entityExists)
