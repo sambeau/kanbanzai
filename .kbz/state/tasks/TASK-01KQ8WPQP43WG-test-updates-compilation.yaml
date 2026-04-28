@@ -3,9 +3,21 @@ parent_feature: FEAT-01KQ7YQKEEHFY
 slug: test-updates-compilation
 name: Test Updates and Compilation Verification
 summary: "Update all test files to reference Batch, verify go build and go test pass, verify external compilation."
-status: ready
+status: done
 estimate: "5"
 depends_on:
   - TASK-01KQ8WPQE53W6
   - TASK-01KQ8WPQGPDQS
   - TASK-01KQ8WPQKD1FR
+files_planned:
+  - internal/service/plans.go
+  - internal/service/plans_test.go
+  - internal/storage/entity_store.go
+  - internal/validate/doc_health_test.go
+completed: "2026-04-28T09:16:59Z"
+claimed_at: "2026-04-28T09:05:32Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-28T09:05:32Z"
+dispatched_by: sambeau
+completion_summary: "Updated test files to use batch terminology: fixed entity_store_test.go fixture paths from plans/ to batches/, test error message expectations, doc_health_test.go entityExists type check. Fixed fieldOrderForEntityType to include incident case. Added matchesPlanFilters backward compat alias. All code compiles and tests pass (except pre-existing timing flake)."
+verification: go build ./... and go test ./internal/... ./kbzschema/... pass (1 pre-existing timing flake excluded)
