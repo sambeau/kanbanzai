@@ -1,0 +1,141 @@
+document_id: PROJECT/design-design-performance-follow-up
+document_path: work/_project/design-performance-follow-up.md
+content_hash: 8e78a8b80cfd8ebc8d29627852f0caf226cabbbaf350c1e77574263ff6731630
+indexed_at: 2026-04-28T23:38:27.241043Z
+sections:
+    - path: "1"
+      level: 2
+      title: Problem and Motivation
+      byte_offset: 221
+      byte_count: 2005
+      word_count: 272
+      content_hash: 2577edcc56a00796b88d0a560b2a048b8caff45282d6d72ba497194452777e53
+    - path: "2"
+      level: 2
+      title: Design
+      byte_offset: 2226
+      byte_count: 4057
+      word_count: 526
+      content_hash: 83bb9da95d5de61c998cf2e839d813938c322ec7aa58a1c09eb6ff79cbb2ddf8
+      children:
+        - path: "2.1"
+          level: 3
+          title: Overview
+          byte_offset: 2237
+          byte_count: 872
+          word_count: 124
+          content_hash: 4ec7e8e959b8714c3cc7ddf2a83e2821eda1fdad9d50e00a501c23f44d885766
+        - path: "2.2"
+          level: 3
+          title: Component responsibilities
+          byte_offset: 3109
+          byte_count: 2371
+          word_count: 262
+          content_hash: cc78cf9fa3917d1e76de93dcc52c0c115e6ed7a7e93d1612d5bc775206e509a3
+        - path: "2.3"
+          level: 3
+          title: Failure modes
+          byte_offset: 5480
+          byte_count: 499
+          word_count: 90
+          content_hash: c7dd1c13637482b00c2873c53e92757ff68e76cd43da06f97c38f5be019786ec
+        - path: "2.4"
+          level: 3
+          title: What this design does NOT change
+          byte_offset: 5979
+          byte_count: 304
+          word_count: 48
+          content_hash: 68cdf10856d22e9adeb53223392f2a5658f94ea0c7efd912fb1e43cd4d496d82
+    - path: "3"
+      level: 2
+      title: Alternatives Considered
+      byte_offset: 6283
+      byte_count: 2890
+      word_count: 402
+      content_hash: 53dd009282313f7b0143cd9f6643c0377b85c446847ab1e33d7e3537c42f528d
+      children:
+        - path: "3.1"
+          level: 3
+          title: 'Alternative 1: Status quo — do nothing'
+          byte_offset: 6311
+          byte_count: 764
+          word_count: 107
+          content_hash: 085ea25252acdffb7ae0510e2e0ac5f40e45d272e37be2fce774c1d3a4350467
+        - path: "3.2"
+          level: 3
+          title: 'Alternative 2: Remove the filesystem fallback entirely'
+          byte_offset: 7075
+          byte_count: 710
+          word_count: 101
+          content_hash: e44d179a5d2b37010a02c2b5f050b78f4f9657986cdf511810049c548854f20b
+        - path: "3.3"
+          level: 3
+          title: 'Alternative 3: Build a shared in-memory index for cross-reference lookups'
+          byte_offset: 7785
+          byte_count: 750
+          word_count: 104
+          content_hash: 13df58d287e120f24425f6a216c8de120f707624fa486a397255399bcadabda0
+        - path: "3.4"
+          level: 3
+          title: 'Alternative 4: Cache the worktree store now'
+          byte_offset: 8535
+          byte_count: 638
+          word_count: 87
+          content_hash: 57a8b0774301c334c0842f0eef11d495e26bf07c8fd81909b1701c54cea80c33
+    - path: "4"
+      level: 2
+      title: Decisions
+      byte_offset: 9173
+      byte_count: 2809
+      word_count: 355
+      content_hash: fd36f19c92586786339872666b18f733763e0660eb5987753654945af879cfde
+    - path: "5"
+      level: 2
+      title: Related Work
+      byte_offset: 11982
+      byte_count: 1337
+      word_count: 196
+      content_hash: b97b4e53210f96dac8eeefae16850f635b6350a5e5f059f9fd658f79aa1277c7
+      children:
+        - path: "5.1"
+          level: 3
+          title: Prior documents consulted
+          byte_offset: 11999
+          byte_count: 810
+          word_count: 108
+          content_hash: d6e1ac387031dc00d1f028c9e337210b83245ac8f903d3923828e7692c50d416
+        - path: "5.2"
+          level: 3
+          title: Decisions that constrain this design
+          byte_offset: 12809
+          byte_count: 510
+          word_count: 85
+          content_hash: 12e0cd27eaf02278b8da32c00ccc77ed334d18ea4fd03f6886a06021c825df43
+conventional_roles:
+    - section_path: "2.1"
+      role: narrative
+      confidence: high
+    - section_path: "3"
+      role: alternative
+      confidence: high
+    - section_path: "3.1"
+      role: alternative
+      confidence: high
+    - section_path: "3.2"
+      role: alternative
+      confidence: high
+    - section_path: "3.3"
+      role: alternative
+      confidence: high
+    - section_path: "3.4"
+      role: alternative
+      confidence: high
+    - section_path: "4"
+      role: decision
+      confidence: high
+    - section_path: "5.2"
+      role: decision
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-28T23:38:27.839773Z
+classified: false

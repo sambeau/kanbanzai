@@ -1,0 +1,97 @@
+document_id: PROJECT/dev-plan-dev-plan-performance-follow-up
+document_path: work/_project/dev-plan-performance-follow-up.md
+content_hash: bec673d92a6ad8ef65719ad92fd5672b3b1d1189c8c2652af9ea9a2787bcb146
+indexed_at: 2026-04-28T23:40:39.863894Z
+sections:
+    - path: "1"
+      level: 2
+      title: Scope
+      byte_offset: 265
+      byte_count: 354
+      word_count: 38
+      content_hash: 3313aca36a6eca6b00500ea4fa274b615b465d84acce02491ba053005439463e
+    - path: "2"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 619
+      byte_count: 1710
+      word_count: 206
+      content_hash: 7d741fd6fc91ff796977754c6cf8444bc1530841b2136733e6ee575e5df50764
+      children:
+        - path: "2.1"
+          level: 3
+          title: 'Task 1: Wire cache into entityExists()'
+          byte_offset: 638
+          byte_count: 538
+          word_count: 66
+          content_hash: 107eed5f58723f1dbfa4bdbc0021fe6b26751ab8363a855427a6148c1fd96268
+        - path: "2.2"
+          level: 3
+          title: 'Task 2: Add pre-loaded cascade variants'
+          byte_offset: 1176
+          byte_count: 683
+          word_count: 79
+          content_hash: a44488e654fff3074b15eec74f89dd658319591490258d51d6849ad9f567d510
+        - path: "2.3"
+          level: 3
+          title: 'Task 3: Tests'
+          byte_offset: 1859
+          byte_count: 470
+          word_count: 58
+          content_hash: 47c1c75fbb36b143b9f31e9b2166f0edbfff5e0b7fee77d3b8daa144bd99da0b
+    - path: "3"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 2329
+      byte_count: 208
+      word_count: 41
+      content_hash: 50da281ccebc0b34b9d3975a0e1b67062e9de12486050b7fb9b63ff704153185
+    - path: "4"
+      level: 2
+      title: Risk Assessment
+      byte_offset: 2537
+      byte_count: 847
+      word_count: 125
+      content_hash: 76f769305534e621f9cc938a73db4d0bbc460a8da83cbd50db83d369821ed042
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Risk: Cache EntityExists returns false negative after external YAML edit'
+          byte_offset: 2557
+          byte_count: 374
+          word_count: 55
+          content_hash: 484f80424ce6b2ce662a29057cf89a4499d52eb7782db3d58234d33a7a919fa3
+        - path: "4.2"
+          level: 3
+          title: 'Risk: Pre-loaded cascade maps miss an entity created mid-cascade'
+          byte_offset: 2931
+          byte_count: 453
+          word_count: 67
+          content_hash: 6d8f13d1213056f14fdbc80f5d1cbceb28853ac3c8b105612a0f4a2d8c62af57
+    - path: "5"
+      level: 2
+      title: Verification Approach
+      byte_offset: 3384
+      byte_count: 815
+      word_count: 141
+      content_hash: cc19f91d96a488536fca37e99b907891a1e95cc6191653777743353649b4ed35
+cross_doc_links:
+    - target_path: work/_project/design-performance-follow-up.md
+      link_text: work/_project/design-performance-follow-up.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: risk
+      confidence: high
+    - section_path: "4.1"
+      role: risk
+      confidence: high
+    - section_path: "4.2"
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-28T23:40:40.395306Z
+classified: false
