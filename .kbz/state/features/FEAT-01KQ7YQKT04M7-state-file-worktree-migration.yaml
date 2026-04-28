@@ -2,7 +2,7 @@ id: FEAT-01KQ7YQKT04M7
 slug: state-file-worktree-migration
 name: State File and Work Tree Migration
 parent: P38-plans-and-batches
-status: specifying
+status: dev-planning
 summary: "Migrate .kbz/state/plans/ to .kbz/state/batches/, rename P{n}-slug state files and work folders to B{n}-slug, and update all cross-references. ON HOLD: coordinate with P37-F5 work tree migration before implementing."
 created: "2026-04-27T17:10:30Z"
 created_by: sambeau
@@ -10,6 +10,11 @@ overrides:
   -
     from_status: designing
     reason: "Combined P38-F8 with P37-F5 migration. P38 design (§7) covers this feature. P37-F5 spec/dev-plan cover the migration approach. Adapting P{n}→B{n} combined with type-first→plan-first into single migration. Skipping intermediate P{n} step per Open Questions #1."
-    timestamp: "2026-04-28T17:02:39+01:00"
+    timestamp: "2026-04-28T17:02:56+01:00"
     to_status: developing
+  -
+    from_status: specifying
+    reason: "Spec combined from P37-F5 work tree migration spec. P38-F8 state file migration content covered by P38 design §7. Both migrations combined per Open Questions #1."
+    timestamp: "2026-04-28T17:02:56+01:00"
+    to_status: dev-planning
 display_id: P38-F7
