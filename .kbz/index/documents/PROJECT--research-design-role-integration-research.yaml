@@ -1,0 +1,168 @@
+document_id: PROJECT/research-design-role-integration-research
+document_path: work/_project/design-role-integration-research.md
+content_hash: 98034f6926f1d5c0357f156ecbf2d3f53c097f2a1aa9b1e3c68331ba5aed90a2
+indexed_at: 2026-04-28T00:21:24.418174Z
+sections:
+    - path: "1"
+      level: 2
+      title: Research Question
+      byte_offset: 361
+      byte_count: 487
+      word_count: 80
+      content_hash: 00a5e0e37c2cf87b72d5035b505c1ebf12e1e93bf33b95042e61bc9d0a0f069c
+    - path: "2"
+      level: 2
+      title: Scope and Methodology
+      byte_offset: 848
+      byte_count: 1094
+      word_count: 153
+      content_hash: 67b4ef8eb0aa3e79aec11d46e40dea8d550ae3f525cf352ed5964c4966cd4cee
+    - path: "3"
+      level: 2
+      title: Findings
+      byte_offset: 1942
+      byte_count: 8076
+      word_count: 1075
+      content_hash: e3297bdd3ff729bd3c513b69ede81af00fe70ce672e5afa1f4f34a0993270041
+      children:
+        - path: "3.1"
+          level: 3
+          title: 'Finding 1: Kanbanzai already acknowledges UI/UX work but has no dedicated roles'
+          byte_offset: 1955
+          byte_count: 742
+          word_count: 85
+          content_hash: c1b563a6c5407b6e3282f554d32bb756a075b8f1fe572401d9bbb26df6ff5acb
+        - path: "3.2"
+          level: 3
+          title: 'Finding 2: The current role/skill pattern is well-suited to design disciplines'
+          byte_offset: 2697
+          byte_count: 956
+          word_count: 126
+          content_hash: f1a97812d7e15f303ec794102b1ba4fb7b1228be7578a28a27ab93cea1c00076
+        - path: "3.3"
+          level: 3
+          title: 'Finding 3: LLMs are capable of design reasoning but limited in design execution'
+          byte_offset: 3653
+          byte_count: 1329
+          word_count: 182
+          content_hash: 704f4dc331b77a3cceecfa28941053c54ae706e5f2b44894743b41f4e750bffc
+        - path: "3.4"
+          level: 3
+          title: 'Finding 4: The Sketch MCP server uses a code-execution model uniquely suited to LLM agents'
+          byte_offset: 4982
+          byte_count: 1547
+          word_count: 215
+          content_hash: fbeb377db99c6f28db77a104743902bbd615139e718d576f0bd27bde936eef96
+        - path: "3.5"
+          level: 3
+          title: 'Finding 5: Community Figma MCP servers exist but use a fundamentally different model'
+          byte_offset: 6529
+          byte_count: 1058
+          word_count: 156
+          content_hash: c7d0a7538dd9b725c5ba0b1cc2d4ba1369e8f7cf2afc55ac2f9dcfdbdf806c8c
+        - path: "3.6"
+          level: 3
+          title: 'Finding 6: No design-specific lifecycle stage exists; integration points are well-defined'
+          byte_offset: 7587
+          byte_count: 949
+          word_count: 107
+          content_hash: dd054beb82057ef536e740b54ded3d7ef0c2a947583e71a73bde5af5bdcf88b1
+        - path: "3.7"
+          level: 3
+          title: 'Finding 7: Three distinct design specialisations warrant separate roles'
+          byte_offset: 8536
+          byte_count: 1482
+          word_count: 202
+          content_hash: 8b8931978fe9ba5307e80d82d72930a798f869c988a26a3d47843fcc63e3e5ec
+    - path: "4"
+      level: 2
+      title: Trade-Off Analysis
+      byte_offset: 10018
+      byte_count: 2286
+      word_count: 377
+      content_hash: 8b9940092a73c35f58f0d96e106b867b3f4536c586938a542858f60236f08f38
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Approach comparison: how to integrate design into Kanbanzai'
+          byte_offset: 10041
+          byte_count: 1358
+          word_count: 229
+          content_hash: c5b3da9bead0a424c090c4ef6666c38e46cfc56e1a91966394a200f7fc5b4889
+        - path: "4.2"
+          level: 3
+          title: 'MCP server comparison: Sketch vs Figma'
+          byte_offset: 11399
+          byte_count: 905
+          word_count: 145
+          content_hash: 03f1783af02a0d4dfcc96d5ce21c72fa46c889caf780c0685980ca237ce8f91d
+    - path: "5"
+      level: 2
+      title: Recommendations
+      byte_offset: 12304
+      byte_count: 3903
+      word_count: 529
+      content_hash: b43ebe126d4c335a444cdb5756faf09b66c53f4e7e7173a5d6d2cb183bef257a
+      children:
+        - path: "5.1"
+          level: 3
+          title: 'Recommendation 1: Create three design roles with a shared base'
+          byte_offset: 12324
+          byte_count: 621
+          word_count: 82
+          content_hash: 6473262e52a451271025e76b25932f35af1842246be832027bb9d72323e0212a
+        - path: "5.2"
+          level: 3
+          title: 'Recommendation 2: Create a `design-ui` skill for the designing stage'
+          byte_offset: 12945
+          byte_count: 770
+          word_count: 98
+          content_hash: d10d9a46e179ba06973b107f5f9c76f20a66e8ef9c8490f77f44030ddc89c6ce
+        - path: "5.3"
+          level: 3
+          title: 'Recommendation 3: Integrate Sketch MCP awareness into the skill from the start'
+          byte_offset: 13715
+          byte_count: 881
+          word_count: 125
+          content_hash: 906d486b8a2e18b8b284643755167e86ceecdd04a6565dfb23532359c04f63c2
+        - path: "5.4"
+          level: 3
+          title: 'Recommendation 4: Defer platform-specific skills to a later iteration'
+          byte_offset: 14596
+          byte_count: 855
+          word_count: 112
+          content_hash: d05ac8570dd078286e3eae367ae7ff574396e7be1dc63fc3de6c8a9a3b18226b
+        - path: "5.5"
+          level: 3
+          title: 'Recommendation 5: Do not build custom MCP tooling for design at this stage'
+          byte_offset: 15451
+          byte_count: 756
+          word_count: 110
+          content_hash: c798144f3f1c7378c9b3a8565bc9cc5062615da051f9134079e619ac6b86b38d
+    - path: "6"
+      level: 2
+      title: Limitations
+      byte_offset: 16207
+      byte_count: 1385
+      word_count: 187
+      content_hash: f7de5018e7d0e4f2e2722eb0603b781fc3a24ff7b107b210eda67fb18bbb46a9
+cross_doc_links:
+    - target_path: document-centric-interface.md
+      link_text: document-centric-interface.md
+      section_path: "2"
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "3.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "3.2"
+conventional_roles:
+    - section_path: "1"
+      role: question
+      confidence: high
+    - section_path: "2"
+      role: constraint
+      confidence: high
+access_count: 2
+last_accessed_at: 2026-04-28T00:21:30.48387Z
+classified: false

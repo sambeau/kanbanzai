@@ -1,4 +1,4 @@
-updated_at: 2026-04-27T23:28:15.138474Z
+updated_at: 2026-04-28T00:21:24.418174Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -86723,5 +86723,120 @@ edges:
     - from: P37-file-names-and-actions/report-review-p37-file-names-and-actions#1.6
       from_type: section
       to: work/design/p37-f4-spec-kbz-delete.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-design-role-integration-research
+      from_type: document
+      to: PROJECT/research-design-role-integration-research#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research
+      from_type: document
+      to: PROJECT/research-design-role-integration-research#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research
+      from_type: document
+      to: PROJECT/research-design-role-integration-research#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research#3
+      from_type: section
+      to: PROJECT/research-design-role-integration-research#3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research#3
+      from_type: section
+      to: PROJECT/research-design-role-integration-research#3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research#3
+      from_type: section
+      to: PROJECT/research-design-role-integration-research#3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research#3
+      from_type: section
+      to: PROJECT/research-design-role-integration-research#3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research#3
+      from_type: section
+      to: PROJECT/research-design-role-integration-research#3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research#3
+      from_type: section
+      to: PROJECT/research-design-role-integration-research#3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research#3
+      from_type: section
+      to: PROJECT/research-design-role-integration-research#3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research
+      from_type: document
+      to: PROJECT/research-design-role-integration-research#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research#4
+      from_type: section
+      to: PROJECT/research-design-role-integration-research#4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research#4
+      from_type: section
+      to: PROJECT/research-design-role-integration-research#4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research
+      from_type: document
+      to: PROJECT/research-design-role-integration-research#5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research#5
+      from_type: section
+      to: PROJECT/research-design-role-integration-research#5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research#5
+      from_type: section
+      to: PROJECT/research-design-role-integration-research#5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research#5
+      from_type: section
+      to: PROJECT/research-design-role-integration-research#5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research#5
+      from_type: section
+      to: PROJECT/research-design-role-integration-research#5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research#5
+      from_type: section
+      to: PROJECT/research-design-role-integration-research#5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research
+      from_type: document
+      to: PROJECT/research-design-role-integration-research#6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-design-role-integration-research#2
+      from_type: section
+      to: document-centric-interface.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-design-role-integration-research#3.1
+      from_type: section
+      to: work/design/document-centric-interface.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-design-role-integration-research#3.2
+      from_type: section
+      to: AGENTS.md
       to_type: document
       edge_type: LINKS_TO
