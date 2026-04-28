@@ -1,0 +1,221 @@
+document_id: PROJECT/design-proposal-sprint-next
+document_path: work/_project/proposal-sprint-next.md
+content_hash: 37fec095b0aa642a26ab5fa6bd162f29c0566df048d813c3d13513df851e6fc7
+indexed_at: 2026-04-28T22:57:27.865056Z
+sections:
+    - path: "1"
+      level: 1
+      title: Next Sprint Proposal
+      byte_offset: 0
+      byte_count: 16586
+      word_count: 2484
+      content_hash: 37fec095b0aa642a26ab5fa6bd162f29c0566df048d813c3d13513df851e6fc7
+      children:
+        - path: "1.1"
+          level: 2
+          title: Executive Summary
+          byte_offset: 286
+          byte_count: 1141
+          word_count: 168
+          content_hash: d4610cea9984829fbb622095e2e252f706488bc5cb2136e3f31965fb2d729513
+        - path: "1.2"
+          level: 2
+          title: Theme 1 — Worktree File Editing
+          byte_offset: 1427
+          byte_count: 2931
+          word_count: 449
+          content_hash: 4869b3f10ba53f31c25cf024f678c6dad42e46df47d12d7cc2f100b10c7dcc2c
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Problem
+              byte_offset: 1465
+              byte_count: 1112
+              word_count: 170
+              content_hash: 40a965f3331131df79ab88a642da6a0e402468816910b3971144c11f62ef9596
+            - path: 1.2.2
+              level: 3
+              title: Proposed changes
+              byte_offset: 2577
+              byte_count: 1781
+              word_count: 272
+              content_hash: 47315bd2ee0cc548ac70d4f2d1be3626f472122e41aa5421689923ffbeee0d65
+        - path: "1.3"
+          level: 2
+          title: Theme 2 — `decompose propose` Reliability
+          byte_offset: 4358
+          byte_count: 2846
+          word_count: 422
+          content_hash: 926719a7477db4ea8aab0e62ce31caeae1d7c6c75515a12241f8c76744497467
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Problem
+              byte_offset: 4406
+              byte_count: 1069
+              word_count: 153
+              content_hash: dc579ec2752465ce46064664d7d694d74cb57d50564131b03da5fe3965bc1fa4
+            - path: 1.3.2
+              level: 3
+              title: Proposed changes
+              byte_offset: 5475
+              byte_count: 1729
+              word_count: 262
+              content_hash: 91de89174d86da750ca7373bb864e247c29289a77a616cbd7377ad3b7548cb31
+        - path: "1.4"
+          level: 2
+          title: Theme 3 — Merge Verification Gate
+          byte_offset: 7204
+          byte_count: 2323
+          word_count: 331
+          content_hash: 94aa08a6f867dd1ad1589fdd0160893fa7b37d249eb9fd87363f2ee381ad5dd8
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Problem
+              byte_offset: 7244
+              byte_count: 936
+              word_count: 137
+              content_hash: 1dc8049b0a626f2c9e4a7780c8bba257d2dc09229faeb6c76cc741fcf517905f
+            - path: 1.4.2
+              level: 3
+              title: Proposed changes
+              byte_offset: 8180
+              byte_count: 1347
+              word_count: 187
+              content_hash: def93ed829b6c87cc45078a4703e552dcdab4b6c8a002313131113a8e435a2b9
+        - path: "1.5"
+          level: 2
+          title: Theme 4 — Sub-agent Context and Handoff Quality
+          byte_offset: 9527
+          byte_count: 3715
+          word_count: 512
+          content_hash: 875ad36f91ac6c1785a6315a3e6227f32ecf890ecbc8c8ce15f60cd61fc94cdf
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Problem
+              byte_offset: 9581
+              byte_count: 1348
+              word_count: 185
+              content_hash: bd46ec6f4bda9d7758f285468fa2f19cd502a627eabed0e1e7d39d90c0fe0126
+            - path: 1.5.2
+              level: 3
+              title: Proposed changes
+              byte_offset: 10929
+              byte_count: 2313
+              word_count: 318
+              content_hash: 74db2de68d49be3d51b6f34bf240d1f66901f96704e6f2fb628fe32ad353ec59
+        - path: "1.6"
+          level: 2
+          title: Prioritised Backlog
+          byte_offset: 13242
+          byte_count: 1232
+          word_count: 246
+          content_hash: e7ab86baab5edc51220dc511d1ff3006c9996ff1bea5e0da244c1db96f7bf1bb
+        - path: "1.7"
+          level: 2
+          title: Recommended Sprint Scope
+          byte_offset: 14474
+          byte_count: 1578
+          word_count: 244
+          content_hash: 38e76d4fb085ef5464430ec13096baaa91d3f649f4f3c6e577bd3a870b742932
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Must do (blocks agentic pipeline quality)
+              byte_offset: 14503
+              byte_count: 746
+              word_count: 118
+              content_hash: 9e73373b71cdb062cab7da6df0a2b4a4639514d54ea25ec94616b6178f56d959
+            - path: 1.7.2
+              level: 3
+              title: Should do (significant recurring friction)
+              byte_offset: 15249
+              byte_count: 570
+              word_count: 88
+              content_hash: 969228e03bd93a8b954c706b64095f15a122b0709ea0cf12a6a8b48aae9fa85e
+            - path: 1.7.3
+              level: 3
+              title: Nice to have (lower frequency)
+              byte_offset: 15819
+              byte_count: 233
+              word_count: 34
+              content_hash: a362e113f105432b36c5a07ce6447b373507b49b88390a3865ed3e5b9394e636
+        - path: "1.8"
+          level: 2
+          title: What Is Explicitly Not Proposed
+          byte_offset: 16052
+          byte_count: 534
+          word_count: 85
+          content_hash: fdca40421773d6f9aea94daafa87370ae9fd18a510bea185b03adfd794d16d71
+entity_refs:
+    - entity_id: FEAT-01KPPG4SXY6T0
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 4492
+    - entity_id: FEAT-01KPPG5XMJWT3
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 4706
+    - entity_id: FEAT-01KPPG5XMJWT3
+      entity_type: feature
+      section_path: 1.5.1
+      byte_offset: 10218
+    - entity_id: P1-alt
+      entity_type: plan
+      section_path: 1.2.2
+      byte_offset: 3215
+    - entity_id: P1-alt
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 13448
+    - entity_id: P1-alt
+      entity_type: plan
+      section_path: 1.7.1
+      byte_offset: 14554
+    - entity_id: P1-alt
+      entity_type: plan
+      section_path: 1.7.2
+      byte_offset: 15804
+cross_doc_links:
+    - target_path: work/reports/p24-implementation-retro.md
+      link_text: work/reports/p24-implementation-retro.md
+      section_path: "1"
+    - target_path: work/reports/retro-session-2026-04-20.md
+      link_text: work/reports/retro-session-2026-04-20.md
+      section_path: "1"
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.2.1
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.2.2
+    - target_path: decompose-feature/SKILL.md
+      link_text: decompose-feature/SKILL.md
+      section_path: 1.3.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.5.1
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.5.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.5.2
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.5.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+    - section_path: "1.7"
+      role: constraint
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-28T22:57:28.274818Z
+classified: false
