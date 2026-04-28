@@ -2,9 +2,15 @@ id: FEAT-01KQ7YQKBDNAP
 slug: plan-entity-data-model-lifecycle
 name: Plan Entity Data Model and Lifecycle
 parent: P38-plans-and-batches
-status: specifying
+status: dev-planning
 summary: "Introduce the new recursive plan entity type in the state store (.kbz/state/plans/). Define the planning lifecycle (idea → shaping → ready → active → done), add parent, depends_on, and order fields, and implement CRUD in the entity service."
 spec: FEAT-01KQ7YQKBDNAP/specification-p38-f2-spec-plan-entity-data-model-lifecycle
 created: "2026-04-27T17:10:30Z"
 created_by: sambeau
 display_id: P38-F2
+overrides:
+  -
+    from_status: specifying
+    reason: Spec approved but registered under PROJECT/ scope rather than feature owner. Spec is PROJECT/spec-p38-spec-p38-f2-plan-entity-data-model-lifecycle.
+    timestamp: "2026-04-28T02:38:56+01:00"
+    to_status: dev-planning

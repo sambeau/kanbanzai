@@ -2,9 +2,15 @@ id: FEAT-01KQ7YQKWTBRP
 slug: documentation-skills-updates
 name: Documentation and Skills Updates
 parent: P38-plans-and-batches
-status: specifying
+status: dev-planning
 summary: "Update .kbz/roles/, .kbz/skills/, .kbz/stage-bindings.yaml, AGENTS.md, and copilot-instructions.md to reflect the plan/batch distinction, new lifecycle states, and updated entity vocabulary throughout all agent-facing materials."
 spec: FEAT-01KQ7YQKWTBRP/specification-p38-f8-spec-documentation-skills-updates
 created: "2026-04-27T17:10:31Z"
 created_by: sambeau
 display_id: P38-F8
+overrides:
+  -
+    from_status: specifying
+    reason: Spec approved but registered under PROJECT/ scope. Spec is PROJECT/spec-p38-spec-p38-f7-documentation-skills-updates.
+    timestamp: "2026-04-28T02:38:56+01:00"
+    to_status: dev-planning
