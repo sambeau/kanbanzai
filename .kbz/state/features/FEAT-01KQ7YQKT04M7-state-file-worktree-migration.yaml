@@ -2,7 +2,7 @@ id: FEAT-01KQ7YQKT04M7
 slug: state-file-worktree-migration
 name: State File and Work Tree Migration
 parent: B38-plans-and-batches
-status: developing
+status: dev-planning
 summary: "Migrate .kbz/state/plans/ to .kbz/state/batches/, rename P{n}-slug state files and work folders to B{n}-slug, and update all cross-references. ON HOLD: coordinate with P37-F5 work tree migration before implementing."
 spec: FEAT-01KQ7YQKT04M7/spec-b38-spec-p38-f8-combined-migration
 created: "2026-04-27T17:10:30Z"

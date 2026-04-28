@@ -1,10 +1,12 @@
-content_hash: 14b4f6a6cca798f4ecc48c5f8d1972c80e4de0928985fa516b8aef10958df38b
+approved_at: "2026-04-28T16:13:59Z"
+approved_by: sambeau
+content_hash: c9f54d031de04c3e5a4beb9730f294536c16a80e46de28e1e889d233e022b381
 created: "2026-04-28T16:13:52Z"
 created_by: sambeau
 id: FEAT-01KQ7YQKT04M7/spec-b38-spec-p38-f8-combined-migration
 owner: FEAT-01KQ7YQKT04M7
 path: work/B38-plans-and-batches/B38-spec-p38-f8-combined-migration.md
-status: draft
+status: approved
 title: "P38-F8: Combined State File and Work Tree Migration — Specification"
 type: spec
-updated: "2026-04-28T16:13:52Z"
+updated: "2026-04-28T16:13:59Z"
