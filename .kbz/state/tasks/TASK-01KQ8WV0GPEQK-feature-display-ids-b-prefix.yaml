@@ -1,0 +1,6 @@
+id: TASK-01KQ8WV0GPEQK
+parent_feature: FEAT-01KQ7YQKHK2GV
+slug: feature-display-ids-b-prefix
+name: Feature Display IDs B-Prefix
+summary: "Update feature display ID computation in CreateFeature and AllocateFeatureDisplayIDInPlan to use batch B-prefix instead of plan P-prefix. Format: B{n}-F{m}. Covers REQ-001 through REQ-006 and AC-001 through AC-006."
+status: queued
