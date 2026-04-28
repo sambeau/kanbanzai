@@ -3,5 +3,18 @@ parent_feature: FEAT-01KQ7YQKWTBRP
 slug: update-skills
 name: Update skill SKILL.md files
 summary: "Review all 18 .kbz/skills/**/SKILL.md files. Update write-design, write-spec, orchestrate-development, orchestrate-review, decompose-feature. Spec: REQ-005-010."
-status: ready
+status: done
 estimate: "3"
+files_planned:
+  - .kbz/skills/orchestrate-development/SKILL.md
+  - .kbz/skills/review-plan/SKILL.md
+  - .kbz/skills/write-design/SKILL.md
+  - .kbz/skills/write-spec/SKILL.md
+  - .kbz/skills/orchestrate-review/SKILL.md
+  - .kbz/skills/decompose-feature/SKILL.md
+completed: "2026-04-28T10:36:13Z"
+claimed_at: "2026-04-28T10:18:18Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-28T10:18:18Z"
+dispatched_by: sambeau
+completion_summary: "Updated all skill SKILL.md files for plan/batch terminology: orchestrate-development (Phase 0 uses batches, references the batch, Phase 6 step 7 uses batch), review-plan (internal terminology updated to batch, stage changed to batch-reviewing), write-design (design ownership for plan or batch), write-spec (parent batch vocabulary), orchestrate-review (parent batch vocabulary), decompose-feature (parent batch vocabulary)."

@@ -3,5 +3,13 @@ parent_feature: FEAT-01KQ7YQKWTBRP
 slug: update-refs
 name: Update reference files
 summary: "Review and update all refs/*.md files for plan/batch consistency. Key files: document-map.md, sub-agents.md. Spec: REQ-017-021."
-status: ready
+status: done
 estimate: "1"
+files_planned:
+  - refs/document-map.md
+completed: "2026-04-28T10:36:13Z"
+claimed_at: "2026-04-28T10:28:32Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-28T10:28:32Z"
+dispatched_by: sambeau
+completion_summary: "Updated refs/document-map.md: renamed 'Plan review SKILL' to 'Batch review SKILL', added entry for P38 meta-planning design document. Verified other refs files (go-style.md, testing.md, sub-agents.md, knowledge-graph.md) have no entity-level plan references."

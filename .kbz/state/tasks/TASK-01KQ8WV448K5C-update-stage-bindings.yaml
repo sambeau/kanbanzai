@@ -3,5 +3,13 @@ parent_feature: FEAT-01KQ7YQKWTBRP
 slug: update-stage-bindings
 name: Update stage bindings
 summary: "Update .kbz/stage-bindings.yaml entity type refs. Verify plan-reviewing stage stays as plan (strategic). Spec: REQ-011-012."
-status: ready
+status: done
 estimate: "1"
+files_planned:
+  - .kbz/stage-bindings.yaml
+completed: "2026-04-28T10:36:13Z"
+claimed_at: "2026-04-28T10:25:30Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-28T10:25:30Z"
+dispatched_by: sambeau
+completion_summary: "Updated .kbz/stage-bindings.yaml: renamed plan-reviewing to batch-reviewing, updated description and notes to use batch terminology. Updated dev-planning notes to clarify 'dev-plan' (document type) vs 'plan' (entity)."
