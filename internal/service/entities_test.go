@@ -928,8 +928,8 @@ func TestEntityService_HealthCheck_CleanProject(t *testing.T) {
 	if report.Summary.WarningCount != 0 {
 		t.Fatalf("WarningCount = %d, want 0; warnings: %v", report.Summary.WarningCount, report.Warnings)
 	}
-	if report.Summary.EntitiesByType["plan"] != 1 {
-		t.Fatalf("plan count = %d, want 1", report.Summary.EntitiesByType["plan"])
+	if report.Summary.EntitiesByType["batch"] != 1 {
+		t.Fatalf("plan count = %d, want 1", report.Summary.EntitiesByType["batch"])
 	}
 	if report.Summary.EntitiesByType["feature"] != 1 {
 		t.Fatalf("feature count = %d, want 1", report.Summary.EntitiesByType["feature"])

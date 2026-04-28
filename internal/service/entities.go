@@ -883,7 +883,14 @@ func (s *EntityService) loadRecordFromPath(entityType, path string) (storage.Ent
 }
 
 func entityDirectory(entityType string) string {
-	return strings.ToLower(strings.TrimSpace(entityType)) + "s"
+	lower := strings.ToLower(strings.TrimSpace(entityType))
+	if lower == string(model.EntityKindStrategicPlan) || lower == "plan" {
+		return "plans"
+	}
+	if lower == string(model.EntityKindBatch) {
+		return "batches"
+	}
+	return lower + "s"
 }
 
 func entityFileName(idValue, slug string) string {
