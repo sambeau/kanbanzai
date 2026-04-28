@@ -2,8 +2,10 @@ id: PROJECT/spec-p38-spec-p38-f3-batch-entity-rename-b-prefix
 path: work/P38-plans-and-batches/P38-spec-p38-f3-batch-entity-rename-b-prefix.md
 type: spec
 title: "P38-F3: Batch Entity Rename and B-Prefix IDs — Specification"
-status: draft
-content_hash: ed82acdb13752b5fd81f98b5054c3244aabd6ef6c67e606d286e8950558e43f0
+status: approved
+approved_by: sambeau
+approved_at: "2026-04-28T01:35:26Z"
+content_hash: 3d721c3ee4445b44695ca4f2092a6e9f0576c44baa5c6114702460f9fb247acb
 created: "2026-04-28T01:24:46Z"
 created_by: sambeau
-updated: "2026-04-28T01:24:46Z"
+updated: "2026-04-28T01:35:26Z"
