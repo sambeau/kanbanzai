@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQ7YQKBDNAP
 slug: define-plan-data-model
 name: Define plan data model and status
 summary: Introduce the new Plan struct alongside the existing Plan struct in internal/model/entities.go with PlanStatus type and seven lifecycle constants. Excludes next_feature_seq.
-status: queued
+status: ready
