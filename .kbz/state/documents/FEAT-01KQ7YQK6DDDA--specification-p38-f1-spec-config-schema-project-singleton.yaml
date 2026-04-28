@@ -1,10 +1,12 @@
 id: FEAT-01KQ7YQK6DDDA/specification-p38-f1-spec-config-schema-project-singleton
 path: work/design/p38-f1-spec-config-schema-project-singleton.md
-type: specification
+type: spec
 title: "P38-F1: Config Schema and Project Singleton — Specification"
-status: draft
+status: approved
 owner: FEAT-01KQ7YQK6DDDA
-content_hash: c055debdb2fe957c71b0921e29d5b0f5ecce96af4902a437d3e4826ed6ec6b44
+approved_by: sambeau
+approved_at: "2026-04-28T01:17:36Z"
+content_hash: e5b152afa2df0bafd527f105ad0ef545f5536b3b861a34dc706ea53898c6deee
 created: "2026-04-27T17:21:25Z"
 created_by: sambeau
-updated: "2026-04-27T17:21:25Z"
+updated: "2026-04-28T01:17:36Z"
