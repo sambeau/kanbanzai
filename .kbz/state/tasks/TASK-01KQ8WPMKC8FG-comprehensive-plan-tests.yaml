@@ -3,8 +3,16 @@ parent_feature: FEAT-01KQ7YQKBDNAP
 slug: comprehensive-plan-tests
 name: Comprehensive unit and integration tests
 summary: "Write tests covering all 17 acceptance criteria: YAML round-trips, lifecycle transitions, parent validation, cycle detection, deep nesting, entity tool integration, and coexistence with existing batch operations."
-status: ready
+status: done
 depends_on:
   - TASK-01KQ8WPMK0JTP
   - TASK-01KQ8WPMKCW26
   - TASK-01KQ8WPMK2MR1
+files_planned:
+  - internal/service/strategic_plans_test.go
+completed: "2026-04-28T08:36:27Z"
+claimed_at: "2026-04-28T08:33:37Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-28T08:33:37Z"
+dispatched_by: sambeau
+completion_summary: "Wrote comprehensive tests covering all 17 acceptance criteria: YAML round-trip, optional parent/order fields, absence of next_feature_seq, ID format, status constants, valid and invalid lifecycle transitions, terminal states, parent existence validation, cycle detection, deep nesting, file persistence, list filtering, field updates, status transitions, Entity interface implementation, and coexistence with existing batch operations"
