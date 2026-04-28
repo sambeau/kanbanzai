@@ -1293,6 +1293,44 @@ func (s *DocumentService) MoveDocument(input MoveDocumentInput) (DocumentResult,
 	}, nil
 }
 
+// UpdateDocumentPathAndOwner updates the path and/or owner of an existing
+// document record without touching the file on disk. It recomputes the
+// content hash from the new path location. Called by kbz move after git mv.
+func (s *DocumentService) UpdateDocumentPathAndOwner(id, newPath, newOwner string) (DocumentResult, error) {
+	if id == "" {
+		return DocumentResult{}, fmt.Errorf("id is required")
+	}
+
+	record, err := s.store.Load(id)
+	if err != nil {
+		return DocumentResult{}, err
+	}
+
+	doc := storage.RecordToDocument(record)
+
+	if newPath != "" {
+		doc.Path = newPath
+		fullPath := filepath.Join(s.repoRoot, newPath)
+		if newHash, hashErr := storage.ComputeContentHash(fullPath); hashErr == nil {
+			doc.ContentHash = newHash
+		}
+	}
+	if newOwner != "" {
+		doc.Owner = newOwner
+	}
+	doc.Updated = s.now()
+
+	updatedRecord := storage.DocumentToRecord(doc, "")
+	recordPath, writeErr := s.store.Write(updatedRecord)
+	if writeErr != nil {
+		return DocumentResult{}, fmt.Errorf("write document record: %w", writeErr)
+	}
+
+	result := documentToResult(doc)
+	result.RecordPath = recordPath
+	return result, nil
+}
+
 // DeleteDocument removes a document file, clears entity references, and
 // removes the state and index records (FR-B16 through FR-B21).
 func (s *DocumentService) DeleteDocument(input DeleteDocumentInput) (DocumentResult, error) {
@@ -1361,6 +1399,26 @@ func (s *DocumentService) DeleteDocument(input DeleteDocumentInput) (DocumentRes
 // inferDocTypeFromPath infers the document type from the path's directory
 // component. Returns an empty string if no type can be inferred, in which
 // case the caller should keep the existing type.
+// documentToResult converts a model.DocumentRecord to a DocumentResult.
+// The RecordPath field is not set here; callers must set it after the fact.
+func documentToResult(doc model.DocumentRecord) DocumentResult {
+	return DocumentResult{
+		ID:           doc.ID,
+		Path:         doc.Path,
+		Type:         string(doc.Type),
+		Title:        doc.Title,
+		Status:       string(doc.Status),
+		Owner:        doc.Owner,
+		ContentHash:  doc.ContentHash,
+		Created:      doc.Created,
+		Updated:      doc.Updated,
+		ApprovedBy:   doc.ApprovedBy,
+		ApprovedAt:   doc.ApprovedAt,
+		Supersedes:   doc.Supersedes,
+		SupersededBy: doc.SupersededBy,
+	}
+}
+
 func inferDocTypeFromPath(path string) string {
 	lower := strings.ToLower(filepath.ToSlash(path))
 	switch {

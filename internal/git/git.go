@@ -111,3 +111,10 @@ func IsFileModifiedSince(repoPath, filePath string, since time.Time) (bool, erro
 
 	return modifiedAt.After(since), nil
 }
+
+// GitMove moves src to dst using git mv, preserving Git history.
+// Both src and dst must be paths relative to repoRoot.
+func GitMove(repoRoot, src, dst string) error {
+	_, err := runGitCmd(repoRoot, "mv", src, dst)
+	return err
+}
