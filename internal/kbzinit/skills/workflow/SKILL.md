@@ -7,8 +7,9 @@ description: >
   approval requirements, or uncertainty about proceeding. Use even when the
   agent is confident — workflow gates exist precisely for the cases where
   confidence is misplaced.
-# kanbanzai-managed: true
-# kanbanzai-version: dev
+metadata:
+  kanbanzai-managed: "true"
+  version: "0.3.0"
 ---
 
 # SKILL: Kanbanzai Workflow
@@ -35,7 +36,7 @@ and ask the human.
 - When deciding what workflow stage work belongs to
 - When deciding whether to proceed to the next stage
 - When checking whether a state transition is valid
-- When creating or transitioning entities (plans, features, tasks, bugs)
+- When creating or transitioning entities (plans, batches, features, tasks, bugs)
 - When unsure whether human approval is needed
 
 ---
@@ -49,7 +50,7 @@ before proceeding.
 |---|---|---|---|
 | **Planning** | Human | Agreed scope | Human signals readiness to design |
 | **Design** | Human + Agent | Approved design document | Document approved before proceeding |
-| **Features** | Agent | Plan + Feature entities | Design document must be approved |
+| **Features** | Agent | Batch + Feature entities | Design document must be approved |
 | **Specification** | Human + Agent | Approved spec document | Features must exist |
 | **Dev plan & tasks** | Agent | Task entities + dev plan | Spec must be approved |
 | **Implementation** | Agent | Working code, tests, merged | Tasks must exist |
@@ -105,11 +106,18 @@ flaw is discovered. Moving backwards is normal. Skipping forward is not.
 ## Feature Close-Out Trigger
 
 When `status` (with no ID or with a feature ID) shows the attention item `"FEAT-xxx has N/N tasks done — ready to advance to reviewing"`, the close-out checklist applies. Follow the procedure in `.kbz/skills/orchestrate-development/SKILL.md` Phase 6.
+
+> **Branch hygiene is mandatory.** Every feature branch **must** be deleted after its work lands on `main`, regardless of how the merge was performed. Orphaned branches are invisible to humans and make sprint boundaries unauditable. If a branch exists, it signals unmerged work — this assumption must hold without exception.
+>
+> At close-out, after merging:
+> - Run `git branch | grep FEAT-xxx` and confirm no output.
+> - If the branch still exists, delete it: `git branch -d feature/FEAT-xxx` (or `-D` if squash history causes a refusal).
+> - Do not end the session with a feature branch still present.
 ---
 
-## Resuming an in-flight plan
+## Resuming an in-flight batch
 
-When returning to a plan that was already in progress, follow these four
+When returning to a batch that was already in progress, follow these four
 steps before dispatching new work or making state changes:
 
 1. **Commit orphaned `.kbz/` changes** — run `git status` in the repository
@@ -118,14 +126,14 @@ steps before dispatching new work or making state changes:
    the previous session ended without a commit, those changes will be
    overwritten by the next operation.
 
-2. **Check the plan lifecycle state** *(Transitional — unnecessary after P28
-   Sprint 2 merges)* — call `entity(action: "get", id: "PLAN-xxx")`. If the
-   plan status is `proposed`, advance it to `active` using the two-step
+2. **Check the batch lifecycle state** *(Transitional — unnecessary after P28
+   Sprint 2 merges)* — call `entity(action: "get", id: "BATCH-xxx")`. If the
+   batch status is `proposed`, advance it to `active` using the two-step
    override: call `entity(action: "transition")` twice with `override: true`
    and a brief `override_reason` on each call.
 
 3. **Confirm dev-plan documents** *(Transitional — unnecessary after P28
-   Sprint 2 merges)* — for each feature under the plan, call
+   Sprint 2 merges)* — for each feature under the batch, call
    `entity(action: "get", id: "FEAT-xxx")` and verify `has_dev_plan` is
    `true`. If a feature is missing its dev plan, apply the gate override
    (`override: true, override_reason: "..."`) before claiming tasks.
@@ -160,19 +168,14 @@ Stop and ask the human when any of these conditions are true:
   document containing architecture decisions, technology choices, or system
   design without an approved design document to anchor it.
 - **Entities without an approved design.** You are about to create Plan,
-  Feature, or Task entities and no approved design document exists.
+  Batch, Feature, or Task entities and no approved design document exists.
 - **Technology or architecture choices.** You are about to make a technology
   selection, define an API shape, choose a data model, or decide on system
   boundaries without explicit human approval.
 - **Stage confusion.** You are unsure which workflow stage the current work
   belongs to.
 - **Scope change.** The work has drifted beyond the scope of the task,
-  feature, or plan you were given.
-- **Direct writes to `.kbz/state/` or `work/` without MCP tools.** You are
-  about to write workflow state or document files directly using `edit_file`
-  or shell commands instead of MCP tools (`entity`, `doc`, `finish`). Direct
-  writes bypass lifecycle validation, registration, and auto-commit, producing
-  state that is inconsistent with the index and invisible to other agents.
+  feature, or batch you were given.
 
 When the emergency brake fires, stop and ask. Do not proceed with a guess.
 The cost of asking is low. The cost of building the wrong thing is high.
@@ -182,7 +185,7 @@ The cost of asking is low. The cost of building the wrong thing is high.
 ## Entity Lifecycle Transitions
 
 For the legal state transitions for each entity type (feature, task, bug,
-plan), see [references/lifecycle.md](references/lifecycle.md).
+plan, batch), see [references/lifecycle.md](references/lifecycle.md).
 
 Agents must not perform transitions that are not listed there. If a
 transition is needed that does not appear, ask the human.
@@ -255,7 +258,7 @@ transition is needed that does not appear, ask the human.
 
 **Correct stage gate check before implementation:**
 1. `doc(action: get, path: "work/spec/feature-x-specification.md")` → verify status is `approved`
-2. `doc(action: get, path: "work/plan/feature-x-plan.md")` → verify status is `approved`
+2. `doc(action: get, path: "work/plan/feature-x-plan.md")` → verify status is `approved` (this is a dev-plan document, not a plan entity)
 3. `entity(action: list, type: task, parent: "FEAT-xxx")` → verify tasks exist
 4. `entity(action: transition, id: "FEAT-xxx", status: "implementing")` → advance feature
 
