@@ -4,3 +4,8 @@ slug: test-updates-compilation
 name: Test Updates and Compilation Verification
 summary: "Update all test files to reference Batch, verify go build and go test pass, verify external compilation."
 status: queued
+estimate: "5"
+depends_on:
+  - TASK-01KQ8WPQE53W6
+  - TASK-01KQ8WPQGPDQS
+  - TASK-01KQ8WPQKD1FR

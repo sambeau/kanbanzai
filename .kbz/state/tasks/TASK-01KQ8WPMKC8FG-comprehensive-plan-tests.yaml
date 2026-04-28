@@ -4,3 +4,7 @@ slug: comprehensive-plan-tests
 name: Comprehensive unit and integration tests
 summary: "Write tests covering all 17 acceptance criteria: YAML round-trips, lifecycle transitions, parent validation, cycle detection, deep nesting, entity tool integration, and coexistence with existing batch operations."
 status: queued
+depends_on:
+  - TASK-01KQ8WPMK0JTP
+  - TASK-01KQ8WPMKCW26
+  - TASK-01KQ8WPMK2MR1

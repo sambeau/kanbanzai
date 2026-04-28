@@ -4,3 +4,4 @@ slug: model-validation-rename
 name: Model and Validation Layer Rename
 summary: "Rename Plan struct to Batch, PlanStatus to BatchStatus, add IsBatchID/ParseBatchID, add EntityKindBatch, rename EntityPlan to EntityBatch in validate package."
 status: queued
+estimate: "3"

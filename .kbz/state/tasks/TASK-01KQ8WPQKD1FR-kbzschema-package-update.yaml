@@ -4,3 +4,6 @@ slug: kbzschema-package-update
 name: kbzschema Package Update
 summary: "Export Batch struct and BatchStatus* constants, deprecate Plan as alias, update Reader methods to GetBatch/ListBatches."
 status: queued
+estimate: "3"
+depends_on:
+  - TASK-01KQ8WPQBQPXN

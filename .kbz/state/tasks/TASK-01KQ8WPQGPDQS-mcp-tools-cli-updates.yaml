@@ -4,3 +4,6 @@ slug: mcp-tools-cli-updates
 name: MCP Tools and CLI Updates
 summary: "Update entity_tool.go to support type:batch with type:plan synonym, update status_tool.go with Batch labels, update CLI commands."
 status: queued
+estimate: "5"
+depends_on:
+  - TASK-01KQ8WPQE53W6

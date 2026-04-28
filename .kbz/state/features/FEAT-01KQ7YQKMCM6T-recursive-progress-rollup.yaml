@@ -5,6 +5,7 @@ parent: P38-plans-and-batches
 status: dev-planning
 summary: Introduce ComputeBatchRollup mirroring current plan rollup logic. Add recursive ComputePlanRollup that aggregates progress across child batches and child plans. Wire both into the estimation service.
 spec: FEAT-01KQ7YQKMCM6T/spec-p38-spec-p38-f5-recursive-progress-rollup
+dev_plan: FEAT-01KQ7YQKMCM6T/dev-plan-p38-dev-plan-p38-f5-recursive-progress-rollup
 created: "2026-04-27T17:10:30Z"
 created_by: sambeau
 display_id: P38-F5

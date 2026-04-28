@@ -4,3 +4,5 @@ slug: implement-plan-lifecycle-validation
 name: Implement plan lifecycle validation
 summary: "Add new plan lifecycle transition rules to internal/validate/lifecycle.go with entry state idea, terminal states superseded and cancelled, and all allowed transitions per REQ-010."
 status: queued
+depends_on:
+  - TASK-01KQ8WPMKCXQH

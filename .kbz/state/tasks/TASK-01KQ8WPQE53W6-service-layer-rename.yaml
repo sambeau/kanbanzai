@@ -4,3 +4,6 @@ slug: service-layer-rename
 name: Service Layer Rename
 summary: "Rename all service methods CreatePlan→CreateBatch etc., update state directory from plans/ to batches/, add legacy P{n} resolution in GetBatch with deprecation logging."
 status: queued
+estimate: "8"
+depends_on:
+  - TASK-01KQ8WPQBQPXN
