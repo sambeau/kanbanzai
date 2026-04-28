@@ -1,0 +1,6 @@
+id: TASK-01KQ8X04PEK00
+parent_feature: FEAT-01KQ7YQKMCM6T
+slug: wire-estimate-status-tools
+name: Wire estimate and status tools
+summary: "Update MCP estimate tool with batch dispatch, update plan dispatch to recursive rollup. Update status tool plan dashboard. Add batch entity type inference."
+status: queued
