@@ -46,7 +46,7 @@ stage_bindings:
     human_gate: true
     document_type: dev-plan
     effort_budget: "5-10 tool calls"
-    notes: "Human gate ensures the task decomposition and dependency graph are reviewed before parallel implementation work begins. Architect role owns the plan because it requires systems-level judgment about interface contracts and sequencing."
+    notes: "Human gate ensures the task decomposition and dependency graph are reviewed before parallel implementation work begins. Architect role owns the dev-plan because it requires systems-level judgment about interface contracts and sequencing."
     prerequisites:
       documents:
         - type: specification
@@ -103,15 +103,15 @@ stage_bindings:
       max_agents: 4
     notes: "DeepMind saturation point for specialist panels is 4. Escalate to human after 3 fail-rework cycles."
 
-  plan-reviewing:
-    description: "Reviewing a completed plan for aggregate delivery"
+  batch-reviewing:
+    description: "Reviewing a completed batch for aggregate delivery"
     orchestration: single-agent
     roles: [reviewer-conformance]
     skills: [review-plan]
     human_gate: true
     document_type: report
     effort_budget: "5-10 tool calls"
-    notes: "Conformance reviewer is authoritative on spec-to-implementation mapping at the plan level. Human gate ensures the aggregate delivery review is approved before the plan is closed."
+    notes: "Conformance reviewer is authoritative on spec-to-implementation mapping at the batch level. Human gate ensures the aggregate delivery review is approved before the batch is closed."
 
   researching:
     description: "Producing a research report or analysis"
