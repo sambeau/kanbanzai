@@ -2,9 +2,11 @@ id: FEAT-01KQ7YQKEEHFY/dev-plan-p38-dev-plan-p38-f3-batch-entity-rename-b-prefix
 path: work/P38-plans-and-batches/P38-dev-plan-p38-f3-batch-entity-rename-b-prefix.md
 type: dev-plan
 title: "P38-F3: Batch Entity Rename and B-Prefix IDs — Dev Plan"
-status: draft
+status: approved
 owner: FEAT-01KQ7YQKEEHFY
-content_hash: 7224327a4884efb004fdc35fb726eea5b8f3ededfaa59568759b24d22afc63d9
+approved_by: sambeau
+approved_at: "2026-04-28T01:53:53Z"
+content_hash: 5c34ca2cfcfd409242f9e6fccb25399c9076126222599170ce575058a3410d60
 created: "2026-04-28T01:49:51Z"
 created_by: sambeau
-updated: "2026-04-28T01:49:51Z"
+updated: "2026-04-28T01:53:53Z"
