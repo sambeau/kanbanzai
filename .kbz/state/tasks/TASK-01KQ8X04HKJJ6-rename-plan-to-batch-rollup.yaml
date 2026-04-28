@@ -3,5 +3,15 @@ parent_feature: FEAT-01KQ7YQKMCM6T
 slug: rename-plan-to-batch-rollup
 name: Rename ComputePlanRollup to ComputeBatchRollup
 summary: Rename existing ComputePlanRollup to ComputeBatchRollup with identical logic. Introduce BatchRollup struct with same fields as current PlanRollup. Update internal callers in estimate_tool.go and status_tool.go.
-status: ready
+status: done
 estimate: "2"
+files_planned:
+  - internal/service/estimation.go
+  - internal/mcp/estimate_tool.go
+completed: "2026-04-28T09:23:50Z"
+claimed_at: "2026-04-28T09:22:39Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-28T09:22:39Z"
+dispatched_by: sambeau
+completion_summary: "Renamed ComputePlanRollup to ComputeBatchRollup, PlanRollup struct to BatchRollup, added backward-compat aliases, updated estimate_tool.go callers"
+verification: go build ./... and go test ./internal/service/... pass

@@ -3,5 +3,9 @@ parent_feature: FEAT-01KQ7YQKHK2GV
 slug: feature-display-ids-b-prefix
 name: Feature Display IDs B-Prefix
 summary: "Update feature display ID computation in CreateFeature and AllocateFeatureDisplayIDInPlan to use batch B-prefix instead of plan P-prefix. Format: B{n}-F{m}. Covers REQ-001 through REQ-006 and AC-001 through AC-006."
-status: ready
+status: active
 estimate: "5"
+claimed_at: "2026-04-28T09:22:32Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-28T09:22:32Z"
+dispatched_by: sambeau
