@@ -3,7 +3,16 @@ parent_feature: FEAT-01KQ7YQKMCM6T
 slug: recursive-plan-rollup-tests
 name: Unit tests for recursive ComputePlanRollup
 summary: "Test two-child-batch aggregation, deep tree, mixed children, three-level tree, empty plan, sibling isolation, and verify ComputeFeatureRollup unchanged."
-status: ready
+status: done
 estimate: "3"
 depends_on:
   - TASK-01KQ8X04KXZB9
+files_planned:
+  - internal/service/estimation_rollup_test.go
+completed: "2026-04-28T09:43:55Z"
+claimed_at: "2026-04-28T09:40:51Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-28T09:40:51Z"
+dispatched_by: sambeau
+completion_summary: "Added 6 unit tests for recursive ComputePlanRollup: empty plan, child batches, child plans, mixed children, three-level recursion, sibling isolation."
+verification: All 9 rollup tests pass (3 batch + 6 plan)
