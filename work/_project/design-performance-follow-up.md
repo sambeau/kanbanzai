@@ -4,6 +4,34 @@
 | Status | Draft                          |
 | Author | Claude Sonnet (via sambeau)    |
 
+## Overview
+
+This design addresses three performance gaps remaining after P29
+(`design-p29-state-store-read-performance`): `entityExists()` not using the
+SQLite cache, redundant entity deserialisation in the task-finish cascade,
+and absent worktree store caching. The first two are addressed here; the
+third is deferred per P29 Decision 4. Tool-level batching is acknowledged
+as related but deferred to a separate design.
+
+## Goals and Non-Goals
+
+### Goals
+
+- Wire the existing SQLite cache into `entityExists()` so cross-reference
+  checks, ID allocation, and parent validation use O(1) cache lookups when warm.
+- Reduce redundant cache deserialisation in the finish cascade by passing
+  pre-loaded entity maps through `CheckAllTasksTerminal` and
+  `CheckAllFeaturesTerminal`.
+- Preserve the filesystem fallback for all reads — the cache remains derived
+  and disposable per the design basis §7.1.
+
+### Non-Goals
+
+- Caching the worktree store (deferred per P29 Decision 4).
+- Adding tool-level batch endpoints (separate concern, separate design).
+- Changing the YAML flat-file canonical store.
+- Modifying MCP tool signatures or external behaviour.
+
 ## Problem and Motivation
 
 Kanbanzai's MCP server is the primary interface for AI agents. Every tool call that
@@ -260,6 +288,22 @@ caching. The cost/benefit hasn't changed. Revisit when worktree count exceeds
   - **Consequences:** Agents continue to make individual MCP tool calls for
     entity operations. This is acceptable; the batch infrastructure can be
     extended independently.
+
+## Dependencies
+
+This design depends on and should remain aligned with:
+
+- `design-p29-state-store-read-performance` — the predecessor design that
+  wired the SQLite cache into `List()` and `Get()`. This design extends that
+  work to `entityExists()` and cascade optimisation.
+- `internal/cache` — the existing SQLite cache package. The `EntityExists()`
+  method already exists; this design only wires it into the service layer.
+- `internal/service/entity_children.go` — the cascade functions that will
+  receive pre-loaded-data variants.
+- `internal/service/entities.go` — the `entityExists()` method that will
+  gain a cache fast-path.
+
+No external dependencies. No schema migrations.
 
 ## Related Work
 
