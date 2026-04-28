@@ -3,7 +3,13 @@ parent_feature: FEAT-01KQ7YQKEEHFY
 slug: service-layer-rename
 name: Service Layer Rename
 summary: "Rename all service methods CreatePlan→CreateBatch etc., update state directory from plans/ to batches/, add legacy P{n} resolution in GetBatch with deprecation logging."
-status: ready
+status: done
 estimate: "8"
 depends_on:
   - TASK-01KQ8WPQBQPXN
+files_planned:
+  - internal/service/plans.go
+  - internal/service/entities.go
+  - internal/service/strategic_plans.go
+completed: "2026-04-28T09:05:11Z"
+completion_summary: "Renamed all service layer methods: CreatePlan→CreateBatch, GetPlan→GetBatch, ListPlans→ListBatches, UpdatePlanStatus→UpdateBatchStatus, UpdatePlan→UpdateBatch, AllocateFeatureDisplayIDInPlan→AllocateFeatureDisplayIDInBatch. Kept deprecated backward-compat wrappers. Updated entityDirectory and validateKindForType in entities.go. Updated strategic_plans.go to use listAllPlanIDs()."

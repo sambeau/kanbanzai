@@ -3,7 +3,11 @@ parent_feature: FEAT-01KQ7YQKEEHFY
 slug: kbzschema-package-update
 name: kbzschema Package Update
 summary: "Export Batch struct and BatchStatus* constants, deprecate Plan as alias, update Reader methods to GetBatch/ListBatches."
-status: ready
+status: done
 estimate: "3"
 depends_on:
   - TASK-01KQ8WPQBQPXN
+files_planned:
+  - kbzschema/types.go
+completed: "2026-04-28T09:05:11Z"
+completion_summary: "Renamed Plan struct to Batch in kbzschema/types.go with deprecated Plan=Batch type alias. Renamed all PlanStatus* constants to BatchStatus* with deprecated aliases."
