@@ -2,7 +2,7 @@ id: FEAT-01KQ2MH2S2ZDH
 slug: instrumentation-expansion
 name: Instrumentation Expansion
 parent: P35-expanded-mcp-instrumentation
-status: specifying
+status: dev-planning
 summary: Extend actionlog Entry with server_version and a sparse extra annotation map; add context-carried annotation API for handlers; capture knowledge rejection events; add action-distribution and doc-funnel aggregations to ComputeMetrics.
 spec: FEAT-01KQ2MH2S2ZDH/spec-p35-spec-expanded-mcp-instrumentation
 created: "2026-04-25T15:35:59Z"
