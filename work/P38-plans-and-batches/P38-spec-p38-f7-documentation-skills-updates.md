@@ -3,7 +3,7 @@
 | Field   | Value                                                                    |
 |---------|--------------------------------------------------------------------------|
 | Date    | 2026-04-28T01:19:36Z                                                     |
-| Status  | draft                                                                    |
+| Status | approved |
 | Author  | spec-author                                                              |
 | Feature | FEAT-01KQ7YQKWTBRP                                                       |
 | Design  | `work/design/meta-planning-plans-and-batches.md` — §1, §2, §3, D1, D3   |
