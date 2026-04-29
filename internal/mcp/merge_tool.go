@@ -476,17 +476,30 @@ func executeMerge(
 	}
 
 	// Auto-advance the feature lifecycle after successful merge.
-	// Transitions from reviewing (or developing) to done so the lifecycle is
-	// always consistent — merging IS the final step (FR-MERGE-001).
+	// Merging IS the final step — the feature should be done afterward.
+	// First try the standard auto-advance (developing→reviewing when all tasks
+	// terminal), then try the final transition to done. Warnings only on failure
+	// — we never fail the merge itself for lifecycle issues.
 	if entityType == string(model.EntityKindFeature) {
 		currentStatus, _ := entity.State["status"].(string)
 		if currentStatus != string(model.FeatureStatusDone) {
-			if _, advErr := entitySvc.UpdateStatus(service.UpdateStatusInput{
+			// Step 1: auto-advance from developing to reviewing if applicable.
+			if currentStatus == string(model.FeatureStatusDeveloping) {
+				if advanced, advErr := entitySvc.MaybeAutoAdvanceFeature(entityID); advErr != nil {
+					warnings = append(warnings, fmt.Sprintf("auto-advance feature %s from developing after merge: %v", entityID, advErr))
+				} else if !advanced {
+					warnings = append(warnings, fmt.Sprintf("auto-advance feature %s from developing after merge: conditions not met (tasks may not all be terminal)", entityID))
+				}
+			}
+			// Step 2: transition to done. May fail if reviewing→done gates
+			// (review report, verification) are not satisfied; that's expected
+			// for features merged directly.
+			if _, doneErr := entitySvc.UpdateStatus(service.UpdateStatusInput{
 				Type:   entityType,
 				ID:     entityID,
 				Status: string(model.FeatureStatusDone),
-			}); advErr != nil {
-				warnings = append(warnings, fmt.Sprintf("auto-advance feature %s to done after merge: %v", entityID, advErr))
+			}); doneErr != nil {
+				warnings = append(warnings, fmt.Sprintf("auto-advance feature %s to done after merge: %v", entityID, doneErr))
 			}
 		}
 	}
