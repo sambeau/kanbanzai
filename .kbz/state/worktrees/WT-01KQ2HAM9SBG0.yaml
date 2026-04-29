@@ -2,7 +2,9 @@ id: WT-01KQ2HAM9SBG0
 entity_id: FEAT-01KQ2E0RB4P8A
 branch: feature/FEAT-01KQ2E0RB4P8A-plan-id-prefix-resolution
 path: .worktrees/FEAT-01KQ2E0RB4P8A-plan-id-prefix-resolution
-status: active
+status: merged
 created: "2026-04-25T14:40:01Z"
 created_by: sambeau
+merged_at: "2026-04-29T05:52:29Z"
+cleanup_after: "2026-05-06T05:52:29Z"
 graph_project: Users-samphillips-Dev-kanbanzai
