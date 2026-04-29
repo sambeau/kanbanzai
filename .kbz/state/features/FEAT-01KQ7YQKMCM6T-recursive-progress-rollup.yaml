@@ -2,16 +2,22 @@ id: FEAT-01KQ7YQKMCM6T
 slug: recursive-progress-rollup
 name: Recursive Progress Rollup
 parent: B38-plans-and-batches
-status: developing
+status: done
+review_cycle: 1
 summary: Introduce ComputeBatchRollup mirroring current plan rollup logic. Add recursive ComputePlanRollup that aggregates progress across child batches and child plans. Wire both into the estimation service.
 spec: FEAT-01KQ7YQKMCM6T/spec-p38-spec-p38-f5-recursive-progress-rollup
 dev_plan: FEAT-01KQ7YQKMCM6T/dev-plan-p38-dev-plan-p38-f5-recursive-progress-rollup
 created: "2026-04-27T17:10:30Z"
 created_by: sambeau
-display_id: B38-F5
 overrides:
   -
     from_status: specifying
     reason: Spec approved but registered under PROJECT/ scope. Spec is PROJECT/spec-p38-spec-p38-f5-recursive-progress-rollup.
-    timestamp: "2026-04-28T02:38:56+01:00"
+    timestamp: "2026-04-29T06:53:07+01:00"
     to_status: dev-planning
+  -
+    from_status: reviewing
+    reason: "All 5 tasks done, branch already merged to main. State repair."
+    timestamp: "2026-04-29T06:53:07+01:00"
+    to_status: done
+display_id: B38-F5

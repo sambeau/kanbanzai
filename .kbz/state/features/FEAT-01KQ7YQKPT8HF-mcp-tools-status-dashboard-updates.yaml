@@ -2,16 +2,22 @@ id: FEAT-01KQ7YQKPT8HF
 slug: mcp-tools-status-dashboard-updates
 name: MCP Tools and Status Dashboard Updates
 parent: B38-plans-and-batches
-status: developing
+status: done
+review_cycle: 1
 summary: "Update the entity tool to support plan CRUD with planning lifecycle. Update the status dashboard to render plan trees with recursive progress, batch dashboards, and project-level overview. Update all other affected MCP tools to recognise plan vs batch entities."
 spec: FEAT-01KQ7YQKPT8HF/spec-p38-spec-p38-f6-mcp-tools-status-dashboard-updates
 dev_plan: FEAT-01KQ7YQKPT8HF/dev-plan-p38-dev-plan-p38-f6-mcp-tools-status-dashboard-updates
 created: "2026-04-27T17:10:30Z"
 created_by: sambeau
-display_id: B38-F6
 overrides:
   -
     from_status: specifying
     reason: Spec approved but registered under PROJECT/ scope. Spec is PROJECT/spec-p38-spec-p38-f6-mcp-tools-status-dashboard-updates.
-    timestamp: "2026-04-28T02:38:56+01:00"
+    timestamp: "2026-04-29T06:53:15+01:00"
     to_status: dev-planning
+  -
+    from_status: reviewing
+    reason: "All 7 tasks done, branch already merged to main. State repair: verification exists upstream."
+    timestamp: "2026-04-29T06:53:15+01:00"
+    to_status: done
+display_id: B38-F6

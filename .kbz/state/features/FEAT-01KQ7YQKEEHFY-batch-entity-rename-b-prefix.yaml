@@ -2,16 +2,22 @@ id: FEAT-01KQ7YQKEEHFY
 slug: batch-entity-rename-b-prefix
 name: Batch Entity Rename and B-Prefix IDs
 parent: B38-plans-and-batches
-status: developing
+status: done
+review_cycle: 1
 summary: "Rename the existing plan entity to batch throughout the codebase (model, service, state store). Introduce B{n}-{slug} IDs for new batches and backward-compatible resolution of legacy P{n} references to batch IDs during a transition period."
 spec: FEAT-01KQ7YQKEEHFY/spec-p38-spec-p38-f3-batch-entity-rename-b-prefix
 dev_plan: FEAT-01KQ7YQKEEHFY/dev-plan-p38-dev-plan-p38-f3-batch-entity-rename-b-prefix
 created: "2026-04-27T17:10:30Z"
 created_by: sambeau
-display_id: B38-F3
 overrides:
   -
     from_status: specifying
     reason: Spec approved but registered under PROJECT/ scope. Spec is PROJECT/spec-p38-spec-p38-f3-batch-entity-rename-b-prefix.
-    timestamp: "2026-04-28T02:38:56+01:00"
+    timestamp: "2026-04-29T06:53:15+01:00"
     to_status: dev-planning
+  -
+    from_status: reviewing
+    reason: "All 5 tasks done, branch already merged to main (merge commit d3a4dc37). State repair: verification exists upstream."
+    timestamp: "2026-04-29T06:53:15+01:00"
+    to_status: done
+display_id: B38-F3
