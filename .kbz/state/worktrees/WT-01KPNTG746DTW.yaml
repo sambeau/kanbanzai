@@ -1,9 +1,0 @@
-id: WT-01KPNTG746DTW
-entity_id: FEAT-01KPNNYYSQTA7
-branch: feature/FEAT-01KPNNYYSQTA7-sqlite-fts-search
-path: .worktrees/FEAT-01KPNNYYSQTA7-sqlite-fts-search
-status: merged
-created: "2026-04-20T16:10:14Z"
-created_by: sambeau
-merged_at: "2026-04-20T17:02:52Z"
-cleanup_after: "2026-04-27T17:02:52Z"
