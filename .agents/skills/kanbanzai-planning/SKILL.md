@@ -29,7 +29,9 @@ design or architecture decisions.
 |------|-----------|
 | **scope agreement** | The outcome of a planning conversation — a shared understanding of what is and is not included in the work. |
 | **feature decomposition** | Breaking a large scope into independent features that can each be designed, specified, and implemented separately. |
-| **plan document** | A coordinating document that describes how multiple features fit together toward a shared goal. |
+| **plan** | The strategic entity; represents scope decomposition and long-term direction; recursive; lifecycle: `idea → shaping → ready → active → done`. |
+| **batch** | The execution entity; groups features for delivery; replaces what was previously called "plan"; lifecycle: `proposed → designing → active → reviewing → done`. |
+| **batch document** | A coordinating document that describes how multiple features within a batch fit together toward a shared goal. |
 | **acceptance criteria** | Testable conditions that define when a requirement is satisfied. Every requirement must have at least one. |
 | **effort estimate** | A story-point sizing on the Modified Fibonacci scale, set before work begins via `estimate(action: set)`. |
 | **dependency graph** | The ordering relationships between tasks — which tasks must complete before others can start. |
@@ -39,10 +41,10 @@ design or architecture decisions.
 ## When to Use
 
 - When starting a new body of work and the scope is not yet defined
-- When deciding whether something is a single feature, a plan with
+- When deciding whether something is a single feature, a batch with
   sub-features, or a small improvement to an existing feature
 - When the human wants to think through what to do next
-- Before creating any Plan or Feature entities
+- Before creating any Plan, Batch, or Feature entities
 
 ---
 
@@ -88,7 +90,7 @@ reason to simplify it prematurely.
 
 ## Scope Decisions
 
-### Feature vs. Plan
+### Feature vs. Batch
 
 A **feature** is a single coherent piece of user-facing behaviour that can be
 designed, specified, and implemented independently. It should be possible to:
@@ -97,15 +99,29 @@ designed, specified, and implemented independently. It should be possible to:
 - Write one specification for it
 - Implement it in a single worktree without significant conflict
 
-A **plan** is a coordinating entity for work that is too large or
-interconnected to treat as a single feature. Use a plan when:
+A **batch** is a coordinating entity for work that is too large or
+interconnected to treat as a single feature. Use a batch when:
 
 - The work comprises multiple independent features
 - A high-level design document describes how the features fit together
 - There is a meaningful milestone the features collectively deliver
 
-**Err towards fewer plans.** A single feature does not need a plan. A plan
+**Err towards fewer batches.** A single feature does not need a batch. A batch
 with only one feature is usually just a feature.
+
+### Batch vs. Plan
+
+A **batch alone is sufficient for most work.** Create a batch when you need to
+group features for coordinated delivery. Batches are the default work-grouping
+entity.
+
+A **plan** is warranted when multiple batches serve a shared strategic goal
+that requires decomposition before execution can start. Plans are optional
+— batches can exist with no parent plan.
+
+**Err towards fewer plans.** Strategic plans carry overhead and are only
+useful when multiple execution batches share a common direction. Most work
+is just a batch of features.
 
 ### Sizing Signals
 
@@ -114,7 +130,7 @@ A scope is probably **one feature** if:
 - It would produce one design document
 - It could be implemented in a focused sprint
 
-A scope is probably **multiple features** (and needs a plan) if:
+A scope is probably **multiple features** (and needs a batch) if:
 - It has clearly independent parts
 - Different agents could work on different parts in parallel
 - The work would naturally produce multiple design documents
@@ -123,7 +139,7 @@ A scope is probably **too large to plan yet** if:
 - It is not yet clear what the individual features are
 - Fundamental questions about the direction are still open
 
-In that case, the right next step is a high-level design document — not a plan.
+In that case, the right next step is a high-level design document — not a batch.
 
 ---
 
@@ -154,12 +170,13 @@ A completed planning conversation produces:
 
 1. **A scope statement** — one or two sentences describing what the work is
    and is not
-2. **A structural decision** — one feature, or a plan with N named features
+2. **A structural decision** — one feature, or a batch with N named features,
+   or a plan with N batches
 3. **Agreement to proceed** — the human signals readiness to move to design
 
 The agent does not need to write a planning document unless the scope is
 complex enough that it would be easy to lose track of. For most work, the
-scope statement lives in the feature or plan summary field.
+scope statement lives in the feature or batch summary field.
 
 ---
 
@@ -168,12 +185,12 @@ scope statement lives in the feature or plan summary field.
 Planning is done when:
 
 - The scope is agreed
-- The structural decision (feature vs. plan) is made
+- The structural decision (feature vs. batch vs. plan) is made
 - The human signals readiness to proceed to design
 
-The agent then creates the appropriate entities (Plan and/or Feature) and the
-workflow moves to the design stage. Entity creation requires clear scope but
-does not require a design document to exist yet.
+The agent then creates the appropriate entities (Plan, Batch, and/or Feature)
+and the workflow moves to the design stage. Entity creation requires clear
+scope but does not require a design document to exist yet.
 
 ---
 
@@ -189,12 +206,12 @@ When planning produces decisions to create specifications or implementation plan
 
 ### Scope Creep in Planning
 
-- **Detect:** Plan includes features not discussed in the scope agreement.
+- **Detect:** Batch includes features not discussed in the scope agreement.
 - **BECAUSE:** Undiscussed scope has not been evaluated for cost, risk, or
   priority. Including it silently bypasses the human's ability to make
   informed trade-offs, and the unvetted work often conflicts with or
   duplicates existing features.
-- **Resolve:** Limit the plan to agreed scope. Flag additional scope for
+- **Resolve:** Limit the batch to agreed scope. Flag additional scope for
   separate discussion with the human.
 
 ### Monolithic Feature
@@ -242,8 +259,8 @@ When planning produces decisions to create specifications or implementation plan
 
 | # | Question | Weight |
 |---|----------|--------|
-| 1 | Does the plan document contain a dependency graph showing task ordering? | required |
-| 2 | Does every feature in the plan have a linked specification or clear acceptance criteria? | required |
+| 1 | Does the batch document contain a dependency graph showing task ordering? | required |
+| 2 | Does every feature in the batch have a linked specification or clear acceptance criteria? | required |
 | 3 | Are features scoped to be independently implementable? | high |
 | 4 | Is the task breakdown between 8 and 15 tasks per feature? | high |
 
@@ -258,11 +275,19 @@ When planning produces decisions to create specifications or implementation plan
 4. "What would we cut if we had to ship in half the time?" → reveals priorities
 5. "Are there any dependencies on other work?" → surfaces blockers early
 
-**Planning output that's ready to proceed:**
+**Planning output that's ready to proceed (simple feature):**
 > **Scope:** Add lifecycle gate validation to the `finish` tool.
 > **Structure:** Single feature — well-defined, can be specified and
 > implemented as one unit.
 > **Agreement:** Human confirmed scope. Proceed to design.
+
+**Planning output distinguishing batch from plan:**
+> **Scope:** Build a webhook notification system.
+> **Structure:** Batch with 3 features — webhook event model, delivery
+> dispatcher, and delivery log. Each feature has independent design and
+> spec documents. A plan above this batch is not needed — no other batches
+> share this strategic goal.
+> **Agreement:** Human confirmed scope. Proceed to batch design.
 
 ---
 
@@ -272,8 +297,9 @@ When planning produces decisions to create specifications or implementation plan
 - How do I break a feature into tasks?
 - What makes a good acceptance criterion?
 - When should a feature be split into multiple features?
+- When should I create a batch vs a plan?
 - How do I estimate task effort?
-- What goes in a plan document vs. a spec document?
+- What goes in a batch document vs. a spec document?
 - How do I handle dependencies between tasks?
 
 ---

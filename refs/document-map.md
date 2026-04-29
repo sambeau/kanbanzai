@@ -13,12 +13,13 @@ Quick-reference mapping from topic to the document that owns it. Use this when y
 | How to review and verify work | `work/design/quality-gates-and-review-policy.md` |
 | Code review SKILL (procedure + checklist) | `.kbz/skills/review-code/SKILL.md` |
 | Code review orchestration SKILL | `.kbz/skills/orchestrate-review/SKILL.md` |
-| Plan review SKILL (procedure + checklist) | `.kbz/skills/review-plan/SKILL.md` |
+| Batch review SKILL (procedure + checklist) | `.kbz/skills/review-plan/SKILL.md` |
 | How to write commits | `work/design/git-commit-policy.md` |
 | Machine context model | `work/design/machine-context-design.md` |
 | Document intelligence | `work/design/document-intelligence-design.md` |
 | Product vs. instance separation | `work/design/product-instance-boundary.md` |
 | Earlier system design | `work/design/workflow-system-design.md` |
+| Plan and batch entity model; strategic vs. execution layer | `work/design/meta-planning-plans-and-batches.md` |
 
 ## Phase Specifications and Plans
 

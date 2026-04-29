@@ -19,6 +19,9 @@ constraint_level: medium
 
 ## Vocabulary
 
+- **parent batch** — the batch entity that owns the feature under review;
+  reviews are scoped to a single feature but the batch provides context
+  for cross-feature dependencies and aggregate delivery status
 - **review unit decomposition** — grouping related files into coherent units
   for independent review; each unit gets its own sub-agent dispatch
 - **finding collation** — merging structured findings from multiple sub-agent

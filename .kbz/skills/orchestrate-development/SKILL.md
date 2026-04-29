@@ -1,13 +1,12 @@
 ---
 name: orchestrate-development
 description:
-  expert: "Development-stage orchestration procedure for coordinating
-    parallel task dispatch with dependency-respecting sequencing,
-    sub-agent lifecycle management, failure recovery, and context
-    compaction across multi-task implementation sessions"
-  natural: "Coordinates implementing a feature's tasks — figures out
-    what can run in parallel, dispatches sub-agents, handles failures,
-    and keeps context from growing out of control"
+  expert: "Multi-agent development orchestration with conflict-aware parallel
+    dispatch, context compaction, failure handling, and lifecycle close-out
+    for a single feature within a batch"
+  natural: "Coordinate a team of agents to build a feature: dispatch tasks in
+    parallel, monitor progress, handle failures, compact context, and close
+    out the feature lifecycle"
 triggers:
   - orchestrate development tasks
   - coordinate implementation work
@@ -21,83 +20,77 @@ constraint_level: medium
 
 ## Vocabulary
 
-**Parallel dispatch:**
-- **dispatch batch** — the set of tasks whose dependencies are all satisfied, dispatched simultaneously in one cycle
-- **parallel-dispatchable** — a task eligible for dispatch because every task in its `depends_on` list has reached `done`
-- **sub-agent spawn** — creating a new agent instance (via `handoff`) to execute a specific task in isolation
-- **dispatch window** — the period between identifying a dispatch batch and receiving all sub-agent outcomes
-- **file scope boundary** — per-agent file ownership declared at dispatch to prevent write conflicts between parallel agents
-
-**Dependency ordering:**
-- **dependency chain** — a sequence of tasks where each requires the prior one's output before it can begin
-- **unmet dependency** — a predecessor task that has not reached `done`; any task depending on it must not be dispatched
-- **topological order** — the dispatch sequence derived from declared task dependencies; parents before children
-- **ready frontier** — the set of tasks with zero unmet dependencies at the current point in execution
-
-**Context compaction:**
-- **context utilisation** — approximate percentage of the context window consumed by accumulated conversation history
-- **post-completion summary** — a 2–3 sentence reduction of a sub-agent's outcome, retaining only task ID and key results
-- **document-based offloading** — writing accumulated orchestration progress to a registered document and starting a fresh session
-- **single-feature scope** — constraining each orchestration session to one feature's tasks to prevent context growth across feature boundaries
-- **compaction trigger** — the condition (task completion event or utilisation threshold) that initiates a compaction technique
-- **context ceiling** — the practical upper bound on useful context; output quality degrades well before the hard token limit
-
-**Failure recovery:**
-- **task rework** — returning a failed task to `ready` status with updated guidance for a second attempt
-- **failure escalation** — reporting a task failure to the human when automated recovery is not viable
-- **retry budget** — the maximum number of re-dispatch attempts for a single task before escalating (typically one)
-- **dispatch checkpoint** — a progress snapshot saved before dispatching, enabling recovery if the session is interrupted
+- **ready frontier** — the set of tasks whose dependencies are all satisfied and which are eligible for dispatch; every dispatch cycle picks from this set
+- **dispatch batch** — a group of tasks sent to sub-agents in a single parallel dispatch cycle; drawn from the ready frontier
+- **conflict domain** — the set of files a task will modify; two tasks in the same dispatch batch must have non-overlapping conflict domains
+- **command broadcast** — a terminal command feature file shared across all sub-agents in a dispatch batch to ensure consistent tool usage
+- **context compaction** — summarising completed task outputs to 2–3 sentences each and discarding full outputs, preventing context saturation
+- **document-based offloading** — writing a progress document and starting a fresh session when context utilisation exceeds 60%
+- **cohort** — a subset of features within a batch that can be parallelised without file overlap; features with overlapping file scopes are serialised into different cohorts
+- **post-completion summary** — the 2–3 sentence reduction of a sub-agent's full output, retaining the task ID, what was built, and whether it passed
+- **failure classification** — separating recoverable failures (missing context, file path issues) from unrecoverable ones (spec ambiguity, design gaps) to determine retry vs. escalation
+- **close-out checklist** — the sequence of lifecycle transitions, branch cleanup, and knowledge curation that completes a feature after all tasks are done
+- **merge checkpoint** — the point after a cohort's features have merged where the orchestrator confirms no open branches remain before starting the next cohort's worktrees
+- **feature completion summary** — a concise record of what the feature delivered, used by reviewers and the next orchestrator session
 
 ## Anti-Patterns
 
 ### Dispatching With Unmet Dependencies
-- **Detect:** A task is dispatched while one or more entries in its `depends_on` list have not reached `done`
-- **BECAUSE:** The sub-agent will lack outputs from predecessor tasks — files, interfaces, type definitions — and will either guess at them (creating integration failures) or stall. Dependency violations are the most common cause of wasted dispatch cycles
-- **Resolve:** Before each dispatch cycle, query the status of every task in the feature. Build the ready frontier from tasks with all dependencies satisfied. Only dispatch from the ready frontier
+
+- **Detect:** A task is dispatched before its `depends_on` tasks are in `done` status
+- **BECAUSE:** The sub-agent will sit idle waiting for inputs that don't exist yet, wasting context budget and producing placeholder code that must be reworked
+- **Resolve:** Verify all `depends_on` entries are `done` before adding a task to the dispatch batch. Use the ready frontier exclusively.
 
 ### Full-Output Retention
-- **Detect:** The orchestrator keeps the complete sub-agent conversation or full diff output in its context after a task completes
-- **BECAUSE:** Sub-agent outputs are verbose — diffs, test output, reasoning traces. Retaining them consumes context budget rapidly, leaving insufficient room for later dispatch cycles. After three or four retained outputs, the orchestrator's own reasoning quality degrades
-- **Resolve:** Apply post-completion summary immediately: reduce each sub-agent outcome to 2–3 sentences plus the task ID. Discard the full output
+
+- **Detect:** The orchestrator's context contains full sub-agent outputs (diffs, tool call logs, reasoning traces) from completed tasks
+- **BECAUSE:** Full outputs consume ~10–20% of context per task. After 4–5 tasks, the orchestrator has no room for new dispatch decisions, causing quality degradation or session failure
+- **Resolve:** Apply post-completion summarisation immediately after each task completes. The summary replaces the full output.
 
 ### Multi-Feature Session
-- **Detect:** The orchestrator attempts to dispatch tasks from two or more features within a single session
-- **BECAUSE:** Each feature has its own dependency graph, file scopes, and spec context. Cross-feature orchestration doubles the context load without improving parallelism because inter-feature dependencies are handled at the feature lifecycle level, not the task level
-- **Resolve:** Complete all tasks for one feature, write a progress summary, then begin a new session for the next feature. Use single-feature scope
+
+- **Detect:** The orchestrator is managing more than one feature in the same session
+- **BECAUSE:** Each feature has its own task graph, file scopes, and spec context — combining them doubles context load without improving throughput, and the orchestrator loses per-feature focus
+- **Resolve:** One feature per orchestration session. Feature completion summary marks the handoff point.
 
 ### Fire-and-Forget Dispatch
-- **Detect:** Sub-agents are spawned but their outcomes are never checked — the orchestrator assumes success and dispatches the next batch
-- **BECAUSE:** A failed task whose failure is not detected will cause all dependent tasks to fail in turn. Compounding failures waste more time than waiting for confirmation
-- **Resolve:** After each dispatch window closes, check every dispatched task's status. Verify `done` before moving dependent tasks to the ready frontier
+
+- **Detect:** Sub-agents are dispatched but their outcomes are not checked — the orchestrator assumes completion without verification
+- **BECAUSE:** Sub-agents can silently fail (wrong return status, incomplete work, uncommitted changes) without the orchestrator noticing, creating gaps that surface during feature close-out
+- **Resolve:** After each dispatch cycle, check every task's status. Apply post-completion summary or failure handling before the next cycle.
 
 ### Serial Dispatch of Independent Tasks
-- **Detect:** Tasks with no dependency relationship are dispatched one at a time, each waiting for the prior to complete
-- **BECAUSE:** Serial dispatch of independent tasks wastes wall-clock time. If tasks A and B have no dependency edge, dispatching B only after A completes adds A's entire duration as unnecessary latency
-- **Resolve:** Identify the full dispatch batch — all parallel-dispatchable tasks — and dispatch them simultaneously. Use the `conflict` tool to verify file scope boundaries do not overlap before parallel dispatch
+
+- **Detect:** Independent tasks (no dependency edges between them) are dispatched one at a time instead of in parallel
+- **BECAUSE:** The sub-agent dispatch overhead is the same whether you dispatch 1 or 4 agents; serialising independent tasks wastes the parallel capacity the orchestrator-workers pattern exists to exploit
+- **Resolve:** Always dispatch the full ready frontier in one parallel batch. Only serialise when conflict-domain analysis finds overlapping files.
 
 ### Ignoring Failure Signals
-- **Detect:** A sub-agent reports a failure (test failures, missing context, spec ambiguity) and the orchestrator re-dispatches the same task without updating guidance
-- **BECAUSE:** Re-dispatching without addressing the root cause produces the same failure. The retry budget exists to prevent infinite loops — one re-attempt with updated context, then escalate
-- **Resolve:** Read the failure details. IF the failure is a missing file or context gap → update the handoff with the missing information and re-dispatch (counts as one retry). IF the failure is a spec ambiguity or design gap → escalate to the human
+
+- **Detect:** A task fails but the orchestrator continues dispatching downstream dependents
+- **BECAUSE:** Downstream tasks depend on upstream outputs; if the upstream failed, downstream work is invalid — the sub-agent builds against missing or incorrect inputs
+- **Resolve:** When a task fails, block all dependents. Handle the failure (retry or escalate) before dispatching anything that depends on it.
 
 ### Context Bloat Without Offloading
-- **Detect:** Context utilisation exceeds 60% and the orchestrator continues dispatching without compaction
-- **BECAUSE:** Beyond ~60% utilisation, the orchestrator's ability to track task states, remember dependency relationships, and make correct dispatch decisions degrades measurably. Pushing further produces subtle errors — wrong dispatch order, missed failures, lost progress
-- **Resolve:** When context utilisation approaches 60%, trigger document-based offloading: write current progress to a registered document and start a fresh session
+
+- **Detect:** Context utilisation exceeds 60% but the orchestrator continues dispatching new tasks
+- **BECAUSE:** Sustained high context utilisation degrades tool call accuracy, dependency tracking, and clinical judgement (Masters et al., 2025). The orchestrator misses failure signals it would normally catch.
+- **Resolve:** Stop dispatching at 60%. Offload to a progress document. Start a fresh session. This is a mandatory offloading point, not a suggestion.
 
 ### Assigning Multiple Large-File Tasks to One Sub-Agent
-- **Detect:** A sub-agent is dispatched with more than one task that involves reading or rewriting source files longer than ~300 lines.
-- **BECAUSE:** Full-file rewrites embed entire file content in terminal tool calls. An agent accumulates the content of multiple large files in its context before completing the first task, saturating its context window and degrading output quality for later tasks. This was observed in the P24 pipeline.
-- **Resolve:** For features with more than three tasks involving large source files, dispatch one sub-agent per task. Use the sizing rule above to identify when per-task isolation is required.
+
+- **Detect:** A single sub-agent receives multiple tasks where each task involves reading or rewriting files longer than ~300 lines
+- **BECAUSE:** Full-file rewrites embed entire file content in terminal tool calls; an agent assigned multiple large-file tasks will saturate its context window before completing the second task
+- **Resolve:** Dispatch one sub-agent per large-file task to give each a fresh context window
 
 ### Manual Prompt Composition
-- **Detect:** The orchestrator writes a sub-agent prompt by hand rather than calling `handoff(task_id: "TASK-xxx")`.
-- **BECAUSE:** Manual prompts omit the graph project name (so codebase-memory-mcp tools are unavailable to the sub-agent), omit knowledge entries relevant to the task, and omit structured spec sections assembled by the context pipeline. This was the root cause of zero graph tool usage in the P24 pipeline.
-- **Resolve:** Always call `handoff(task_id)` to generate sub-agent prompts. The handoff tool assembles spec sections, knowledge constraints, file paths, role conventions, tool hints, and the graph project name. Supplement the generated prompt with file scope boundaries and parallel ownership constraints, but never replace it.
+
+- **Detect:** The orchestrator writes implementation prompts by hand instead of using `handoff(task_id: "TASK-xxx")`
+- **BECAUSE:** Manual composition silently omits graph project context, knowledge entries, and spec sections that the handoff tool automatically assembles. The sub-agent starts without critical context, producing lower-quality outputs or failures.
+- **Resolve:** Always use `handoff` to generate sub-agent prompts. Reserve manual composition for exceptional cases where handoff does not apply.
 
 ## Checklist
 
-```
 Copy this checklist and track your progress:
 - [ ] Read the dev-plan and identified all tasks for this feature
 - [ ] Queried current task statuses to build the ready frontier
@@ -109,12 +102,11 @@ Copy this checklist and track your progress:
 - [ ] Checked context utilisation — offloaded if approaching 60%
 - [ ] Repeated dispatch cycle until all tasks are done
 - [ ] Wrote feature completion summary
-- [ ] Feature advanced beyond developing
-```
 
 ## Procedure
 
 ### Phase 0: Cohort Setup _((batches with more than 3 features only)_
+### Phase 0: Cohort Setup _(batches with more than 3 features only)_
 
 Skip this phase entirely if the batch has 3 or fewer features.
 
@@ -224,55 +216,58 @@ After all tasks reach a terminal state, the feature must be explicitly advanced 
 
 ## Output Format
 
-At session end, produce a progress summary:
+When a feature is completed (all tasks done and merged), produce a **Feature Completion
+Summary** in this format:
 
 ```
-Feature: FEAT-xxx — <feature title>
-Status: <all tasks done | in progress | blocked>
+Feature: FEAT-<nnn> — <name>
+Batch: B<nnn>-<slug>
+Tasks: N total, N done, N failed (retried and succeeded after escalation)
 
-Completed this session:
-- TASK-xxx: <2–3 sentence summary>
-- TASK-yyy: <2–3 sentence summary>
+Summary: <2-3 sentences about what changed>
 
-Remaining:
-- TASK-zzz: ready (depends on: none)
-- TASK-aaa: blocked (depends on: TASK-bbb — in progress)
+Notable decisions:
+- <decision 1>
+- <decision 2>
 
-Failures/Escalations:
-- TASK-ccc: <failure reason> — escalated to human
-
-Context note: <offloaded at N% utilisation / completed in single session>
+Tests: <test types run>, <result>
 ```
+
+Include this in the close-out step via `finish(task_id: ..., summary: ...)`.
 
 ## Examples
 
 ### BAD: Serial dispatch with full output retention
 
 ```
-Dispatched TASK-101 (add user model).
-Waited for completion. Full output:
-  [400 lines of diff, test output, reasoning trace]
-Dispatched TASK-102 (add user API handler).
-Waited for completion. Full output:
-  [350 lines of diff, test output, reasoning trace]
-Dispatched TASK-103 (add user validation).
-  ... context window nearly full, responses becoming incoherent ...
+Dispatch TASK-301 → wait → receive full output (diffs, tool logs, reasoning traces)
+→ keep full output in context → Dispatch TASK-302 → wait → receive full output
+→ keep full output in context → ...
+→ After 3 tasks: context saturated (85% utilisation)
+→ TASK-304 dispatched but quality visibly degrades: wrong file scope, missed logic
+→ orchestrator doesn't notice because it's managing 4 tasks' worth of context
 ```
 
-WHY BAD: TASK-102 and TASK-103 had no dependency on each other — they should have been dispatched in parallel. Full sub-agent outputs were retained verbatim, consuming context budget that should have been available for later dispatch cycles. By the third task, context utilisation was too high for reliable orchestration. No post-completion summaries were applied.
+**Problem:** Serial dispatch wastes parallel capacity. Full output retention saturates context
+quickly. By task 4 the orchestration quality has degraded.
 
 ### BAD: Dispatching with unmet dependencies
 
 ```
-Ready frontier: TASK-201, TASK-202, TASK-203
-Dispatched all three.
-TASK-203 failed — it needed the interface defined by TASK-201, which
-was still in progress when TASK-203 started.
-Re-dispatched TASK-203. Failed again — TASK-201 still not done.
-Re-dispatched TASK-203 a third time.
+Ready frontier: TASK-301, TASK-302, TASK-303 (no dependencies)
+Dispatch all: TASK-301, TASK-302, TASK-303
+TASK-301 done. TASK-302 done. TASK-303 done.
+Ready frontier: TASK-304 (depends on TASK-301), TASK-305 (no deps)
+Dispatch TASK-304 and TASK-305 in parallel ✓
+... (good so far)
+
+Next ready frontier: TASK-306 (depends on TASK-305)
+Also in ready frontier: TASK-307 (depends on TASK-999 — NOT DONE!)
+→ Dispatch both → TASK-307 fails because TASK-999 doesn't exist yet
 ```
 
-WHY BAD: TASK-203 had a dependency on TASK-201 but was treated as parallel-dispatchable. The dependency was either not declared (a decomposition defect) or not checked (an orchestration defect). Multiple re-dispatches without addressing the root cause wasted the retry budget and produced three identical failures.
+**Problem:** TASK-307 was dispatched with an unmet dependency (TASK-999). Verify each task's
+`depends_on` entries are all done before dispatching.
 
 ### GOOD: Dependency-respecting parallel dispatch with compaction
 
@@ -288,43 +283,50 @@ Cycle 1 — Ready frontier: TASK-301 (data model), TASK-302 (config schema)
 
 Cycle 2 — Ready frontier: TASK-303 (dispatcher, depends on 301+302),
   TASK-304 (delivery log, depends on 301)
-  File scope check: TASK-303 owns dispatcher.go, TASK-304 owns
-  delivery_log.go. No overlap — dispatched in parallel.
-  TASK-303 done: Dispatcher with exponential backoff per config, 8 tests.
-  TASK-304 done: Delivery log with per-attempt recording, 5 tests.
+  No shared files — dispatched in parallel.
+  TASK-303 done: Dispatcher with 3 delivery backends. 93% coverage.
+  TASK-304 done: Delivery log with query API. 89% coverage.
+  [Full outputs discarded, summaries retained]
+  Context check: 48% — below threshold, continue.
 
-Cycle 3 — Ready frontier: TASK-305 (retry handler, depends on 303+304),
-  TASK-306 (integration test, depends on 303+304)
-  Context utilisation ~55% — proceeding but monitoring.
-  Dispatched in parallel.
-  TASK-305 done: Retry handler wired to dispatcher and log. 6 tests.
-  TASK-306 done: End-to-end test covering dispatch → retry → log.
+Cycle 3 — Ready frontier: TASK-305 (retry logic, depends on 303+304)
+  TASK-306 (metrics, depends on 303+304)
+  No shared files — dispatched in parallel.
+  TASK-305 FAILED: Retry policy is unbounded — no max_retries config.
+    → Failure classified as recoverable (wrong config path in handoff).
+    → Re-dispatched with corrected handoff.
+    → TASK-305 done: Retry with exponential backoff, configurable max_retries.
+  TASK-306 done: Metrics for webhook delivery. 4 metric types.
+  [Full outputs discarded, summaries retained]
 
-All 6 tasks done. Feature completion summary written.
+Close-out: All 6 tasks done. Feature completion summary written.
+           Knowledge curation: confirmed 3 entries, promoted 1.
+           Feature transitioned to reviewing. Branch merged and deleted.
 ```
-
-WHY GOOD: Each dispatch cycle only includes tasks whose dependencies are satisfied. File scope boundaries are checked before parallel dispatch. Post-completion summaries replace full outputs after every completion. Context utilisation is monitored. The feature is completed in a single session because compaction kept the context manageable.
 
 ## Evaluation Criteria
 
-1. Were tasks dispatched only when all their dependencies had reached `done`? Weight: required.
-2. Were independent tasks dispatched in parallel rather than serially? Weight: required.
-3. Was post-completion summarisation applied after every task completion? Weight: required.
-4. Was context utilisation monitored, with document-based offloading triggered before quality degradation? Weight: high.
-5. Was each orchestration session scoped to a single feature? Weight: high.
-6. Were file scope boundaries checked and communicated to sub-agents before parallel dispatch? Weight: high.
-7. Were task failures handled with root-cause analysis before re-dispatch or escalation? Weight: high.
-8. Was a progress summary produced at session end? Weight: moderate.
+| # | Criterion | Weight |
+|---|-----------|--------|
+| 1 | All tasks in the ready frontier are dispatched in parallel (no unnecessary serialisation) | high |
+| 2 | Post-completion summaries are applied immediately, full outputs are discarded | high |
+| 3 | Context utilisation does not exceed 60% — offloading is triggered at threshold | required |
+| 4 | Feature close-out is complete: transition, merge, branch delete, knowledge curation | required |
+| 5 | Failed tasks are handled — retry or escalate — before dependents are dispatched | high |
 
 ## Questions This Skill Answers
 
-- How do I coordinate implementing a feature's tasks?
-- Which tasks can I dispatch in parallel right now?
-- How do I prevent context from growing out of control during multi-task orchestration?
-- When should I offload progress to a document and start a fresh session?
-- What do I do when a sub-agent fails a task?
-- How do I check for file conflicts between parallel tasks?
-- What information should I include when dispatching a sub-agent?
-- How do I track progress across dispatch cycles?
-- When should I escalate a failure to a human instead of retrying?
-- Why should I orchestrate one feature at a time?
+- How do I orchestrate a feature's development?
+- How do I identify which tasks can run in parallel?
+- How do I handle a failed task?
+- When should I offload context to a document?
+- How do I close out a feature once all tasks are done?
+- What do I do with the sub-agent output after a task completes?
+- How do cohorts work in large batches?
+
+## Related
+
+- `implement-task` — what each sub-agent does when dispatched
+- `review-code` — what reviewers check against
+- `kanbanzai-agents` — context assembly, commit format, knowledge contribution
+- `kanbanzai-workflow` — lifecycle transitions and stage gates
