@@ -772,3 +772,44 @@ func TestDocumentRecord_WithQualityEvaluation_YAMLRoundTrip(t *testing.T) {
 		t.Errorf("Evaluator = %q, want model-v1", got.QualityEvaluation.Evaluator)
 	}
 }
+
+func TestParseShortPlanRef(t *testing.T) {
+	tests := []struct {
+		input      string
+		wantPrefix string
+		wantNumber string
+		wantOK     bool
+	}{
+		// AC-006: basic ASCII prefix
+		{"P30", "P", "30", true},
+		// AC-010: non-ASCII Unicode prefix (ñ = U+00F1)
+		{"ñ5", "ñ", "5", true},
+		// additional valid inputs
+		{"Z1", "Z", "1", true},
+		{"a999", "a", "999", true},
+		// AC-007: hyphen present
+		{"P30-foo", "", "", false},
+		// AC-008: no leading non-digit rune
+		{"30", "", "", false},
+		// AC-009: empty string
+		{"", "", "", false},
+		// no digits after prefix
+		{"P", "", "", false},
+		// trailing non-digit char
+		{"P30X", "", "", false},
+	}
+	for _, tc := range tests {
+		t.Run(tc.input, func(t *testing.T) {
+			gotPrefix, gotNumber, gotOK := model.ParseShortPlanRef(tc.input)
+			if gotOK != tc.wantOK {
+				t.Errorf("ParseShortPlanRef(%q) ok = %v, want %v", tc.input, gotOK, tc.wantOK)
+			}
+			if gotPrefix != tc.wantPrefix {
+				t.Errorf("ParseShortPlanRef(%q) prefix = %q, want %q", tc.input, gotPrefix, tc.wantPrefix)
+			}
+			if gotNumber != tc.wantNumber {
+				t.Errorf("ParseShortPlanRef(%q) number = %q, want %q", tc.input, gotNumber, tc.wantNumber)
+			}
+		})
+	}
+}

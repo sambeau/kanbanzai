@@ -251,6 +251,13 @@ func entityGetAction(entitySvc *service.EntityService) ActionHandler {
 			return nil, fmt.Errorf("id is required for get")
 		}
 		explicitType := entityArgStr(args, "type")
+
+		resolvedID, resolveErr := resolveShortPlanRef(entitySvc, entityID)
+		if resolveErr != nil {
+			return nil, fmt.Errorf("Cannot get entity %q: %w.", entityID, resolveErr)
+		}
+		entityID = resolvedID
+
 		entityType, ok := entityInferType(entityID)
 		if !ok {
 			return nil, fmt.Errorf("unrecognised ID format %q", entityID)
@@ -382,6 +389,13 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 		if entityID == "" {
 			return nil, fmt.Errorf("id is required for update")
 		}
+
+		resolvedID, resolveErr := resolveShortPlanRef(entitySvc, entityID)
+		if resolveErr != nil {
+			return nil, fmt.Errorf("Cannot update entity %q: %w.", entityID, resolveErr)
+		}
+		entityID = resolvedID
+
 		entityType, ok := entityInferType(entityID)
 		if !ok {
 			return nil, fmt.Errorf("unrecognised ID format %q", entityID)
@@ -490,6 +504,13 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 		if newStatus == "" {
 			return nil, fmt.Errorf("status is required for transition")
 		}
+
+		resolvedID, resolveErr := resolveShortPlanRef(entitySvc, entityID)
+		if resolveErr != nil {
+			return nil, fmt.Errorf("cannot resolve entity ID %q: %w", entityID, resolveErr)
+		}
+		entityID = resolvedID
+
 		entityType, ok := entityInferType(entityID)
 		if !ok {
 			return nil, fmt.Errorf("cannot infer entity type from ID %q", entityID)
@@ -953,6 +974,26 @@ func entityInferType(entityID string) (entityType string, ok bool) {
 	}
 }
 
+
+// resolveShortPlanRef resolves a short plan reference (e.g. "P30") to its full
+// canonical plan ID (e.g. "P30-my-plan-slug"). If entityID is not a short plan
+// reference, it is returned unchanged. Implements FR-009, FR-011, FR-012.
+func resolveShortPlanRef(entitySvc *service.EntityService, entityID string) (string, error) {
+	prefix, number, ok := model.ParseShortPlanRef(entityID)
+	if !ok {
+		return entityID, nil
+	}
+	cfg := config.LoadOrDefault()
+	fullID, _, err := entitySvc.ResolvePlanByNumber(*cfg, prefix, number)
+	if err != nil {
+		return "", err
+	}
+	return fullID, nil
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+// entityArgStr extracts a trimmed string from an MCP args map.
 func entityArgStr(args map[string]any, key string) string {
 	if args == nil {
 		return ""

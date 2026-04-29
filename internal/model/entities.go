@@ -3,6 +3,7 @@ package model
 import (
 	"time"
 	"unicode"
+	"unicode/utf8"
 )
 
 // EntityKind identifies a canonical entity type.
@@ -695,4 +696,28 @@ func ParseBatchID(id string) (prefix string, number string, slug string) {
 // Deprecated: use ParseBatchID.
 func ParsePlanID(id string) (prefix string, number string, slug string) {
 	return ParseBatchID(id)
+}
+
+// ParseShortPlanRef parses a short plan reference of the form {prefix}{number}
+// (e.g. "P30") into its constituent parts. It returns ok=true when s consists
+// of exactly one non-digit Unicode rune followed by one or more digit
+// characters and nothing else.
+func ParseShortPlanRef(s string) (prefix, number string, ok bool) {
+	if s == "" {
+		return "", "", false
+	}
+	r, size := utf8.DecodeRuneInString(s)
+	if unicode.IsDigit(r) {
+		return "", "", false
+	}
+	rest := s[size:]
+	if rest == "" {
+		return "", "", false
+	}
+	for _, c := range rest {
+		if !unicode.IsDigit(c) {
+			return "", "", false
+		}
+	}
+	return s[:size], rest, true
 }

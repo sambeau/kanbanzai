@@ -2059,3 +2059,63 @@ func TestGenerateOrphanedReviewingAttention_NoReports_EmitsWarning(t *testing.T)
 		t.Errorf("message: got %q, want %q", item.Message, wantMsg)
 	}
 }
+
+// ─── short plan ref resolution (FR-010) ──────────────────────────────────────
+
+func TestStatusTool_ShortPlanRef_HappyPath(t *testing.T) {
+	// Verifies FR-010/AC-002: status(id:"P1") resolves to the plan dashboard.
+	// DefaultConfig includes prefix "P", so no real config.yaml is needed.
+	entitySvc, docSvc := setupStatusTest(t)
+	planID := createTestPlan(t, entitySvc, "short-ref-status", "Short Ref Status Plan")
+	// planID == "P1-short-ref-status"
+
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
+	req := makeRequest(map[string]any{"id": "P1"})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+	if _, hasErr := parsed["error"]; hasErr {
+		t.Fatalf("unexpected error: %v", parsed["error"])
+	}
+	if parsed["scope"] != "plan" {
+		t.Errorf("scope = %v, want plan", parsed["scope"])
+	}
+	plan, ok := parsed["plan"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected plan field in response, got: %v", parsed)
+	}
+	if plan["id"] != planID {
+		t.Errorf("plan.id = %v, want %q", plan["id"], planID)
+	}
+}
+
+func TestStatusTool_ShortPlanRef_UnknownPrefix(t *testing.T) {
+	// Verifies FR-010/FR-012: status(id:"X1") surfaces unknown-prefix error.
+	entitySvc, docSvc := setupStatusTest(t)
+
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
+	req := makeRequest(map[string]any{"id": "X1"})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+	errField, hasErr := parsed["error"].(map[string]any)
+	if !hasErr {
+		t.Fatalf("expected error for unknown prefix X1, got: %v", parsed)
+	}
+	msg, _ := errField["message"].(string)
+	if !strings.Contains(msg, "unknown plan prefix") {
+		t.Errorf("error message = %q, want it to contain %q", msg, "unknown plan prefix")
+	}
+}
