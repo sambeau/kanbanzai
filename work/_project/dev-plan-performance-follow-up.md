@@ -7,7 +7,9 @@
 
 ## Scope
 
-This plan implements the performance follow-up design defined in
+This plan implements the specification defined in
+`work/_project/spec-performance-follow-up.md`
+(PROJECT/spec-spec-performance-follow-up), which traces to
 `work/_project/design-performance-follow-up.md`
 (PROJECT/design-design-performance-follow-up). It covers cache-backed
 `entityExists()` and cascade optimisation for the task-finish path.

@@ -1,0 +1,88 @@
+document_id: PROJECT/spec-spec-performance-follow-up
+document_path: work/_project/spec-performance-follow-up.md
+content_hash: 2b250a6655685b03cbd8b7f5a11f6f138cab7d20116e40ec93b8172ca713c9c1
+indexed_at: 2026-04-29T06:22:03.471452Z
+sections:
+    - path: "1"
+      level: 2
+      title: Overview
+      byte_offset: 278
+      byte_count: 185
+      word_count: 13
+      content_hash: eaeefd509c11e20c928693ebf9d5c7af675da8a47cd7d6480da36dcd90b9999d
+    - path: "2"
+      level: 2
+      title: Scope
+      byte_offset: 463
+      byte_count: 461
+      word_count: 67
+      content_hash: feaa52e0dd6b91b31e490004d68e88af7265176b11b632464d5bcae06eda3e59
+    - path: "3"
+      level: 2
+      title: Functional Requirements
+      byte_offset: 924
+      byte_count: 1145
+      word_count: 145
+      content_hash: 6c4b80316286d9267f1240e40afe85414aab8353df1c6afd716d8ce623658c1d
+    - path: "4"
+      level: 2
+      title: Non-Functional Requirements
+      byte_offset: 2069
+      byte_count: 564
+      word_count: 79
+      content_hash: 65892b5fc70f970065adebe145f73066ebcf3bf5cc250346331d1a56380bf4bd
+    - path: "5"
+      level: 2
+      title: Constraints
+      byte_offset: 2633
+      byte_count: 564
+      word_count: 80
+      content_hash: f077201d1390d396294a92bf1afbcfa98a49a0c02ef926f5b9b35eeb42d3dddf
+    - path: "6"
+      level: 2
+      title: Acceptance Criteria
+      byte_offset: 3197
+      byte_count: 1461
+      word_count: 202
+      content_hash: fbbe85fe430a06726acd972a70e037eecd2f859c166d2c4df433057cb4ce1043
+    - path: "7"
+      level: 2
+      title: Verification Plan
+      byte_offset: 4658
+      byte_count: 935
+      word_count: 148
+      content_hash: ee52647aa966f35ff5ce3918849292c3e012960c889b8b421853f3afeb08d5ff
+entity_refs:
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: "6"
+      byte_offset: 3282
+cross_doc_links:
+    - target_path: work/_project/design-performance-follow-up.md
+      link_text: work/_project/design-performance-follow-up.md
+      section_path: "1"
+    - target_path: workflow-design-basis.md
+      link_text: workflow-design-basis.md
+      section_path: "5"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "2"
+      role: constraint
+      confidence: high
+    - section_path: "3"
+      role: requirement
+      confidence: high
+    - section_path: "4"
+      role: requirement
+      confidence: high
+    - section_path: "5"
+      role: constraint
+      confidence: high
+    - section_path: "6"
+      role: requirement
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-29T06:22:04.040908Z
+classified: false

@@ -1,4 +1,4 @@
-updated_at: 2026-04-28T23:40:39.863894Z
+updated_at: 2026-04-29T06:22:03.471452Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -89023,5 +89023,55 @@ edges:
     - from: PROJECT/dev-plan-dev-plan-performance-follow-up#1
       from_type: section
       to: work/_project/design-performance-follow-up.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/spec-spec-performance-follow-up
+      from_type: document
+      to: PROJECT/spec-spec-performance-follow-up#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/spec-spec-performance-follow-up
+      from_type: document
+      to: PROJECT/spec-spec-performance-follow-up#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/spec-spec-performance-follow-up
+      from_type: document
+      to: PROJECT/spec-spec-performance-follow-up#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/spec-spec-performance-follow-up
+      from_type: document
+      to: PROJECT/spec-spec-performance-follow-up#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/spec-spec-performance-follow-up
+      from_type: document
+      to: PROJECT/spec-spec-performance-follow-up#5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/spec-spec-performance-follow-up
+      from_type: document
+      to: PROJECT/spec-spec-performance-follow-up#6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/spec-spec-performance-follow-up
+      from_type: document
+      to: PROJECT/spec-spec-performance-follow-up#7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/spec-spec-performance-follow-up#6
+      from_type: section
+      to: FEAT-001
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/spec-spec-performance-follow-up#1
+      from_type: section
+      to: work/_project/design-performance-follow-up.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/spec-spec-performance-follow-up#5
+      from_type: section
+      to: workflow-design-basis.md
       to_type: document
       edge_type: LINKS_TO
