@@ -3,10 +3,10 @@ content: "[moderate] tool-friction: The stale MCP binary issue wasted significan
 created: "2026-03-28T01:20:27Z"
 created_by: unknown
 id: KE-01KMS0EE97M2P
-last_accessed_at: "2026-04-30T21:59:57Z"
+last_accessed_at: "2026-04-30T22:01:39Z"
 learned_from: TASK-01KMRXK1G474P
 miss_count: 0
-recent_use_count: 218
+recent_use_count: 219
 scope: project
 status: contributed
 tags:
