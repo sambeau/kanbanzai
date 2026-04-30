@@ -1,0 +1,6 @@
+id: TASK-01KQFDMTTN0Q9
+parent_feature: FEAT-01KQ2VFTWD1W2
+slug: implement-file-path-resolution
+name: Implement File Path Resolution
+summary: "Add LookupByPath method to DocumentService. Implement path normalisation (strip ./), file-existence check, repo-relative exact match, unregistered-document response (exit 0, kbz doc register suggestion), and doc-to-entity routing."
+status: queued
