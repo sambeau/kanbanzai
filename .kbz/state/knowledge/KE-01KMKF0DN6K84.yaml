@@ -3,10 +3,10 @@ content: "Dependency management: Tasks default to 'queued' status. Use depends_o
 created: "2026-03-25T21:39:30Z"
 created_by: sambeau
 id: KE-01KMKF0DN6K84
-last_accessed_at: "2026-04-30T09:54:57Z"
+last_accessed_at: "2026-04-30T09:55:09Z"
 learned_from: P1-phase-4-orchestration
 miss_count: 0
-recent_use_count: 146
+recent_use_count: 147
 scope: project
 status: confirmed
 tags:
