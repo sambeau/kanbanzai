@@ -1,0 +1,6 @@
+id: TASK-01KQEZ8HWK5JF
+parent_feature: FEAT-01KQ7YQK6DDDA
+slug: tests-all-14-ac-config-schema
+name: Tests for all 14 acceptance criteria
+summary: "Write unit tests for AC-001 through AC-014 covering: plan/batch prefix loading, cross-registry validation, defaults, project section all variants, legacy config backward compat, retired prefix handling, and round-trip YAML."
+status: queued
