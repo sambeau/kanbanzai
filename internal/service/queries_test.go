@@ -408,6 +408,30 @@ func TestListEntitiesFiltered_ByParent_TaskWithStatus(t *testing.T) {
 	}
 }
 
+func TestListEntitiesFiltered_ByParent_Task_NoMatch(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := NewEntityService(root)
+
+	writeTestEntity(t, root, "task", "TASK-01AAAAAAAAA25", "task-x",
+		makeTaskFields("TASK-01AAAAAAAAA25", "task-x", "FEAT-01AAAAAAAAA09", "queued", nil))
+
+	writeTestEntity(t, root, "task", "TASK-01AAAAAAAAA26", "task-y",
+		makeTaskFields("TASK-01AAAAAAAAA26", "task-y", "FEAT-01AAAAAAAAA09", "queued", nil))
+
+	results, err := svc.ListEntitiesFiltered(ListFilteredInput{
+		Type:   "task",
+		Parent: "FEAT-01ZZZZZZZZZZZ",
+	})
+	if err != nil {
+		t.Fatalf("ListEntitiesFiltered() error = %v", err)
+	}
+
+	if len(results) != 0 {
+		t.Fatalf("expected 0 tasks for nonexistent feature, got %d", len(results))
+	}
+}
+
 func TestListEntitiesFiltered_MissingType(t *testing.T) {
 	t.Parallel()
 	root := t.TempDir()
