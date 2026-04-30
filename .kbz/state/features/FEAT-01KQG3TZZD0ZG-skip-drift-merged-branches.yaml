@@ -2,8 +2,15 @@ id: FEAT-01KQG3TZZD0ZG
 slug: skip-drift-merged-branches
 name: Skip Drift Alerts for Merged Branches
 parent: B42-worktree-cleanup-automation
-status: proposed
+status: dev-planning
 summary: "When a worktree record has a merged_at timestamp, suppress branch drift alerts. Merged branches are intentionally stale. Addresses REQ-004, REQ-005, AC-004, AC-005."
+design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
 created: "2026-04-30T21:13:40Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: specifying
+    reason: Spec approved at batch level (B42-worktree-cleanup-automation/spec-p40-spec-b42-worktree-cleanup).
+    timestamp: "2026-04-30T22:14:24+01:00"
+    to_status: dev-planning
 display_id: B42-F2
