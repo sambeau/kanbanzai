@@ -88,6 +88,10 @@ func (i *Initializer) Run(opts Options) error {
 
 	// --update-skills: only update skill files, skip everything else.
 	if opts.UpdateSkills {
+		// Detect stale MCP configs before updating skills.
+		if !opts.SkipMCP {
+			i.detectStaleMCPConfigs(gitRoot)
+		}
 		fmt.Fprintln(i.stdout, "Updating skill files...")
 		if err := i.installSkills(gitRoot); err != nil {
 			return err
@@ -213,6 +217,7 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 	}
 
 	if !opts.SkipMCP {
+		i.detectStaleMCPConfigs(baseDir)
 		if err := i.writeMCPConfig(baseDir); err != nil {
 			return err
 		}
@@ -317,6 +322,7 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 	}
 
 	if !opts.SkipMCP {
+		i.detectStaleMCPConfigs(baseDir)
 		if err := i.writeMCPConfig(baseDir); err != nil {
 			return err
 		}

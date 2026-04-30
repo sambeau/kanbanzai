@@ -2079,3 +2079,183 @@ func TestConfigNameField(t *testing.T) {
 		t.Errorf("Config.Name = %q, want %q", cfg.Name, "My Test Project")
 	}
 }
+
+// ---- Migration detection: stale "command": "kanbanzai" ----
+
+// TestDetectStaleMCPConfig_MCPJSON_StaleCommand_Warns (AC-007) verifies that
+// kbz init --update-skills warns when a managed .mcp.json contains
+// "command": "kanbanzai".
+func TestDetectStaleMCPConfig_MCPJSON_StaleCommand_Warns(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+
+	// Seed a managed .mcp.json with stale command.
+	stale := `{
+  "_managed": {
+    "tool": "kanbanzai",
+    "version": 1
+  },
+  "mcpServers": {
+    "kanbanzai": {
+      "command": "kanbanzai",
+      "args": ["serve"]
+    }
+  }
+}
+`
+	if err := os.WriteFile(filepath.Join(dir, ".mcp.json"), []byte(stale), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	in, stdout := newTestInitWithVersion(dir, "", "2.0.0")
+	if err := in.Run(Options{UpdateSkills: true}); err != nil {
+		t.Fatalf("Run --update-skills: %v", err)
+	}
+
+	got := stdout.String()
+	if !strings.Contains(got, ".mcp.json references \"kanbanzai\" which is no longer installed") {
+		t.Errorf("expected stale .mcp.json warning, got: %s", got)
+	}
+	if !strings.Contains(got, "Run: kbz init to update editor configuration") {
+		t.Errorf("expected corrective action hint, got: %s", got)
+	}
+}
+
+// TestDetectStaleMCPConfig_ZedJSON_StaleCommand_Warns (AC-008) verifies that
+// kbz init warns when .zed/settings.json contains a stale command.
+func TestDetectStaleMCPConfig_ZedJSON_StaleCommand_Warns(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+
+	zedDir := filepath.Join(dir, ".zed")
+	if err := os.MkdirAll(zedDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+
+	// Seed a .zed/settings.json with stale command (no _managed block —
+	// the file was written by an older kanbanzai that included it, or by a
+	// user who copied from the getting-started guide).
+	stale := `{
+  "context_servers": {
+    "kanbanzai": {
+      "command": "kanbanzai",
+      "args": ["serve"]
+    }
+  }
+}
+`
+	if err := os.WriteFile(filepath.Join(zedDir, "settings.json"), []byte(stale), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	in, stdout := newTestInitWithVersion(dir, "", "2.0.0")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	got := stdout.String()
+	if !strings.Contains(got, ".zed/settings.json references \"kanbanzai\" which is no longer installed") {
+		t.Errorf("expected stale .zed/settings.json warning, got: %s", got)
+	}
+	if !strings.Contains(got, "Run: kbz init to update editor configuration") {
+		t.Errorf("expected corrective action hint, got: %s", got)
+	}
+}
+
+// TestDetectStaleMCPConfig_MCPJSON_KbzCommand_NoWarning verifies no false
+// positive when .mcp.json already has "command": "kbz".
+func TestDetectStaleMCPConfig_MCPJSON_KbzCommand_NoWarning(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+
+	// Seed a managed .mcp.json with the correct command.
+	fresh := `{
+  "_managed": {
+    "tool": "kanbanzai",
+    "version": 2
+  },
+  "mcpServers": {
+    "kanbanzai": {
+      "command": "kbz",
+      "args": ["serve"]
+    }
+  }
+}
+`
+	if err := os.WriteFile(filepath.Join(dir, ".mcp.json"), []byte(fresh), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	in, stdout := newTestInitWithVersion(dir, "", "2.0.0")
+	if err := in.Run(Options{UpdateSkills: true}); err != nil {
+		t.Fatalf("Run --update-skills: %v", err)
+	}
+
+	got := stdout.String()
+	if strings.Contains(got, "references \"kanbanzai\" which is no longer installed") {
+		t.Errorf("unexpected stale warning for fresh config, got: %s", got)
+	}
+}
+
+// TestDetectStaleMCPConfig_ZedJSON_KbzCommand_NoWarning verifies no false
+// positive when .zed/settings.json already has "command": "kbz".
+func TestDetectStaleMCPConfig_ZedJSON_KbzCommand_NoWarning(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+
+	zedDir := filepath.Join(dir, ".zed")
+	if err := os.MkdirAll(zedDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+
+	fresh := `{
+  "context_servers": {
+    "kanbanzai": {
+      "command": "kbz",
+      "args": ["serve"]
+    }
+  }
+}
+`
+	if err := os.WriteFile(filepath.Join(zedDir, "settings.json"), []byte(fresh), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	in, stdout := newTestInitWithVersion(dir, "", "2.0.0")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	got := stdout.String()
+	if strings.Contains(got, "references \"kanbanzai\" which is no longer installed") {
+		t.Errorf("unexpected stale warning for fresh config, got: %s", got)
+	}
+}
+
+// TestDetectStaleMCPConfig_MCPJSON_NoFile_NoWarning verifies no false
+// positive when no .mcp.json exists.
+func TestDetectStaleMCPConfig_MCPJSON_NoFile_NoWarning(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+
+	in, stdout := newTestInitWithVersion(dir, "", "2.0.0")
+	if err := in.Run(Options{UpdateSkills: true}); err != nil {
+		t.Fatalf("Run --update-skills: %v", err)
+	}
+
+	got := stdout.String()
+	if strings.Contains(got, "references \"kanbanzai\" which is no longer installed") {
+		t.Errorf("unexpected stale warning when no config exists, got: %s", got)
+	}
+}
+
+// TestDetectStaleMCPConfig_ZedJSON_NoFile_NoWarning verifies no false
+// positive when no .zed/settings.json exists.
+func TestDetectStaleMCPConfig_ZedJSON_NoFile_NoWarning(t *testing.T) {
+	dir := makeGitRepoNoCommits(t)
+
+	in, stdout := newTestInitWithVersion(dir, "", "2.0.0")
+	if err := in.Run(Options{}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	got := stdout.String()
+	if strings.Contains(got, "references \"kanbanzai\" which is no longer installed") {
+		t.Errorf("unexpected stale warning when no config exists, got: %s", got)
+	}
+}

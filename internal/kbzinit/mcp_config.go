@@ -208,6 +208,51 @@ func (i *Initializer) writeZedConfig(baseDir string, createIfAbsent bool) error 
 	return nil
 }
 
+// detectStaleMCPConfigs inspects managed .mcp.json and .zed/settings.json for a stale
+// "command": "kanbanzai" value (from before the binary rename to "kbz") and prints
+// a human-readable warning. It is called by both kbz init and kbz init --update-skills
+// so that projects with stale configs are never silently left unreported.
+func (i *Initializer) detectStaleMCPConfigs(baseDir string) {
+	staleMsg := "Warning: %s references \"kanbanzai\" which is no longer installed.\n  Run: kbz init to update editor configuration.\n"
+
+	// Check .mcp.json
+	mcpPath := filepath.Join(baseDir, ".mcp.json")
+	if data, err := os.ReadFile(mcpPath); err == nil {
+		var raw map[string]json.RawMessage
+		if json.Unmarshal(data, &raw) == nil {
+			if managedRaw, ok := raw["_managed"]; ok {
+				var managed managedBlock
+				if json.Unmarshal(managedRaw, &managed) == nil && managed.Tool == "kanbanzai" {
+					if serversRaw, ok := raw["mcpServers"]; ok {
+						var servers map[string]mcpServer
+						if json.Unmarshal(serversRaw, &servers) == nil {
+							if srv, ok := servers["kanbanzai"]; ok && srv.Command == "kanbanzai" {
+								fmt.Fprintf(i.stdout, staleMsg, ".mcp.json")
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// Check .zed/settings.json
+	zedPath := filepath.Join(baseDir, ".zed", "settings.json")
+	if data, err := os.ReadFile(zedPath); err == nil {
+		var raw map[string]json.RawMessage
+		if json.Unmarshal(data, &raw) == nil {
+			if csRaw, ok := raw["context_servers"]; ok {
+				var cs map[string]zedContextServer
+				if json.Unmarshal(csRaw, &cs) == nil {
+					if srv, ok := cs["kanbanzai"]; ok && srv.Command == "kanbanzai" {
+						fmt.Fprintf(i.stdout, staleMsg, ".zed/settings.json")
+					}
+				}
+			}
+		}
+	}
+}
+
 // writeJSONConfig applies version-aware create/update/skip logic to a JSON config file.
 // It reads any existing file, checks the _managed marker, and writes, skips, or warns accordingly.
 func (i *Initializer) writeJSONConfig(destPath, displayName string, newContent []byte, warningInstruction string) error {
