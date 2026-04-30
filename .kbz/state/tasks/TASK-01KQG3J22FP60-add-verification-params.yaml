@@ -1,0 +1,6 @@
+id: TASK-01KQG3J22FP60
+parent_feature: FEAT-01KQG3AX1AD0K
+slug: add-verification-params
+name: Add verification params to entity update handler
+summary: "Add verification and verification_status optional params to entity update. Write to entity record, no transition. Reject for unsupported types. Addresses REQ-007, REQ-008."
+status: queued
