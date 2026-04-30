@@ -67,6 +67,8 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		mcp.WithBoolean("advance", mcp.Description("When true, advance a feature through multiple lifecycle states")),
 		mcp.WithBoolean("override", mcp.Description("Bypass a failing stage gate prerequisite")),
 		mcp.WithString("override_reason", mcp.Description("Required when override is true")),
+		mcp.WithString("verification", mcp.Description("Verification criteria or description")),
+		mcp.WithString("verification_status", mcp.Description("Verification status: passed or failed")),
 	)
 
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
@@ -405,6 +407,12 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 			entityType = "strategic-plan"
 		}
 		if entityType == "strategic-plan" {
+			if _, has := args["verification"]; has {
+				return nil, fmt.Errorf("verification is not supported for strategic plans")
+			}
+			if _, has := args["verification_status"]; has {
+				return nil, fmt.Errorf("verification_status is not supported for strategic plans")
+			}
 			_, _, slug := model.ParseBatchID(entityID)
 			input := service.UpdateStrategicPlanInput{ID: entityID, Slug: slug}
 			if _, has := args["name"]; has {
@@ -441,6 +449,12 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 			return map[string]any{"entity": entityFullRecord(r.ID, r.Type, r.Slug, r.State)}, nil
 		}
 		if entityType == "batch" {
+			if _, has := args["verification"]; has {
+				return nil, fmt.Errorf("verification is not supported for batches")
+			}
+			if _, has := args["verification_status"]; has {
+				return nil, fmt.Errorf("verification_status is not supported for batches")
+			}
 			_, _, slug := model.ParseBatchID(entityID)
 			input := service.UpdateBatchInput{ID: entityID, Slug: slug}
 			if _, has := args["name"]; has {
@@ -465,7 +479,7 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 			return map[string]any{"entity": entityFullRecord(r.ID, r.Type, r.Slug, r.State)}, nil
 		}
 		fields := make(map[string]string)
-		for _, key := range []string{"slug", "summary", "name", "design", "rationale", "observed", "expected", "severity", "priority"} {
+		for _, key := range []string{"slug", "summary", "name", "design", "rationale", "observed", "expected", "severity", "priority", "verification", "verification_status"} {
 			if v, exists := args[key]; exists {
 				if s, ok := v.(string); ok && strings.TrimSpace(s) != "" {
 					fields[key] = strings.TrimSpace(s)
@@ -475,6 +489,11 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 		if nameVal, hasName := fields["name"]; hasName {
 			if _, err := validate.ValidateName(nameVal); err != nil {
 				return nil, fmt.Errorf("invalid name: %w", err)
+			}
+		}
+		if vs, hasVS := fields["verification_status"]; hasVS {
+			if vs != "passed" && vs != "failed" {
+				return nil, fmt.Errorf("verification_status must be 'passed' or 'failed', got %q", vs)
 			}
 		}
 		var listFields map[string][]string
