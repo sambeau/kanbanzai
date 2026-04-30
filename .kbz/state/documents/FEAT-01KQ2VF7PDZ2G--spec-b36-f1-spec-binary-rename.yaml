@@ -1,10 +1,12 @@
-content_hash: 176ea39542b8701131f7fe28e31805da4d20e8de862123b4c979b00023c83970
+approved_at: "2026-04-30T14:14:09Z"
+approved_by: sambeau
+content_hash: 45c3844b73c7195b76d40e6d628b379fb9e6a2213fd8b3f7b3321203cc80bf25
 created: "2026-04-30T14:08:14Z"
 created_by: sambeau
 id: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename
 owner: FEAT-01KQ2VF7PDZ2G
 path: work/spec/B36-F1-spec-binary-rename.md
-status: draft
+status: approved
 title: "Specification: Binary rename kanbanzai to kbz"
 type: spec
-updated: "2026-04-30T14:08:14Z"
+updated: "2026-04-30T14:14:09Z"

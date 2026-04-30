@@ -1,10 +1,12 @@
-content_hash: b88a60a978a107b511891dba4273725c093cc5bf19e9ff35257099f039146e40
+approved_at: "2026-04-30T14:14:09Z"
+approved_by: sambeau
+content_hash: c27874ed477b2bedfca4217260df1e751bb297bcca82f76b7366867153942a4e
 created: "2026-04-30T14:11:16Z"
 created_by: sambeau
 id: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output
 owner: FEAT-01KQ2VGTRZHPC
 path: work/spec/B36-F3-spec-status-human-output.md
-status: draft
+status: approved
 title: "Specification: Status command human output"
 type: spec
-updated: "2026-04-30T14:11:16Z"
+updated: "2026-04-30T14:14:09Z"

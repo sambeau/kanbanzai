@@ -1,10 +1,12 @@
-content_hash: 12025e84439dfb22062b791cdf0b66f0cc6eafb7751bdde636a554d2ebe1605f
+approved_at: "2026-04-30T14:14:09Z"
+approved_by: sambeau
+content_hash: c95533a0a430acde8418d36fbfe670145eaef20289b7122fb3e17c9e49cea055
 created: "2026-04-30T14:08:26Z"
 created_by: sambeau
 id: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution
 owner: FEAT-01KQ2VFTWD1W2
 path: work/spec/B36-F2-spec-status-argument-resolution.md
-status: draft
+status: approved
 title: "Specification: Status command argument resolution"
 type: spec
-updated: "2026-04-30T14:08:26Z"
+updated: "2026-04-30T14:14:09Z"
