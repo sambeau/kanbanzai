@@ -3,7 +3,14 @@ parent_feature: FEAT-01KQ2VFTWD1W2
 slug: wire-format-flag-validation
 name: Wire format flag and argument validation into kbz status
 summary: "Modify runStatus to accept optional target arg and --format/-f flag. Validate --format against allow-list (human/plain/json), reject unknown flags and multiple positional args (exit 2). Preserve existing no-target behaviour."
-status: ready
+status: done
 estimate: "3"
 depends_on:
   - TASK-01KQFDMBCJZJR
+completed: "2026-04-30T15:33:07Z"
+claimed_at: "2026-04-30T15:19:29Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T15:19:29Z"
+dispatched_by: sambeau
+completion_summary: "Wired --format/-f flag and optional positional target into kbz status. Added flag parsing (human/plain/json, default human), target validation, and integration with resolution.Disambiguate(). Rejects unknown flags, multiple positional args, invalid format values (exit 2). Routes to stub renderers for entity/plan/path targets. Created internal/resolution package (no-I/O lexical disambiguation). Added WorkQueue to entityService interface. 25 status + 28 resolution tests pass."
+verification: go build ./... passes; go test ./cmd/kbz/... -run TestRunStatus (25 tests) pass; go test ./internal/resolution/... (28 tests) pass.
