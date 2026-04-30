@@ -3,10 +3,10 @@ content: "[minor] spec-ambiguity: Spec FR-002 listed paired test task fields but
 created: "2026-04-25T14:59:15Z"
 created_by: unknown
 id: KE-01KQ2JDTJR0PQ
-last_accessed_at: "2026-04-30T19:26:55Z"
+last_accessed_at: "2026-04-30T19:27:34Z"
 learned_from: TASK-01KQ2GJXRJV5E
 miss_count: 0
-recent_use_count: 102
+recent_use_count: 103
 scope: project
 status: contributed
 tags:
