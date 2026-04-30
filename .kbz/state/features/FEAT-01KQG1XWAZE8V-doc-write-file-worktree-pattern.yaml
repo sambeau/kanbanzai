@@ -2,8 +2,15 @@ id: FEAT-01KQG1XWAZE8V
 slug: doc-write-file-worktree-pattern
 name: Document write_file as Primary Worktree Pattern
 parent: B39-fix-worktree-dev-experience
-status: proposed
+status: dev-planning
 summary: "Update implement-task/SKILL.md to make write_file(entity_id) the primary recommended pattern for worktree file creation. Demote python3 -c and heredoc workarounds to fallback status. Add write_file to the developing-stage default tool subset. Addresses REQ-001, REQ-002, REQ-003, REQ-NF-003."
+design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
 created: "2026-04-30T20:40:17Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: specifying
+    reason: Specification is approved at batch level (B39-fix-worktree-dev-experience/spec-p40-spec-b39-worktree-dev-experience). F1 and F2 share the B39 batch spec; per-feature specs are not required when a batch-level spec covers all features in the batch.
+    timestamp: "2026-04-30T21:41:19+01:00"
+    to_status: dev-planning
 display_id: B39-F1
