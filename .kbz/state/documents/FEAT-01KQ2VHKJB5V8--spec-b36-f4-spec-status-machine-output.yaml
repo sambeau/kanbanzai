@@ -1,6 +1,6 @@
-approved_at: "2026-04-30T14:17:35Z"
+approved_at: "2026-04-30T14:22:32Z"
 approved_by: sambeau
-content_hash: f6f5f842407b2e152d4426d37099981f09041e13b29582454eee7a44ddac1c1f
+content_hash: ca4fd66d9a88426b2f7e2971046fbc689b43fed8b54af0675ef4b644633d991a
 created: "2026-04-30T14:07:33Z"
 created_by: sambeau
 id: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output
@@ -9,4 +9,4 @@ path: work/spec/B36-F4-spec-status-machine-output.md
 status: approved
 title: "Specification: Status command machine output formats"
 type: spec
-updated: "2026-04-30T14:17:35Z"
+updated: "2026-04-30T14:22:32Z"

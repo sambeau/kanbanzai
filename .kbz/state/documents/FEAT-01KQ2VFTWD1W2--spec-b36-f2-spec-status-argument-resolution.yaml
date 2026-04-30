@@ -1,6 +1,6 @@
-approved_at: "2026-04-30T14:17:35Z"
+approved_at: "2026-04-30T14:22:32Z"
 approved_by: sambeau
-content_hash: 5963cb1a63ccc5c99075344b8afd2a4db55856072d9b6c4ced5cde0cd850b2d4
+content_hash: cb1ed70916f7c19c1eca35816b5af379c3b31d81014cdd1c03502099ca6cdffd
 created: "2026-04-30T14:08:26Z"
 created_by: sambeau
 id: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution
@@ -9,4 +9,4 @@ path: work/spec/B36-F2-spec-status-argument-resolution.md
 status: approved
 title: "Specification: Status command argument resolution"
 type: spec
-updated: "2026-04-30T14:17:35Z"
+updated: "2026-04-30T14:22:32Z"
