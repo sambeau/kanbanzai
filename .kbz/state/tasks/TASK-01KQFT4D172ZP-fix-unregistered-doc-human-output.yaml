@@ -1,0 +1,6 @@
+id: TASK-01KQFT4D172ZP
+parent_feature: FEAT-01KQ2VGTRZHPC
+slug: fix-unregistered-doc-human-output
+name: Fix Unregistered-Document Human Output Format
+summary: "The unregistered-document human output in runStatusPath violates three spec requirements: (FR-2.1) Line 1 uses \"File: {normalised-path}\" instead of the bare path as supplied — remove the \"File:\" prefix and do not normalise the displayed path. (FR-2.2) The verbatim phrase \"Not registered with Kanbanzai.\" is absent — replace \"Status: not registered\". (FR-2.3) The suggested register command omits --type and --title placeholders — add them. Deliverable: modified cmd/kbz/workflow_cmd.go (~L571-574)."
+status: queued
