@@ -1,0 +1,13 @@
+id: B39-fix-worktree-dev-experience
+slug: fix-worktree-dev-experience
+name: Fix Worktree Development Experience
+status: proposed
+summary: "Make worktree file editing discoverable and reliable. Document write_file(entity_id) as the primary pattern, add entity_id support to edit_file, and fix heredoc support in the terminal tool. Addresses Theme 1 (Critical) from the April 2026 retrospective."
+tags:
+  - workstream-a
+  - critical
+created: "2026-04-30T20:15:00Z"
+created_by: sambeau
+updated: "2026-04-30T20:15:00Z"
+next_feature_seq: 1
+parent: P40-retro-batch-april-2026
