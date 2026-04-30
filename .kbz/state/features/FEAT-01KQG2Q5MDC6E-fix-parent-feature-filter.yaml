@@ -2,7 +2,7 @@ id: FEAT-01KQG2Q5MDC6E
 slug: fix-parent-feature-filter
 name: Fix entity list parent_feature Filter
 parent: B40-fix-tool-correctness
-status: dev-planning
+status: developing
 summary: "Fix the broken parent_feature filter on entity(action: list, type: task) so it returns only tasks owned by the specified feature instead of all 614 tasks. Addresses REQ-001, REQ-NF-001, AC-001, AC-002, AC-012."
 design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
 dev_plan: FEAT-01KQG2Q5MDC6E/dev-plan-p40-f3-dev-plan-parent-feature-filter

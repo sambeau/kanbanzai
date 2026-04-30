@@ -3,4 +3,7 @@ parent_feature: FEAT-01KQG2Q5V4S6W
 slug: test-decompose-ac-formats
 name: Write tests for all AC formats and diagnostic
 summary: "Tests: heading-based, bold-parenthetical, GWT blocks, unrecognised format diagnostic, existing formats preserved. Depends on T1 and T2. Addresses AC-006 through AC-010."
-status: queued
+status: ready
+depends_on:
+  - TASK-01KQG2WT8EVFH
+  - TASK-01KQG2WTB2NFH

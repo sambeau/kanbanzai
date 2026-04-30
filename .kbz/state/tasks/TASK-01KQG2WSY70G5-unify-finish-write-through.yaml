@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQG2Q5Q1HX9
 slug: unify-finish-write-through
 name: Unify finish() write-through path
 summary: "Ensure finish() writes task status synchronously to both entity YAML store and SQLite cache before returning response. Entity record first, then cache invalidation. Addresses REQ-002, REQ-003, REQ-NF-002."
-status: queued
+status: ready

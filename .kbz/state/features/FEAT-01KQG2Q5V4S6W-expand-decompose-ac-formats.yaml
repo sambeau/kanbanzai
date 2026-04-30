@@ -2,7 +2,7 @@ id: FEAT-01KQG2Q5V4S6W
 slug: expand-decompose-ac-formats
 name: Expand Decompose AC Format Recognition
 parent: B40-fix-tool-correctness
-status: dev-planning
+status: developing
 summary: "Extend decompose(action: propose) to recognise heading-based ACs, bold-with-parenthetical, Given/When/Then blocks, and numbered lists. Emit diagnostic with closest candidates on failure. Addresses REQ-007, REQ-008, AC-006 through AC-010."
 design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
 dev_plan: FEAT-01KQG2Q5V4S6W/dev-plan-p40-f6-dev-plan-decompose-ac-formats

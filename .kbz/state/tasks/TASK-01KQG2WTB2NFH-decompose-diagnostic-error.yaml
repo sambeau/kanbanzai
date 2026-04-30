@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQG2Q5V4S6W
 slug: decompose-diagnostic-error
 name: Add diagnostic error on decompose parse failure
 summary: "When no ACs match, emit error with sections found, closest unrecognised patterns with line numbers, and expected format example. Addresses REQ-008."
-status: queued
+status: ready

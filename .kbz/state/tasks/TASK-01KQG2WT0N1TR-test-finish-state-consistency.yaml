@@ -4,3 +4,5 @@ slug: test-finish-state-consistency
 name: Write integration test for finish state consistency
 summary: "Integration test: finish a task, immediately verify entity get, entity list, and gate checks all observe done status. Benchmark p95 latency before/after. Depends on T1. Addresses AC-003, AC-013."
 status: queued
+depends_on:
+  - TASK-01KQG2WSY70G5

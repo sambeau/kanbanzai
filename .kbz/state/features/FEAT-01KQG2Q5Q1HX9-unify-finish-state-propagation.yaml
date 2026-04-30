@@ -2,7 +2,7 @@ id: FEAT-01KQG2Q5Q1HX9
 slug: unify-finish-state-propagation
 name: Unify finish() State Propagation
 parent: B40-fix-tool-correctness
-status: dev-planning
+status: developing
 summary: "Ensure finish() writes task status synchronously to both the entity YAML store and the SQLite cache before returning. After finish() returns success, all subsequent reads must observe the task as done. Addresses REQ-002, REQ-003, REQ-NF-002, AC-003, AC-013."
 design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
 dev_plan: FEAT-01KQG2Q5Q1HX9/dev-plan-p40-f4-dev-plan-finish-state-propagation

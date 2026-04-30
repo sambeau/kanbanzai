@@ -1,13 +1,19 @@
 id: B40-fix-tool-correctness
 slug: fix-tool-correctness
 name: Fix Tool Correctness and Reliability
-status: proposed
+status: active
 summary: "Fix four correctness bugs: broken parent_feature filter, inconsistent finish() state propagation, non-atomic multi-edit application, and brittle decompose AC format recognition. Addresses Themes 2 and 3 (Significant) from the April 2026 retrospective."
 tags:
   - workstream-b
   - significant
 created: "2026-04-30T20:15:00Z"
 created_by: sambeau
-updated: "2026-04-30T20:15:00Z"
+updated: "2026-04-30T20:57:39Z"
 next_feature_seq: 5
+overrides:
+  -
+    from_status: proposed
+    reason: "proposed → active shortcut: 4 feature(s) in post-designing state at transition time"
+    timestamp: "2026-04-30T20:57:39Z"
+    to_status: active
 parent: P40-retro-batch-april-2026
