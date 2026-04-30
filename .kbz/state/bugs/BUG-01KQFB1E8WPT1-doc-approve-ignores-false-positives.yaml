@@ -1,0 +1,11 @@
+id: BUG-01KQFB1E8WPT1
+slug: doc-approve-ignores-false-positives
+name: doc approve ignores record_false_positive entries
+status: reported
+severity: medium
+priority: medium
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-04-30T14:00:16Z"
+observed: "When calling `doc(action: \"approve\")` on a document that has `record_false_positive` entries recorded, approval still fails as if the false positives were not recorded."
+expected: "`doc(action: \"approve\")` should read any `record_false_positive` entries and exclude those check failures from blocking approval."
