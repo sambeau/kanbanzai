@@ -1,10 +1,12 @@
-content_hash: e053fa1e76d107658297bd5b3fdec453bb1c754667560dbd77c26c51aef4c4a6
+approved_at: "2026-04-30T12:33:43Z"
+approved_by: sambeau
+content_hash: 81d739064aef19a6e3892594a37e140d668af229e6516e5fc2c834e2304f69a7
 created: "2026-04-30T11:34:47Z"
 created_by: sambeau
 id: B38-plans-and-batches/report-batch-review-b38-plans-and-batches-2026-04-30
 owner: B38-plans-and-batches
 path: work/reviews/batch-review-B38-plans-and-batches-2026-04-30.md
-status: draft
+status: approved
 title: "Batch Conformance Review: B38 Plans and Batches"
 type: report
-updated: "2026-04-30T11:34:47Z"
+updated: "2026-04-30T12:33:43Z"
