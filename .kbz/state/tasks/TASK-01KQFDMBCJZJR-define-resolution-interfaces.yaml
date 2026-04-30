@@ -3,9 +3,15 @@ parent_feature: FEAT-01KQ2VFTWD1W2
 slug: define-resolution-interfaces
 name: Define Resolution Interfaces and Contracts
 summary: "Create internal/resolution package with ResolutionKind enum, bare plan prefix pattern, Disambiguate(target string) ResolutionKind function (lexical-only, no I/O), and unit tests covering AC-001 through AC-004."
-status: active
+status: done
 estimate: "3"
+files_planned:
+  - internal/resolution/resolution.go
+  - internal/resolution/resolution_test.go
+completed: "2026-04-30T15:19:15Z"
 claimed_at: "2026-04-30T15:13:31Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-30T15:13:31Z"
 dispatched_by: sambeau
+completion_summary: "Created internal/resolution package with ResolutionKind enum (ResolvePath, ResolveEntity, ResolvePlanPrefix, ResolveNone), bare plan prefix regex ^[A-Z][0-9]+$, and Disambiguate(target string) ResolutionKind function — purely lexical, zero I/O (NFR-001). 28 unit tests covering AC-001 through AC-004 plus edge cases (empty string, ./ prefix, case-insensitive, path-over-entity priority). All tests pass, go build and go vet clean."
+verification: "All 28 tests pass. AC-001 through AC-004 verified by named test functions. Bare plan prefix (P1→ResolvePlanPrefix), generic token (sometoken→ResolveNone), empty string, ./ prefix path, all pass. go build ./... and go vet clean."
