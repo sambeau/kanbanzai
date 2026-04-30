@@ -2,7 +2,8 @@ id: FEAT-01KQG3AX1AD0K
 slug: entity-update-verification
 name: Add Verification Parameter to Entity Update
 parent: B41-fix-doc-ownership-lifecycle
-status: developing
+status: done
+review_cycle: 1
 summary: "Add verification and verification_status optional parameters to entity(action: update). Set directly on entity record with no lifecycle transition. Addresses REQ-007, REQ-008, REQ-NF-003, AC-008 through AC-010, AC-012."
 design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
 dev_plan: FEAT-01KQG3AX1AD0K/dev-plan-p40-f10-dev-plan-entity-update-verification
@@ -12,6 +13,11 @@ overrides:
   -
     from_status: specifying
     reason: Specification is approved at batch level (B41-fix-doc-ownership-lifecycle/spec-p40-spec-b41-doc-ownership-lifecycle). All four B41 features share the batch spec.
-    timestamp: "2026-04-30T22:05:36+01:00"
+    timestamp: "2026-04-30T23:45:39+01:00"
     to_status: dev-planning
+  -
+    from_status: reviewing
+    reason: "Reviewing→done: both tasks done, verification params on entity update, 4 tests pass."
+    timestamp: "2026-04-30T23:45:39+01:00"
+    to_status: done
 display_id: B41-F4
