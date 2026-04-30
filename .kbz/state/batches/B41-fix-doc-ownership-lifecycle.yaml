@@ -1,14 +1,14 @@
 id: B41-fix-doc-ownership-lifecycle
 slug: fix-doc-ownership-lifecycle
 name: Fix Document Ownership and Lifecycle
-status: active
+status: reviewing
 summary: "Auto-infer document owner from path context, preserve approval status on minor edits, add bypassable signalling to merge gates, and add verification parameter to entity update. Addresses Themes 4 and 7 (Significant/Moderate) from the April 2026 retrospective."
 tags:
   - workstream-c
   - significant
 created: "2026-04-30T20:15:00Z"
 created_by: sambeau
-updated: "2026-04-30T21:09:10Z"
+updated: "2026-04-30T22:45:53Z"
 next_feature_seq: 5
 overrides:
   -
