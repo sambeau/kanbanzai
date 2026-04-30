@@ -5,6 +5,7 @@ parent: B41-fix-doc-ownership-lifecycle
 status: dev-planning
 summary: "Add verification and verification_status optional parameters to entity(action: update). Set directly on entity record with no lifecycle transition. Addresses REQ-007, REQ-008, REQ-NF-003, AC-008 through AC-010, AC-012."
 design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
+dev_plan: FEAT-01KQG3AX1AD0K/dev-plan-p40-f10-dev-plan-entity-update-verification
 created: "2026-04-30T21:04:52Z"
 created_by: sambeau
 overrides:

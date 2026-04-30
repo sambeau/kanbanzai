@@ -5,6 +5,7 @@ parent: B41-fix-doc-ownership-lifecycle
 status: dev-planning
 summary: "doc refresh should detect change scope: preserve approval for formatting-only changes, warn before resetting for substantive changes. Addresses REQ-004, REQ-005, AC-005, AC-006."
 design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
+dev_plan: FEAT-01KQG3AWX916X/dev-plan-p40-f8-dev-plan-preserve-approval
 created: "2026-04-30T21:04:52Z"
 created_by: sambeau
 overrides:

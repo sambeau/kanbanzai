@@ -5,6 +5,7 @@ parent: B41-fix-doc-ownership-lifecycle
 status: dev-planning
 summary: "Add bypassable: bool to each gate result in merge(action: check) output. Hard gates (review_report_exists) have bypassable: false. Addresses REQ-006, REQ-NF-002, AC-007."
 design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
+dev_plan: FEAT-01KQG3AWZ3HEZ/dev-plan-p40-f9-dev-plan-merge-gate-bypassable
 created: "2026-04-30T21:04:52Z"
 created_by: sambeau
 overrides:
