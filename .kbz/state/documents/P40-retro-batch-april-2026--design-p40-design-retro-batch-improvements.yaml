@@ -1,10 +1,12 @@
-content_hash: b8e06678d2cc2381cd0b566e83b320f97c2b54ada7d5cb6bd3cf1b966ece2685
+approved_at: "2026-04-30T20:09:46Z"
+approved_by: sambeau
+content_hash: 99289e7671b3c67cf3eb65747c850d0708928c841a0e68a41d3eb918e2051a70
 created: "2026-04-30T20:08:19Z"
 created_by: sambeau
 id: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
 owner: P40-retro-batch-april-2026
 path: work/P40-retro-batch-april-2026/P40-design-retro-batch-improvements.md
-status: draft
+status: approved
 title: "Design: Retrospective Batch Improvements — April 2026"
 type: design
-updated: "2026-04-30T20:08:19Z"
+updated: "2026-04-30T20:09:46Z"
