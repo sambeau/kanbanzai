@@ -3,6 +3,6 @@ parent_feature: FEAT-01KQ7JDT511BZ
 slug: work-tree-migration-implement-execute-mode
 name: Implement --execute mode
 summary: Implement --execute mode
-status: queued
+status: ready
 depends_on:
   - TASK-01KQ7PT6RWYK6

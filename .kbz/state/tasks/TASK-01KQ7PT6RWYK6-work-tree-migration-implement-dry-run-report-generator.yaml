@@ -3,10 +3,13 @@ parent_feature: FEAT-01KQ7JDT511BZ
 slug: work-tree-migration-implement-dry-run-report-generator
 name: Implement dry-run report generator
 summary: Implement dry-run report generator
-status: active
+status: done
 depends_on:
   - TASK-01KQ7PT6RKW3P
+completed: "2026-04-30T10:16:23Z"
 claimed_at: "2026-04-30T10:08:56Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-30T10:08:56Z"
 dispatched_by: sambeau
+completion_summary: "Implemented dry-run report generator (T2) for kbz migrate: reads all document records, classifies each as MOVE/SKIP/MISSING; produces triage report for unregistered files with inferred types and recommended actions; supports --porcelain tab-separated output. Wired into main.go dispatch. Added 6 tests for output formatters and recommendAction. Build and all migrate tests pass."
+verification: "go build ./cmd/kanbanzai/ passes. All 15 migrate tests pass: TestResolveMigrateTarget (9), TestInferTypeFromPath (2), TestStripPlanAndTypePrefix (1), TestPrintDryRunReport, TestPrintTriageReport, TestPrintTriageReport_Empty, TestPrintPorcelain, TestRecommendAction."
