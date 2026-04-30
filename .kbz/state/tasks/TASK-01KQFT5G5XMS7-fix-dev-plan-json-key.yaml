@@ -1,0 +1,6 @@
+id: TASK-01KQFT5G5XMS7
+parent_feature: FEAT-01KQ2VHKJB5V8
+slug: fix-dev-plan-json-key
+name: Fix dev-plan JSON Key (dev_plan to dev-plan)
+summary: "The jsonDocs struct uses Go field DevPlan with JSON tag json:\"dev_plan\" (underscore). The spec schema and AC-5 require \"dev-plan\" (hyphen). Change the tag to json:\"dev-plan\". Update contract test expectations (Task 3) to reference the corrected key. Deliverable: modified internal/cli/status/json.go (jsonDocs struct, ~L43)."
+status: queued
