@@ -1,0 +1,19 @@
+confidence: "0.5"
+content: "When features or bugs are advanced to done/closed via override (bypassing the normal merge gate), worktrees and branches are not automatically cleaned up. This resulted in 9 stale active worktrees accumulating from B36 and B38 — all entities were done/closed but worktrees remained. The cleanup tool also had stale records for worktrees whose disk directories were already deleted. After an override-based lifecycle completion, explicitly run cleanup(action: execute) or worktree(action: remove) to reclaim worktrees and branches."
+created: "2026-04-30T19:07:55Z"
+created_by: sambeau
+id: KE-01KQFWMRPKK9D
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - worktree
+  - cleanup
+  - override
+  - lifecycle
+  - gotcha
+tier: 2
+topic: worktree-cleanup-after-override
+ttl_days: 90
+updated: "2026-04-30T19:07:55Z"
+use_count: 0
