@@ -8,6 +8,10 @@ estimate: "5"
 depends_on:
   - TASK-01KQFJN8PCT62
   - TASK-01KQFJNHR4YKZ
+  - TASK-01KQFT5G5XMS7
+  - TASK-01KQFT5G6JS5X
+  - TASK-01KQFT5G61DWR
+  - TASK-01KQFT5G604ZX
 completed: "2026-04-30T17:21:46Z"
 claimed_at: "2026-04-30T17:04:07Z"
 dispatched_to: unspecified

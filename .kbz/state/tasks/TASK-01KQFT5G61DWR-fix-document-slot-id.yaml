@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQ2VHKJB5V8
 slug: fix-document-slot-id
 name: Fix Document Slot ID (Add ID to DocInput)
 summary: "RenderFeature sets documentSlot.ID to d.Path (file path instead of doc record ID). Root cause: DocInput in render/types.go has no ID field. Fix: (1) Add ID string field to DocInput. (2) Populate from document record ID when building FeatureInput in workflow_cmd.go. (3) Use d.ID not d.Path for documentSlot.ID in both json.go and plain.go. Deliverable: modified render/types.go, status/json.go, status/plain.go, cmd/kbz/workflow_cmd.go."
-status: queued
+status: ready

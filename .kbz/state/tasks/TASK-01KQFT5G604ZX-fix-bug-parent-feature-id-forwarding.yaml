@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQ2VHKJB5V8
 slug: fix-bug-parent-feature-id-forwarding
 name: Fix Bug parent_feature_id Forwarding
 summary: "JSONRenderer.RenderBug hardcodes ParentFeatureID nil; PlainRenderer.RenderBug hardcodes parent_feature missing. Neither accepts a parentFeature param. runStatusBugFormatted extracts parentFeature but never forwards it. Fix: (1) Add parentFeature string param to both RenderBug signatures. (2) Forward from runStatusBugFormatted. Deliverable: modified status/json.go, status/plain.go, cmd/kbz/workflow_cmd.go."
-status: queued
+status: ready
