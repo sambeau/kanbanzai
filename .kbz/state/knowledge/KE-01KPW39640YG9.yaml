@@ -3,10 +3,10 @@ content: "[moderate] tool-friction: Terminal heredoc failed for multi-line Go co
 created: "2026-04-23T02:39:07Z"
 created_by: unknown
 id: KE-01KPW39640YG9
-last_accessed_at: "2026-04-30T10:34:59Z"
+last_accessed_at: "2026-04-30T10:40:46Z"
 learned_from: TASK-01KPVG85SXVXZ
 miss_count: 0
-recent_use_count: 133
+recent_use_count: 134
 scope: project
 status: contributed
 tags:

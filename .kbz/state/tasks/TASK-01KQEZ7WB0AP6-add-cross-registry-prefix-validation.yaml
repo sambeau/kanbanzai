@@ -3,4 +3,11 @@ parent_feature: FEAT-01KQ7YQK6DDDA
 slug: add-cross-registry-prefix-validation
 name: Add cross-registry prefix validation
 summary: "Add Validate() check: error if same prefix char in both plan_prefixes and batch_prefixes. Add IsActivePlanPrefix/IsActiveBatchPrefix helpers. AC-003-004, AC-014."
-status: ready
+status: done
+completed: "2026-04-30T10:40:55Z"
+claimed_at: "2026-04-30T10:40:46Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T10:40:46Z"
+dispatched_by: sambeau
+completion_summary: Cross-registry prefix validation and IsActivePlanPrefix/IsActiveBatchPrefix helpers implemented alongside T1. ValidatePrefixSeparation returns error on shared prefix chars. All existing config tests pass.
+verification: go test ./internal/config/ passes. ValidatePrefixSeparation rejects shared prefixes and allows distinct ones.
