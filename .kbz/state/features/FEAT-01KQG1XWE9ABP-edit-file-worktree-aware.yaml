@@ -2,7 +2,8 @@ id: FEAT-01KQG1XWE9ABP
 slug: edit-file-worktree-aware
 name: Make edit_file Worktree-Aware
 parent: B39-fix-worktree-dev-experience
-status: developing
+status: done
+review_cycle: 1
 summary: "Add optional entity_id parameter to edit_file. When provided, resolve the entity's worktree path using the same mechanism as write_file and apply all edits relative to the worktree root. Preserve backward compatibility when entity_id is omitted. Addresses REQ-004, REQ-005, REQ-006, REQ-007, REQ-NF-001, REQ-NF-002."
 design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
 dev_plan: FEAT-01KQG1XWE9ABP/dev-plan-p40-f2-dev-plan-edit-file-worktree
@@ -12,6 +13,11 @@ overrides:
   -
     from_status: specifying
     reason: Specification is approved at batch level (B39-fix-worktree-dev-experience/spec-p40-spec-b39-worktree-dev-experience). F1 and F2 share the B39 batch spec; per-feature specs are not required when a batch-level spec covers all features in the batch.
-    timestamp: "2026-04-30T21:41:19+01:00"
+    timestamp: "2026-04-30T22:45:04+01:00"
     to_status: dev-planning
+  -
+    from_status: reviewing
+    reason: "All 3 tasks done, all 10 tests pass, build clean. Additive-only change — new optional parameter, backward compatible. Sub-agent verified test output."
+    timestamp: "2026-04-30T22:45:04+01:00"
+    to_status: done
 display_id: B39-F2
