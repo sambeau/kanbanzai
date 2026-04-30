@@ -3,4 +3,17 @@ parent_feature: FEAT-01KQG3AWX916X
 slug: change-scope-detection
 name: Implement change-scope detection and tests
 summary: "On doc refresh, compare old/new content. Preserve approval for formatting-only changes. Warn and reset for substantive changes. Single task with tests. Addresses REQ-004, REQ-005, AC-005, AC-006."
-status: ready
+status: done
+files_planned:
+  - internal/model/entities.go
+  - internal/storage/document_store.go
+  - internal/service/documents.go
+  - internal/mcp/doc_tool.go
+  - internal/service/documents_refresh_test.go
+completed: "2026-04-30T22:44:52Z"
+claimed_at: "2026-04-30T22:28:13Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T22:28:13Z"
+dispatched_by: sambeau
+completion_summary: "Implemented change-scope detection for doc refresh: added CanonicalContentHash to model, ComputeCanonicalContentHash to storage. RefreshContentHash and RefreshDocument now compare canonical hashes — formatting-only changes preserve approval (AC-005), substantive changes reset to draft with warning (AC-006). Added Message field to RefreshResult and MCP response. 7 new tests pass; all existing doc tests pass."
+verification: "All 7 new tests pass. All existing document-related tests pass (TestSubmit*, TestApprove*, TestGetDoc*, TestRefresh*, TestListDoc*, TestSupersede*, TestValidate*, TestDocument*). Pre-existing failures in entity_store_test.go and mcp package are unrelated."
