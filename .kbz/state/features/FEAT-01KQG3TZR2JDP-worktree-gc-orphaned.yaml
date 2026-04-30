@@ -1,0 +1,9 @@
+id: FEAT-01KQG3TZR2JDP
+slug: worktree-gc-orphaned
+name: Add worktree gc for Orphaned Records
+parent: B42-worktree-cleanup-automation
+status: proposed
+summary: "Add worktree(action: gc) to detect and remove state records whose git worktree directories no longer exist. Support dry_run preview mode. Addresses REQ-001, REQ-002, REQ-003, REQ-NF-001, AC-001 through AC-003, AC-010."
+created: "2026-04-30T21:13:39Z"
+created_by: sambeau
+display_id: B42-F1
