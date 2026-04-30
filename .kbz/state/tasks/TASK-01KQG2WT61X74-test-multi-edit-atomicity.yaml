@@ -3,6 +3,6 @@ parent_feature: FEAT-01KQG2Q5RS9G9
 slug: test-multi-edit-atomicity
 name: Write tests for multi-edit atomicity
 summary: "Tests: one match + one mismatch (file unchanged + error), two matches (both applied), single-edit unchanged, existing suite passes. Depends on T1. Addresses AC-004, AC-005, AC-011."
-status: queued
+status: ready
 depends_on:
   - TASK-01KQG2WT3GC31
