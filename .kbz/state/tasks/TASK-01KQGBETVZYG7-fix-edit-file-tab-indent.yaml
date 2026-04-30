@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQGBA8WD0GJ
 slug: fix-edit-file-tab-indent
 name: Fix tab indentation preservation in edit_file edit mode
 summary: "Fix the fuzzy matching engine in edit_file's edit mode to preserve original tab indentation when applying replacements. When old_text is matched against tab-indented content, new_text should be indented at the same tab level. Surrounding lines must retain original indentation. Addresses REQ-001, REQ-002, REQ-NF-001, REQ-NF-002, AC-001 through AC-004."
-status: queued
+status: ready
