@@ -1,10 +1,12 @@
-content_hash: a0c21dd49a804030676d643f7f6142df802628c567123365863dac2e12653669
+approved_at: "2026-04-30T21:08:28Z"
+approved_by: sambeau
+content_hash: e44024c84de1405acf5b1be599186d6cadc05639739dfbe52f50da12963a9eb6
 created: "2026-04-30T21:07:03Z"
 created_by: sambeau
 id: FEAT-01KQG3AX1AD0K/dev-plan-p40-f10-dev-plan-entity-update-verification
 owner: FEAT-01KQG3AX1AD0K
 path: work/P40-retro-batch-april-2026/P40-F10-dev-plan-entity-update-verification.md
-status: draft
+status: approved
 title: "Dev-Plan: Entity Update Verification (B41-F4)"
 type: dev-plan
-updated: "2026-04-30T21:07:03Z"
+updated: "2026-04-30T21:08:28Z"

@@ -1,10 +1,12 @@
-content_hash: 58af12cb9491aaf48c54f2ee95a547a4babe75ff3cc35a0dc06c9f63fe7c34b2
+approved_at: "2026-04-30T21:08:28Z"
+approved_by: sambeau
+content_hash: 70c0a7598f5eef6df2b65e5160c03e4942a4aa2e7fd4f8f9910e4c08d223c0ac
 created: "2026-04-30T21:07:03Z"
 created_by: sambeau
 id: FEAT-01KQG3AWZ3HEZ/dev-plan-p40-f9-dev-plan-merge-gate-bypassable
 owner: FEAT-01KQG3AWZ3HEZ
 path: work/P40-retro-batch-april-2026/P40-F9-dev-plan-merge-gate-bypassable.md
-status: draft
+status: approved
 title: "Dev-Plan: Merge Gate Bypassable Field (B41-F3)"
 type: dev-plan
-updated: "2026-04-30T21:07:03Z"
+updated: "2026-04-30T21:08:28Z"

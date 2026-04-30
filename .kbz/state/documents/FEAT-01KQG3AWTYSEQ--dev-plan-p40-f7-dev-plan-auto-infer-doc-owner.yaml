@@ -1,10 +1,12 @@
-content_hash: b6aaebe399d7e6645f92b7dcc9d2b6f36bd2af20c6c31ffe02f9410a01f0da85
+approved_at: "2026-04-30T21:08:28Z"
+approved_by: sambeau
+content_hash: 35f94a5259f04210b315cf866a945b7569926fe466dccc7b1d937fe54b9c8411
 created: "2026-04-30T21:07:03Z"
 created_by: sambeau
 id: FEAT-01KQG3AWTYSEQ/dev-plan-p40-f7-dev-plan-auto-infer-doc-owner
 owner: FEAT-01KQG3AWTYSEQ
 path: work/P40-retro-batch-april-2026/P40-F7-dev-plan-auto-infer-doc-owner.md
-status: draft
+status: approved
 title: "Dev-Plan: Auto-Infer Document Owner (B41-F1)"
 type: dev-plan
-updated: "2026-04-30T21:07:03Z"
+updated: "2026-04-30T21:08:28Z"

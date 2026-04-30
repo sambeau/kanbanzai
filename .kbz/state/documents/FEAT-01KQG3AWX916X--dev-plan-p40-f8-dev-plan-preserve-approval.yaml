@@ -1,10 +1,12 @@
-content_hash: 20123124740e74c1a62851f2cf1596a3df24f26e2d202f574bd5d6142d204984
+approved_at: "2026-04-30T21:08:28Z"
+approved_by: sambeau
+content_hash: bda2978c73461610ec2e2021db6b5f23b02255006cbcfd84f1182b005f894861
 created: "2026-04-30T21:07:03Z"
 created_by: sambeau
 id: FEAT-01KQG3AWX916X/dev-plan-p40-f8-dev-plan-preserve-approval
 owner: FEAT-01KQG3AWX916X
 path: work/P40-retro-batch-april-2026/P40-F8-dev-plan-preserve-approval.md
-status: draft
+status: approved
 title: "Dev-Plan: Preserve Approval on Minor Edits (B41-F2)"
 type: dev-plan
-updated: "2026-04-30T21:07:03Z"
+updated: "2026-04-30T21:08:28Z"
