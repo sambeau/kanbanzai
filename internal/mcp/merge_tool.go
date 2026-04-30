@@ -466,9 +466,11 @@ func executeMerge(
 		warnings = append(warnings, fmt.Sprintf("failed to update worktree record after merge: %v", updateErr))
 	}
 
-	// Delete branch if requested
+	// Delete branch if requested.
+	// For squash merges, git -d does not recognise the branch as merged
+	// (squash creates a new commit, not a merge commit), so we force-delete.
 	if deleteBranch {
-		_ = gitOps.DeleteBranch(wt.Branch, false)
+		_ = gitOps.DeleteBranch(wt.Branch, strategy == worktree.MergeStrategySquash)
 		// Also delete remote branch if configured
 		if cfg.Cleanup.AutoDeleteRemoteBranch {
 			_ = gitOps.DeleteRemoteBranch("origin", wt.Branch)
