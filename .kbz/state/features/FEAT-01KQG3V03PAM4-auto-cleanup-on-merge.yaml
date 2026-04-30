@@ -1,0 +1,9 @@
+id: FEAT-01KQG3V03PAM4
+slug: auto-cleanup-on-merge
+name: Auto-Schedule Cleanup on Merge
+parent: B42-worktree-cleanup-automation
+status: proposed
+summary: "After successful merge, automatically schedule cleanup for the merged worktree and delete the local tracking branch on squash merge. Cleanup failure is best-effort, not a merge failure. Addresses REQ-006, REQ-007, REQ-NF-002, AC-006, AC-007, AC-011."
+created: "2026-04-30T21:13:40Z"
+created_by: sambeau
+display_id: B42-F3
