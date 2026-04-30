@@ -3,4 +3,15 @@ parent_feature: FEAT-01KQG2Q5MDC6E
 slug: fix-parent-feature-filter
 name: Fix parent_feature filter and add tests
 summary: "Fix the broken parent_feature filter in entity list to scope results to the specified feature. Write tests: filter returns correct subset, no matches returns empty, unfiltered listing unchanged. Addresses REQ-001, REQ-NF-001, AC-001, AC-002, AC-012."
-status: ready
+status: done
+files_planned:
+  - internal/mcp/entity_tool.go
+  - internal/mcp/entity_tool_test.go
+  - internal/service/queries_test.go
+completed: "2026-04-30T21:57:37Z"
+claimed_at: "2026-04-30T21:46:51Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T21:46:51Z"
+dispatched_by: sambeau
+completion_summary: "Fixed parent_feature filter on entity list. Code fix (parent_feature fallback) was in commit 8167b8ea. Completed: updated MCP schema descriptions to indicate parent/parent_feature work as list filters; added 3 tests covering AC-001 (filter by parent_feature), AC-002 (no-match returns empty), plus service-layer no-match test. AC-012 (unfiltered) already covered by TestEntity_List_Tasks."
+verification: "go test ./internal/service/ ./internal/mcp/ -run \"ByParent|List.*Tasks|List.*ParentFeature\" - all pass"
