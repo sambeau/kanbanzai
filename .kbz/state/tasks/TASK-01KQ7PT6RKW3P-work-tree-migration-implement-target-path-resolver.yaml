@@ -3,8 +3,11 @@ parent_feature: FEAT-01KQ7JDT511BZ
 slug: work-tree-migration-implement-target-path-resolver
 name: Implement target-path resolver
 summary: Implement target-path resolver
-status: active
+status: done
+completed: "2026-04-30T10:08:23Z"
 claimed_at: "2026-04-30T09:54:56Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-30T09:54:56Z"
 dispatched_by: sambeau
+completion_summary: "Implemented target-path resolver (T1) for kbz migrate: resolveMigrateTarget handles feature-owned, plan-owned, and project documents; inferTypeFromPath supports legacy folder aliases; stripPlanAndTypePrefix extracts slugs from filenames. Added 11 unit tests covering AC-002 through AC-015. Build and T1 tests pass."
+verification: "go build ./cmd/kanbanzai/ passes. go test ./cmd/kanbanzai/ -run 'TestResolveMigrateTarget|TestInferTypeFromPath|TestStripPlanAndTypePrefix' passes (all 11 tests). One pre-existing failure in TestReParentEntityUpdate (move_cmd_test.go) — unrelated."
