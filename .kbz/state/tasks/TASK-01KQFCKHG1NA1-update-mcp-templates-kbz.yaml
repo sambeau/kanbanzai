@@ -1,0 +1,6 @@
+id: TASK-01KQFCKHG1NA1
+parent_feature: FEAT-01KQ2VF7PDZ2G
+slug: update-mcp-templates-kbz
+name: Update MCP config templates to kbz and bump mcpVersion
+summary: "In internal/kbzinit/mcp_config.go, change command from kanbanzai to kbz in both writeMCPConfig and writeZedConfig. Bump mcpVersion from 1 to 2. Update test fixtures. Preserve server key names. Addresses FR-005 through FR-007, FR-014, FR-015."
+status: queued
