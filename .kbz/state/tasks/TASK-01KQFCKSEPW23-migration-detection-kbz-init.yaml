@@ -4,3 +4,4 @@ slug: migration-detection-kbz-init
 name: Add migration detection to kbz init for stale configs
 summary: "Add detection logic in mcp_config.go for stale command: kanbanzai in managed .mcp.json and .zed/settings.json. Emit human-readable warning instructing re-run of kbz init. Add test cases with seeded stale configs. Addresses FR-008, FR-009, NFR-003."
 status: queued
+estimate: "5"
