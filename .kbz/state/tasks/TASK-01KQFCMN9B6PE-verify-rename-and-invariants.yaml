@@ -1,0 +1,6 @@
+id: TASK-01KQFCMN9B6PE
+parent_feature: FEAT-01KQ2VF7PDZ2G
+slug: verify-rename-and-invariants
+name: Verify binary rename with test suite and invariants
+summary: "Run go test ./... and verify zero failures. Verify Go module path, ServerName constant, and MCP server key preservation. Validate all 15 ACs pass. Fix any breakage discovered. Addresses FR-014, FR-015, NFR-001, and all ACs."
+status: queued
