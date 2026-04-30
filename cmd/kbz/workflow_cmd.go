@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/sambeau/kanbanzai/internal/cli/render"
+	"github.com/sambeau/kanbanzai/internal/cli/status"
 	"github.com/sambeau/kanbanzai/internal/core"
 	"github.com/sambeau/kanbanzai/internal/id"
 	"github.com/sambeau/kanbanzai/internal/resolution"
@@ -144,19 +145,6 @@ func deriveEntityType(target string) string {
 // ─── project overview ───────────────────────────────────────────────────────
 
 func runStatusProjectOverview(format string, r *render.Renderer, deps dependencies) error {
-	switch format {
-	case "json":
-		_, err := fmt.Fprintf(deps.stdout, `{"format":"json","message":"json output not yet implemented"}`+"\n")
-		return err
-	case "plain":
-		_, err := fmt.Fprintf(deps.stdout, "plain output not yet implemented\n")
-		return err
-	default: // human
-		return runStatusProjectHuman(r, deps)
-	}
-}
-
-func runStatusProjectHuman(r *render.Renderer, deps dependencies) error {
 	stateRoot := core.StatePath()
 	entitySvc := deps.newEntityService(stateRoot)
 
@@ -173,7 +161,7 @@ func runStatusProjectHuman(r *render.Renderer, deps dependencies) error {
 		return fmt.Errorf("list plans: %w", err)
 	}
 
-	// Build project input.
+	// Build project input (same as human path).
 	input := render.ProjectInput{
 		Name: "Kanbanzai",
 		Health: &render.StatusHealthSummary{
@@ -190,8 +178,8 @@ func runStatusProjectHuman(r *render.Renderer, deps dependencies) error {
 		fActive, _ := toInt(p.State["features_active"])
 		fTotal, _ := toInt(p.State["features_total"])
 		input.Plans = append(input.Plans, render.ProjectPlanInput{
-			DisplayID:     p.ID,
-			Status:        pStatus,
+			DisplayID:      p.ID,
+			Status:         pStatus,
 			FeaturesActive: fActive,
 			FeaturesTotal:  fTotal,
 		})
@@ -213,7 +201,21 @@ func runStatusProjectHuman(r *render.Renderer, deps dependencies) error {
 		})
 	}
 
-	return r.RenderProject(deps.stdout, &input)
+	switch format {
+	case "json":
+		jr := &status.JSONRenderer{}
+		b, err := jr.RenderProject(&input)
+		if err != nil {
+			return err
+		}
+		_, err = fmt.Fprintln(deps.stdout, string(b))
+		return err
+	case "plain":
+		pr := &status.PlainRenderer{}
+		return pr.RenderProject(deps.stdout, &input)
+	default: // human
+		return r.RenderProject(deps.stdout, &input)
+	}
 }
 
 // ─── entity status ──────────────────────────────────────────────────────────
@@ -234,17 +236,136 @@ func runStatusEntity(target, format string, r *render.Renderer, deps dependencie
 		return nil
 	}
 
+	// Human format delegates to the existing human renderer.
+	if format == "human" {
+		return runStatusEntityHuman(target, entityType, &result, r, deps)
+	}
+
+	// Plain and JSON formats: use status renderers.
 	status, _ := result.State["status"].(string)
+	slug := result.Slug
+
+	switch entityType {
+	case "feature":
+		return runStatusFeatureFormatted(format, target, &result, status, slug, deps)
+	case "task":
+		parentFeature, _ := result.State["parent_feature"].(string)
+		return runStatusTaskFormatted(format, target, slug, status, parentFeature, deps)
+	case "bug":
+		severity, _ := result.State["severity"].(string)
+		return runStatusBugFormatted(format, target, slug, status, severity, deps)
+	default:
+		// Fallback for unknown entity types: simple key:value / JSON.
+		if format == "json" {
+			_, err = fmt.Fprintf(deps.stdout, `{"entity":%q,"status":%q,"format":"json"}`+"\n", target, status)
+		} else {
+			_, err = fmt.Fprintf(deps.stdout, "%s: %s\n", target, status)
+		}
+		return err
+	}
+}
+
+// runStatusFeatureFormatted outputs a feature in plain or JSON format.
+func runStatusFeatureFormatted(format, target string, result *service.GetResult, entityStatus, slug string, deps dependencies) error {
+	stateRoot := core.StatePath()
+	entitySvc := deps.newEntityService(stateRoot)
+
+	summary, _ := result.State["summary"].(string)
+	planID, _ := result.State["plan"].(string)
+	planName, _ := result.State["plan_name"].(string)
+
+	input := render.FeatureInput{
+		DisplayID: target,
+		ID:        result.ID,
+		Slug:      slug,
+		Summary:   summary,
+		Status:    entityStatus,
+		PlanID:    planID,
+		PlanName:  planName,
+	}
+
+	// Count tasks.
+	tasks, err := entitySvc.List("task")
+	if err == nil {
+		for _, t := range tasks {
+			parentFeature, _ := t.State["parent_feature"].(string)
+			if parentFeature == target || parentFeature == result.ID {
+				input.TasksTotal++
+				ts, _ := t.State["status"].(string)
+				switch ts {
+				case "active", "developing":
+					input.TasksActive++
+				case "ready":
+					input.TasksReady++
+				case "done", "closed":
+					input.TasksDone++
+				}
+			}
+		}
+	}
+
+	// Extract document references.
+	if docs, ok := result.State["documents"]; ok {
+		if docList, ok := docs.([]any); ok {
+			for _, d := range docList {
+				if dm, ok := d.(map[string]any); ok {
+					t, _ := dm["type"].(string)
+					p, _ := dm["path"].(string)
+					s, _ := dm["status"].(string)
+					input.Documents = append(input.Documents, render.DocInput{
+						Type: t, Path: p, Status: s,
+					})
+				}
+			}
+		}
+	}
 
 	switch format {
 	case "json":
-		_, err = fmt.Fprintf(deps.stdout, `{"entity":%q,"status":%q,"format":"json"}`+"\n", target, status)
+		jr := &status.JSONRenderer{}
+		b, err := jr.RenderFeature(&input)
+		if err != nil {
+			return err
+		}
+		_, err = fmt.Fprintln(deps.stdout, string(b))
 		return err
-	case "plain":
-		_, err = fmt.Fprintf(deps.stdout, "%s: %s\n", target, status)
+	default: // plain
+		pr := &status.PlainRenderer{}
+		return pr.RenderFeature(deps.stdout, &input)
+	}
+}
+
+// runStatusTaskFormatted outputs a task in plain or JSON format.
+func runStatusTaskFormatted(format, id, slug, entityStatus, parentFeature string, deps dependencies) error {
+	switch format {
+	case "json":
+		jr := &status.JSONRenderer{}
+		b, err := jr.RenderTask(id, slug, entityStatus, parentFeature, nil)
+		if err != nil {
+			return err
+		}
+		_, err = fmt.Fprintln(deps.stdout, string(b))
 		return err
-	default: // human
-		return runStatusEntityHuman(target, entityType, &result, r, deps)
+	default: // plain
+		pr := &status.PlainRenderer{}
+		return pr.RenderTask(deps.stdout, id, slug, entityStatus, parentFeature, nil)
+	}
+}
+
+// runStatusBugFormatted outputs a bug in plain or JSON format.
+func runStatusBugFormatted(format, id, slug, entityStatus, severity string, deps dependencies) error {
+	switch format {
+	case "json":
+		jr := &status.JSONRenderer{}
+		b, err := jr.RenderBug(id, slug, entityStatus, severity, nil)
+		if err != nil {
+			return err
+		}
+		_, err = fmt.Fprintln(deps.stdout, string(b))
+		return err
+	default: // plain
+		pr := &status.PlainRenderer{}
+		return pr.RenderBug(deps.stdout, id, slug, entityStatus, severity, nil)
 	}
 }
 
@@ -318,16 +439,50 @@ func runStatusPlanPrefix(target, format string, r *render.Renderer, deps depende
 		return nil
 	}
 
-	status, _ := result.State["status"].(string)
+	if format == "human" {
+		return runStatusPlanHuman(target, &result, r, deps)
+	}
+
+	// Build plan input for plain/JSON renderers.
+	planStatus, _ := result.State["status"].(string)
+
+	input := render.PlanInput{
+		DisplayID: target,
+		ID:        result.ID,
+		Slug:      result.Slug,
+		Name:      result.Slug,
+		Status:    planStatus,
+	}
+
+	features, err := entitySvc.List("feature")
+	if err == nil {
+		for _, f := range features {
+			featPlan, _ := f.State["plan"].(string)
+			if featPlan != target && featPlan != result.ID {
+				continue
+			}
+			fStatus, _ := f.State["status"].(string)
+			input.Features = append(input.Features, render.PlanFeatureInput{
+				DisplayID: f.ID,
+				Slug:      f.Slug,
+				Status:    fStatus,
+			})
+		}
+	}
 
 	switch format {
 	case "json":
-		_, err = fmt.Fprintf(deps.stdout, `{"plan_prefix":%q,"plan_id":%q,"status":%q,"format":"json"}`+"\n", target, result.ID, status)
+		jr := &status.JSONRenderer{}
+		b, err := jr.RenderPlan(&input)
+		if err != nil {
+			return err
+		}
+		_, err = fmt.Fprintln(deps.stdout, string(b))
 		return err
 	case "plain":
-		_, err = fmt.Fprintf(deps.stdout, "%s → %s: %s\n", target, result.ID, status)
-		return err
-	default: // human
+		pr := &status.PlainRenderer{}
+		return pr.RenderPlan(deps.stdout, &input)
+	default:
 		return runStatusPlanHuman(target, &result, r, deps)
 	}
 }
@@ -414,47 +569,46 @@ func runStatusPath(target, format string, r *render.Renderer, deps dependencies)
 	if doc.ID == "" {
 		switch format {
 		case "json":
-			_, err = fmt.Fprintf(deps.stdout,
-				`{"path":%q,"registered":false,"suggestion":"kbz doc register %s","format":"json"}`+"\n",
-				lookupPath, lookupPath)
+			jr := &status.JSONRenderer{}
+			b, err := jr.RenderDocument(&doc)
+			if err != nil {
+				return err
+			}
+			_, err = fmt.Fprintln(deps.stdout, string(b))
+			return err
 		case "plain":
-			_, err = fmt.Fprintf(deps.stdout,
-				"%s: not registered (use `kbz doc register %s` to register)\n",
-				lookupPath, lookupPath)
+			pr := &status.PlainRenderer{}
+			return pr.RenderDocument(deps.stdout, &doc)
 		default:
 			_, err = fmt.Fprintf(deps.stdout,
 				"File: %s\nStatus: not registered\n\nThis file exists on disk but is not registered in the document store.\nRegister it with:\n  kbz doc register %s\n",
 				lookupPath, lookupPath)
+			return err
 		}
-		return err
 	}
 
 	// Registered file: show document info.
 	switch format {
 	case "json":
-		ownerJSON := "null"
-		if doc.Owner != "" {
-			ownerJSON = fmt.Sprintf("%q", doc.Owner)
+		jr := &status.JSONRenderer{}
+		b, err := jr.RenderDocument(&doc)
+		if err != nil {
+			return err
 		}
-		_, err = fmt.Fprintf(deps.stdout,
-			`{"path":%q,"registered":true,"doc_id":%q,"type":%q,"title":%q,"status":%q,"owner":%s,"format":"json"}`+"\n",
-			doc.Path, doc.ID, doc.Type, doc.Title, doc.Status, ownerJSON)
+		_, err = fmt.Fprintln(deps.stdout, string(b))
+		return err
 	case "plain":
-		_, err = fmt.Fprintf(deps.stdout, "%s [%s] %s: %s", doc.Path, doc.Type, doc.ID, doc.Status)
-		if doc.Owner != "" {
-			fmt.Fprintf(deps.stdout, " (owner: %s)", doc.Owner)
-		}
-		fmt.Fprintln(deps.stdout)
+		pr := &status.PlainRenderer{}
+		return pr.RenderDocument(deps.stdout, &doc)
 	default:
 		_, err = fmt.Fprintf(deps.stdout, "Document: %s\nID: %s\nType: %s\nTitle: %s\nStatus: %s\nPath: %s\n",
 			doc.ID, doc.ID, doc.Type, doc.Title, doc.Status, doc.Path)
 		if doc.Owner != "" {
 			fmt.Fprintf(deps.stdout, "Owner: %s\n", doc.Owner)
 		}
-	}
-
-	if err != nil {
-		return err
+		if err != nil {
+			return err
+		}
 	}
 
 	// If the document has an owner entity, also show the entity status.

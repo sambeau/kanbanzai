@@ -183,11 +183,14 @@ func TestRunStatus_EntityTarget_JSONFormat(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, `"format":"json"`) {
-		t.Fatalf("stdout missing json format marker:\n%s", stdout)
+	if !strings.Contains(stdout, `"results"`) {
+		t.Fatalf("stdout missing results wrapper:\n%s", stdout)
 	}
-	if !strings.Contains(stdout, `"entity":"FEAT-01J3K7MXP3RT5"`) {
-		t.Fatalf("stdout missing entity field:\n%s", stdout)
+	if !strings.Contains(stdout, `"id":"FEAT-01J3K7MXP3RT5"`) {
+		t.Fatalf("stdout missing feature id field:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, `"scope":"feature"`) {
+		t.Fatalf("stdout missing scope:feature:\n%s", stdout)
 	}
 }
 
@@ -201,8 +204,11 @@ func TestRunStatus_EntityTarget_PlainFormat(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, "FEAT-01J3K7MXP3RT5:") {
-		t.Fatalf("stdout missing plain entity output:\n%s", stdout)
+	if !strings.Contains(stdout, "scope: feature") {
+		t.Fatalf("stdout missing scope line:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "id: FEAT-01J3K7MXP3RT5") {
+		t.Fatalf("stdout missing id line:\n%s", stdout)
 	}
 }
 
@@ -236,11 +242,14 @@ func TestRunStatus_PlanPrefixTarget_JSONFormat(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, `"plan_prefix":"P1"`) {
-		t.Fatalf("stdout missing plan_prefix field:\n%s", stdout)
+	if !strings.Contains(stdout, `"results"`) {
+		t.Fatalf("stdout missing results wrapper:\n%s", stdout)
 	}
-	if !strings.Contains(stdout, `"format":"json"`) {
-		t.Fatalf("stdout missing json format:\n%s", stdout)
+	if !strings.Contains(stdout, `"scope":"plan"`) {
+		t.Fatalf("stdout missing scope:plan:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, `"id":"P1"`) {
+		t.Fatalf("stdout missing plan ID:\n%s", stdout)
 	}
 }
 
@@ -338,8 +347,8 @@ func TestRunStatus_FilePathTarget_UnregisteredFile_JSONFormat(t *testing.T) {
 	if !strings.Contains(stdout, `"registered":false`) {
 		t.Fatalf("stdout missing registered:false:\n%s", stdout)
 	}
-	if !strings.Contains(stdout, `"format":"json"`) {
-		t.Fatalf("stdout missing json format:\n%s", stdout)
+	if !strings.Contains(stdout, `"results"`) {
+		t.Fatalf("stdout missing results wrapper:\n%s", stdout)
 	}
 }
 
@@ -479,8 +488,11 @@ func TestRunStatus_FormatBeforeTarget(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, `"entity":"FEAT-01J3K7MXP3RT5"`) {
-		t.Fatalf("stdout missing entity with flag-first order:\n%s", stdout)
+	if !strings.Contains(stdout, `"id":"FEAT-01J3K7MXP3RT5"`) {
+		t.Fatalf("stdout missing feature id with flag-first order:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, `"results"`) {
+		t.Fatalf("stdout missing results wrapper with flag-first order:\n%s", stdout)
 	}
 }
 
@@ -494,8 +506,11 @@ func TestRunStatus_FormatAfterTarget(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, `"entity":"FEAT-01J3K7MXP3RT5"`) {
-		t.Fatalf("stdout missing entity with flag-last order:\n%s", stdout)
+	if !strings.Contains(stdout, `"id":"FEAT-01J3K7MXP3RT5"`) {
+		t.Fatalf("stdout missing feature id with flag-last order:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, `"results"`) {
+		t.Fatalf("stdout missing results wrapper with flag-last order:\n%s", stdout)
 	}
 }
 
@@ -745,8 +760,14 @@ func TestRunStatus_ProjectOverview_PlainFormat(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, "not yet implemented") {
-		t.Fatalf("stdout missing stub message:\n%s", stdout)
+	if !strings.Contains(stdout, "scope: project") {
+		t.Fatalf("stdout missing scope:project:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "plans.total:") {
+		t.Fatalf("stdout missing plans.total:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "health.errors:") {
+		t.Fatalf("stdout missing health.errors:\n%s", stdout)
 	}
 }
 
@@ -760,8 +781,14 @@ func TestRunStatus_ProjectOverview_JSONFormat(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, "not yet implemented") {
-		t.Fatalf("stdout missing stub message:\n%s", stdout)
+	if !strings.Contains(stdout, `"scope":"project"`) {
+		t.Fatalf("stdout missing scope:project:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, `"plans"`) {
+		t.Fatalf("stdout missing plans array:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, `"health"`) {
+		t.Fatalf("stdout missing health block:\n%s", stdout)
 	}
 }
 
