@@ -3,4 +3,11 @@ parent_feature: FEAT-01KQG1XWAZE8V
 slug: update-implement-task-skill
 name: Update implement-task skill with write_file guidance
 summary: "Edit implement-task/SKILL.md to make write_file(entity_id) the primary worktree file-writing pattern. Replace python3 -c and heredoc recommendations. Preserve all procedure steps, anti-patterns, and vocabulary. Addresses REQ-001, REQ-002, REQ-NF-003, AC-001, AC-002, AC-011."
-status: ready
+status: done
+completed: "2026-04-30T21:25:39Z"
+claimed_at: "2026-04-30T21:25:01Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T21:25:01Z"
+dispatched_by: sambeau
+completion_summary: Verified implement-task/SKILL.md already documents write_file(entity_id) as the primary worktree pattern. No python3/heredoc references remain. Checklist includes write_file guidance. No changes needed — skill was updated during P21/P34.
+verification: Grep confirmed zero python3/heredoc references. Read Worktree File Editing section — write_file is primary recommendation.
