@@ -3,7 +3,7 @@ parent_feature: FEAT-01KQG2Q5RS9G9
 slug: preflight-multi-edit-match
 name: Implement pre-flight match for multi-edit calls
 summary: "Add pre-flight logic: read file once, match all old_text patterns, apply all-or-nothing. On mismatch, return error naming failed patterns. Single-edit unchanged. Addresses REQ-004, REQ-005, REQ-006, REQ-009, REQ-NF-003."
-status: active
+status: done
 claimed_at: "2026-04-30T21:49:47Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-30T21:49:47Z"

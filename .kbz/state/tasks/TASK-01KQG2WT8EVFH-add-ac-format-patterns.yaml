@@ -3,7 +3,7 @@ parent_feature: FEAT-01KQG2Q5V4S6W
 slug: add-ac-format-patterns
 name: Add new AC format patterns to decompose parser
 summary: "Add four new AC format recognisers: heading-based, bold-with-parenthetical, Given/When/Then blocks, numbered lists. Preserve existing patterns. Addresses REQ-007."
-status: active
+status: done
 claimed_at: "2026-04-30T21:49:47Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-30T21:49:47Z"
