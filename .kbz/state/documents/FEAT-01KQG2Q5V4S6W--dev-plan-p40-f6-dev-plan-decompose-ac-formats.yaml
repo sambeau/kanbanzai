@@ -1,10 +1,12 @@
-content_hash: 5ce6fc0aec21871860326857f9d535ecddc00da7cd14317898b75e56a587eccd
+approved_at: "2026-04-30T20:56:44Z"
+approved_by: sambeau
+content_hash: 361746f36a6a65b23c3622bef10ee43952501c50e063767b329707ce930384d4
 created: "2026-04-30T20:56:32Z"
 created_by: sambeau
 id: FEAT-01KQG2Q5V4S6W/dev-plan-p40-f6-dev-plan-decompose-ac-formats
 owner: FEAT-01KQG2Q5V4S6W
 path: work/P40-retro-batch-april-2026/P40-F6-dev-plan-decompose-ac-formats.md
-status: draft
+status: approved
 title: "Dev-Plan: Expand Decompose AC Format Recognition (B40-F4)"
 type: dev-plan
-updated: "2026-04-30T20:56:32Z"
+updated: "2026-04-30T20:56:44Z"

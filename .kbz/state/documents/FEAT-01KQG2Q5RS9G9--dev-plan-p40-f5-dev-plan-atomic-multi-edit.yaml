@@ -1,10 +1,12 @@
-content_hash: 00382014e96862ae2bb5fc267433bf3aef7741bf13f1b5922ecad05e11f0e6d3
+approved_at: "2026-04-30T20:56:44Z"
+approved_by: sambeau
+content_hash: 5cca71fe4f912063950dbad6fe0671e14a3935ab8bd2890a03f804b9f811a9bb
 created: "2026-04-30T20:56:32Z"
 created_by: sambeau
 id: FEAT-01KQG2Q5RS9G9/dev-plan-p40-f5-dev-plan-atomic-multi-edit
 owner: FEAT-01KQG2Q5RS9G9
 path: work/P40-retro-batch-april-2026/P40-F5-dev-plan-atomic-multi-edit.md
-status: draft
+status: approved
 title: "Dev-Plan: Make Multi-Edit Calls Atomic (B40-F3)"
 type: dev-plan
-updated: "2026-04-30T20:56:32Z"
+updated: "2026-04-30T20:56:44Z"

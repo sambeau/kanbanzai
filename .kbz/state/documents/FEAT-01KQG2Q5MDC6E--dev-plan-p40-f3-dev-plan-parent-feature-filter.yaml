@@ -1,10 +1,12 @@
-content_hash: 4bcc2b65619ed062e296fad248213dd4cadafc1282dee1fcc3a040928af12679
+approved_at: "2026-04-30T20:56:44Z"
+approved_by: sambeau
+content_hash: c0463ecf349f0a6debf5b65311a45da667b5439cee26d85e64b80f0f5298f442
 created: "2026-04-30T20:56:32Z"
 created_by: sambeau
 id: FEAT-01KQG2Q5MDC6E/dev-plan-p40-f3-dev-plan-parent-feature-filter
 owner: FEAT-01KQG2Q5MDC6E
 path: work/P40-retro-batch-april-2026/P40-F3-dev-plan-parent-feature-filter.md
-status: draft
+status: approved
 title: "Dev-Plan: Fix entity list parent_feature Filter (B40-F1)"
 type: dev-plan
-updated: "2026-04-30T20:56:32Z"
+updated: "2026-04-30T20:56:44Z"
