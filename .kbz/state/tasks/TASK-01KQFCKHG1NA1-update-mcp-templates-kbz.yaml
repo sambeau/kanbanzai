@@ -3,5 +3,12 @@ parent_feature: FEAT-01KQ2VF7PDZ2G
 slug: update-mcp-templates-kbz
 name: Update MCP config templates to kbz and bump mcpVersion
 summary: "In internal/kbzinit/mcp_config.go, change command from kanbanzai to kbz in both writeMCPConfig and writeZedConfig. Bump mcpVersion from 1 to 2. Update test fixtures. Preserve server key names. Addresses FR-005 through FR-007, FR-014, FR-015."
-status: ready
+status: done
 estimate: "3"
+completed: "2026-04-30T14:54:58Z"
+claimed_at: "2026-04-30T14:51:28Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T14:51:28Z"
+dispatched_by: sambeau
+completion_summary: "Updated MCP config templates in internal/kbzinit/mcp_config.go: changed command from \"kanbanzai\" to \"kbz\" in both writeMCPConfig and writeZedConfig, bumped mcpVersion constant from 1 to 2, and updated the corresponding test assertion in init_test.go. Server key names (\"kanbanzai\" in mcpServers.kanbanzai and context_servers.kanbanzai) are preserved — only the command field value changed."
+verification: "Ran `go build ./...` — clean build. Ran `go test ./internal/kbzinit/... -v -run \"Mcp|Zed|SkipMcp\"` — all MCP-related tests pass (TestInit_WritesMcpJson, TestInit_ZedDir_WritesSettingsJson, TestInit_ManagedMcpJson_OlderVersion_Overwrites, TestInit_NewProject_NoZedDir_CreatesSettingsJson, TestInit_ZedSettings_MigratesOldManagedBlock, TestInit_ZedSettings_MigratesNoAgentBlock, TestInit_ZedSettings_PreservesUserAgentBlock, TestInit_UnmanagedZedSettings_Skips, TestInit_UnmanagedMcpJson_Skips, TestInit_SkipMcp, TestInit_ExistingProject_NoZedDir_NoSettingsJson, TestInit_FirstTimeInit_WithCommits_CreatesZedSettings). The one failure (TestInit_ManagedMcpJson_CurrentVersion_NoOp) is a pre-existing skills frontmatter issue unrelated to this change."
