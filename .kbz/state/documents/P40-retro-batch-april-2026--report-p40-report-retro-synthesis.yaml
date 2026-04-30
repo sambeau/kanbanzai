@@ -1,10 +1,12 @@
+approved_at: "2026-04-30T19:17:02Z"
+approved_by: sambeau
 content_hash: c1254a803e1329ccf276a7ce9b4ae069d851583bb73d79e96883fef7b9801471
 created: "2026-04-30T19:16:55Z"
 created_by: sambeau
 id: P40-retro-batch-april-2026/report-p40-report-retro-synthesis
 owner: P40-retro-batch-april-2026
 path: work/P40-retro-batch-april-2026/P40-report-retro-synthesis.md
-status: draft
+status: approved
 title: "Retrospective: Project-Wide Synthesis — April 2026"
 type: report
-updated: "2026-04-30T19:16:55Z"
+updated: "2026-04-30T19:17:02Z"
