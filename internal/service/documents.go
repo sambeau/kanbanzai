@@ -272,6 +272,19 @@ func (s *DocumentService) SubmitDocument(input SubmitDocumentInput) (DocumentRes
 	// Generate document ID
 	owner := strings.TrimSpace(input.Owner)
 	slug := generateDocumentSlug(docType, docPath)
+	hasExplicitOwner := owner != ""
+
+	// Auto-infer owner from path context when no explicit owner is provided (REQ-001–REQ-003).
+	if !hasExplicitOwner {
+		pathSlug := extractPlanOrBatchSlug(docPath)
+		if pathSlug != "" && s.entityHook != nil {
+			entityType, _, err := s.entityHook.GetEntityStatus(pathSlug)
+			if err == nil && (entityType == "plan" || entityType == "feature") {
+				owner = pathSlug
+			}
+		}
+	}
+
 	var docID string
 	if owner != "" {
 		docID = fmt.Sprintf("%s/%s", owner, slug)
@@ -283,6 +296,21 @@ func (s *DocumentService) SubmitDocument(input SubmitDocumentInput) (DocumentRes
 	// Check if document already exists
 	if s.store.Exists(docID) {
 		return DocumentResult{}, fmt.Errorf("document %q is already registered. Use doc_record_get to view the existing record", docID)
+	}
+
+	// Warn if path is already registered under a different owner (REQ-002).
+	var pathConflictWarning string
+	if existing, lookupErr := s.LookupByPath(context.Background(), docPath); lookupErr == nil && existing.ID != "" {
+		if !strings.EqualFold(existing.Owner, owner) {
+			currentOwner := existing.Owner
+			if currentOwner == "" {
+				currentOwner = "PROJECT"
+			}
+			pathConflictWarning = fmt.Sprintf(
+				"This path is already registered under %s. Did you mean owner: %s?",
+				currentOwner, owner,
+			)
+		}
 	}
 
 	now := s.now()
@@ -317,6 +345,11 @@ func (s *DocumentService) SubmitDocument(input SubmitDocumentInput) (DocumentRes
 		ContentHash: doc.ContentHash,
 		Created:     doc.Created,
 		Updated:     doc.Updated,
+	}
+
+	// Emit path-conflict warning (REQ-002).
+	if pathConflictWarning != "" {
+		result.Warnings = append(result.Warnings, pathConflictWarning)
 	}
 
 	// Section validation (FR-D04): validate required sections and return
@@ -1082,6 +1115,27 @@ func generateDocumentSlug(docType model.DocumentType, path string) string {
 		slugName = "doc"
 	}
 	return fmt.Sprintf("%s-%s", docType, slugName)
+}
+
+// extractPlanOrBatchSlug extracts a plan or batch ID from the path's folder component.
+// For paths like "work/B41-fix-doc-ownership-lifecycle/doc.md", it returns
+// "B41-fix-doc-ownership-lifecycle". Returns empty string if no plan/batch ID is found.
+func extractPlanOrBatchSlug(path string) string {
+	path = filepath.ToSlash(strings.TrimSpace(path))
+	parts := strings.Split(path, "/")
+	// Expect at least work/{slug}/... (3 parts minimum).
+	if len(parts) < 3 || strings.ToLower(parts[0]) != "work" {
+		return ""
+	}
+	// The second component must be a valid batch/plan ID (e.g. B41-fix-..., P40-retro-...).
+	candidate := parts[1]
+	if candidate == "" || candidate == "_project" || candidate == "templates" || candidate == "plan" || candidate == "reviews" {
+		return ""
+	}
+	if model.IsBatchID(candidate) {
+		return candidate
+	}
+	return ""
 }
 
 // isValidEntityID checks if a string looks like a valid entity ID.

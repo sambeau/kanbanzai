@@ -3,6 +3,7 @@ package service
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -2661,5 +2662,354 @@ func TestApproveDocument_HashRefreshFailure_ApprovalSucceeds(t *testing.T) {
 	}
 	if !strings.Contains(logBuf.String(), "[doc] WARNING") {
 		t.Errorf("expected WARNING log for hash refresh failure, got: %q", logBuf.String())
+	}
+}
+
+// --- Owner inference tests (B41-F1: auto-infer doc owner from path context) ---
+
+// TestSubmitDocument_InferOwnerFromBatchPath verifies AC-001: when registering
+// a document under a batch folder without an explicit owner, the batch ID is
+// inferred as the owner.
+func TestSubmitDocument_InferOwnerFromBatchPath(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	// Wire a mock hook that resolves batch IDs as "plan" type.
+	mock := &mockEntityHook{entityType: "plan", status: "active"}
+	svc.SetEntityHook(mock)
+
+	batchSlug := "B41-fix-doc-ownership-lifecycle"
+	docPath := filepath.Join("work", batchSlug, "B41-spec-b41.md")
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatalf("failed to create directory: %v", err)
+	}
+	if err := os.WriteFile(fullPath, []byte("# Spec\n\nContent."), 0o644); err != nil {
+		t.Fatalf("failed to create document: %v", err)
+	}
+
+	result, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Test Spec",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument() error = %v", err)
+	}
+
+	if result.Owner != batchSlug {
+		t.Errorf("Owner = %q, want %q (inferred from batch path)", result.Owner, batchSlug)
+	}
+	if !strings.Contains(result.ID, batchSlug+"/") {
+		t.Errorf("ID = %q, want prefix %q/", result.ID, batchSlug)
+	}
+}
+
+// TestSubmitDocument_ExplicitOwnerTakesPrecedence verifies AC-002: when an
+// explicit owner is provided, it is used and inference is bypassed.
+func TestSubmitDocument_ExplicitOwnerTakesPrecedence(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	mock := &mockEntityHook{entityType: "plan", status: "active"}
+	svc.SetEntityHook(mock)
+
+	batchSlug := "B40-fix-tool-correctness"
+	docPath := filepath.Join("work", batchSlug, "B40-spec-some-file.md")
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatalf("failed to create directory: %v", err)
+	}
+	if err := os.WriteFile(fullPath, []byte("# Some File"), 0o644); err != nil {
+		t.Fatalf("failed to create document: %v", err)
+	}
+
+	result, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Test Spec",
+		Owner:     "PROJECT",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument() error = %v", err)
+	}
+
+	// Explicit owner must be used, not the inferred batch slug.
+	if result.Owner != "PROJECT" {
+		t.Errorf("Owner = %q, want %q (explicit takes precedence)", result.Owner, "PROJECT")
+	}
+}
+
+// TestSubmitDocument_PathConflictWarning verifies AC-003: when a path is
+// already registered under a different owner, a warning is emitted.
+func TestSubmitDocument_PathConflictWarning(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	mock := &mockEntityHook{entityType: "plan", status: "active"}
+	svc.SetEntityHook(mock)
+
+	batchSlug := "B40-fix-tool-correctness"
+	docPath := filepath.Join("work", batchSlug, "B40-spec-existing.md")
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatalf("failed to create directory: %v", err)
+	}
+	if err := os.WriteFile(fullPath, []byte("# Existing"), 0o644); err != nil {
+		t.Fatalf("failed to create document: %v", err)
+	}
+
+	// First registration: explicit owner PROJECT (different from inferred batch).
+	_, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "First Registration",
+		Owner:     "PROJECT",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("first SubmitDocument() error = %v", err)
+	}
+
+	// Second registration: no explicit owner, should infer the batch slug
+	// and warn about different owner.
+	result, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "report",
+		Title:     "Second Registration",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("second SubmitDocument() error = %v", err)
+	}
+
+	// Should have a warning about the path being registered under PROJECT.
+	found := false
+	for _, w := range result.Warnings {
+		if strings.Contains(w, "already registered under PROJECT") {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Errorf("expected path conflict warning, got warnings: %v", result.Warnings)
+	}
+}
+
+// TestSubmitDocument_FallbackToProjectWhenUnresolvable verifies AC-004: when
+// the path does not contain a resolvable plan/batch slug, the owner falls back
+// to PROJECT/.
+func TestSubmitDocument_FallbackToProjectWhenUnresolvable(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	// Wire a hook that returns an error for unknown entities.
+	mock := &mockEntityHook{err: fmt.Errorf("entity not found")}
+	svc.SetEntityHook(mock)
+
+	docPath := "work/random-folder/doc.md"
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatalf("failed to create directory: %v", err)
+	}
+	if err := os.WriteFile(fullPath, []byte("# Random Doc"), 0o644); err != nil {
+		t.Fatalf("failed to create document: %v", err)
+	}
+
+	result, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "research",
+		Title:     "Random Doc",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument() error = %v", err)
+	}
+
+	// Should fall back to PROJECT/ since the first path component "random-folder"
+	// is not a valid batch/plan ID.
+	if result.Owner != "" {
+		t.Errorf("Owner = %q, want empty (fallback to PROJECT/)", result.Owner)
+	}
+	if !strings.Contains(result.ID, "PROJECT/") {
+		t.Errorf("ID = %q, want PROJECT/ prefix", result.ID)
+	}
+}
+
+// TestSubmitDocument_ExplicitOwnerNoConflictWarning verifies that when an
+// explicit owner matches what would have been inferred, no warning is emitted
+// on re-registration with the same owner.
+func TestSubmitDocument_ExplicitOwnerNoConflictWarning(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	mock := &mockEntityHook{entityType: "plan", status: "active"}
+	svc.SetEntityHook(mock)
+
+	batchSlug := "B41-fix-doc-ownership-lifecycle"
+	docPath := filepath.Join("work", batchSlug, "B41-spec.md")
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatalf("failed to create directory: %v", err)
+	}
+	if err := os.WriteFile(fullPath, []byte("# Spec"), 0o644); err != nil {
+		t.Fatalf("failed to create document: %v", err)
+	}
+
+	// First registration: infer owner from path.
+	result1, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Spec",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("first SubmitDocument() error = %v", err)
+	}
+	if result1.Owner != batchSlug {
+		t.Fatalf("first registration owner = %q, want %q", result1.Owner, batchSlug)
+	}
+
+	// Second registration with the same path but different type (different doc ID).
+	result2, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "report",
+		Title:     "Report",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("second SubmitDocument() error = %v", err)
+	}
+
+	// No conflict warning since owner matches.
+	for _, w := range result2.Warnings {
+		if strings.Contains(w, "already registered under") {
+			t.Errorf("unexpected conflict warning when owner matches: %q", w)
+		}
+	}
+}
+
+// TestSubmitDocument_NoEntityHook_NoInference verifies that when no entity hook
+// is set, owner inference is skipped (no crash) and PROJECT/ fallback works.
+func TestSubmitDocument_NoEntityHook_NoInference(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+	// No entity hook set.
+
+	batchSlug := "B41-fix-doc-ownership-lifecycle"
+	docPath := filepath.Join("work", batchSlug, "B41-spec.md")
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatalf("failed to create directory: %v", err)
+	}
+	if err := os.WriteFile(fullPath, []byte("# Spec"), 0o644); err != nil {
+		t.Fatalf("failed to create document: %v", err)
+	}
+
+	result, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Spec",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument() error = %v", err)
+	}
+
+	// Without entity hook, fallback to PROJECT/ even if path slug looks valid.
+	if !strings.Contains(result.ID, "PROJECT/") {
+		t.Errorf("ID = %q, want PROJECT/ prefix when no entity hook", result.ID)
+	}
+}
+
+// TestSubmitDocument_NonPlanEntityNotInferred verifies that GetEntityStatus
+// returning an entity type other than "plan" or "feature" does not trigger
+// owner inference.
+func TestSubmitDocument_NonPlanEntityNotInferred(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	// Mock returns entityType "task" — not a valid owner.
+	mock := &mockEntityHook{entityType: "task", status: "active"}
+	svc.SetEntityHook(mock)
+
+	batchSlug := "B41-fix-doc-ownership-lifecycle"
+	docPath := filepath.Join("work", batchSlug, "B41-spec.md")
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatalf("failed to create directory: %v", err)
+	}
+	if err := os.WriteFile(fullPath, []byte("# Spec"), 0o644); err != nil {
+		t.Fatalf("failed to create document: %v", err)
+	}
+
+	result, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Spec",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument() error = %v", err)
+	}
+
+	// Should fall back to PROJECT/ since "task" is not a valid owner type.
+	if result.Owner != "" {
+		t.Errorf("Owner = %q, want empty (task is not a valid owner type)", result.Owner)
+	}
+}
+
+// TestExtractPlanOrBatchSlug verifies the path-slug extraction logic.
+func TestExtractPlanOrBatchSlug(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		path string
+		want string
+	}{
+		{"work/B41-fix-doc-ownership-lifecycle/spec.md", "B41-fix-doc-ownership-lifecycle"},
+		{"work/P40-retro-batch-april-2026/spec.md", "P40-retro-batch-april-2026"},
+		{"work/B42-worktree-cleanup/sub/deep/file.md", "B42-worktree-cleanup"},
+		{"docs/overview.md", ""},
+		{"work/_project/spec.md", ""},
+		{"work/templates/template.md", ""},
+		{"work/plan/spec.md", ""},
+		{"work/reviews/review.md", ""},
+		{"work/random-folder/doc.md", ""}, // not a valid batch/plan ID
+		{"work/B41/doc.md", ""},           // no slug after number
+		{"just-a-file.md", ""},
+		{"", ""},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.path, func(t *testing.T) {
+			got := extractPlanOrBatchSlug(tt.path)
+			if got != tt.want {
+				t.Errorf("extractPlanOrBatchSlug(%q) = %q, want %q", tt.path, got, tt.want)
+			}
+		})
 	}
 }
