@@ -1,0 +1,6 @@
+id: TASK-01KQFDNAAR04Q
+parent_feature: FEAT-01KQ2VFTWD1W2
+slug: implement-doc-approve-path-resolution
+name: Implement kbz doc approve Path Resolution
+summary: "Extend runDocApprove to accept file path args using same FR-005 lexical rule. Resolve path to doc record, exit 1 if unregistered, pass resolved ID to existing approval flow. Preserve --by flag and backward compatibility."
+status: queued
