@@ -1,0 +1,158 @@
+document_id: PROJECT/report-p40-report-retro-report-4
+document_path: work/P40-retro-batch-april-2026/P40-report-retro-report-4.md
+content_hash: 100dac11cec8abcc488ec028b2dca57915bcf3d6b6291c6e24113d5f8ee3c1e1
+indexed_at: 2026-04-30T19:26:37.620519Z
+sections:
+    - path: "1"
+      level: 1
+      title: Personal Retrospective — April 2026 Batch
+      byte_offset: 0
+      byte_count: 5564
+      word_count: 802
+      content_hash: 100dac11cec8abcc488ec028b2dca57915bcf3d6b6291c6e24113d5f8ee3c1e1
+      children:
+        - path: "1.1"
+          level: 2
+          title: What went well
+          byte_offset: 261
+          byte_count: 1474
+          word_count: 205
+          content_hash: de2293e949c1bbc55e5f9dbb7966f7f4693761855d670928bcd6448253d795da
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Cache performance payoff is real
+              byte_offset: 280
+              byte_count: 431
+              word_count: 69
+              content_hash: cff4ff5396c2bf0c13eeeaf88b1a918310af8add5c5713d4ee58839093d23613
+            - path: 1.1.2
+              level: 3
+              title: The cache infrastructure itself is well-built
+              byte_offset: 711
+              byte_count: 435
+              word_count: 56
+              content_hash: 5156ef64ac3c8d868fa653e6eb5ef775ba5bd1d55e1a3b19c246fbf21ce944f3
+            - path: 1.1.3
+              level: 3
+              title: Document pipeline produced consistent output
+              byte_offset: 1146
+              byte_count: 318
+              word_count: 39
+              content_hash: 9c3dbed5f2bddbe7910a93efbeb5c685d774c2651951b15b9a67c9d845538a9a
+            - path: 1.1.4
+              level: 3
+              title: Health check caught real drift
+              byte_offset: 1464
+              byte_count: 271
+              word_count: 37
+              content_hash: 7d2db1c3b1a767e9d40db6acfdefcb111c1729a2e59ef2eb34d6efa4ba53c07f
+        - path: "1.2"
+          level: 2
+          title: What didn't go well
+          byte_offset: 1735
+          byte_count: 2443
+          word_count: 367
+          content_hash: 59f5c225634c0bb570479baac72082ff153e95675a3f6d668e29cfa9eb711600
+          children:
+            - path: 1.2.1
+              level: 3
+              title: I jumped to code before analysis
+              byte_offset: 1759
+              byte_count: 452
+              word_count: 75
+              content_hash: 7400c649e01537be1d455286a70ec71227e795cd3e736f08b0af139430044466
+            - path: 1.2.2
+              level: 3
+              title: Skill/validation script mismatch
+              byte_offset: 2211
+              byte_count: 542
+              word_count: 74
+              content_hash: 1a7dbf7a907469e6cff43d47b1d8f67798073155db0a175a692ff6b2e34c94ee
+            - path: 1.2.3
+              level: 3
+              title: Bug lifecycle is friction-heavy
+              byte_offset: 2753
+              byte_count: 379
+              word_count: 57
+              content_hash: 237b4371602075c70f4acc9606713ee6898db0a57223a07701e7ad72ceba9b57
+            - path: 1.2.4
+              level: 3
+              title: Bugs fixed on main don't auto-advance
+              byte_offset: 3132
+              byte_count: 328
+              word_count: 52
+              content_hash: 2e376c76b06e91c7582d016c0edd7568267a2e14a013edd092345531f3f2668e
+            - path: 1.2.5
+              level: 3
+              title: Worktree auto-creation on bug transition is noisy
+              byte_offset: 3460
+              byte_count: 347
+              word_count: 49
+              content_hash: 25975e22c05617ce798f3c860cae27945e7aa92088878f773cf1af293d08e167
+            - path: 1.2.6
+              level: 3
+              title: No graph tools available
+              byte_offset: 3807
+              byte_count: 371
+              word_count: 55
+              content_hash: ed337dc61d0c29515d27cb5d1447af4e623b2805cf6651595b6743679376c386
+        - path: "1.3"
+          level: 2
+          title: What to improve
+          byte_offset: 4178
+          byte_count: 1386
+          word_count: 201
+          content_hash: 8fdaccabff0c85af564380ecc2537f6e286f7849b5020df74bf27e0797a9fbc1
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Add cache fast-path to entityExists()
+              byte_offset: 4198
+              byte_count: 331
+              word_count: 37
+              content_hash: 625ff9cc81576c2ab8f5b5cf5f4dd9ab051ff662705a4661036488e8b8295e3a
+            - path: 1.3.2
+              level: 3
+              title: Add bug lifecycle fast-forward
+              byte_offset: 4529
+              byte_count: 273
+              word_count: 42
+              content_hash: c32988d01ac1bf2f1bc7d02c873efdac2423eb8f7982e8d00e82bfaf795ace4e
+            - path: 1.3.3
+              level: 3
+              title: Align write-spec skill with validation script
+              byte_offset: 4802
+              byte_count: 221
+              word_count: 35
+              content_hash: 1632a6c8cea6a57a00c90f0b0ec8fce525092e29e02e5479ba683c0bd6847314
+            - path: 1.3.4
+              level: 3
+              title: Consider a "bug resolved by commit" heuristic
+              byte_offset: 5023
+              byte_count: 280
+              word_count: 47
+              content_hash: 9f250d1a378642248f767181325eb79f9c8ccec815fae72f6ec03657b3ffda88
+            - path: 1.3.5
+              level: 3
+              title: Ensure the knowledge graph is indexed
+              byte_offset: 5303
+              byte_count: 261
+              word_count: 36
+              content_hash: 8f98fe50bea703b03403c4daaf61642e3f3369e78abf3ab0e691aab9d1d62ee5
+entity_refs:
+    - entity_id: BUG-01KQB
+      entity_type: bug
+      section_path: "1"
+      byte_offset: 166
+    - entity_id: BUG-01KQB
+      entity_type: bug
+      section_path: 1.2.4
+      byte_offset: 3174
+cross_doc_links:
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.5
+access_count: 1
+last_accessed_at: 2026-04-30T19:26:38.175971Z
+classified: false
