@@ -3,4 +3,11 @@ parent_feature: FEAT-01KQG1XWE9ABP
 slug: add-entity-id-to-edit-file-schema
 name: Add entity_id parameter to edit_file tool schema
 summary: "Add optional entity_id string parameter to the edit_file MCP tool's input schema. Must be optional to preserve backward compatibility. Addresses REQ-004, REQ-NF-001."
-status: ready
+status: done
+completed: "2026-04-30T21:36:17Z"
+claimed_at: "2026-04-30T21:28:50Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T21:28:50Z"
+dispatched_by: sambeau
+completion_summary: "Added entity_id optional string parameter to the edit_file MCP tool. Created edit_file_tool.go with full worktree-aware implementation mirroring write_file_tool.go. Registered in GroupGit. Updated server_test.go expectations (23→24 tools for full preset, 18→19 for orchestration). All new code compiles and the 3 directly-affected server tests pass."
+verification: "go build ./internal/mcp/ passes. go test ./internal/mcp/... -run \"TestServer_ListTools\" all pass. Pre-existing test failures confirmed unrelated on main."
