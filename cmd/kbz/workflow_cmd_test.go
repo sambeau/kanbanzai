@@ -4,6 +4,10 @@ import (
 	"os"
 	"strings"
 	"testing"
+
+	"github.com/sambeau/kanbanzai/internal/cache"
+	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
 func TestRunStatus_NoArgs_ShowsProjectOverview(t *testing.T) {
@@ -446,3 +450,217 @@ func TestRunStatus_ViaMain_InvalidFormat(t *testing.T) {
 		t.Fatalf("error missing 'invalid format': %v", err)
 	}
 }
+
+// ─── Entity not found tests (AC-013) ────────────────────────────────────────
+
+func TestRunStatus_EntityTarget_NotFound(t *testing.T) {
+	fake := newFakeEntityService()
+	deps, _ := testDependenciesWithService(fake)
+
+	// AC-013: entity ID that matches the pattern but doesn't exist in the store.
+	err := runStatus([]string{"FEAT-01ZZZZZZZZZZZ"}, deps)
+	if err == nil {
+		t.Fatal("runStatus(FEAT-01ZZZZZZZZZZZ) error = nil, want non-nil")
+	}
+	if !strings.Contains(err.Error(), "entity not found") {
+		t.Fatalf("error missing 'entity not found': %v", err)
+	}
+}
+
+// ─── Bug entity routing (AC-015) ────────────────────────────────────────────
+
+func TestRunStatus_EntityTarget_BugRouting(t *testing.T) {
+	fake := newFakeEntityService()
+	// Add a bug with display-format ID to getResults.
+	fake.getResults["bug:BUG-007:login-bypass"] = service.GetResult{
+		Type: "bug",
+		ID:   "BUG-007",
+		Slug: "login-bypass",
+		Path: "test/state/bugs/BUG-007-login-bypass.yaml",
+		State: map[string]any{
+			"status":   "reported",
+			"severity": "high",
+		},
+	}
+	deps, output := testDependenciesWithService(fake)
+
+	err := runStatus([]string{"BUG-007"}, deps)
+	if err != nil {
+		t.Fatalf("runStatus(BUG-007) error = %v", err)
+	}
+
+	stdout := output.String()
+	if !strings.Contains(stdout, "Entity: BUG-007") {
+		t.Fatalf("stdout missing bug entity output:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "Status: reported") {
+		t.Fatalf("stdout missing bug status:\n%s", stdout)
+	}
+}
+
+func TestRunStatus_EntityTarget_BugNotFound(t *testing.T) {
+	fake := newFakeEntityService()
+	deps, _ := testDependenciesWithService(fake)
+
+	err := runStatus([]string{"BUG-999"}, deps)
+	if err == nil {
+		t.Fatal("runStatus(BUG-999) error = nil, want non-nil")
+	}
+	if !strings.Contains(err.Error(), "entity not found") {
+		t.Fatalf("error missing 'entity not found': %v", err)
+	}
+}
+
+// ─── State store error (AC-020) ─────────────────────────────────────────────
+
+func TestRunStatus_StateStoreError_HealthCheckFails(t *testing.T) {
+	fake := &faultyEntityService{err: &testError{"state store unavailable"}}
+	deps, _ := testDependenciesWithService(fake)
+
+	err := runStatus(nil, deps)
+	if err == nil {
+		t.Fatal("runStatus with faulty health check error = nil, want non-nil")
+	}
+	if !strings.Contains(err.Error(), "state store unavailable") {
+		t.Fatalf("error missing state store message: %v", err)
+	}
+}
+
+// ─── Exit code verification (AC-019) ────────────────────────────────────────
+
+func TestRunStatus_ExitCodes(t *testing.T) {
+	fake := newFakeEntityService()
+
+	t.Run("no_args_success", func(t *testing.T) {
+		deps, _ := testDependenciesWithService(fake)
+		if err := runStatus(nil, deps); err != nil {
+			t.Errorf("runStatus(nil) error = %v, want nil (exit 0)", err)
+		}
+	})
+
+	t.Run("entity_found_success", func(t *testing.T) {
+		deps, _ := testDependenciesWithService(fake)
+		if err := runStatus([]string{"FEAT-01J3K7MXP3RT5"}, deps); err != nil {
+			t.Errorf("runStatus(FEAT-...) error = %v, want nil (exit 0)", err)
+		}
+	})
+
+	t.Run("plan_prefix_success", func(t *testing.T) {
+		deps, _ := testDependenciesWithService(fake)
+		if err := runStatus([]string{"P1"}, deps); err != nil {
+			t.Errorf("runStatus(P1) error = %v, want nil (exit 0)", err)
+		}
+	})
+
+	t.Run("invalid_format_error", func(t *testing.T) {
+		deps, _ := testDependenciesWithService(fake)
+		if err := runStatus([]string{"--format", "xml"}, deps); err == nil {
+			t.Error("runStatus(--format xml) error = nil, want non-nil (exit 1)")
+		}
+	})
+
+	t.Run("unknown_flag_error", func(t *testing.T) {
+		deps, _ := testDependenciesWithService(fake)
+		if err := runStatus([]string{"--bogus"}, deps); err == nil {
+			t.Error("runStatus(--bogus) error = nil, want non-nil (exit 1)")
+		}
+	})
+
+	t.Run("multiple_args_error", func(t *testing.T) {
+		deps, _ := testDependenciesWithService(fake)
+		if err := runStatus([]string{"FEAT-042", "FEAT-043"}, deps); err == nil {
+			t.Error("runStatus(two targets) error = nil, want non-nil (exit 1)")
+		}
+	})
+
+	t.Run("entity_not_found_error", func(t *testing.T) {
+		deps, _ := testDependenciesWithService(fake)
+		if err := runStatus([]string{"FEAT-01ZZZZZZZZZZZ"}, deps); err == nil {
+			t.Error("runStatus(nonexistent) error = nil, want non-nil (exit 1)")
+		}
+	})
+
+	t.Run("file_not_found_error", func(t *testing.T) {
+		deps, _ := testDependenciesWithService(fake)
+		if err := runStatus([]string{"work/design/nonexistent.md"}, deps); err == nil {
+			t.Error("runStatus(nonexistent file) error = nil, want non-nil (exit 1)")
+		}
+	})
+
+	t.Run("unrecognised_target_error", func(t *testing.T) {
+		deps, _ := testDependenciesWithService(fake)
+		if err := runStatus([]string{"sometoken"}, deps); err == nil {
+			t.Error("runStatus(sometoken) error = nil, want non-nil (exit 1)")
+		}
+	})
+}
+
+// ─── Doc approve integration (AC-021 through AC-024 via main) ───────────────
+
+func TestRunDocApprove_ViaMain(t *testing.T) {
+	deps, _ := testDependencies()
+
+	err := run([]string{"doc", "approve"}, deps)
+	if err == nil {
+		t.Fatal("run(doc approve) with no args error = nil, want non-nil")
+	}
+	if !strings.Contains(err.Error(), "missing document ID or path") {
+		t.Fatalf("error missing expected message: %v", err)
+	}
+}
+
+// ─── faultyEntityService for testing error paths ─────────────────────────────
+
+type faultyEntityService struct {
+	err error
+}
+
+func (f *faultyEntityService) CreatePlan(input service.CreatePlanInput) (service.CreateResult, error) {
+	return service.CreateResult{}, f.err
+}
+func (f *faultyEntityService) CreateFeature(input service.CreateFeatureInput) (service.CreateResult, error) {
+	return service.CreateResult{}, f.err
+}
+func (f *faultyEntityService) CreateTask(input service.CreateTaskInput) (service.CreateResult, error) {
+	return service.CreateResult{}, f.err
+}
+func (f *faultyEntityService) CreateBug(input service.CreateBugInput) (service.CreateResult, error) {
+	return service.CreateResult{}, f.err
+}
+func (f *faultyEntityService) CreateDecision(input service.CreateDecisionInput) (service.CreateResult, error) {
+	return service.CreateResult{}, f.err
+}
+func (f *faultyEntityService) GetPlan(id string) (service.ListResult, error) {
+	return service.ListResult{}, f.err
+}
+func (f *faultyEntityService) Get(entityType, entityID, slug string) (service.GetResult, error) {
+	return service.GetResult{}, f.err
+}
+func (f *faultyEntityService) List(entityType string) ([]service.ListResult, error) {
+	return nil, f.err
+}
+func (f *faultyEntityService) ListPlans(filters service.PlanFilters) ([]service.ListResult, error) {
+	return nil, f.err
+}
+func (f *faultyEntityService) UpdateStatus(input service.UpdateStatusInput) (service.GetResult, error) {
+	return service.GetResult{}, f.err
+}
+func (f *faultyEntityService) UpdateEntity(input service.UpdateEntityInput) (service.GetResult, error) {
+	return service.GetResult{}, f.err
+}
+func (f *faultyEntityService) ValidateCandidate(entityType string, fields map[string]any) []validate.ValidationError {
+	return nil
+}
+func (f *faultyEntityService) HealthCheck() (*validate.HealthReport, error) {
+	return nil, f.err
+}
+func (f *faultyEntityService) RebuildCache() (int, error) {
+	return 0, f.err
+}
+func (f *faultyEntityService) SetCache(c *cache.Cache) {
+}
+func (f *faultyEntityService) WorkQueue(input service.WorkQueueInput) (service.WorkQueueResult, error) {
+	return service.WorkQueueResult{}, f.err
+}
+
+var _ entityService = (*faultyEntityService)(nil)
