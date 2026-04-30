@@ -1,0 +1,7 @@
+id: WT-01KQGBB623Y1M
+entity_id: BUG-01KQGB83FXVKV
+branch: bug/BUG-01KQGB83FXVKV-edit-file-tab-whitespace-corruption
+path: .worktrees/BUG-01KQGB83FXVKV-edit-file-tab-whitespace-corruption
+status: active
+created: "2026-04-30T23:24:50Z"
+created_by: sambeau
