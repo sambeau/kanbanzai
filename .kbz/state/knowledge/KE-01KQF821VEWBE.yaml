@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "Bugs are frequently fixed without advancing their lifecycle state beyond \"reported.\" The fix is committed to main, but the bug entity stays in reported/triaged status indefinitely. This creates stale entity state, misleading health dashboards (showing open critical bugs that are already fixed), and stalled-task attention items. The same pattern affected BUG-01KQB-54280HDP (fixed in fc749adf, only closed days later when explicitly asked). Root cause: the workflow does not require or prompt bug lifecycle advancement after a fix commit; agents treat the commit as the closure signal rather than advancing the entity."
+created: "2026-04-30T13:08:11Z"
+created_by: sambeau
+id: KE-01KQF821VEWBE
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - workflow-friction
+  - bug-lifecycle
+  - entity-state
+tier: 2
+topic: bug-lifecycle-discipline
+ttl_days: 90
+updated: "2026-04-30T13:08:11Z"
+use_count: 0

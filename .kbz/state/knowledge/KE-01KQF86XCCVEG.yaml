@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "Advancing a bug through its full lifecycle requires an excessive number of sequential MCP tool calls — each transition is a separate entity(action: \"transition\") call. Closing BUG-01KQB-54280HDP required 7 calls: triaged → planned → in-progress → needs-review → verified → closed, plus a cleanup call. Each call is a round-trip with validation. An \"advance\" or \"fast-forward\" mode that chains valid transitions to a target state would reduce this to a single call. The entity tool already has an \"advance\" parameter for features; extending it to bugs and other entity types, or adding a general-purpose transition-chaining capability, would eliminate this friction. Alternatively, a \"close\" action that auto-advances through the required intermediate states could make the common case (bug fixed → close) a single call."
+created: "2026-04-30T13:10:50Z"
+created_by: sambeau
+id: KE-01KQF86XCCVEG
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - tool-friction
+  - bug-lifecycle
+  - entity-transition
+  - mcp-ergonomics
+tier: 2
+topic: entity-transition-ergonomics
+ttl_days: 90
+updated: "2026-04-30T13:10:50Z"
+use_count: 0

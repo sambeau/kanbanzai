@@ -1,7 +1,7 @@
 id: BUG-01KQF4CEB8Z90
 slug: entity-list-response-too-large
 name: entity list returns excessively large response
-status: needs-review
+status: verified
 severity: high
 priority: high
 type: design-problem
