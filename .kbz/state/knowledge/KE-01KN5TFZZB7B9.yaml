@@ -3,10 +3,10 @@ content: "[minor] tool-friction: Heredoc/HEREDOC syntax consistently fails in th
 created: "2026-04-02T00:46:34Z"
 created_by: unknown
 id: KE-01KN5TFZZB7B9
-last_accessed_at: "2026-04-30T14:51:28Z"
+last_accessed_at: "2026-04-30T15:02:21Z"
 learned_from: TASK-01KN5AJRS26YW
 miss_count: 0
-recent_use_count: 173
+recent_use_count: 176
 scope: project
 status: contributed
 tags:
