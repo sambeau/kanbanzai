@@ -1,0 +1,9 @@
+id: FEAT-01KQG3AWZ3HEZ
+slug: merge-gate-bypassable
+name: Add bypassable Field to Merge Gate Results
+parent: B41-fix-doc-ownership-lifecycle
+status: proposed
+summary: "Add bypassable: bool to each gate result in merge(action: check) output. Hard gates (review_report_exists) have bypassable: false. Addresses REQ-006, REQ-NF-002, AC-007."
+created: "2026-04-30T21:04:52Z"
+created_by: sambeau
+display_id: B41-F3
