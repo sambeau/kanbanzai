@@ -1,0 +1,11 @@
+id: BUG-01KQGB83FXVKV
+slug: edit-file-tab-whitespace-corruption
+name: edit_file corrupts tab indentation in Go source files
+status: reported
+severity: medium
+priority: medium
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-04-30T23:23:09Z"
+observed: "edit_file replaced tab-indented Go source with space-indented version. Subsequent struct fields converted from tabs to spaces, struct brace displaced. Three attempts, same corruption. Workaround: git checkout + sed."
+expected: "When edit_file replaces old_text in a tab-indented Go source file, the resulting file should preserve original tab indentation. Diff should show only intended changes, not whitespace corruption."
