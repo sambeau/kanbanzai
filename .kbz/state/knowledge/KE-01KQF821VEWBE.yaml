@@ -3,9 +3,9 @@ content: "Bugs are frequently fixed without advancing their lifecycle state. The
 created: "2026-04-30T13:08:11Z"
 created_by: sambeau
 id: KE-01KQF821VEWBE
-last_accessed_at: "2026-04-30T22:10:07Z"
+last_accessed_at: "2026-04-30T22:16:31Z"
 miss_count: 0
-recent_use_count: 50
+recent_use_count: 53
 scope: project
 status: contributed
 tags:
