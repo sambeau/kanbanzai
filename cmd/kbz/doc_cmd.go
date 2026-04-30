@@ -1,10 +1,12 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/sambeau/kanbanzai/internal/config"
 	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/resolution"
 	"github.com/sambeau/kanbanzai/internal/service"
 )
 
@@ -17,7 +19,7 @@ Subcommands:
     --owner <id>      Optional parent Plan or Feature ID
     --by <user>       Creator identity (auto-resolved if omitted)
 
-  approve <id>        Approve a document record
+  approve <id|path>   Approve a document record by ID or file path
     --by <user>       Approver identity (auto-resolved if omitted)
 
   list                List all document records
@@ -122,10 +124,10 @@ func runDocRegister(args []string, deps dependencies) error {
 
 func runDocApprove(args []string, deps dependencies) error {
 	if len(args) == 0 {
-		return fmt.Errorf("missing document ID\n\nUsage: kbz doc approve <id> [--by <user>]")
+		return fmt.Errorf("missing document ID or path\n\nUsage: kbz doc approve <id|path> [--by <user>]")
 	}
 
-	docID := args[0]
+	target := args[0]
 	remaining := args[1:]
 
 	var approvedBy string
@@ -139,18 +141,24 @@ func runDocApprove(args []string, deps dependencies) error {
 			i++
 			approvedBy = remaining[i]
 		default:
-			return fmt.Errorf("unknown flag %q\n\nUsage: kbz doc approve <id> [--by <user>]", remaining[i])
+			return fmt.Errorf("unknown flag %q\n\nUsage: kbz doc approve <id|path> [--by <user>]", remaining[i])
 		}
+	}
+
+	stateRoot := core.StatePath()
+	repoRoot := "."
+	docSvc := service.NewDocumentService(stateRoot, repoRoot)
+
+	// Resolve document ID from target, supporting both file paths and IDs.
+	docID, err := resolveDocApproveTarget(target, docSvc)
+	if err != nil {
+		return err
 	}
 
 	resolvedBy, err := config.ResolveIdentity(approvedBy)
 	if err != nil {
 		return err
 	}
-
-	stateRoot := core.StatePath()
-	repoRoot := "."
-	docSvc := service.NewDocumentService(stateRoot, repoRoot)
 
 	result, err := docSvc.ApproveDocument(service.ApproveDocumentInput{
 		ID:         docID,
@@ -163,6 +171,27 @@ func runDocApprove(args []string, deps dependencies) error {
 	_, err = fmt.Fprintf(deps.stdout, "approved document\nid: %s\ntitle: %s\nstatus: %s\n",
 		result.ID, result.Title, result.Status)
 	return err
+}
+
+// resolveDocApproveTarget resolves a target string (which may be a file path
+// or a document ID) to a document ID using lexical disambiguation.
+func resolveDocApproveTarget(target string, docSvc *service.DocumentService) (string, error) {
+	kind := resolution.Disambiguate(target)
+
+	if kind == resolution.ResolvePath {
+		result, err := docSvc.LookupByPath(context.Background(), target)
+		if err != nil {
+			return "", err
+		}
+		if result.ID == "" {
+			return "", fmt.Errorf("file is not registered: %s", target)
+		}
+		return result.ID, nil
+	}
+
+	// For ResolveEntity, ResolvePlanPrefix, or ResolveNone, treat as a
+	// document ID and let the service layer validate.
+	return target, nil
 }
 
 // ─── list ────────────────────────────────────────────────────────────────────

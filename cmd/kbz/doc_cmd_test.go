@@ -2,8 +2,13 @@ package main
 
 import (
 	"bytes"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/sambeau/kanbanzai/internal/core"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 // TestRunDoc_NoSubcommand checks the missing-subcommand error path.
@@ -177,5 +182,140 @@ func TestRunDocRegister_ByFlagAcceptsEmptyWithoutHardcodedError(t *testing.T) {
 	//   - the ResolveIdentity error (if git config is also absent)
 	if err != nil && strings.Contains(err.Error(), "created_by is required") {
 		t.Errorf("got old hard-coded error %q; expected identity resolution to be attempted via config.ResolveIdentity", err.Error())
+	}
+}
+
+// ─── resolveDocApproveTarget tests ───────────────────────────────────────────
+
+// setupDocSvc creates a DocumentService backed by a temporary state directory.
+// The repoRoot is set to tmpDir so that SubmitDocument can find files at
+// relative paths within tmpDir.
+func setupDocSvc(t *testing.T) (*service.DocumentService, string) {
+	t.Helper()
+
+	tmpDir := t.TempDir()
+	stateDir := filepath.Join(tmpDir, core.StateDir)
+	if err := os.MkdirAll(filepath.Join(stateDir, "documents"), 0o755); err != nil {
+		t.Fatalf("create state dir: %v", err)
+	}
+
+	docSvc := service.NewDocumentService(stateDir, tmpDir)
+	return docSvc, tmpDir
+}
+
+// registerTestDoc registers a document file in the temp directory and returns
+// the SubmitDocument result. The file is created at the given relative path
+// within repoRoot with minimal content.
+func registerTestDoc(t *testing.T, docSvc *service.DocumentService, repoRoot, relPath, docType, title string) service.DocumentResult {
+	t.Helper()
+
+	fullPath := filepath.Join(repoRoot, relPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatalf("create doc dir: %v", err)
+	}
+	if err := os.WriteFile(fullPath, []byte("# "+title+"\n\nTest content.\n"), 0o644); err != nil {
+		t.Fatalf("write doc file: %v", err)
+	}
+
+	result, err := docSvc.SubmitDocument(service.SubmitDocumentInput{
+		Path:      relPath,
+		Type:      docType,
+		Title:     title,
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+	if result.ID == "" {
+		t.Fatal("SubmitDocument returned empty ID")
+	}
+	return result
+}
+
+// TestResolveDocApproveTarget_UnregisteredPath_Error verifies AC-021:
+// a path to an unregistered file returns "file is not registered: <path>".
+func TestResolveDocApproveTarget_UnregisteredPath_Error(t *testing.T) {
+	t.Parallel()
+
+	docSvc, _ := setupDocSvc(t)
+
+	_, err := resolveDocApproveTarget("work/design/unregistered.md", docSvc)
+	if err == nil {
+		t.Fatal("expected error for unregistered file, got nil")
+	}
+	if !strings.Contains(err.Error(), "file is not registered") {
+		t.Errorf("error = %q, want to contain 'file is not registered'", err.Error())
+	}
+	if !strings.Contains(err.Error(), "work/design/unregistered.md") {
+		t.Errorf("error = %q, want to contain the file path", err.Error())
+	}
+}
+
+// TestResolveDocApproveTarget_RegisteredPath_ReturnsID verifies AC-022:
+// a path to a registered file resolves to the correct document ID.
+func TestResolveDocApproveTarget_RegisteredPath_ReturnsID(t *testing.T) {
+	t.Parallel()
+
+	docSvc, repoRoot := setupDocSvc(t)
+	result := registerTestDoc(t, docSvc, repoRoot, "work/design/foo.md", "design", "Test Design")
+
+	gotID, err := resolveDocApproveTarget("work/design/foo.md", docSvc)
+	if err != nil {
+		t.Fatalf("resolveDocApproveTarget: %v", err)
+	}
+	if gotID != result.ID {
+		t.Errorf("resolved ID = %q, want %q", gotID, result.ID)
+	}
+}
+
+// TestResolveDocApproveTarget_IDForm_ReturnsUnchanged verifies AC-023:
+// an existing document ID is passed through unchanged (backward compat).
+func TestResolveDocApproveTarget_IDForm_ReturnsUnchanged(t *testing.T) {
+	t.Parallel()
+
+	docSvc, _ := setupDocSvc(t)
+
+	// "DOC-0012" matches the entity ID pattern so Disambiguate returns ResolveEntity.
+	gotID, err := resolveDocApproveTarget("DOC-0012", docSvc)
+	if err != nil {
+		t.Fatalf("resolveDocApproveTarget: %v", err)
+	}
+	if gotID != "DOC-0012" {
+		t.Errorf("resolved ID = %q, want %q", gotID, "DOC-0012")
+	}
+}
+
+// TestResolveDocApproveTarget_PathWithDotSlash_StripsPrefix verifies that
+// paths with "./" prefix are correctly resolved (LookupByPath strips "./").
+func TestResolveDocApproveTarget_PathWithDotSlash_StripsPrefix(t *testing.T) {
+	t.Parallel()
+
+	docSvc, repoRoot := setupDocSvc(t)
+	result := registerTestDoc(t, docSvc, repoRoot, "work/design/foo.md", "design", "Test Design")
+
+	// Resolve with "./" prefix.
+	gotID, err := resolveDocApproveTarget("./work/design/foo.md", docSvc)
+	if err != nil {
+		t.Fatalf("resolveDocApproveTarget: %v", err)
+	}
+	if gotID != result.ID {
+		t.Errorf("resolved ID = %q, want %q", gotID, result.ID)
+	}
+}
+
+// TestRunDocApprove_MissingArg_ShowsUpdatedUsage verifies the error message
+// mentions both ID and path options.
+func TestRunDocApprove_MissingArg_ShowsUpdatedUsage(t *testing.T) {
+	t.Parallel()
+
+	var buf bytes.Buffer
+	deps := dependencies{stdout: &buf, stdin: strings.NewReader("")}
+
+	err := runDocApprove(nil, deps)
+	if err == nil {
+		t.Fatal("expected error for missing arg, got nil")
+	}
+	if !strings.Contains(err.Error(), "missing document ID or path") {
+		t.Errorf("error = %q, want to contain 'missing document ID or path'", err.Error())
 	}
 }
