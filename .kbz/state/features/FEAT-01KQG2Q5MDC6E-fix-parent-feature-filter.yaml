@@ -2,7 +2,8 @@ id: FEAT-01KQG2Q5MDC6E
 slug: fix-parent-feature-filter
 name: Fix entity list parent_feature Filter
 parent: B40-fix-tool-correctness
-status: developing
+status: done
+review_cycle: 1
 summary: "Fix the broken parent_feature filter on entity(action: list, type: task) so it returns only tasks owned by the specified feature instead of all 614 tasks. Addresses REQ-001, REQ-NF-001, AC-001, AC-002, AC-012."
 design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
 dev_plan: FEAT-01KQG2Q5MDC6E/dev-plan-p40-f3-dev-plan-parent-feature-filter
@@ -12,6 +13,11 @@ overrides:
   -
     from_status: specifying
     reason: Specification is approved at batch level (B40-fix-tool-correctness/spec-p40-spec-b40-tool-correctness). All four B40 features share the batch spec.
-    timestamp: "2026-04-30T21:54:51+01:00"
+    timestamp: "2026-04-30T23:14:50+01:00"
     to_status: dev-planning
+  -
+    from_status: reviewing
+    reason: "Reviewing→done: single task, fix verified (entity_tool.go filter), tests pass (TestEntity_List_TasksFilteredByParentFeature, TestEntity_List_TasksFilteredByParentFeature_NoMatch)."
+    timestamp: "2026-04-30T23:14:50+01:00"
+    to_status: done
 display_id: B40-F1
