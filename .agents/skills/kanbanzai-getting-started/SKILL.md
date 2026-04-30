@@ -149,8 +149,9 @@ prior `.kbz/` directory.
 ### Steps
 
 1. **Configure document roots.** Add your document directories to `.kbz/config.yaml`
-   under `documents.roots`. Typically these include `work/design/`, `work/spec/`,
-   `work/dev/`, `work/research/`, and `work/reports/`.
+   under `documents.roots`. Plan-scoped documents go in `work/{PlanID}-{plan-slug}/`;
+   project-level documents go in `work/_project/`. See `kanbanzai-documents` for the
+   canonical filename template.
 
 2. **Import all documents.** For each configured root, run:
    ```

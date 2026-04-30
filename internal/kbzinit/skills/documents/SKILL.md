@@ -62,26 +62,76 @@ Copy this checklist when creating any new document:
 
 ## Document Types and Locations
 
-Documents live in configured roots under the project's document directory
-(typically `work/`). Each root has a default type:
+Documents live in **plan-first directories** under the project's document
+directory (typically `work/`). Plan-level and feature-scoped documents go in
+their plan's folder; project-level documents go in `work/_project/`.
 
-| Type | Typical directory | When to use |
+### Canonical filename template
+
+All work documents follow this template:
+
+```
+{plan-id}-{type}[-{slug}].md          # plan-level
+{plan-id}-{feature-seq}-{type}[-{slug}].md  # feature-scoped
+```
+
+Where:
+- `{plan-id}` is `P{n}` (e.g. `P37`)
+- `{feature-seq}` is `F{m}` (e.g. `F2`)
+- `{type}` is the document type prefix (`design`, `spec`, `dev-plan`, `review`,
+  `report`, `research`, `retro`, `proposal`)
+- `[-{slug}]` is an optional lowercase-kebab-case human description
+
+Each identifier appears **exactly once** in the filename. The feature ID
+(`F2`) is sufficient because it is plan-scoped — do not repeat the plan ID
+or document type.
+
+**Examples:**
+
+| Document | Filename |
+|---|---|
+| Plan 37's design | `P37-design-file-names-and-actions.md` |
+| Plan 37, Feature 2's spec | `P37-F2-spec-doc-type-and-filename-enforcement.md` |
+| Plan 37, Feature 2's dev-plan | `P37-F2-dev-plan-doc-type-and-filename-enforcement.md` |
+| Plan 24, Feature 3's spec | `P24-F3-spec-auth-flow.md` |
+| Project-level research | `research-ai-orchestration.md` (in `work/_project/`) |
+
+**Character rules:**
+- Filenames are lowercase throughout, including the plan ID and feature
+  sequence: `p37-f2-spec-auth-flow.md`
+- Exception: the plan and feature prefixes use uppercase `P` and `F` for
+  visual distinction: `P37-F2-spec-auth-flow.md`
+- Slugs use only `[a-z0-9-]`
+- No spaces, no underscores, no uppercase in slugs
+
+### Document types
+
+| Type prefix | Type (register as) | When to use |
 |---|---|---|
-| `design` | `work/design/` | Architecture, vision, approach decisions |
-| `specification` | `work/spec/` | Acceptance criteria, binding contracts |
-| `dev-plan` | `work/dev/` or `work/plan/` | Implementation plans, task breakdowns |
-| `research` | `work/research/` | Analysis, exploration, background |
-| `report` | `work/reports/` | Review reports, audits, post-mortems |
-| `policy` | `work/design/` | Standing rules, process definitions |
+| `design` | `design` | Architecture, vision, approach decisions |
+| `spec` | `specification` | Acceptance criteria, binding contracts |
+| `dev-plan` | `dev-plan` | Implementation plans, task breakdowns |
+| `review` | `review` | Formal review reports |
+| `report` | `report` | Internal analyses, evaluations, status |
+| `research` | `research` | External research, technology comparisons |
+| `retro` | `retrospective` | Retrospectives |
+| `proposal` | `proposal` | Early-stage proposals before formal design |
 
-The actual roots and default types are defined in `.kbz/config.yaml` under
-`documents.roots`. Check the project configuration if the defaults above do
-not match.
+**Note:** `specification` and `retrospective` are accepted as synonyms for the
+`spec` and `retro` types respectively when registering. The stored type is
+normalised to the short form.
+
+### Folder placement
+
+| Scope | Directory |
+|---|---|
+| Plan-level documents | `work/{PlanID}-{plan-slug}/` |
+| Feature-scoped documents | `work/{PlanID}-{plan-slug}/` (same folder) |
+| Project-level documents | `work/_project/` |
 
 **Placement rule:** design content goes in design documents, not in planning
-documents. A document in `work/plan/` that contains "Decision:",
-"Architecture:", or "Technology Choice:" is a sign that design work is being
-done in the wrong place.
+documents. A document whose content contains "Decision:",
+"Architecture:", or "Technology Choice:" should be a `design` type.
 
 ---
 
@@ -96,14 +146,27 @@ intelligence, entity extraction, approval workflow, and health checks.
 ```
 doc(
   action="register",
-  path="work/design/my-document.md",
+  path="work/P37-my-plan/P37-design-my-plan.md",
   type="design",
   title="Human-Readable Title"
 )
 ```
 
-The `type` must match the document root. The system generates a document ID
-from the path (e.g., `PROJECT/design-my-document`).
+For a feature-scoped document:
+
+```
+doc(
+  action="register",
+  path="work/P37-my-plan/P37-F2-spec-auth-flow.md",
+  type="specification",
+  title="Authentication Flow Specification"
+)
+```
+
+The system generates a document ID from the path (e.g.
+`FEAT-01ABC/spec-auth-flow`). The filename must follow the canonical
+template — each identifier (plan ID, feature ID, document type) appears
+exactly once.
 
 ### Batch import
 
@@ -327,9 +390,9 @@ To delete a document:
 - **Forgot to register.** If you create a file in `work/` and forget to call
   `doc` action: `register`, the document is invisible to the system. Run
   `doc(action="import", path="work")` as a safety net if unsure.
-- **Design in the wrong place.** Design decisions belong in `work/design/`,
-  not `work/plan/`. If a planning document contains architecture decisions,
-  move that content to a design document.
+- **Design in the wrong place.** Design decisions belong in design
+  documents, not planning documents. If a dev-plan contains architecture
+  decisions, move that content to a design document.
 - **Registering with the wrong type.** A specification registered as `design`
   won't be found when the system checks for specification prerequisites.
   Check the Document Types table — the type determines how the system treats
