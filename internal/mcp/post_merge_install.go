@@ -18,15 +18,15 @@ import (
 // is never affected by build failures.
 //
 // Returns a SideEffect describing the outcome (install_complete or install_failed),
-// or nil if the step was skipped entirely (opt-out or no cmd/kanbanzai/main.go).
+// or nil if the step was skipped entirely (opt-out or no cmd/kbz/main.go).
 func postMergeInstall(ctx context.Context, repoPath string, cfg *config.Config) *SideEffect {
 	// Check opt-out: merge.post_merge_install == false.
 	if cfg.Merge.PostMergeInstall != nil && !*cfg.Merge.PostMergeInstall {
 		return nil
 	}
 
-	// Check if cmd/kanbanzai/main.go exists at the repo root.
-	mainPath := filepath.Join(repoPath, "cmd", "kanbanzai", "main.go")
+	// Check if cmd/kbz/main.go exists at the repo root.
+	mainPath := filepath.Join(repoPath, "cmd", "kbz", "main.go")
 	if _, err := os.Stat(mainPath); err != nil {
 		// File doesn't exist — skip silently.
 		return nil
@@ -57,7 +57,7 @@ func postMergeInstall(ctx context.Context, repoPath string, cfg *config.Config) 
 	)
 
 	// Run go install with ldflags.
-	installCmd := exec.Command("go", "install", "-ldflags", ldflags, "./cmd/kanbanzai")
+	installCmd := exec.Command("go", "install", "-ldflags", ldflags, "./cmd/kbz")
 	installCmd.Dir = repoPath
 	installOutput, err := installCmd.CombinedOutput()
 	if err != nil {
@@ -108,7 +108,7 @@ func resolveInstalledBinaryPath() (string, error) {
 	// Check GOBIN first.
 	gobin := os.Getenv("GOBIN")
 	if gobin != "" {
-		return filepath.Join(gobin, "kanbanzai"), nil
+		return filepath.Join(gobin, "kbz"), nil
 	}
 
 	// Fall back to GOPATH/bin.
@@ -122,7 +122,7 @@ func resolveInstalledBinaryPath() (string, error) {
 		gopath = filepath.Join(home, "go")
 	}
 
-	return filepath.Join(gopath, "bin", "kanbanzai"), nil
+	return filepath.Join(gopath, "bin", "kbz"), nil
 }
 
 // installFailedEffect returns a side effect for a failed install attempt.

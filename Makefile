@@ -1,6 +1,6 @@
 MODULE   := kanbanzai
 PKG      := $(MODULE)/internal/buildinfo
-BINARY   := kanbanzai
+BINARY   := kbz
 
 # Git metadata
 VERSION  := $(shell git describe --tags --always --dirty 2>/dev/null || echo dev)
@@ -16,10 +16,10 @@ LDFLAGS  := -X '$(PKG).Version=$(VERSION)' \
 .PHONY: build install clean test
 
 build:
-	go build -ldflags "$(LDFLAGS)" -o $(BINARY) ./cmd/kanbanzai
+	go build -ldflags "$(LDFLAGS)" -o $(BINARY) ./cmd/kbz
 
 install: build
-	go install -ldflags "$(LDFLAGS)" ./cmd/kanbanzai
+	go install -ldflags "$(LDFLAGS)" ./cmd/kbz
 	./$(BINARY) install-record write --by makefile
 
 clean:
