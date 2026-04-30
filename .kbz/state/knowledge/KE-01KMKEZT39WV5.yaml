@@ -3,10 +3,10 @@ content: "MCP tools should be thin adapters: extract and validate parameters, de
 created: "2026-03-25T21:39:10Z"
 created_by: sambeau
 id: KE-01KMKEZT39WV5
-last_accessed_at: "2026-04-30T15:02:21Z"
+last_accessed_at: "2026-04-30T15:13:32Z"
 learned_from: P2-phase-1-kernel
 miss_count: 0
-recent_use_count: 161
+recent_use_count: 162
 scope: developer
 status: confirmed
 tags:

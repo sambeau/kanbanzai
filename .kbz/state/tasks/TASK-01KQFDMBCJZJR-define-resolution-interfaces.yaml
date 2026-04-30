@@ -3,5 +3,9 @@ parent_feature: FEAT-01KQ2VFTWD1W2
 slug: define-resolution-interfaces
 name: Define Resolution Interfaces and Contracts
 summary: "Create internal/resolution package with ResolutionKind enum, bare plan prefix pattern, Disambiguate(target string) ResolutionKind function (lexical-only, no I/O), and unit tests covering AC-001 through AC-004."
-status: ready
+status: active
 estimate: "3"
+claimed_at: "2026-04-30T15:13:31Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T15:13:31Z"
+dispatched_by: sambeau

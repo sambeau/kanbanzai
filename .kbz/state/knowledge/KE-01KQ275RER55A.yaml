@@ -3,9 +3,9 @@ content: "Agents cannot use shortened references like \"P30\" with `status(id: .
 created: "2026-04-25T11:42:36Z"
 created_by: sambeau
 id: KE-01KQ275RER55A
-last_accessed_at: "2026-04-30T15:02:21Z"
+last_accessed_at: "2026-04-30T15:13:32Z"
 miss_count: 0
-recent_use_count: 78
+recent_use_count: 79
 scope: project
 status: contributed
 tags:
