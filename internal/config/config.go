@@ -165,6 +165,59 @@ func (m MergeConfig) RequiresHumanReview() bool {
 	return m.RequireHumanReview != nil && *m.RequireHumanReview
 }
 
+
+// PlanPrefixesOrDefault returns the effective plan prefixes, defaulting to [{P, Plan}] (REQ-005).
+func (c Config) PlanPrefixesOrDefault() []PrefixEntry {
+	if len(c.PlanPrefixes) > 0 {
+		return c.PlanPrefixes
+	}
+	return []PrefixEntry{{Prefix: "P", Name: "Plan"}}
+}
+
+// BatchPrefixesOrDefault returns the effective batch prefixes, defaulting to [{B, Batch}] (REQ-006).
+func (c Config) BatchPrefixesOrDefault() []PrefixEntry {
+	if len(c.BatchPrefixes) > 0 {
+		return c.BatchPrefixes
+	}
+	return []PrefixEntry{{Prefix: "B", Name: "Batch"}}
+}
+
+// IsActivePlanPrefix reports whether the given prefix is an active (non-retired) plan prefix.
+func (c Config) IsActivePlanPrefix(prefix string) bool {
+	for _, e := range c.PlanPrefixesOrDefault() {
+		if e.Prefix == prefix && !e.Retired {
+			return true
+		}
+	}
+	return false
+}
+
+// IsActiveBatchPrefix reports whether the given prefix is an active (non-retired) batch prefix.
+func (c Config) IsActiveBatchPrefix(prefix string) bool {
+	for _, e := range c.BatchPrefixesOrDefault() {
+		if e.Prefix == prefix && !e.Retired {
+			return true
+		}
+	}
+	return false
+}
+
+// ValidatePrefixSeparation checks that plan and batch registries don't share prefix chars (REQ-004).
+func (c Config) ValidatePrefixSeparation() error {
+	planPrefixes := c.PlanPrefixesOrDefault()
+	batchPrefixes := c.BatchPrefixesOrDefault()
+	planChars := make(map[string]bool)
+	for _, e := range planPrefixes {
+		planChars[e.Prefix] = true
+	}
+	for _, e := range batchPrefixes {
+		if planChars[e.Prefix] {
+			return fmt.Errorf("prefix %q appears in both plan_prefixes and batch_prefixes; each registry must use unique prefix characters", e.Prefix)
+		}
+	}
+	return nil
+}
+
 type MCPConfig struct {
 	// Preset is a shorthand for a common group configuration.
 	// Valid values: "minimal", "orchestration", "full".
@@ -184,6 +237,14 @@ type QualityEvaluationConfig struct {
 	Threshold float64 `yaml:"quality_evaluation_threshold"`
 }
 
+// ProjectConfig holds the optional project singleton section (P38 D5).
+type ProjectConfig struct {
+	Name string `yaml:"name,omitempty"`
+	Vision string `yaml:"vision,omitempty"`
+	Architecture string `yaml:"architecture,omitempty"`
+	Constraints []string `yaml:"constraints,omitempty"`
+}
+
 // Config is the project configuration structure stored in .kbz/config.yaml.
 type Config struct {
 	// Version is the configuration schema version.
@@ -196,6 +257,9 @@ type Config struct {
 	SchemaVersion string `yaml:"schema_version,omitempty"`
 	// Prefixes is the registry of Plan ID prefixes.
 	Prefixes []PrefixEntry `yaml:"prefixes"`
+	PlanPrefixes []PrefixEntry `yaml:"plan_prefixes,omitempty"`
+	BatchPrefixes []PrefixEntry `yaml:"batch_prefixes,omitempty"`
+	Project ProjectConfig `yaml:"project,omitempty"`
 	// Import holds configuration for batch document import.
 	Import ImportConfig `yaml:"import,omitempty"`
 	// BranchTracking holds settings for branch staleness and drift detection.
@@ -232,6 +296,12 @@ func DefaultConfig() Config {
 		SchemaVersion: BinarySupportedSchemaVersion,
 		Prefixes: []PrefixEntry{
 			{Prefix: "P", Name: "Plan"},
+		},
+		PlanPrefixes: []PrefixEntry{
+			{Prefix: "P", Name: "Plan"},
+		},
+		BatchPrefixes: []PrefixEntry{
+			{Prefix: "B", Name: "Batch"},
 		},
 		Import: ImportConfig{
 			TypeMappings: defaultImportTypeMappings(),
@@ -482,6 +552,11 @@ func (c *Config) Validate() error {
 		return errors.New("at least one prefix is required")
 	}
 
+	// P38: validate plan/batch prefix separation (REQ-004).
+	if err := c.ValidatePrefixSeparation(); err != nil {
+		return err
+	}
+
 	seen := make(map[string]bool)
 	hasActive := false
 
@@ -675,6 +750,35 @@ func (c *Config) NextPlanNumber(prefix string, planIDScanner func() ([]string, e
 			continue
 		}
 
+		var num int
+		if _, err := fmt.Sscanf(numStr, "%d", &num); err == nil {
+			if num > maxNum {
+				maxNum = num
+			}
+		}
+	}
+
+	return maxNum + 1, nil
+}
+
+// NextBatchNumber returns the next available sequence number for a batch prefix.
+// It scans only against the batch_prefixes (or legacy prefixes) registry (REQ-007).
+func (c *Config) NextBatchNumber(prefix string, batchIDScanner func() ([]string, error)) (int, error) {
+	if !c.IsActiveBatchPrefix(prefix) && !c.IsValidPrefix(prefix) {
+		return 0, fmt.Errorf("unknown batch prefix: %q", prefix)
+	}
+
+	ids, err := batchIDScanner()
+	if err != nil {
+		return 0, fmt.Errorf("scan batch IDs: %w", err)
+	}
+
+	maxNum := 0
+	for _, id := range ids {
+		p, numStr, _ := parsePlanIDParts(id)
+		if p != prefix {
+			continue
+		}
 		var num int
 		if _, err := fmt.Sscanf(numStr, "%d", &num); err == nil {
 			if num > maxNum {

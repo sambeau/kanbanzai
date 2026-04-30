@@ -1022,3 +1022,192 @@ func TestRequiresGitHubPR_TruePointer(t *testing.T) {
 		t.Error("RequiresGitHubPR() = false, want true for *true pointer")
 	}
 }
+
+// ─── P38: Config Schema and Project Singleton tests ────────────────────────
+
+func TestPlanPrefixesOrDefault_Default(t *testing.T) {
+	// AC-005: absent plan_prefixes defaults to [{P, Plan}]
+	t.Parallel()
+	cfg := Config{}
+	got := cfg.PlanPrefixesOrDefault()
+	if len(got) != 1 || got[0].Prefix != "P" || got[0].Name != "Plan" {
+		t.Errorf("PlanPrefixesOrDefault() = %+v, want [{P Plan}]", got)
+	}
+}
+
+func TestBatchPrefixesOrDefault_Default(t *testing.T) {
+	// AC-006: absent batch_prefixes defaults to [{B, Batch}]
+	t.Parallel()
+	cfg := Config{}
+	got := cfg.BatchPrefixesOrDefault()
+	if len(got) != 1 || got[0].Prefix != "B" || got[0].Name != "Batch" {
+		t.Errorf("BatchPrefixesOrDefault() = %+v, want [{B Batch}]", got)
+	}
+}
+
+func TestPlanPrefixesOrDefault_Custom(t *testing.T) {
+	// AC-001: custom plan_prefixes are used when present
+	t.Parallel()
+	cfg := Config{
+		PlanPrefixes: []PrefixEntry{{Prefix: "X", Name: "XPlan"}},
+	}
+	got := cfg.PlanPrefixesOrDefault()
+	if len(got) != 1 || got[0].Prefix != "X" {
+		t.Errorf("PlanPrefixesOrDefault() = %+v, want [{X XPlan}]", got)
+	}
+}
+
+func TestBatchPrefixesOrDefault_Custom(t *testing.T) {
+	// AC-002: custom batch_prefixes are used when present
+	t.Parallel()
+	cfg := Config{
+		BatchPrefixes: []PrefixEntry{{Prefix: "Z", Name: "ZBatch"}},
+	}
+	got := cfg.BatchPrefixesOrDefault()
+	if len(got) != 1 || got[0].Prefix != "Z" {
+		t.Errorf("BatchPrefixesOrDefault() = %+v, want [{Z ZBatch}]", got)
+	}
+}
+
+func TestValidatePrefixSeparation_SameChar(t *testing.T) {
+	// AC-003: same prefix in both registries returns error
+	t.Parallel()
+	cfg := Config{
+		PlanPrefixes:  []PrefixEntry{{Prefix: "P"}},
+		BatchPrefixes: []PrefixEntry{{Prefix: "P"}},
+	}
+	err := cfg.ValidatePrefixSeparation()
+	if err == nil {
+		t.Error("expected error for shared prefix character")
+	}
+}
+
+func TestValidatePrefixSeparation_Distinct(t *testing.T) {
+	// AC-004: distinct prefixes return no error
+	t.Parallel()
+	cfg := Config{
+		PlanPrefixes:  []PrefixEntry{{Prefix: "X"}},
+		BatchPrefixes: []PrefixEntry{{Prefix: "Y"}},
+	}
+	if err := cfg.ValidatePrefixSeparation(); err != nil {
+		t.Errorf("unexpected error: %v", err)
+	}
+}
+
+func TestIsActivePlanPrefix(t *testing.T) {
+	cfg := Config{
+		PlanPrefixes: []PrefixEntry{
+			{Prefix: "P", Name: "Plan"},
+			{Prefix: "R", Name: "Retired", Retired: true},
+		},
+	}
+	if !cfg.IsActivePlanPrefix("P") {
+		t.Error("expected P to be active")
+	}
+	if cfg.IsActivePlanPrefix("R") {
+		t.Error("expected R (retired) to be inactive")
+	}
+	if cfg.IsActivePlanPrefix("Z") {
+		t.Error("expected unknown Z to be inactive")
+	}
+}
+
+func TestIsActiveBatchPrefix(t *testing.T) {
+	// AC-014: retired batch prefix returns false
+	cfg := Config{
+		BatchPrefixes: []PrefixEntry{
+			{Prefix: "B", Name: "Batch"},
+			{Prefix: "Q", Name: "Old", Retired: true},
+		},
+	}
+	if !cfg.IsActiveBatchPrefix("B") {
+		t.Error("expected B to be active")
+	}
+	if cfg.IsActiveBatchPrefix("Q") {
+		t.Error("expected Q (retired) to be inactive")
+	}
+}
+
+func TestProjectConfig_Defaults(t *testing.T) {
+	// AC-011: absent project section returns zero value
+	t.Parallel()
+	cfg := Config{}
+	if cfg.Project.Name != "" {
+		t.Error("Project.Name should be empty")
+	}
+	if len(cfg.Project.Constraints) != 0 {
+		t.Error("Project.Constraints should be nil")
+	}
+}
+
+func TestNextBatchNumber_Independent(t *testing.T) {
+	// AC-007: plan and batch counters are independent
+	t.Parallel()
+	cfg := Config{
+		Prefixes:      []PrefixEntry{{Prefix: "P"}},
+		PlanPrefixes:  []PrefixEntry{{Prefix: "P"}},
+		BatchPrefixes: []PrefixEntry{{Prefix: "B"}},
+	}
+	// Scanner returns P1, P2, P3 plans — batch counter should not see these
+	planScanner := func() ([]string, error) {
+		return []string{"P1-plan", "P2-plan", "P3-plan"}, nil
+	}
+	batchScanner := func() ([]string, error) {
+		return []string{"B5-batch"}, nil
+	}
+	n, err := cfg.NextPlanNumber("P", planScanner)
+	if err != nil {
+		t.Fatalf("NextPlanNumber: %v", err)
+	}
+	if n != 4 {
+		t.Errorf("NextPlanNumber = %d, want 4", n)
+	}
+	n2, err := cfg.NextBatchNumber("B", batchScanner)
+	if err != nil {
+		t.Fatalf("NextBatchNumber: %v", err)
+	}
+	if n2 != 6 {
+		t.Errorf("NextBatchNumber = %d, want 6", n2)
+	}
+}
+
+func TestNextBatchNumber_EmptyDir(t *testing.T) {
+	// AC-008: empty plan dir after migration returns 1
+	t.Parallel()
+	cfg := Config{
+		Prefixes:      []PrefixEntry{{Prefix: "P"}},
+		PlanPrefixes:  []PrefixEntry{{Prefix: "P"}},
+		BatchPrefixes: []PrefixEntry{{Prefix: "B"}},
+	}
+	emptyScanner := func() ([]string, error) { return nil, nil }
+	n, err := cfg.NextPlanNumber("P", emptyScanner)
+	if err != nil {
+		t.Fatalf("NextPlanNumber: %v", err)
+	}
+	if n != 1 {
+		t.Errorf("NextPlanNumber with empty dir = %d, want 1", n)
+	}
+	// Batch counter with B1, B2, B3 should return 4
+	batchScanner := func() ([]string, error) {
+		return []string{"B1-a", "B2-b", "B3-c"}, nil
+	}
+	n2, err := cfg.NextBatchNumber("B", batchScanner)
+	if err != nil {
+		t.Fatalf("NextBatchNumber: %v", err)
+	}
+	if n2 != 4 {
+		t.Errorf("NextBatchNumber after migration = %d, want 4", n2)
+	}
+}
+
+func TestDefaultConfig_P38Defaults(t *testing.T) {
+	// Verify default config has plan/batch prefix defaults
+	t.Parallel()
+	cfg := DefaultConfig()
+	if len(cfg.PlanPrefixes) != 1 || cfg.PlanPrefixes[0].Prefix != "P" {
+		t.Error("DefaultConfig PlanPrefixes should default to [{P, Plan}]")
+	}
+	if len(cfg.BatchPrefixes) != 1 || cfg.BatchPrefixes[0].Prefix != "B" {
+		t.Error("DefaultConfig BatchPrefixes should default to [{B, Batch}]")
+	}
+}
