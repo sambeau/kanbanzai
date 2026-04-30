@@ -1,0 +1,6 @@
+id: TASK-01KQFCPSN2GEC
+parent_feature: FEAT-01KQ2VGTRZHPC
+slug: integration-edge-cases
+name: Integration and Edge-Case Handling
+summary: "Wire renderer into kbz status command handler. Define shared input data types (modelled on MCP synthesis types). Implement top-level dispatch selecting correct view by target type. Handle AC-7 edge cases: I/O errors to stderr + non-zero exit, non-existent entity → message + exit 0. Ensure NFR-2 (pure read) and NFR-3 (no panic on missing fields). Files: dispatch.go, types.go, status_cmd.go; integration tests covering all 7 ACs."
+status: queued
