@@ -10,3 +10,5 @@ dev_plan: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution
 created: "2026-04-25T17:37:38Z"
 created_by: sambeau
 display_id: B36-F2
+verification: "TASK-01KQFDMBCJZJR: (no verification recorded)\nTASK-01KQFDMK63E62: (no verification recorded)\nTASK-01KQFDMTTN0Q9: (no verification recorded)\nTASK-01KQFDN2H29PF: (no verification recorded)\nTASK-01KQFDNAAR04Q: (no verification recorded)\nTASK-01KQFDNGTAXZ8: go test ./cmd/kbz/... -v: ALL PASS; go test ./internal/resolution/... -v: ALL PASS (27 tests); go build ./...: clean\nTASK-01KQFT3QQ5739: (no verification recorded)\nTASK-01KQFT41W0H05: (no verification recorded)"
+verification_status: partial
