@@ -15,6 +15,14 @@ entries:
         mode: warning
         consecutive_clean: 0
         false_positive_count: 7
+    missing_sections/design:
+        mode: warning
+        consecutive_clean: 0
+        false_positive_count: 1
+    missing_sections/overview/design:
+        mode: warning
+        consecutive_clean: 0
+        false_positive_count: 1
     required_sections/design:
         mode: warning
         consecutive_clean: 0

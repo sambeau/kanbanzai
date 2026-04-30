@@ -4,7 +4,7 @@ created_by: sambeau
 id: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename
 owner: B36-kbz-cli-and-status
 path: work/_project/design-kbz-cli-and-binary-rename.md
-status: draft
+status: approved
 title: "Design: kbz Binary Rename and Status Command Extension"
 type: design
 updated: "2026-04-30T13:43:51Z"
