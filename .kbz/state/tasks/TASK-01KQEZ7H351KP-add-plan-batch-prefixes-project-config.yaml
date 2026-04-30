@@ -3,4 +3,11 @@ parent_feature: FEAT-01KQ7YQK6DDDA
 slug: add-plan-batch-prefixes-project-config
 name: Add Plan/Batch prefixes and ProjectConfig to Config
 summary: "Add PlanPrefixes and BatchPrefixes fields and ProjectConfig struct to Config. AC-001-002, AC-005-006, AC-009-012."
-status: ready
+status: done
+completed: "2026-04-30T10:40:34Z"
+claimed_at: "2026-04-30T10:34:59Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T10:34:59Z"
+dispatched_by: sambeau
+completion_summary: "Added PlanPrefixes, BatchPrefixes, and ProjectConfig to Config struct. Implemented PlanPrefixesOrDefault, BatchPrefixesOrDefault, IsActivePlanPrefix, IsActiveBatchPrefix, and ValidatePrefixSeparation. Wired separation validation into Config.Validate(). All existing config tests pass."
+verification: go build ./... and go test ./internal/config/ pass.

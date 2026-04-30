@@ -3,10 +3,10 @@ content: "Document intelligence has 3 layers: Layer 1 (structure parsing) extrac
 created: "2026-03-25T21:39:05Z"
 created_by: sambeau
 id: KE-01KMKEZNQ6A06
-last_accessed_at: "2026-04-30T10:22:05Z"
+last_accessed_at: "2026-04-30T10:34:59Z"
 learned_from: P2-phase-1-kernel
 miss_count: 0
-recent_use_count: 152
+recent_use_count: 153
 scope: project
 status: confirmed
 tags:

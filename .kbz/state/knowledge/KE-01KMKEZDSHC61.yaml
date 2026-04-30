@@ -3,10 +3,10 @@ content: "Entity YAML files MUST be written in canonical field order defined by 
 created: "2026-03-25T21:38:57Z"
 created_by: sambeau
 id: KE-01KMKEZDSHC61
-last_accessed_at: "2026-04-30T10:22:05Z"
+last_accessed_at: "2026-04-30T10:34:59Z"
 learned_from: P2-phase-1-kernel
 miss_count: 0
-recent_use_count: 146
+recent_use_count: 147
 scope: project
 status: confirmed
 tags:
