@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQ2VHKJB5V8
 slug: json-format-renderer
 name: JSON format renderer
 summary: "Implement JSONRenderer in internal/cli/status/json.go. Consume service-layer synthesis structs, emit RFC 8259 JSON with intermediate spec-matching structs. Entity/document queries use results array wrapper (D-7). Project overview uses distinct scope:project shape (D-8). Handle null plan_id, empty attention as [], registered:false with id:null for unregistered docs."
-status: queued
+status: ready
