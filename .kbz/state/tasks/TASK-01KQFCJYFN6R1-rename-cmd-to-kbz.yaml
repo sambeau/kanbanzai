@@ -3,9 +3,16 @@ parent_feature: FEAT-01KQ2VF7PDZ2G
 slug: rename-cmd-to-kbz
 name: Rename cmd/kanbanzai/ to cmd/kbz/ and update build system
 summary: "Rename the main package directory from cmd/kanbanzai/ to cmd/kbz/. Update Makefile BINARY variable and go build / go install targets to ./cmd/kbz. Verify make build produces binary named kbz. Addresses FR-001, FR-002, FR-003, FR-004."
-status: active
+status: done
 estimate: "3"
+files_planned:
+  - cmd/kbz/ (renamed from cmd/kanbanzai/)
+  - Makefile
+  - internal/mcp/post_merge_install.go
+completed: "2026-04-30T14:51:04Z"
 claimed_at: "2026-04-30T14:48:38Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-30T14:48:38Z"
 dispatched_by: sambeau
+completion_summary: "Renamed cmd/kanbanzai/ to cmd/kbz/. Updated Makefile: BINARY changed to kbz, go build/install paths changed to ./cmd/kbz. Updated internal/mcp/post_merge_install.go: all references to cmd/kanbanzai/main.go replaced with cmd/kbz/main.go, binary name in resolveInstalledBinaryPath updated to kbz. Verified make build produces kbz binary, go build ./... passes clean."
+verification: "make build produces kbz binary (20MB, executable). go build ./... succeeds with no errors. grep -r 'cmd/kanbanzai' --include='*.go' --include='Makefile' in main tree returns zero results (only worktree branches have old references, which is expected)."
