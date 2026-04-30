@@ -3,5 +3,8 @@ parent_feature: FEAT-01KQ2VGTRZHPC
 slug: entity-views
 name: "Entity Views (Feature, Plan, Project Overview)"
 summary: "Implement RenderFeature, RenderPlan, RenderProject functions plus block-level column alignment helpers. Covers: feature view (header, Plan line, Documents, Tasks, Attention), plan view (header, Features list, aggregated Tasks, Attention), project overview (Plans, Health, Attention, Work queue). Files: feature.go, plan.go, project.go, alignment.go with unit tests covering all FR-4 through FR-7 scenarios including edge cases."
-status: ready
+status: done
 estimate: "8"
+completed: "2026-04-30T16:46:15Z"
+completion_summary: "Implemented RenderFeature, RenderPlan, RenderProject plus AlignDocuments in internal/cli/render/. 9 new files: alignment.go (label+path padding), feature.go (docs block, tasks, attention), plan.go (features list w/ status icons), project.go (plans, health, work queue), types.go. 4 test files covering TTY/ASCII, no plan/docs/dev-plan, zero tasks, no attention, health errors, nil health edge cases. Copied render scaffolding from worktree."
+verification: go build ./... passes; go test -race ./internal/cli/render/... 28 tests pass; go vet clean
