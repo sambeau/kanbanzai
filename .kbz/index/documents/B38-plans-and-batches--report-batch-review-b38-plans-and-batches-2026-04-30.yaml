@@ -1,0 +1,193 @@
+document_id: B38-plans-and-batches/report-batch-review-b38-plans-and-batches-2026-04-30
+document_path: work/reviews/batch-review-B38-plans-and-batches-2026-04-30.md
+content_hash: e053fa1e76d107658297bd5b3fdec453bb1c754667560dbd77c26c51aef4c4a6
+indexed_at: 2026-04-30T11:34:47.541593Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Batch Conformance Review: B38-plans-and-batches'
+      byte_offset: 0
+      byte_count: 7127
+      word_count: 1018
+      content_hash: e053fa1e76d107658297bd5b3fdec453bb1c754667560dbd77c26c51aef4c4a6
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 51
+          byte_count: 193
+          word_count: 25
+          content_hash: a3a31fd4c5ed6ac493ab2a7f7586e5b08a45d2f874f03e5f6060f693a3eab96d
+        - path: "1.2"
+          level: 2
+          title: Feature Census
+          byte_offset: 244
+          byte_count: 1228
+          word_count: 232
+          content_hash: 2909aa67aa583ee88eeaffed6d4ac4a5c73a3a35eedd3433bac8e6e1d42320de
+        - path: "1.3"
+          level: 2
+          title: Conformance Gaps
+          byte_offset: 1472
+          byte_count: 2182
+          word_count: 297
+          content_hash: 5feffacf647b55d11cf206decd8a64fd4b5bf47ee594b143b07d68e8f3e6f88a
+        - path: "1.4"
+          level: 2
+          title: Documentation Currency
+          byte_offset: 3654
+          byte_count: 900
+          word_count: 94
+          content_hash: 2009f2ba45c3c00ffbf1363f52b76d729a5950cfb44798571c53f9e953e78e55
+        - path: "1.5"
+          level: 2
+          title: Cross-Cutting Checks
+          byte_offset: 4554
+          byte_count: 551
+          word_count: 79
+          content_hash: d7abbb06306d7d622502cc9987598a61eae80231159e221870b88bd7205b4367
+        - path: "1.6"
+          level: 2
+          title: Retrospective Summary
+          byte_offset: 5105
+          byte_count: 518
+          word_count: 72
+          content_hash: 9606da739ccddb66aeb9b4db04166de3b8941fbd9214a09ee48ae66417ba505d
+        - path: "1.7"
+          level: 2
+          title: Batch Verdict
+          byte_offset: 5623
+          byte_count: 946
+          word_count: 143
+          content_hash: 6f2195982dba2496c2c8832c228de5ef35c26b21eb2d5ea9dbf7ceae821eda9a
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Resolution Path
+              byte_offset: 6011
+              byte_count: 558
+              word_count: 86
+              content_hash: a65b48d35518bf151503bba09002b0b04c854cc7d4c326bcc16d327ec2723b90
+        - path: "1.8"
+          level: 2
+          title: Evidence
+          byte_offset: 6569
+          byte_count: 558
+          word_count: 71
+          content_hash: 79b1b3208879e41ab541d2de0b9d8f1b64c30c68fcbe86838b3c48ef3166a776
+entity_refs:
+    - entity_id: FEAT-01KQ7YQKBDNAP
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 413
+    - entity_id: FEAT-01KQ7YQKEEHFY
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 509
+    - entity_id: FEAT-01KQ7YQKHK2GV
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 602
+    - entity_id: FEAT-01KQ7YQKMCM6T
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 695
+    - entity_id: FEAT-01KQ7YQKPT8HF
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 794
+    - entity_id: FEAT-01KQ7YQKWTBRP
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 889
+    - entity_id: FEAT-01KQ7JDT511BZ
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 985
+    - entity_id: FEAT-01KQ7YQK6DDDA
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1092
+    - entity_id: FEAT-01KQ7YQKT04M7
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1212
+    - entity_id: FEAT-01KQAGMVQABXH
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1346
+    - entity_id: FEAT-01KQ7YQKT04M7
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 1598
+    - entity_id: FEAT-01KQ7YQK6DDDA
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 2449
+    - entity_id: FEAT-01KQ7JDT511BZ
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 2727
+    - entity_id: FEAT-01KQ7
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 3062
+    - entity_id: FEAT-01KQ7YQK6DDDA
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 4630
+    - entity_id: FEAT-01KQ7YQK6DDDA
+      entity_type: feature
+      section_path: "1.8"
+      byte_offset: 6822
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 28
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 73
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: "1.3"
+      byte_offset: 3412
+    - entity_id: P38-plans-and-batches
+      entity_type: plan
+      section_path: "1.3"
+      byte_offset: 3465
+    - entity_id: P38-plans-and-batches
+      entity_type: plan
+      section_path: "1.4"
+      byte_offset: 4441
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 5174
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 6626
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-documents/SKILL.md
+      link_text: .agents/skills/kanbanzai-documents/SKILL.md
+      section_path: "1.4"
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: "1.4"
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: "1.4"
+    - target_path: .agents/skills/kanbanzai-plan-review/SKILL.md
+      link_text: .agents/skills/kanbanzai-plan-review/SKILL.md
+      section_path: "1.4"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-30T11:34:48.283504Z
+classified: false

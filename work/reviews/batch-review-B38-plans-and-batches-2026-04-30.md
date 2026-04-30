@@ -3,8 +3,9 @@
 ## Scope
 - **Batch:** B38-plans-and-batches (Plans and Batches)
 - **Features:** 10 total (6 done, 3 reviewing, 1 superseded)
-- **Review date:** 2026-04-30
+- **Review date:** 2026-04-30 (revised 13:25 BST)
 - **Reviewer:** reviewer-conformance
+- **Review cycle:** 2 (re-verification of prior draft findings)
 
 ## Feature Census
 
@@ -16,60 +17,58 @@
 | 4 | FEAT-01KQ7YQKMCM6T | B38-F5 | done | approved | — | 5/5 done | Recursive Progress Rollup |
 | 5 | FEAT-01KQ7YQKPT8HF | B38-F6 | done | approved | — | 7/7 done | MCP Tools & Dashboard |
 | 6 | FEAT-01KQ7YQKWTBRP | B38-F7 | done | approved | — | 7/7 done | Documentation & Skills |
-| 7 | FEAT-01KQ7JDT511BZ | B38-F9 | **reviewing** | approved | approved | 5/5 done | Work Tree Migration |
-| 8 | FEAT-01KQ7YQK6DDDA | B38-F1 | **reviewing** | approved | — | 4/4 done | Config Schema — **merge conflicts** |
-| 9 | FEAT-01KQ7YQKT04M7 | B38-F8 | **reviewing** | **draft** | — | **0 tasks** | State File Migration — **no implementation** |
-| 10 | FEAT-01KQAGMVQABXH | B38-F10 | superseded | approved | approved | — | Full Combined Migration — superseded by F7+F8+F9 |
+| 7 | FEAT-01KQ7JDT511BZ | B38-F9 | **reviewing** | approved | approved | 5/5 done | Work Tree Migration — branch **merged to main** ✓ |
+| 8 | FEAT-01KQ7YQK6DDDA | B38-F1 | **reviewing** | approved | — | 4/4 done | Config Schema — **merge conflicts with main** |
+| 9 | FEAT-01KQ7YQKT04M7 | B38-F8 | **reviewing** | **draft** | — | **0 tasks** | State File Migration — spec unapproved, no implementation |
+| 10 | FEAT-01KQAGMVQABXH | B38-F10 | superseded | approved | approved | — | Full Combined Migration — superseded by F8+F9 |
 
 ## Conformance Gaps
 
-| # | Feature | Type | Description | Severity |
-|---|---------|------|-------------|----------|
-| CG-1 | FEAT-01KQ7YQKT04M7 (B38-F8) | spec-status | Spec `spec-b38-spec-p38-f8-combined-migration` is **draft**, not approved. The feature is in `reviewing` status but has never passed the spec-approval gate. | **blocking** |
-| CG-2 | FEAT-01KQ7YQKT04M7 (B38-F8) | missing-tasks | Feature has **0 tasks**. It is in `reviewing` status, but the `reviewing` stage prerequisite requires `tasks.all_terminal: true`. With no tasks, there is nothing to verify as complete. | **blocking** |
-| CG-3 | FEAT-01KQ7YQKT04M7 (B38-F8) | lifecycle-override | Feature was overridden from `designing` straight to `developing`, then from `specifying` to `dev-planning`, then from `dev-planning` to `developing` (twice). The spec was written retrospectively and never approved. Four gate overrides for a feature with zero tasks indicates a process gap. | **blocking** |
-| CG-4 | FEAT-01KQ7YQK6DDDA (B38-F1) | branch-conflict | Worktree branch `feature/FEAT-01KQ7YQK6DDDA-config-schema-project-singleton` has **merge conflicts with main**. The branch is also 8 commits behind main. It cannot be merged until conflicts are resolved. | **blocking** |
-| CG-5 | FEAT-01KQ7JDT511BZ (B38-F9) | stale-worktree | Two active worktrees exist for the same feature: `WT-01KQEX083D5Y4` (branch already merged to main per health check) and `WT-01KQEX7T3X5XD`. The first worktree's branch is already merged but the worktree was not cleaned up. The second worktree also has a stale branch display_id format (`FEAT-01KQ7-JDT511BZ` with a hyphen embedded in the entity ID). | non-blocking |
-| CG-6 | FEAT-01KQ7JDT511BZ (B38-F9) | branch-staleness | Branch `feature/FEAT-01KQ7JDT511BZ-work-tree-migration` is **23 commits behind main**. While it has no conflicts, the drift is significant and the branch should be rebased before merge. | non-blocking |
-| CG-7 | B38-plans-and-batches | prior-review | Prior review `P38-plans-and-batches/report-p38-report-review-f2-f7` (for F2-F7) is still in **draft** status. A batch-level review should either supersede or incorporate prior reviews. | non-blocking |
+| # | Feature | Type | Description | Severity | Status |
+|---|---------|------|-------------|----------|--------|
+| CG-1 | FEAT-01KQ7YQKT04M7 (B38-F8) | spec-status | Spec `spec-b38-spec-p38-f8-combined-migration` is **draft**, not approved. Feature is in `reviewing` but never passed the spec-approval gate. | **blocking** | unresolved |
+| CG-2 | FEAT-01KQ7YQKT04M7 (B38-F8) | missing-tasks | Feature has **0 tasks**. `reviewing` prerequisite requires `tasks.all_terminal: true`. With no tasks there is nothing to verify as complete. | **blocking** | unresolved |
+| CG-3 | FEAT-01KQ7YQKT04M7 (B38-F8) | lifecycle-integrity | Feature was overridden from `designing → developing`, `specifying → dev-planning`, and `dev-planning → developing` (twice). Spec written retrospectively and never approved. Four gate overrides with zero tasks indicates no implementation was delivered. | **blocking** | unresolved |
+| CG-4 | FEAT-01KQ7YQK6DDDA (B38-F1) | branch-conflict | Worktree branch `feature/FEAT-01KQ7YQK6DDDA-config-schema-project-singleton` has **merge conflicts with main**. Cannot be merged until resolved. | **blocking** | unresolved |
+| CG-5 | FEAT-01KQ7JDT511BZ (B38-F9) | stale-worktree | Two active worktrees exist: `WT-01KQEX083D5Y4` (branch already merged) and `WT-01KQEX7T3X5XD`. Neither has been cleaned up. | non-blocking | unresolved |
+| CG-6 | B38-plans-and-batches | prior-review-draft | Prior internal review `P38-plans-and-batches/report-p38-report-review-f2-f7` (covering F2–F7) remains in draft status. | non-blocking | unresolved |
+
+> **Change since cycle 1:** CG-6 from the prior draft (B38-F9 branch 23 commits behind main) is **resolved** — `feature/FEAT-01KQ7JDT511BZ-work-tree-migration` has been merged to main (confirmed via health check warning `worktree_branch_merged`). The `kbz migrate` command is now on main. B38-F9 feature status still needs to advance `reviewing → done`.
 
 ## Documentation Currency
 
-- **AGENTS.md:** References stale tool names (`sh`, `graph_project`, `main`) — flagged by health check.
-- **B38 scope guard:** B38 is not listed in AGENTS.md scope guard section — 27 prior batches are also missing from the scope guard.
-- **Workflow skills:** Multiple stale tool references in `.agents/skills/kanbanzai-getting-started/SKILL.md`, `.agents/skills/kanbanzai-documents/SKILL.md`, `.agents/skills/kanbanzai-workflow/SKILL.md`, `.agents/skills/kanbanzai-agents/SKILL.md`, and `.agents/skills/kanbanzai-plan-review/SKILL.md`. These are **pre-existing** issues not introduced by B38 but are blocking for project-level documentation currency.
-- **Knowledge entries:** No knowledge entries contributed under B38 scope.
-- **B38 design doc:** Design `P38-plans-and-batches/design-meta-planning-plans-and-batches` is approved (registered under the legacy P38 ID).
-
-## Cross-Cutting Checks
-
-- **Health check:** 9 errors (1 branch conflict on FEAT-01KQ7YQK6DDDA, 8 TTL-expired knowledge entries). Warnings include stale worktrees, outdated doc references, and missing scope guard entries.
-- **Orphaned worktrees:** 4 active worktrees for B38 features — 2 for F9 (one stale/merged), 1 for F1 (conflicted), 1 for F10 (superseded). All should be resolved before batch closure.
-- **Cohort merge checkpoints:** Not applicable — B38 features were implemented sequentially or in ad-hoc parallel, not via formal cohorts.
+- **AGENTS.md:** Stale tool references (`sh`, `graph_project`, `main`) — pre-existing, not introduced by B38.
+- **Scope guard:** B38 not listed in AGENTS.md scope guard. 27+ prior batches also absent — pre-existing systemic gap.
+- **Workflow skills:** Multiple stale tool references across `.agents/skills/` — pre-existing.
+- **Knowledge entries:** 1 retrospective signal recorded for B38 period (tool friction writing Go files from worktree sub-agents). No formal knowledge entries contributed under B38 scope.
 
 ## Retrospective Summary
 
-No retrospective signals were recorded for B38-plans-and-batches scope (retro synthesis returned 0 signals). This is itself a signal: the batch's features completed with no recorded observations about workflow friction, tool gaps, or things that worked well. For a batch of this size and complexity (10 features spanning a foundational entity model change), the absence of recorded retro signals suggests the retrospective contribution step was skipped during individual feature completion.
+One workflow signal was captured from the B38 implementation period: writing Go source files from worktree sub-agents is significantly complicated by shell/Python/Go triple-escaping; the `write_file` MCP tool should be the primary recommendation in `implement-task SKILL.md`. No other signals were recorded. For a batch spanning 10 features and a foundational entity model change, the low signal count suggests retrospective contribution was not consistently observed during feature completion.
 
 ## Batch Verdict
 
-**fail** — 4 blocking conformance gaps (CG-1 through CG-4) prevent batch closure:
+**fail** — 4 blocking conformance gaps (CG-1 through CG-4) prevent batch closure.
 
-1. **B38-F8 (State File Migration)**: Spec is draft. Zero tasks. No implementation exists. This feature cannot be in `reviewing` — it hasn't been specified, planned, or developed.
-2. **B38-F1 (Config Schema)**: Branch has merge conflicts with main. Cannot be merged until resolved.
+### Summary of blocking issues
 
-### Resolution Path
+1. **B38-F8 (State File Migration):** Spec is draft; 0 tasks; no implementation evidence. The feature appears to have been staged into `reviewing` via lifecycle overrides without any actual work being done. Resolution options: (a) supersede this feature — document that state-file migration was subsumed by B38-F9 (Work Tree Migration), which already handles the migration — or (b) approve the spec, create tasks, implement, and review.
 
-1. **B38-F8**: Either (a) approve the spec, create tasks, implement, and review the feature; or (b) if the work is truly covered by B38-F9 (Work Tree Migration) + B38-F10 (superseded), then supersede this feature with a documented rationale.
-2. **B38-F1**: Rebase the feature branch onto main and resolve merge conflicts, then re-verify.
-3. **B38-F9**: Rebase onto main (23 commits behind), clean up the stale/merged worktree, then run the feature review stage.
-4. After all 3 reviewing features reach `done`, re-run this batch review.
+2. **B38-F1 (Config Schema):** Branch has merge conflicts with main. All 4 tasks are done and spec is approved; the only blocking issue is the unresolved merge conflict. Resolution: rebase the branch onto main, resolve conflicts, re-verify tests pass.
+
+### Resolution path to `done`
+
+1. **B38-F8:** Supersede with documented rationale that state-file migration work was completed as part of B38-F9, OR approve spec, create tasks, implement, and review.
+2. **B38-F1:** Rebase `feature/FEAT-01KQ7YQK6DDDA-config-schema-project-singleton` onto main, resolve conflicts, verify tests, advance to `done`.
+3. **B38-F9:** Advance feature lifecycle `reviewing → done` (branch is already on main). Clean up the two stale worktrees.
+4. **Batch:** Once all 3 features reach a terminal state, re-run this batch review. The 6 `done` features and the 1 `superseded` feature are conformance-clean.
 
 ## Evidence
 
-- Batch entity: `entity(action: "get", id: "B38-plans-and-batches", type: "batch")`
+- Batch entity: `entity(action: "get", id: "B38-plans-and-batches")`
 - Feature list: `entity(action: "list", type: "feature", parent: "B38-plans-and-batches")` → 10 features
-- Health check: `health()` — merge conflict on FEAT-01KQ7YQK6DDDA, 8 TTL-expired knowledge entries
-- Retro synthesis: `retro(action: "synthesise", scope: "B38-plans-and-batches")` → 0 signals
-- Worktrees: `worktree(action: "list", status: "active")` → 4 active for B38 features
-- Branch status: F1 has merge conflicts; F9 is 23 commits behind main
+- Spec statuses: F9 approved, F1 approved, F8 draft
+- Task verification: F9 5/5 done; F1 4/4 done; F8 0 tasks
+- Health check: merge conflict on FEAT-01KQ7YQK6DDDA (error); branch-merged warning on FEAT-01KQ7JDT511BZ; 2 stale worktrees; 9 TTL-expired knowledge entries
+- Retro synthesis (project scope, since 2026-04-27): 1 signal (tool-friction, worktree file writing)
+- Worktrees: `worktree(action: "list", status: "active")` → 4 active (F1, F9 ×2, F10-superseded)

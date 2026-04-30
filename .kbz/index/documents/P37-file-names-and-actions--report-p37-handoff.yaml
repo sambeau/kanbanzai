@@ -268,8 +268,8 @@ conventional_roles:
     - section_path: 1.3.1
       role: constraint
       confidence: high
-access_count: 7
-last_accessed_at: 2026-04-27T20:29:34.344409Z
+access_count: 17
+last_accessed_at: 2026-04-30T10:22:05.843427Z
 section_access:
     1.4.3:
         access_count: 2
