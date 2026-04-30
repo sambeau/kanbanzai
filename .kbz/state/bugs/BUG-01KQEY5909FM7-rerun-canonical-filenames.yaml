@@ -1,0 +1,11 @@
+id: BUG-01KQEY5909FM7
+slug: rerun-canonical-filenames
+name: Rerun filenames project-wide to canonical form
+status: reported
+severity: low
+priority: medium
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-04-30T10:15:11Z"
+observed: "After BUG-01KQEWZ8YJ1FN is fixed, the kanbanzai project itself will have a mix of old (redundant) and new (canonical) filenames. Additionally, many pre-P37 documents were created before the canonical filename template existed and may use older conventions (type-first folders like work/design/, work/spec/, work/plan/, or inconsistent naming patterns). The project should be fully self-consistent as a reference implementation — eating our own dogfood."
+expected: "All work documents in the kanbanzai project follow the canonical filename template:\n\nPlan-level: P{n}-{type}[-{slug}].md\nFeature-level: P{n}-F{m}-{type}[-{slug}].md\n\nEach identifier appears exactly once. Plan IDs use P{n} (not B{n}). Documents live in their correct plan-scoped folders (work/P{n}-{slug}/). Project-level documents live in work/_project/. The kanbanzai project itself serves as a reference example of correct Kanbanzai layout for other projects to follow."

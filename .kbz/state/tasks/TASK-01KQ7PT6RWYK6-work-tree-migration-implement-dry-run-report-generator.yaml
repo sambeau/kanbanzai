@@ -3,6 +3,10 @@ parent_feature: FEAT-01KQ7JDT511BZ
 slug: work-tree-migration-implement-dry-run-report-generator
 name: Implement dry-run report generator
 summary: Implement dry-run report generator
-status: ready
+status: active
 depends_on:
   - TASK-01KQ7PT6RKW3P
+claimed_at: "2026-04-30T10:08:56Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T10:08:56Z"
+dispatched_by: sambeau
