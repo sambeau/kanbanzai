@@ -1,0 +1,123 @@
+document_id: PROJECT/report-p40-report-retro-agent-session-experience
+document_path: work/P40-retro-batch-april-2026/P40-report-retro-agent-session-experience.md
+content_hash: 21de46b9b34d74d2d9fd5c7c8b13540042ead92833a4a3280ea768fad1b84303
+indexed_at: 2026-04-30T19:26:53.302834Z
+sections:
+    - path: "1"
+      level: 1
+      title: Retrospective Report 3 — Agent Session Experience
+      byte_offset: 0
+      byte_count: 6308
+      word_count: 898
+      content_hash: 21de46b9b34d74d2d9fd5c7c8b13540042ead92833a4a3280ea768fad1b84303
+      children:
+        - path: "1.1"
+          level: 2
+          title: Research Question
+          byte_offset: 271
+          byte_count: 293
+          word_count: 44
+          content_hash: cfb63f988590c50ecd4b76c69a3341b87f5d6bb1c74ecdee1a120c4081c0537a
+        - path: "1.2"
+          level: 2
+          title: Scope and Methodology
+          byte_offset: 564
+          byte_count: 510
+          word_count: 64
+          content_hash: f8d7f4d9faa60515d2a9c46c386b148529bf8b0f67b8def94cda107946e3b720
+        - path: "1.3"
+          level: 2
+          title: Findings
+          byte_offset: 1074
+          byte_count: 4131
+          word_count: 595
+          content_hash: d16c62b5c9d519d10a9b162e6a9d910326b78807661478510ddd1d70fbe5842e
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Finding 1: Orientation flow is smooth and discoverable'
+              byte_offset: 1087
+              byte_count: 690
+              word_count: 97
+              content_hash: a58e3eac7b2bfd476bce7dc2dcb71794ac670b16aeb5f7ffbd07261e7b20cfb8
+            - path: 1.3.2
+              level: 3
+              title: 'Finding 2: Stage binding prerequisite enforcement is clear but creates a sequencing puzzle'
+              byte_offset: 1777
+              byte_count: 1350
+              word_count: 198
+              content_hash: 0d4419c7c9b4f8747615f311157dea2e881d400426763163166ce0503b4bdeb4
+            - path: 1.3.3
+              level: 3
+              title: 'Finding 3: Document audit reveals corpus hygiene gaps'
+              byte_offset: 3127
+              byte_count: 923
+              word_count: 126
+              content_hash: 0ee927e65fe761d1a9f95cf09d8f8fd2797c60725637df68fc30b08a82ec25c9
+            - path: 1.3.4
+              level: 3
+              title: 'Finding 4: Bug status tracking has a stale-attention problem'
+              byte_offset: 4050
+              byte_count: 481
+              word_count: 67
+              content_hash: 4b2dba435c1b0ecb9821f913b4cb67e8834b47555745df0df1eef6a0697fede2
+            - path: 1.3.5
+              level: 3
+              title: 'Finding 5: Project overview is dense but scannable'
+              byte_offset: 4531
+              byte_count: 674
+              word_count: 105
+              content_hash: 14bb2a2356e718d4e608f5e456359460690393cfafa45973cc7e46cba64d0204
+        - path: "1.4"
+          level: 2
+          title: Recommendations
+          byte_offset: 5205
+          byte_count: 662
+          word_count: 101
+          content_hash: 0e5e074ec3d26ea8c321ba3fb6fbad52a351c2dd602fba70fadd4fac794a4988
+        - path: "1.5"
+          level: 2
+          title: Limitations
+          byte_offset: 5867
+          byte_count: 441
+          word_count: 62
+          content_hash: 0a62410765153c4f11ba2e4cef251f042bd410728fec33f83a0d4123af839dab
+entity_refs:
+    - entity_id: BUG-01KQB
+      entity_type: bug
+      section_path: 1.3.4
+      byte_offset: 4142
+    - entity_id: BUG-01KQF
+      entity_type: bug
+      section_path: 1.3.4
+      byte_offset: 4167
+    - entity_id: B36-kbz-cli-and-status
+      entity_type: plan
+      section_path: 1.3.2
+      byte_offset: 2764
+cross_doc_links:
+    - target_path: work/_project/design-kbz-cli-and-binary-rename.md
+      link_text: work/_project/design-kbz-cli-and-binary-rename.md
+      section_path: 1.3.2
+    - target_path: work/plan/P10-*.md
+      link_text: work/plan/P10-*.md
+      section_path: 1.3.3
+    - target_path: work/reviews/review-P38-*.md
+      link_text: work/reviews/review-P38-*.md
+      section_path: 1.3.3
+    - target_path: docs/orchestration-and-knowledge.md
+      link_text: docs/orchestration-and-knowledge.md
+      section_path: 1.3.3
+conventional_roles:
+    - section_path: "1.1"
+      role: question
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.5
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-30T19:26:53.787339Z
+classified: false
