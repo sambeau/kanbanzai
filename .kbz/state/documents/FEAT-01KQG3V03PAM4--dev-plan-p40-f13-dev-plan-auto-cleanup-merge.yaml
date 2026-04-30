@@ -1,10 +1,12 @@
-content_hash: d6de6cc524b16310de362cbeddd737ee0bfb7fed4d092fe71bf4f88830f54ef8
+approved_at: "2026-04-30T21:15:48Z"
+approved_by: sambeau
+content_hash: 88f5cbcc98ced37a0c9c8b358b9749750423688211da80207cd83b506f1b59ac
 created: "2026-04-30T21:15:37Z"
 created_by: sambeau
 id: FEAT-01KQG3V03PAM4/dev-plan-p40-f13-dev-plan-auto-cleanup-merge
 owner: FEAT-01KQG3V03PAM4
 path: work/P40-retro-batch-april-2026/P40-F13-dev-plan-auto-cleanup-merge.md
-status: draft
+status: approved
 title: "Dev-Plan: Auto-Schedule Cleanup on Merge (B42-F3)"
 type: dev-plan
-updated: "2026-04-30T21:15:37Z"
+updated: "2026-04-30T21:15:48Z"

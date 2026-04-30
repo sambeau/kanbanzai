@@ -1,10 +1,12 @@
-content_hash: 327f3b40ccf9af786de5f9d99410fd213f6f379ddcf7f59b2107c8c40a12f3b3
+approved_at: "2026-04-30T21:15:48Z"
+approved_by: sambeau
+content_hash: 573def952989b683113e6be844064a1cd4599c318491dbd13b056d4eb144d747
 created: "2026-04-30T21:15:37Z"
 created_by: sambeau
 id: FEAT-01KQG3V06KNZG/dev-plan-p40-f14-dev-plan-validate-worktree-ids
 owner: FEAT-01KQG3V06KNZG
 path: work/P40-retro-batch-april-2026/P40-F14-dev-plan-validate-worktree-ids.md
-status: draft
+status: approved
 title: "Dev-Plan: Validate Entity IDs at Worktree Creation (B42-F4)"
 type: dev-plan
-updated: "2026-04-30T21:15:37Z"
+updated: "2026-04-30T21:15:48Z"

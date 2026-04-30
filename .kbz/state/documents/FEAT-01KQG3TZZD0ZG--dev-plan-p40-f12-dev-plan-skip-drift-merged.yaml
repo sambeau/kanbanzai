@@ -1,10 +1,12 @@
-content_hash: 0523a714adf4845610650737b6f6a474ce3a0f2cde2f2bf954e755111440b7df
+approved_at: "2026-04-30T21:15:48Z"
+approved_by: sambeau
+content_hash: 07277f295146c8a9827ae5d94419c007960893e71315ce91139d43cc600327ec
 created: "2026-04-30T21:15:37Z"
 created_by: sambeau
 id: FEAT-01KQG3TZZD0ZG/dev-plan-p40-f12-dev-plan-skip-drift-merged
 owner: FEAT-01KQG3TZZD0ZG
 path: work/P40-retro-batch-april-2026/P40-F12-dev-plan-skip-drift-merged.md
-status: draft
+status: approved
 title: "Dev-Plan: Skip Drift Alerts for Merged Branches (B42-F2)"
 type: dev-plan
-updated: "2026-04-30T21:15:37Z"
+updated: "2026-04-30T21:15:48Z"
