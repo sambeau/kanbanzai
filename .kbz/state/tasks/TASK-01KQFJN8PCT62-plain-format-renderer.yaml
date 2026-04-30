@@ -3,4 +3,8 @@ parent_feature: FEAT-01KQ2VHKJB5V8
 slug: plain-format-renderer
 name: Plain format renderer
 summary: "Implement PlainRenderer in internal/cli/status/plain.go. Consume service-layer synthesis structs, emit key:value pairs per FR-3–FR-7 spec schemas. Handle edge cases: missing for null values, registered:true/false on documents, single attention line (highest severity), none for empty attention."
-status: ready
+status: active
+claimed_at: "2026-04-30T16:16:40Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T16:16:40Z"
+dispatched_by: sambeau
