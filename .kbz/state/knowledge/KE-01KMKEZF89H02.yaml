@@ -3,10 +3,10 @@ content: "Error handling convention: service layer returns (result, error). MCP 
 created: "2026-03-25T21:38:58Z"
 created_by: sambeau
 id: KE-01KMKEZF89H02
-last_accessed_at: "2026-04-30T21:59:29Z"
+last_accessed_at: "2026-04-30T21:59:57Z"
 learned_from: P2-phase-1-kernel
 miss_count: 0
-recent_use_count: 197
+recent_use_count: 198
 scope: developer
 status: confirmed
 tags:
