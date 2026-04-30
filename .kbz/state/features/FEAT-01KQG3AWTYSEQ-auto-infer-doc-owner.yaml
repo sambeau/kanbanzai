@@ -1,0 +1,9 @@
+id: FEAT-01KQG3AWTYSEQ
+slug: auto-infer-doc-owner
+name: Auto-Infer Document Owner from Path Context
+parent: B41-fix-doc-ownership-lifecycle
+status: proposed
+summary: "When registering a document without explicit owner, extract the plan/batch slug from the file path and resolve it as the default owner instead of PROJECT/. Warn when path is already registered under a different owner. Addresses REQ-001, REQ-002, REQ-003, REQ-NF-001, AC-001 through AC-004, AC-011."
+created: "2026-04-30T21:04:52Z"
+created_by: sambeau
+display_id: B41-F1
