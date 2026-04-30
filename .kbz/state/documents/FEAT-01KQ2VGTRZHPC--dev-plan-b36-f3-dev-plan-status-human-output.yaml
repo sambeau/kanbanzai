@@ -1,10 +1,12 @@
-content_hash: 460b2cfb034dc4f256520b79e76409c4fce871bef431969c057cc37acdc7f0f1
+approved_at: "2026-04-30T14:28:35Z"
+approved_by: sambeau
+content_hash: d1fdd18d74b2685d775a85b645fa2722f70e0ed1eae317679cfd63577f86a4a3
 created: "2026-04-30T14:27:50Z"
 created_by: sambeau
 id: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output
 owner: FEAT-01KQ2VGTRZHPC
 path: work/plan/B36-F3-dev-plan-status-human-output.md
-status: draft
+status: approved
 title: "Dev Plan: Status command human output"
 type: dev-plan
-updated: "2026-04-30T14:27:50Z"
+updated: "2026-04-30T14:28:35Z"
