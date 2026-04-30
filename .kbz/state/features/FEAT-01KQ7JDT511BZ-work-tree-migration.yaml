@@ -2,7 +2,7 @@ id: FEAT-01KQ7JDT511BZ
 slug: work-tree-migration
 name: Work tree migration
 parent: B38-plans-and-batches
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Migration tooling for the 430 existing work files. Script reads document records, resolves owner to plan, computes target path using canonical template, emits kbz move commands. Triage report lists 28 unregistered files with recommended actions. Bulk migration executed in one atomic commit. Cleanup commit removes now-empty old type-first folders. Depends on F2 doc-type-and-filename-enforcement, F3 kbz-move, F4 kbz-delete."
 spec: FEAT-01KQ7JDT511BZ/specification-p37-f5-spec-work-tree-migration
@@ -13,6 +13,11 @@ overrides:
   -
     from_status: specifying
     reason: "Specs approved by human owner. Documents use equivalent Problem Statement / Requirements / Constraints headings rather than the required Overview / Scope / Functional Requirements / Non-Functional Requirements naming convention, but the content is complete and user-approved."
-    timestamp: "2026-04-27T15:10:42+01:00"
+    timestamp: "2026-04-30T13:36:45+01:00"
     to_status: dev-planning
+  -
+    from_status: reviewing
+    reason: Branch feature/FEAT-01KQ7JDT511BZ-work-tree-migration is confirmed merged to main (appears in git branch --merged main). The kbz migrate command is on main. Closing without re-running the merge gate since the merge already occurred.
+    timestamp: "2026-04-30T13:36:45+01:00"
+    to_status: done
 display_id: B38-F9
