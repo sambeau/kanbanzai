@@ -1,10 +1,12 @@
-content_hash: 7a75b55042e5c6dd809adb4dbd9f496a8348f23f49ae5b54e8e7cb9ea67cc986
+approved_at: "2026-04-30T20:43:05Z"
+approved_by: sambeau
+content_hash: 1cee4c4915def5e1ff8ed0122f9347bcabd7170993f3722a2bdded3aed8690b6
 created: "2026-04-30T20:42:56Z"
 created_by: sambeau
 id: FEAT-01KQG1XWE9ABP/dev-plan-p40-f2-dev-plan-edit-file-worktree
 owner: FEAT-01KQG1XWE9ABP
 path: work/P40-retro-batch-april-2026/P40-F2-dev-plan-edit-file-worktree.md
-status: draft
+status: approved
 title: "Dev-Plan: Make edit_file Worktree-Aware (B39-F2)"
 type: dev-plan
-updated: "2026-04-30T20:42:56Z"
+updated: "2026-04-30T20:43:05Z"
