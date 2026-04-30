@@ -159,15 +159,16 @@ func editFileTool(repoRoot string, worktreeStore *worktree.Store) server.ServerT
 
 				// Do fuzzy matching: try exact first, fall back to fuzzy.
 				idx := strings.Index(modified, oldText)
+				matchLen := len(oldText)
 				if idx < 0 {
 					// Fuzzy match: normalize whitespace and try again.
-					idx = fuzzyIndex(modified, oldText)
+					idx, matchLen = fuzzyMatch(modified, oldText)
 					if idx < 0 {
 						return inlineErr("edit_failed",
 							fmt.Sprintf("edit %d: could not find old_text in file (even with fuzzy matching)", i+1))
 					}
 				}
-				modified = modified[:idx] + newText + modified[idx+len(oldText):]
+				modified = modified[:idx] + newText + modified[idx+matchLen:]
 			}
 
 			// Write modifications back atomically.
@@ -176,9 +177,9 @@ func editFileTool(repoRoot string, worktreeStore *worktree.Store) server.ServerT
 			}
 
 			return map[string]any{
-				"path":             resolved,
-				"display":          display,
-				"edits_applied":    len(edits),
+				"path":          resolved,
+				"display":       display,
+				"edits_applied": len(edits),
 			}, nil
 		}
 
@@ -188,17 +189,47 @@ func editFileTool(repoRoot string, worktreeStore *worktree.Store) server.ServerT
 	return server.ServerTool{Tool: tool, Handler: handler}
 }
 
-// fuzzyIndex finds oldText in s with tolerance for whitespace differences.
-// It normalizes consecutive whitespace to a single space before matching.
-func fuzzyIndex(s, oldText string) int {
+// fuzzyMatch finds oldText in s with tolerance for whitespace differences.
+// It normalizes both strings, finds the match in normalized space, maps the
+// start and end positions back to the original string, and returns the start
+// position and match length in the original string.
+func fuzzyMatch(s, oldText string) (start, length int) {
 	normalized := normalizeWhitespace(s)
 	normalizedOld := normalizeWhitespace(oldText)
-	return strings.Index(normalized, normalizedOld)
+	nIdx := strings.Index(normalized, normalizedOld)
+	if nIdx < 0 {
+		return -1, 0
+	}
+	start = mapToOriginal(s, nIdx)
+	end := mapToOriginal(s, nIdx+len(normalizedOld))
+	return start, end - start
+}
+
+// mapToOriginal converts a position in the normalized string back to the
+// corresponding position in the original string.
+func mapToOriginal(original string, normalizedIdx int) int {
+	origIdx := 0
+	nIdx := 0
+	inSpace := false
+	for origIdx < len(original) && nIdx < normalizedIdx {
+		r := original[origIdx]
+		if r == ' ' || r == '\t' || r == '\n' || r == '\r' {
+			if !inSpace {
+				nIdx++
+				inSpace = true
+			}
+			origIdx++
+		} else {
+			nIdx++
+			origIdx++
+			inSpace = false
+		}
+	}
+	return origIdx
 }
 
 // normalizeWhitespace collapses consecutive whitespace characters (spaces, tabs,
-// newlines) into a single space and trims leading/trailing whitespace from each
-// line before joining.
+// newlines) into a single space.
 func normalizeWhitespace(s string) string {
 	var b strings.Builder
 	inSpace := false
