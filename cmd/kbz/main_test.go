@@ -934,6 +934,13 @@ func (f *fakeEntityService) HealthCheck() (*validate.HealthReport, error) {
 	}, nil
 }
 
+func (f *fakeEntityService) WorkQueue(input service.WorkQueueInput) (service.WorkQueueResult, error) {
+	return service.WorkQueueResult{
+		Queue:       []service.WorkQueueItem{},
+		TotalQueued: 0,
+	}, nil
+}
+
 func normalizeTestSlug(value string) string {
 	value = strings.TrimSpace(strings.ToLower(value))
 	value = strings.ReplaceAll(value, " ", "-")

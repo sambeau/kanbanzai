@@ -6,27 +6,209 @@ import (
 
 	"github.com/sambeau/kanbanzai/internal/core"
 	"github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/resolution"
 	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 // ─── status ──────────────────────────────────────────────────────────────────
 
+const statusUsageText = `Usage: kbz status [<target>] [options]
+
+Show project overview or entity status.
+
+Arguments:
+  <target>                Optional entity ID, plan prefix, or file path
+
+Options:
+  --format, -f <fmt>      Output format: human, plain, json (default: human)
+`
+
+var validStatusFormats = map[string]bool{
+	"human": true,
+	"plain": true,
+	"json":  true,
+}
+
+func validStatusFormatsList() string {
+	return "human, plain, json"
+}
+
 func runStatus(args []string, deps dependencies) error {
-	// Simple project overview: health check + queue summary.
-	if err := runHealth(deps); err != nil {
-		return err
+	var format string
+	var target string
+	var positionalCount int
+
+	// Parse args manually for --format/-f flag and positional target.
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+
+		// Handle --format=<value> and -f=<value> compact syntax.
+		if before, val, found := strings.Cut(a, "="); found {
+			switch before {
+			case "--format", "-f":
+				if format != "" {
+					return fmt.Errorf("--format specified more than once")
+				}
+				format = val
+				continue
+			default:
+				return fmt.Errorf("unknown flag %q\n\n%s", a, statusUsageText)
+			}
+		}
+
+		switch a {
+		case "--format", "-f":
+			if format != "" {
+				return fmt.Errorf("--format specified more than once")
+			}
+			if i+1 >= len(args) {
+				return fmt.Errorf("--format requires a value (human, plain, json)\n\n%s", statusUsageText)
+			}
+			i++
+			format = args[i]
+		default:
+			// Anything that starts with -- or - is an unknown flag.
+			if strings.HasPrefix(a, "--") || strings.HasPrefix(a, "-") {
+				return fmt.Errorf("unknown flag %q\n\n%s", a, statusUsageText)
+			}
+			// Positional argument.
+			positionalCount++
+			if positionalCount > 1 {
+				return fmt.Errorf("expected at most one target argument, got multiple\n\n%s", statusUsageText)
+			}
+			target = a
+		}
 	}
 
-	stateRoot := core.StatePath()
-	entitySvc := service.NewEntityService(stateRoot)
-	result, err := entitySvc.WorkQueue(service.WorkQueueInput{})
+	// Default format.
+	if format == "" {
+		format = "human"
+	}
+
+	// Validate format value.
+	if !validStatusFormats[format] {
+		return fmt.Errorf("invalid format %q — valid formats: %s", format, validStatusFormatsList())
+	}
+
+	// No target: project overview (existing behaviour).
+	if target == "" {
+		if err := runHealth(deps); err != nil {
+			return err
+		}
+
+		stateRoot := core.StatePath()
+		entitySvc := deps.newEntityService(stateRoot)
+		result, err := entitySvc.WorkQueue(service.WorkQueueInput{})
+		if err != nil {
+			return err
+		}
+
+		fmt.Fprintln(deps.stdout)
+		fmt.Fprintf(deps.stdout, "Work queue: %d ready, %d queued\n", len(result.Queue), result.TotalQueued)
+		return nil
+	}
+
+	// Target provided: disambiguate and route.
+	kind := resolution.Disambiguate(target)
+	switch kind {
+	case resolution.ResolveEntity:
+		return runStatusEntity(target, format, deps)
+	case resolution.ResolvePlanPrefix:
+		return runStatusPlanPrefix(target, format, deps)
+	case resolution.ResolvePath:
+		return runStatusPath(target, format, deps)
+	default:
+		// ResolveNone: try entity first, then path, then give up.
+		return fmt.Errorf("unrecognised target %q — not an entity ID, plan prefix, or file path", target)
+	}
+}
+
+// deriveEntityType extracts the entity type string from a target by inspecting
+// its prefix. Returns "" if the prefix is unrecognised.
+func deriveEntityType(target string) string {
+	// Strip the leading prefix (e.g. "FEAT-042" -> "FEAT").
+	idx := strings.Index(target, "-")
+	if idx <= 0 {
+		return ""
+	}
+	prefix := target[:idx]
+
+	// Map to entity type string used by the service layer.
+	kind, err := id.EntityKindFromPrefix(prefix)
 	if err != nil {
-		return err
+		return ""
+	}
+	return string(kind)
+}
+
+// runStatusEntity shows status for a resolved entity target.
+// Stub rendering — full rendering is the job of F3/F4.
+func runStatusEntity(target, format string, deps dependencies) error {
+	stateRoot := core.StatePath()
+	entitySvc := deps.newEntityService(stateRoot)
+
+	entityType := deriveEntityType(target)
+	if entityType == "" {
+		return fmt.Errorf("cannot determine entity type for target %q", target)
 	}
 
-	fmt.Fprintln(deps.stdout)
-	fmt.Fprintf(deps.stdout, "Work queue: %d ready, %d queued\n", len(result.Queue), result.TotalQueued)
-	return nil
+	result, err := entitySvc.Get(entityType, target, "")
+	if err != nil {
+		return fmt.Errorf("entity not found: %s: %w", target, err)
+	}
+
+	status, _ := result.State["status"].(string)
+	switch format {
+	case "json":
+		_, err = fmt.Fprintf(deps.stdout, `{"entity":%q,"status":%q,"format":"json"}
+`, target, status)
+	case "plain":
+		_, err = fmt.Fprintf(deps.stdout, "%s: %s\n", target, status)
+	default:
+		_, err = fmt.Fprintf(deps.stdout, "Entity: %s\nStatus: %s\n", target, status)
+	}
+	return err
+}
+
+// runStatusPlanPrefix shows status for a bare plan prefix (e.g. "P1").
+// Stub rendering — full rendering is the job of F3/F4.
+func runStatusPlanPrefix(target, format string, deps dependencies) error {
+	stateRoot := core.StatePath()
+	entitySvc := deps.newEntityService(stateRoot)
+
+	result, err := entitySvc.GetPlan(target)
+	if err != nil {
+		return fmt.Errorf("plan not found for prefix %q: %w", target, err)
+	}
+
+	status, _ := result.State["status"].(string)
+	switch format {
+	case "json":
+		_, err = fmt.Fprintf(deps.stdout, `{"plan_prefix":%q,"plan_id":%q,"status":%q,"format":"json"}
+`, target, result.ID, status)
+	case "plain":
+		_, err = fmt.Fprintf(deps.stdout, "%s → %s: %s\n", target, result.ID, status)
+	default:
+		_, err = fmt.Fprintf(deps.stdout, "Plan prefix: %s\nResolved to: %s\nStatus: %s\n", target, result.ID, status)
+	}
+	return err
+}
+
+// runStatusPath shows status for a file path target.
+// Stub rendering — full rendering is the job of F3/F4.
+func runStatusPath(target, format string, deps dependencies) error {
+	switch format {
+	case "json":
+		_, err := fmt.Fprintf(deps.stdout, `{"path":%q,"kind":"file","format":"json"}
+`, target)
+		return err
+	case "plain":
+		_, err := fmt.Fprintf(deps.stdout, "path: %s\n", target)
+		return err
+	default:
+		_, err := fmt.Fprintf(deps.stdout, "Path: %s (file path resolution — full rendering TBD)\n", target)
+		return err
+	}
 }
 
 // ─── next ────────────────────────────────────────────────────────────────────

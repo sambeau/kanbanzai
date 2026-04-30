@@ -40,6 +40,7 @@ type entityService interface {
 	HealthCheck() (*validate.HealthReport, error)
 	RebuildCache() (int, error)
 	SetCache(c *cache.Cache)
+	WorkQueue(service.WorkQueueInput) (service.WorkQueueResult, error)
 }
 
 type dependencies struct {
