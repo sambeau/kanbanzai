@@ -3,10 +3,10 @@ content: "[moderate] worked-well: Sub-agent parallelism with disjoint file scope
 created: "2026-04-02T00:46:34Z"
 created_by: unknown
 id: KE-01KN5TFZZAQKD
-last_accessed_at: "2026-04-30T12:25:12Z"
+last_accessed_at: "2026-04-30T14:05:19Z"
 learned_from: TASK-01KN5AJRS26YW
 miss_count: 0
-recent_use_count: 168
+recent_use_count: 169
 scope: project
 status: contributed
 tags:
