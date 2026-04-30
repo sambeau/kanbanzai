@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQG3AWZ3HEZ
 slug: merge-gate-bypassable-field
 name: Add bypassable field and tests
 summary: "Add bypassable: bool to merge check gate results. Hard gates false, soft gates true. Write test asserting review_report_exists is false. Single task with tests. Addresses REQ-006, REQ-NF-002, AC-007."
-status: queued
+status: ready

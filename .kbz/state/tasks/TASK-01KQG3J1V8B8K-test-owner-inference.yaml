@@ -3,4 +3,6 @@ parent_feature: FEAT-01KQG3AWTYSEQ
 slug: test-owner-inference
 name: Write tests for owner inference
 summary: "Tests: batch folder owner, explicit owner precedence, path conflict warning, unresolvable fallback, single cache read. Depends on T1. Addresses AC-001 through AC-004, AC-011."
-status: queued
+status: ready
+depends_on:
+  - TASK-01KQG3J1RG3J3

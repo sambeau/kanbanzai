@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQG3AWX916X
 slug: change-scope-detection
 name: Implement change-scope detection and tests
 summary: "On doc refresh, compare old/new content. Preserve approval for formatting-only changes. Warn and reset for substantive changes. Single task with tests. Addresses REQ-004, REQ-005, AC-005, AC-006."
-status: queued
+status: ready
