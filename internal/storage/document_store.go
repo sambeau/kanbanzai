@@ -240,6 +240,70 @@ func ComputeContentHash(path string) (string, error) {
 	return hex.EncodeToString(h.Sum(nil)), nil
 }
 
+// ComputeCanonicalContentHash computes a SHA-256 hash of the file's content after
+// whitespace normalisation. Lines are trimmed of trailing whitespace, leading
+// whitespace is collapsed, and blank lines are normalised. This hash is stable
+// under formatting-only changes.
+func ComputeCanonicalContentHash(path string) (string, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", fmt.Errorf("read file for canonical hashing: %w", err)
+	}
+	normalised := normaliseWhitespace(string(data))
+	h := sha256.New()
+	if _, err := io.WriteString(h, normalised); err != nil {
+		return "", fmt.Errorf("hash normalised content: %w", err)
+	}
+	return hex.EncodeToString(h.Sum(nil)), nil
+}
+
+// normaliseWhitespace normalises whitespace in text content:
+// - Trims trailing whitespace from each line
+// - Collapses multiple leading spaces/tabs into a single space
+// - Normalises blank lines (any sequence of blank lines becomes a single \n)
+// This produces a canonical representation that is stable under
+// formatting-only changes.
+func normaliseWhitespace(content string) string {
+	lines := strings.Split(content, "\n")
+	var out []string
+
+	for _, line := range lines {
+		// Trim trailing whitespace and replace leading whitespace with a single space
+		trimmed := strings.TrimRight(line, " \t\r")
+		if strings.TrimSpace(trimmed) == "" {
+			// Blank line: normalise to empty string
+			out = append(out, "")
+		} else {
+			// Collapse leading whitespace: count leading spaces, replace with one space
+			stripped := strings.TrimLeft(trimmed, " \t")
+			if stripped != trimmed {
+				// Had leading whitespace, add a single space prefix
+				out = append(out, " "+stripped)
+			} else {
+				out = append(out, trimmed)
+			}
+		}
+	}
+
+	// Collapse consecutive blank lines: any run of empty strings becomes a single empty string
+	var collapsed []string
+	prevBlank := false
+	for _, line := range out {
+		isBlank := line == ""
+		if isBlank {
+			if !prevBlank {
+				collapsed = append(collapsed, line)
+			}
+			prevBlank = true
+		} else {
+			collapsed = append(collapsed, line)
+			prevBlank = false
+		}
+	}
+
+	return strings.Join(collapsed, "\n")
+}
+
 // GetFileMtime returns the modification time of a file.
 func GetFileMtime(path string) (time.Time, error) {
 	info, err := os.Stat(path)
@@ -299,6 +363,10 @@ func DocumentToRecord(doc model.DocumentRecord, fileHash string) DocumentRecord 
 	}
 
 	fields["content_hash"] = doc.ContentHash
+
+	if doc.CanonicalContentHash != "" {
+		fields["canonical_content_hash"] = doc.CanonicalContentHash
+	}
 
 	if doc.Supersedes != "" {
 		fields["supersedes"] = doc.Supersedes
@@ -364,6 +432,9 @@ func RecordToDocument(record DocumentRecord) model.DocumentRecord {
 	}
 	if v, ok := record.Fields["content_hash"].(string); ok {
 		doc.ContentHash = v
+	}
+	if v, ok := record.Fields["canonical_content_hash"].(string); ok {
+		doc.CanonicalContentHash = v
 	}
 	if v, ok := record.Fields["supersedes"].(string); ok {
 		doc.Supersedes = v

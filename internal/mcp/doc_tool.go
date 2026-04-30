@@ -842,6 +842,7 @@ func docRefreshAction(docSvc *service.DocumentService) ActionHandler {
 			"new_hash":          result.NewHash,
 			"status":            result.Status,
 			"status_transition": result.StatusTransition,
+			"message":           result.Message,
 		}, nil
 	}
 }
