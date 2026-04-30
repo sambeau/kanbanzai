@@ -3,6 +3,13 @@ parent_feature: FEAT-01KQ7JDT511BZ
 slug: work-tree-migration-implement-execute-cleanup-mode
 name: Implement --execute --cleanup mode
 summary: Implement --execute --cleanup mode
-status: ready
+status: done
 depends_on:
   - TASK-01KQ7PT6RYVHN
+completed: "2026-04-30T10:21:58Z"
+claimed_at: "2026-04-30T10:21:51Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T10:21:51Z"
+dispatched_by: sambeau
+completion_summary: "Implemented --cleanup mode (T4) alongside T3 in same commit. cleanupEmptyFolders scans legacy type-first directories, removes empty ones via git rm -r, and commits with message 'chore(work): remove empty legacy type-first folders'. Skips gracefully if no empty dirs."
+verification: go build ./cmd/kanbanzai/ passes. All 15 migrate unit tests pass.
