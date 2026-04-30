@@ -3,8 +3,16 @@ parent_feature: FEAT-01KQ2VHKJB5V8
 slug: plain-format-renderer
 name: Plain format renderer
 summary: "Implement PlainRenderer in internal/cli/status/plain.go. Consume service-layer synthesis structs, emit key:value pairs per FR-3–FR-7 spec schemas. Handle edge cases: missing for null values, registered:true/false on documents, single attention line (highest severity), none for empty attention."
-status: active
+status: done
+files_planned:
+  - internal/cli/status/plain.go
+  - internal/cli/status/plain_test.go
+  - internal/mcp/status_tool.go
+  - internal/mcp/status_tool_test.go
+completed: "2026-04-30T16:30:10Z"
 claimed_at: "2026-04-30T16:16:40Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-30T16:16:40Z"
 dispatched_by: sambeau
+completion_summary: "Implemented PlainRenderer with six per-scope methods consuming exported synthesis types from internal/mcp. Exported all types (FeatureDetail, ProjectOverview, PlanDashboard, TaskDetail, BugDetail, and embedded types). Renamed batchSummary→StatusBatchSummary to avoid conflict. Handled edge cases: missing sentinel, registered:true/false, attention:none, nil health defaults. Tests cover all scope types, edge cases, and FR-3 line ordering."
+verification: "go build ./... (clean), go vet (clean), go test ./internal/cli/status/... -v -count=1 (all 18 subtests pass including TestRenderFeature_LineOrder)"
