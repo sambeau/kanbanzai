@@ -8,7 +8,7 @@ import (
 )
 
 // mcpVersion is the current schema version for both .mcp.json and .zed/settings.json.
-const mcpVersion = 1
+const mcpVersion = 2
 
 // managedBlock is the _managed metadata written to both MCP config files.
 type managedBlock struct {
@@ -92,7 +92,7 @@ func (i *Initializer) writeMCPConfig(baseDir string) error {
 	content := mcpConfig{
 		Managed: managedBlock{Tool: "kanbanzai", Version: mcpVersion},
 		MCPServers: map[string]mcpServer{
-			"kanbanzai": {Command: "kanbanzai", Args: []string{"serve"}},
+			"kanbanzai": {Command: "kbz", Args: []string{"serve"}},
 		},
 	}
 
@@ -134,7 +134,7 @@ func (i *Initializer) writeZedConfig(baseDir string, createIfAbsent bool) error 
 
 	content := zedConfig{
 		ContextServers: map[string]zedContextServer{
-			"kanbanzai": {Command: "kanbanzai", Args: []string{"serve"}},
+			"kanbanzai": {Command: "kbz", Args: []string{"serve"}},
 		},
 		Agent: &zedAgentConfig{
 			ToolPermissions: &zedToolPermissions{

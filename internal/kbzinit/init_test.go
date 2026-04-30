@@ -1068,8 +1068,8 @@ func TestInit_WritesMcpJson(t *testing.T) {
 	if !ok {
 		t.Fatal("missing mcpServers.kanbanzai")
 	}
-	if kbz["command"] != "kanbanzai" {
-		t.Errorf("command = %v, want kanbanzai", kbz["command"])
+	if kbz["command"] != "kbz" {
+		t.Errorf("command = %v, want kbz", kbz["command"])
 	}
 }
 
