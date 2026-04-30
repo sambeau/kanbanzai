@@ -2,7 +2,7 @@ id: FEAT-01KQ2VHKJB5V8
 slug: status-machine-output
 name: Status command machine output formats
 parent: B36-kbz-cli-and-status
-status: proposed
+status: specifying
 summary: "Implement --format plain and --format json for kbz status. Plain: stable key:value output for shell scripts and pre-commit hooks, including the registered:false key for unregistered documents. JSON: results-array wrapper for entity/document queries (forward-compatible with multi-target); distinct scope:project shape for project overview with summary counts and no full feature list. Schema must be stable within a major version."
 design: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename
 created: "2026-04-25T17:38:36Z"
