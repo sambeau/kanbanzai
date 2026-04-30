@@ -3,8 +3,17 @@ parent_feature: FEAT-01KQ2VHKJB5V8
 slug: schema-stability-contract-test
 name: Schema stability contract test
 summary: "Implement contract test that enumerates all required plain keys (FR-3 through FR-7) and JSON fields (FR-9 through FR-10), then asserts their presence in each scope type's output. Seeds a minimal project, runs kbz status with both formats for all scopes, verifies all keys/fields present. Must run in CI. Deliverable: internal/cli/status/contract_test.go."
-status: ready
+status: done
 estimate: "2"
 depends_on:
-  - TASK-01KQFCZ3AZTTQ
-  - TASK-01KQFCZ3AWCSX
+  - TASK-01KQFJN8PCT62
+  - TASK-01KQFJNHR4YKZ
+files_planned:
+  - internal/cli/status/contract_test.go
+completed: "2026-04-30T17:09:14Z"
+claimed_at: "2026-04-30T17:04:07Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T17:04:07Z"
+dispatched_by: sambeau
+completion_summary: "Added contract_test.go with 10 tests covering schema stability for both PlainRenderer and JSONRenderer across all scope types (feature, plan, document, project). Tests assert required keys are present in plain output and required JSON fields in structured output, verify the project scope uses the D-8 top-level shape (not results wrapper), and confirm entity scopes use the results array wrapper."
+verification: "go test ./internal/cli/status/... -v -count=1: all 31 tests pass (10 new contract tests + 21 existing)"
