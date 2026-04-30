@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"strings"
 	"testing"
 )
@@ -237,38 +238,106 @@ func TestRunStatus_PlanPrefixTarget_JSONFormat(t *testing.T) {
 	}
 }
 
-func TestRunStatus_FilePathTarget_DisambiguatesAndRoutes(t *testing.T) {
+// ─── File path resolution tests ──────────────────────────────────────────────
+
+func TestRunStatus_FilePathTarget_NonexistentFile(t *testing.T) {
 	fake := newFakeEntityService()
-	deps, output := testDependenciesWithService(fake)
+	deps, _ := testDependenciesWithService(fake)
 
-	err := runStatus([]string{"work/design/foo.md"}, deps)
-	if err != nil {
-		t.Fatalf("runStatus(work/design/foo.md) error = %v", err)
+	err := runStatus([]string{"work/design/nonexistent.md"}, deps)
+	if err == nil {
+		t.Fatal("runStatus(work/design/nonexistent.md) error = nil, want non-nil")
 	}
-
-	stdout := output.String()
-	if !strings.Contains(stdout, "Path: work/design/foo.md") {
-		t.Fatalf("stdout missing path output:\n%s", stdout)
+	if !strings.Contains(err.Error(), "file not found") {
+		t.Fatalf("error missing 'file not found': %v", err)
 	}
 }
 
-func TestRunStatus_FilePathTarget_JSONFormat(t *testing.T) {
+func TestRunStatus_FilePathTarget_UnregisteredFile(t *testing.T) {
+	tmpDir := t.TempDir()
+	origDir, _ := os.Getwd()
+	defer os.Chdir(origDir)
+	os.Chdir(tmpDir)
+
+	f, err := os.Create("unregistered.md")
+	if err != nil {
+		t.Fatal(err)
+	}
+	f.Close()
+
 	fake := newFakeEntityService()
 	deps, output := testDependenciesWithService(fake)
 
-	err := runStatus([]string{"notes.txt", "--format", "json"}, deps)
+	err = runStatus([]string{"unregistered.md"}, deps)
 	if err != nil {
-		t.Fatalf("runStatus(notes.txt --format json) error = %v", err)
+		t.Fatalf("runStatus(unregistered.md) error = %v", err)
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, `"kind":"file"`) {
-		t.Fatalf("stdout missing file kind:\n%s", stdout)
+	if !strings.Contains(stdout, "not registered") {
+		t.Fatalf("stdout missing 'not registered':\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "kbz doc register") {
+		t.Fatalf("stdout missing register suggestion:\n%s", stdout)
+	}
+}
+
+func TestRunStatus_FilePathTarget_UnregisteredFile_DotSlashPrefix(t *testing.T) {
+	tmpDir := t.TempDir()
+	origDir, _ := os.Getwd()
+	defer os.Chdir(origDir)
+	os.Chdir(tmpDir)
+
+	f, err := os.Create("unregistered.md")
+	if err != nil {
+		t.Fatal(err)
+	}
+	f.Close()
+
+	fake := newFakeEntityService()
+	deps, output := testDependenciesWithService(fake)
+
+	err = runStatus([]string{"./unregistered.md"}, deps)
+	if err != nil {
+		t.Fatalf("runStatus(./unregistered.md) error = %v", err)
+	}
+
+	stdout := output.String()
+	if !strings.Contains(stdout, "not registered") {
+		t.Fatalf("stdout missing 'not registered' for ./ prefix:\n%s", stdout)
+	}
+}
+
+func TestRunStatus_FilePathTarget_UnregisteredFile_JSONFormat(t *testing.T) {
+	tmpDir := t.TempDir()
+	origDir, _ := os.Getwd()
+	defer os.Chdir(origDir)
+	os.Chdir(tmpDir)
+
+	f, err := os.Create("unregistered.md")
+	if err != nil {
+		t.Fatal(err)
+	}
+	f.Close()
+
+	fake := newFakeEntityService()
+	deps, output := testDependenciesWithService(fake)
+
+	err = runStatus([]string{"unregistered.md", "--format", "json"}, deps)
+	if err != nil {
+		t.Fatalf("runStatus(unregistered.md --format json) error = %v", err)
+	}
+
+	stdout := output.String()
+	if !strings.Contains(stdout, `"registered":false`) {
+		t.Fatalf("stdout missing registered:false:\n%s", stdout)
 	}
 	if !strings.Contains(stdout, `"format":"json"`) {
 		t.Fatalf("stdout missing json format:\n%s", stdout)
 	}
 }
+
+// ─── End file path resolution tests ──────────────────────────────────────────
 
 func TestRunStatus_UnrecognisedTarget_ReturnsError(t *testing.T) {
 	fake := newFakeEntityService()

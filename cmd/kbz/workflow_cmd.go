@@ -1,7 +1,10 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/sambeau/kanbanzai/internal/core"
@@ -195,20 +198,114 @@ func runStatusPlanPrefix(target, format string, deps dependencies) error {
 }
 
 // runStatusPath shows status for a file path target.
-// Stub rendering — full rendering is the job of F3/F4.
+//
+// Behaviour (per AC-008 through AC-012):
+//   - Nonexistent file → exit 1 with "file not found"
+//   - Unregistered file (exists on disk, no document record) → exit 0 with
+//     "not registered" message + suggested kbz doc register command
+//   - Registered file with owner → doc view + entity view
+//   - Registered file without owner → doc view only
+//   - Leading "./" prefix is normalised away before lookup
 func runStatusPath(target, format string, deps dependencies) error {
-	switch format {
-	case "json":
-		_, err := fmt.Fprintf(deps.stdout, `{"path":%q,"kind":"file","format":"json"}
-`, target)
-		return err
-	case "plain":
-		_, err := fmt.Fprintf(deps.stdout, "path: %s\n", target)
-		return err
-	default:
-		_, err := fmt.Fprintf(deps.stdout, "Path: %s (file path resolution — full rendering TBD)\n", target)
+	// Normalise the path: strip "./" prefix for file-existence check.
+	normalised := strings.TrimPrefix(target, "./")
+
+	// Check file exists on disk.
+	fullPath := filepath.Join(".", normalised)
+	if _, err := os.Stat(fullPath); os.IsNotExist(err) {
+		return fmt.Errorf("file not found: %s", target)
+	}
+
+	stateRoot := core.StatePath()
+	repoRoot := "."
+	docSvc := service.NewDocumentService(stateRoot, repoRoot)
+
+	// Strip "./" again for the service call (idempotent, but explicit).
+	lookupPath := strings.TrimPrefix(target, "./")
+	doc, err := docSvc.LookupByPath(context.Background(), lookupPath)
+	if err != nil {
+		return fmt.Errorf("lookup document: %w", err)
+	}
+
+	// Unregistered file case.
+	if doc.ID == "" {
+		switch format {
+		case "json":
+			_, err = fmt.Fprintf(deps.stdout,
+				`{"path":%q,"registered":false,"suggestion":"kbz doc register %s","format":"json"}`+"\n",
+				lookupPath, lookupPath)
+		case "plain":
+			_, err = fmt.Fprintf(deps.stdout,
+				"%s: not registered (use `kbz doc register %s` to register)\n",
+				lookupPath, lookupPath)
+		default:
+			_, err = fmt.Fprintf(deps.stdout,
+				"File: %s\nStatus: not registered\n\nThis file exists on disk but is not registered in the document store.\nRegister it with:\n  kbz doc register %s\n",
+				lookupPath, lookupPath)
+		}
 		return err
 	}
+
+	// Registered file: show document info.
+	switch format {
+	case "json":
+		ownerJSON := "null"
+		if doc.Owner != "" {
+			ownerJSON = fmt.Sprintf("%q", doc.Owner)
+		}
+		_, err = fmt.Fprintf(deps.stdout,
+			`{"path":%q,"registered":true,"doc_id":%q,"type":%q,"title":%q,"status":%q,"owner":%s,"format":"json"}`+"\n",
+			doc.Path, doc.ID, doc.Type, doc.Title, doc.Status, ownerJSON)
+	case "plain":
+		_, err = fmt.Fprintf(deps.stdout, "%s [%s] %s: %s", doc.Path, doc.Type, doc.ID, doc.Status)
+		if doc.Owner != "" {
+			_, err = fmt.Fprintf(deps.stdout, " (owner: %s)", doc.Owner)
+		}
+		_, err = fmt.Fprintf(deps.stdout, "\n")
+	default:
+		_, err = fmt.Fprintf(deps.stdout, "Document: %s\nID: %s\nType: %s\nTitle: %s\nStatus: %s\nPath: %s\n",
+			doc.ID, doc.ID, doc.Type, doc.Title, doc.Status, doc.Path)
+		if doc.Owner != "" {
+			_, err = fmt.Fprintf(deps.stdout, "Owner: %s\n", doc.Owner)
+		}
+	}
+
+	if err != nil {
+		return err
+	}
+
+	// If the document has an owner entity, also show the entity status.
+	if doc.Owner != "" {
+		entitySvc := deps.newEntityService(stateRoot)
+
+		entityType := deriveEntityType(doc.Owner)
+		if entityType == "" {
+			// Can't determine entity type — skip entity view.
+			return nil
+		}
+
+		entity, err := entitySvc.Get(entityType, doc.Owner, "")
+		if err != nil {
+			// Entity lookup failed — skip entity view but don't error.
+			return nil
+		}
+
+		entityStatus, _ := entity.State["status"].(string)
+		switch format {
+		case "json":
+			// Entity already inline in JSON output above via owner field.
+		case "plain":
+			_, err = fmt.Fprintf(deps.stdout, "  %s: %s\n", doc.Owner, entityStatus)
+		default:
+			_, err = fmt.Fprintf(deps.stdout, "\nOwner entity:\n  ID: %s\n  Type: %s\n  Status: %s\n",
+				entity.ID, entity.Type, entityStatus)
+		}
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 // ─── next ────────────────────────────────────────────────────────────────────

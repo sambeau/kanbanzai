@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"log"
@@ -931,6 +932,48 @@ func (s *DocumentService) SupersessionChain(docID string) ([]DocumentResult, err
 // DocumentExists checks if a document record exists.
 func (s *DocumentService) DocumentExists(id string) bool {
 	return s.store.Exists(id)
+}
+
+// LookupByPath finds a document record by its repository-relative file path.
+// The path is normalised (leading "./" stripped) before lookup. If no record
+// exists for the path, the returned DocumentResult has an empty ID and no error
+// is returned — callers should check result.ID == "" to detect the unregistered
+// case.
+func (s *DocumentService) LookupByPath(ctx context.Context, path string) (DocumentResult, error) {
+	// Normalise: strip leading "./" if present.
+	path = strings.TrimPrefix(path, "./")
+
+	// List all records and find by exact path match.
+	records, err := s.store.List()
+	if err != nil {
+		return DocumentResult{}, fmt.Errorf("lookup document by path: %w", err)
+	}
+
+	for _, record := range records {
+		doc := storage.RecordToDocument(record)
+		if doc.Path == path {
+			return DocumentResult{
+				ID:                doc.ID,
+				Path:              doc.Path,
+				RecordPath:        s.store.GetFilePath(doc.ID),
+				Type:              string(doc.Type),
+				Title:             doc.Title,
+				Status:            string(doc.Status),
+				Owner:             doc.Owner,
+				ContentHash:       doc.ContentHash,
+				Created:           doc.Created,
+				Updated:           doc.Updated,
+				ApprovedBy:        doc.ApprovedBy,
+				ApprovedAt:        doc.ApprovedAt,
+				Supersedes:        doc.Supersedes,
+				SupersededBy:      doc.SupersededBy,
+				QualityEvaluation: doc.QualityEvaluation,
+			}, nil
+		}
+	}
+
+	// No record found — not an error; empty ID signals unregistered.
+	return DocumentResult{}, nil
 }
 
 // RefreshContentHash recomputes the content hash of the document's file and

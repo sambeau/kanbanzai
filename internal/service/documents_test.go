@@ -2,6 +2,7 @@ package service
 
 import (
 	"bytes"
+	"context"
 	"log"
 	"os"
 	"path/filepath"
@@ -760,6 +761,141 @@ func TestDocumentExists(t *testing.T) {
 	// Check existent
 	if !svc.DocumentExists(submitResult.ID) {
 		t.Error("DocumentExists() = false for existing document")
+	}
+}
+
+func TestLookupByPath_ExistingPath(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "design/test.md"
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(fullPath, []byte("content"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	submitResult, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "design",
+		Title:     "Test Design",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument() error = %v", err)
+	}
+
+	result, err := svc.LookupByPath(context.Background(), docPath)
+	if err != nil {
+		t.Fatalf("LookupByPath() error = %v", err)
+	}
+	if result.ID != submitResult.ID {
+		t.Errorf("LookupByPath() ID = %s, want %s", result.ID, submitResult.ID)
+	}
+	if result.Path != docPath {
+		t.Errorf("LookupByPath() Path = %s, want %s", result.Path, docPath)
+	}
+}
+
+func TestLookupByPath_UnregisteredPath(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	// File exists on disk but no document record.
+	docPath := "unregistered.md"
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.WriteFile(fullPath, []byte("unregistered content"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	result, err := svc.LookupByPath(context.Background(), docPath)
+	if err != nil {
+		t.Fatalf("LookupByPath() error = %v", err)
+	}
+	if result.ID != "" {
+		t.Errorf("LookupByPath() ID = %s, want empty for unregistered", result.ID)
+	}
+}
+
+func TestLookupByPath_NormalisedDotSlashPrefix(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "spec/requirements.md"
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(fullPath, []byte("# Requirements"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	submitResult, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Requirements",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument() error = %v", err)
+	}
+
+	result, err := svc.LookupByPath(context.Background(), "./spec/requirements.md")
+	if err != nil {
+		t.Fatalf("LookupByPath(./...) error = %v", err)
+	}
+	if result.ID != submitResult.ID {
+		t.Errorf("LookupByPath(./...) ID = %s, want %s", result.ID, submitResult.ID)
+	}
+}
+
+func TestLookupByPath_WithOwner(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	docPath := "design/owned.md"
+	fullPath := filepath.Join(repoRoot, docPath)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(fullPath, []byte("owned content"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	submitResult, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "design",
+		Title:     "Owned Design",
+		Owner:     "FEAT-001",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument() error = %v", err)
+	}
+
+	result, err := svc.LookupByPath(context.Background(), docPath)
+	if err != nil {
+		t.Fatalf("LookupByPath() error = %v", err)
+	}
+	if result.Owner != "FEAT-001" {
+		t.Errorf("LookupByPath() Owner = %s, want FEAT-001", result.Owner)
+	}
+	if result.ID != submitResult.ID {
+		t.Errorf("LookupByPath() ID = %s, want %s", result.ID, submitResult.ID)
 	}
 }
 
