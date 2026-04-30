@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -36,14 +38,17 @@ func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOp
 				"Use INSTEAD OF manual `git worktree` commands; this tool tracks worktree records alongside entity lifecycle. "+
 				"Call AFTER entity(action: create) establishes the feature or bug. "+
 				"Do NOT use for branch health checks — use branch for that. "+
-				"Actions: create, get, list, remove, update. "+
+				"Actions: create, get, list, remove, update, gc. "+
 				"entity_id is required for create, get, remove, and update; optional filter for list. "+
+				"gc detects worktree records whose directories no longer exist on disk. "+
+				"dry_run: true lists orphaned records; dry_run: false removes them. "+
+				"Do NOT invoke `git worktree remove` (directories don't exist). "+
 				"On timeout, fall back: (1) `git worktree add <path> -b <branch>` via terminal; "+
 				"(2) worktree(action: update, entity_id: ...) to register the record manually.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),
-			mcp.Description("Action: create, get, list, remove, update"),
+			mcp.Description("Action: create, get, list, remove, update, gc"),
 		),
 		mcp.WithString("entity_id",
 			mcp.Description("Entity ID (FEAT-... or BUG-...) — required for create, get, remove; optional filter for list"),
@@ -63,6 +68,9 @@ func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOp
 		mcp.WithBoolean("force",
 			mcp.Description("Remove even with uncommitted changes (default: false) — remove only"),
 		),
+		mcp.WithBoolean("dry_run",
+			mcp.Description("List orphaned records without removing them (default: false) — gc only"),
+		),
 		mcp.WithString("graph_project",
 			mcp.Description("codebase-memory-mcp project name for graph-based code navigation — create and update only"),
 		),
@@ -75,6 +83,7 @@ func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOp
 			"list":   worktreeListAction(store),
 			"remove": worktreeRemoveAction(store, gitOps),
 			"update": worktreeUpdateAction(store),
+			"gc":     worktreeGcAction(store, repoRoot),
 		})
 	})
 
@@ -420,6 +429,82 @@ func worktreeRemoveAction(store *worktree.Store, gitOps *worktree.Git) ActionHan
 		}
 
 		return response, nil
+	}
+}
+
+// ─── gc ──────────────────────────────────────────────────────────────────────
+
+// worktreeGcAction returns a handler for the gc action.
+// It detects worktree records whose directories no longer exist on disk.
+// dry_run: true lists orphaned records; dry_run: false removes them.
+// Detection is filesystem-only — no git commands are invoked (REQ-NF-001).
+func worktreeGcAction(store *worktree.Store, repoRoot string) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		dryRun := req.GetBool("dry_run", false)
+
+		if !dryRun {
+			SignalMutation(ctx)
+		}
+
+		// Validate action parameter (redundant with dispatch but defensive).
+		action := req.GetString("action", "")
+		if action != "" && action != "gc" {
+			return nil, nil
+		}
+
+		records, err := store.List()
+		if err != nil {
+			return nil, fmt.Errorf("Cannot gc worktrees: storage read failed: %w.\n\nTo resolve:\n  Check file permissions in .kbz/state/worktrees/ and retry", err)
+		}
+
+		var orphaned []map[string]any
+
+		for _, r := range records {
+			// Resolve relative path against repo root.
+			absPath := filepath.Join(repoRoot, r.Path)
+			_, statErr := os.Stat(absPath)
+			if os.IsNotExist(statErr) {
+				orphaned = append(orphaned, map[string]any{
+					"id":        r.ID,
+					"entity_id": r.EntityID,
+					"path":      r.Path,
+				})
+			}
+			// If Stat succeeds or returns another error, the directory exists — skip.
+		}
+
+		if dryRun {
+			return map[string]any{
+				"dry_run":  true,
+				"count":    len(orphaned),
+				"orphaned": orphaned,
+			}, nil
+		}
+
+		// Remove orphaned state files.
+		removed := 0
+		var errs []map[string]any
+		for _, o := range orphaned {
+			id, _ := o["id"].(string)
+			if err := store.Delete(id); err != nil {
+				errs = append(errs, map[string]any{
+					"id":    id,
+					"error": err.Error(),
+				})
+			} else {
+				removed++
+			}
+		}
+
+		resp := map[string]any{
+			"dry_run": false,
+			"count":   removed,
+			"removed": removed,
+		}
+		if len(errs) > 0 {
+			resp["errors"] = errs
+		}
+		return resp, nil
 	}
 }
 
