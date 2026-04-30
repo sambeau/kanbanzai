@@ -10,3 +10,5 @@ dev_plan: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output
 created: "2026-04-25T17:38:10Z"
 created_by: sambeau
 display_id: B36-F3
+verification: "TASK-01KQFCNHK6W8J: (no verification recorded)\nTASK-01KQFCP2JV67G: (no verification recorded)\nTASK-01KQFCPC6AVD8: (no verification recorded)\nTASK-01KQFCPSN2GEC: go build ./... passes. go test ./cmd/kbz/... passes (all 45+ status tests). go test ./internal/cli/render/... passes.\nTASK-01KQFT4D172ZP: (no verification recorded)"
+verification_status: partial
