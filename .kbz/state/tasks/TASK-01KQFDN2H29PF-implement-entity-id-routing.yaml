@@ -3,8 +3,15 @@ parent_feature: FEAT-01KQ2VFTWD1W2
 slug: implement-entity-id-routing
 name: Implement Entity ID Routing and Plan Prefix Resolution
 summary: "Route display-format entity IDs to service layer. Resolve FEAT-042 via ResolvePrefix, TASK-/BUG- via Get. For bare plan prefixes (P1), scan plans dir for match. Exit 1 with descriptive message when not found."
-status: ready
+status: done
 estimate: "5"
 depends_on:
   - TASK-01KQFDMBCJZJR
   - TASK-01KQFDMK63E62
+completed: "2026-04-30T15:48:37Z"
+claimed_at: "2026-04-30T15:33:48Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T15:33:48Z"
+dispatched_by: sambeau
+completion_summary: "Implemented entity ID routing for kbz status: runStatusEntity routes FEAT-/TASK-/BUG-/INC- through entitySvc.Get with display-ID resolution; runStatusPlanPrefix scans .kbz/state/plans/ for bare prefix matches (P1→P1-my-plan) then loads via GetPlan. Added resolvePlanPrefixFromDisk (testable via var override). Not-found targets exit 1 with descriptive message. Added WorkQueue to entityService interface and fake. 29 status tests pass."
+verification: go build ./... passes; go test ./cmd/kbz/... -run TestRunStatus (29 tests) all pass; go test ./internal/resolution/... passes; go vet ./cmd/kbz/... clean. Pre-existing TestReParentEntityUpdate failure confirmed on main.
