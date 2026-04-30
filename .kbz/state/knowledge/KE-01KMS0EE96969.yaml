@@ -3,10 +3,10 @@ content: "When MCP tool calls fail with errors about unknown states or type mism
 created: "2026-03-28T01:20:27Z"
 created_by: unknown
 id: KE-01KMS0EE96969
-last_accessed_at: "2026-04-30T14:05:19Z"
+last_accessed_at: "2026-04-30T14:48:38Z"
 learned_from: TASK-01KMRXK1G474P
 miss_count: 0
-recent_use_count: 154
+recent_use_count: 155
 scope: project
 status: contributed
 tags:
