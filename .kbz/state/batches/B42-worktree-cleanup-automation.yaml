@@ -1,0 +1,13 @@
+id: B42-worktree-cleanup-automation
+slug: worktree-cleanup-automation
+name: Worktree and Cleanup Automation
+status: proposed
+summary: "Add worktree garbage collection for orphaned records, skip drift alerts for merged branches, auto-schedule cleanup on merge, and validate entity IDs at worktree creation. Addresses Theme 6 (Moderate) from the April 2026 retrospective."
+tags:
+  - workstream-d
+  - moderate
+created: "2026-04-30T20:15:00Z"
+created_by: sambeau
+updated: "2026-04-30T20:15:00Z"
+next_feature_seq: 1
+parent: P40-retro-batch-april-2026
