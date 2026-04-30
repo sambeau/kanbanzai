@@ -1,0 +1,6 @@
+id: TASK-01KQEZ869RKCR
+parent_feature: FEAT-01KQ7YQK6DDDA
+slug: independent-seq-counters-plans-batches
+name: Independent sequence counters for plans and batches
+summary: "Separate sequence scanning for plan and batch IDs. Plans scanned against plan_prefixes, batches against batch_prefixes. AllocateNextPlanID and AllocateNextBatchID functions. AC-007-008."
+status: queued
