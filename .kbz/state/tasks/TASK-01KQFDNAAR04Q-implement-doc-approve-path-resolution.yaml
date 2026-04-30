@@ -3,8 +3,18 @@ parent_feature: FEAT-01KQ2VFTWD1W2
 slug: implement-doc-approve-path-resolution
 name: Implement kbz doc approve Path Resolution
 summary: "Extend runDocApprove to accept file path args using same FR-005 lexical rule. Resolve path to doc record, exit 1 if unregistered, pass resolved ID to existing approval flow. Preserve --by flag and backward compatibility."
-status: ready
+status: done
 estimate: "3"
 depends_on:
   - TASK-01KQFDMBCJZJR
   - TASK-01KQFDMTTN0Q9
+files_planned:
+  - cmd/kbz/doc_cmd.go
+  - cmd/kbz/doc_cmd_test.go
+completed: "2026-04-30T15:57:10Z"
+claimed_at: "2026-04-30T15:49:55Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T15:49:55Z"
+dispatched_by: sambeau
+completion_summary: "Extended kbz doc approve to accept file path arguments via resolution.Disambiguate. Added resolveDocApproveTarget that resolves paths through DocumentService.LookupByPath and returns \"file is not registered: <path>\" for unregistered files. ID targets pass through for backward compat. Updated usage text. Added 5 tests covering AC-021 through AC-023, dot-slash prefix handling, and updated usage."
+verification: go build ./... passes. go test ./cmd/kbz/... passes all doc-related tests. The one failing test (TestReParentEntityUpdate) is pre-existing and unrelated.
