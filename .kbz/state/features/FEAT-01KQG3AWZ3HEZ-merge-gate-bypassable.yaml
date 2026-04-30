@@ -2,8 +2,15 @@ id: FEAT-01KQG3AWZ3HEZ
 slug: merge-gate-bypassable
 name: Add bypassable Field to Merge Gate Results
 parent: B41-fix-doc-ownership-lifecycle
-status: proposed
+status: dev-planning
 summary: "Add bypassable: bool to each gate result in merge(action: check) output. Hard gates (review_report_exists) have bypassable: false. Addresses REQ-006, REQ-NF-002, AC-007."
+design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
 created: "2026-04-30T21:04:52Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: specifying
+    reason: Specification is approved at batch level (B41-fix-doc-ownership-lifecycle/spec-p40-spec-b41-doc-ownership-lifecycle). All four B41 features share the batch spec.
+    timestamp: "2026-04-30T22:05:36+01:00"
+    to_status: dev-planning
 display_id: B41-F3
