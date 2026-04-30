@@ -1,0 +1,214 @@
+document_id: P40-retro-batch-april-2026/report-p40-report-retro-synthesis
+document_path: work/P40-retro-batch-april-2026/P40-report-retro-synthesis.md
+content_hash: c1254a803e1329ccf276a7ce9b4ae069d851583bb73d79e96883fef7b9801471
+indexed_at: 2026-04-30T19:16:55.714974Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Retrospective: Project-Wide Synthesis — April 2026'
+      byte_offset: 0
+      byte_count: 10256
+      word_count: 1422
+      content_hash: c1254a803e1329ccf276a7ce9b4ae069d851583bb73d79e96883fef7b9801471
+      children:
+        - path: "1.1"
+          level: 2
+          title: Themes
+          byte_offset: 199
+          byte_count: 5833
+          word_count: 802
+          content_hash: 243f50496d76638fb749d13b04fd73adaa79b838af52f6b5d20d3e77b208d1e4
+          children:
+            - path: 1.1.1
+              level: 3
+              title: '1. tool-friction: edit_file and create_directory tools write to the main repo ...'
+              byte_offset: 210
+              byte_count: 524
+              word_count: 70
+              content_hash: e0057e595309ebf3bd147eecbaa440517810a60c357483f5cf55ccc3fa1b1889
+            - path: 1.1.2
+              level: 3
+              title: '2. workflow-friction: Commit discipline is not being followed for workflow/managem...'
+              byte_offset: 734
+              byte_count: 1000
+              word_count: 140
+              content_hash: a4cf4ac6944b486b2160caf1a4c20e8d5b7210c7d572ebfabafb37aae581d65b
+            - path: 1.1.3
+              level: 3
+              title: '3. tool-friction: The stale MCP binary issue wasted significant verification t...'
+              byte_offset: 1734
+              byte_count: 578
+              word_count: 85
+              content_hash: 7b1257959d24bb209e1b30924a5ef675bda3c3822be960f1f27a1f0294d1650f
+            - path: 1.1.4
+              level: 3
+              title: '4. tool-friction: Terminal heredoc failed for multi-line Go code with embedded...'
+              byte_offset: 2312
+              byte_count: 392
+              word_count: 52
+              content_hash: fdfb95092cbdeb7f06ed089fa2e2d3a8d5d762373babfe8baed7f102ef47f2b8
+            - path: 1.1.5
+              level: 3
+              title: '5. tool-friction: Writing Go source files from a worktree sub-agent is signifi...'
+              byte_offset: 2704
+              byte_count: 503
+              word_count: 65
+              content_hash: fef7ce188d76182a6c751697918ce1555f1ccf8e4ee089eaf74a3d89c2fa6ecc
+            - path: 1.1.6
+              level: 3
+              title: '6. workflow-friction: Shell string escaping in python3 -c with embedded YAML/Go co...'
+              byte_offset: 3207
+              byte_count: 464
+              word_count: 65
+              content_hash: 212659be672d6fce33c028fece40409fb24b5dcf37abed8fc660656d07e95823
+            - path: 1.1.7
+              level: 3
+              title: '7. workflow-friction: Working directly on main instead of feature worktrees. Workt...'
+              byte_offset: 3671
+              byte_count: 574
+              word_count: 85
+              content_hash: e2a25c3689bcfdb00fe82625c9655545ac373b31c8f6f1a70431441b6a29e357
+            - path: 1.1.8
+              level: 3
+              title: '8. decomposition-issue: Task 4 (P3 descriptions) and Task 6 (P2+P3 testing) had a ci...'
+              byte_offset: 4245
+              byte_count: 449
+              word_count: 63
+              content_hash: 41d4a6d108bcb1ecf15fa03e3c25c5c0593d261266253f995db92af4f1fd6cc1
+            - path: 1.1.9
+              level: 3
+              title: '9. spec-ambiguity: AC-07 describes ''needs-review task blocks auto-advance'' but ...'
+              byte_offset: 4694
+              byte_count: 569
+              word_count: 69
+              content_hash: 620ea662c0c645998b5bc2cf6787778c66ecc67aabd0fb5efbdf71ef752f75ea
+            - path: 1.1.10
+              level: 3
+              title: '10. spec-ambiguity: Spec FR-002 listed paired test task fields but omitted Ratio...'
+              byte_offset: 5263
+              byte_count: 424
+              word_count: 60
+              content_hash: cd13ee5a3c04dbafba004c40063c68d6668994f78b1da296d3362b36511d002a
+            - path: 1.1.11
+              level: 3
+              title: '11. tool-friction: Heredoc/HEREDOC syntax consistently fails in the terminal to...'
+              byte_offset: 5687
+              byte_count: 345
+              word_count: 46
+              content_hash: ed285c7ded03ad861030b9bc4e78af535812f5829172a7a949e03357766f6950
+        - path: "1.2"
+          level: 2
+          title: What Worked Well
+          byte_offset: 6032
+          byte_count: 4224
+          word_count: 588
+          content_hash: 449f2d7c510ce6c57ec61ea42c1518a76af03748f6f06e6fa3dfcdf126cc2f12
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'worked-well: The advance: true flag on entity transitions worked perfectl...'
+              byte_offset: 6053
+              byte_count: 357
+              word_count: 49
+              content_hash: e514ddd14bac064a0e42745588996e3b51a806462fc0fbd02dbcb3cd80874969
+            - path: 1.2.2
+              level: 3
+              title: 'worked-well: Using a cross-plan feature (Skills Content from P3) as a sec...'
+              byte_offset: 6410
+              byte_count: 411
+              word_count: 62
+              content_hash: c1eda988cec034b668dd90e1d54481233952848b12f3216802c452dd498b51f2
+            - path: 1.2.3
+              level: 3
+              title: 'worked-well: T1-T4 parallelism plan held exactly — zero file conflicts....'
+              byte_offset: 6821
+              byte_count: 226
+              word_count: 34
+              content_hash: 63d9bc51815f67021fd94ccf6b867a6c550bcec4ba546509d36f9cd6eaef3082
+            - path: 1.2.4
+              level: 3
+              title: 'worked-well: Version-aware conflict logic pattern from mcp_config.go tran...'
+              byte_offset: 7047
+              byte_count: 309
+              word_count: 38
+              content_hash: 93960a73748d1e655c16772206a433b99135c9701c1601d806b3b19b3f58df3b
+            - path: 1.2.5
+              level: 3
+              title: 'worked-well: Sub-agent parallelism for disjoint file edits (description r...'
+              byte_offset: 7356
+              byte_count: 377
+              word_count: 51
+              content_hash: 4f10752f76025c997e1810065cc4344117c271816505b048d5889030aa34852a
+            - path: 1.2.6
+              level: 3
+              title: 'worked-well: Sub-agent parallelism with disjoint file scopes worked perfe...'
+              byte_offset: 7733
+              byte_count: 279
+              word_count: 41
+              content_hash: 0b7f6e0ef521e4b1e5d3b8609720b85e87224238f3b0fd835dc92d2a8bcb3d3c
+            - path: 1.2.7
+              level: 3
+              title: 'worked-well: Python-based file editing via terminal was reliable for work...'
+              byte_offset: 8012
+              byte_count: 297
+              word_count: 42
+              content_hash: 9f0698d904329b30a477eb9a7c4f4987e4ac506b96c557031ce8de63ef9d63dc
+            - path: 1.2.8
+              level: 3
+              title: 'worked-well: Sub-agent delegation per editorial pipeline stage was effect...'
+              byte_offset: 8309
+              byte_count: 278
+              word_count: 38
+              content_hash: af336893647419adb75d7f97d624987ce55951930c63c29393cd71e12080b882
+            - path: 1.2.9
+              level: 3
+              title: 'worked-well: Fact-checking sub-agent found 3 genuine inaccuracies (tool c...'
+              byte_offset: 8587
+              byte_count: 276
+              word_count: 36
+              content_hash: 1a970484dc5fa2a62d3c18487c4e2591e2c3931b4b0180991df4a5b221305ef5
+            - path: 1.2.10
+              level: 3
+              title: 'worked-well: The fact-checking sub-agent found 5 genuine errors in the or...'
+              byte_offset: 8863
+              byte_count: 300
+              word_count: 44
+              content_hash: 81821342a0be5ff45107ecd810d30f60e61194b7e1f7ffcc187a86f019d3ca4a
+            - path: 1.2.11
+              level: 3
+              title: 'worked-well: Retrospectives doc required only 1 factual correction (scope...'
+              byte_offset: 9163
+              byte_count: 295
+              word_count: 40
+              content_hash: f05a8f791bc06c1020bfa6fa18618b332d44cf7152ccd80a472b3bcb0a067c58
+            - path: 1.2.12
+              level: 3
+              title: 'worked-well: Narrowing exclusion checks to Type == ''open_critical_bug'' pr...'
+              byte_offset: 9458
+              byte_count: 293
+              word_count: 38
+              content_hash: 1b7bd6702f6ebbe10a49c6b0a4aff3623dfb767b18180c6608226a4eb8c583fa
+            - path: 1.2.13
+              level: 3
+              title: 'worked-well: Sub-agent parallelism for disjoint file sets (gate.go vs sta...'
+              byte_offset: 9751
+              byte_count: 275
+              word_count: 35
+              content_hash: 0a23105841cb7330f5b82e9f6051090c9777b4ca5715a23ff7ffcd1d48338613
+            - path: 1.2.14
+              level: 3
+              title: 'worked-well: Parallel dispatch for Tasks 1 and 3 (disjoint files) worked ...'
+              byte_offset: 10026
+              byte_count: 230
+              word_count: 36
+              content_hash: 16249bb4d4ac8a4cdc74e15c69d01f5debd14803d5c796282fd249594f24b0f2
+conventional_roles:
+    - section_path: 1.2.6
+      role: constraint
+      confidence: high
+    - section_path: 1.2.11
+      role: constraint
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-30T19:16:56.18533Z
+classified: false
