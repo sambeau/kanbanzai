@@ -1,9 +1,9 @@
 id: P40-retro-batch-april-2026
 slug: retro-batch-april-2026
 name: Retrospective Batch — April 2026
-status: shaping
+status: ready
 summary: "Collect retrospective findings from recent AI agent sessions, compile a batch of upgrades to address the identified friction points, tool gaps, and workflow issues. This plan serves as a container for retro analysis and improvement batching."
 order: 0
 created: "2026-04-30T19:16:18Z"
 created_by: sambeau
-updated: "2026-04-30T20:15:31Z"
+updated: "2026-04-30T20:15:36Z"
