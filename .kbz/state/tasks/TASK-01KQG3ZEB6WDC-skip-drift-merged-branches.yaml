@@ -1,0 +1,6 @@
+id: TASK-01KQG3ZEB6WDC
+parent_feature: FEAT-01KQG3TZZD0ZG
+slug: skip-drift-merged-branches
+name: Add merged_at check to branch drift alert and tests
+summary: "In branch health check: if worktree.merged_at is non-nil, suppress drift alert. Unmerged branches continue to alert. Single task with tests. Addresses REQ-004, REQ-005, AC-004, AC-005."
+status: queued
