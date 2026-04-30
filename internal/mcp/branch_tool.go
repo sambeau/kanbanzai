@@ -3,6 +3,7 @@ package mcp
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
@@ -92,6 +93,15 @@ func branchStatusAction(
 		return ActionError("internal_error", fmt.Sprintf("evaluate branch status: %v", err), nil), nil
 	}
 
+	// If the branch has been merged, suppress drift alerts (both warnings and
+	// errors). Staleness and conflict alerts are still reported because they
+	// reflect repository hygiene issues that persist regardless of merge status.
+	// Per REQ-004, REQ-005: merged branches skip drift; unmerged branches alert.
+	if record.MergedAt != nil {
+		status.Warnings = filterDrift(status.Warnings)
+		status.Errors = filterDrift(status.Errors)
+	}
+
 	resp := map[string]any{
 		"branch": record.Branch,
 		"metrics": map[string]any{
@@ -104,12 +114,30 @@ func branchStatusAction(
 		},
 		"warnings": status.Warnings,
 		"errors":   status.Errors,
+		"merged":   record.MergedAt != nil,
 	}
 
 	return branchToolMapJSON(resp)
 }
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
+
+// filterDrift removes drift-related messages from a slice of status strings.
+// A message is drift-related if it contains "drifting" or "drift" (case-sensitive).
+// Staleness and conflict messages are not filtered.
+func filterDrift(msgs []string) []string {
+	if len(msgs) == 0 {
+		return msgs
+	}
+	out := make([]string, 0, len(msgs))
+	for _, m := range msgs {
+		if strings.Contains(m, "drift") || strings.Contains(m, "Drift") {
+			continue
+		}
+		out = append(out, m)
+	}
+	return out
+}
 
 // isWorktreeNotFound returns true if the error indicates a missing worktree record.
 func isWorktreeNotFound(err error) bool {
