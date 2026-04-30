@@ -60,45 +60,47 @@ Copy this checklist when creating any new document:
 
 ## Document Types and Locations
 
-Documents live in **plan-first directories** under the project's document
-directory (typically `work/`). Plan-level and feature-scoped documents go in
-their plan's folder; project-level documents go in `work/_project/`.
+Documents live in entity-scoped directories under the project's document
+directory (typically `work/`). Execution work goes in batch folders; strategic
+work goes in plan folders; project-level documents go in `work/_project/`.
 
 ### Canonical filename template
 
-All work documents follow this template:
+All work documents follow one of these templates:
 
 ```
-{plan-id}-{type}[-{slug}].md          # plan-level
-{plan-id}-{feature-seq}-{type}[-{slug}].md  # feature-scoped
+{entity-id}-{type}[-{slug}].md              # batch or plan level
+{entity-id}-{feature-seq}-{type}[-{slug}].md  # feature-scoped (under a batch)
 ```
 
 Where:
-- `{plan-id}` is `P{n}` (e.g. `P37`)
-- `{feature-seq}` is `F{m}` (e.g. `F2`)
+- `{entity-id}` is the owning entity's ID:
+  - `B{n}` for batches (e.g. `B24`) — execution containers that hold features
+  - `P{n}` for plans (e.g. `P1`) — strategic containers that hold batches and child plans
+- `{feature-seq}` is `F{m}` (e.g. `F3`)
 - `{type}` is the document type prefix (`design`, `spec`, `dev-plan`, `review`,
   `report`, `research`, `retro`, `proposal`)
 - `[-{slug}]` is an optional lowercase-kebab-case human description
 
 Each identifier appears **exactly once** in the filename. The feature ID
-(`F2`) is sufficient because it is plan-scoped — do not repeat the plan ID
+(`F3`) is sufficient because it is batch-scoped — do not repeat the batch ID
 or document type.
 
 **Examples:**
 
 | Document | Filename |
 |---|---|
-| Plan 37's design | `P37-design-file-names-and-actions.md` |
-| Plan 37, Feature 2's spec | `P37-F2-spec-doc-type-and-filename-enforcement.md` |
-| Plan 37, Feature 2's dev-plan | `P37-F2-dev-plan-doc-type-and-filename-enforcement.md` |
-| Plan 24, Feature 3's spec | `P24-F3-spec-auth-flow.md` |
+| Batch 24's design | `B24-design-auth-system.md` |
+| Batch 24, Feature 3's spec | `B24-F3-spec-oauth-flow.md` |
+| Batch 24, Feature 3's dev-plan | `B24-F3-dev-plan-oauth-flow.md` |
+| Plan 1's design | `P1-design-social-platform.md` |
 | Project-level research | `research-ai-orchestration.md` (in `work/_project/`) |
 
 **Character rules:**
-- Filenames are lowercase throughout, including the plan ID and feature
-  sequence: `p37-f2-spec-auth-flow.md`
-- Exception: the plan and feature prefixes use uppercase `P` and `F` for
-  visual distinction: `P37-F2-spec-auth-flow.md`
+- Filenames are lowercase throughout, including the entity ID and feature
+  sequence: `b24-f3-spec-oauth-flow.md`
+- Exception: the entity and feature prefixes use uppercase `B`/`P` and `F`
+  for visual distinction: `B24-F3-spec-oauth-flow.md`
 - Slugs use only `[a-z0-9-]`
 - No spaces, no underscores, no uppercase in slugs
 
@@ -123,8 +125,9 @@ normalised to the short form.
 
 | Scope | Directory |
 |---|---|
+| Batch-level documents | `work/{BatchID}-{batch-slug}/` |
+| Feature-scoped documents | `work/{BatchID}-{batch-slug}/` (same folder) |
 | Plan-level documents | `work/{PlanID}-{plan-slug}/` |
-| Feature-scoped documents | `work/{PlanID}-{plan-slug}/` (same folder) |
 | Project-level documents | `work/_project/` |
 
 **Placement rule:** design content goes in design documents, not in planning
@@ -144,7 +147,7 @@ intelligence, entity extraction, approval workflow, and health checks.
 ```
 doc(
   action="register",
-  path="work/P37-my-plan/P37-design-my-plan.md",
+  path="work/B24-auth-system/B24-design-auth-system.md",
   type="design",
   title="Human-Readable Title"
 )
@@ -155,15 +158,15 @@ For a feature-scoped document:
 ```
 doc(
   action="register",
-  path="work/P37-my-plan/P37-F2-spec-auth-flow.md",
+  path="work/B24-auth-system/B24-F3-spec-oauth-flow.md",
   type="specification",
-  title="Authentication Flow Specification"
+  title="OAuth Flow Specification"
 )
 ```
 
 The system generates a document ID from the path (e.g.
-`FEAT-01ABC/spec-auth-flow`). The filename must follow the canonical
-template — each identifier (plan ID, feature ID, document type) appears
+`FEAT-01ABC/spec-oauth-flow`). The filename must follow the canonical
+template — each identifier (batch ID, feature ID, document type) appears
 exactly once.
 
 ### Batch import
@@ -180,7 +183,7 @@ at any time as a consistency check.
 ### Verify registration
 
 ```
-doc(action="get", id="PROJECT/design-my-document")
+doc(action="get", id="FEAT-01ABC/spec-oauth-flow")
 ```
 
 A document is properly registered when a YAML record exists in
