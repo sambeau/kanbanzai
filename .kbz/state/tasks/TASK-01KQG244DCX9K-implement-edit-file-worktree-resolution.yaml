@@ -3,6 +3,13 @@ parent_feature: FEAT-01KQG1XWE9ABP
 slug: implement-edit-file-worktree-resolution
 name: Implement worktree path resolution in edit_file handler
 summary: "Add worktree path resolution logic to the edit_file handler. Reuse the existing write_file worktree lookup function. Return clear error when entity_id is provided but no worktree exists. Must be O(1) single lookup. Depends on T1 (schema). Addresses REQ-005, REQ-006, REQ-007, REQ-NF-002, AC-005, AC-006, AC-008, AC-010."
-status: ready
+status: done
 depends_on:
   - TASK-01KQG2448DCKJ
+completed: "2026-04-30T21:36:49Z"
+claimed_at: "2026-04-30T21:36:20Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T21:36:20Z"
+dispatched_by: sambeau
+completion_summary: "The worktree path resolution was already implemented in T1 as part of the complete edit_file_tool.go creation. The handler reuses worktreeStore.GetByEntityID() — the same O(1) function write_file uses — for worktree path resolution. When entity_id is omitted, paths resolve to main repo root. When entity_id is provided but no worktree exists, returns error \"no worktree found for entity {id}\". Path resolution and traversal prevention mirror write_file exactly."
+verification: "Code review confirms: same worktreeStore.GetByEntityID() call as write_file (AC-008), single lookup pattern (AC-010), correct error message per AC-006, and backward-compatible when entity_id omitted (AC-005)."
