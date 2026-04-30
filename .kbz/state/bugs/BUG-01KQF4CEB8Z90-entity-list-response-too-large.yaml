@@ -1,0 +1,11 @@
+id: BUG-01KQF4CEB8Z90
+slug: entity-list-response-too-large
+name: entity list returns excessively large response
+status: reported
+severity: high
+priority: high
+type: design-problem
+reported_by: samphillips
+reported: "2026-04-30T12:03:57Z"
+observed: "Calling `entity(action: \"list\", type: \"task\", parent_feature: \"FEAT-01KQ7JDT511BZ\")` returns 321,100 characters. Each task record includes `entity_ref` (a redundant computed string), full `summary` text, and `display_id` alongside `id`, inflating the payload far beyond what a list view needs."
+expected: "List responses should return a compact projection — e.g. `id`, `name`, `slug`, `status`, `type` — sufficient to identify and navigate to entities. Verbose fields like `summary` and redundant computed fields like `entity_ref` and `display_id` should be omitted from list results, or a `fields` / `compact` parameter should be available to request a trimmed response."
