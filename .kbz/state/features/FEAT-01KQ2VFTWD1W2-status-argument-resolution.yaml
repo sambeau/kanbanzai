@@ -2,7 +2,7 @@ id: FEAT-01KQ2VFTWD1W2
 slug: status-argument-resolution
 name: Status command argument resolution
 parent: B36-kbz-cli-and-status
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Extend kbz status to accept a file path or entity ID as its argument. Implement the disambiguation logic (path vs entity ID vs plan prefix), file-path-to-document-record lookup, entity routing to the service layer, and the unregistered-document response. Also add path resolution to kbz doc approve so it accepts a file path in place of a document ID. Exit code semantics: 0 for all valid query results, 1 for genuine failures."
 design: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename
@@ -10,6 +10,12 @@ spec: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution
 dev_plan: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution
 created: "2026-04-25T17:37:38Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: "Batch review work/reviews/batch-review-b36-kbz-cli-and-status.md covers all 4 features. All 10 blocking findings resolved. F2: 8/8 tasks done, go build/go vet/go test pass."
+    timestamp: "2026-04-30T19:46:55+01:00"
+    to_status: done
 display_id: B36-F2
 verification: "TASK-01KQFDMBCJZJR: (no verification recorded)\nTASK-01KQFDMK63E62: (no verification recorded)\nTASK-01KQFDMTTN0Q9: (no verification recorded)\nTASK-01KQFDN2H29PF: (no verification recorded)\nTASK-01KQFDNAAR04Q: (no verification recorded)\nTASK-01KQFDNGTAXZ8: go test ./cmd/kbz/... -v: ALL PASS; go test ./internal/resolution/... -v: ALL PASS (27 tests); go build ./...: clean\nTASK-01KQFT3QQ5739: (no verification recorded)\nTASK-01KQFT41W0H05: (no verification recorded)"
 verification_status: partial
