@@ -1,0 +1,6 @@
+id: TASK-01KQG3ZE6D689
+parent_feature: FEAT-01KQG3TZR2JDP
+slug: impl-worktree-gc
+name: Implement gc action with dry_run
+summary: "Add worktree(action: gc). Iterate state records, detect orphaned (directory missing). dry_run lists; default removes. No git invocation. Addresses REQ-001, REQ-002, REQ-003, REQ-NF-001."
+status: queued
