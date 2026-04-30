@@ -1,0 +1,6 @@
+id: TASK-01KQG244418FZ
+parent_feature: FEAT-01KQG1XWAZE8V
+slug: add-write-file-to-tool-subset
+name: Add write_file to developing-stage tool subset
+summary: "Add write_file to the default tool subset for the developing stage in stage bindings or role configuration so sub-agents discover it automatically. Addresses REQ-003, AC-003."
+status: queued
