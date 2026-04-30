@@ -1,0 +1,6 @@
+id: TASK-01KQFCM19B847
+parent_feature: FEAT-01KQ2VF7PDZ2G
+slug: doc-sweep-kbz
+name: Sweep documentation for binary name kanbanzai to kbz
+summary: "Update AGENTS.md, README.md, docs/getting-started.md, and all docs/ files to use kbz instead of kanbanzai for binary invocations. Update go install line to cmd/kbz. Preserve system name Kanbanzai and server key names. Addresses FR-010 through FR-013."
+status: queued
