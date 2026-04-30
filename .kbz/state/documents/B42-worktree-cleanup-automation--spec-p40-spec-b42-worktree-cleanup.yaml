@@ -1,10 +1,12 @@
-content_hash: ed27c4791801d5e30aa84418338200ac14fec93da79b0bdfaa96d504c26310d2
+approved_at: "2026-04-30T21:13:24Z"
+approved_by: sambeau
+content_hash: e6beb99740d02a2d26457e31a5d1af948cfec9263e6c8b794061895a43330a08
 created: "2026-04-30T21:11:04Z"
 created_by: sambeau
 id: B42-worktree-cleanup-automation/spec-p40-spec-b42-worktree-cleanup
 owner: B42-worktree-cleanup-automation
 path: work/P40-retro-batch-april-2026/P40-spec-b42-worktree-cleanup.md
-status: draft
+status: approved
 title: "Specification: Worktree and Cleanup Automation (B42)"
 type: spec
-updated: "2026-04-30T21:11:04Z"
+updated: "2026-04-30T21:13:24Z"
