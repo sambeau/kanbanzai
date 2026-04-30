@@ -1,0 +1,6 @@
+id: TASK-01KQG2448DCKJ
+parent_feature: FEAT-01KQG1XWE9ABP
+slug: add-entity-id-to-edit-file-schema
+name: Add entity_id parameter to edit_file tool schema
+summary: "Add optional entity_id string parameter to the edit_file MCP tool's input schema. Must be optional to preserve backward compatibility. Addresses REQ-004, REQ-NF-001."
+status: queued
