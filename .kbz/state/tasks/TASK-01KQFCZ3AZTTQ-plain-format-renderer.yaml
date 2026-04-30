@@ -3,5 +3,5 @@ parent_feature: FEAT-01KQ2VHKJB5V8
 slug: plain-format-renderer
 name: Plain format renderer
 summary: "Implement a plain-format renderer that consumes existing service-layer synthesis structs and emits key:value pairs per FR-3 through FR-7 for all six scope types (feature, plan, task, bug, document, project). Handle edge cases: missing for null values, registered: true/false on documents, single attention: line (highest severity), none for empty attention. Deliverable: internal/cli/status/plain.go."
-status: queued
+status: ready
 estimate: "3"
