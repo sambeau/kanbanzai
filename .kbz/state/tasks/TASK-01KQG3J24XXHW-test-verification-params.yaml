@@ -3,6 +3,6 @@ parent_feature: FEAT-01KQG3AX1AD0K
 slug: test-verification-params
 name: Write tests for verification parameter
 summary: "Tests: set verification on feature, merge gate pass-through, batch rejection, backward compat. Depends on T1. Addresses AC-008 through AC-010, AC-012."
-status: queued
+status: ready
 depends_on:
   - TASK-01KQG3J22FP60

@@ -3,8 +3,11 @@ parent_feature: FEAT-01KQG3AX1AD0K
 slug: add-verification-params
 name: Add verification params to entity update handler
 summary: "Add verification and verification_status optional params to entity update. Write to entity record, no transition. Reject for unsupported types. Addresses REQ-007, REQ-008."
-status: active
+status: done
+completed: "2026-04-30T22:21:52Z"
 claimed_at: "2026-04-30T22:16:29Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-30T22:16:29Z"
 dispatched_by: sambeau
+completion_summary: "Added verification and verification_status optional params to entity(action: update). In entity_tool.go: registered both in MCP tool definition; reject for strategic-plan/batch types; added to generic string fields map for feature/bug/task/decision; validation ensures verification_status is \"passed\" or \"failed\". No lifecycle transition triggered. Build and existing service tests pass."
+verification: "go build ./... succeeds, go test ./internal/service/ -run UpdateEntity passes"
