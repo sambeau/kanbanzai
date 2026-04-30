@@ -3,8 +3,14 @@ parent_feature: FEAT-01KQG3V03PAM4
 slug: auto-cleanup-on-merge
 name: Implement post-merge cleanup hook and tests
 summary: "After merge success: schedule cleanup for worktree, delete local branch on squash merge. Cleanup failure is best-effort warning, not merge failure. Single task with tests. Addresses REQ-006, REQ-007, REQ-NF-002, AC-006, AC-007, AC-011."
-status: active
+status: done
+files_planned:
+  - internal/mcp/merge_tool.go
+  - internal/mcp/merge_tool_cleanup_test.go
+completed: "2026-04-30T22:59:45Z"
 claimed_at: "2026-04-30T22:47:30Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-30T22:47:30Z"
 dispatched_by: sambeau
+completion_summary: "Implemented post-merge cleanup hook: force-delete branch on squash merge (git -d doesn't recognise squash-merged branches). Added 5 tests covering AC-006 (worktree in cleanup list), AC-007 (branch deletion), AC-011 (cleanup failure doesn't fail merge). Existing cleanup scheduling via MarkMerged + store.Update was already in place; the key fix was using force-delete for squash strategy."
+verification: All 5 new tests pass. All existing merge tests pass. Full suite passes except pre-existing failures in kbzinit and status_tool (unrelated).
