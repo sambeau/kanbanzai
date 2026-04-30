@@ -3,9 +3,9 @@ content: "Sub-agents spawned via spawn_agent share the same filesystem and MCP s
 created: "2026-03-28T13:11:13Z"
 created_by: sambeau
 id: KE-01KMT93WRC43V
-last_accessed_at: "2026-04-30T22:01:39Z"
+last_accessed_at: "2026-04-30T22:10:07Z"
 miss_count: 0
-recent_use_count: 222
+recent_use_count: 223
 scope: project
 status: confirmed
 tags:
