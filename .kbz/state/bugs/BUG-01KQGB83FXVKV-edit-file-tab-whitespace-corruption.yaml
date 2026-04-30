@@ -2,8 +2,8 @@ id: BUG-01KQGB83FXVKV
 slug: edit-file-tab-whitespace-corruption
 name: edit_file corrupts tab indentation in Go source files
 status: reported
-severity: medium
-priority: medium
+severity: high
+priority: high
 type: implementation-defect
 reported_by: sambeau
 reported: "2026-04-30T23:23:09Z"

@@ -1,0 +1,10 @@
+id: FEAT-01KQGBA8WD0GJ
+slug: fix-edit-file-tab-whitespace
+name: Fix edit_file Tab Whitespace Corruption
+parent: P40-retro-batch-april-2026
+status: proposed
+summary: "Fix edit_file's fuzzy matching to preserve original tab indentation when applying replacements. Currently, tab-indented Go source lines are replaced with space-indented versions, corrupting struct field alignment and breaking compilation. Related to Theme 10 (edit_file reliability) and B40-F3 (atomic multi-edit). Tracked as BUG-01KQGB83FXVKV."
+design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
+created: "2026-04-30T23:24:20Z"
+created_by: sambeau
+display_id: P40-F1
