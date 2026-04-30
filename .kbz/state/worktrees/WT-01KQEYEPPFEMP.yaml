@@ -1,0 +1,8 @@
+id: WT-01KQEYEPPFEMP
+entity_id: BUG-01KQEWZ8YJ1FN
+branch: bug/BUG-01KQEWZ8YJ1FN-redundant-filename-ids
+path: .worktrees/BUG-01KQEWZ8YJ1FN-redundant-filename-ids
+status: active
+created: "2026-04-30T10:20:20Z"
+created_by: sambeau
+graph_project: Users-samphillips-Dev-kanbanzai

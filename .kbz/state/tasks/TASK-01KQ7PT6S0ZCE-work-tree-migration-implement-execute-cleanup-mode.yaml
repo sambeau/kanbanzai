@@ -3,6 +3,6 @@ parent_feature: FEAT-01KQ7JDT511BZ
 slug: work-tree-migration-implement-execute-cleanup-mode
 name: Implement --execute --cleanup mode
 summary: Implement --execute --cleanup mode
-status: queued
+status: ready
 depends_on:
   - TASK-01KQ7PT6RYVHN

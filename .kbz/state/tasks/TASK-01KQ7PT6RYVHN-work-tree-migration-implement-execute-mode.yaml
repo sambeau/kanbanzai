@@ -3,6 +3,13 @@ parent_feature: FEAT-01KQ7JDT511BZ
 slug: work-tree-migration-implement-execute-mode
 name: Implement --execute mode
 summary: Implement --execute mode
-status: ready
+status: done
 depends_on:
   - TASK-01KQ7PT6RWYK6
+completed: "2026-04-30T10:21:46Z"
+claimed_at: "2026-04-30T10:16:43Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T10:16:43Z"
+dispatched_by: sambeau
+completion_summary: "Implemented --execute mode (T3) and --cleanup mode (T4) for kbz migrate: MISSING records are deleted, MOVE entries use git mv + doc record updates, --resume skips already-staged files, atomic commit with correct message. Cleanup removes empty legacy folders via git rm -r with second commit. Halt-on-failure stops on first error."
+verification: go build ./cmd/kanbanzai/ passes. All 15 migrate unit tests pass.
