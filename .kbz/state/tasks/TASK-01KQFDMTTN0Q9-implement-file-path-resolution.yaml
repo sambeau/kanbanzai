@@ -3,12 +3,20 @@ parent_feature: FEAT-01KQ2VFTWD1W2
 slug: implement-file-path-resolution
 name: Implement File Path Resolution
 summary: "Add LookupByPath method to DocumentService. Implement path normalisation (strip ./), file-existence check, repo-relative exact match, unregistered-document response (exit 0, kbz doc register suggestion), and doc-to-entity routing."
-status: active
+status: done
 estimate: "5"
 depends_on:
   - TASK-01KQFDMBCJZJR
   - TASK-01KQFDMK63E62
+files_planned:
+  - cmd/kbz/workflow_cmd.go
+  - cmd/kbz/workflow_cmd_test.go
+  - internal/service/documents.go
+  - internal/service/documents_test.go
+completed: "2026-04-30T15:49:37Z"
 claimed_at: "2026-04-30T15:33:48Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-30T15:33:48Z"
 dispatched_by: sambeau
+completion_summary: "Implemented LookupByPath method on DocumentService that normalises paths (strips `./` prefix) and looks up document records by repo-relative path. Returns empty DocumentResult (not error) for unregistered paths. Wired into `runStatusPath` in the status command with three behaviors: nonexistent file → exit 1, unregistered file → exit 0 with register suggestion, registered file → doc view + owner entity view. Added 4 service tests and 4 CLI tests covering all cases."
+verification: go build ./... and go vet ./... pass clean. All 4 LookupByPath tests pass. All 26 RunStatus tests pass (including 4 new file path resolution tests). The only pre-existing failure is TestReParentEntityUpdate (unrelated).
