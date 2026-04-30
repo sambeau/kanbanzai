@@ -5,6 +5,7 @@ parent: B42-worktree-cleanup-automation
 status: dev-planning
 summary: "When a worktree record has a merged_at timestamp, suppress branch drift alerts. Merged branches are intentionally stale. Addresses REQ-004, REQ-005, AC-004, AC-005."
 design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
+dev_plan: FEAT-01KQG3TZZD0ZG/dev-plan-p40-f12-dev-plan-skip-drift-merged
 created: "2026-04-30T21:13:40Z"
 created_by: sambeau
 overrides:
