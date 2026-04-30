@@ -1,0 +1,6 @@
+id: TASK-01KQG2WSTPF5K
+parent_feature: FEAT-01KQG2Q5MDC6E
+slug: fix-parent-feature-filter
+name: Fix parent_feature filter and add tests
+summary: "Fix the broken parent_feature filter in entity list to scope results to the specified feature. Write tests: filter returns correct subset, no matches returns empty, unfiltered listing unchanged. Addresses REQ-001, REQ-NF-001, AC-001, AC-002, AC-012."
+status: queued
