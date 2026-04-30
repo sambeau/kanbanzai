@@ -1,10 +1,12 @@
-content_hash: 0634b720e30efdcbd8281e9e903b6209509b66170c514a61b11a8c0bd4cad85c
+approved_at: "2026-04-30T14:45:25Z"
+approved_by: sambeau
+content_hash: ac3e2fd66966d9636e3e82bc143032945aae3b66fc7156dbf021cb8fd32f5898
 created: "2026-04-30T14:43:16Z"
 created_by: sambeau
 id: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution
 owner: FEAT-01KQ2VFTWD1W2
 path: work/plan/B36-F2-dev-plan-status-argument-resolution.md
-status: draft
+status: approved
 title: "Dev Plan: Status command argument resolution"
 type: dev-plan
-updated: "2026-04-30T14:43:16Z"
+updated: "2026-04-30T14:45:25Z"
