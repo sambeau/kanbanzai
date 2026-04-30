@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
@@ -455,6 +456,198 @@ func TestEditFile_FuzzyMatching(t *testing.T) {
 	wantContent := "func hello() {\n\tfmt.Println(\"hello\")\n}\n"
 	if string(data) != wantContent {
 		t.Errorf("content = %q, want %q", string(data), wantContent)
+	}
+}
+
+// ─── Tab indentation preservation tests ──────────────────────────────────────
+
+// TestEditFile_TabIndentedLineReplacementPreservesTabs verifies AC-001:
+// When a tab-indented line in a Go file is replaced via edit mode, the
+// replacement text inherits the tab indentation level of the matched line.
+func TestEditFile_TabIndentedLineReplacementPreservesTabs(t *testing.T) {
+	t.Parallel()
+
+	repoRoot := t.TempDir()
+	store := worktree.NewStore(t.TempDir())
+
+	origContent := "package main\n\nfunc main() {\n\tx := 1\n\ty := 2\n\tz := 3\n}\n"
+	repoFile := filepath.Join(repoRoot, "main.go")
+	if err := os.WriteFile(repoFile, []byte(origContent), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	// Replace one tab-indented line. newText has no leading whitespace.
+	resp := invokeEditFile(t, repoRoot, store, map[string]any{
+		"path":                "main.go",
+		"mode":                "edit",
+		"display_description": "Replace tab-indented line",
+		"edits": []any{
+			map[string]any{
+				"old_text": "y := 2",
+				"new_text": "y := 42",
+			},
+		},
+	})
+
+	if _, hasErr := resp["error"]; hasErr {
+		t.Fatalf("unexpected error: %v", resp["error"])
+	}
+
+	data, err := os.ReadFile(repoFile)
+	if err != nil {
+		t.Fatalf("ReadFile: %v", err)
+	}
+
+	// The replacement should be tab-indented, same level as surrounding lines.
+	wantContent := "package main\n\nfunc main() {\n\tx := 1\n\ty := 42\n\tz := 3\n}\n"
+	if string(data) != wantContent {
+		t.Errorf("content =\n%q\nwant =\n%q", string(data), wantContent)
+	}
+
+	// Verify surrounding lines retain tab indentation.
+	lines := strings.SplitN(string(data), "\n", -1)
+	for _, line := range lines {
+		if strings.HasPrefix(line, "x :=") || strings.HasPrefix(line, "z :=") {
+			if !strings.HasPrefix(line, "\t") {
+				t.Errorf("surrounding line lost tab indentation: %q", line)
+			}
+		}
+	}
+}
+
+// TestEditFile_StructFieldReplacementDoesntCorruptNeighbors verifies AC-002:
+// When a struct field in a tab-indented Go struct is replaced, other fields
+// retain their tab indentation.
+func TestEditFile_StructFieldReplacementDoesntCorruptNeighbors(t *testing.T) {
+	t.Parallel()
+
+	repoRoot := t.TempDir()
+	store := worktree.NewStore(t.TempDir())
+
+	origContent := "package main\n\ntype Config struct {\n\tName    string\n\tAge     int\n\tEnabled bool\n}\n"
+	repoFile := filepath.Join(repoRoot, "types.go")
+	if err := os.WriteFile(repoFile, []byte(origContent), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	// Replace "int" with "uint" — newText has no leading whitespace.
+	resp := invokeEditFile(t, repoRoot, store, map[string]any{
+		"path":                "types.go",
+		"mode":                "edit",
+		"display_description": "Replace struct field type",
+		"edits": []any{
+			map[string]any{
+				"old_text": "Age     int",
+				"new_text": "Age     uint",
+			},
+		},
+	})
+
+	if _, hasErr := resp["error"]; hasErr {
+		t.Fatalf("unexpected error: %v", resp["error"])
+	}
+
+	data, err := os.ReadFile(repoFile)
+	if err != nil {
+		t.Fatalf("ReadFile: %v", err)
+	}
+
+	// Verify no field has extra tab indentation (double-tab).
+	if strings.Contains(string(data), "\t\t") {
+		t.Errorf("content contains double-tab indentation: %q", string(data))
+	}
+
+	// Verify exact content to catch any whitespace corruption.
+	wantContent := "package main\n\ntype Config struct {\n\tName    string\n\tAge     uint\n\tEnabled bool\n}\n"
+	if string(data) != wantContent {
+		t.Errorf("content =\n%q\nwant =\n%q", string(data), wantContent)
+	}
+}
+
+// TestEditFile_SpaceIndentedFilesUnchanged verifies AC-003:
+// Space-indented files are unaffected by the fix — existing behaviour preserved.
+func TestEditFile_SpaceIndentedFilesUnchanged(t *testing.T) {
+	t.Parallel()
+
+	repoRoot := t.TempDir()
+	store := worktree.NewStore(t.TempDir())
+
+	// Space-indented YAML file.
+	origContent := "root:\n  key: old-value\n  nested:\n    child: foo\n"
+	repoFile := filepath.Join(repoRoot, "config.yaml")
+	if err := os.WriteFile(repoFile, []byte(origContent), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	resp := invokeEditFile(t, repoRoot, store, map[string]any{
+		"path":                "config.yaml",
+		"mode":                "edit",
+		"display_description": "Replace YAML value",
+		"edits": []any{
+			map[string]any{
+				"old_text": "key: old-value",
+				"new_text": "key: new-value",
+			},
+		},
+	})
+
+	if _, hasErr := resp["error"]; hasErr {
+		t.Fatalf("unexpected error: %v", resp["error"])
+	}
+
+	data, err := os.ReadFile(repoFile)
+	if err != nil {
+		t.Fatalf("ReadFile: %v", err)
+	}
+
+	wantContent := "root:\n  key: new-value\n  nested:\n    child: foo\n"
+	if string(data) != wantContent {
+		t.Errorf("content =\n%q\nwant =\n%q", string(data), wantContent)
+	}
+}
+
+// TestEditFile_FuzzyMatchPreservesTabIndentation verifies that fuzzy matching
+// with tab-indented files preserves indentation (critical bug scenario).
+func TestEditFile_FuzzyMatchPreservesTabIndentation(t *testing.T) {
+	t.Parallel()
+
+	repoRoot := t.TempDir()
+	store := worktree.NewStore(t.TempDir())
+
+	// Tab-indented Go file simulating the bug scenario: a string slice with
+	// tab-indented entries.
+	origContent := "var tools = []string{\n\t\"read\",\n\t\"write\",\n\t\"list\",\n}\n"
+	repoFile := filepath.Join(repoRoot, "tools.go")
+	if err := os.WriteFile(repoFile, []byte(origContent), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	// Replace a tab-indented entry — oldText has no tabs (fuzzy matching
+	// normalizes them away) and newText has no tabs either.
+	resp := invokeEditFile(t, repoRoot, store, map[string]any{
+		"path":                "tools.go",
+		"mode":                "edit",
+		"display_description": "Replace tab-indented slice entry",
+		"edits": []any{
+			map[string]any{
+				"old_text": "\"list\"",
+				"new_text": "\"download\"",
+			},
+		},
+	})
+
+	if _, hasErr := resp["error"]; hasErr {
+		t.Fatalf("unexpected error: %v", resp["error"])
+	}
+
+	data, err := os.ReadFile(repoFile)
+	if err != nil {
+		t.Fatalf("ReadFile: %v", err)
+	}
+
+	wantContent := "var tools = []string{\n\t\"read\",\n\t\"write\",\n\t\"download\",\n}\n"
+	if string(data) != wantContent {
+		t.Errorf("content =\n%q\nwant =\n%q", string(data), wantContent)
 	}
 }
 

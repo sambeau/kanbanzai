@@ -168,6 +168,18 @@ func editFileTool(repoRoot string, worktreeStore *worktree.Store) server.ServerT
 							fmt.Sprintf("edit %d: could not find old_text in file (even with fuzzy matching)", i+1))
 					}
 				}
+
+				// Preserve indentation: when oldText matches at the start
+				// of an indented line and newText doesn't start with
+				// whitespace, extend the match backward to include the
+				// indentation so newText inherits it without doubling.
+				lineIndent := lineIndentation(modified, idx)
+				if lineIndent != "" && !startsWithWhitespace(newText) {
+					idx -= len(lineIndent)
+					matchLen += len(lineIndent)
+					newText = lineIndent + newText
+				}
+
 				modified = modified[:idx] + newText + modified[idx+matchLen:]
 			}
 
@@ -226,6 +238,34 @@ func mapToOriginal(original string, normalizedIdx int) int {
 		}
 	}
 	return origIdx
+}
+
+// lineIndentation returns the leading whitespace (tabs/spaces) on the line
+// containing position idx in s. Returns empty string if the line has no
+// leading whitespace, or if idx is not at the first non-whitespace character
+// of the line (i.e. there is non-whitespace content between line start and idx).
+func lineIndentation(s string, idx int) string {
+	// Find start of line (position after last newline before idx).
+	lineStart := 0
+	for i := idx - 1; i >= 0; i-- {
+		if s[i] == '\n' {
+			lineStart = i + 1
+			break
+		}
+	}
+	// Walk from lineStart to idx: everything must be whitespace.
+	for i := lineStart; i < idx; i++ {
+		if s[i] != ' ' && s[i] != '\t' {
+			return "" // non-whitespace between line start and idx — not at line start
+		}
+	}
+	// Everything from lineStart to idx is whitespace.
+	return s[lineStart:idx]
+}
+
+// startsWithWhitespace reports whether s starts with a space or tab.
+func startsWithWhitespace(s string) bool {
+	return len(s) > 0 && (s[0] == ' ' || s[0] == '\t')
 }
 
 // normalizeWhitespace collapses consecutive whitespace characters (spaces, tabs,
