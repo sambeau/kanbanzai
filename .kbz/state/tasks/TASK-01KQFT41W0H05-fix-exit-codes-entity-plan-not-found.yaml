@@ -1,0 +1,6 @@
+id: TASK-01KQFT41W0H05
+parent_feature: FEAT-01KQ2VFTWD1W2
+slug: fix-exit-codes-entity-plan-not-found
+name: Fix Exit Codes on Entity Plan Not-Found
+summary: "runStatusEntity returns nil (exit 0) when entitySvc.Get fails; runStatusPlanPrefix returns nil (exit 0) when GetPlan fails. Both must instead return descriptive errors so the caller runStatus can exit with code 1 as required by FR-016 and FR-008 respectively. Error messages must include the unresolved ID/prefix. Update the inline comment in runStatusPlanPrefix that currently reads \"Plan not found — informational, exit 0\" to reflect the corrected behaviour. Deliverable: modified cmd/kbz/workflow_cmd.go."
+status: queued
