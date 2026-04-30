@@ -1,0 +1,11 @@
+id: BUG-01KQEWZ8YJ1FN
+slug: redundant-filename-ids
+name: Agent filenames have redundant repeated IDs
+status: reported
+severity: medium
+priority: high
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-04-30T09:54:25Z"
+observed: "Files generated under work/B37-file-names-and-actions/ have redundant IDs:\n- B37-F1-dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids.md — repeats B37/p37, F1/f1, and dev-plan\n- B37-F1-spec-p37-f1-spec-plan-scoped-feature-display-ids.md — repeats B37/p37, F1/f1, and spec\n- B37-F2-dev-plan-p37-f2-dev-plan-doc-type-and-filename-enforcement.md — repeats B37/p37, F2/f2, and dev-plan\n- B37-F2-spec-p37-f2-spec-doc-type-and-filename-enforcement.md — repeats B37/p37, F2/f2, and spec\n- B37-F3-dev-plan-p37-f3-dev-plan-kbz-move.md — repeats B37/p37, F3/f3, and dev-plan\n- B37-F3-spec-p37-f3-spec-kbz-move.md — repeats B37/p37, F3/f3, and spec\n- B37-F4-dev-plan-p37-f4-dev-plan-kbz-delete.md — repeats B37/p37, F4/f4, and dev-plan\n- B37-F4-spec-p37-f4-spec-kbz-delete.md — repeats B37/p37, F4/f4, and spec\n\nAlso uses B37 (batch ID) instead of P37 (plan ID) as the filename prefix."
+expected: "Filenames should follow the canonical template from the design (D3) and spec (REQ-005):\n- Plan-level: P37-design-file-names-and-actions.md\n- Feature-level: P37-F2-spec-doc-type-and-filename-enforcement.md\n\nEach identifier (P37, F2, dev-plan) should appear exactly once. The plan ID prefix should be P{n} not B{n}."
