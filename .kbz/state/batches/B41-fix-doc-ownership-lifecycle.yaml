@@ -1,0 +1,13 @@
+id: B41-fix-doc-ownership-lifecycle
+slug: fix-doc-ownership-lifecycle
+name: Fix Document Ownership and Lifecycle
+status: proposed
+summary: "Auto-infer document owner from path context, preserve approval status on minor edits, add bypassable signalling to merge gates, and add verification parameter to entity update. Addresses Themes 4 and 7 (Significant/Moderate) from the April 2026 retrospective."
+tags:
+  - workstream-c
+  - significant
+created: "2026-04-30T20:15:00Z"
+created_by: sambeau
+updated: "2026-04-30T20:15:00Z"
+next_feature_seq: 1
+parent: P40-retro-batch-april-2026
