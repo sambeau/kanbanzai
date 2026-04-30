@@ -2,12 +2,14 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"reflect"
 	"strings"
 	"testing"
 
 	"github.com/sambeau/kanbanzai/internal/cache"
+	"github.com/sambeau/kanbanzai/internal/cli/render"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/validate"
@@ -677,6 +679,12 @@ func testDependenciesWithService(svc entityService) (dependencies, *bytes.Buffer
 		newEntityService: func(root string) entityService {
 			return svc
 		},
+		newDocumentService: func(stateRoot, repoRoot string) docService {
+			return newFakeDocService()
+		},
+		newRenderer: func(tty render.TTYDetector) *render.Renderer {
+			return render.NewRenderer(render.StaticTTY{Value: false})
+		},
 	}, buf
 }
 
@@ -956,4 +964,51 @@ type testError struct {
 
 func (e *testError) Error() string {
 	return e.message
+}
+
+// ─── fakeDocService ──────────────────────────────────────────────────────────
+
+type fakeDocService struct {
+	lookupResults map[string]service.DocumentResult
+	lookupErr     error
+}
+
+func newFakeDocService() *fakeDocService {
+	return &fakeDocService{
+		lookupResults: map[string]service.DocumentResult{
+			"design/existing.md": {
+				ID:     "DOC-001",
+				Path:   "design/existing.md",
+				Type:   "design",
+				Title:  "Existing Design",
+				Status: "approved",
+				Owner:  "FEAT-01J3K7MXP3RT5",
+			},
+			"design/owned.md": {
+				ID:     "DOC-002",
+				Path:   "design/owned.md",
+				Type:   "design",
+				Title:  "Owned Design",
+				Status: "approved",
+				Owner:  "FEAT-01J3K9ABC5DE7",
+			},
+			"design/no-owner.md": {
+				ID:     "DOC-003",
+				Path:   "design/no-owner.md",
+				Type:   "design",
+				Title:  "No Owner Design",
+				Status: "draft",
+			},
+		},
+	}
+}
+
+func (f *fakeDocService) LookupByPath(ctx context.Context, path string) (service.DocumentResult, error) {
+	if f.lookupErr != nil {
+		return service.DocumentResult{}, f.lookupErr
+	}
+	if r, ok := f.lookupResults[path]; ok {
+		return r, nil
+	}
+	return service.DocumentResult{}, nil
 }

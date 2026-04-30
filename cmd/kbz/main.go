@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"os"
@@ -11,6 +12,7 @@ import (
 
 	_ "github.com/sambeau/kanbanzai/internal/buildinfo"
 	"github.com/sambeau/kanbanzai/internal/cache"
+	"github.com/sambeau/kanbanzai/internal/cli/render"
 	"github.com/sambeau/kanbanzai/internal/config"
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
 	"github.com/sambeau/kanbanzai/internal/core"
@@ -43,11 +45,17 @@ type entityService interface {
 	WorkQueue(service.WorkQueueInput) (service.WorkQueueResult, error)
 }
 
+type docService interface {
+	LookupByPath(ctx context.Context, path string) (service.DocumentResult, error)
+}
+
 type dependencies struct {
-	stdout           io.Writer
-	stdin            io.Reader
-	version          string
-	newEntityService func(root string) entityService
+	stdout             io.Writer
+	stdin              io.Reader
+	version            string
+	newEntityService   func(root string) entityService
+	newDocumentService func(stateRoot, repoRoot string) docService
+	newRenderer        func(tty render.TTYDetector) *render.Renderer
 }
 
 func defaultDependencies() dependencies {
@@ -66,6 +74,12 @@ func defaultDependencies() dependencies {
 				}
 			}
 			return svc
+		},
+		newDocumentService: func(stateRoot, repoRoot string) docService {
+			return service.NewDocumentService(stateRoot, repoRoot)
+		},
+		newRenderer: func(tty render.TTYDetector) *render.Renderer {
+			return render.NewRenderer(tty)
 		},
 	}
 }

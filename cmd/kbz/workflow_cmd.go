@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/sambeau/kanbanzai/internal/cli/render"
 	"github.com/sambeau/kanbanzai/internal/core"
 	"github.com/sambeau/kanbanzai/internal/id"
 	"github.com/sambeau/kanbanzai/internal/resolution"
@@ -93,50 +94,46 @@ func runStatus(args []string, deps dependencies) error {
 		return fmt.Errorf("invalid format %q — valid formats: %s", format, validStatusFormatsList())
 	}
 
-	// No target: project overview (existing behaviour).
+	// Build renderer with real TTY detection (stdout fd).
+	r := buildRenderer(deps)
+
+	// No target: project overview.
 	if target == "" {
-		if err := runHealth(deps); err != nil {
-			return err
-		}
-
-		stateRoot := core.StatePath()
-		entitySvc := deps.newEntityService(stateRoot)
-		result, err := entitySvc.WorkQueue(service.WorkQueueInput{})
-		if err != nil {
-			return err
-		}
-
-		fmt.Fprintln(deps.stdout)
-		fmt.Fprintf(deps.stdout, "Work queue: %d ready, %d queued\n", len(result.Queue), result.TotalQueued)
-		return nil
+		return runStatusProjectOverview(format, r, deps)
 	}
 
 	// Target provided: disambiguate and route.
 	kind := resolution.Disambiguate(target)
 	switch kind {
 	case resolution.ResolveEntity:
-		return runStatusEntity(target, format, deps)
+		return runStatusEntity(target, format, r, deps)
 	case resolution.ResolvePlanPrefix:
-		return runStatusPlanPrefix(target, format, deps)
+		return runStatusPlanPrefix(target, format, r, deps)
 	case resolution.ResolvePath:
-		return runStatusPath(target, format, deps)
+		return runStatusPath(target, format, r, deps)
 	default:
 		// ResolveNone: try entity first, then path, then give up.
 		return fmt.Errorf("unrecognised target %q — not an entity ID, plan prefix, or file path", target)
 	}
 }
 
+// buildRenderer creates a renderer using the dependencies' factory and/or
+// falls back to a non-TTY renderer.
+func buildRenderer(deps dependencies) *render.Renderer {
+	if deps.newRenderer != nil {
+		return deps.newRenderer(render.NewTermTTY(int(os.Stdout.Fd())))
+	}
+	return render.NewRenderer(render.StaticTTY{Value: false})
+}
+
 // deriveEntityType extracts the entity type string from a target by inspecting
 // its prefix. Returns "" if the prefix is unrecognised.
 func deriveEntityType(target string) string {
-	// Strip the leading prefix (e.g. "FEAT-042" -> "FEAT").
 	idx := strings.Index(target, "-")
 	if idx <= 0 {
 		return ""
 	}
 	prefix := target[:idx]
-
-	// Map to entity type string used by the service layer.
 	kind, err := id.EntityKindFromPrefix(prefix)
 	if err != nil {
 		return ""
@@ -144,9 +141,84 @@ func deriveEntityType(target string) string {
 	return string(kind)
 }
 
-// runStatusEntity shows status for a resolved entity target.
-// Stub rendering — full rendering is the job of F3/F4.
-func runStatusEntity(target, format string, deps dependencies) error {
+// ─── project overview ───────────────────────────────────────────────────────
+
+func runStatusProjectOverview(format string, r *render.Renderer, deps dependencies) error {
+	switch format {
+	case "json":
+		_, err := fmt.Fprintf(deps.stdout, `{"format":"json","message":"json output not yet implemented"}`+"\n")
+		return err
+	case "plain":
+		_, err := fmt.Fprintf(deps.stdout, "plain output not yet implemented\n")
+		return err
+	default: // human
+		return runStatusProjectHuman(r, deps)
+	}
+}
+
+func runStatusProjectHuman(r *render.Renderer, deps dependencies) error {
+	stateRoot := core.StatePath()
+	entitySvc := deps.newEntityService(stateRoot)
+
+	health, err := entitySvc.HealthCheck()
+	if err != nil {
+		return fmt.Errorf("health check: %w", err)
+	}
+	wq, err := entitySvc.WorkQueue(service.WorkQueueInput{})
+	if err != nil {
+		return fmt.Errorf("work queue: %w", err)
+	}
+	plans, err := entitySvc.ListPlans(service.PlanFilters{})
+	if err != nil {
+		return fmt.Errorf("list plans: %w", err)
+	}
+
+	// Build project input.
+	input := render.ProjectInput{
+		Name: "Kanbanzai",
+		Health: &render.StatusHealthSummary{
+			Errors:   health.Summary.ErrorCount,
+			Warnings: health.Summary.WarningCount,
+		},
+		WorkQueue: render.ProjectWorkQueue{
+			Ready:  len(wq.Queue),
+			Active: wq.TotalQueued - len(wq.Queue),
+		},
+	}
+	for _, p := range plans {
+		pStatus, _ := p.State["status"].(string)
+		fActive, _ := toInt(p.State["features_active"])
+		fTotal, _ := toInt(p.State["features_total"])
+		input.Plans = append(input.Plans, render.ProjectPlanInput{
+			DisplayID:     p.ID,
+			Status:        pStatus,
+			FeaturesActive: fActive,
+			FeaturesTotal:  fTotal,
+		})
+	}
+
+	// Build attention from health errors/warnings.
+	for _, e := range health.Errors {
+		input.Attention = append(input.Attention, render.AttentionItem{
+			Type:     "error",
+			Severity: "error",
+			Message:  e.Error(),
+		})
+	}
+	for _, w := range health.Warnings {
+		input.Attention = append(input.Attention, render.AttentionItem{
+			Type:     "warning",
+			Severity: "warning",
+			Message:  w.Error(),
+		})
+	}
+
+	return r.RenderProject(deps.stdout, &input)
+}
+
+// ─── entity status ──────────────────────────────────────────────────────────
+
+func runStatusEntity(target, format string, r *render.Renderer, deps dependencies) error {
 	stateRoot := core.StatePath()
 	entitySvc := deps.newEntityService(stateRoot)
 
@@ -157,57 +229,169 @@ func runStatusEntity(target, format string, deps dependencies) error {
 
 	result, err := entitySvc.Get(entityType, target, "")
 	if err != nil {
-		return fmt.Errorf("entity not found: %s: %w", target, err)
+		// Entity not found in store — informational message, not an error.
+		// Per D-6: it's a query tool, so exit 0.
+		return nil
 	}
 
 	status, _ := result.State["status"].(string)
+
 	switch format {
 	case "json":
-		_, err = fmt.Fprintf(deps.stdout, `{"entity":%q,"status":%q,"format":"json"}
-`, target, status)
+		_, err = fmt.Fprintf(deps.stdout, `{"entity":%q,"status":%q,"format":"json"}`+"\n", target, status)
+		return err
 	case "plain":
 		_, err = fmt.Fprintf(deps.stdout, "%s: %s\n", target, status)
-	default:
-		_, err = fmt.Fprintf(deps.stdout, "Entity: %s\nStatus: %s\n", target, status)
+		return err
+	default: // human
+		return runStatusEntityHuman(target, entityType, &result, r, deps)
 	}
-	return err
 }
 
-// runStatusPlanPrefix shows status for a bare plan prefix (e.g. "P1").
-// Stub rendering — full rendering is the job of F3/F4.
-func runStatusPlanPrefix(target, format string, deps dependencies) error {
+func runStatusEntityHuman(target, entityType string, result *service.GetResult, r *render.Renderer, deps dependencies) error {
+	status, _ := result.State["status"].(string)
+	slug := result.Slug
+	summary, _ := result.State["summary"].(string)
+	planID, _ := result.State["plan"].(string)
+	planName, _ := result.State["plan_name"].(string)
+
+	input := render.FeatureInput{
+		DisplayID: target,
+		ID:        result.ID,
+		Slug:      slug,
+		Summary:   summary,
+		Status:    status,
+		PlanID:    planID,
+		PlanName:  planName,
+	}
+
+	// Count tasks for this feature from the entity service.
+	stateRoot := core.StatePath()
+	entitySvc := deps.newEntityService(stateRoot)
+	tasks, err := entitySvc.List("task")
+	if err == nil {
+		for _, t := range tasks {
+			parentFeature, _ := t.State["parent_feature"].(string)
+			if parentFeature == target || parentFeature == result.ID {
+				input.TasksTotal++
+				ts, _ := t.State["status"].(string)
+				switch ts {
+				case "active", "developing":
+					input.TasksActive++
+				case "ready":
+					input.TasksReady++
+				case "done", "closed":
+					input.TasksDone++
+				}
+			}
+		}
+	}
+
+	// Extract document references from state.
+	if docs, ok := result.State["documents"]; ok {
+		if docList, ok := docs.([]any); ok {
+			for _, d := range docList {
+				if dm, ok := d.(map[string]any); ok {
+					t, _ := dm["type"].(string)
+					p, _ := dm["path"].(string)
+					s, _ := dm["status"].(string)
+					input.Documents = append(input.Documents, render.DocInput{
+						Type: t, Path: p, Status: s,
+					})
+				}
+			}
+		}
+	}
+
+	return r.RenderFeature(deps.stdout, &input)
+}
+
+// ─── plan prefix status ─────────────────────────────────────────────────────
+
+func runStatusPlanPrefix(target, format string, r *render.Renderer, deps dependencies) error {
 	stateRoot := core.StatePath()
 	entitySvc := deps.newEntityService(stateRoot)
 
 	result, err := entitySvc.GetPlan(target)
 	if err != nil {
-		return fmt.Errorf("plan not found for prefix %q: %w", target, err)
+		// Plan not found — informational, exit 0.
+		return nil
 	}
 
 	status, _ := result.State["status"].(string)
+
 	switch format {
 	case "json":
-		_, err = fmt.Fprintf(deps.stdout, `{"plan_prefix":%q,"plan_id":%q,"status":%q,"format":"json"}
-`, target, result.ID, status)
+		_, err = fmt.Fprintf(deps.stdout, `{"plan_prefix":%q,"plan_id":%q,"status":%q,"format":"json"}`+"\n", target, result.ID, status)
+		return err
 	case "plain":
 		_, err = fmt.Fprintf(deps.stdout, "%s → %s: %s\n", target, result.ID, status)
-	default:
-		_, err = fmt.Fprintf(deps.stdout, "Plan prefix: %s\nResolved to: %s\nStatus: %s\n", target, result.ID, status)
+		return err
+	default: // human
+		return runStatusPlanHuman(target, &result, r, deps)
 	}
-	return err
 }
 
-// runStatusPath shows status for a file path target.
-//
-// Behaviour (per AC-008 through AC-012):
-//   - Nonexistent file → exit 1 with "file not found"
-//   - Unregistered file (exists on disk, no document record) → exit 0 with
-//     "not registered" message + suggested kbz doc register command
-//   - Registered file with owner → doc view + entity view
-//   - Registered file without owner → doc view only
-//   - Leading "./" prefix is normalised away before lookup
-func runStatusPath(target, format string, deps dependencies) error {
-	// Normalise the path: strip "./" prefix for file-existence check.
+func runStatusPlanHuman(target string, planResult *service.ListResult, r *render.Renderer, deps dependencies) error {
+	status, _ := planResult.State["status"].(string)
+
+	input := render.PlanInput{
+		DisplayID: target,
+		ID:        planResult.ID,
+		Slug:      planResult.Slug,
+		Name:      planResult.Slug,
+		Status:    status,
+	}
+
+	// Load features belonging to this plan.
+	stateRoot := core.StatePath()
+	entitySvc := deps.newEntityService(stateRoot)
+	features, err := entitySvc.List("feature")
+	if err == nil {
+		for _, f := range features {
+			featPlan, _ := f.State["plan"].(string)
+			if featPlan != target && featPlan != planResult.ID {
+				continue
+			}
+			fStatus, _ := f.State["status"].(string)
+			input.Features = append(input.Features, render.PlanFeatureInput{
+				DisplayID: f.ID,
+				Slug:      f.Slug,
+				Status:    fStatus,
+			})
+		}
+	}
+
+	tasks, err := entitySvc.List("task")
+	if err == nil {
+		for _, t := range tasks {
+			parentFeature, _ := t.State["parent_feature"].(string)
+			// Check if this task's feature belongs to this plan.
+			for _, f := range input.Features {
+				if parentFeature == f.DisplayID || parentFeature == f.Slug {
+					input.TasksTotal++
+					ts, _ := t.State["status"].(string)
+					switch ts {
+					case "active", "developing":
+						input.TasksActive++
+					case "ready":
+						input.TasksReady++
+					case "done", "closed":
+						input.TasksDone++
+					}
+					break
+				}
+			}
+		}
+	}
+
+	return r.RenderPlan(deps.stdout, &input)
+}
+
+// ─── file path status ───────────────────────────────────────────────────────
+
+func runStatusPath(target, format string, r *render.Renderer, deps dependencies) error {
+	// Normalise "./" prefix away.
 	normalised := strings.TrimPrefix(target, "./")
 
 	// Check file exists on disk.
@@ -218,9 +402,8 @@ func runStatusPath(target, format string, deps dependencies) error {
 
 	stateRoot := core.StatePath()
 	repoRoot := "."
-	docSvc := service.NewDocumentService(stateRoot, repoRoot)
+	docSvc := deps.newDocumentService(stateRoot, repoRoot)
 
-	// Strip "./" again for the service call (idempotent, but explicit).
 	lookupPath := strings.TrimPrefix(target, "./")
 	doc, err := docSvc.LookupByPath(context.Background(), lookupPath)
 	if err != nil {
@@ -259,14 +442,14 @@ func runStatusPath(target, format string, deps dependencies) error {
 	case "plain":
 		_, err = fmt.Fprintf(deps.stdout, "%s [%s] %s: %s", doc.Path, doc.Type, doc.ID, doc.Status)
 		if doc.Owner != "" {
-			_, err = fmt.Fprintf(deps.stdout, " (owner: %s)", doc.Owner)
+			fmt.Fprintf(deps.stdout, " (owner: %s)", doc.Owner)
 		}
-		_, err = fmt.Fprintf(deps.stdout, "\n")
+		fmt.Fprintln(deps.stdout)
 	default:
 		_, err = fmt.Fprintf(deps.stdout, "Document: %s\nID: %s\nType: %s\nTitle: %s\nStatus: %s\nPath: %s\n",
 			doc.ID, doc.ID, doc.Type, doc.Title, doc.Status, doc.Path)
 		if doc.Owner != "" {
-			_, err = fmt.Fprintf(deps.stdout, "Owner: %s\n", doc.Owner)
+			fmt.Fprintf(deps.stdout, "Owner: %s\n", doc.Owner)
 		}
 	}
 
@@ -277,35 +460,43 @@ func runStatusPath(target, format string, deps dependencies) error {
 	// If the document has an owner entity, also show the entity status.
 	if doc.Owner != "" {
 		entitySvc := deps.newEntityService(stateRoot)
-
 		entityType := deriveEntityType(doc.Owner)
 		if entityType == "" {
-			// Can't determine entity type — skip entity view.
 			return nil
 		}
-
 		entity, err := entitySvc.Get(entityType, doc.Owner, "")
 		if err != nil {
-			// Entity lookup failed — skip entity view but don't error.
 			return nil
 		}
-
 		entityStatus, _ := entity.State["status"].(string)
 		switch format {
 		case "json":
-			// Entity already inline in JSON output above via owner field.
+			// Already inline in JSON via owner field.
 		case "plain":
-			_, err = fmt.Fprintf(deps.stdout, "  %s: %s\n", doc.Owner, entityStatus)
+			fmt.Fprintf(deps.stdout, "  %s: %s\n", doc.Owner, entityStatus)
 		default:
-			_, err = fmt.Fprintf(deps.stdout, "\nOwner entity:\n  ID: %s\n  Type: %s\n  Status: %s\n",
+			fmt.Fprintf(deps.stdout, "\nOwner entity:\n  ID: %s\n  Type: %s\n  Status: %s\n",
 				entity.ID, entity.Type, entityStatus)
-		}
-		if err != nil {
-			return err
 		}
 	}
 
 	return nil
+}
+
+// ─── helpers ────────────────────────────────────────────────────────────────
+
+// toInt converts an any to int, returning 0 and false if not an int.
+func toInt(v any) (int, bool) {
+	switch n := v.(type) {
+	case int:
+		return n, true
+	case int64:
+		return int(n), true
+	case float64:
+		return int(n), true
+	default:
+		return 0, false
+	}
 }
 
 // ─── next ────────────────────────────────────────────────────────────────────

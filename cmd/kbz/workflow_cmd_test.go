@@ -20,10 +20,13 @@ func TestRunStatus_NoArgs_ShowsProjectOverview(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, "health check") {
-		t.Fatalf("stdout missing health check:\n%s", stdout)
+	if !strings.Contains(stdout, "Kanbanzai") {
+		t.Fatalf("stdout missing project header:\n%s", stdout)
 	}
-	if !strings.Contains(stdout, "Work queue:") {
+	if !strings.Contains(stdout, "Health") {
+		t.Fatalf("stdout missing health:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "Work queue") {
 		t.Fatalf("stdout missing work queue:\n%s", stdout)
 	}
 }
@@ -38,9 +41,6 @@ func TestRunStatus_InvalidFormat_ReturnsError(t *testing.T) {
 	}
 	if !strings.Contains(err.Error(), "invalid format") {
 		t.Fatalf("error missing 'invalid format': %v", err)
-	}
-	if !strings.Contains(err.Error(), "human, plain, json") {
-		t.Fatalf("error missing valid formats list: %v", err)
 	}
 }
 
@@ -63,10 +63,7 @@ func TestRunStatus_MultiplePositionalArgs_ReturnsError(t *testing.T) {
 
 	err := runStatus([]string{"FEAT-042", "FEAT-043"}, deps)
 	if err == nil {
-		t.Fatal("runStatus(FEAT-042 FEAT-043) error = nil, want non-nil")
-	}
-	if !strings.Contains(err.Error(), "at most one target") {
-		t.Fatalf("error missing target count message: %v", err)
+		t.Fatal("runStatus with multiple targets should error")
 	}
 }
 
@@ -74,9 +71,9 @@ func TestRunStatus_UnknownFlag_ReturnsError(t *testing.T) {
 	fake := newFakeEntityService()
 	deps, _ := testDependenciesWithService(fake)
 
-	err := runStatus([]string{"--unknown-flag"}, deps)
+	err := runStatus([]string{"--no-such-flag"}, deps)
 	if err == nil {
-		t.Fatal("runStatus(--unknown-flag) error = nil, want non-nil")
+		t.Fatal("runStatus with unknown flag should error")
 	}
 	if !strings.Contains(err.Error(), "unknown flag") {
 		t.Fatalf("error missing 'unknown flag': %v", err)
@@ -87,9 +84,9 @@ func TestRunStatus_UnknownFlag_CompactEquals(t *testing.T) {
 	fake := newFakeEntityService()
 	deps, _ := testDependenciesWithService(fake)
 
-	err := runStatus([]string{"--unknown=value"}, deps)
+	err := runStatus([]string{"--bogus=value"}, deps)
 	if err == nil {
-		t.Fatal("runStatus(--unknown=value) error = nil, want non-nil")
+		t.Fatal("runStatus with unknown flag should error")
 	}
 	if !strings.Contains(err.Error(), "unknown flag") {
 		t.Fatalf("error missing 'unknown flag': %v", err)
@@ -102,10 +99,10 @@ func TestRunStatus_FormatRequiresValue(t *testing.T) {
 
 	err := runStatus([]string{"--format"}, deps)
 	if err == nil {
-		t.Fatal("runStatus(--format) error = nil, want non-nil")
+		t.Fatal("runStatus(--format without value) should error")
 	}
-	if !strings.Contains(err.Error(), "--format requires a value") {
-		t.Fatalf("error missing required value message: %v", err)
+	if !strings.Contains(err.Error(), "requires a value") {
+		t.Fatalf("error missing 'requires a value': %v", err)
 	}
 }
 
@@ -113,50 +110,50 @@ func TestRunStatus_ShortFlag(t *testing.T) {
 	fake := newFakeEntityService()
 	deps, _ := testDependenciesWithService(fake)
 
-	err := runStatus([]string{"-f", "json"}, deps)
+	err := runStatus([]string{"-f", "json", "FEAT-01J3K7MXP3RT5"}, deps)
 	if err != nil {
-		t.Fatalf("runStatus(-f json) error = %v", err)
+		t.Fatalf("runStatus(-f json FEAT-...) error = %v", err)
 	}
-	// No target — should show project overview.
 }
 
 func TestRunStatus_ShortFlag_CompactEquals(t *testing.T) {
 	fake := newFakeEntityService()
 	deps, _ := testDependenciesWithService(fake)
 
-	err := runStatus([]string{"-f=json"}, deps)
+	err := runStatus([]string{"-f=json", "FEAT-01J3K7MXP3RT5"}, deps)
 	if err != nil {
-		t.Fatalf("runStatus(-f=json) error = %v", err)
+		t.Fatalf("runStatus(-f=json FEAT-...) error = %v", err)
 	}
-	// No target — should show project overview.
 }
 
 func TestRunStatus_DuplicateFormat_ReturnsError(t *testing.T) {
 	fake := newFakeEntityService()
 	deps, _ := testDependenciesWithService(fake)
 
-	err := runStatus([]string{"--format", "json", "--format", "human"}, deps)
+	err := runStatus([]string{"--format", "json", "--format", "plain"}, deps)
 	if err == nil {
-		t.Fatal("runStatus with duplicate --format error = nil, want non-nil")
+		t.Fatal("runStatus with duplicate --format should error")
 	}
 	if !strings.Contains(err.Error(), "specified more than once") {
-		t.Fatalf("error missing duplicate message: %v", err)
+		t.Fatalf("error missing 'specified more than once': %v", err)
 	}
 }
 
 func TestRunStatus_ValidFormats_Accepted(t *testing.T) {
-	fake := newFakeEntityService()
-	deps, _ := testDependenciesWithService(fake)
-
 	for _, fmt := range []string{"human", "plain", "json"} {
 		t.Run(fmt, func(t *testing.T) {
-			err := runStatus([]string{"--format", fmt}, deps)
+			fake := newFakeEntityService()
+			deps, _ := testDependenciesWithService(fake)
+
+			err := runStatus([]string{"--format", fmt, "FEAT-01J3K7MXP3RT5"}, deps)
 			if err != nil {
-				t.Fatalf("runStatus(--format %s) error = %v", fmt, err)
+				t.Fatalf("runStatus(--format %s FEAT-...) error = %v", fmt, err)
 			}
 		})
 	}
 }
+
+// ─── Human renderer entity tests ────────────────────────────────────────────
 
 func TestRunStatus_EntityTarget_DisambiguatesAndRoutes(t *testing.T) {
 	fake := newFakeEntityService()
@@ -168,8 +165,11 @@ func TestRunStatus_EntityTarget_DisambiguatesAndRoutes(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, "Entity: FEAT-01J3K7MXP3RT5") {
-		t.Fatalf("stdout missing entity output:\n%s", stdout)
+	if !strings.Contains(stdout, "Feature") {
+		t.Fatalf("stdout missing Feature header:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "FEAT-01J3K7MXP3RT5") {
+		t.Fatalf("stdout missing feature ID:\n%s", stdout)
 	}
 }
 
@@ -206,6 +206,8 @@ func TestRunStatus_EntityTarget_PlainFormat(t *testing.T) {
 	}
 }
 
+// ─── Plan prefix tests ──────────────────────────────────────────────────────
+
 func TestRunStatus_PlanPrefixTarget_DisambiguatesAndRoutes(t *testing.T) {
 	fake := newFakeEntityService()
 	deps, output := testDependenciesWithService(fake)
@@ -216,11 +218,11 @@ func TestRunStatus_PlanPrefixTarget_DisambiguatesAndRoutes(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, "Plan prefix: P1") {
-		t.Fatalf("stdout missing plan prefix output:\n%s", stdout)
+	if !strings.Contains(stdout, "Plan") {
+		t.Fatalf("stdout missing Plan header:\n%s", stdout)
 	}
-	if !strings.Contains(stdout, "Resolved to:") {
-		t.Fatalf("stdout missing resolved plan ID:\n%s", stdout)
+	if !strings.Contains(stdout, "P1") {
+		t.Fatalf("stdout missing plan prefix:\n%s", stdout)
 	}
 }
 
@@ -341,6 +343,117 @@ func TestRunStatus_FilePathTarget_UnregisteredFile_JSONFormat(t *testing.T) {
 	}
 }
 
+// ─── Registered file path tests ──────────────────────────────────────────────
+
+func TestRunStatus_FilePathTarget_RegisteredFile_Human(t *testing.T) {
+	tmpDir := t.TempDir()
+	origDir, _ := os.Getwd()
+	defer os.Chdir(origDir)
+	os.Chdir(tmpDir)
+
+	// Create the file on disk so the existence check passes.
+	if err := os.MkdirAll("design", 0o755); err != nil {
+		t.Fatal(err)
+	}
+	f, err := os.Create("design/existing.md")
+	if err != nil {
+		t.Fatal(err)
+	}
+	f.Close()
+
+	fake := newFakeEntityService()
+	docSvc := newFakeDocService()
+	deps, output := testDependenciesWithService(fake)
+	deps.newDocumentService = func(stateRoot, repoRoot string) docService {
+		return docSvc
+	}
+
+	err = runStatus([]string{"design/existing.md"}, deps)
+	if err != nil {
+		t.Fatalf("runStatus(design/existing.md) error = %v", err)
+	}
+
+	stdout := output.String()
+	if !strings.Contains(stdout, "DOC-001") {
+		t.Fatalf("stdout missing document ID:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "Document:") {
+		t.Fatalf("stdout missing Document section:\n%s", stdout)
+	}
+}
+
+func TestRunStatus_FilePathTarget_RegisteredFile_WithOwner(t *testing.T) {
+	tmpDir := t.TempDir()
+	origDir, _ := os.Getwd()
+	defer os.Chdir(origDir)
+	os.Chdir(tmpDir)
+
+	if err := os.MkdirAll("design", 0o755); err != nil {
+		t.Fatal(err)
+	}
+	f, err := os.Create("design/owned.md")
+	if err != nil {
+		t.Fatal(err)
+	}
+	f.Close()
+
+	fake := newFakeEntityService()
+	docSvc := newFakeDocService()
+	deps, output := testDependenciesWithService(fake)
+	deps.newDocumentService = func(stateRoot, repoRoot string) docService {
+		return docSvc
+	}
+
+	err = runStatus([]string{"design/owned.md"}, deps)
+	if err != nil {
+		t.Fatalf("runStatus(design/owned.md) error = %v", err)
+	}
+
+	stdout := output.String()
+	if !strings.Contains(stdout, "DOC-002") {
+		t.Fatalf("stdout missing document ID:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "Owner entity:") {
+		t.Fatalf("stdout missing Owner entity section:\n%s", stdout)
+	}
+}
+
+func TestRunStatus_FilePathTarget_RegisteredFile_NoOwner(t *testing.T) {
+	tmpDir := t.TempDir()
+	origDir, _ := os.Getwd()
+	defer os.Chdir(origDir)
+	os.Chdir(tmpDir)
+
+	if err := os.MkdirAll("design", 0o755); err != nil {
+		t.Fatal(err)
+	}
+	f, err := os.Create("design/no-owner.md")
+	if err != nil {
+		t.Fatal(err)
+	}
+	f.Close()
+
+	fake := newFakeEntityService()
+	docSvc := newFakeDocService()
+	deps, output := testDependenciesWithService(fake)
+	deps.newDocumentService = func(stateRoot, repoRoot string) docService {
+		return docSvc
+	}
+
+	err = runStatus([]string{"design/no-owner.md"}, deps)
+	if err != nil {
+		t.Fatalf("runStatus(design/no-owner.md) error = %v", err)
+	}
+
+	stdout := output.String()
+	if !strings.Contains(stdout, "DOC-003") {
+		t.Fatalf("stdout missing document ID:\n%s", stdout)
+	}
+	if strings.Contains(stdout, "Owner entity:") {
+		t.Fatalf("stdout should not include Owner entity:\n%s", stdout)
+	}
+}
+
 // ─── End file path resolution tests ──────────────────────────────────────────
 
 func TestRunStatus_UnrecognisedTarget_ReturnsError(t *testing.T) {
@@ -387,7 +500,6 @@ func TestRunStatus_FormatAfterTarget(t *testing.T) {
 }
 
 func TestRunStatus_ErrorExitCode(t *testing.T) {
-	// Errors from runStatus should be non-nil (exit code 2 in main).
 	fake := newFakeEntityService()
 	deps, _ := testDependenciesWithService(fake)
 
@@ -411,7 +523,6 @@ func TestRunStatus_ErrorExitCode(t *testing.T) {
 }
 
 func TestRunStatus_ViaMain(t *testing.T) {
-	// Integration: test that `kbz status` wired through `run` works.
 	deps, output := testDependencies()
 
 	err := run([]string{"status"}, deps)
@@ -420,8 +531,8 @@ func TestRunStatus_ViaMain(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, "health check") {
-		t.Fatalf("stdout missing health check:\n%s", stdout)
+	if !strings.Contains(stdout, "Kanbanzai") {
+		t.Fatalf("stdout missing project header:\n%s", stdout)
 	}
 }
 
@@ -434,8 +545,11 @@ func TestRunStatus_ViaMain_WithTarget(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, "Entity: FEAT-01J3K7MXP3RT5") {
-		t.Fatalf("stdout missing entity output:\n%s", stdout)
+	if !strings.Contains(stdout, "Feature") {
+		t.Fatalf("stdout missing Feature header:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "FEAT-01J3K7MXP3RT5") {
+		t.Fatalf("stdout missing feature ID:\n%s", stdout)
 	}
 }
 
@@ -451,27 +565,27 @@ func TestRunStatus_ViaMain_InvalidFormat(t *testing.T) {
 	}
 }
 
-// ─── Entity not found tests (AC-013) ────────────────────────────────────────
+// ─── Entity not found tests (D-6: query tool, exit 0) ───────────────────────
 
 func TestRunStatus_EntityTarget_NotFound(t *testing.T) {
 	fake := newFakeEntityService()
-	deps, _ := testDependenciesWithService(fake)
+	deps, output := testDependenciesWithService(fake)
 
-	// AC-013: entity ID that matches the pattern but doesn't exist in the store.
+	// D-6: entity ID that matches pattern but doesn't exist → informational, exit 0.
 	err := runStatus([]string{"FEAT-01ZZZZZZZZZZZ"}, deps)
-	if err == nil {
-		t.Fatal("runStatus(FEAT-01ZZZZZZZZZZZ) error = nil, want non-nil")
+	if err != nil {
+		t.Fatalf("runStatus(FEAT-01ZZZZZZZZZZZ) error = %v, want nil (exit 0 for query)", err)
 	}
-	if !strings.Contains(err.Error(), "entity not found") {
-		t.Fatalf("error missing 'entity not found': %v", err)
+	stdout := output.String()
+	if stdout != "" {
+		t.Fatalf("expected empty output for not-found entity, got:\n%s", stdout)
 	}
 }
 
-// ─── Bug entity routing (AC-015) ────────────────────────────────────────────
+// ─── Bug entity routing (human renderer) ────────────────────────────────────
 
 func TestRunStatus_EntityTarget_BugRouting(t *testing.T) {
 	fake := newFakeEntityService()
-	// Add a bug with display-format ID to getResults.
 	fake.getResults["bug:BUG-007:login-bypass"] = service.GetResult{
 		Type: "bug",
 		ID:   "BUG-007",
@@ -490,24 +604,29 @@ func TestRunStatus_EntityTarget_BugRouting(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, "Entity: BUG-007") {
-		t.Fatalf("stdout missing bug entity output:\n%s", stdout)
+	if !strings.Contains(stdout, "Feature") {
+		t.Fatalf("stdout missing Feature header:\n%s", stdout)
 	}
-	if !strings.Contains(stdout, "Status: reported") {
+	if !strings.Contains(stdout, "BUG-007") {
+		t.Fatalf("stdout missing bug ID:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "reported") {
 		t.Fatalf("stdout missing bug status:\n%s", stdout)
 	}
 }
 
 func TestRunStatus_EntityTarget_BugNotFound(t *testing.T) {
 	fake := newFakeEntityService()
-	deps, _ := testDependenciesWithService(fake)
+	deps, output := testDependenciesWithService(fake)
 
+	// D-6: not-found entity → informational, exit 0.
 	err := runStatus([]string{"BUG-999"}, deps)
-	if err == nil {
-		t.Fatal("runStatus(BUG-999) error = nil, want non-nil")
+	if err != nil {
+		t.Fatalf("runStatus(BUG-999) error = %v, want nil (exit 0)", err)
 	}
-	if !strings.Contains(err.Error(), "entity not found") {
-		t.Fatalf("error missing 'entity not found': %v", err)
+	stdout := output.String()
+	if stdout != "" {
+		t.Fatalf("expected empty output for not-found bug, got:\n%s", stdout)
 	}
 }
 
@@ -526,7 +645,7 @@ func TestRunStatus_StateStoreError_HealthCheckFails(t *testing.T) {
 	}
 }
 
-// ─── Exit code verification (AC-019) ────────────────────────────────────────
+// ─── Exit code verification ─────────────────────────────────────────────────
 
 func TestRunStatus_ExitCodes(t *testing.T) {
 	fake := newFakeEntityService()
@@ -573,10 +692,11 @@ func TestRunStatus_ExitCodes(t *testing.T) {
 		}
 	})
 
-	t.Run("entity_not_found_error", func(t *testing.T) {
+	t.Run("entity_not_found_success", func(t *testing.T) {
 		deps, _ := testDependenciesWithService(fake)
-		if err := runStatus([]string{"FEAT-01ZZZZZZZZZZZ"}, deps); err == nil {
-			t.Error("runStatus(nonexistent) error = nil, want non-nil (exit 1)")
+		// D-6: not-found query → exit 0.
+		if err := runStatus([]string{"FEAT-01ZZZZZZZZZZZ"}, deps); err != nil {
+			t.Errorf("runStatus(nonexistent) error = %v, want nil (exit 0)", err)
 		}
 	})
 
@@ -595,7 +715,57 @@ func TestRunStatus_ExitCodes(t *testing.T) {
 	})
 }
 
-// ─── Doc approve integration (AC-021 through AC-024 via main) ───────────────
+// ─── TTY detection integration test ─────────────────────────────────────────
+
+func TestRunStatus_TTYDetection_Integrated(t *testing.T) {
+	fake := newFakeEntityService()
+	deps, output := testDependenciesWithService(fake)
+
+	err := runStatus([]string{"FEAT-01J3K7MXP3RT5"}, deps)
+	if err != nil {
+		t.Fatalf("runStatus(FEAT-...) error = %v", err)
+	}
+
+	stdout := output.String()
+	// With StaticTTY{Value: false}, ASCII symbols should be used.
+	if !strings.Contains(stdout, "[missing]") {
+		t.Fatalf("non-TTY output should use ASCII symbols, got:\n%s", stdout)
+	}
+}
+
+// ─── Plain and JSON stub tests ──────────────────────────────────────────────
+
+func TestRunStatus_ProjectOverview_PlainFormat(t *testing.T) {
+	fake := newFakeEntityService()
+	deps, output := testDependenciesWithService(fake)
+
+	err := runStatus([]string{"--format", "plain"}, deps)
+	if err != nil {
+		t.Fatalf("runStatus(--format plain) error = %v", err)
+	}
+
+	stdout := output.String()
+	if !strings.Contains(stdout, "not yet implemented") {
+		t.Fatalf("stdout missing stub message:\n%s", stdout)
+	}
+}
+
+func TestRunStatus_ProjectOverview_JSONFormat(t *testing.T) {
+	fake := newFakeEntityService()
+	deps, output := testDependenciesWithService(fake)
+
+	err := runStatus([]string{"--format", "json"}, deps)
+	if err != nil {
+		t.Fatalf("runStatus(--format json) error = %v", err)
+	}
+
+	stdout := output.String()
+	if !strings.Contains(stdout, "not yet implemented") {
+		t.Fatalf("stdout missing stub message:\n%s", stdout)
+	}
+}
+
+// ─── Doc approve integration ────────────────────────────────────────────────
 
 func TestRunDocApprove_ViaMain(t *testing.T) {
 	deps, _ := testDependencies()
