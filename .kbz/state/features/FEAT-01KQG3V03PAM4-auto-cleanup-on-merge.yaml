@@ -2,7 +2,7 @@ id: FEAT-01KQG3V03PAM4
 slug: auto-cleanup-on-merge
 name: Auto-Schedule Cleanup on Merge
 parent: B42-worktree-cleanup-automation
-status: dev-planning
+status: developing
 summary: "After successful merge, automatically schedule cleanup for the merged worktree and delete the local tracking branch on squash merge. Cleanup failure is best-effort, not a merge failure. Addresses REQ-006, REQ-007, REQ-NF-002, AC-006, AC-007, AC-011."
 design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
 dev_plan: FEAT-01KQG3V03PAM4/dev-plan-p40-f13-dev-plan-auto-cleanup-merge

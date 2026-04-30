@@ -2,7 +2,7 @@ id: FEAT-01KQG3V06KNZG
 slug: validate-worktree-entity-ids
 name: Validate Entity IDs at Worktree Creation
 parent: B42-worktree-cleanup-automation
-status: dev-planning
+status: developing
 summary: "Reject display-format entity IDs (with embedded segment hyphen) at worktree(action: create). Accept canonical ULID format. Addresses REQ-008, REQ-009, REQ-NF-003, AC-008, AC-009."
 design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
 dev_plan: FEAT-01KQG3V06KNZG/dev-plan-p40-f14-dev-plan-validate-worktree-ids
