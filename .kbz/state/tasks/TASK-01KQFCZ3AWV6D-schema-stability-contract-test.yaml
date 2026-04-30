@@ -1,0 +1,6 @@
+id: TASK-01KQFCZ3AWV6D
+parent_feature: FEAT-01KQ2VHKJB5V8
+slug: schema-stability-contract-test
+name: Schema stability contract test
+summary: "Implement contract test that enumerates all required plain keys (FR-3 through FR-7) and JSON fields (FR-9 through FR-10), then asserts their presence in each scope type's output. Seeds a minimal project, runs kbz status with both formats for all scopes, verifies all keys/fields present. Must run in CI. Deliverable: internal/cli/status/contract_test.go."
+status: queued

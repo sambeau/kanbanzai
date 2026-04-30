@@ -1,0 +1,6 @@
+id: TASK-01KQFCZ3AZKJG
+parent_feature: FEAT-01KQ2VHKJB5V8
+slug: integration-and-verification
+name: Integration and verification
+summary: "Wire plain and JSON renderers into kbz status command behind --format flag (depends on B36-F2 for routing). Implement document-by-path lookup. Add integration tests covering all 11 ACs plus performance verification per NFR-2.1. Wire into cmd/kanbanzai/main.go. Deliverable: modified workflow_cmd.go, internal/cli/status/status.go, cmd/kanbanzai/status_format_test.go."
+status: queued
