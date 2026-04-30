@@ -1,7 +1,7 @@
 id: BUG-01KQEWZ8YJ1FN
 slug: redundant-filename-ids
 name: Agent filenames have redundant repeated IDs
-status: reported
+status: triaged
 severity: medium
 priority: high
 type: implementation-defect
