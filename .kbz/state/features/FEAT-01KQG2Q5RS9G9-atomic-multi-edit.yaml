@@ -5,6 +5,7 @@ parent: B40-fix-tool-correctness
 status: dev-planning
 summary: "Pre-flight all old_text patterns in multi-edit calls before applying any edits. On any mismatch, apply zero edits and return error naming the failed patterns. Addresses REQ-004, REQ-005, REQ-006, REQ-009, REQ-NF-003, AC-004, AC-005, AC-011."
 design: P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements
+dev_plan: FEAT-01KQG2Q5RS9G9/dev-plan-p40-f5-dev-plan-atomic-multi-edit
 created: "2026-04-30T20:54:06Z"
 created_by: sambeau
 overrides:
