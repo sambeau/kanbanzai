@@ -761,6 +761,35 @@ func (c *Config) NextPlanNumber(prefix string, planIDScanner func() ([]string, e
 	return maxNum + 1, nil
 }
 
+// NextBatchNumber returns the next available sequence number for a batch prefix.
+// It scans only against the batch_prefixes (or legacy prefixes) registry (REQ-007).
+func (c *Config) NextBatchNumber(prefix string, batchIDScanner func() ([]string, error)) (int, error) {
+	if !c.IsActiveBatchPrefix(prefix) && !c.IsValidPrefix(prefix) {
+		return 0, fmt.Errorf("unknown batch prefix: %q", prefix)
+	}
+
+	ids, err := batchIDScanner()
+	if err != nil {
+		return 0, fmt.Errorf("scan batch IDs: %w", err)
+	}
+
+	maxNum := 0
+	for _, id := range ids {
+		p, numStr, _ := parsePlanIDParts(id)
+		if p != prefix {
+			continue
+		}
+		var num int
+		if _, err := fmt.Sscanf(numStr, "%d", &num); err == nil {
+			if num > maxNum {
+				maxNum = num
+			}
+		}
+	}
+
+	return maxNum + 1, nil
+}
+
 // mergePhase4aDefaults fills in zero-value Phase 4a config fields with sensible defaults.
 // This handles pre-Phase 4a config files that lack these sections.
 func (c *Config) mergePhase4aDefaults() {
