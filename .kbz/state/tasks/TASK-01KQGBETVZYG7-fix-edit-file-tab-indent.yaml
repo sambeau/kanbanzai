@@ -3,4 +3,10 @@ parent_feature: FEAT-01KQGBA8WD0GJ
 slug: fix-edit-file-tab-indent
 name: Fix tab indentation preservation in edit_file edit mode
 summary: "Fix the fuzzy matching engine in edit_file's edit mode to preserve original tab indentation when applying replacements. When old_text is matched against tab-indented content, new_text should be indented at the same tab level. Surrounding lines must retain original indentation. Addresses REQ-001, REQ-002, REQ-NF-001, REQ-NF-002, AC-001 through AC-004."
-status: ready
+status: done
+files_planned:
+  - internal/mcp/edit_file_tool.go
+  - internal/mcp/edit_file_tool_test.go
+completed: "2026-04-30T23:39:23Z"
+completion_summary: "Fixed tab indentation corruption in edit_file's edit mode. When fuzzy matching replaces text on an indented line, the replacement now inherits the line's indentation (tabs or spaces) if newText doesn't already start with whitespace. The fix extends the match backward to include indentation, preventing double-indentation. Added 4 new tests covering tab-indented lines, struct fields, space-indented files, and the critical fuzzy-match scenario."
+verification: "go test ./internal/mcp/... -run \"TestEditFile|TestFuzzy\" - all 15 tests pass. Full suite has same pre-existing failures as main."
