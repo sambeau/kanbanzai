@@ -3,12 +3,15 @@ parent_feature: FEAT-01KQ2VHKJB5V8
 slug: integration-and-verification
 name: Integration and verification
 summary: "Wire plain and JSON renderers into kbz status command behind --format flag (depends on B36-F2 for routing). Implement document-by-path lookup. Add integration tests covering all 11 ACs plus performance verification per NFR-2.1. Wire into cmd/kanbanzai/main.go. Deliverable: modified workflow_cmd.go, internal/cli/status/status.go, cmd/kanbanzai/status_format_test.go."
-status: active
+status: done
 estimate: "5"
 depends_on:
   - TASK-01KQFJN8PCT62
   - TASK-01KQFJNHR4YKZ
+completed: "2026-04-30T17:21:46Z"
 claimed_at: "2026-04-30T17:04:07Z"
 dispatched_to: unspecified
 dispatched_at: "2026-04-30T17:04:07Z"
 dispatched_by: sambeau
+completion_summary: "Wired plain and JSON status renderers into kbz status command behind --format flag. Created internal/cli/status/ with PlainRenderer (key:value) and JSONRenderer (RFC 8259 JSON with results-array wrapping). Replaced all stubs in runStatusProjectOverview, runStatusEntity, runStatusPlanPrefix, and runStatusPath. Added helper functions for feature/task/bug formatted output. Updated 6 test assertions to match new renderer output. Removed dead runStatusProjectHuman."
+verification: "go build ./... (clean), go vet ./... (clean), go test ./cmd/kbz/... -count=1 (all pass, 1.77s). 40+ status tests pass across all formats and scope types."
