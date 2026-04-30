@@ -3,4 +3,11 @@ parent_feature: FEAT-01KQ2VFTWD1W2
 slug: fr-007-resolvenone-fallback-probe
 name: Implement FR-007 ResolveNone Fallback Probe
 summary: "The ResolveNone branch in runStatus currently returns an error immediately. Implement the two-step fallback probe required by FR-007: (1) attempt entity-ID lookup via EntityService.Get; if that fails, (2) attempt path lookup via DocumentService.ListDocuments filtered by path. Only after both fail should the command return an error. Each probe attempt must use the same service calls as their dedicated code paths (Tasks 3 and 4) so behaviour is consistent. Deliverable: modified cmd/kbz/workflow_cmd.go."
-status: ready
+status: done
+completed: "2026-04-30T18:36:07Z"
+claimed_at: "2026-04-30T18:29:43Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T18:29:43Z"
+dispatched_by: sambeau
+completion_summary: "Implemented FR-007 ResolveNone fallback probe: runStatusResolveNone probes entity-ID first, then path lookup, before erroring. Fixed exit codes: runStatusEntity returns error on not-found (FR-016), runStatusPlanPrefix returns error on not-found (FR-008). Updated tests to assert exit 1."
+verification: "go build, go vet clean; go test ./cmd/kbz/... all pass"
