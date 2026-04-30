@@ -1,0 +1,53 @@
+document_id: FEAT-01KQ7YQK6DDDA/report-b38-f1-report-review-feat-01kq7yqk6ddda-config-schema-post-rebase
+document_path: work/B38-plans-and-batches/B38-F1-report-review-FEAT-01KQ7YQK6DDDA-config-schema-post-rebase.md
+content_hash: af9e26f3ba95d633eee60e20634ea1812dde2cf6001b50aacff7dcd30a730fd3
+indexed_at: 2026-04-30T12:45:54.435031Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: B38-F1 Config Schema and Project Singleton — Post-Rebase Conformance'
+      byte_offset: 0
+      byte_count: 1022
+      word_count: 159
+      content_hash: af9e26f3ba95d633eee60e20634ea1812dde2cf6001b50aacff7dcd30a730fd3
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 190
+          byte_count: 149
+          word_count: 20
+          content_hash: 67b91fb2c244a48160ddbe0d1e90edffd8379f30ddc9a4c408bf7a6d00557374
+        - path: "1.2"
+          level: 2
+          title: Verification
+          byte_offset: 339
+          byte_count: 369
+          word_count: 55
+          content_hash: c9446043c77b6485802ca96fb206d13a70f73834559277d20b2a2ed8fd0107ba
+        - path: "1.3"
+          level: 2
+          title: Conformance Checklist
+          byte_offset: 708
+          byte_count: 254
+          word_count: 54
+          content_hash: e540da9ddeb1edbdb7fa14061920a4bf297afb6e424a639c00fe3c1a2d81949c
+        - path: "1.4"
+          level: 2
+          title: Findings
+          byte_offset: 962
+          byte_count: 60
+          word_count: 10
+          content_hash: 6274adb15273765b521b073ee5e7130fcdd114ca82e23de37ad7eb145ebbf885
+entity_refs:
+    - entity_id: FEAT-01KQ7YQK6DDDA
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 103
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-30T12:45:54.964794Z
+classified: false
