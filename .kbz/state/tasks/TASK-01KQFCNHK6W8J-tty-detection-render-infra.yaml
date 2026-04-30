@@ -1,0 +1,6 @@
+id: TASK-01KQFCNHK6W8J
+parent_feature: FEAT-01KQ2VGTRZHPC
+slug: tty-detection-render-infra
+name: TTY Detection and Rendering Infrastructure
+summary: "Create injectable TTY detector, Unicode-to-ASCII symbol mapping, ANSI colour helpers, and Renderer struct in new package kanbanzai/internal/cli/render/. Tasks deliverable files: tty.go, symbols.go, colour.go, renderer.go with unit tests covering TTY/non-TTY paths."
+status: queued
