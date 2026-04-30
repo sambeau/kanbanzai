@@ -1,0 +1,9 @@
+id: FEAT-01KQG3AWX916X
+slug: preserve-approval-minor-edits
+name: Preserve Approval Status on Minor Doc Edits
+parent: B41-fix-doc-ownership-lifecycle
+status: proposed
+summary: "doc refresh should detect change scope: preserve approval for formatting-only changes, warn before resetting for substantive changes. Addresses REQ-004, REQ-005, AC-005, AC-006."
+created: "2026-04-30T21:04:52Z"
+created_by: sambeau
+display_id: B41-F2
