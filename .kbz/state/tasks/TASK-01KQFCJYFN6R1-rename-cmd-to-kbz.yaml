@@ -1,0 +1,6 @@
+id: TASK-01KQFCJYFN6R1
+parent_feature: FEAT-01KQ2VF7PDZ2G
+slug: rename-cmd-to-kbz
+name: Rename cmd/kanbanzai/ to cmd/kbz/ and update build system
+summary: "Rename the main package directory from cmd/kanbanzai/ to cmd/kbz/. Update Makefile BINARY variable and go build / go install targets to ./cmd/kbz. Verify make build produces binary named kbz. Addresses FR-001, FR-002, FR-003, FR-004."
+status: queued
