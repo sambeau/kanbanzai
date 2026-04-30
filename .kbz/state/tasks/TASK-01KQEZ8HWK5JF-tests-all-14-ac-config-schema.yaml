@@ -3,4 +3,11 @@ parent_feature: FEAT-01KQ7YQK6DDDA
 slug: tests-all-14-ac-config-schema
 name: Tests for all 14 acceptance criteria
 summary: "Write unit tests for AC-001 through AC-014 covering: plan/batch prefix loading, cross-registry validation, defaults, project section all variants, legacy config backward compat, retired prefix handling, and round-trip YAML."
-status: ready
+status: done
+completed: "2026-04-30T10:44:36Z"
+claimed_at: "2026-04-30T10:42:18Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T10:42:18Z"
+dispatched_by: sambeau
+completion_summary: "Added 12 unit tests for P38 config schema: PlanPrefixesOrDefault/BatchPrefixesOrDefault defaults and custom, ValidatePrefixSeparation, IsActivePlanPrefix/IsActiveBatchPrefix (incl. retired), ProjectConfig defaults, NextBatchNumber independent counting, empty-dir after migration, DefaultConfig P38 defaults. All existing and new tests pass."
+verification: go test ./internal/config/ -count=1 passes (all 12 new P38 tests + all existing tests).

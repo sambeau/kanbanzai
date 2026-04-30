@@ -3,10 +3,10 @@ content: "[minor] worked-well: Version-aware conflict logic pattern from mcp_con
 created: "2026-03-30T12:26:58Z"
 created_by: unknown
 id: KE-01KMZBCA4VZWW
-last_accessed_at: "2026-04-30T10:40:46Z"
+last_accessed_at: "2026-04-30T10:42:18Z"
 learned_from: TASK-01KMZAHTWDZZS
 miss_count: 0
-recent_use_count: 163
+recent_use_count: 164
 scope: project
 status: contributed
 tags:
