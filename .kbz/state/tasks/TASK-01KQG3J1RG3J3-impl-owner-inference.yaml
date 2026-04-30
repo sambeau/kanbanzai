@@ -1,0 +1,6 @@
+id: TASK-01KQG3J1RG3J3
+parent_feature: FEAT-01KQG3AWTYSEQ
+slug: impl-owner-inference
+name: Implement owner inference and path conflict warning
+summary: "Extract plan/batch slug from doc path, resolve to entity, use as default owner. Warn when path already registered under different owner. Fall back to PROJECT/ when no entity matches. Addresses REQ-001, REQ-002, REQ-003, REQ-NF-001."
+status: queued
