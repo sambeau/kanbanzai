@@ -3,10 +3,10 @@ content: "The Phase 1 document store (internal/document/, .kbz/docs/) is depreca
 created: "2026-03-25T17:06:31Z"
 created_by: unknown
 id: KE-01KMJZCK15HEK
-last_accessed_at: "2026-04-30T15:57:29Z"
+last_accessed_at: "2026-04-30T16:12:26Z"
 learned_from: TASK-01KMJVK9V8YTT
 miss_count: 0
-recent_use_count: 157
+recent_use_count: 158
 scope: project
 status: confirmed
 tags:
