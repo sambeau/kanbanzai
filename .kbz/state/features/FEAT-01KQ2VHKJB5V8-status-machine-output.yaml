@@ -6,6 +6,7 @@ status: dev-planning
 summary: "Implement --format plain and --format json for kbz status. Plain: stable key:value output for shell scripts and pre-commit hooks, including the registered:false key for unregistered documents. JSON: results-array wrapper for entity/document queries (forward-compatible with multi-target); distinct scope:project shape for project overview with summary counts and no full feature list. Schema must be stable within a major version."
 design: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename
 spec: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output
+dev_plan: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output
 created: "2026-04-25T17:38:36Z"
 created_by: sambeau
 display_id: B36-F4
