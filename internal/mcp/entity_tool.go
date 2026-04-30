@@ -296,6 +296,9 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 		}
 		statusFilter := entityArgStr(args, "status")
 		parentFilter := entityArgStr(args, "parent")
+		if parentFilter == "" {
+			parentFilter = entityArgStr(args, "parent_feature")
+		}
 		tagsFilter := entityArgStringSlice(args, "tags")
 		var createdAfter, createdBefore *time.Time
 		if caStr := entityArgStr(args, "created_after"); caStr != "" {
@@ -345,14 +348,11 @@ func entityListResponse(entityType string, summaries []map[string]any) map[strin
 func entitySummaries(results []service.ListResult) []map[string]any {
 	out := make([]map[string]any, 0, len(results))
 	for _, r := range results {
-		summary, _ := r.State["summary"].(string)
 		name, _ := r.State["name"].(string)
 		status, _ := r.State["status"].(string)
-		did := id.FormatFullDisplay(r.ID)
 		out = append(out, map[string]any{
-			"display_id": did, "id": r.ID, "type": r.Type, "slug": r.Slug,
-			"name": name, "status": status, "summary": summary,
-			"entity_ref": id.FormatEntityRef(did, r.Slug, name),
+			"display_id": id.FormatFullDisplay(r.ID), "id": r.ID, "type": r.Type, "slug": r.Slug,
+			"name": name, "status": status,
 		})
 	}
 	return out
@@ -973,7 +973,6 @@ func entityInferType(entityID string) (entityType string, ok bool) {
 		return "", false
 	}
 }
-
 
 // resolveShortPlanRef resolves a short plan reference (e.g. "P30") to its full
 // canonical plan ID (e.g. "P30-my-plan-slug"). If entityID is not a short plan
