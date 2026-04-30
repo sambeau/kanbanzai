@@ -181,8 +181,8 @@ conventional_roles:
     - section_path: 1.3.2
       role: example
       confidence: high
-access_count: 106
-last_accessed_at: 2026-04-30T14:51:28.731096Z
+access_count: 108
+last_accessed_at: 2026-04-30T15:02:21.336434Z
 classified: true
 classified_at: 2026-04-22T18:33:10.409551Z
 classified_by: claude-sonnet-4-6
