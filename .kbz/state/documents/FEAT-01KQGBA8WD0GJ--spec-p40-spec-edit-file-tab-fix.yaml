@@ -1,10 +1,12 @@
-content_hash: 8e888813f2f438bf3ee9a0e702c0a7cafd9e2420ca197162995dbf0cc604aebb
+approved_at: "2026-04-30T23:26:31Z"
+approved_by: sambeau
+content_hash: 2d360dde30fcced21786ea668152baf266587bd5cad6036497c6a66778c57e2b
 created: "2026-04-30T23:26:25Z"
 created_by: sambeau
 id: FEAT-01KQGBA8WD0GJ/spec-p40-spec-edit-file-tab-fix
 owner: FEAT-01KQGBA8WD0GJ
 path: work/P40-retro-batch-april-2026/P40-spec-edit-file-tab-fix.md
-status: draft
+status: approved
 title: "Spec: Fix edit_file Tab Whitespace Corruption"
 type: spec
-updated: "2026-04-30T23:26:25Z"
+updated: "2026-04-30T23:26:31Z"
