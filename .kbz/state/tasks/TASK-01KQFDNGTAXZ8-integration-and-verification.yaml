@@ -3,10 +3,17 @@ parent_feature: FEAT-01KQ2VFTWD1W2
 slug: integration-and-verification
 name: Integration and Verification
 summary: "Write integration tests covering all 24 ACs: disambiguation, file path resolution, entity ID routing, flag validation, no-target behaviour, and doc approve path resolution. Verify exit codes 0/1/2. Use stub renderer."
-status: ready
+status: done
 estimate: "5"
 depends_on:
   - TASK-01KQFDMK63E62
   - TASK-01KQFDMTTN0Q9
   - TASK-01KQFDN2H29PF
   - TASK-01KQFDNAAR04Q
+completed: "2026-04-30T16:11:31Z"
+claimed_at: "2026-04-30T15:57:29Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T15:57:29Z"
+dispatched_by: sambeau
+completion_summary: "Added integration tests for all 24 ACs: entity not found (AC-013), bug routing (AC-015), state store error (AC-020), exit codes (AC-019 with 9 subtests), and doc approve via main (AC-021-024). Confirmed pre-existing coverage for AC-001-012 and AC-016-018. Fixed TestReParentEntityUpdate regression from batch rename by checking batches/ directory first. All cmd/kbz tests pass, resolution tests pass, build is clean."
+verification: "go test ./cmd/kbz/... -v: ALL PASS; go test ./internal/resolution/... -v: ALL PASS (27 tests); go build ./...: clean"
