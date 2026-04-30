@@ -30,22 +30,16 @@ This mirrors the real workflow for any feature, whether it is a one-file change 
 Kanbanzai is a Go project. With Go 1.25 or later installed, run:
 
 ```sh
-go install github.com/sambeau/kanbanzai/cmd/kanbanzai@latest
+go install github.com/sambeau/kanbanzai/cmd/kbz@latest
 ```
 
 Or from a local clone:
 
 ```sh
-go install ./cmd/kanbanzai
+go install ./cmd/kbz
 ```
 
-This places the `kanbanzai` binary at `~/go/bin/kanbanzai`. Make sure `~/go/bin` is in your `PATH`.
-
-If you want a shorter command, create a symlink:
-
-```sh
-ln -s ~/go/bin/kanbanzai ~/go/bin/kbz
-```
+This places the `kbz` binary at `~/go/bin/kbz`. Make sure `~/go/bin` is in your `PATH`.
 
 ### Prebuilt binaries
 
@@ -54,17 +48,17 @@ At the 1.0 release, prebuilt binaries will be available from [GitHub Releases](h
 ### Verify the installation
 
 ```sh
-kanbanzai version
+kbz version
 ```
 
 If you get "command not found", check that `~/go/bin` is on your `PATH`.
 
 ### macOS GUI editors and PATH
 
-macOS GUI applications (Zed, VS Code, Cursor) launch with a minimal environment that does not inherit your shell's `PATH`. If your editor cannot find the `kanbanzai` binary, install it to `/usr/local/bin`:
+macOS GUI applications (Zed, VS Code, Cursor) launch with a minimal environment that does not inherit your shell's `PATH`. If your editor cannot find the `kbz` binary, install it to `/usr/local/bin`:
 
 ```sh
-sudo ln -sf ~/go/bin/kanbanzai /usr/local/bin/kanbanzai
+sudo ln -sf ~/go/bin/kbz /usr/local/bin/kbz
 ```
 
 This is the most reliable way to ensure any editor can start the MCP server.
@@ -76,12 +70,12 @@ This is the most reliable way to ensure any editor can start the MCP server.
 With Kanbanzai installed, navigate to a Git repository and run:
 
 ```sh
-kanbanzai init
+kbz init
 ```
 
 This must be run inside an existing Git repository. If you do not have one yet, run `git init` first.
 
-`kanbanzai init` creates the following structure:
+`kbz init` creates the following structure:
 
 ```
 your-repo/
@@ -110,11 +104,11 @@ your-repo/
     └── retro/                   # Retrospective synthesis documents
 ```
 
-`kanbanzai init` is idempotent — running it again updates skill files and managed configuration to the current version without overwriting your changes.
+`kbz init` is idempotent — running it again updates skill files and managed configuration to the current version without overwriting your changes.
 
 **Agent orientation.** `AGENTS.md` tells AI agents to use Kanbanzai MCP tools, follow the stage gates, and where to find the skill files. `.github/copilot-instructions.md` does the same for GitHub Copilot. Both use a managed marker so future `kbz init` runs can update them safely. Use `--skip-agents-md` to suppress writing both files.
 
-**Existing repositories.** If you run `kanbanzai init` in a repository that already has commits but no `.kbz/` directory, it behaves as a first-time init and creates all the files shown above.
+**Existing repositories.** If you run `kbz init` in a repository that already has commits but no `.kbz/` directory, it behaves as a first-time init and creates all the files shown above.
 
 ### Local configuration
 
@@ -148,14 +142,14 @@ If automatic configuration does not work for your setup, use the manual snippets
 {
   "context_servers": {
     "kanbanzai": {
-      "command": "kanbanzai",
+      "command": "kbz",
       "args": ["serve"]
     }
   }
 }
 ```
 
-If `kanbanzai` is not on the PATH that Zed can see, use the absolute path to the binary (see [macOS GUI editors and PATH](#macos-gui-editors-and-path) above).
+If `kbz` is not on the PATH that Zed can see, use the absolute path to the binary (see [macOS GUI editors and PATH](#macos-gui-editors-and-path) above).
 
 **Verify:** Open Zed's agent panel and ask it to call the `health` tool. It should return a health report showing entity counts and system status.
 
@@ -167,7 +161,7 @@ Add the following to your `claude_desktop_config.json`. On macOS, this file is a
 {
   "mcpServers": {
     "kanbanzai": {
-      "command": "kanbanzai",
+      "command": "kbz",
       "args": ["serve"],
       "cwd": "/path/to/your/project"
     }
@@ -187,7 +181,7 @@ For **GitHub Copilot** (built-in MCP support), `.mcp.json` is read automatically
 {
   "github.copilot.chat.mcpServers": {
     "kanbanzai": {
-      "command": "kanbanzai",
+      "command": "kbz",
       "args": ["serve"]
     }
   }
@@ -204,7 +198,7 @@ For **GitHub Copilot** (built-in MCP support), `.mcp.json` is read automatically
 {
   "mcpServers": {
     "kanbanzai": {
-      "command": "kanbanzai",
+      "command": "kbz",
       "args": ["serve"],
       "cwd": "/path/to/your/project"
     }

@@ -3,7 +3,7 @@
 | Field  | Value                            |
 |--------|----------------------------------|
 | Date   | 2026-04-30                       |
-| Status | Draft                            |
+| Status | approved |
 | Author | spec-author                      |
 
 ---
@@ -284,62 +284,13 @@ rendering paths without spawning a real TTY.
 
 ## Acceptance Criteria
 
-### AC-1: TTY rendering
-
-| # | Scenario | Expected |
-|---|----------|----------|
-| 1.1 | `kbz status` run in an interactive terminal | Output contains Unicode symbols and ANSI colour codes |
-| 1.2 | `kbz status \| cat` | Output contains ASCII fallbacks; no ANSI escape sequences in the byte stream |
-| 1.3 | `kbz status > file.txt` | Same as 1.2 |
-
-### AC-2: Unregistered document view
-
-| # | Scenario | Expected |
-|---|----------|----------|
-| 2.1 | `kbz status work/design/new-draft.md` where file exists but is not registered | Output starts with the path; second section reads "Not registered with Kanbanzai."; a `kbz doc register` command is shown |
-| 2.2 | File path given does not exist on disk | Output states file not found; exit 0 |
-
-### AC-3: Registered document with owner
-
-| # | Scenario | Expected |
-|---|----------|----------|
-| 3.1 | `kbz status work/design/my-feature.md` for an approved design belonging to a feature | Document block (path, Title, Type, Status) appears before the feature block; feature block matches AC-4 expectations |
-| 3.2 | Document is registered but in `draft` status | Status field shows `draft`; attention item noting not yet approved appears below the document block |
-| 3.3 | Document has no owning feature (orphan) | Only document block rendered; no feature block |
-
-### AC-4: Direct feature lookup
-
-| # | Scenario | Expected |
-|---|----------|----------|
-| 4.1 | Feature with plan, all three docs, some tasks | Header, Plan line, Documents section (three rows, aligned), Tasks line, no Attention block |
-| 4.2 | Feature with a missing dev-plan | Dev-plan row shows `✗ missing`; Attention block shows warning with suggested `kbz doc register` command |
-| 4.3 | Feature with no plan | `Plan:` line absent; no warning generated for the missing plan |
-| 4.4 | Feature with no documents at all | All three doc rows show `✗ missing`; Attention item noting no documents registered |
-| 4.5 | Feature with no tasks | Tasks line shows `0 active · 0 ready · 0 done  (0 total)` |
-
-### AC-5: Plan lookup
-
-| # | Scenario | Expected |
-|---|----------|----------|
-| 5.1 | Plan with 5 features in mixed states | All five listed, column-aligned; task counts aggregated across all features |
-| 5.2 | Plan with no features | `Features (0)` heading; Tasks line with zero counts |
-| 5.3 | Plan where a feature has no dev-plan | Attention block references that feature by short ID and slug |
-
-### AC-6: Project overview
-
-| # | Scenario | Expected |
-|---|----------|----------|
-| 6.1 | Project with 2 plans, 2 attention items, tasks in queue | Plans section, Health line, Attention block with 2 items, Work queue line |
-| 6.2 | Project with no attention items | Attention block absent; Work queue line directly follows Health line |
-| 6.3 | Project with no plans | `Plans (0)` heading; Health, Work queue still rendered |
-| 6.4 | Health check finds errors | Health line shows red `✗ {n} errors · {n} warnings` |
-
-### AC-7: Edge cases
-
-| # | Scenario | Expected |
-|---|----------|----------|
-| 7.1 | Runtime I/O error reading state | Command exits non-zero with an error message to stderr |
-| 7.2 | Target is a valid entity ID that does not exist | Informational message; exit 0 |
+- [ ] **AC-1:** TTY rendering — `kbz status` in an interactive terminal produces Unicode symbols and ANSI colour codes; piped or redirected output (`| cat`, `> file.txt`) produces ASCII fallbacks with no ANSI escape sequences.
+- [ ] **AC-2:** Unregistered document view — `kbz status work/design/new-draft.md` for an unregistered file shows path, "Not registered with Kanbanzai.", and a `kbz doc register` command; nonexistent path shows "file not found" and exits 0.
+- [ ] **AC-3:** Registered document with owner — `kbz status` for an approved design shows the document block (path, Title, Type, Status) before the owning feature block; draft docs show `draft` status with an attention item; orphan docs render only the document block.
+- [ ] **AC-4:** Direct feature lookup — feature with plan, all three docs, and some tasks shows Header, Plan, Documents (three aligned rows), Tasks, no Attention; missing dev-plan shows `✗ missing` with attention warning; missing plan omits `Plan:` line; no docs shows all three `✗ missing` with attention; no tasks shows `0 active · 0 ready · 0 done  (0 total)`.
+- [ ] **AC-5:** Plan lookup — plan with 5 features lists all five column-aligned with aggregated task counts; plan with no features shows `Features (0)` heading and zero task counts; feature missing a dev-plan generates an attention block referencing that feature by short ID and slug.
+- [ ] **AC-6:** Project overview — project with 2 plans, 2 attention items, and queued tasks shows Plans, Health, Attention (2 items), Work queue; no attention items means Attention block is absent; no plans shows `Plans (0)` with Health and Work queue still rendered; health check errors show red `✗ {n} errors · {n} warnings`.
+- [ ] **AC-7:** Edge cases — runtime I/O error reading state exits non-zero with an error message to stderr; valid entity ID that does not exist produces an informational message and exits 0.
 
 ---
 

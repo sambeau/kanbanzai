@@ -38,9 +38,9 @@ The `state/` directory is the single source of truth. Every entity is one YAML f
 
 Two paths outside the `.kbz` directory are managed by Kanbanzai:
 
-- **`.kbz/local.yaml`** — Per-machine settings such as user identity and GitHub credentials. This file must be listed in `.gitignore` and is never committed. It is not created by `kanbanzai init`; users create it manually when needed.
+- **`.kbz/local.yaml`** — Per-machine settings such as user identity and GitHub credentials. This file must be listed in `.gitignore` and is never committed. It is not created by `kbz init`; users create it manually when needed.
 
-- **`.agents/skills/`** — Skill files for AI agent onboarding. These live outside `.kbz` because they are consumed directly by editors and AI assistants. The `kanbanzai init` command creates and updates these files.
+- **`.agents/skills/`** — Skill files for AI agent onboarding. These live outside `.kbz` because they are consumed directly by editors and AI assistants. The `kbz init` command creates and updates these files.
 
 ---
 
@@ -91,7 +91,7 @@ id: P3-kanbanzai-1.0
 slug: kanbanzai-1.0
 name: Kanbanzai 1.0
 status: active
-summary: "Make Kanbanzai installable and usable by projects other than itself: pre-compiled binary distribution, skills-based agent onboarding, public schema interface, kanbanzai init command, and user documentation."
+summary: "Make Kanbanzai installable and usable by projects other than itself: pre-compiled binary distribution, skills-based agent onboarding, public schema interface, kbz init command, and user documentation."
 design: PROJECT/design-kanbanzai-10
 created: "2026-03-26T00:28:22Z"
 created_by: sambeau
@@ -141,7 +141,7 @@ id: FEAT-01KMKRQRRX3CC
 slug: init-command
 parent: P3-kanbanzai-1.0
 status: developing
-summary: "The kanbanzai init command: creates .kbz/config.yaml, installs Kanbanzai-managed skill files into .agents/skills/, records document roots, handles both new and existing projects without touching pre-existing files."
+summary: "The kbz init command: creates .kbz/config.yaml, installs Kanbanzai-managed skill files into .agents/skills/, records document roots, handles both new and existing projects without touching pre-existing files."
 design: FEAT-01KMKRQRRX3CC/design-init-command
 spec: FEAT-01KMKRQRRX3CC/specification-init-command
 dev_plan: FEAT-01KMKRQRRX3CC/dev-plan-init-command
@@ -190,7 +190,7 @@ Tasks in queued status automatically promote to ready when all entries in their 
 id: TASK-01KMNA39KTWW4
 parent_feature: FEAT-01KMKRQRRX3CC
 slug: init-command-skeleton
-summary: "Implement kanbanzai init CLI subcommand skeleton with flag parsing: --docs-path, --skip-skills, --update-skills, --non-interactive."
+summary: "Implement kbz init CLI subcommand skeleton with flag parsing: --docs-path, --skip-skills, --update-skills, --non-interactive."
 status: done
 files_planned:
   - cmd/kanbanzai/init_cmd.go
@@ -203,7 +203,7 @@ claimed_at: "2026-03-26T15:03:55Z"
 dispatched_to: backend
 dispatched_at: "2026-03-26T15:03:55Z"
 dispatched_by: agent/init-command
-completion_summary: "Implemented kanbanzai init as a CLI subcommand. Flag definitions: --docs-path, --skip-skills, --update-skills, --non-interactive, --skip-work-dirs. Validates mutually exclusive flags."
+completion_summary: "Implemented kbz init as a CLI subcommand. Flag definitions: --docs-path, --skip-skills, --update-skills, --non-interactive, --skip-work-dirs. Validates mutually exclusive flags."
 verification: "go build ./..., go test -race ./internal/kbzinit/... (37 tests pass), go vet ./..."
 ```
 
@@ -391,7 +391,7 @@ Approving a document locks its `content_hash`. If the file on disk later changes
 id: FEAT-01KMKRQRRX3CC/design-init-command
 path: work/design/init-command.md
 type: design
-title: kanbanzai init Command Design
+title: kbz init Command Design
 status: approved
 owner: FEAT-01KMKRQRRX3CC
 approved_by: sambeau
@@ -761,7 +761,7 @@ Each prefix entry has:
 | description | string | Optional description of the prefix's purpose |
 | retired | boolean | Whether the prefix is retired (omitted if false) |
 
-The configuration file is created by `kanbanzai init` and should be committed to version control.
+The configuration file is created by `kbz init` and should be committed to version control.
 
 > **Note:** This table lists the core fields. The Configuration Reference document provides the complete listing of all supported configuration options.
 

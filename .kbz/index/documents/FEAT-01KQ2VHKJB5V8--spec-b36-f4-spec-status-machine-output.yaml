@@ -1,0 +1,423 @@
+document_id: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output
+document_path: work/spec/B36-F4-spec-status-machine-output.md
+content_hash: f0244adf8053f1cac65d7596130a23466e89c2d3c19aa309578c4552c2880286
+indexed_at: 2026-04-30T14:07:33.862244Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Status command machine output formats'
+      byte_offset: 0
+      byte_count: 19776
+      word_count: 2825
+      content_hash: f0244adf8053f1cac65d7596130a23466e89c2d3c19aa309578c4552c2880286
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 252
+          byte_count: 873
+          word_count: 126
+          content_hash: 5fc60b583f078f76880b86c0d6685779c601386d923eb9de7d1911dadda8d7ea
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 1125
+          byte_count: 397
+          word_count: 57
+          content_hash: 3186d93a9ed9c88b1b0f763d31906b6b0b9f6418f1cee150f27046bb01626371
+        - path: "1.3"
+          level: 2
+          title: Scope
+          byte_offset: 1522
+          byte_count: 685
+          word_count: 107
+          content_hash: 007acc02ed3a2948481f01e043fd3764d800a8692be7b604f7263799399fd456
+        - path: "1.4"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2207
+          byte_count: 10753
+          word_count: 1470
+          content_hash: 381c30d7fd19e48a5352b0d435afa6c03e2bbfc716696ac0c109b40833659b67
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'FR-1: Format flag'
+              byte_offset: 2235
+              byte_count: 577
+              word_count: 88
+              content_hash: e5daa37ca01f4fe51ce657e115c70a78b8fef823554d991efdb7cde79e482726
+            - path: 1.4.2
+              level: 3
+              title: 'FR-2: `--format plain` — general rules'
+              byte_offset: 2812
+              byte_count: 956
+              word_count: 149
+              content_hash: c2b1f0003b612b142ac249c3edc2ef9ad8de73b0bb52e96e6a896c0b608dcdbf
+            - path: 1.4.3
+              level: 3
+              title: 'FR-3: `--format plain` — feature target'
+              byte_offset: 3768
+              byte_count: 1389
+              word_count: 191
+              content_hash: d3d81d7e8740f5086e549807970cfb7611d89a92dcc63f4f37c41a9c59883fc6
+            - path: 1.4.4
+              level: 3
+              title: 'FR-4: `--format plain` — plan target'
+              byte_offset: 5157
+              byte_count: 302
+              word_count: 38
+              content_hash: c820c1d61b774f3f52e877e8c516d47028b2a88725a194cfaa4905f9bb0ec1ec
+            - path: 1.4.5
+              level: 3
+              title: 'FR-5: `--format plain` — task and bug targets'
+              byte_offset: 5459
+              byte_count: 437
+              word_count: 60
+              content_hash: bec1a4f7cda9d602f6567a1a5ed0671225cf12068b50d5c99983d8362645ee34
+            - path: 1.4.6
+              level: 3
+              title: 'FR-6: `--format plain` — document target'
+              byte_offset: 5896
+              byte_count: 783
+              word_count: 110
+              content_hash: 6e7e009135ba99c8b306e74cf149882acb66e72faf512a194995868750ee0982
+            - path: 1.4.7
+              level: 3
+              title: 'FR-7: `--format plain` — project overview (no target)'
+              byte_offset: 6679
+              byte_count: 558
+              word_count: 72
+              content_hash: 176ee08d64070f8efe854a19f46870d894b142a02b2d38dfdbb38171ab69a3bb
+            - path: 1.4.8
+              level: 3
+              title: 'FR-8: `--format json` — general rules'
+              byte_offset: 7237
+              byte_count: 574
+              word_count: 88
+              content_hash: 79d746d1c4eaedf0365b111972f575bb612ab7c3102f19ceac5992a943464b29
+            - path: 1.4.9
+              level: 3
+              title: 'FR-9: `--format json` — entity/document queries (feature, plan, task, bug, document)'
+              byte_offset: 7811
+              byte_count: 3506
+              word_count: 432
+              content_hash: 4223a5c17f76c1d6c8aa58ce3756147e7f65312ad33a5dbfd3506c93fda25c48
+              children:
+                - path: 1.4.9.1
+                  level: 4
+                  title: FR-9.1 Feature result object
+                  byte_offset: 8056
+                  byte_count: 1170
+                  word_count: 151
+                  content_hash: f316cb3e93189b25f8c012cc314b60bc3351bab4a7250654056ce7099666a2ae
+                - path: 1.4.9.2
+                  level: 4
+                  title: FR-9.2 Plan result object
+                  byte_offset: 9226
+                  byte_count: 290
+                  word_count: 36
+                  content_hash: c818974947bdd9a84beae3ab36fd71afef5a37204825da7486c5c3f955624a1d
+                - path: 1.4.9.3
+                  level: 4
+                  title: FR-9.3 Task result object
+                  byte_offset: 9516
+                  byte_count: 286
+                  word_count: 29
+                  content_hash: c277cef3ea1837e0958f3fe3ea10c4c4ef95e315f116b1112e3558caf79178b1
+                - path: 1.4.9.4
+                  level: 4
+                  title: FR-9.4 Bug result object
+                  byte_offset: 9802
+                  byte_count: 379
+                  word_count: 43
+                  content_hash: bb7c40a3bf55c1fe81c5918ba45c3f52ce80995c2a70dcbccaf8941a7ad327c0
+                - path: 1.4.9.5
+                  level: 4
+                  title: FR-9.5 Document result object
+                  byte_offset: 10181
+                  byte_count: 600
+                  word_count: 75
+                  content_hash: 36f0eec08f6c52125b05a7fe68498ffa86bc0028a642dbf6a2f58d0b63ffce76
+                - path: 1.4.9.6
+                  level: 4
+                  title: FR-9.6 Unregistered document result object
+                  byte_offset: 10781
+                  byte_count: 536
+                  word_count: 63
+                  content_hash: 9242fcd619873fde448b7f2c79b86854bbf7b7a4dddebf1846d90d9852051f15
+            - path: 1.4.10
+              level: 3
+              title: 'FR-10: `--format json` — project overview (no target)'
+              byte_offset: 11317
+              byte_count: 1210
+              word_count: 172
+              content_hash: 54eb881c8317cc194a7758f55da83287930bc75c10037966e400ae2c6df11d84
+            - path: 1.4.11
+              level: 3
+              title: 'FR-11: Exit codes'
+              byte_offset: 12527
+              byte_count: 433
+              word_count: 67
+              content_hash: c9f7f3ff89b051aaa73417409ff6c999e771ee77e34b0d8024a2449f2501142a
+        - path: "1.5"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 12960
+          byte_count: 1256
+          word_count: 194
+          content_hash: 6716845028b963fbba34feafb4d253c9b5ee2cc141aa0be8451c28c78ea24adf
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'NFR-1: Schema stability'
+              byte_offset: 12992
+              byte_count: 813
+              word_count: 129
+              content_hash: a3d9c92a213321d8f64ea19a8e8af0324a6c073b7421ca9a03551ec1dbfc368d
+            - path: 1.5.2
+              level: 3
+              title: 'NFR-2: Performance'
+              byte_offset: 13805
+              byte_count: 151
+              word_count: 25
+              content_hash: b0c21b6739890cba1e8dffbd14eb94286e64b6ed29aea249c9c72dda981ff2d1
+            - path: 1.5.3
+              level: 3
+              title: 'NFR-3: Parsability'
+              byte_offset: 13956
+              byte_count: 260
+              word_count: 37
+              content_hash: 99645091b400356851157d63dccfc8d736947d4c34a21857bf86f0c1706d87df
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 14216
+          byte_count: 3255
+          word_count: 467
+          content_hash: 6c7dc0e80d8b1a039b030c9cf6921b02691db4e54dff08e9a0e6c7e2e7a789e0
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'AC-1: Plain format — feature with full documents'
+              byte_offset: 14240
+              byte_count: 765
+              word_count: 104
+              content_hash: 60f842c8c75896b88ff9bba07b2bce3cf46646f7aaddf5d1bbc3e6fd24080264
+            - path: 1.6.2
+              level: 3
+              title: 'AC-2: Plain format — feature with no plan'
+              byte_offset: 15005
+              byte_count: 159
+              word_count: 26
+              content_hash: f8fdd5062ef6184e1d11d4c7bed7706d5377ba2adedf5f8db33835ad056ae4db
+            - path: 1.6.3
+              level: 3
+              title: 'AC-3: Plain format — unregistered document'
+              byte_offset: 15164
+              byte_count: 281
+              word_count: 34
+              content_hash: 981c3d4c49912450b5f4f1bee410114691e6842acf48651c0752872208f74555
+            - path: 1.6.4
+              level: 3
+              title: 'AC-4: Plain format — project overview health gate'
+              byte_offset: 15445
+              byte_count: 234
+              word_count: 39
+              content_hash: cfa8749461e49b42c083e75209820a0f6e7a71dc478f6a9871739d15995df49a
+            - path: 1.6.5
+              level: 3
+              title: 'AC-5: JSON format — feature results array'
+              byte_offset: 15679
+              byte_count: 354
+              word_count: 46
+              content_hash: 791b3509d15ecf91383ca8fb0a1dc46155d557782a50662b77fe1af07420c28d
+            - path: 1.6.6
+              level: 3
+              title: 'AC-6: JSON format — feature with null plan_id'
+              byte_offset: 16033
+              byte_count: 139
+              word_count: 21
+              content_hash: 98dda43620a668902b18f7d7a5bc114e795b27ee4164b2ccbabefe7f65f52c79
+            - path: 1.6.7
+              level: 3
+              title: 'AC-7: JSON format — unregistered document'
+              byte_offset: 16172
+              byte_count: 296
+              word_count: 35
+              content_hash: 6a67e18539058da6949d1030edee054b3b92b670bd0bf746269864e67b730796
+            - path: 1.6.8
+              level: 3
+              title: 'AC-8: JSON format — project overview shape'
+              byte_offset: 16468
+              byte_count: 428
+              word_count: 68
+              content_hash: 548b72dadb911219a81a8be12b40eb870614f75db7bacc55b0fdfe7133ad327e
+            - path: 1.6.9
+              level: 3
+              title: 'AC-9: JSON format — empty attention'
+              byte_offset: 16896
+              byte_count: 151
+              word_count: 23
+              content_hash: 020c9ffe4161bdbe89fa91998837f54a917a5004f83153601c6c3db120024dd1
+            - path: 1.6.10
+              level: 3
+              title: 'AC-10: Exit codes'
+              byte_offset: 17047
+              byte_count: 197
+              word_count: 30
+              content_hash: 56006ca02598272b28b63600de58c1e3f7b9a30c7fd00c937c3af0178dc29669
+            - path: 1.6.11
+              level: 3
+              title: 'AC-11: Schema contract test'
+              byte_offset: 17244
+              byte_count: 227
+              word_count: 38
+              content_hash: eeb9bd151ecd9da48e02a8ab2add9bbe271b9c1735692c543f51d599a55af74e
+        - path: "1.7"
+          level: 2
+          title: Verification Plan
+          byte_offset: 17471
+          byte_count: 684
+          word_count: 120
+          content_hash: 4bcb05bd4c007d7ab4c430fc0033a068f53260caa9e0c51b4a0f71fd24ba6a16
+        - path: "1.8"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 18155
+          byte_count: 1621
+          word_count: 255
+          content_hash: b8481985741ae116bcb1e65d217d67e29ce5e6bc67f52fd0e603feaea0365d74
+          children:
+            - path: 1.8.1
+              level: 3
+              title: Dependencies
+              byte_offset: 18188
+              byte_count: 566
+              word_count: 86
+              content_hash: aef7a24cc3711516a9590d5323277623e0c7b11475ef6237f165583271641bbd
+            - path: 1.8.2
+              level: 3
+              title: Assumptions
+              byte_offset: 18754
+              byte_count: 1022
+              word_count: 165
+              content_hash: 01e0b757efd899c8e15e0a28c8ac7405ae50064eb6526c07289d63f8e67c846d
+entity_refs:
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.4.3
+      byte_offset: 4040
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.4.9.1
+      byte_offset: 8182
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.4.9.3
+      byte_offset: 9744
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.4.9.5
+      byte_offset: 10481
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.4.10
+      byte_offset: 11820
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 14313
+    - entity_id: FEAT-099
+      entity_type: feature
+      section_path: 1.6.2
+      byte_offset: 15074
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.6.5
+      byte_offset: 15748
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 17884
+    - entity_id: TASK-0099
+      entity_type: task
+      section_path: 1.4.9.3
+      byte_offset: 9633
+    - entity_id: BUG-0017
+      entity_type: bug
+      section_path: 1.4.9.4
+      byte_offset: 9916
+    - entity_id: DOC-0019
+      entity_type: document
+      section_path: 1.4.9.1
+      byte_offset: 8377
+    - entity_id: DOC-0023
+      entity_type: document
+      section_path: 1.4.9.1
+      byte_offset: 8478
+    - entity_id: DOC-0023
+      entity_type: document
+      section_path: 1.4.9.5
+      byte_offset: 10310
+    - entity_id: P1-my-plan
+      entity_type: plan
+      section_path: 1.4.4
+      byte_offset: 5287
+    - entity_id: P1-my-plan
+      entity_type: plan
+      section_path: 1.4.9.1
+      byte_offset: 8306
+    - entity_id: P1-my-plan
+      entity_type: plan
+      section_path: 1.4.9.2
+      byte_offset: 9343
+    - entity_id: P1-main-plan
+      entity_type: plan
+      section_path: 1.4.10
+      byte_offset: 11580
+    - entity_id: P1-my-plan
+      entity_type: plan
+      section_path: 1.6.1
+      byte_offset: 14377
+cross_doc_links:
+    - target_path: work/_project/design-kbz-cli-and-binary-rename.md
+      link_text: work/_project/design-kbz-cli-and-binary-rename.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: 1.4.7
+      role: narrative
+      confidence: high
+    - section_path: 1.4.10
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: 1.6.4
+      role: narrative
+      confidence: high
+    - section_path: 1.6.8
+      role: narrative
+      confidence: high
+    - section_path: "1.8"
+      role: assumption
+      confidence: high
+    - section_path: 1.8.2
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-30T14:07:34.455158Z
+classified: false

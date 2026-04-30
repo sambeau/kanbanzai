@@ -39,7 +39,7 @@ Kanbanzai's MCP server communicates over **stdio** (standard input/output) using
 **Starting the server:**
 
 ```
-kanbanzai serve
+kbz serve
 ```
 
 The server is **editor-agnostic** — it works with any MCP-compatible client including Zed, Claude Desktop, VS Code, Cursor, and others.

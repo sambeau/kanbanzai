@@ -1,0 +1,139 @@
+document_id: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output
+document_path: work/plan/B36-F4-dev-plan-status-machine-output.md
+content_hash: da9c659681ff6e8a681a39fcc8aa9dea922cf1832a0d3822d604da93f6225d67
+indexed_at: 2026-04-30T14:28:52.77335Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Status command machine output formats'
+      byte_offset: 0
+      byte_count: 13591
+      word_count: 1824
+      content_hash: da9c659681ff6e8a681a39fcc8aa9dea922cf1832a0d3822d604da93f6225d67
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 647
+          byte_count: 1290
+          word_count: 173
+          content_hash: 28bf6ea866a7068c834af4d89422667a32d36148054f3d9e92ae2124f50d8baa
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1937
+          byte_count: 8108
+          word_count: 1039
+          content_hash: eb9f5ae8b06b135d6996832fe006b9434bc6c64e9c76c76db0dd424ffbbfffcd
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Plain format renderer'
+              byte_offset: 1956
+              byte_count: 2469
+              word_count: 295
+              content_hash: 0a95937b7629d4e9518e0ce2adbda6f808c1431a9b2b8e2b0b31ac313acaa399
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: JSON format renderer'
+              byte_offset: 4425
+              byte_count: 2385
+              word_count: 310
+              content_hash: 58cc0ce9494c2d93452152ecf9460dafce47915e912a2c230a4d0c4c5db4e0bd
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Schema stability contract test'
+              byte_offset: 6810
+              byte_count: 1349
+              word_count: 191
+              content_hash: cd10d4a54874de2705d62db7058600e2e03c18b5e338368c9b0610d3a0d75f5b
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Integration and verification'
+              byte_offset: 8159
+              byte_count: 1886
+              word_count: 240
+              content_hash: ce2c2de8a97bff42ad0683fb10d0f64964e712e425960521c07896dd49db2807
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 10045
+          byte_count: 691
+          word_count: 91
+          content_hash: 9384022af02dc77aae314ea65fb475de13fcb02b24d9fe61f13593f0cafe6ac5
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 10736
+          byte_count: 1579
+          word_count: 240
+          content_hash: 6c03362bbdeefc3757df279acd5f46e3e559b98565a339be62338800d93488f9
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: Service-layer struct mismatch with spec schemas'
+              byte_offset: 10756
+              byte_count: 638
+              word_count: 91
+              content_hash: 12ffbac098d10186edc5e2b24c0d41b3897e111202a03fe5875c415176dca68b
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: B36-F2 delay blocks integration'
+              byte_offset: 11394
+              byte_count: 495
+              word_count: 80
+              content_hash: 8ac9f23ab5e1773d414face2aeabb475854147785e664a8015df462c79a7007a
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Document path lookup returns multiple records'
+              byte_offset: 11889
+              byte_count: 426
+              word_count: 66
+              content_hash: c60ef6145c256513ffc58098b099a52da56091ee020087dadb5d27992ecb2c7d
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 12315
+          byte_count: 1276
+          word_count: 232
+          content_hash: 664bce6f745e6bf84b7b0d4f186c9a2ff28eecb962ec937b01e695e713c7620f
+entity_refs:
+    - entity_id: FEAT-01KQ2VHKJB5V8
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 418
+    - entity_id: FEAT-01KQ2VHKJB5V8
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 848
+    - entity_id: F4-spec-status-machine-output
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 503
+    - entity_id: F4-spec-status-machine-output
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 813
+cross_doc_links:
+    - target_path: work/spec/B36-F4-spec-status-machine-output.md
+      link_text: work/spec/B36-F4-spec-status-machine-output.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-30T14:28:53.32438Z
+classified: false

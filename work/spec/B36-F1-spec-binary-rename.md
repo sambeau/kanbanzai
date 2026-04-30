@@ -3,7 +3,7 @@
 | Field  | Value                    |
 |--------|--------------------------|
 | Date   | 2026-04-30               |
-| Status | Draft                    |
+| Status | approved |
 | Author | spec-author              |
 
 ## Related Work
@@ -66,21 +66,21 @@ This specification defines the requirements for renaming the `kanbanzai` CLI bin
 
 ## Acceptance Criteria
 
-- **AC-001 (FR-001, FR-002):** Given the repository is checked out and `make build` is executed, when the build completes successfully, then a file named `kbz` (not `kanbanzai`) exists at the repository root.
-- **AC-002 (FR-003):** Given `make install` is executed, when it completes successfully, then the installed binary is named `kbz` in `GOPATH/bin` (or `GOBIN`).
-- **AC-003 (FR-004):** Given the repository source tree, when `cmd/kbz/main.go` is verified to exist, then `cmd/kanbanzai/` does not exist anywhere in the tree.
-- **AC-004 (FR-005):** Given a clean project directory, when `kbz init` is run, then the generated `.mcp.json` contains `"command": "kbz"` in the `mcpServers.kanbanzai` object.
-- **AC-005 (FR-006):** Given a clean project directory, when `kbz init` is run, then the generated `.zed/settings.json` contains `"command": "kbz"` in the `context_servers.kanbanzai` object.
-- **AC-006 (FR-007):** Given a managed `.mcp.json` written by the previous version of `kbz init` (with the old `mcpVersion` value), when `kbz init` is run, then the file is overwritten with a config containing `"command": "kbz"` and the new `mcpVersion` value.
-- **AC-007 (FR-008):** Given a project directory whose managed `.mcp.json` contains `"command": "kanbanzai"`, when `kbz init --update-skills` is run, then the command prints a warning to stdout that mentions `kbz init` as the corrective action and does not silently leave the stale config in place unreported.
-- **AC-008 (FR-009):** Given a project directory whose `.zed/settings.json` contains `"command": "kanbanzai"` under `context_servers`, when `kbz init` is run, then the command prints a warning to stdout that mentions `kbz init` as the corrective action.
-- **AC-009 (FR-010):** Given the file `AGENTS.md` at the repository root, when it is scanned for the string `kanbanzai` appearing as a binary invocation (e.g. `kanbanzai init`, `kanbanzai serve`), then no such occurrences are found.
-- **AC-010 (FR-011):** Given the project README, when it is scanned for the string `kanbanzai` appearing as a binary name in commands or install instructions, then no such occurrences are found.
-- **AC-011 (FR-012):** Given all Markdown files under `docs/`, when each file is scanned for shell command examples or install instructions that reference `kanbanzai` as a binary, then no such occurrences are found.
-- **AC-012 (FR-013):** Given the installation documentation, when the `go install` command is located, then it reads `go install github.com/sambeau/kanbanzai/cmd/kbz@latest`.
-- **AC-013 (FR-014):** Given the Go source tree, when all `.go` files are scanned for `import` paths, then no import path has changed from its pre-rename value; `github.com/sambeau/kanbanzai/internal/...` paths are intact.
-- **AC-014 (FR-015):** Given the generated `.mcp.json` and `.zed/settings.json` after `kbz init`, when the server key names in `mcpServers` and `context_servers` are inspected, then they remain `"kanbanzai"`, not `"kbz"`.
-- **AC-015 (NFR-001):** Given the full test suite, when `go test ./...` is executed against the renamed codebase, then all tests pass with zero failures.
+- [ ] **AC-001 (FR-001, FR-002):** Given the repository is checked out and `make build` is executed, when the build completes successfully, then a file named `kbz` (not `kanbanzai`) exists at the repository root.
+- [ ] **AC-002 (FR-003):** Given `make install` is executed, when it completes successfully, then the installed binary is named `kbz` in `GOPATH/bin` (or `GOBIN`).
+- [ ] **AC-003 (FR-004):** Given the repository source tree, when `cmd/kbz/main.go` is verified to exist, then `cmd/kanbanzai/` does not exist anywhere in the tree.
+- [ ] **AC-004 (FR-005):** Given a clean project directory, when `kbz init` is run, then the generated `.mcp.json` contains `"command": "kbz"` in the `mcpServers.kanbanzai` object.
+- [ ] **AC-005 (FR-006):** Given a clean project directory, when `kbz init` is run, then the generated `.zed/settings.json` contains `"command": "kbz"` in the `context_servers.kanbanzai` object.
+- [ ] **AC-006 (FR-007):** Given a managed `.mcp.json` written by the previous version of `kbz init` (with the old `mcpVersion` value), when `kbz init` is run, then the file is overwritten with a config containing `"command": "kbz"` and the new `mcpVersion` value.
+- [ ] **AC-007 (FR-008):** Given a project directory whose managed `.mcp.json` contains `"command": "kanbanzai"`, when `kbz init --update-skills` is run, then the command prints a warning to stdout that mentions `kbz init` as the corrective action and does not silently leave the stale config in place unreported.
+- [ ] **AC-008 (FR-009):** Given a project directory whose `.zed/settings.json` contains `"command": "kanbanzai"` under `context_servers`, when `kbz init` is run, then the command prints a warning to stdout that mentions `kbz init` as the corrective action.
+- [ ] **AC-009 (FR-010):** Given the file `AGENTS.md` at the repository root, when it is scanned for the string `kanbanzai` appearing as a binary invocation (e.g. `kanbanzai init`, `kanbanzai serve`), then no such occurrences are found.
+- [ ] **AC-010 (FR-011):** Given the project README, when it is scanned for the string `kanbanzai` appearing as a binary name in commands or install instructions, then no such occurrences are found.
+- [ ] **AC-011 (FR-012):** Given all Markdown files under `docs/`, when each file is scanned for shell command examples or install instructions that reference `kanbanzai` as a binary, then no such occurrences are found.
+- [ ] **AC-012 (FR-013):** Given the installation documentation, when the `go install` command is located, then it reads `go install github.com/sambeau/kanbanzai/cmd/kbz@latest`.
+- [ ] **AC-013 (FR-014):** Given the Go source tree, when all `.go` files are scanned for `import` paths, then no import path has changed from its pre-rename value; `github.com/sambeau/kanbanzai/internal/...` paths are intact.
+- [ ] **AC-014 (FR-015):** Given the generated `.mcp.json` and `.zed/settings.json` after `kbz init`, when the server key names in `mcpServers` and `context_servers` are inspected, then they remain `"kanbanzai"`, not `"kbz"`.
+- [ ] **AC-015 (NFR-001):** Given the full test suite, when `go test ./...` is executed against the renamed codebase, then all tests pass with zero failures.
 
 ## Verification Plan
 

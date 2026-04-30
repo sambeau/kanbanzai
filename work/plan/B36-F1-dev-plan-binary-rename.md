@@ -1,12 +1,16 @@
 | Field  | Value                                   |
 |--------|-----------------------------------------|
 | Date   | 2026-04-30                              |
-| Status | Draft                                   |
+| Status | approved |
 | Author | architect                               |
+
+## Overview
+
+This plan implements the binary rename from `kanbanzai` to `kbz` as specified in `work/spec/B36-F1-spec-binary-rename.md` (doc ID: `FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename`). It covers renaming the main package directory and build targets, updating MCP config templates with a version bump and migration detection, and sweeping documentation references. The 15 functional requirements and 15 acceptance criteria from the specification are consolidated into 5 vertical-slice tasks with clear dependency ordering.
 
 ## Scope
 
-This plan implements the binary rename from `kanbanzai` to `kbz` as specified in `work/spec/B36-F1-spec-binary-rename.md` (doc ID: `FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename`). It covers renaming the main package directory and build targets, updating MCP config templates with a version bump and migration detection, and sweeping documentation references. It does **not** cover the `kbz status` extension (B36-F2–F4), the Go module path, the MCP server protocol name `"kanbanzai"`, or any deprecation shim.
+This plan implements the requirements defined in `work/spec/B36-F1-spec-binary-rename.md` (doc ID: `FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename`). It covers the binary rename path (Part A of the design). It does **not** cover the `kbz status` extension (B36-F2–F4), the Go module path, the MCP server protocol name `"kanbanzai"`, or any deprecation shim.
 
 ## Task Breakdown
 
@@ -85,6 +89,25 @@ Critical path: Task 1 → Task 2 → Task 3 → Task 5
 - **Impact:** Medium (migration warning might fire spuriously or not at all).
 - **Mitigation:** The migration detection sits after the version-gating path in `writeMCPConfig` / `writeZedConfig`. It compares the existing file's command field against `"kbz"` (the canonical value) and fires only when a stale value is found. The version bump to `2` guarantees the rewrite path executes, and the warning adds a user-visible confirmation after rewrite. Task 3 includes test cases for both the `.mcp.json` and `.zed/settings.json` detection paths.
 - **Affected tasks:** Task 3.
+
+## Interface Contracts
+
+The rename is self-contained within one Go module — there are no cross-service or cross-module interface changes. The internal interfaces that matter for correctness:
+
+- **`internal/kbzinit.Initializer` → filesystem:** `writeMCPConfig` and `writeZedConfig` write `.mcp.json` and `.zed/settings.json` respectively. The schema of these files changes only in the `"command"` field value (`"kbz"` replacing `"kanbanzai"`). The `_managed` block schema (`tool`, `version`) is unchanged. The `context_servers` key schema is unchanged.
+- **`cmd/kbz/main.go` → `internal/mcp.ServerName`:** The `ServerName` constant (`"kanbanzai"`) is preserved per FR-015. The binary rename does not touch this value.
+- **Go module path:** `github.com/sambeau/kanbanzai` and all `internal/...` import paths are preserved per FR-014. No `go.mod` changes.
+- **Makefile → `go build`:** The build target changes from `./cmd/kanbanzai` to `./cmd/kbz`. The `BINARY` variable changes from `kanbanzai` to `kbz`. No flags or ldflags change.
+
+## Traceability Matrix
+
+| Task | FRs Covered | ACs Verified |
+|------|-------------|-------------|
+| Task 1: Rename cmd + build system | FR-001, FR-002, FR-003, FR-004 | AC-001, AC-002, AC-003 |
+| Task 2: Update MCP templates + version | FR-005, FR-006, FR-007, FR-014, FR-015 | AC-004, AC-005, AC-006, AC-014 |
+| Task 3: Migration detection | FR-008, FR-009, NFR-003 | AC-007, AC-008 |
+| Task 4: Documentation sweep | FR-010, FR-011, FR-012, FR-013 | AC-009, AC-010, AC-011, AC-012 |
+| Task 5: Verification and invariants | FR-014, FR-015, NFR-001 | AC-013, AC-015, all above |
 
 ## Verification Approach
 

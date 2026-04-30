@@ -1,0 +1,133 @@
+document_id: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename
+document_path: work/spec/B36-F1-spec-binary-rename.md
+content_hash: 176ea39542b8701131f7fe28e31805da4d20e8de862123b4c979b00023c83970
+indexed_at: 2026-04-30T14:08:14.213508Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Binary rename kanbanzai to kbz'
+      byte_offset: 0
+      byte_count: 12027
+      word_count: 1706
+      content_hash: 176ea39542b8701131f7fe28e31805da4d20e8de862123b4c979b00023c83970
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 240
+          byte_count: 489
+          word_count: 57
+          content_hash: 35f985a7efb9aa0c5b7fdfceb8584473cba7d750a6015720bbe750cc78c37d31
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 729
+          byte_count: 579
+          word_count: 89
+          content_hash: 8f1ca5cdeb3f06a6b80c8b88e09cfc866050101587a58df98e7606402ea35075
+        - path: "1.3"
+          level: 2
+          title: Scope
+          byte_offset: 1308
+          byte_count: 1569
+          word_count: 206
+          content_hash: 69dce5587d9a0c852cbfb001562b907e5426e0b5d0e76b77735652933dad5d29
+          children:
+            - path: 1.3.1
+              level: 3
+              title: In scope
+              byte_offset: 1318
+              byte_count: 871
+              word_count: 116
+              content_hash: 71d0b945e17387ccbbd98c549dbaeeccffae5e56b422d4138526b0fb6807b5fd
+            - path: 1.3.2
+              level: 3
+              title: Out of scope
+              byte_offset: 2189
+              byte_count: 688
+              word_count: 88
+              content_hash: 4849cb367e7eba8d675293aff5a09cc679ab2bb2f833c977de2b0d3c595532cf
+        - path: "1.4"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2877
+          byte_count: 2100
+          word_count: 297
+          content_hash: 0e12879cc203e4b5e4ecb2b99376a10e1067c46ba0f9fbfe603ecce62a90a80f
+        - path: "1.5"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 4977
+          byte_count: 681
+          word_count: 105
+          content_hash: 901ec2ae7d0afab897f07277955ed64d1134de41b0b91145890fc21e55198d9d
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 5658
+          byte_count: 3166
+          word_count: 455
+          content_hash: eeba9ac45fbbbecdff932a16dbfe2f603f6ad0f32d74ccf424694d3b5aeada8a
+        - path: "1.7"
+          level: 2
+          title: Verification Plan
+          byte_offset: 8824
+          byte_count: 2068
+          word_count: 314
+          content_hash: aa0f762bbd81c24fe1a39b765a202e19ff3081730740c6f35efbde0ab13e0015
+        - path: "1.8"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 10892
+          byte_count: 1135
+          word_count: 155
+          content_hash: 4f378c12512abc72fab0bbd5dc57b683df1a8c49ac52ffd1a9ae5ad8a685f314
+entity_refs:
+    - entity_id: B36-kbz-cli-and-status
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 333
+cross_doc_links:
+    - target_path: work/_project/design-kbz-cli-and-binary-rename.md
+      link_text: work/_project/design-kbz-cli-and-binary-rename.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.4"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.6"
+    - target_path: work/_project/design-kbz-cli-and-binary-rename.md
+      link_text: work/_project/design-kbz-cli-and-binary-rename.md
+      section_path: "1.8"
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.8"
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-30T14:08:14.726231Z
+classified: false

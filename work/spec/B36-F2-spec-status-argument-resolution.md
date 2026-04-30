@@ -3,7 +3,7 @@
 | Field  | Value                                   |
 |--------|-----------------------------------------|
 | Date   | 2026-04-30                              |
-| Status | Draft                                   |
+| Status | approved |
 | Author | spec-author                             |
 
 ---
@@ -124,63 +124,53 @@ The feature is concerned exclusively with argument parsing, disambiguation, path
 
 ## Acceptance Criteria
 
-### Disambiguation
+- [ ] **AC-001:** Given `kbz status work/design/foo.md`, when the argument is parsed, then the command routes to file path resolution without consulting the entity ID matcher.
 
-- **AC-001 (FR-005):** Given `kbz status work/design/foo.md`, when the argument is parsed, then the command routes to file path resolution without consulting the entity ID matcher.
+- [ ] **AC-002:** Given `kbz status notes.txt`, when the argument is parsed, then the command routes to file path resolution.
 
-- **AC-002 (FR-005):** Given `kbz status notes.txt`, when the argument is parsed, then the command routes to file path resolution.
+- [ ] **AC-003:** Given `kbz status FEAT-042`, when the argument is parsed, then the command routes to entity ID lookup.
 
-- **AC-003 (FR-006):** Given `kbz status FEAT-042`, when the argument is parsed, then the command routes to entity ID lookup.
+- [ ] **AC-004:** Given `kbz status P1-my-plan`, when the argument is parsed, then the command routes to entity ID lookup.
 
-- **AC-004 (FR-006):** Given `kbz status P1-my-plan`, when the argument is parsed, then the command routes to entity ID lookup.
+- [ ] **AC-005:** Given `kbz status P1` and a plan with prefix `P1` exists, when the command runs, then it produces the plan view for that plan and exits 0.
 
-- **AC-005 (FR-008):** Given `kbz status P1` and a plan with prefix `P1` exists, when the command runs, then it produces the plan view for that plan and exits 0.
+- [ ] **AC-006:** Given `kbz status P99` and no plan with prefix `P99` exists, when the command runs, then it exits 1 with an error message referencing `P99`.
 
-- **AC-006 (FR-008):** Given `kbz status P99` and no plan with prefix `P99` exists, when the command runs, then it exits 1 with an error message referencing `P99`.
+- [ ] **AC-007:** Given `kbz status sometoken` where `sometoken` matches no entity ID pattern, when entity ID lookup fails and file path lookup also fails, then the command exits 1 with a descriptive error.
 
-- **AC-007 (FR-007):** Given `kbz status sometoken` where `sometoken` matches no entity ID pattern, when entity ID lookup fails and file path lookup also fails, then the command exits 1 with a descriptive error.
+- [ ] **AC-008:** Given `kbz status work/design/nonexistent.md` and the file does not exist on disk, when the command runs, then it exits 1 with an error message referencing the path.
 
-### File path resolution
+- [ ] **AC-009:** Given `kbz status work/design/unregistered.md` and the file exists on disk but has no document record, when the command runs, then it exits 0 and the output includes the phrase "not registered" and a suggested `kbz doc register` command.
 
-- **AC-008 (FR-009):** Given `kbz status work/design/nonexistent.md` and the file does not exist on disk, when the command runs, then it exits 1 with an error message referencing the path.
+- [ ] **AC-010:** Given `kbz status work/design/registered.md` and the file has a document record with an owner feature, when the command runs, then it exits 0 and routes to both the document view and the owner feature view.
 
-- **AC-009 (FR-011):** Given `kbz status work/design/unregistered.md` and the file exists on disk but has no document record, when the command runs, then it exits 0 and the output includes the phrase "not registered" and a suggested `kbz doc register` command.
+- [ ] **AC-011:** Given `kbz status work/design/registered.md` and the file has a document record with no owner entity, when the command runs, then it exits 0 and routes to the document view only (no entity view).
 
-- **AC-010 (FR-012):** Given `kbz status work/design/registered.md` and the file has a document record with an owner feature, when the command runs, then it exits 0 and routes to both the document view and the owner feature view.
+- [ ] **AC-012:** Given `kbz status ./work/design/foo.md` (leading `./`), when the command runs, then it performs the same document record lookup as `kbz status work/design/foo.md`.
 
-- **AC-011 (FR-012):** Given `kbz status work/design/registered.md` and the file has a document record with no owner entity, when the command runs, then it exits 0 and routes to the document view only (no entity view).
+- [ ] **AC-013:** Given `kbz status FEAT-999` and no feature with display ID `FEAT-999` exists, when the command runs, then it exits 1 with an error message containing `FEAT-999`.
 
-- **AC-012 (FR-013):** Given `kbz status ./work/design/foo.md` (leading `./`), when the command runs, then it performs the same document record lookup as `kbz status work/design/foo.md`.
+- [ ] **AC-014:** Given `kbz status FEAT-042` and the feature exists, when the command runs, then it exits 0 and routes to the feature view.
 
-### Entity ID routing
+- [ ] **AC-015:** Given `kbz status BUG-007` and the bug exists, when the command runs, then it exits 0 and routes to the bug view.
 
-- **AC-013 (FR-015, FR-016):** Given `kbz status FEAT-999` and no feature with display ID `FEAT-999` exists, when the command runs, then it exits 1 with an error message containing `FEAT-999`.
+- [ ] **AC-016:** Given `kbz status --format xml`, when the command runs, then it exits 2 and prints a message listing `human`, `plain`, and `json` as the valid values.
 
-- **AC-014 (FR-014):** Given `kbz status FEAT-042` and the feature exists, when the command runs, then it exits 0 and routes to the feature view.
+- [ ] **AC-017:** Given `kbz status --unknown-flag`, when the command runs, then it exits 2 with a usage error.
 
-- **AC-015 (FR-014):** Given `kbz status BUG-007` and the bug exists, when the command runs, then it exits 0 and routes to the bug view.
+- [ ] **AC-018:** Given `kbz status FEAT-042 FEAT-043`, when the command runs, then it exits 2 with a usage error.
 
-### Exit codes and flags
+- [ ] **AC-019:** Given `kbz status` with no target and the project overview succeeds, when the command runs, then it exits 0.
 
-- **AC-016 (FR-002, FR-019):** Given `kbz status --format xml`, when the command runs, then it exits 2 and prints a message listing `human`, `plain`, and `json` as the valid values.
+- [ ] **AC-020:** Given `kbz status` and the state store cannot be read, when the command runs, then it exits 1.
 
-- **AC-017 (FR-003, FR-019):** Given `kbz status --unknown-flag`, when the command runs, then it exits 2 with a usage error.
+- [ ] **AC-021:** Given `kbz doc approve work/design/foo.md` and no document record exists for that path, when the command runs, then it exits 1 with an error message stating the file is not registered.
 
-- **AC-018 (FR-004, FR-019):** Given `kbz status FEAT-042 FEAT-043`, when the command runs, then it exits 2 with a usage error.
+- [ ] **AC-022:** Given `kbz doc approve work/design/foo.md` and a document record exists for that path, when the command runs, then it approves the document and exits 0, producing the same output as `kbz doc approve <resolved-id>`.
 
-- **AC-019 (FR-017):** Given `kbz status` with no target and the project overview succeeds, when the command runs, then it exits 0.
+- [ ] **AC-023:** Given `kbz doc approve DOC-0012` where `DOC-0012` exists, when the command runs, then behaviour is unchanged from the current implementation.
 
-- **AC-020 (FR-018):** Given `kbz status` and the state store cannot be read, when the command runs, then it exits 1.
-
-### `kbz doc approve` path resolution
-
-- **AC-021 (FR-021, FR-022):** Given `kbz doc approve work/design/foo.md` and no document record exists for that path, when the command runs, then it exits 1 with an error message stating the file is not registered.
-
-- **AC-022 (FR-021, FR-023):** Given `kbz doc approve work/design/foo.md` and a document record exists for that path, when the command runs, then it approves the document and exits 0, producing the same output as `kbz doc approve <resolved-id>`.
-
-- **AC-023 (FR-024):** Given `kbz doc approve DOC-0012` where `DOC-0012` exists, when the command runs, then behaviour is unchanged from the current implementation.
-
-- **AC-024 (FR-021, FR-022):** Given `kbz doc approve work/design/foo.md --by alice` and a document record exists for that path, when the command runs, then the approval is recorded with `alice` as the approver, identical to `kbz doc approve <resolved-id> --by alice`.
+- [ ] **AC-024:** Given `kbz doc approve work/design/foo.md --by alice` and a document record exists for that path, when the command runs, then the approval is recorded with `alice` as the approver, identical to `kbz doc approve <resolved-id> --by alice`.
 
 ---
 

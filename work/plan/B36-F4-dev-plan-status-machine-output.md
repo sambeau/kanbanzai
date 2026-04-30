@@ -3,7 +3,7 @@
 | Field   | Value                                                    |
 |---------|----------------------------------------------------------|
 | Date    | 2026-04-30                                               |
-| Status  | Draft                                                    |
+| Status | approved |
 | Author  | architect                                                |
 | Feature | FEAT-01KQ2VHKJB5V8                                       |
 | Spec    | work/spec/B36-F4-spec-status-machine-output.md           |
@@ -11,29 +11,25 @@
 
 ---
 
-## Scope
+## Overview
 
 This plan implements the machine-readable output formats (`--format plain` and `--format json`)
 for the `kbz status` command as specified in
 `work/spec/B36-F4-spec-status-machine-output.md` (FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output).
 
-It covers four vertical slices:
+### Goals
 
-1. **Plain format renderer** — key:value output for all six scope types (feature, plan, task,
-   bug, document, project), with exhaustive schemas per FR-3 through FR-7.
-2. **JSON format renderer** — structured JSON output for all scope types with results-array
-   wrapping (D-7), distinct project overview shape (D-8), and full schemas per FR-9–FR-10.
-3. **Schema stability contract test** — automated test that asserts the presence of every
-   required plain key and JSON field across all scope types (NFR-1.5).
-4. **Integration and verification** — wiring into the `kbz status` command, integration tests
-   covering all 11 acceptance criteria, and performance verification (NFR-2.1).
+- Deliver `--format plain` key:value output for all six scope types per FR-3 through FR-7
+- Deliver `--format json` structured output with results-array wrapping (D-7) and distinct
+  project shape (D-8) per FR-9–FR-10
+- Guarantee schema stability with an automated CI contract test (NFR-1.5)
+- Integrate into `kbz status` with full AC coverage and perf verification (NFR-2.1)
 
-It does **not** cover:
+### Non-Goals
 
 - `--format human` output (B36-F3)
-- The argument resolution and routing logic (B36-F2 — dependency)
-- Any MCP server tool changes; the CLI renderers consume service-layer data, same as the MCP
-  `status` tool already does
+- Argument resolution and routing (B36-F2 — dependency)
+- MCP server tool changes; the CLI renderers consume existing service-layer data
 - Multi-target queries (Q-1 — deferred)
 
 ---
@@ -69,20 +65,6 @@ It does **not** cover:
 - Keys are emitted in a fixed order matching the spec schemas; a struct field tag convention
   (e.g. `plain:"doc.design"`) drives ordering without hard-coded switch statements.
 
-**Interface contract (consumed by Task 4):**
-
-```go
-// PlainRenderer writes plain key:value status output to w.
-type PlainRenderer struct{}
-
-func (r *PlainRenderer) RenderFeature(w io.Writer, d *mcp.FeatureDetail) error
-func (r *PlainRenderer) RenderPlan(w io.Writer, d *mcp.PlanDashboard) error
-func (r *PlainRenderer) RenderTask(w io.Writer, d *mcp.TaskDetail) error
-func (r *PlainRenderer) RenderBug(w io.Writer, d *mcp.BugDetail) error
-func (r *PlainRenderer) RenderDocument(w io.Writer, d *service.DocumentResult) error
-func (r *PlainRenderer) RenderProject(w io.Writer, p *mcp.ProjectOverview) error
-```
-
 ---
 
 ### Task 2: JSON format renderer
@@ -114,19 +96,6 @@ func (r *PlainRenderer) RenderProject(w io.Writer, p *mcp.ProjectOverview) error
   the top-level shape.
 - `health.errors` and `health.warnings` are computed from attention items at query time,
   not cached.
-
-**Interface contract (consumed by Task 4):**
-
-```go
-type JSONRenderer struct{}
-
-func (r *JSONRenderer) RenderFeature(w io.Writer, d *mcp.FeatureDetail) error
-func (r *JSONRenderer) RenderPlan(w io.Writer, d *mcp.PlanDashboard) error
-func (r *JSONRenderer) RenderTask(w io.Writer, d *mcp.TaskDetail) error
-func (r *JSONRenderer) RenderBug(w io.Writer, d *mcp.BugDetail) error
-func (r *JSONRenderer) RenderDocument(w io.Writer, d *service.DocumentResult) error
-func (r *JSONRenderer) RenderProject(w io.Writer, p *mcp.ProjectOverview) error
-```
 
 ---
 
@@ -208,6 +177,82 @@ with Task 1; the longer of the two determines the start of Task 4).
 
 ---
 
+## Interface Contracts
+
+### Task 1 → Task 4: PlainRenderer
+
+```go
+// PlainRenderer writes plain key:value status output to w.
+type PlainRenderer struct{}
+
+func (r *PlainRenderer) RenderFeature(w io.Writer, d *mcp.FeatureDetail) error
+func (r *PlainRenderer) RenderPlan(w io.Writer, d *mcp.PlanDashboard) error
+func (r *PlainRenderer) RenderTask(w io.Writer, d *mcp.TaskDetail) error
+func (r *PlainRenderer) RenderBug(w io.Writer, d *mcp.BugDetail) error
+func (r *PlainRenderer) RenderDocument(w io.Writer, d *service.DocumentResult) error
+func (r *PlainRenderer) RenderProject(w io.Writer, p *mcp.ProjectOverview) error
+```
+
+### Task 2 → Task 4: JSONRenderer
+
+```go
+type JSONRenderer struct{}
+
+func (r *JSONRenderer) RenderFeature(w io.Writer, d *mcp.FeatureDetail) error
+func (r *JSONRenderer) RenderPlan(w io.Writer, d *mcp.PlanDashboard) error
+func (r *JSONRenderer) RenderTask(w io.Writer, d *mcp.TaskDetail) error
+func (r *JSONRenderer) RenderBug(w io.Writer, d *mcp.BugDetail) error
+func (r *JSONRenderer) RenderDocument(w io.Writer, d *service.DocumentResult) error
+func (r *JSONRenderer) RenderProject(w io.Writer, p *mcp.ProjectOverview) error
+```
+
+### Task 1, 2 → Task 4: Dispatcher (in `internal/cli/status/status.go`)
+
+```go
+// Dispatch synthesises a status result using the existing service-layer functions
+// and renders it using the appropriate renderer for the requested format.
+func Dispatch(w io.Writer, format string, target string, entitySvc *service.EntityService, docSvc *service.DocumentService) error
+```
+
+The dispatcher encapsulates the `synthesise*` → renderer pipeline. `format` is one of
+`"plain"` or `"json"` (human is handled by B36-F3).
+
+### Shared types (imported from existing packages)
+
+| Type | Package | Used by |
+|------|---------|---------|
+| `projectOverview` | `internal/mcp` | Plain, JSON, dispatcher |
+| `featureDetail` | `internal/mcp` | Plain, JSON, dispatcher |
+| `planDashboard` | `internal/mcp` | Plain, JSON, dispatcher |
+| `taskDetail` | `internal/mcp` | Plain, JSON, dispatcher |
+| `bugDetail` | `internal/mcp` | Plain, JSON, dispatcher |
+| `DocumentResult` | `internal/service` | Plain, JSON, dispatcher |
+| `DocumentService` | `internal/service` | Dispatcher |
+| `EntityService` | `internal/service` | Dispatcher |
+
+---
+
+## Traceability Matrix
+
+| Requirement | Task(s) | Verification |
+|-------------|---------|-------------|
+| FR-1: Format flag | Task 4 | AC-1 through AC-11 |
+| FR-2: Plain general rules | Task 1 | AC-1 through AC-4 |
+| FR-3: Plain feature | Task 1 | AC-1, AC-2 |
+| FR-4: Plain plan | Task 1 | Integration test (Task 4) |
+| FR-5: Plain task/bug | Task 1 | Integration test (Task 4) |
+| FR-6: Plain document | Task 1 | AC-3 |
+| FR-7: Plain project | Task 1 | AC-4 |
+| FR-8: JSON general rules | Task 2 | AC-5 through AC-9 |
+| FR-9: JSON entity/doc queries | Task 2 | AC-5, AC-6, AC-7, AC-9 |
+| FR-10: JSON project overview | Task 2 | AC-8 |
+| FR-11: Exit codes | Task 4 | AC-10 |
+| NFR-1: Schema stability | Task 3 | AC-11 |
+| NFR-2: Performance | Task 4 | Performance benchmark |
+| NFR-3: Parsability | Task 4 | jq/grep integration tests |
+
+---
+
 ## Risk Assessment
 
 ### Risk: Service-layer struct mismatch with spec schemas
@@ -242,7 +287,7 @@ with Task 1; the longer of the two determines the start of Task 4).
 
 ---
 
-## Verification Approach
+## Verification
 
 | Acceptance Criterion | Verification Method | Producing Task |
 |----------------------|--------------------|----------------|

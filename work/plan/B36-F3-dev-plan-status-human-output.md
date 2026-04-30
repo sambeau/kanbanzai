@@ -1,8 +1,15 @@
 | Field  | Value                                   |
 |--------|-----------------------------------------|
 | Date   | 2026-04-30                              |
-| Status | Draft                                   |
+| Status | approved |
 | Author | architect                               |
+
+## Overview
+
+This dev-plan covers the rendering layer of the `kbz status` command: converting structured
+status data (synthesised by the service layer) into human-readable prose output with TTY-aware
+formatting. The four tasks below deliver injectable TTY detection, five output views, column
+alignment, and integration into the status command handler.
 
 ## Scope
 
@@ -157,6 +164,39 @@ allowing partial work before F2 is complete, but final wiring and integration te
   the synthesis layer (already implemented in `status_tool.go`), not the renderer. The renderer
   receives a pre-resolved document list.
 - **Affected tasks:** Task 3, Task 4
+
+## Interface Contracts
+
+The renderer consumes structured input types from the resolution layer. These types mirror
+the MCP status tool's synthesis output already defined in `kanbanzai/internal/mcp/status_tool.go`.
+
+| Contract | Consumer | Provider | Data Shape Reference |
+|----------|----------|----------|---------------------|
+| Feature detail input | `RenderFeature` | F2 resolution layer | `featureDetail` struct (status_tool.go L1053+) |
+| Plan dashboard input | `RenderPlan` | F2 resolution layer | `planDashboard` struct (status_tool.go L580+) |
+| Project overview input | `RenderProject` | F2 resolution layer | `projectOverview` struct (status_tool.go L280+) |
+| Document lookup result | `RenderRegisteredDoc` | F2 resolution layer | `DocumentResult` struct (service/documents.go L100+) |
+| Attention items | All views | F2 resolution layer | `AttentionItem` struct (status_tool.go L200+) |
+| TTY status | All views | `os.Stdout` fd | `golang.org/x/term.IsTerminal` |
+
+All inputs are passed by value or pointer — the renderer never modifies them (NFR-2).
+The renderer writes exclusively to an `io.Writer` (stdout or a test buffer).
+
+## Traceability Matrix
+
+| Spec Requirement | Task(s) | Verification |
+|-----------------|---------|-------------|
+| FR-1: TTY Detection | Task 1 | Unit tests: TTY and non-TTY symbol+colour output |
+| FR-2: Unregistered Document View | Task 2 | Unit tests: all sub-requirements and edge cases |
+| FR-3: Registered Document with Owner View | Task 2 | Unit tests: with-owner, orphan, draft status |
+| FR-4: Direct Feature Lookup View | Task 3 | Unit tests: all sub-requirements and edge cases |
+| FR-5: Plan Lookup View | Task 3 | Unit tests: all sub-requirements and edge cases |
+| FR-6: Project Overview View | Task 3 | Unit tests: all sub-requirements and edge cases |
+| FR-7: Alignment and Layout | Task 3 | Unit tests: per-block column alignment |
+| NFR-1: Performance (<100ms render) | Task 3, Task 4 | Benchmark test |
+| NFR-2: No State Mutation | Task 4 | Code review: renderer writes only to io.Writer |
+| NFR-3: Robustness (no panic) | Task 4 | Unit tests: nil/empty optional fields |
+| NFR-4: Injectable TTY | Task 1 | Unit tests: boolean flag injection |
 
 ## Verification Approach
 

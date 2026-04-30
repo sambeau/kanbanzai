@@ -1,4 +1,4 @@
-updated_at: 2026-04-30T12:45:54.435031Z
+updated_at: 2026-04-30T14:43:16.189082Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -89288,5 +89288,1480 @@ edges:
     - from: FEAT-01KQ7YQK6DDDA/report-b38-f1-report-review-feat-01kq7yqk6ddda-config-schema-post-rebase#1
       from_type: section
       to: FEAT-01KQ7YQK6DDDA
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename
+      from_type: document
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.2
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.2
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.4
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.4
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.4
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.4
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.1
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.4
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.4
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.4
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.6
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.6
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.6
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.6
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.7
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.7
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.7
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.7
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.8.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.9
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.9
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.9
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.1
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.4.2
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.4.3
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5.2
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5.3
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.6.2
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.6.3
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.1
+      from_type: section
+      to: BUG-007
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.3
+      from_type: section
+      to: DOC-0012
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.4.3
+      from_type: section
+      to: DOC-0019
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.4.3
+      from_type: section
+      to: DOC-0023
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5.5
+      from_type: section
+      to: DOC-0031
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.1
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.4.2
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.4.3
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.4.3
+      from_type: section
+      to: P1-main-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5.2
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5.3
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5.4
+      from_type: section
+      to: P1-main-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5.5
+      from_type: section
+      to: P1-main-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5.5
+      from_type: section
+      to: P2-infrastructure
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: work/design/document-centric-interface.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: work/design/workflow-design-basis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: work/design/fresh-install-experience.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1
+      from_type: section
+      to: work/design/interactive-help-system.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.4.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.1
+      from_type: section
+      to: work/design/my-feature.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5.1
+      from_type: section
+      to: work/design/my-feature.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename#1.5.5.2
+      from_type: section
+      to: work/design/my-feature.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output
+      from_type: document
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.5
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.5
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.5
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.8
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.8
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.3
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9.1
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9.3
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9.5
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.10
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6.1
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6.2
+      from_type: section
+      to: FEAT-099
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6.5
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.7
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9.3
+      from_type: section
+      to: TASK-0099
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9.4
+      from_type: section
+      to: BUG-0017
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9.1
+      from_type: section
+      to: DOC-0019
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9.1
+      from_type: section
+      to: DOC-0023
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9.5
+      from_type: section
+      to: DOC-0023
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.4
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9.1
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.9.2
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.4.10
+      from_type: section
+      to: P1-main-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.6.1
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output#1.1
+      from_type: section
+      to: work/_project/design-kbz-cli-and-binary-rename.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename
+      from_type: document
+      to: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.3
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.3
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.1
+      from_type: section
+      to: B36-kbz-cli-and-status
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.1
+      from_type: section
+      to: work/_project/design-kbz-cli-and-binary-rename.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.3.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.4
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.6
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VF7PDZ2G/spec-b36-f1-spec-binary-rename#1.8
+      from_type: section
+      to: work/_project/design-kbz-cli-and-binary-rename.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution
+      from_type: document
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4.2
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4.4
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6.1
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6.3
+      from_type: section
+      to: FEAT-999
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6.3
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6.4
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6.4
+      from_type: section
+      to: FEAT-043
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.8
+      from_type: section
+      to: FEAT-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4.2
+      from_type: section
+      to: TASK-001
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4.2
+      from_type: section
+      to: BUG-007
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6.3
+      from_type: section
+      to: BUG-007
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6.5
+      from_type: section
+      to: DOC-0012
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4.2
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.4.2
+      from_type: section
+      to: B2-my-batch
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.6.1
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.1
+      from_type: section
+      to: work/_project/design-kbz-cli-and-binary-rename.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.7
+      from_type: section
+      to: ./work/design/foo.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution#1.7
+      from_type: section
+      to: work/design/foo.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output
+      from_type: document
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.6.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.6
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.6.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4.4
+      from_type: section
+      to: P1-my-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.4.5
+      from_type: section
+      to: P1-main-plan
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output#1.1
+      from_type: section
+      to: work/_project/design-kbz-cli-and-binary-rename.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output
+      from_type: document
+      to: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output
+      from_type: document
+      to: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#2
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#2
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#2
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#2
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output
+      from_type: document
+      to: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output
+      from_type: document
+      to: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#4
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#4
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#4
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#4
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output
+      from_type: document
+      to: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#1
+      from_type: section
+      to: FEAT-01KQ2VGTRZHPC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#1
+      from_type: section
+      to: F3-spec-status-human-output
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#1
+      from_type: section
+      to: work/spec/B36-F3-spec-status-human-output.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output#1
+      from_type: section
+      to: work/_project/design-kbz-cli-and-binary-rename.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename
+      from_type: document
+      to: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename
+      from_type: document
+      to: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#2
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#2
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#2
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#2
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#2
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename
+      from_type: document
+      to: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename
+      from_type: document
+      to: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#4
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#4
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#4
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename
+      from_type: document
+      to: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#1
+      from_type: section
+      to: FEAT-01KQ2VF7PDZ2G
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#1
+      from_type: section
+      to: F1-spec-binary-rename
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#1
+      from_type: section
+      to: work/spec/B36-F1-spec-binary-rename.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#2.4
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#2.4
+      from_type: section
+      to: README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#2.4
+      from_type: section
+      to: docs/getting-started.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename#5
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output
+      from_type: document
+      to: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.2
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.2
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.2
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.2
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.4
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.1
+      from_type: section
+      to: FEAT-01KQ2VHKJB5V8
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1
+      from_type: section
+      to: F4-spec-status-machine-output
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.1
+      from_type: section
+      to: F4-spec-status-machine-output
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VHKJB5V8/dev-plan-b36-f4-dev-plan-status-machine-output#1.1
+      from_type: section
+      to: work/spec/B36-F4-spec-status-machine-output.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution
+      from_type: document
+      to: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution
+      from_type: document
+      to: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#2
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#2
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#2
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#2
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#2
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#2
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution
+      from_type: document
+      to: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution
+      from_type: document
+      to: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#4
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#4
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#4
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#4
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution
+      from_type: document
+      to: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#1
+      from_type: section
+      to: FEAT-01KQ2VFTWD1W2
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution#1
+      from_type: section
+      to: F2-spec-status-argument-resolution
       to_type: entity_ref
       edge_type: REFERENCES

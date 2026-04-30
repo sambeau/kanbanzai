@@ -16,12 +16,10 @@ A viewer's job is to read committed `.kbz/` state and present it to humans — p
 
 ## 2. Technology Stack
 
-Kanbanzai is written in Go. There is a single binary, `kanbanzai`, with two modes:
+Kanbanzai is written in Go. There is a single binary, `kbz`, with two modes:
 
-- **`kanbanzai serve`** — runs as an MCP server (the write interface for AI agents)
-- **`kanbanzai <subcommand>`** — a CLI with ~20 subcommands (`status`, `next`, `entity`, `doc`, `health`, etc.) for human use in the terminal
-
-The getting-started guide suggests creating a symlink `ln -s ~/go/bin/kanbanzai ~/go/bin/kbz` for shorter typing, and the CLI usage text says `kbz <command>`, but there is no separate `kbz` binary — it is just a convenience alias for the same `kanbanzai` executable.
+- **`kbz serve`** — runs as an MCP server (the write interface for AI agents)
+- **`kbz <subcommand>`** — a CLI with ~20 subcommands (`status`, `next`, `entity`, `doc`, `health`, etc.) for human use in the terminal
 
 All core logic lives under `internal/` and is not importable by external Go programs. However, there is **an exported Go package specifically for external consumers**: `kbzschema`. More on this in §8.
 
@@ -405,7 +403,7 @@ Checkpoints where `status == "pending"` — these are questions awaiting human r
 id: FEAT-01KMKRQRRX3CC/design-init-command
 path: work/design/init-command.md
 type: design
-title: kanbanzai init Command Design
+title: kbz init Command Design
 status: approved
 content_hash: 15e486b2966498eefcf00170e34b900f14e18a02c6be0a2b00dec731beab84fc
 ```
@@ -438,7 +436,7 @@ metadata:
 ...
 ```
 
-The frontmatter is delimited by `---` on its own line. Standard YAML frontmatter parsing applies. The `metadata.kanbanzai-managed: "true"` marker identifies files managed by `kanbanzai init`.
+The frontmatter is delimited by `---` on its own line. Standard YAML frontmatter parsing applies. The `metadata.kanbanzai-managed: "true"` marker identifies files managed by `kbz init`.
 
 For regular project documents (designs, specs, plans), there is **no required frontmatter**. They are plain Markdown. Some may have informal metadata at the top in a table format:
 
@@ -633,7 +631,7 @@ slug: init-command
 name: Init command
 parent: P3-kanbanzai-1.0
 status: developing
-summary: "The kanbanzai init command."
+summary: "The kbz init command."
 design: FEAT-01KMKRQRRX3CC/design-init-command
 spec: FEAT-01KMKRQRRX3CC/specification-init-command
 dev_plan: FEAT-01KMKRQRRX3CC/dev-plan-init-command
@@ -648,7 +646,7 @@ id: TASK-01KMNA39KTWW4
 parent_feature: FEAT-01KMKRQRRX3CC
 slug: init-command-skeleton
 name: Init command skeleton
-summary: "Implement kanbanzai init CLI subcommand skeleton with flag parsing."
+summary: "Implement kbz init CLI subcommand skeleton with flag parsing."
 status: done
 files_planned:
   - cmd/kanbanzai/init_cmd.go
@@ -658,7 +656,7 @@ claimed_at: "2026-03-26T15:03:55Z"
 dispatched_to: backend
 dispatched_at: "2026-03-26T15:03:55Z"
 dispatched_by: agent/init-command
-completion_summary: "Implemented kanbanzai init as a CLI subcommand."
+completion_summary: "Implemented kbz init as a CLI subcommand."
 verification: "go build ./..., go test -race ./internal/kbzinit/... (37 tests pass)"
 ```
 
@@ -668,7 +666,7 @@ verification: "go build ./..., go test -race ./internal/kbzinit/... (37 tests pa
 id: FEAT-01KMKRQRRX3CC/design-init-command
 path: work/design/init-command.md
 type: design
-title: kanbanzai init Command Design
+title: kbz init Command Design
 status: approved
 owner: FEAT-01KMKRQRRX3CC
 approved_by: sambeau

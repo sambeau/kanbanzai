@@ -118,17 +118,17 @@ Agents cannot skip stages. A feature in **designing** cannot move to **developin
 
 ```sh
 # Install
-go install github.com/sambeau/kanbanzai/cmd/kanbanzai@latest
+go install github.com/sambeau/kanbanzai/cmd/kbz@latest
 
 # Initialise in your project root
 cd your-project
-kanbanzai init
+kbz init
 
 # Verify
-kanbanzai health
+kbz health
 ```
 
-`kanbanzai init` creates the `.kbz/` directory, installs default roles and skills, and generates editor configuration. Open the project in your editor — the MCP server should connect automatically.
+`kbz init` creates the `.kbz/` directory, installs default roles and skills, and generates editor configuration. Open the project in your editor — the MCP server should connect automatically.
 
 For GitHub integration, editor profiles, and a guided walkthrough of your first feature, see the [Getting Started guide](docs/getting-started.md).
 

@@ -411,7 +411,7 @@ GitHub token lives in `local.yaml` rather than in an environment variable.
 Run the health check from the command line:
 
 ```
-kanbanzai health
+kbz health
 ```
 
 This validates:

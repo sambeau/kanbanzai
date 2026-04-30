@@ -3,7 +3,7 @@
 | Field  | Value                    |
 |--------|--------------------------|
 | Date   | 2026-04-30               |
-| Status | Draft                    |
+| Status | approved |
 | Author | spec-author              |
 
 ---
@@ -427,81 +427,27 @@ When invoked with no target, the output MUST use a distinct top-level shape (Dec
 
 ## Acceptance Criteria
 
-### AC-1: Plain format — feature with full documents
+- [ ] **AC-1:** Plain format — feature with full documents. Given a feature `FEAT-042` with slug `my-feature`, status `developing`, plan `P1-my-plan`, design and spec docs registered (approved), no dev-plan registered, 1 active / 3 ready / 7 done tasks (total 11), and one warning attention item, running `kbz status FEAT-042 --format plain` MUST produce output starting with `scope: feature`, containing `id: FEAT-042`, `plan: P1-my-plan`, `doc.design: work/design/my-feature.md`, `doc.design.status: approved`, `doc.dev-plan: missing`, `doc.dev-plan.status: missing`, `tasks.total: 11`, and a non-empty `attention:` message.
 
-Given a feature `FEAT-042` with:
-- slug `my-feature`, status `developing`, plan `P1-my-plan`
-- design doc registered (approved), spec doc registered (approved), no dev-plan registered
-- 1 active task, 3 ready tasks, 7 done tasks (total 11)
-- 1 warning attention item: "No dev-plan document registered"
+- [ ] **AC-2:** Plain format — feature with no plan. Running `kbz status FEAT-099 --format plain` for a feature with no parent plan MUST contain `plan: missing`.
 
-Running `kbz status FEAT-042 --format plain` MUST produce output that:
-- Starts with `scope: feature`
-- Contains `id: FEAT-042`
-- Contains `plan: P1-my-plan`
-- Contains `doc.design: work/design/my-feature.md`
-- Contains `doc.design.status: approved`
-- Contains `doc.dev-plan: missing`
-- Contains `doc.dev-plan.status: missing`
-- Contains `tasks.total: 11`
-- Contains `attention:` with a non-empty message
+- [ ] **AC-3:** Plain format — unregistered document. Running `kbz status work/spec/unregistered.md --format plain` MUST produce output containing `registered: false`. Piping through `grep '^registered: false'` MUST produce a match.
 
-### AC-2: Plain format — feature with no plan
+- [ ] **AC-4:** Plain format — project overview health gate. Running `kbz status --format plain | grep '^health.errors: 0'` on a healthy project MUST produce a match; on a project with at least one error-severity item it MUST NOT match.
 
-Running `kbz status FEAT-099 --format plain` for a feature with no parent plan MUST contain `plan: missing`.
+- [ ] **AC-5:** JSON format — feature results array. Running `kbz status FEAT-042 --format json` MUST produce JSON where the top-level key is `results` (array), `results[0].scope == "feature"`, `results[0].feature.id == "FEAT-042"`, `results[0].documents["dev-plan"] == null`, `results[0].attention` is a non-empty array, and `results[0].tasks.total == 11`.
 
-### AC-3: Plain format — unregistered document
+- [ ] **AC-6:** JSON format — feature with null plan_id. For a feature with no parent plan, `results[0].feature.plan_id` MUST be JSON `null`.
 
-Running `kbz status work/spec/unregistered.md --format plain` MUST produce output that contains `registered: false`.
+- [ ] **AC-7:** JSON format — unregistered document. Running `kbz status work/spec/unregistered.md --format json` MUST produce JSON where `results[0].scope == "document"`, `results[0].document.registered == false`, `results[0].document.id == null`, and `results[0].attention` is a non-empty array.
 
-Running `kbz status work/spec/unregistered.md --format plain | grep '^registered: false'` MUST produce a match.
+- [ ] **AC-8:** JSON format — project overview shape. Running `kbz status --format json` with no target MUST produce JSON where the top-level key is `scope` with value `"project"` (NOT a `results` array), `plans` is an array, each plan object contains `features.total` (integer) but NOT a `features` array of full feature objects, `health` contains integer keys `errors` and `warnings`, and `attention` is an array (possibly empty).
 
-### AC-4: Plain format — project overview health gate
+- [ ] **AC-9:** JSON format — empty attention. For a fully healthy feature, `results[0].attention` MUST be `[]` (empty array), not `null` and not absent.
 
-Running `kbz status --format plain | grep '^health.errors: 0'` on a healthy project MUST produce a match. On a project with at least one error-severity item it MUST NOT match.
+- [ ] **AC-10:** Exit codes. All successful invocations of `kbz status --format plain` and `kbz status --format json` MUST exit with code `0`, including when `health.errors > 0` or `registered: false`.
 
-### AC-5: JSON format — feature results array
-
-Running `kbz status FEAT-042 --format json` MUST produce JSON where:
-- Top-level key is `results` (array)
-- `results[0].scope == "feature"`
-- `results[0].feature.id == "FEAT-042"`
-- `results[0].documents["dev-plan"] == null`
-- `results[0].attention` is a non-empty array
-- `results[0].tasks.total == 11`
-
-### AC-6: JSON format — feature with null plan_id
-
-For a feature with no parent plan: `results[0].feature.plan_id` MUST be JSON `null`.
-
-### AC-7: JSON format — unregistered document
-
-Running `kbz status work/spec/unregistered.md --format json` MUST produce JSON where:
-- `results[0].scope == "document"`
-- `results[0].document.registered == false`
-- `results[0].document.id == null`
-- `results[0].attention` is a non-empty array
-
-### AC-8: JSON format — project overview shape
-
-Running `kbz status --format json` with no target MUST produce JSON where:
-- Top-level key is `scope` with value `"project"` (NOT a `results` array)
-- `plans` is an array
-- Each plan object contains `features.total` (integer) but NOT a `features` array of full feature objects
-- `health` contains integer keys `errors` and `warnings`
-- `attention` is an array (possibly empty)
-
-### AC-9: JSON format — empty attention
-
-For a fully healthy feature: `results[0].attention` MUST be `[]` (empty array), not `null` and not absent.
-
-### AC-10: Exit codes
-
-All successful invocations of `kbz status --format plain` and `kbz status --format json` MUST exit with code `0`, including when `health.errors > 0` or `registered: false`.
-
-### AC-11: Schema contract test
-
-A contract test MUST exist that asserts the presence of every key defined in FR-3–FR-7 (plain) and every field defined in FR-9–FR-10 (JSON) across all scope types, and MUST run in CI.
+- [ ] **AC-11:** Schema contract test. A contract test MUST exist that asserts the presence of every key defined in FR-3–FR-7 (plain) and every field defined in FR-9–FR-10 (JSON) across all scope types, and MUST run in CI.
 
 ---
 

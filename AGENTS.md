@@ -17,14 +17,14 @@ Use these terms consistently. They refer to different things.
 | Term | What it means |
 |---|---|
 | **Kanbanzai** (or "the Kanbanzai System") | The system/methodology, used in prose the way people say "Scrum" or "Kanban" |
-| **`kanbanzai`** | The tool binary and MCP server name (used in `.mcp.json` config, `kanbanzai serve`) |
+| **`kanbanzai`** | The MCP server name (used in `.mcp.json` config as `"kanbanzai"`) |
 | **`.kbz/`** | The instance root directory (project-local workflow state) |
 
-The binary is `kanbanzai`. When invoked with `kanbanzai serve`, it runs as the MCP server. Both modes share the same core logic.
+The binary is `kbz`. When invoked with `kbz serve`, it runs as the MCP server. Both modes share the same core logic.
 
 Examples:
 - "We're adopting Kanbanzai for our workflow." (the system)
-- `kanbanzai serve` (MCP server, launched by MCP client)
+- `kbz serve` (MCP server, launched by MCP client)
 - `.kbz/state/` (instance directory on disk)
 
 ## Key Terms
@@ -181,7 +181,7 @@ Do not let document changes accumulate uncommitted across long sessions.
 
 ### Dual-write rule for skill changes
 
-**Dual-write rule for skill changes.** The kanbanzai binary embeds `.agents/skills/kanbanzai-*/SKILL.md` files under `internal/kbzinit/skills/` for distribution to newly-initialised projects via `kanbanzai init`. When you modify any file under `.agents/skills/kanbanzai-*/`, check whether a corresponding file exists under `internal/kbzinit/skills/`. If one exists, apply the same change in the same commit.
+**Dual-write rule for skill changes.** The `kbz` binary embeds `.agents/skills/kanbanzai-*/SKILL.md` files under `internal/kbzinit/skills/` for distribution to newly-initialised projects via `kbz init`. When you modify any file under `.agents/skills/kanbanzai-*/`, check whether a corresponding file exists under `internal/kbzinit/skills/`. If one exists, apply the same change in the same commit.
 
 The correspondence is: `.agents/skills/kanbanzai-<name>/SKILL.md` ↔ `internal/kbzinit/skills/<name>/SKILL.md`
 
@@ -227,9 +227,9 @@ go mod tidy             # clean up dependencies
 
 ## Diagnosing Tool Failures
 
-If MCP tool calls return unexpected errors or unknown states (e.g. transitions failing, entity types unrecognised, tool responses that don't match the current codebase), the most common cause is a **stale binary** — the running `kanbanzai serve` process was built before recent code changes.
+If MCP tool calls return unexpected errors or unknown states (e.g. transitions failing, entity types unrecognised, tool responses that don't match the current codebase), the most common cause is a **stale binary** — the running `kbz serve` process was built before recent code changes.
 
-Run `server_info` first before investigating further. It reports the build timestamp, git SHA, and binary path so you can confirm whether the server matches the current source. If the binary is stale, rebuild and restart: `go install ./cmd/kanbanzai/`.
+Run `server_info` first before investigating further. It reports the build timestamp, git SHA, and binary path so you can confirm whether the server matches the current source. If the binary is stale, rebuild and restart: `go install ./cmd/kbz/`.
 
 ## Go Code Style and Testing
 

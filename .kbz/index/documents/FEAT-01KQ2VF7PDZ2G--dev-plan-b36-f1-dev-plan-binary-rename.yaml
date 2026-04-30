@@ -1,0 +1,146 @@
+document_id: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename
+document_path: work/plan/B36-F1-dev-plan-binary-rename.md
+content_hash: aef175a5e64807fcbdb498cc711743db84b74e9fdc7990456d3d40e88b8ebab8
+indexed_at: 2026-04-30T14:28:30.320385Z
+sections:
+    - path: "1"
+      level: 2
+      title: Scope
+      byte_offset: 266
+      byte_count: 528
+      word_count: 67
+      content_hash: c7aaa5bf650f40d546794b731f3557cc2e64e467b57ea23e7d652293d02cef8b
+    - path: "2"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 794
+      byte_count: 4407
+      word_count: 595
+      content_hash: 909ffe9a2103a67b45c0dfc3293024d2307c1617649e81280f850adeb37202b5
+      children:
+        - path: "2.1"
+          level: 3
+          title: 'Task 1: Rename cmd/kanbanzai/ to cmd/kbz/ and update build system'
+          byte_offset: 813
+          byte_count: 557
+          word_count: 79
+          content_hash: 32b0a414572c871a3761c3c2c0aad0a763ecd3e8479848ffbc02a4ed34970519
+        - path: "2.2"
+          level: 3
+          title: 'Task 2: Update MCP config templates (command + mcpVersion bump)'
+          byte_offset: 1370
+          byte_count: 966
+          word_count: 124
+          content_hash: 8954e7e31e7c9ea78257d8c0851a4e67595a4bdae465370a2fcf7bc5fe273ba8
+        - path: "2.3"
+          level: 3
+          title: 'Task 3: Add migration detection to kbz init'
+          byte_offset: 2336
+          byte_count: 1059
+          word_count: 147
+          content_hash: 3a121f011f9cca2bdbb470b493e67e9e81be0c705923849ec3511ba4a5f2d95c
+        - path: "2.4"
+          level: 3
+          title: 'Task 4: Documentation sweep'
+          byte_offset: 3395
+          byte_count: 917
+          word_count: 119
+          content_hash: 26d9f6582d03f1def8f36a1fb48a552573b32cf7babbda0a3325bc57b99b93b0
+        - path: "2.5"
+          level: 3
+          title: 'Task 5: Verification and regression suite'
+          byte_offset: 4312
+          byte_count: 889
+          word_count: 123
+          content_hash: 8c81733a0ee037dc24c350085adf7a8420b656cb2766eb7e7dded5c33c3d9911
+    - path: "3"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 5201
+      byte_count: 439
+      word_count: 77
+      content_hash: fe7acc770309a4f29907dea1809e2d1e2abbad7b9dd6642ed9c314d726af1f5f
+    - path: "4"
+      level: 2
+      title: Risk Assessment
+      byte_offset: 5640
+      byte_count: 1623
+      word_count: 235
+      content_hash: 3bd117dc76854a868bab402849e8653725904c266f71e30fe8665da84cf0c561
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Risk: Stale binary-name references in non-obvious locations'
+          byte_offset: 5660
+          byte_count: 421
+          word_count: 63
+          content_hash: a22763f46e26fde3698b31dc1e6fa03f82d77b63d96af5cbc95c92e9963c9d5c
+        - path: "4.2"
+          level: 3
+          title: 'Risk: Test fixtures with hardcoded `"kanbanzai"` command strings cause unexpected failures'
+          byte_offset: 6081
+          byte_count: 497
+          word_count: 72
+          content_hash: dc20e69c035ba6799415cdf8e130bb0b367976065f444c53503005cbd19ad9e3
+        - path: "4.3"
+          level: 3
+          title: 'Risk: Migration detection interacts poorly with version-gating in writeJSONConfig'
+          byte_offset: 6578
+          byte_count: 685
+          word_count: 97
+          content_hash: 1c0760a53c58557d6826f7b13f7e6b36d60806c7feccc9d568c6a37fe555581a
+    - path: "5"
+      level: 2
+      title: Verification Approach
+      byte_offset: 7263
+      byte_count: 2022
+      word_count: 337
+      content_hash: 62dd421dc322e96123976a9ee96154ef9ba2c53df48af28294d4b344473e14a1
+entity_refs:
+    - entity_id: FEAT-01KQ2VF7PDZ2G
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 408
+    - entity_id: F1-spec-binary-rename
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 372
+cross_doc_links:
+    - target_path: work/spec/B36-F1-spec-binary-rename.md
+      link_text: work/spec/B36-F1-spec-binary-rename.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "2.4"
+    - target_path: README.md
+      link_text: README.md
+      section_path: "2.4"
+    - target_path: docs/getting-started.md
+      link_text: docs/getting-started.md
+      section_path: "2.4"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "5"
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: risk
+      confidence: high
+    - section_path: "4.1"
+      role: risk
+      confidence: high
+    - section_path: "4.2"
+      role: risk
+      confidence: high
+    - section_path: "4.3"
+      role: risk
+      confidence: high
+access_count: 3
+last_accessed_at: 2026-04-30T14:51:28.721274Z
+section_access:
+    "1":
+        access_count: 2
+        last_accessed_at: 2026-04-30T14:51:28.721274Z
+classified: false

@@ -1,0 +1,241 @@
+document_id: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution
+document_path: work/spec/B36-F2-spec-status-argument-resolution.md
+content_hash: 12025e84439dfb22062b791cdf0b66f0cc6eafb7751bdde636a554d2ebe1605f
+indexed_at: 2026-04-30T14:08:26.568479Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Status Command Argument Resolution'
+      byte_offset: 0
+      byte_count: 16449
+      word_count: 2596
+      content_hash: 12025e84439dfb22062b791cdf0b66f0cc6eafb7751bdde636a554d2ebe1605f
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 324
+          byte_count: 560
+          word_count: 78
+          content_hash: 1b944f800bafc8ae0ef04c9d72a8636b937cd629c77420ccaaf5f1e58fe4f87a
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 884
+          byte_count: 566
+          word_count: 89
+          content_hash: 9bb8507ba43a77dff1a8880dffca35add336d3a39baa0bfa63d849604f9200d6
+        - path: "1.3"
+          level: 2
+          title: Scope
+          byte_offset: 1450
+          byte_count: 865
+          word_count: 137
+          content_hash: a96d820a7753a211582f40903539c2c07665afbf2f24b683e54589b2fd8c070c
+        - path: "1.4"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2315
+          byte_count: 5572
+          word_count: 917
+          content_hash: 9ab87a376f8695c947cbd46b15c6b90ddcfb430db933d8a30eab392ca111f75f
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Command interface
+              byte_offset: 2343
+              byte_count: 736
+              word_count: 113
+              content_hash: c86afa6fd9c1e641c1cf2e9e3ac1e2f3d207926012505de45ca316feae914304
+            - path: 1.4.2
+              level: 3
+              title: Disambiguation
+              byte_offset: 3079
+              byte_count: 1107
+              word_count: 184
+              content_hash: 060fa01a51faf3b4b8dd4ee19d272b4e864c259db9cc8b08c85001f9c1cff7dc
+            - path: 1.4.3
+              level: 3
+              title: File path resolution
+              byte_offset: 4186
+              byte_count: 1348
+              word_count: 221
+              content_hash: 2f5e4afadf0da4ff38d7f76cfaaedfc032586e7a47ed0862f336ae91db49605c
+            - path: 1.4.4
+              level: 3
+              title: Entity ID routing
+              byte_offset: 5534
+              byte_count: 590
+              word_count: 95
+              content_hash: 42847ecdb2add83e801971a7532652ad9abf8814fcaf6e2a6a1f91e15343bf61
+            - path: 1.4.5
+              level: 3
+              title: Exit codes
+              byte_offset: 6124
+              byte_count: 776
+              word_count: 131
+              content_hash: 420c8a36d7a7db422e45e0bf4033e2566b8d6e8ce153bb9495d8b8fda93233d2
+            - path: 1.4.6
+              level: 3
+              title: '`kbz doc approve` path resolution'
+              byte_offset: 6900
+              byte_count: 987
+              word_count: 170
+              content_hash: dac8ce997d6bb54548986a1669e0ab477bd332b7cda4a61dee502425c0c3fe13
+        - path: "1.5"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 7887
+          byte_count: 988
+          word_count: 149
+          content_hash: c6898e816945308b1091c78b15efe41a312290dbed3647da7639225b568d1b06
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 8875
+          byte_count: 4434
+          word_count: 704
+          content_hash: 69ee463df503d1b6a8774cf6874d1fcd19002a2c23470a55275df6cf11b72d65
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Disambiguation
+              byte_offset: 8899
+              byte_count: 1131
+              word_count: 180
+              content_hash: 03a70c53bba967481374a2cdebde799885c87a08b56fc8dec05eb7ae03daa140
+            - path: 1.6.2
+              level: 3
+              title: File path resolution
+              byte_offset: 10030
+              byte_count: 1117
+              word_count: 174
+              content_hash: f2fea0997e2dbf7888c270a08e92b9a5ad5d8df5e54ff36034905bb2827cc6eb
+            - path: 1.6.3
+              level: 3
+              title: Entity ID routing
+              byte_offset: 11147
+              byte_count: 502
+              word_count: 84
+              content_hash: 6c9c30924c814517b0afffc4ae93b1cef2e242f0cfd67510617d0455389b15ec
+            - path: 1.6.4
+              level: 3
+              title: Exit codes and flags
+              byte_offset: 11649
+              byte_count: 716
+              word_count: 119
+              content_hash: debcb13c09b7e12db894a34bd217548c09daa6fb3f2b943678cc06a6073a52d3
+            - path: 1.6.5
+              level: 3
+              title: '`kbz doc approve` path resolution'
+              byte_offset: 12365
+              byte_count: 944
+              word_count: 144
+              content_hash: 3ec8c6eb03e79d4c407fab5068efb4fe210f497c6a7153e85b2f1d5bb7023a14
+        - path: "1.7"
+          level: 2
+          title: Verification Plan
+          byte_offset: 13309
+          byte_count: 1536
+          word_count: 246
+          content_hash: ec8e4e62259f60588dd67f253e1708f130e23a1ce30ce3f33e3d79ced06d7383
+        - path: "1.8"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 14845
+          byte_count: 1604
+          word_count: 248
+          content_hash: 0c039c06d01715ee920f0eeb17b183696744f3364f3f9fcdd92ae5997731278b
+entity_refs:
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.4.2
+      byte_offset: 3418
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.4.4
+      byte_offset: 5802
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 9274
+    - entity_id: FEAT-999
+      entity_type: feature
+      section_path: 1.6.3
+      byte_offset: 11219
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.6.3
+      byte_offset: 11405
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: 1.6.4
+      byte_offset: 12033
+    - entity_id: FEAT-043
+      entity_type: feature
+      section_path: 1.6.4
+      byte_offset: 12042
+    - entity_id: FEAT-042
+      entity_type: feature
+      section_path: "1.8"
+      byte_offset: 15200
+    - entity_id: TASK-001
+      entity_type: task
+      section_path: 1.4.2
+      byte_offset: 3470
+    - entity_id: BUG-007
+      entity_type: bug
+      section_path: 1.4.2
+      byte_offset: 3430
+    - entity_id: BUG-007
+      entity_type: bug
+      section_path: 1.6.3
+      byte_offset: 11552
+    - entity_id: DOC-0012
+      entity_type: document
+      section_path: 1.6.5
+      byte_offset: 12914
+    - entity_id: P1-my-plan
+      entity_type: plan
+      section_path: 1.4.2
+      byte_offset: 3441
+    - entity_id: B2-my-batch
+      entity_type: plan
+      section_path: 1.4.2
+      byte_offset: 3455
+    - entity_id: P1-my-plan
+      entity_type: plan
+      section_path: 1.6.1
+      byte_offset: 9401
+cross_doc_links:
+    - target_path: work/_project/design-kbz-cli-and-binary-rename.md
+      link_text: work/_project/design-kbz-cli-and-binary-rename.md
+      section_path: "1.1"
+    - target_path: ./work/design/foo.md
+      link_text: ./work/design/foo.md
+      section_path: "1.7"
+    - target_path: work/design/foo.md
+      link_text: work/design/foo.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.8"
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-30T14:08:27.032355Z
+classified: false

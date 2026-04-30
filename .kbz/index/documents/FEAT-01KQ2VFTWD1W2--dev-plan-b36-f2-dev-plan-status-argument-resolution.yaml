@@ -1,0 +1,143 @@
+document_id: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution
+document_path: work/plan/B36-F2-dev-plan-status-argument-resolution.md
+content_hash: 0634b720e30efdcbd8281e9e903b6209509b66170c514a61b11a8c0bd4cad85c
+indexed_at: 2026-04-30T14:43:16.189082Z
+sections:
+    - path: "1"
+      level: 2
+      title: Scope
+      byte_offset: 266
+      byte_count: 632
+      word_count: 74
+      content_hash: 0f7a5b9b38f3f494b0ef507c4362e28e1077bea867606f23f8eb12bf3bfd9817
+    - path: "2"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 898
+      byte_count: 4199
+      word_count: 579
+      content_hash: 1a913289c2c0782ab2a1776cadae044731ac9d7c3f514a34e89f335f895d4551
+      children:
+        - path: "2.1"
+          level: 3
+          title: 'Task 1: Define Resolution Interfaces and Contracts'
+          byte_offset: 917
+          byte_count: 716
+          word_count: 89
+          content_hash: 8db26a07b665bc9e68d646088c5282724bb7ab8ab78912760702f4dd35d928fe
+        - path: "2.2"
+          level: 3
+          title: 'Task 2: Wire --format Flag and Argument Validation into kbz status'
+          byte_offset: 1633
+          byte_count: 776
+          word_count: 100
+          content_hash: 5ae9cafc14a8dce1a6adf9e0cd4ecbb263def9150c132bc671ec719f616c154f
+        - path: "2.3"
+          level: 3
+          title: 'Task 3: Implement File Path Resolution'
+          byte_offset: 2409
+          byte_count: 842
+          word_count: 122
+          content_hash: dabae0d8db2b3169e99a0807f644727c99aa035add2df59588a85816e4bd0ec4
+        - path: "2.4"
+          level: 3
+          title: 'Task 4: Implement Entity ID Routing and Plan Prefix Resolution'
+          byte_offset: 3251
+          byte_count: 599
+          word_count: 86
+          content_hash: 14ad84aac4ed89a49a634a9016e084910933f6bda205434dc47debf3bd32af1d
+        - path: "2.5"
+          level: 3
+          title: 'Task 5: Implement kbz doc approve Path Resolution'
+          byte_offset: 3850
+          byte_count: 723
+          word_count: 108
+          content_hash: 0d7afba7f4a5f3cb69a35abd20b455d29e9aa03096f7c7bdf8180eb30af079a1
+        - path: "2.6"
+          level: 3
+          title: 'Task 6: Integration and Verification'
+          byte_offset: 4573
+          byte_count: 524
+          word_count: 71
+          content_hash: ef72c634269aa08275402dcfa1ad657188b3a9463c6f6203675049dc9d3991b4
+    - path: "3"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 5097
+      byte_count: 332
+      word_count: 76
+      content_hash: 7ceeceee8311ab4eb05056568323fae58b85cc8038a5a6948be6994985a314be
+    - path: "4"
+      level: 2
+      title: Risk Assessment
+      byte_offset: 5429
+      byte_count: 1309
+      word_count: 196
+      content_hash: 959caf0eb1d48524b3469d0bce64e006125251454ca4b82765b709efcd50ec07
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Risk: LookupByPath Requires O(n) Scan'
+          byte_offset: 5449
+          byte_count: 360
+          word_count: 61
+          content_hash: 247674cb06f4df724f3ac828b17c3f171e202973087f6449854416b3dcda726a
+        - path: "4.2"
+          level: 3
+          title: 'Risk: Display ID Resolution Ambiguity'
+          byte_offset: 5809
+          byte_count: 293
+          word_count: 40
+          content_hash: 0bbe86e9906601636b1cbf95618a399babc1a71abb9922ed6a4dc5933cfcc0ec
+        - path: "4.3"
+          level: 3
+          title: 'Risk: DocumentService Interface Change Breaks MCP'
+          byte_offset: 6102
+          byte_count: 336
+          word_count: 49
+          content_hash: f6a0079b31626d3707213595a278f50f166280a18ad256bf118a8bd782e54165
+        - path: "4.4"
+          level: 3
+          title: 'Risk: Integration Test Fixture Complexity'
+          byte_offset: 6438
+          byte_count: 300
+          word_count: 43
+          content_hash: af91863b0dd5b00f2942eef1f82d6ffcbeb9706934af32507ead8826f0703d86
+    - path: "5"
+      level: 2
+      title: Verification Approach
+      byte_offset: 6738
+      byte_count: 362
+      word_count: 54
+      content_hash: 25e986b2636adb9bbe2958e57021867182a020884d2afb94fbbc93c65f90aaec
+entity_refs:
+    - entity_id: FEAT-01KQ2VFTWD1W2
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 386
+    - entity_id: F2-spec-status-argument-resolution
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 339
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: risk
+      confidence: high
+    - section_path: "4.1"
+      role: risk
+      confidence: high
+    - section_path: "4.2"
+      role: risk
+      confidence: high
+    - section_path: "4.3"
+      role: risk
+      confidence: high
+    - section_path: "4.4"
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-30T14:43:16.75821Z
+classified: false

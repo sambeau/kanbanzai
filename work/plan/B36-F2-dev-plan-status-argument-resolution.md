@@ -1,8 +1,16 @@
 | Field  | Value                                   |
 |--------|-----------------------------------------|
 | Date   | 2026-04-30                              |
-| Status | Draft                                   |
+| Status | approved |
 | Author | architect                               |
+
+## Overview
+
+This dev-plan decomposes the specification `work/spec/B36-F2-spec-status-argument-resolution.md`
+into six vertical slices covering argument parsing and validation for `kbz status [<target>]
+[--format <fmt>]`, disambiguation of `<target>` (file path vs entity ID vs plan prefix),
+file-path-to-document-record resolution, entity ID routing, `kbz doc approve` path resolution,
+and integration verification.
 
 ## Scope
 
@@ -164,3 +172,84 @@ All 24 ACs mapped to Tasks 1-6. Task 1 covers AC-001 through AC-004
 (flag/usage error tests). Task 3 covers AC-012 (path normalisation unit
 test). Task 6 covers all remaining ACs as integration tests (AC-005
 through AC-011, AC-013 through AC-015, AC-019 through AC-024).
+
+## Interface Contracts
+
+### ResolutionKind enum (Task 1)
+
+```
+type ResolutionKind int
+const (
+    KindFile            ResolutionKind = iota  // contains / or endswith .md/.txt
+    KindEntityID                               // matches known entity ID patterns
+    KindBarePlanPrefix                         // matches [A-Z]{1,2}[0-9]+ no slug
+    KindAmbiguous                               // needs fallback probe
+)
+```
+
+### Disambiguate(target string) ResolutionKind (Task 1)
+
+Pure function, no I/O. Consumers call this first to decide resolution strategy.
+
+### LookupByPath(path string) (DocumentResult, error) (Task 3)
+
+New method on DocumentService. Case-sensitive exact repo-relative match.
+Returns sentinel error when not found.
+
+### runStatus signature (Task 2)
+
+```
+func runStatus(args []string, deps dependencies) error
+```
+Parses optional target and --format/-f flag. Exit code via error type.
+
+### runDocApprove extended signature (Task 5)
+
+```
+func runDocApprove(args []string, deps dependencies) error
+```
+First arg may be file path (lexical FR-005 rule) or doc ID. Backward compatible.
+
+### Renderer interface (Tasks 3, 4, 6)
+
+```
+type Renderer interface {
+    RenderOverview(state ProjectOverview) string
+    RenderDocumentView(doc DocumentResult) string
+    RenderEntityView(entity GetResult) string
+    RenderUnregistered(path string) string
+    RenderError(err error) string
+}
+```
+Passed via dependencies. Task 6 uses stub renderer for integration tests.
+
+## Traceability Matrix
+
+FR-001: Task 2, AC-019
+FR-002: Task 2
+FR-003: Task 2, AC-017
+FR-004: Task 2, AC-018
+FR-005: Task 1, Task 5, AC-001, AC-002
+FR-006: Task 1, AC-003, AC-004
+FR-007: Task 1, Task 4, AC-007
+FR-008: Task 1, Task 4, AC-005, AC-006
+FR-009: Task 3, AC-008
+FR-010: Task 3, AC-009
+FR-011: Task 3, AC-009
+FR-012: Task 3, AC-010, AC-011
+FR-013: Task 3, AC-012
+FR-014: Task 4, AC-014, AC-015
+FR-015: Task 4, AC-014
+FR-016: Task 4, AC-013
+FR-017: Task 3, Task 4, Task 6, AC-005, AC-009 through AC-011, AC-014, AC-015, AC-019, AC-022, AC-023
+FR-018: Task 3, Task 4, Task 6, AC-006 through AC-008, AC-013, AC-020, AC-021
+FR-019: Task 2, AC-016 through AC-018
+FR-020: Task 2, AC-016
+FR-021: Task 5, AC-021, AC-022, AC-024
+FR-022: Task 5, AC-021
+FR-023: Task 5, AC-022, AC-024
+FR-024: Task 5, AC-023
+NFR-001: Task 1, AC-001 through AC-007
+NFR-002: Task 3, AC-012
+NFR-003: Task 2, Task 3, Task 4, Task 6, AC-006, AC-008, AC-013, AC-016, AC-017, AC-021
+NFR-004: Task 2, AC-016

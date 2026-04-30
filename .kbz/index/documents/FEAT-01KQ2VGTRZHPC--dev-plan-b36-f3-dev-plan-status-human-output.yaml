@@ -1,0 +1,139 @@
+document_id: FEAT-01KQ2VGTRZHPC/dev-plan-b36-f3-dev-plan-status-human-output
+document_path: work/plan/B36-F3-dev-plan-status-human-output.md
+content_hash: 460b2cfb034dc4f256520b79e76409c4fce871bef431969c057cc37acdc7f0f1
+indexed_at: 2026-04-30T14:27:50.026308Z
+sections:
+    - path: "1"
+      level: 2
+      title: Scope
+      byte_offset: 266
+      byte_count: 1477
+      word_count: 197
+      content_hash: e6de2a99cc492447ae9150d2777c40cd378943bae57502c20879f95866ff20ec
+    - path: "2"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 1743
+      byte_count: 5262
+      word_count: 721
+      content_hash: 97aa9a7b8eb506d2dd7ce85d94e6dbfbbda10a9c92ff8f7bc3b4ddf9c04babb7
+      children:
+        - path: "2.1"
+          level: 3
+          title: 'Task 1: TTY Detection and Rendering Infrastructure'
+          byte_offset: 1762
+          byte_count: 1090
+          word_count: 157
+          content_hash: 0ab0c6f53bbedb7bdc3d162d6f553b9120a7fbb0d8ec15144c6822b6879910d1
+        - path: "2.2"
+          level: 3
+          title: 'Task 2: Document Views (Unregistered and Registered)'
+          byte_offset: 2852
+          byte_count: 1185
+          word_count: 159
+          content_hash: 4a4d412a2e429fdd1a3ecfb3a1622ddf02c9b747a5ccd5b8fe3763f602c2cbfe
+        - path: "2.3"
+          level: 3
+          title: 'Task 3: Entity Views (Feature, Plan, Project Overview)'
+          byte_offset: 4037
+          byte_count: 1588
+          word_count: 209
+          content_hash: 5475296f309a8dc4552f13827534a3207dc8466702eb93f85eecb763eb4361f7
+        - path: "2.4"
+          level: 3
+          title: 'Task 4: Integration and Edge-Case Handling'
+          byte_offset: 5625
+          byte_count: 1380
+          word_count: 193
+          content_hash: 7f52125fa1efedee2e6ef2f0ec6fc7f1e1199d1ee842bc05e43a2d559ab4de64
+    - path: "3"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 7005
+      byte_count: 544
+      word_count: 105
+      content_hash: ae195b9e50a9c6fa406ffb0a52d4ebbd3baf9387966b85a22e967ad1e223629d
+    - path: "4"
+      level: 2
+      title: Risk Assessment
+      byte_offset: 7549
+      byte_count: 1612
+      word_count: 224
+      content_hash: 486d1ac6939b920b35733b2d32a6f49f29bdb4ca8ed3eca148ba7757b56dc7be
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Risk: F2 interface contract mismatch'
+          byte_offset: 7569
+          byte_count: 494
+          word_count: 68
+          content_hash: bbe661e04b10bff87480599ac94c7bc5cf161339e55b80022db46857defee1d4
+        - path: "4.2"
+          level: 3
+          title: 'Risk: TTY detection false negatives in CI'
+          byte_offset: 8063
+          byte_count: 292
+          word_count: 41
+          content_hash: 239f0fe4f9cd461bc42a6ecfdabf95e8bd093d5db3391b0afb677d1f94272de8
+        - path: "4.3"
+          level: 3
+          title: 'Risk: Alignment logic complexity across varying content widths'
+          byte_offset: 8355
+          byte_count: 332
+          word_count: 46
+          content_hash: cd1b718483905c1b353b13c8e046c0590b3c57ebaf1945748e402fb775a17429
+        - path: "4.4"
+          level: 3
+          title: 'Risk: Spec ambiguity around plan-level doc inheritance rendering'
+          byte_offset: 8687
+          byte_count: 474
+          word_count: 66
+          content_hash: 14b98676a701b3646dfedb87a68072cd3cdc2c879b1ab71b6cba7ad187016c33
+    - path: "5"
+      level: 2
+      title: Verification Approach
+      byte_offset: 9161
+      byte_count: 1351
+      word_count: 237
+      content_hash: 9006a4b047705eaa4b94e2cfbcdfbb00761245de17988f08d11c4d84a74e4d90
+entity_refs:
+    - entity_id: FEAT-01KQ2VGTRZHPC
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 417
+    - entity_id: F3-spec-status-human-output
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 375
+cross_doc_links:
+    - target_path: work/spec/B36-F3-spec-status-human-output.md
+      link_text: work/spec/B36-F3-spec-status-human-output.md
+      section_path: "1"
+    - target_path: work/_project/design-kbz-cli-and-binary-rename.md
+      link_text: work/_project/design-kbz-cli-and-binary-rename.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "2.3"
+      role: narrative
+      confidence: high
+    - section_path: "4"
+      role: risk
+      confidence: high
+    - section_path: "4.1"
+      role: risk
+      confidence: high
+    - section_path: "4.2"
+      role: risk
+      confidence: high
+    - section_path: "4.3"
+      role: risk
+      confidence: high
+    - section_path: "4.4"
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-30T14:27:50.653971Z
+classified: false
