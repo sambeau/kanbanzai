@@ -4,3 +4,5 @@ slug: implement-edit-file-worktree-resolution
 name: Implement worktree path resolution in edit_file handler
 summary: "Add worktree path resolution logic to the edit_file handler. Reuse the existing write_file worktree lookup function. Return clear error when entity_id is provided but no worktree exists. Must be O(1) single lookup. Depends on T1 (schema). Addresses REQ-005, REQ-006, REQ-007, REQ-NF-002, AC-005, AC-006, AC-008, AC-010."
 status: queued
+depends_on:
+  - TASK-01KQG2448DCKJ

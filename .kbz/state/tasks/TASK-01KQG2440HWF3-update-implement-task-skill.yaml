@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQG1XWAZE8V
 slug: update-implement-task-skill
 name: Update implement-task skill with write_file guidance
 summary: "Edit implement-task/SKILL.md to make write_file(entity_id) the primary worktree file-writing pattern. Replace python3 -c and heredoc recommendations. Preserve all procedure steps, anti-patterns, and vocabulary. Addresses REQ-001, REQ-002, REQ-NF-003, AC-001, AC-002, AC-011."
-status: queued
+status: ready
