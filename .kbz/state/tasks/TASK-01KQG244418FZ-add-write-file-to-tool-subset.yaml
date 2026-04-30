@@ -3,4 +3,11 @@ parent_feature: FEAT-01KQG1XWAZE8V
 slug: add-write-file-to-tool-subset
 name: Add write_file to developing-stage tool subset
 summary: "Add write_file to the default tool subset for the developing stage in stage bindings or role configuration so sub-agents discover it automatically. Addresses REQ-003, AC-003."
-status: ready
+status: done
+completed: "2026-04-30T21:28:17Z"
+claimed_at: "2026-04-30T21:25:45Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T21:25:45Z"
+dispatched_by: sambeau
+completion_summary: Added write_file to Developing and NeedsRework PrimaryTools in internal/stage/config.go. Updated TestToolSubsets to expect write_file. All stage tests pass.
+verification: "TestToolSubsets PASS, TestStageIntegration_AllStagesHaveValidConfig PASS. Grep confirms write_file on lines 99 and 131 of config.go."
