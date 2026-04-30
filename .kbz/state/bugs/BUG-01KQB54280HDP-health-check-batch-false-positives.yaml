@@ -1,7 +1,7 @@
 id: BUG-01KQB54280HDP
 slug: health-check-batch-false-positives
 name: Health check false batch errors
-status: planned
+status: in-progress
 severity: high
 priority: high
 type: implementation-defect

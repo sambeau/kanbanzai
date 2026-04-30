@@ -1,0 +1,7 @@
+id: WT-01KQF7Y0YQS36
+entity_id: BUG-01KQB54280HDP
+branch: bug/BUG-01KQB54280HDP-health-check-batch-false-positives
+path: .worktrees/BUG-01KQB54280HDP-health-check-batch-false-positives
+status: active
+created: "2026-04-30T13:05:59Z"
+created_by: sambeau
