@@ -1,0 +1,166 @@
+| Field  | Value                                   |
+|--------|-----------------------------------------|
+| Date   | 2026-04-30                              |
+| Status | Draft                                   |
+| Author | architect                               |
+
+## Scope
+
+This plan implements the requirements defined in
+work/spec/B36-F2-spec-status-argument-resolution.md (doc ID:
+FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution). It covers
+argument parsing, disambiguation, file path to document record resolution,
+entity ID routing, kbz doc approve path resolution, and integration
+verification for kbz status [target] [--format fmt].
+
+It does not cover output rendering (B36-F3 human/plain, B36-F4 JSON),
+changes to the project overview (no-target) rendering, multi-target support,
+--watch mode, kbz doc register path changes, or title-based resolution
+for kbz doc approve.
+
+## Task Breakdown
+
+### Task 1: Define Resolution Interfaces and Contracts
+
+- Description: Create a shared ResolutionResult enum and a
+  TargetResolver interface in a new internal/resolution package.
+  The interface separates lexical disambiguation (no I/O) from
+  concrete resolution (I/O). Codify the lexical-first rule from
+  FR-005-FR-008: path heuristic to entity ID pattern match
+  to bare plan prefix pattern to fallback entity lookup then
+  path lookup. Add a Disambiguate(target string) ResolutionKind
+  function and companion unit tests.
+- Deliverable: internal/resolution/resolver.go,
+  internal/resolution/resolver_test.go.
+- Depends on: None.
+- Effort: Medium.
+- Spec requirement: FR-005, FR-006, FR-007, FR-008, NFR-001.
+
+### Task 2: Wire --format Flag and Argument Validation into kbz status
+
+- Description: Modify runStatus in cmd/kanbanzai/workflow_cmd.go
+  to accept a single optional target argument and --format/-f flag.
+  Validate the flag value against the allow-list (human, plain, json),
+  reject unknown flags (exit 2), reject multiple positional arguments
+  (exit 2), and reject invalid --format values (exit 2, with a message
+  listing valid values). When target is omitted, preserve the existing
+  project-overview behaviour unchanged.
+- Deliverable: Modified cmd/kanbanzai/workflow_cmd.go and
+  cmd/kanbanzai/workflow_cmd_test.go.
+- Depends on: Task 1 (needs the Disambiguate function).
+- Effort: Medium.
+- Spec requirement: FR-001, FR-002, FR-003, FR-004, FR-019, FR-020, NFR-004.
+
+### Task 3: Implement File Path Resolution
+
+- Description: Implement path resolution per FR-009 to FR-013:
+  normalise relative paths (strip ./), check file existence on disk
+  (exit 1 if missing), look up the path in the document record store
+  via exact repo-relative match. Add a LookupByPath method to
+  DocumentService (DEP-001). When no record is found, print an
+  unregistered-document response (exit 0) with the file path, not
+  registered message, and a suggested kbz doc register command.
+  When a record is found, route to the document view, then to the
+  owner entity view if present.
+- Deliverable: New method on DocumentService, modified
+  cmd/kanbanzai/workflow_cmd.go, new cmd/kanbanzai/workflow_cmd_test.go.
+- Depends on: Task 1, Task 2.
+- Effort: Large.
+- Spec requirement: FR-009, FR-010, FR-011, FR-012, FR-013, DEP-001.
+
+### Task 4: Implement Entity ID Routing and Plan Prefix Resolution
+
+- Description: Implement entity ID routing per FR-014 to FR-016:
+  resolve display-format IDs to full IDs using existing
+  id.StripBreakHyphens, id.NormalizeID, IsFeatureDisplayID, and
+  ResolvePrefix. Route by type. For bare plan prefixes (no slug),
+  scan the plans directory for a match. Exit 1 with a descriptive
+  message when the entity is not found.
+- Deliverable: Modified cmd/kanbanzai/workflow_cmd.go and tests.
+- Depends on: Task 1, Task 2.
+- Effort: Large.
+- Spec requirement: FR-008, FR-014, FR-015, FR-016, ASM-002.
+
+### Task 5: Implement kbz doc approve Path Resolution
+
+- Description: Extend runDocApprove in cmd/kanbanzai/doc_cmd.go
+  to accept a file path as its first argument using the same lexical
+  rule as kbz status (FR-005). When a file path is provided, resolve
+  it to a document record via the same exact repo-relative match
+  (Task 3). If no record is found, exit 1. If a record is found,
+  proceed with approval using the resolved document ID. Preserve
+  all existing flags and the existing ID-based flow unchanged.
+- Deliverable: Modified cmd/kanbanzai/doc_cmd.go and
+  cmd/kanbanzai/doc_cmd_test.go.
+- Depends on: Task 1, Task 3 (needs LookupByPath).
+- Effort: Medium.
+- Spec requirement: FR-021, FR-022, FR-023, FR-024.
+
+### Task 6: Integration and Verification
+
+- Description: Write integration tests covering all exit paths and
+  verifying all 24 acceptance criteria. Verify exit codes 0, 1, and
+  2 in their respective scenarios. Stub the rendering layer to assert
+  routing decisions without depending on B36-F3/B36-F4.
+- Deliverable: cmd/kanbanzai/status_cmd_integration_test.go,
+  modified cmd/kanbanzai/doc_cmd_test.go.
+- Depends on: Task 2, Task 3, Task 4, Task 5.
+- Effort: Large.
+- Spec requirement: All ACs; FR-017, FR-018, NFR-003.
+
+## Dependency Graph
+
+Task 1 (no dependencies)
+Task 2 -> depends on Task 1
+Task 3 -> depends on Task 1, Task 2
+Task 4 -> depends on Task 1, Task 2
+Task 5 -> depends on Task 1, Task 3
+Task 6 -> depends on Task 2, Task 3, Task 4, Task 5
+
+Parallel groups: [Task 3, Task 4]
+Critical path: Task 1 -> Task 2 -> Task 3 -> Task 5 -> Task 6
+
+## Risk Assessment
+
+### Risk: LookupByPath Requires O(n) Scan
+
+- Probability: Medium.
+- Impact: Medium. Document count is typically small, but a linear scan
+  on every kbz status invocation is suboptimal.
+- Mitigation: Accept the linear scan for now; document count is low
+  enough. The path to ID lookup can be cached in a follow-up if needed.
+- Affected tasks: Task 3, Task 5.
+
+### Risk: Display ID Resolution Ambiguity
+
+- Probability: Low.
+- Impact: Medium. ResolvePrefix can return ambiguous results.
+- Mitigation: TSID has 13 characters of entropy; ambiguous matches
+  are astronomically unlikely. ResolvePrefix already errors on ambiguity.
+- Affected tasks: Task 4.
+
+### Risk: DocumentService Interface Change Breaks MCP
+
+- Probability: Low.
+- Impact: High. Adding LookupByPath to DocumentService could interact
+  unexpectedly with MCP code paths.
+- Mitigation: LookupByPath is a read-only addition with no side effects.
+  Verify MCP status tool still works after the change.
+- Affected tasks: Task 3.
+
+### Risk: Integration Test Fixture Complexity
+
+- Probability: Medium.
+- Impact: Medium. Integration tests need document records, entity state
+  files, and plan directories.
+- Mitigation: Reuse existing test helpers. Keep fixtures minimal:
+  one doc, one feature, one plan.
+- Affected tasks: Task 6.
+
+## Verification Approach
+
+All 24 ACs mapped to Tasks 1-6. Task 1 covers AC-001 through AC-004
+(disambiguation unit tests). Task 2 covers AC-016 through AC-018
+(flag/usage error tests). Task 3 covers AC-012 (path normalisation unit
+test). Task 6 covers all remaining ACs as integration tests (AC-005
+through AC-011, AC-013 through AC-015, AC-019 through AC-024).

@@ -6,6 +6,7 @@ status: dev-planning
 summary: "Extend kbz status to accept a file path or entity ID as its argument. Implement the disambiguation logic (path vs entity ID vs plan prefix), file-path-to-document-record lookup, entity routing to the service layer, and the unregistered-document response. Also add path resolution to kbz doc approve so it accepts a file path in place of a document ID. Exit code semantics: 0 for all valid query results, 1 for genuine failures."
 design: B36-kbz-cli-and-status/design-design-kbz-cli-and-binary-rename
 spec: FEAT-01KQ2VFTWD1W2/spec-b36-f2-spec-status-argument-resolution
+dev_plan: FEAT-01KQ2VFTWD1W2/dev-plan-b36-f2-dev-plan-status-argument-resolution
 created: "2026-04-25T17:37:38Z"
 created_by: sambeau
 display_id: B36-F2
