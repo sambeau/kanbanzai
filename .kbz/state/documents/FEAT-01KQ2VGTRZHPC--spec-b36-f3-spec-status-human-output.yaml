@@ -1,6 +1,6 @@
-approved_at: "2026-04-30T14:14:09Z"
+approved_at: "2026-04-30T14:17:35Z"
 approved_by: sambeau
-content_hash: c27874ed477b2bedfca4217260df1e751bb297bcca82f76b7366867153942a4e
+content_hash: 2a6685e8c8e605be6f2b39e4df9fdb03baf59059f84d70609b05d49e9c8df55e
 created: "2026-04-30T14:11:16Z"
 created_by: sambeau
 id: FEAT-01KQ2VGTRZHPC/spec-b36-f3-spec-status-human-output
@@ -9,4 +9,4 @@ path: work/spec/B36-F3-spec-status-human-output.md
 status: approved
 title: "Specification: Status command human output"
 type: spec
-updated: "2026-04-30T14:14:09Z"
+updated: "2026-04-30T14:17:35Z"
