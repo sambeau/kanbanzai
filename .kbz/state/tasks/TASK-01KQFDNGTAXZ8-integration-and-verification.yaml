@@ -4,3 +4,9 @@ slug: integration-and-verification
 name: Integration and Verification
 summary: "Write integration tests covering all 24 ACs: disambiguation, file path resolution, entity ID routing, flag validation, no-target behaviour, and doc approve path resolution. Verify exit codes 0/1/2. Use stub renderer."
 status: queued
+estimate: "5"
+depends_on:
+  - TASK-01KQFDMK63E62
+  - TASK-01KQFDMTTN0Q9
+  - TASK-01KQFDN2H29PF
+  - TASK-01KQFDNAAR04Q

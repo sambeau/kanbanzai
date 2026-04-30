@@ -4,3 +4,7 @@ slug: implement-file-path-resolution
 name: Implement File Path Resolution
 summary: "Add LookupByPath method to DocumentService. Implement path normalisation (strip ./), file-existence check, repo-relative exact match, unregistered-document response (exit 0, kbz doc register suggestion), and doc-to-entity routing."
 status: queued
+estimate: "5"
+depends_on:
+  - TASK-01KQFDMBCJZJR
+  - TASK-01KQFDMK63E62

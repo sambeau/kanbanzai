@@ -4,3 +4,7 @@ slug: implement-entity-id-routing
 name: Implement Entity ID Routing and Plan Prefix Resolution
 summary: "Route display-format entity IDs to service layer. Resolve FEAT-042 via ResolvePrefix, TASK-/BUG- via Get. For bare plan prefixes (P1), scan plans dir for match. Exit 1 with descriptive message when not found."
 status: queued
+estimate: "5"
+depends_on:
+  - TASK-01KQFDMBCJZJR
+  - TASK-01KQFDMK63E62
