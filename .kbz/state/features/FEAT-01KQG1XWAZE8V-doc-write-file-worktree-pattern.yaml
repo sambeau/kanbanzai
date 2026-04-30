@@ -1,0 +1,9 @@
+id: FEAT-01KQG1XWAZE8V
+slug: doc-write-file-worktree-pattern
+name: Document write_file as Primary Worktree Pattern
+parent: B39-fix-worktree-dev-experience
+status: proposed
+summary: "Update implement-task/SKILL.md to make write_file(entity_id) the primary recommended pattern for worktree file creation. Demote python3 -c and heredoc workarounds to fallback status. Add write_file to the developing-stage default tool subset. Addresses REQ-001, REQ-002, REQ-003, REQ-NF-003."
+created: "2026-04-30T20:40:17Z"
+created_by: sambeau
+display_id: B39-F1
