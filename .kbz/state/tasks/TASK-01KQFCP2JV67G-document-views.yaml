@@ -4,3 +4,4 @@ slug: document-views
 name: Document Views (Unregistered and Registered)
 summary: "Implement RenderUnregisteredDoc and RenderRegisteredDoc functions. Covers: unregistered file view (path, \"Not registered\", suggested kbz doc register command), registered document with owner (doc block then feature block delegation), orphan document (doc block only with draft/pending attention). File: documents.go with unit tests for all FR-2 and FR-3 scenarios."
 status: queued
+estimate: "5"

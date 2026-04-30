@@ -1,10 +1,12 @@
-content_hash: aef175a5e64807fcbdb498cc711743db84b74e9fdc7990456d3d40e88b8ebab8
+approved_at: "2026-04-30T14:30:04Z"
+approved_by: sambeau
+content_hash: 9c6054059ba3031ce47e9bdc50ce544ba4d201f452fa9368d4b11c8ffe874c0f
 created: "2026-04-30T14:28:30Z"
 created_by: sambeau
 id: FEAT-01KQ2VF7PDZ2G/dev-plan-b36-f1-dev-plan-binary-rename
 owner: FEAT-01KQ2VF7PDZ2G
 path: work/plan/B36-F1-dev-plan-binary-rename.md
-status: draft
+status: approved
 title: "Dev Plan: Binary rename kanbanzai to kbz"
 type: dev-plan
-updated: "2026-04-30T14:28:30Z"
+updated: "2026-04-30T14:30:04Z"
