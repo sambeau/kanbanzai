@@ -3,5 +3,12 @@ parent_feature: FEAT-01KQ2VGTRZHPC
 slug: document-views
 name: Document Views (Unregistered and Registered)
 summary: "Implement RenderUnregisteredDoc and RenderRegisteredDoc functions. Covers: unregistered file view (path, \"Not registered\", suggested kbz doc register command), registered document with owner (doc block then feature block delegation), orphan document (doc block only with draft/pending attention). File: documents.go with unit tests for all FR-2 and FR-3 scenarios."
-status: ready
+status: done
 estimate: "5"
+completed: "2026-04-30T16:37:08Z"
+claimed_at: "2026-04-30T16:32:19Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T16:32:19Z"
+dispatched_by: sambeau
+completion_summary: "Implemented RenderUnregisteredDoc and RenderRegisteredDoc in internal/cli/render/documents.go. RenderUnregisteredDoc returns error for nonexistent files and renders \"Not registered\" with kbz doc register command for existing unregistered files. RenderRegisteredDoc renders doc metadata block (path, title, type, coloured status) with feature context stub when owner exists, warn symbol for drafts. 12 tests covering file-not-found, unregistered output, fields, colouring, TTY variations."
+verification: "go build ./... passes, go test ./internal/cli/render/... -v passes all 31 tests (12 new + 19 existing)"
