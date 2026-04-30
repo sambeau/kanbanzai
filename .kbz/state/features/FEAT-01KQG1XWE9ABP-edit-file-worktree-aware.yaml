@@ -1,0 +1,9 @@
+id: FEAT-01KQG1XWE9ABP
+slug: edit-file-worktree-aware
+name: Make edit_file Worktree-Aware
+parent: B39-fix-worktree-dev-experience
+status: proposed
+summary: "Add optional entity_id parameter to edit_file. When provided, resolve the entity's worktree path using the same mechanism as write_file and apply all edits relative to the worktree root. Preserve backward compatibility when entity_id is omitted. Addresses REQ-004, REQ-005, REQ-006, REQ-007, REQ-NF-001, REQ-NF-002."
+created: "2026-04-30T20:40:17Z"
+created_by: sambeau
+display_id: B39-F2
