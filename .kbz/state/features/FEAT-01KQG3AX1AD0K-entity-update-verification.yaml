@@ -1,0 +1,9 @@
+id: FEAT-01KQG3AX1AD0K
+slug: entity-update-verification
+name: Add Verification Parameter to Entity Update
+parent: B41-fix-doc-ownership-lifecycle
+status: proposed
+summary: "Add verification and verification_status optional parameters to entity(action: update). Set directly on entity record with no lifecycle transition. Addresses REQ-007, REQ-008, REQ-NF-003, AC-008 through AC-010, AC-012."
+created: "2026-04-30T21:04:52Z"
+created_by: sambeau
+display_id: B41-F4
