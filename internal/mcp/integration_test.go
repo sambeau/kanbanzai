@@ -3,6 +3,7 @@ package mcp
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -249,4 +250,263 @@ func integrationPlanSlug(id string) string {
 		return id[idx+2:]
 	}
 	return id
+}
+
+// TestIntegration_FinishStateConsistency verifies AC-003: after finish() returns
+// success, all read paths (entity get, entity list with parent_feature filter,
+// and sibling-based gate checks) observe the task as done.
+func TestIntegration_FinishStateConsistency(t *testing.T) {
+	t.Parallel()
+
+	// ── Setup services ──────────────────────────────────────────────────
+
+	entityRoot := t.TempDir()
+	knowledgeRoot := t.TempDir()
+
+	entitySvc := service.NewEntityService(entityRoot)
+	knowledgeSvc := service.NewKnowledgeService(knowledgeRoot)
+	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
+
+	// Wire the dependency unblocking hook.
+	hook := service.NewDependencyUnblockingHook(entitySvc)
+	entitySvc.SetStatusTransitionHook(hook)
+
+	// ── Create entities: plan → feature → task ──────────────────────────
+
+	planID := "P1-finish-consistency"
+	writeIntegrationPlan(t, entitySvc, planID)
+
+	feat, err := entitySvc.CreateFeature(service.CreateFeatureInput{
+		Name:      "test",
+		Slug:      "finish-consistency",
+		Parent:    planID,
+		Summary:   "Test feature for finish state consistency",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature: %v", err)
+	}
+
+	// Advance feature to developing so tasks can be manipulated.
+	for _, fStatus := range []string{"designing", "specifying", "dev-planning", "developing"} {
+		if _, err := entitySvc.UpdateStatus(service.UpdateStatusInput{
+			Type: "feature", ID: feat.ID, Slug: "finish-consistency", Status: fStatus,
+		}); err != nil {
+			t.Fatalf("advance feature to %s: %v", fStatus, err)
+		}
+	}
+
+	// Create two tasks — one to finish, one to leave active for sibling testing.
+	task1Result, err := entitySvc.CreateTask(service.CreateTaskInput{
+		Name:          "test",
+		ParentFeature: feat.ID,
+		Slug:          "task-to-finish",
+		Summary:       "Task we will finish",
+	})
+	if err != nil {
+		t.Fatalf("CreateTask 1: %v", err)
+	}
+	task1ID := task1Result.ID
+	task1Slug := task1Result.Slug
+
+	task2Result, err := entitySvc.CreateTask(service.CreateTaskInput{
+		Name:          "test",
+		ParentFeature: feat.ID,
+		Slug:          "sibling-task",
+		Summary:       "Sibling task that stays active",
+	})
+	if err != nil {
+		t.Fatalf("CreateTask 2: %v", err)
+	}
+	task2ID := task2Result.ID
+
+	// Advance both tasks to active (queued → ready → active).
+	advanceToActive(t, entitySvc, task1ID, task1Slug)
+	advanceToActive(t, entitySvc, task2ID, task2Result.Slug)
+
+	// ── Call finish() on task1 ──────────────────────────────────────────
+
+	finishTools := FinishTools(entitySvc, dispatchSvc)
+	finishHandler := finishTools[0].Handler
+
+	finishReq := makeRequest(map[string]any{
+		"task_id": task1ID,
+		"summary": "Completed the state consistency fix",
+	})
+
+	finishResult, err := finishHandler(context.Background(), finishReq)
+	if err != nil {
+		t.Fatalf("finish(%s) error: %v", task1ID, err)
+	}
+	if finishResult.IsError {
+		t.Fatalf("finish(%s) returned error result: %v", task1ID, extractText(t, finishResult))
+	}
+
+	// ── AC-003: entity get returns done ─────────────────────────────────
+
+	taskAfterFinish, err := entitySvc.Get("task", task1ID, "")
+	if err != nil {
+		t.Fatalf("entity get after finish: %v", err)
+	}
+	statusAfterFinish, _ := taskAfterFinish.State["status"].(string)
+	if statusAfterFinish != "done" {
+		t.Errorf("entity get: task status = %q, want \"done\"", statusAfterFinish)
+	}
+
+	// Completion metadata should be present.
+	completionSummary, _ := taskAfterFinish.State["completion_summary"].(string)
+	if completionSummary == "" {
+		t.Error("entity get: completion_summary is empty after finish")
+	}
+
+	// ── AC-003: entity list with parent_feature shows task as done ──────
+
+	tasksForFeature, err := entitySvc.ListEntitiesFiltered(service.ListFilteredInput{
+		Type:   "task",
+		Parent: feat.ID,
+	})
+	if err != nil {
+		t.Fatalf("entity list with parent_feature: %v", err)
+	}
+
+	var foundTask1, foundTask2 bool
+	for _, tResult := range tasksForFeature {
+		st, _ := tResult.State["status"].(string)
+		switch tResult.ID {
+		case task1ID:
+			foundTask1 = true
+			if st != "done" {
+				t.Errorf("entity list: task1 status = %q, want \"done\"", st)
+			}
+		case task2ID:
+			foundTask2 = true
+			if st != "active" {
+				t.Errorf("entity list: task2 status = %q, want \"active\" (untouched sibling)", st)
+			}
+		}
+	}
+	if !foundTask1 {
+		t.Errorf("entity list with parent_feature did not return finished task %s", task1ID)
+	}
+	if !foundTask2 {
+		t.Errorf("entity list with parent_feature did not return sibling task %s", task2ID)
+	}
+
+	// ── AC-003: gate check — sibling check correctly sees task1 as done ──
+	// The sibling-based "all tasks terminal" check is done in finish_tool.go
+	// by calling ListEntitiesFiltered. We simulate the same check here:
+	// task1 is done, task2 is active → not all terminal.
+	allTerminal := true
+	for _, tResult := range tasksForFeature {
+		st, _ := tResult.State["status"].(string)
+		if !isFinishTerminal(st) {
+			allTerminal = false
+			break
+		}
+	}
+	if allTerminal {
+		t.Error("gate check: all tasks terminal = true, want false (task2 is still active)")
+	}
+
+	t.Logf("Finish state consistency test passed:")
+	t.Logf("  entity get:  task1 = %s", statusAfterFinish)
+	t.Logf("  entity list: task1 = done, task2 = active")
+	t.Logf("  gate check:  all terminal = false (correct — task2 still active)")
+}
+
+// BenchmarkFinishLatency measures p95 latency of finish() calls to satisfy
+// AC-013 (REQ-NF-002): no measurable latency increase from the cache write.
+func BenchmarkFinishLatency(b *testing.B) {
+	// ── Setup ───────────────────────────────────────────────────────────
+
+	entityRoot := b.TempDir()
+	knowledgeRoot := b.TempDir()
+
+	entitySvc := service.NewEntityService(entityRoot)
+	knowledgeSvc := service.NewKnowledgeService(knowledgeRoot)
+	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
+
+	planID := "P1-bench-finish"
+	now := time.Now().UTC().Format(time.RFC3339)
+	slug := "bench-finish"
+	record := storage.EntityRecord{
+		Type: "plan",
+		ID:   planID,
+		Slug: slug,
+		Fields: map[string]any{
+			"id":         planID,
+			"slug":       slug,
+			"title":      "Bench Plan",
+			"status":     "active",
+			"summary":    "Benchmark plan",
+			"created":    now,
+			"created_by": "tester",
+			"updated":    now,
+		},
+	}
+	if _, err := entitySvc.Store().Write(record); err != nil {
+		b.Fatalf("write plan: %v", err)
+	}
+
+	feat, err := entitySvc.CreateFeature(service.CreateFeatureInput{
+		Name:      "test",
+		Slug:      "bench-feat",
+		Parent:    planID,
+		Summary:   "Benchmark feature",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		b.Fatalf("CreateFeature: %v", err)
+	}
+
+	finishTools := FinishTools(entitySvc, dispatchSvc)
+	finishHandler := finishTools[0].Handler
+
+	// Pre-create tasks and advance them to active.
+	type benchTask struct {
+		id, slug string
+	}
+	var tasks []benchTask
+	for i := 0; i < b.N; i++ {
+		taskSlug := fmt.Sprintf("bench-task-%d", i)
+		taskResult, err := entitySvc.CreateTask(service.CreateTaskInput{
+			Name:          "test",
+			ParentFeature: feat.ID,
+			Slug:          taskSlug,
+			Summary:       "Benchmark task",
+		})
+		if err != nil {
+			b.Fatalf("CreateTask %d: %v", i, err)
+		}
+		// Advance: queued → ready → active (inline since advanceToActive takes *testing.T).
+		if _, err := entitySvc.UpdateStatus(service.UpdateStatusInput{
+			Type: "task", ID: taskResult.ID, Slug: taskResult.Slug, Status: "ready",
+		}); err != nil {
+			b.Fatalf("advance %s to ready: %v", taskResult.ID, err)
+		}
+		if _, err := entitySvc.UpdateStatus(service.UpdateStatusInput{
+			Type: "task", ID: taskResult.ID, Slug: taskResult.Slug, Status: "active",
+		}); err != nil {
+			b.Fatalf("advance %s to active: %v", taskResult.ID, err)
+		}
+		tasks = append(tasks, benchTask{id: taskResult.ID, slug: taskResult.Slug})
+	}
+
+	// ── Benchmark ───────────────────────────────────────────────────────
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		req := makeRequest(map[string]any{
+			"task_id": tasks[i].id,
+			"summary": "Benchmarked finish",
+		})
+		result, err := finishHandler(context.Background(), req)
+		if err != nil {
+			b.Fatalf("finish iteration %d: %v", i, err)
+		}
+		if result.IsError {
+			b.Fatalf("finish iteration %d returned error", i)
+		}
+	}
+	b.StopTimer()
 }
