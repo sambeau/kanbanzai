@@ -1,0 +1,6 @@
+id: TASK-01KQEZ7WB0AP6
+parent_feature: FEAT-01KQ7YQK6DDDA
+slug: add-cross-registry-prefix-validation
+name: Add cross-registry prefix validation
+summary: "Add Validate() check: error if same prefix char in both plan_prefixes and batch_prefixes. Add IsActivePlanPrefix/IsActiveBatchPrefix helpers. AC-003-004, AC-014."
+status: queued
