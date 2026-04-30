@@ -3,4 +3,8 @@ parent_feature: FEAT-01KQG3V06KNZG
 slug: validate-worktree-entity-ids
 name: Add entity ID validation and tests
 summary: "Reject display-format IDs (embedded hyphen) at worktree create. Accept canonical ULID. O(1) string check. Single task with tests. Addresses REQ-008, REQ-009, REQ-NF-003, AC-008, AC-009."
-status: ready
+status: active
+claimed_at: "2026-04-30T22:47:22Z"
+dispatched_to: unspecified
+dispatched_at: "2026-04-30T22:47:22Z"
+dispatched_by: sambeau

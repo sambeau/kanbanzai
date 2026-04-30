@@ -3,6 +3,6 @@ parent_feature: FEAT-01KQG3TZR2JDP
 slug: test-worktree-gc
 name: Write tests for gc action
 summary: "Tests: dry_run lists orphaned, gc removes state files, existing directories not removed, no git calls. Depends on T1. Addresses AC-001 through AC-003, AC-010."
-status: queued
+status: ready
 depends_on:
   - TASK-01KQG3ZE6D689
