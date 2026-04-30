@@ -1,5 +1,5 @@
 confidence: "0.5"
-content: "Bugs are frequently fixed without advancing their lifecycle state beyond \"reported.\" The fix is committed to main, but the bug entity stays in reported/triaged status indefinitely. This creates stale entity state, misleading health dashboards (showing open critical bugs that are already fixed), and stalled-task attention items. The same pattern affected BUG-01KQB-54280HDP (fixed in fc749adf, only closed days later when explicitly asked). Root cause: the workflow does not require or prompt bug lifecycle advancement after a fix commit; agents treat the commit as the closure signal rather than advancing the entity."
+content: "Bugs are frequently fixed without advancing their lifecycle state. The fix is committed to main, but the bug entity stays in a stale status indefinitely. This creates misleading health dashboards (showing open critical bugs that are already fixed) and stalled-task attention items.\n\nConfirmed instances:\n- BUG-01KQB-54280HDP: fixed in fc749adf, left in reported; only closed days later when explicitly prompted.\n- BUG-01KQF4CEB8Z90: fixes landed in main via an unrelated refactor commit (8167b8ea); bug was left stranded at `needs-review` with an empty worktree branch. Required manual `verified → closed` transition after the fact.\n\nRoot cause: workflow does not require or prompt bug lifecycle advancement after a fix commit. Agents treat the commit as the closure signal rather than advancing the entity. Additionally, when a fix lands as a side effect of another commit, there is no mechanism to detect and close the associated bug.\n\nSuggested remedy: add a post-commit or post-merge hook reminder to check for open bugs whose symptoms match the changed files, and require explicit lifecycle advancement as part of the fix task's `finish` call."
 created: "2026-04-30T13:08:11Z"
 created_by: sambeau
 id: KE-01KQF821VEWBE
@@ -13,5 +13,5 @@ tags:
 tier: 2
 topic: bug-lifecycle-discipline
 ttl_days: 90
-updated: "2026-04-30T13:08:11Z"
+updated: "2026-04-30T13:32:40Z"
 use_count: 0

@@ -1,0 +1,9 @@
+id: P39-kbz-cli-and-binary-rename
+slug: kbz-cli-and-binary-rename
+name: kbz CLI and Binary Rename
+status: proposed
+summary: "Rename the kanbanzai binary to kbz and extend kbz status to accept file paths and entity IDs, producing human-readable and machine-readable output for both human developers and AI agents in shell-only contexts."
+created: "2026-04-30T13:42:55Z"
+created_by: sambeau
+updated: "2026-04-30T13:42:55Z"
+next_feature_seq: 1
