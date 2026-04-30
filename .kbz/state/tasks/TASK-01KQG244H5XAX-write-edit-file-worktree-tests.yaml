@@ -1,0 +1,6 @@
+id: TASK-01KQG244H5XAX
+parent_feature: FEAT-01KQG1XWE9ABP
+slug: write-edit-file-worktree-tests
+name: Write tests for edit_file worktree-aware behaviour
+summary: "Write automated tests: worktree edit, no-entity_id backward compat, non-existent entity error, multi-edit in worktree, existing suite passes. Depends on T2 (implementation). Addresses AC-004, AC-005, AC-006, AC-007, AC-009."
+status: queued
