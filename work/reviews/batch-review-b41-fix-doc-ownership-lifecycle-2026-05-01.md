@@ -3,28 +3,34 @@
 ## Scope
 - **Batch:** B41-fix-doc-ownership-lifecycle (Fix Document Ownership and Lifecycle)
 - **Parent Plan:** P40-retro-batch-april-2026
-- **Features:** 4 total (3 delivered, 1 verification-only, 0 incomplete)
-- **Review date:** 2026-05-01
+- **Features:** 4 total (4 done, 0 incomplete)
+- **Review date:** 2026-05-01 (original), re-reviewed 2026-05-01
 - **Reviewer:** reviewer-conformance
+- **Re-review note:** This is an updated report. The prior review found 2 blocking gaps (CG-1, CG-2). The feature lifecycle states have advanced to `done` but the code still is not on `main`.
 
 ## Feature Census
 
-| Feature | Status | Spec Approved | Dev-Plan | Tasks | Notes |
-|---------|--------|---------------|----------|-------|-------|
-| FEAT-01KQG3AWTYSEQ (B41-F1) — Auto-Infer Document Owner from Path Context | done | yes | approved | 2/2 done | Code merged to main (`b5dbe05f`). Owner inference + conflict warning + PROJECT/ fallback implemented. |
-| FEAT-01KQG3AWX916X (B41-F2) — Preserve Approval Status on Minor Doc Edits | done | yes | approved | 1/1 done | Code in unmerged branch (`feature/FEAT-01KQG3AWX916X-preserve-approval-minor-edits`, 1 commit ahead of main). Not yet on main. |
-| FEAT-01KQG3AWZ3HEZ (B41-F3) — Add bypassable Field to Merge Gate Results | done | yes | approved | 1/1 done | **Verification-only.** Bypassable field already implemented in P31 (`6a5181bf`). Task confirmed existing behaviour. No new code was written for this feature. |
-| FEAT-01KQG3AX1AD0K (B41-F4) — Add Verification Parameter to Entity Update | done | yes | approved | 2/2 done | Code in unmerged branch (`feature/FEAT-01KQG3AX1AD0K-entity-update-verification`, 1 commit ahead of main). Not yet on main. |
+| Feature | Status | Spec Approved | Dev-Plan | Tasks | Merge Status |
+|---------|--------|---------------|----------|-------|--------------|
+| FEAT-01KQG3AWTYSEQ (B41-F1) — Auto-Infer Document Owner from Path Context | done | yes | approved | 2/2 done | ✅ Merged to main (`b5dbe05f`) |
+| FEAT-01KQG3AWX916X (B41-F2) — Preserve Approval Status on Minor Doc Edits | done | yes | approved | 1/1 done | ❌ NOT merged to main (`2b5fe15a` on `feature/FEAT-01KQG3AWX916X-preserve-approval-minor-edits`) |
+| FEAT-01KQG3AWZ3HEZ (B41-F3) — Add bypassable Field to Merge Gate Results | done | yes | approved | 1/1 done | ✅ Merged to main (already existed from P31, `6a5181bf`) |
+| FEAT-01KQG3AX1AD0K (B41-F4) — Add Verification Parameter to Entity Update | done | yes | approved | 2/2 done | ❌ NOT merged to main (`d43ed30a` on `feature/FEAT-01KQG3AX1AD0K-entity-update-verification`) |
+
+### Changes since prior review
+- B41-F2: `reviewing` → `done` (override: single task, CanonicalContentHash for formatting-only detection, 7 tests pass)
+- B41-F4: `reviewing` → `done` (override: both tasks done, verification params on entity update, 4 tests pass)
+- Neither branch has been merged. No PRs exist.
 
 ## Conformance Gaps
 
 | # | Feature | Type | Description | Severity |
 |---|---------|------|-------------|----------|
-| CG-1 | FEAT-01KQG3AWX916X (B41-F2) | merge-status | Implementation exists in an unmerged branch. Code is NOT on `main`. No PR has been created. | **blocking** |
-| CG-2 | FEAT-01KQG3AX1AD0K (B41-F4) | merge-status | Implementation exists in an unmerged branch. Code is NOT on `main`. No PR has been created. | **blocking** |
-| CG-3 | FEAT-01KQG3AWZ3HEZ (B41-F3) | scope-delivery | Feature was verification-only — no new code was produced. The bypassable field was already implemented in a prior plan (P31). This is a legitimate outcome (the dev-plan confirms it), but the feature effectively validated existing behaviour rather than delivering new work. | non-blocking |
-| CG-4 | B41 (all features) | worktree-cleanup | All 4 feature worktrees are still `active` despite branches being merged (F1, F3) or commits existing (F2, F4). Health check flags `worktree_branch_merged` for F1 and F3. Cleanup is overdue. | non-blocking |
-| CG-5 | B41-fix-doc-ownership-lifecycle | document-currency | Batch is `done` but not listed in AGENTS.md Scope Guard. This is a pre-existing issue affecting all completed plans (systemic, not batch-specific). | non-blocking |
+| CG-1 | FEAT-01KQG3AWX916X (B41-F2) | merge-status | Implementation exists in an unmerged branch. Code is NOT on `main`. No PR has been created. Feature entity is `done` but code is not delivered to the mainline. | **blocking** |
+| CG-2 | FEAT-01KQG3AX1AD0K (B41-F4) | merge-status | Implementation exists in an unmerged branch. Code is NOT on `main`. No PR has been created. Feature entity is `done` but code is not delivered to the mainline. | **blocking** |
+| CG-3 | FEAT-01KQG3AWZ3HEZ (B41-F3) | scope-delivery | Feature was verification-only — no new code was produced. The bypassable field was already implemented in P31. This is a legitimate outcome (the dev-plan confirms existing behaviour). | non-blocking |
+| CG-4 | B41 (all features) | worktree-cleanup | All 4 feature worktrees are still active on disk. F1 (`WT-01KQG7CZB6APK`) and F3 (`WT-01KQG7CZBFQ62`) branches are already on main — worktrees should be removed. F2 (`WT-01KQG830W6MNJ`) and F4 (`WT-01KQG7CZB6JTS`) contain unmerged code. Health check flags `worktree_branch_merged` for F1 and F3. | non-blocking |
+| CG-5 | B41-fix-doc-ownership-lifecycle | document-currency | Batch is `done` but not listed in AGENTS.md Scope Guard. This is a pre-existing systemic issue affecting all completed plans (not batch-specific). | non-blocking |
 
 ## Spec Conformance Verification
 
@@ -81,41 +87,43 @@
 | B41-F3 | WT-01KQG7CZBFQ62 | `feature/FEAT-01KQG3AWZ3HEZ-merge-gate-bypassable` | active | ✅ Merged (via P31) |
 | B41-F4 | WT-01KQG7CZB6JTS | `feature/FEAT-01KQG3AX1AD0K-entity-update-verification` | active | ❌ Not merged |
 
-All worktrees should be `merged` or `abandoned`. F1 and F3 worktrees are stale (branch already on main but worktree still active — flagged by health check). F2 and F4 worktrees contain unmerged code.
+All four worktrees are still active on disk. F1 and F3 worktrees are stale (branch already on main but worktree still active — flagged by health check). F2 and F4 worktrees contain unmerged code.
 
-## Health Check Findings
+## Health Check Findings (B41-specific)
 
-- **feature_child_consistency:** FEAT-01KQG3AWZ3HEZ has 1 child task in terminal state but feature was `developing` — resolved by the override to done.
-- **estimation_coverage:** FEAT-01KQG3AWZ3HEZ has 1 task with no estimates — pre-existing, non-blocking.
 - **worktree_branch_merged:** B41-F1 and B41-F3 worktrees are active but branches are already merged — cleanup needed.
-- No errors directly related to B41 entities (the batch-level parent plan P40 has an unknown status `"idea"`, which is a separate issue).
+- **feature_child_consistency:** FEAT-01KQG3AWZ3HEZ has all 1 child task(s) in terminal state but feature is `developing` — this appears to be a stale cache since the entity shows `done`.
+- **estimation_coverage:** FEAT-01KQG3AWZ3HEZ has 1 task with no estimates — pre-existing, non-blocking.
+- **doc_currency for B41:** Plan `B41-fix-doc-ownership-lifecycle` is `done` but not mentioned in AGENTS.md Scope Guard.
+- **gate_overrides for B41-F2 and B41-F4:** Both features used overrides from `reviewing→done`. While the implementation work was complete, the merge-to-main step was skipped.
 
 ## Retrospective Summary
 
-No retrospective signals were recorded for B41 specifically. The batch was completed in a single session with direct orchestration. The project-level retro synthesis surface 25 signals across 11 themes, dominated by tool-friction (stale binary, worktree file writing, heredoc escaping) and workflow-friction (commit discipline, worktree usage). None of these are unique to B41.
+No retrospective signals were recorded for B41 specifically. The batch was completed in a single session with direct orchestration. The project-level retro synthesis surfaces 25 signals across 11 themes, dominated by tool-friction (stale binary, worktree file writing, heredoc escaping) and workflow-friction (commit discipline, worktree usage). None of these are unique to B41.
 
 ## Batch Verdict
 
-### FAIL — 2 blocking conformance gaps
+### FAIL — 2 blocking conformance gaps (unchanged from prior review)
 
-**CG-1** and **CG-2** are blocking: B41-F2 (Preserve Approval Status) and B41-F4 (Entity Update Verification) have been implemented and tested on feature branches, but **neither branch has been merged to `main`**. No pull requests exist. The code exists only in unmerged local branches. Until these are merged, the features are not delivered to the mainline.
+**CG-1** and **CG-2** remain blocking: B41-F2 (Preserve Approval Status on Minor Doc Edits) and B41-F4 (Add Verification Parameter to Entity Update) have been implemented and tested on feature branches, and their feature entities have advanced to `done`, but **neither branch has been merged to `main`**. No pull requests exist. The code exists only in unmerged local branches. Until these are merged, the features are not delivered to the mainline.
 
-**CG-3** (F3 verification-only) is non-blocking but worth documenting: the bypassable field feature was correctly identified as already implemented by P31, and the task verified this rather than producing new code. The dev-plan and spec handled this appropriately.
+The lifecycle state advancement from `reviewing` to `done` for both features does not change the conformance outcome — the code is still not on `main`, which is the defining criterion for a merge-status conformance gap.
 
 ## Required Actions
 
 1. **Merge B41-F2:** Create PR and merge `feature/FEAT-01KQG3AWX916X-preserve-approval-minor-edits` into `main`.
 2. **Merge B41-F4:** Create PR and merge `feature/FEAT-01KQG3AX1AD0K-entity-update-verification` into `main`.
-3. **Clean up worktrees:** Run `cleanup(action: "execute")` or `worktree(action: "remove")` for F1 and F3 worktrees (already on main).
+3. **Clean up worktrees:** Run `cleanup(action: "execute")` or `worktree(action: "remove")` for F1 and F3 worktrees (already on main). After F2 and F4 are merged, clean up those worktrees too.
 
 After actions 1 and 2 are complete, re-run this conformance review for pass.
 
 ## Evidence
 - Batch entity: `entity(action: "get", id: "B41-fix-doc-ownership-lifecycle")` → status: done
-- Feature list: `entity(action: "list", type: "feature", parent: "B41-fix-doc-ownership-lifecycle")` → 4 features, all tasks done
+- Feature list: `entity(action: "get")` for all 4 features → all done
 - Spec approval: `doc(action: "get", id: "B41-fix-doc-ownership-lifecycle/spec-p40-spec-b41-doc-ownership-lifecycle")` → approved
 - Design approval: `doc(action: "get", id: "P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements")` → approved
 - Dev-plans: All 4 dev-plans approved
-- Health check: `health()` → no B41-specific errors
-- Branch status: `git branch --merged main` confirms F1, F3 on main; F2, F4 unmerged
+- Health check: `health()` → B41-F1/F3 worktree cleanup warnings; B41 Scope Guard doc-currency gap
+- Branch status: `git branch --merged main` confirms F1, F3 on main; F2, F4 unmerged (1 commit ahead each)
+- Git worktrees: All 4 still active on disk — `git worktree list` confirms
 - Retro synthesis: `retro(action: "synthesise", scope: "B41-fix-doc-ownership-lifecycle")` → 0 signals

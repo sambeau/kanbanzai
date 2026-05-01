@@ -1,4 +1,4 @@
-updated_at: 2026-05-01T09:58:05.734516Z
+updated_at: 2026-05-01T10:14:01.569644Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -93025,321 +93025,6 @@ edges:
       to: B41-specific
       to_type: entity_ref
       edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01
-      from_type: document
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.1
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2.1
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2.2
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.1
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.2
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.3
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.4
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.5
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.6
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.7
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.8
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.9
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.10
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.11
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.12
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.13
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.5
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.6
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.6
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.6.1
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.6
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.6.2
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.7
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.8
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.8
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.8.1
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.8
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.8.2
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
-      from_type: section
-      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.9
-      to_type: section
-      edge_type: CONTAINS
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2
-      from_type: section
-      to: FEAT-01KQG2Q5MDC6E
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2
-      from_type: section
-      to: FEAT-01KQG2Q5Q1HX9
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2
-      from_type: section
-      to: FEAT-01KQG2Q5RS9G9
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2
-      from_type: section
-      to: FEAT-01KQG2Q5V4S6W
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3
-      from_type: section
-      to: FEAT-01KQG2Q5MDC6E
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3
-      from_type: section
-      to: FEAT-01KQG2Q5Q1HX9
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.6.1
-      from_type: section
-      to: FEAT-01KQG2Q5RS9G9
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.6.1
-      from_type: section
-      to: FEAT-01KQG2Q5V4S6W
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.9
-      from_type: section
-      to: FEAT-01KQG2Q5MDC6E
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.9
-      from_type: section
-      to: FEAT-01KQG2Q5Q1HX9
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.9
-      from_type: section
-      to: FEAT-01KQG2Q5RS9G9
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.9
-      from_type: section
-      to: FEAT-01KQG2Q5V4S6W
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2.2
-      from_type: section
-      to: TASK-01KQG2WSTPF5K
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2.2
-      from_type: section
-      to: TASK-01KQG2WSY70G5
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2.2
-      from_type: section
-      to: TASK-01KQG2WT0N1TR
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2.2
-      from_type: section
-      to: TASK-01KQG2WT3GC31
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2.2
-      from_type: section
-      to: TASK-01KQG2WT61X74
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2.2
-      from_type: section
-      to: TASK-01KQG2WT8EVFH
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2.2
-      from_type: section
-      to: TASK-01KQG2WTB2NFH
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2.2
-      from_type: section
-      to: TASK-01KQG2WTDZHQJ
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
-      from_type: section
-      to: B40-fix-tool-correctness
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.1
-      from_type: section
-      to: B40-fix-tool-correctness
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.1
-      from_type: section
-      to: P40-retro-batch-april-2026
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2.1
-      from_type: section
-      to: B40-fix-tool-correctness
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2.1
-      from_type: section
-      to: P40-retro-batch-april-2026
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3
-      from_type: section
-      to: B40-all
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3
-      from_type: section
-      to: B40-fix-tool-correctness
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.9
-      from_type: section
-      to: B40-fix-tool-correctness
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.9
-      from_type: section
-      to: P40-retro-batch-april-2026
-      to_type: entity_ref
-      edge_type: REFERENCES
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.5
-      from_type: section
-      to: .agents/skills/kanbanzai-agents/SKILL.md
-      to_type: document
-      edge_type: LINKS_TO
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.5
-      from_type: section
-      to: kanbanzai-documents/SKILL.md
-      to_type: document
-      edge_type: LINKS_TO
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.5
-      from_type: section
-      to: kanbanzai-getting-started/SKILL.md
-      to_type: document
-      edge_type: LINKS_TO
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.5
-      from_type: section
-      to: kanbanzai-plan-review/SKILL.md
-      to_type: document
-      edge_type: LINKS_TO
-    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.5
-      from_type: section
-      to: kanbanzai-workflow/SKILL.md
-      to_type: document
-      edge_type: LINKS_TO
     - from: B42-worktree-cleanup-automation/report-batch-review-b42-worktree-cleanup-automation-2026-05-01
       from_type: document
       to: B42-worktree-cleanup-automation/report-batch-review-b42-worktree-cleanup-automation-2026-05-01#1
@@ -93698,5 +93383,640 @@ edges:
     - from: P40-retro-batch-april-2026/report-batch-review-p40-retro-batch-april-2026#1.5.2
       from_type: section
       to: SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01
+      from_type: document
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
+      from_type: section
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
+      from_type: section
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
+      from_type: section
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3
+      from_type: section
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3
+      from_type: section
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
+      from_type: section
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
+      from_type: section
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
+      from_type: section
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
+      from_type: section
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4
+      from_type: section
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
+      from_type: section
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
+      from_type: section
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
+      from_type: section
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
+      from_type: section
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.8
+      from_type: section
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
+      from_type: section
+      to: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3
+      from_type: section
+      to: FEAT-01KQG2Q5MDC6E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3
+      from_type: section
+      to: FEAT-01KQG2Q5Q1HX9
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3
+      from_type: section
+      to: FEAT-01KQG2Q5RS9G9
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3
+      from_type: section
+      to: FEAT-01KQG2Q5V4S6W
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.1
+      from_type: section
+      to: FEAT-01KQG2Q5MDC6E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.1
+      from_type: section
+      to: FEAT-01KQG2Q5Q1HX9
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.6
+      from_type: section
+      to: FEAT-01KQG2Q5MDC6E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.6
+      from_type: section
+      to: FEAT-01KQG2Q5Q1HX9
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.6
+      from_type: section
+      to: FEAT-01KQG2Q5RS9G9
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.6
+      from_type: section
+      to: FEAT-01KQG2Q5V4S6W
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.8.1
+      from_type: section
+      to: FEAT-01KQG2Q5MDC6E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.8.1
+      from_type: section
+      to: FEAT-01KQG2Q5Q1HX9
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.9
+      from_type: section
+      to: FEAT-01KQG2Q5
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.9
+      from_type: section
+      to: FEAT-01KQG2Q5MDC6E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3.2
+      from_type: section
+      to: TASK-01KQG2WSTPF5K
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3.2
+      from_type: section
+      to: TASK-01KQG2WSY70G5
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3.2
+      from_type: section
+      to: TASK-01KQG2WT0N1TR
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3.2
+      from_type: section
+      to: TASK-01KQG2WT3GC31
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3.2
+      from_type: section
+      to: TASK-01KQG2WT61X74
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3.2
+      from_type: section
+      to: TASK-01KQG2WT8EVFH
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3.2
+      from_type: section
+      to: TASK-01KQG2WTB2NFH
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3.2
+      from_type: section
+      to: TASK-01KQG2WTDZHQJ
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1
+      from_type: section
+      to: B40-fix-tool-correctness
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.1
+      from_type: section
+      to: B40-fix-tool-correctness
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.1
+      from_type: section
+      to: P40-retro-batch-april-2026
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3.1
+      from_type: section
+      to: B40-fix-tool-correctness
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.3.1
+      from_type: section
+      to: P40-retro-batch-april-2026
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01#1.4.4
+      from_type: section
+      to: B40-fix-tool-correctness
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01
+      from_type: document
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1
+      from_type: section
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1
+      from_type: section
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1
+      from_type: section
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1
+      from_type: section
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1
+      from_type: section
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.5
+      from_type: section
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.5
+      from_type: section
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.5
+      from_type: section
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.5
+      from_type: section
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1
+      from_type: section
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.6
+      from_type: section
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.6
+      from_type: section
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.6
+      from_type: section
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1
+      from_type: section
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1
+      from_type: section
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1
+      from_type: section
+      to: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.4
+      from_type: section
+      to: FEAT-01KQG1XWE9ABP
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.6.1
+      from_type: section
+      to: FEAT-01KQG1XWAZE8V
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.6.2
+      from_type: section
+      to: FEAT-01KQG1XWAZE8V
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.6.2
+      from_type: section
+      to: FEAT-01KQG1XWE9ABP
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.8
+      from_type: section
+      to: FEAT-01KQG1XWE9ABP
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.9
+      from_type: section
+      to: FEAT-01KQG1XWAZE8V
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.9
+      from_type: section
+      to: FEAT-01KQG1XWE9ABP
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1
+      from_type: section
+      to: B39-fix-worktree-dev-experience
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.1
+      from_type: section
+      to: B39-fix-worktree-dev-experience
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.2
+      from_type: section
+      to: B39-fix-worktree-dev-experience
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.2
+      from_type: section
+      to: P40-retro-batch-april-2026
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.5.2
+      from_type: section
+      to: B39-fix-worktree-dev-experience
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.6.1
+      from_type: section
+      to: B39-specific
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.7
+      from_type: section
+      to: B39-fix-worktree-dev-experience
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.9
+      from_type: section
+      to: B39-fix-worktree-dev-experience
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.9
+      from_type: section
+      to: B39-related
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.8
+      from_type: section
+      to: implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B39-fix-worktree-dev-experience/report-batch-review-b39-fix-worktree-dev-experience-2026-05-01#1.9
+      from_type: section
+      to: .kbz/skills/implement-task/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026
+      from_type: document
+      to: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1
+      from_type: section
+      to: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1
+      from_type: section
+      to: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1
+      from_type: section
+      to: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1
+      from_type: section
+      to: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1
+      from_type: section
+      to: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1
+      from_type: section
+      to: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1
+      from_type: section
+      to: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1
+      from_type: section
+      to: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1
+      from_type: section
+      to: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1
+      from_type: section
+      to: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1
+      from_type: section
+      to: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.11
+      from_type: section
+      to: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.11.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.11
+      from_type: section
+      to: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.11.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.11
+      from_type: section
+      to: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.11.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1
+      from_type: section
+      to: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.4
+      from_type: section
+      to: FEAT-01KQG1XWAZE8V
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.4
+      from_type: section
+      to: FEAT-01KQG1XWE9ABP
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.4
+      from_type: section
+      to: FEAT-01KQG2Q5MDC6E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.4
+      from_type: section
+      to: FEAT-01KQG2Q5Q1HX9
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.4
+      from_type: section
+      to: FEAT-01KQG2Q5RS9G9
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.4
+      from_type: section
+      to: FEAT-01KQG2Q5V4S6W
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.4
+      from_type: section
+      to: FEAT-01KQG3AWTYSEQ
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.4
+      from_type: section
+      to: FEAT-01KQG3AWX916X
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.4
+      from_type: section
+      to: FEAT-01KQG3AWZ3HEZ
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.4
+      from_type: section
+      to: FEAT-01KQG3AX1AD0K
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.4
+      from_type: section
+      to: FEAT-01KQG3TZR2JDP
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.4
+      from_type: section
+      to: FEAT-01KQG3TZZD0ZG
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.4
+      from_type: section
+      to: FEAT-01KQG3V03PAM4
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.4
+      from_type: section
+      to: FEAT-01KQG3V06KNZG
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.5
+      from_type: section
+      to: FEAT-01KQG1XWE9ABP
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.5
+      from_type: section
+      to: FEAT-01KQG2Q5MDC6E
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.5
+      from_type: section
+      to: FEAT-01KQG2Q5Q1HX9
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.5
+      from_type: section
+      to: FEAT-01KQG3AWX916X
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.5
+      from_type: section
+      to: FEAT-01KQG3AX1AD0K
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.5
+      from_type: section
+      to: FEAT-01KQG3TZZD0ZG
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.5
+      from_type: section
+      to: FEAT-01KQG3V06KNZG
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1
+      from_type: section
+      to: P40-retro-batch-april-2026
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.1
+      from_type: section
+      to: P40-retro-batch-april-2026
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.9
+      from_type: section
+      to: P40-related
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.12
+      from_type: section
+      to: B42-worktree-cleanup-automation-2026-05-01
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.12
+      from_type: section
+      to: P40-related
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.12
+      from_type: section
+      to: P40-retro-batch-april-2026
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.12
+      from_type: section
+      to: work/reviews/batch-review-b39-fix-worktree-dev-experience-2026-05-01.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.12
+      from_type: section
+      to: work/reviews/batch-review-b40-fix-tool-correctness-2026-05-01.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.12
+      from_type: section
+      to: work/reviews/batch-review-b41-fix-doc-ownership-lifecycle-2026-05-01.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P40-retro-batch-april-2026/report-plan-review-p40-retro-batch-april-2026#1.12
+      from_type: section
+      to: work/reviews/batch-review-B42-worktree-cleanup-automation-2026-05-01.md
       to_type: document
       edge_type: LINKS_TO
