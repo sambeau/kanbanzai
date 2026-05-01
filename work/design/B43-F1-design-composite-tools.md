@@ -3,8 +3,42 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-01                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | sambeau                        |
+
+## Overview
+
+This design proposes **composite MCP tool actions** — new actions on existing
+Kanbanzai tools that collapse multi-step workflow sequences into single
+server-side operations. These composites are deterministic, synchronous, and
+stateless: they orchestrate existing service logic without introducing AI
+calls, background execution, or new state machines.
+
+The design covers five composite actions: `doc(action: "publish")` for
+document lifecycle completion, `entity(action: "bootstrap")` for feature
+lifecycle setup, `entity(action: "close-out")` for feature completion
+cascading, `develop(action: "dispatch")` for orchestrator dispatch cycles,
+and `batch(action: "snapshot")` for prescriptive status rollups.
+
+## Goals and Non-Goals
+
+### Goals
+
+- Reduce the number of sequential MCP tool calls needed for common workflow
+  operations by collapsing multi-step sequences into single calls.
+- Replace prose gate-failure recovery instructions with structured,
+  machine-readable next-action objects.
+- Reuse existing service, gate, and lifecycle logic without modification —
+  composites are wrappers, not new abstractions.
+- Preserve human gates as hard stops that no composite can auto-pass.
+
+### Non-Goals
+
+- AI-driven orchestration inside the MCP server. No LLM calls.
+- Background workflow execution or event-driven automation.
+- Replacement of individual tool calls — composites are additive, not
+  substitutive.
+- Cross-batch or cross-project workflow coordination.
 
 ## Problem and Motivation
 
@@ -463,3 +497,50 @@ calls the MCP server multiple times).
   dispatched task. However, the dispatch action eliminates the separate
   `next` → `conflict` → N × `handoff` sequence, reducing the orchestrator's
   per-cycle tool calls from 3+N to 1+N.
+
+## Dependencies
+
+### Internal dependencies (existing code)
+
+- **`service/advance.go`** — `AdvanceFeatureStatus`, `AdvanceConfig`,
+  `featureForwardPath`, `advanceStopStates`. The `bootstrap` and `close-out`
+  actions wrap this function. No modifications required.
+- **`service/entity_children.go`** — `MaybeAutoAdvanceFeature`,
+  `MaybeAutoAdvancePlan`. Used by `close-out` for cascade logic.
+- **`gate/` package** — `GateRouter`, `RegistryCache`, document and task
+  evaluators. Gate evaluation in composites uses the same router as
+  individual transitions.
+- **`internal/mcp/sideeffect.go`** — `SideEffect` types and
+  `WithSideEffects` middleware. All composites push the same side-effect
+  types.
+- **`internal/mcp/doc_tool.go`** — `docRegisterOne`, `docApproveOne`.
+  `publish` calls these directly.
+- **`internal/mcp/handoff_tool.go`** — handoff prompt generation pipeline.
+  `dispatch` calls this for each task.
+
+### External dependencies
+
+- **`mcp-go` library** — used for tool registration and handler signatures.
+  No version change required.
+- **No new dependencies.** All composite logic uses existing `service`,
+  `gate`, `binding`, and `validate` packages.
+
+### Upstream design dependencies
+
+- **Skills System Redesign** (`work/design/skills-system-redesign-v2.md`)
+  Design Principles DP-9 (constraint levels), DP-5 (composition), and DP-10
+  (only add what the model doesn't know) directly constrain this design.
+- **Stage bindings** (`.kbz/stage-bindings.yaml`) — composite actions
+  respect human gates and document prerequisites defined in the bindings.
+  Changes to stage bindings propagate automatically via the `GateRouter`.
+
+### Downstream consumers
+
+- **Chat agents** using the `doc`, `entity`, `develop`, and `batch` tools.
+  No migration required — existing individual actions remain available.
+- **Orchestrator skills** (`orchestrate-development`, `orchestrate-review`)
+  should be updated to prefer `develop(action: "dispatch")` over manual
+  dispatch loops.
+- **Workflow skills** (`kanbanzai-workflow`, `kanbanzai-documents`) should
+  reference composite actions as the recommended path for multi-step
+  operations.
