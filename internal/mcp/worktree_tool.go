@@ -111,6 +111,17 @@ func worktreeCreateAction(store *worktree.Store, entitySvc *service.EntityServic
 			return inlineErr("invalid_entity_type", "entity ID must start with FEAT- or BUG-")
 		}
 
+		// Reject display-format entity IDs (embedded hyphen after the type prefix).
+		// Display IDs like FEAT-01KQ7-JDT511BZ use a second hyphen for readability.
+		// Canonical form: FEAT-01KQ7JDT511BZ (single hyphen separating type from ULID).
+		// Per REQ-008, REQ-009, REQ-NF-003: O(1) string check.
+		if isDisplayEntityID(entityID) {
+			canonical := displayToCanonical(entityID)
+			return inlineErr("invalid_entity_id",
+				fmt.Sprintf("entity_id %q appears to be a display ID. Use the canonical form %s instead.",
+					entityID, canonical))
+		}
+
 		entity, err := entitySvc.Get(entityType, entityID, "")
 		if err != nil {
 			if errors.Is(err, service.ErrNotFound) {
@@ -522,6 +533,30 @@ func entityTypeFromID(id string) string {
 	default:
 		return ""
 	}
+}
+
+// isDisplayEntityID reports whether id is a display-format entity ID (embedded
+// hyphen after the type prefix). Display IDs like FEAT-01KQ7-JDT511BZ have two
+// hyphens; canonical IDs like FEAT-01KQ7JDT511BZ have exactly one.
+// O(1) string check per REQ-NF-003.
+func isDisplayEntityID(id string) bool {
+	return strings.Count(id, "-") >= 2
+}
+
+// displayToCanonical converts a display-format entity ID to canonical form by
+// removing the second hyphen. For example, FEAT-01KQ7-JDT511BZ → FEAT-01KQ7JDT511BZ.
+func displayToCanonical(id string) string {
+	// Find the second hyphen and remove it.
+	first := strings.Index(id, "-")
+	if first < 0 {
+		return id
+	}
+	second := strings.Index(id[first+1:], "-")
+	if second < 0 {
+		return id
+	}
+	second += first + 1
+	return id[:second] + id[second+1:]
 }
 
 // worktreeRecordToMap converts a worktree record to a map for JSON serialization.

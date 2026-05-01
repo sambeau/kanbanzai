@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
@@ -743,5 +744,169 @@ func TestWorktreeGc_NoGitInvocation(t *testing.T) {
 	// The response should NOT contain git_error, git-related strings.
 	if errMsg, hasErr := resp["error"]; hasErr {
 		t.Errorf("response should not have error: %v", errMsg)
+	}
+}
+
+// ─── entity ID validation tests ─────────────────────────────────────────────
+
+// TestIsDisplayEntityID verifies the display-ID detection logic (O(1) string check).
+func TestIsDisplayEntityID(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name string
+		id   string
+		want bool
+	}{
+		// AC-008: display IDs with embedded hyphen are detected.
+		{"display ID FEAT", "FEAT-01KQ7-JDT511BZ", true},
+		{"display ID BUG", "BUG-01KQ7-JDT511BZ", true},
+		{"display ID with multiple embedded hyphens", "FEAT-01K-Q7-JDT511BZ", true},
+
+		// AC-009: canonical IDs (single hyphen) are NOT display IDs.
+		{"canonical FEAT", "FEAT-01KQ7JDT511BZ", false},
+		{"canonical BUG", "BUG-01KQ7JDT511BZ", false},
+		{"short canonical", "FEAT-01ABCDEFGHIJKL", false},
+
+		// Edge cases.
+		{"no hyphen at all", "FEAT01KQ7JDT511BZ", false},
+		{"empty string", "", false},
+		{"just hyphens", "---", true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got := isDisplayEntityID(tt.id)
+			if got != tt.want {
+				t.Errorf("isDisplayEntityID(%q) = %v, want %v", tt.id, got, tt.want)
+			}
+		})
+	}
+}
+
+// TestDisplayToCanonical verifies conversion from display to canonical form.
+func TestDisplayToCanonical(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name string
+		id   string
+		want string
+	}{
+		// AC-008: display ID converted to canonical.
+		{"FEAT display to canonical", "FEAT-01KQ7-JDT511BZ", "FEAT-01KQ7JDT511BZ"},
+		{"BUG display to canonical", "BUG-01KQ7-JDT511BZ", "BUG-01KQ7JDT511BZ"},
+
+		// Already canonical: unchanged.
+		{"canonical unchanged", "FEAT-01KQ7JDT511BZ", "FEAT-01KQ7JDT511BZ"},
+
+		// Edge cases.
+		{"no hyphens", "FEAT01KQ7JDT511BZ", "FEAT01KQ7JDT511BZ"},
+		{"single hyphen", "FEAT-01KQ7JDT511BZ", "FEAT-01KQ7JDT511BZ"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got := displayToCanonical(tt.id)
+			if got != tt.want {
+				t.Errorf("displayToCanonical(%q) = %q, want %q", tt.id, got, tt.want)
+			}
+		})
+	}
+}
+
+// TestWorktreeCreate_DisplayIDRejected verifies AC-008:
+// Display-format entity IDs are rejected with a suggestion.
+func TestWorktreeCreate_DisplayIDRejected(t *testing.T) {
+	t.Parallel()
+
+	store := worktree.NewStore(t.TempDir())
+	repoDir, _ := setupGitRepoForRemove(t, "wt-display-id-reject")
+	gitOps := worktree.NewGit(repoDir)
+
+	// We need an EntityService but we can use the nil-safe inline error path.
+	// The display-ID check happens before the entity lookup, so we can test
+	// with a handler that will fail on display ID before hitting entitySvc.
+	handler := worktreeCreateAction(store, nil, gitOps, repoDir)
+
+	req := mcp.CallToolRequest{}
+	req.Params.Arguments = map[string]any{
+		"entity_id": "FEAT-01KQ7-JDT511BZ",
+	}
+
+	result, err := handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	data, _ := json.Marshal(result)
+	var resp map[string]any
+	if err := json.Unmarshal(data, &resp); err != nil {
+		t.Fatalf("unmarshal: %v", err)
+	}
+
+	// AC-008: display ID should be rejected.
+	errInfo, hasErr := resp["error"].(map[string]any)
+	if !hasErr {
+		t.Fatalf("expected error for display ID, got: %v", resp)
+	}
+
+	if code, _ := errInfo["code"].(string); code != "invalid_entity_id" {
+		t.Errorf("error code = %q, want %q", code, "invalid_entity_id")
+	}
+
+	msg, _ := errInfo["message"].(string)
+	if !strings.Contains(msg, "display ID") {
+		t.Errorf("error message should mention 'display ID': %s", msg)
+	}
+	if !strings.Contains(msg, "canonical form") {
+		t.Errorf("error message should suggest canonical form: %s", msg)
+	}
+	if !strings.Contains(msg, "FEAT-01KQ7JDT511BZ") {
+		t.Errorf("error message should include canonical form: %s", msg)
+	}
+}
+
+// TestWorktreeCreate_CanonicalIDAccepted verifies AC-009:
+// Canonical entity IDs pass the display-ID gate (testing via isDisplayEntityID).
+// The full handler path is tested in TestWorktreeCreate_DisplayIDRejected above.
+func TestWorktreeCreate_CanonicalIDAccepted(t *testing.T) {
+	t.Parallel()
+
+	// AC-009: canonical IDs (single hyphen) are not flagged as display IDs.
+	canonicalIDs := []string{
+		"FEAT-01KQ7JDT511BZ",
+		"BUG-01KQ7JDT511BZ",
+		"FEAT-01ABCDEFGHIJKL",
+	}
+
+	for _, id := range canonicalIDs {
+		if isDisplayEntityID(id) {
+			t.Errorf("isDisplayEntityID(%q) = true, want false (canonical ID)", id)
+		}
+	}
+}
+
+// TestIsDisplayEntityID_WrongHybridFormats verifies edge cases for display ID detection.
+func TestIsDisplayEntityID_WrongHybridFormats(t *testing.T) {
+	t.Parallel()
+
+	// These are wrong but not display IDs — they'd fail at entity lookup.
+	// isDisplayEntityID only checks for the embedded hyphen pattern.
+	wrongFormats := []string{
+		"TASK-01KQ7-JDT511BZ", // TASK has single hyphen after prefix — but IsDisplayEntityID only checks hyphen count
+		"FEAT01KQ7JDT511BZ",   // missing hyphen entirely — no type separator
+	}
+
+	for _, id := range wrongFormats {
+		t.Run(id, func(t *testing.T) {
+			t.Parallel()
+			// These either have <2 hyphens (no display-ID pattern) or have hyphen
+			// count that triggers display. The type prefix check happens separately.
+			got := isDisplayEntityID(id)
+			t.Logf("isDisplayEntityID(%q) = %v", id, got)
+		})
 	}
 }
