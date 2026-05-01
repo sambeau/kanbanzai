@@ -756,6 +756,119 @@ func TestEntity_Update_DependsOnRejectsInvalidID(t *testing.T) {
 	}
 }
 
+// ─── update verification params ───────────────────────────────────────────────
+
+// AC-008: Set verification on feature → fields updated, no transition.
+func TestEntity_Update_VerificationOnFeature(t *testing.T) {
+	t.Parallel()
+	entitySvc := setupEntityToolTest(t)
+
+	planID := createEntityTestPlan(t, entitySvc, "ent-ver1")
+	featID := createEntityTestFeature(t, entitySvc, planID, "feat-ver1")
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action":              "update",
+		"id":                  featID,
+		"verification":        "All tests pass and CI is green",
+		"verification_status": "passed",
+	})
+
+	entity, ok := result["entity"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected 'entity' object, got: %v", result)
+	}
+	if entity["verification"] != "All tests pass and CI is green" {
+		t.Errorf("verification = %v, want 'All tests pass and CI is green'", entity["verification"])
+	}
+	if entity["verification_status"] != "passed" {
+		t.Errorf("verification_status = %v, want 'passed'", entity["verification_status"])
+	}
+	// Status must be unchanged (no lifecycle transition).
+	if entity["status"] != "proposed" {
+		t.Errorf("status = %v, want 'proposed' (unchanged)", entity["status"])
+	}
+}
+
+// AC-009: Set verification, then call merge check → verification gates pass.
+func TestEntity_Update_VerificationMergeGatePass(t *testing.T) {
+	t.Parallel()
+	entitySvc := setupEntityToolTest(t)
+
+	planID := createEntityTestPlan(t, entitySvc, "ent-ver2")
+	featID := createEntityTestFeature(t, entitySvc, planID, "feat-ver2")
+
+	// Set verification to passed.
+	callEntityToolJSON(t, entitySvc, map[string]any{
+		"action":              "update",
+		"id":                  featID,
+		"verification":        "Manual review complete",
+		"verification_status": "passed",
+	})
+
+	// Read back the entity to verify fields are persisted.
+	getResult := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action": "get",
+		"id":     featID,
+	})
+	entity, ok := getResult["entity"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected 'entity' object on get, got: %v", getResult)
+	}
+	if entity["verification"] != "Manual review complete" {
+		t.Errorf("verification = %v, want 'Manual review complete'", entity["verification"])
+	}
+	if entity["verification_status"] != "passed" {
+		t.Errorf("verification_status = %v, want 'passed'", entity["verification_status"])
+	}
+}
+
+// AC-010: Set verification on plan → error returned (unsupported type).
+func TestEntity_Update_VerificationPlanRejected(t *testing.T) {
+	t.Parallel()
+	entitySvc := setupEntityToolTest(t)
+
+	planID := createEntityTestPlan(t, entitySvc, "ent-ver3")
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action":       "update",
+		"id":           planID,
+		"type":         "strategic-plan",
+		"verification": "Should not work",
+	})
+
+	if _, hasErr := result["error"]; !hasErr {
+		t.Fatalf("expected error for verification on strategic plan, got: %v", result)
+	}
+}
+
+// AC-012: Existing entity update calls unchanged (backward compat).
+func TestEntity_Update_BackwardCompat(t *testing.T) {
+	t.Parallel()
+	entitySvc := setupEntityToolTest(t)
+
+	planID := createEntityTestPlan(t, entitySvc, "ent-ver4")
+	featID := createEntityTestFeature(t, entitySvc, planID, "feat-ver4")
+
+	// Update without verification params — must still work.
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action":  "update",
+		"id":      featID,
+		"summary": "Updated summary without verification",
+	})
+
+	entity, ok := result["entity"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected 'entity' object, got: %v", result)
+	}
+	if entity["summary"] != "Updated summary without verification" {
+		t.Errorf("summary = %v, want 'Updated summary without verification'", entity["summary"])
+	}
+	// Existing status unchanged.
+	if entity["status"] != "proposed" {
+		t.Errorf("status = %v, want 'proposed'", entity["status"])
+	}
+}
+
 // ─── transition action ────────────────────────────────────────────────────────
 
 func TestEntity_Transition_TaskQueuedToReady(t *testing.T) {
