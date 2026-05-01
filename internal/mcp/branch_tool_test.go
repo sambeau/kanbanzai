@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -230,16 +229,6 @@ func setupDriftBetweenMainAndBranch(t *testing.T, repoDir, branch string, n int)
 		createTestFile(t, repoDir, filename, fmt.Sprintf("content %d", i))
 		runGit(t, repoDir, "add", filename)
 		runGit(t, repoDir, "commit", "-m", fmt.Sprintf("drift commit %d", i))
-	}
-}
-
-func runGit(t *testing.T, repoDir string, args ...string) {
-	t.Helper()
-	cmd := exec.Command("git", args...)
-	cmd.Dir = repoDir
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		t.Fatalf("git %v failed: %v\n%s", args, err, out)
 	}
 }
 

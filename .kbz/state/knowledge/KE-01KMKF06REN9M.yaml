@@ -3,10 +3,10 @@ content: "Decomposition best practice: Features should decompose into 8-15 tasks
 created: "2026-03-25T21:39:23Z"
 created_by: sambeau
 id: KE-01KMKF06REN9M
-last_accessed_at: "2026-04-30T22:53:52Z"
+last_accessed_at: "2026-05-01T10:40:21Z"
 learned_from: P1-phase-4-orchestration
 miss_count: 0
-recent_use_count: 211
+recent_use_count: 212
 scope: project
 status: confirmed
 tags:
