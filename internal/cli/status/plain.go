@@ -78,14 +78,18 @@ func (r *PlainRenderer) RenderTask(w io.Writer, id, slug, status, parentFeature 
 }
 
 // RenderBug writes a plain key:value block for a bug.
-func (r *PlainRenderer) RenderBug(w io.Writer, id, slug, status, severity string, attention []render.AttentionItem) error {
+func (r *PlainRenderer) RenderBug(w io.Writer, id, slug, status, severity, parentFeature string, attention []render.AttentionItem) error {
+	pf := parentFeature
+	if pf == "" {
+		pf = "missing"
+	}
 	return writePairs(w, []pair{
 		{"scope", "bug"},
 		{"id", id},
 		{"slug", slug},
 		{"status", status},
 		{"severity", val(severity)},
-		{"parent_feature", "missing"},
+		{"parent_feature", pf},
 		{"attention", attentionFirst(attention)},
 	})
 }

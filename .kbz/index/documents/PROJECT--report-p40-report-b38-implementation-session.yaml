@@ -1,0 +1,211 @@
+document_id: PROJECT/report-p40-report-b38-implementation-session
+document_path: work/P40-retro-batch-april-2026/P40-report-b38-implementation-session.md
+content_hash: b3dcd52079dd0f5e625dee704ff6177a15f9b883a72a8ed999b6fe70221d0bb9
+indexed_at: 2026-04-30T19:27:19.987696Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Retrospective Report: B38 Implementation Session'
+      byte_offset: 0
+      byte_count: 7491
+      word_count: 1073
+      content_hash: b3dcd52079dd0f5e625dee704ff6177a15f9b883a72a8ed999b6fe70221d0bb9
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 172
+          byte_count: 497
+          word_count: 68
+          content_hash: 6021085de661ddfba33f53f1c943f0ae9bd4dfedabb5cd1269f22d1d0132b8f1
+        - path: "1.2"
+          level: 2
+          title: What Went Well
+          byte_offset: 669
+          byte_count: 1606
+          word_count: 219
+          content_hash: f15d54f72ba43e7dcaabb95f623315a481d4922190b9ad525e254836eba8f9b2
+          children:
+            - path: 1.2.1
+              level: 3
+              title: The orchestrator role and skill system worked
+              byte_offset: 688
+              byte_count: 435
+              word_count: 58
+              content_hash: 76bfa3f3f148aa117f073103186cef0fc629b59faa5529a7a1629e6f2e579c4a
+            - path: 1.2.2
+              level: 3
+              title: Feature 7 (kbz migrate) flowed smoothly
+              byte_offset: 1123
+              byte_count: 397
+              word_count: 56
+              content_hash: 271676dd4a86cdafac6d0e78405d249cacf79172ffa0366207c03efed58edbe0
+            - path: 1.2.3
+              level: 3
+              title: Feature 9 (Config Schema) was fast to implement
+              byte_offset: 1520
+              byte_count: 253
+              word_count: 38
+              content_hash: 6d6bb3cce23c9d2525bc523d027344c91d5e1a4dc35a50246718ba17f0e3e4be
+            - path: 1.2.4
+              level: 3
+              title: Automated dependency unblocking worked
+              byte_offset: 1773
+              byte_count: 239
+              word_count: 32
+              content_hash: ba190ab4453367713b7b87b54fdaeaf4840e33e771c6cf987f9a29ed6cabf84b
+            - path: 1.2.5
+              level: 3
+              title: The entity/status tools stayed reliable
+              byte_offset: 2012
+              byte_count: 263
+              word_count: 31
+              content_hash: 19e5f037b32d10ede806fe0c7b94a04d2b5b1dc2328cc238e0dd05496f682783
+        - path: "1.3"
+          level: 2
+          title: What Didn't Go Well
+          byte_offset: 2275
+          byte_count: 2172
+          word_count: 326
+          content_hash: 8d82723d48c4e3717457897ed16816926c3aa539708df56967964e8f013195eb
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Worktree file editing is painful
+              byte_offset: 2299
+              byte_count: 503
+              word_count: 76
+              content_hash: c446bd1964a0647f45d293f0686e51bbbf0629c85da503ddd37107481c82d870
+            - path: 1.3.2
+              level: 3
+              title: Decompose can't parse `AC-001 (REQ-001):` format
+              byte_offset: 2802
+              byte_count: 417
+              word_count: 57
+              content_hash: df90f8f36fc91a2d4c1c7e7467bc2ed72ae5b521f9a4c87e290b83a08651a9c0
+            - path: 1.3.3
+              level: 3
+              title: Shell heredoc fails consistently in the terminal tool
+              byte_offset: 3219
+              byte_count: 327
+              word_count: 48
+              content_hash: 0aa9f70c9e937a05292ce21b1ce22bfe5ee4db1a9aeba1658aa9d47a7e3bbbd0
+            - path: 1.3.4
+              level: 3
+              title: Context budget was tight
+              byte_offset: 3546
+              byte_count: 406
+              word_count: 59
+              content_hash: be60a855dc60a5bd530473677861c3863f0a665cc60e87702ef8d8ac41772f69
+            - path: 1.3.5
+              level: 3
+              title: Feature 8 was stuck in limbo
+              byte_offset: 3952
+              byte_count: 495
+              word_count: 81
+              content_hash: dfae2bc29151b182a6b63e2870429fe62202d59ea2496f9650fc4e1d7c0cc82c
+        - path: "1.4"
+          level: 2
+          title: What Should Improve
+          byte_offset: 4447
+          byte_count: 1648
+          word_count: 232
+          content_hash: e01dca308ee50a2fdd0bb88613045295cca1b04b36ca42f8d1b02134315180a6
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Make worktree file writing first-class
+              byte_offset: 4471
+              byte_count: 353
+              word_count: 53
+              content_hash: 8e47a9a23737bbf406bdd4e09ba0ee303050e740df3078c7129c2394d0b270e7
+            - path: 1.4.2
+              level: 3
+              title: Expand decompose's AC format recognition
+              byte_offset: 4824
+              byte_count: 264
+              word_count: 39
+              content_hash: 987f5c078f97ae91d187e1f9b1666e17e211469727e9336a6b83d59bac65fc22
+            - path: 1.4.3
+              level: 3
+              title: Increase context budget for orchestrator role
+              byte_offset: 5088
+              byte_count: 332
+              word_count: 42
+              content_hash: 42f7ad9645406aae8a28197d650582832c79996053d686897432b88890ca479c
+            - path: 1.4.4
+              level: 3
+              title: Auto-close features with no implementation work
+              byte_offset: 5420
+              byte_count: 388
+              word_count: 51
+              content_hash: a5693278d7ea5b3b57803536fc0449234bf1ade19ece636e72f9d6ff8c7e2a26
+            - path: 1.4.5
+              level: 3
+              title: Improve the worktree-edit_file gap
+              byte_offset: 5808
+              byte_count: 287
+              word_count: 43
+              content_hash: fa2f90f5da8333359ffaf8938167ff8bc980af922e79e9565f9cdd755408e16a
+        - path: "1.5"
+          level: 2
+          title: Observations on the Kanbanzai System Itself
+          byte_offset: 6095
+          byte_count: 1396
+          word_count: 205
+          content_hash: 737decc58b46ed7f9afeaf20c5e597628ccdc73807c068c05d35bc7c005fdaba
+          children:
+            - path: 1.5.1
+              level: 3
+              title: The plan/batch distinction is clean
+              byte_offset: 6143
+              byte_count: 359
+              word_count: 55
+              content_hash: f24e3b7521102cad5aef5f65b096f6df29406346f21d0c1315fb369cf3f8260b
+            - path: 1.5.2
+              level: 3
+              title: The stage gate system provides useful guardrails
+              byte_offset: 6502
+              byte_count: 285
+              word_count: 42
+              content_hash: 004cdd3acfddb29c89952c031b09c69308ba29ef4ab2679e6c28825fa1f7b424
+            - path: 1.5.3
+              level: 3
+              title: The knowledge system has signal-to-noise challenges
+              byte_offset: 6787
+              byte_count: 354
+              word_count: 47
+              content_hash: 2e157368cbc96b00ad7ef3fd495ef70c0faa361b0a7d84330f8a9c7bbb425efc
+            - path: 1.5.4
+              level: 3
+              title: Manual task creation is a viable escape hatch
+              byte_offset: 7141
+              byte_count: 350
+              word_count: 54
+              content_hash: 50b6e1ace48f8b4a57f37669be047760bd729e2f79813eb461482730037d8aac
+entity_refs:
+    - entity_id: FEAT-01KQ7
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 296
+    - entity_id: FEAT-01KQA
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 525
+    - entity_id: BUG-01KPVGMMP56GC
+      entity_type: bug
+      section_path: 1.3.2
+      byte_offset: 3165
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.4
+      role: narrative
+      confidence: high
+    - section_path: 1.4.3
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-04-30T19:27:20.557281Z
+classified: false

@@ -30,16 +30,17 @@ type featureResult struct {
 }
 
 type jsonFeature struct {
-	ID     string `json:"id"`
-	Slug   string `json:"slug"`
-	Status string `json:"status"`
-	PlanID any    `json:"plan_id"`
+	ID        string `json:"id"`
+	DisplayID string `json:"display_id"`
+	Slug      string `json:"slug"`
+	Status    string `json:"status"`
+	PlanID    any    `json:"plan_id"`
 }
 
 type jsonDocs struct {
 	Design  *documentSlot `json:"design"`
 	Spec    *documentSlot `json:"spec"`
-	DevPlan *documentSlot `json:"dev_plan"`
+	DevPlan *documentSlot `json:"dev-plan"`
 }
 
 type jsonTaskSummary struct {
@@ -50,10 +51,10 @@ type jsonTaskSummary struct {
 }
 
 type planResult struct {
-	Scope     string       `json:"scope"`
-	Plan      jsonPlanHdr  `json:"plan"`
-	Features  jsonFeatCnt  `json:"features"`
-	Attention []jsonAttn   `json:"attention"`
+	Scope     string      `json:"scope"`
+	Plan      jsonPlanHdr `json:"plan"`
+	Features  jsonFeatCnt `json:"features"`
+	Attention []jsonAttn  `json:"attention"`
 }
 
 type jsonPlanHdr struct {
@@ -69,8 +70,8 @@ type jsonFeatCnt struct {
 }
 
 type taskResult struct {
-	Scope     string    `json:"scope"`
-	Task      jsonTask  `json:"task"`
+	Scope     string     `json:"scope"`
+	Task      jsonTask   `json:"task"`
 	Attention []jsonAttn `json:"attention"`
 }
 
@@ -82,8 +83,8 @@ type jsonTask struct {
 }
 
 type bugResult struct {
-	Scope     string    `json:"scope"`
-	Bug       jsonBug   `json:"bug"`
+	Scope     string     `json:"scope"`
+	Bug       jsonBug    `json:"bug"`
 	Attention []jsonAttn `json:"attention"`
 }
 
@@ -96,13 +97,13 @@ type jsonBug struct {
 }
 
 type docResult struct {
-	Scope     string    `json:"scope"`
-	Document  jsonDoc   `json:"document"`
+	Scope     string     `json:"scope"`
+	Document  jsonDoc    `json:"document"`
 	Attention []jsonAttn `json:"attention"`
 }
 
 type jsonDoc struct {
-	ID         any  `json:"id"`
+	ID         any    `json:"id"`
 	Path       string `json:"path"`
 	Type       any    `json:"type"`
 	Status     any    `json:"status"`
@@ -140,7 +141,7 @@ type jsonAttn struct {
 func (r *JSONRenderer) RenderFeature(in *render.FeatureInput) ([]byte, error) {
 	byType := map[string]*documentSlot{}
 	for _, d := range in.Documents {
-		byType[d.Type] = &documentSlot{ID: d.Path, Path: d.Path, Status: d.Status}
+		byType[d.Type] = &documentSlot{ID: d.ID, Path: d.Path, Status: d.Status}
 	}
 
 	var planID any
@@ -151,10 +152,11 @@ func (r *JSONRenderer) RenderFeature(in *render.FeatureInput) ([]byte, error) {
 	fr := featureResult{
 		Scope: "feature",
 		Feature: jsonFeature{
-			ID:     in.ID,
-			Slug:   in.Slug,
-			Status: in.Status,
-			PlanID: planID,
+			ID:        in.ID,
+			DisplayID: in.DisplayID,
+			Slug:      in.Slug,
+			Status:    in.Status,
+			PlanID:    planID,
 		},
 		Documents: jsonDocs{
 			Design:  byType["design"],
@@ -222,7 +224,11 @@ func (r *JSONRenderer) RenderTask(id, slug, status, parentFeature string, attent
 
 // ─── RenderBug ────────────────────────────────────────────────────────────────
 
-func (r *JSONRenderer) RenderBug(id, slug, status, severity string, attention []render.AttentionItem) ([]byte, error) {
+func (r *JSONRenderer) RenderBug(id, slug, status, severity, parentFeature string, attention []render.AttentionItem) ([]byte, error) {
+	var pfid any
+	if parentFeature != "" {
+		pfid = parentFeature
+	}
 	br := bugResult{
 		Scope: "bug",
 		Bug: jsonBug{
@@ -230,7 +236,7 @@ func (r *JSONRenderer) RenderBug(id, slug, status, severity string, attention []
 			Slug:            slug,
 			Status:          status,
 			Severity:        severity,
-			ParentFeatureID: nil,
+			ParentFeatureID: pfid,
 		},
 		Attention: attnToJSON(attention),
 	}

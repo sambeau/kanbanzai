@@ -1,0 +1,76 @@
+document_id: FEAT-01KQG3TZZD0ZG/dev-plan-p40-f12-dev-plan-skip-drift-merged
+document_path: work/P40-retro-batch-april-2026/P40-F12-dev-plan-skip-drift-merged.md
+content_hash: 0523a714adf4845610650737b6f6a474ce3a0f2cde2f2bf954e755111440b7df
+indexed_at: 2026-04-30T21:15:37.044795Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Skip Drift Alerts for Merged Branches (B42-F2)'
+      byte_offset: 0
+      byte_count: 1508
+      word_count: 211
+      content_hash: 0523a714adf4845610650737b6f6a474ce3a0f2cde2f2bf954e755111440b7df
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 404
+          byte_count: 229
+          word_count: 33
+          content_hash: 7729790d56905ec6312e5d439655e3775ad353594de4aad9a78f66f457534da2
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 633
+          byte_count: 590
+          word_count: 85
+          content_hash: f5f484a76addef827358913c0409a040a6b41a4fb40e92422c6811e807b2475a
+          children:
+            - path: 1.2.1
+              level: 3
+              title: T1 — Add merged_at check to branch drift alert and tests
+              byte_offset: 652
+              byte_count: 571
+              word_count: 82
+              content_hash: 83049a3513886658497e25ad8bef4d920625603c6ce977b8bf5e417accc48683
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 1223
+          byte_count: 78
+          word_count: 13
+          content_hash: 595e222286fe17d00ef6914850b3c3e3df33542b2ac520578271b31c8be107fa
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 1301
+          byte_count: 71
+          word_count: 10
+          content_hash: 7e737f9dc9d6955a0dec47e69c041bdd1774c9ae47078ba8254ca56c85114fcc
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 1372
+          byte_count: 136
+          word_count: 29
+          content_hash: 0add80450fdb5efbae04968ef433cf504363c5b1b65ec215614f73b7f0e65c24
+entity_refs:
+    - entity_id: FEAT-01KQG3TZZD0ZG
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 287
+    - entity_id: B42-worktree-cleanup-automation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 329
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 2
+last_accessed_at: 2026-04-30T22:47:22.840039Z
+section_access:
+    "1":
+        access_count: 1
+        last_accessed_at: 2026-04-30T22:47:22.840039Z
+classified: false

@@ -152,7 +152,7 @@ func TestToolSubsets(t *testing.T) {
 		},
 		{
 			stage:        "developing",
-			wantPrimary:  []string{"entity", "handoff", "next", "finish", "knowledge", "status", "branch", "worktree"},
+			wantPrimary:  []string{"entity", "handoff", "next", "finish", "knowledge", "status", "branch", "worktree", "write_file"},
 			wantExcluded: []string{"decompose", "doc_intel"},
 		},
 		{

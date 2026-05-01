@@ -3,7 +3,7 @@
 | Field   | Value                                                    |
 |---------|----------------------------------------------------------|
 | Date    | 2026-04-30                                               |
-| Status | approved |
+| Status  | approved (amended: 2026-04-30)                           |
 | Author  | architect                                                |
 | Feature | FEAT-01KQ2VHKJB5V8                                       |
 | Spec    | work/spec/B36-F4-spec-status-machine-output.md           |
@@ -17,6 +17,12 @@ This plan implements the machine-readable output formats (`--format plain` and `
 for the `kbz status` command as specified in
 `work/spec/B36-F4-spec-status-machine-output.md` (FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output).
 
+> **Amended 2026-04-30:** Added Tasks 5–8 to address blocking findings from the B36 batch
+> conformance review (see `work/reviews/batch-review-b36-kbz-cli-and-status.md`). These fix
+> four JSON schema and data-integrity violations: incorrect `dev-plan` key (Task 5), missing
+> `display_id` field (Task 6), document slot ID populated with file path instead of record ID
+> (Task 7), and bug `parent_feature_id` always null/missing (Task 8).
+
 ### Goals
 
 - Deliver `--format plain` key:value output for all six scope types per FR-3 through FR-7
@@ -24,6 +30,7 @@ for the `kbz status` command as specified in
   project shape (D-8) per FR-9–FR-10
 - Guarantee schema stability with an automated CI contract test (NFR-1.5)
 - Integrate into `kbz status` with full AC coverage and perf verification (NFR-2.1)
+- Fix four JSON schema/data-integrity violations identified in batch conformance review
 
 ### Non-Goals
 
@@ -108,7 +115,7 @@ for the `kbz status` command as specified in
   plain` and `--format json` for each scope type, and verifies that all expected keys/fields
   are present. This test must run in CI and fail on key/field removal.
 - **Deliverable:** `internal/cli/status/contract_test.go`
-- **Depends on:** Task 1, Task 2 (needs both renderers to exist)
+- **Depends on:** Task 1, Task 2, Task 5, Task 6, Task 7, Task 8 (needs all renderers and schema fixes to exist)
 - **Effort:** Small
 - **Spec requirements:** NFR-1.1, NFR-1.2, NFR-1.5, AC-11
 
@@ -136,9 +143,81 @@ for the `kbz status` command as specified in
 - **Deliverable:** Modified `cmd/kanbanzai/workflow_cmd.go` (format flag routing),
   `internal/cli/status/status.go` (dispatcher that calls service-layer synthesis + renderer),
   and `cmd/kanbanzai/status_format_test.go` (integration tests).
-- **Depends on:** Task 1, Task 2, B36-F2 (argument resolution)
+- **Depends on:** Task 1, Task 2, Task 5, Task 6, Task 7, Task 8, B36-F2 (argument resolution)
 - **Effort:** Large
 - **Spec requirements:** FR-1.1, FR-11, NFR-2.1, NFR-3.1, NFR-3.2, AC-1 through AC-11
+
+### Task 5: Fix dev-plan JSON Key
+
+- **Description:** The `jsonDocs` struct in `internal/cli/status/json.go` uses Go field
+  `DevPlan` with JSON tag `json:"dev_plan"` (underscore). The spec schema and AC-5
+  require `"dev-plan"` (hyphen). Change the tag to `json:"dev-plan"`. Also update
+  any test expectations or contract test maps (Task 3) that reference the old key.
+  This is a one-line fix with a cascading schema impact — the contract test must
+  be updated simultaneously to prevent CI breakage.
+- **Deliverable:** Modified `internal/cli/status/json.go` (jsonDocs struct, ~L43).
+- **Depends on:** Task 2 (needs the JSON renderer struct).
+- **Effort:** Small.
+- **Spec requirement:** FR-9.1, AC-5, NFR-1.1.
+
+### Task 6: Add display_id to Feature JSON
+
+- **Description:** The `jsonFeature` struct in `internal/cli/status/json.go` has fields
+  `id`, `slug`, `status`, `plan_id` but no `display_id`. Spec A-2 and FR-9.1 require
+  `display_id` to be present and non-null (e.g. `"F-042"`). Add `DisplayID string` field
+  with tag `json:"display_id"` to `jsonFeature`; populate it from `in.DisplayID` in
+  `JSONRenderer.RenderFeature`. FeatureInput in `render/types.go` already carries
+  DisplayID — use it.
+- **Deliverable:** Modified `internal/cli/status/json.go` (jsonFeature struct, ~L33;
+  RenderFeature population).
+- **Depends on:** Task 2 (needs the JSON renderer and FeatureInput type).
+- **Effort:** Small.
+- **Spec requirement:** FR-9.1, A-2.
+
+### Task 7: Fix Document Slot ID (Add ID to DocInput)
+
+- **Description:** In `RenderFeature` (json.go ~L135), `byType[d.Type]` sets
+  `documentSlot.ID` to `d.Path` — the file path instead of the document record ID.
+  Root cause: `DocInput` in `internal/cli/render/types.go` has no `ID` field, so
+  the document record ID is lost before reaching the renderer. Fix:
+  (1) Add `ID string` field to `DocInput` in `render/types.go`.
+  (2) Populate it from the document record ID when building FeatureInput in
+  `cmd/kbz/workflow_cmd.go` (`runStatusFeatureFormatted` and
+  `runStatusEntityHuman` builders).
+  (3) Use `d.ID` (not `d.Path`) for `documentSlot.ID` in both `json.go` and
+  `plain.go` document rendering.
+  The contract test (Task 3) must assert that doc `id` ≠ doc `path` for registered
+  documents.
+- **Deliverable:** Modified `internal/cli/render/types.go` (DocInput struct),
+  `internal/cli/status/json.go` (RenderFeature population),
+  `internal/cli/status/plain.go` (RenderDocument),
+  `cmd/kbz/workflow_cmd.go` (feature/doc input builders).
+- **Depends on:** Task 1, Task 2 (needs both renderers and DocInput type).
+- **Effort:** Small.
+- **Spec requirement:** FR-9.1.
+
+### Task 8: Fix Bug parent_feature_id Forwarding
+
+- **Description:** `JSONRenderer.RenderBug` hardcodes `ParentFeatureID: nil`;
+  `PlainRenderer.RenderBug` hardcodes `{"parent_feature", "missing"}`. Neither
+  accepts a parent feature parameter. Meanwhile, `runStatusBugFormatted` in
+  `cmd/kbz/workflow_cmd.go` (~L253) extracts `parentFeature` from entity
+  state but never forwards it to either renderer. Fix:
+  (1) Add `parentFeature string` parameter to `PlainRenderer.RenderBug`.
+  When non-empty, emit `parent_feature: {value}`; when empty, emit
+  `parent_feature: missing`.
+  (2) Add `parentFeature string` parameter to `JSONRenderer.RenderBug`.
+  When non-empty, set `ParentFeatureID` to a `*string` pointing to the value;
+  when empty, set `ParentFeatureID: nil` (JSON `null`).
+  (3) Forward `parentFeature` from `runStatusBugFormatted` to the selected
+  renderer.
+- **Deliverable:** Modified `internal/cli/status/json.go` (RenderBug signature
+  and body, ~L200), `internal/cli/status/plain.go` (RenderBug signature and
+  body, ~L82), `cmd/kbz/workflow_cmd.go` (runStatusBugFormatted call site,
+  ~L253).
+- **Depends on:** Task 1, Task 2 (needs both renderers).
+- **Effort:** Small.
+- **Spec requirement:** FR-9.4, FR-5.
 
 **Key design decisions:**
 
@@ -163,17 +242,24 @@ for the `kbz status` command as specified in
 Task 1 (plain renderer) ──┐
                            ├── Task 3 (contract test)
 Task 2 (JSON renderer) ───┘       │
+       │                           │
+       ├── Task 5 (dev-plan key) ──┤
+       ├── Task 6 (display_id) ────┤
+       ├── Task 7 (doc slot ID) ───┤
+       └── Task 8 (bug parent) ────┘
                                    │
 B36-F2 (argument resolution) ─────┤
                                    │
                            Task 4 (integration + verification)
 ```
 
-**Parallel groups:** [Task 1, Task 2] can execute in parallel — they share no state and both
-consume the same existing service-layer types as read-only inputs.
+**Parallel groups:** [Task 1, Task 2] for initial renderer implementation;
+[Task 5, Task 6, Task 7, Task 8] for review fixes — all depend on Task 2 and
+are independent of each other.
 
-**Critical path:** Task 1 → Task 4 (Task 4 needs both renderers, and Task 2 runs in parallel
-with Task 1; the longer of the two determines the start of Task 4).
+**Critical path:** Task 2 → Task 7 → Task 4 (Task 7 touches types.go which
+Task 4's integration tests depend on; all four fix tasks must complete before
+Task 4).
 
 ---
 
@@ -188,7 +274,7 @@ type PlainRenderer struct{}
 func (r *PlainRenderer) RenderFeature(w io.Writer, d *mcp.FeatureDetail) error
 func (r *PlainRenderer) RenderPlan(w io.Writer, d *mcp.PlanDashboard) error
 func (r *PlainRenderer) RenderTask(w io.Writer, d *mcp.TaskDetail) error
-func (r *PlainRenderer) RenderBug(w io.Writer, d *mcp.BugDetail) error
+func (r *PlainRenderer) RenderBug(w io.Writer, d *mcp.BugDetail, parentFeature string) error
 func (r *PlainRenderer) RenderDocument(w io.Writer, d *service.DocumentResult) error
 func (r *PlainRenderer) RenderProject(w io.Writer, p *mcp.ProjectOverview) error
 ```
@@ -201,7 +287,7 @@ type JSONRenderer struct{}
 func (r *JSONRenderer) RenderFeature(w io.Writer, d *mcp.FeatureDetail) error
 func (r *JSONRenderer) RenderPlan(w io.Writer, d *mcp.PlanDashboard) error
 func (r *JSONRenderer) RenderTask(w io.Writer, d *mcp.TaskDetail) error
-func (r *JSONRenderer) RenderBug(w io.Writer, d *mcp.BugDetail) error
+func (r *JSONRenderer) RenderBug(w io.Writer, d *mcp.BugDetail, parentFeature string) error
 func (r *JSONRenderer) RenderDocument(w io.Writer, d *service.DocumentResult) error
 func (r *JSONRenderer) RenderProject(w io.Writer, p *mcp.ProjectOverview) error
 ```
@@ -240,14 +326,14 @@ The dispatcher encapsulates the `synthesise*` → renderer pipeline. `format` is
 | FR-2: Plain general rules | Task 1 | AC-1 through AC-4 |
 | FR-3: Plain feature | Task 1 | AC-1, AC-2 |
 | FR-4: Plain plan | Task 1 | Integration test (Task 4) |
-| FR-5: Plain task/bug | Task 1 | Integration test (Task 4) |
+| FR-5: Plain task/bug | Task 1, Task 8 | Integration test (Task 4) |
 | FR-6: Plain document | Task 1 | AC-3 |
 | FR-7: Plain project | Task 1 | AC-4 |
 | FR-8: JSON general rules | Task 2 | AC-5 through AC-9 |
-| FR-9: JSON entity/doc queries | Task 2 | AC-5, AC-6, AC-7, AC-9 |
+| FR-9: JSON entity/doc queries | Task 2, Task 5, Task 6, Task 7, Task 8 | AC-5, AC-6, AC-7, AC-9 |
 | FR-10: JSON project overview | Task 2 | AC-8 |
 | FR-11: Exit codes | Task 4 | AC-10 |
-| NFR-1: Schema stability | Task 3 | AC-11 |
+| NFR-1: Schema stability | Task 3, Task 5, Task 6, Task 7 | AC-11 |
 | NFR-2: Performance | Task 4 | Performance benchmark |
 | NFR-3: Parsability | Task 4 | jq/grep integration tests |
 
@@ -276,6 +362,17 @@ The dispatcher encapsulates the `synthesise*` → renderer pipeline. `format` is
   directly without the CLI routing layer. Only Task 4 is blocked.
 - **Affected tasks:** Task 4
 
+### Risk: DocInput ID field addition breaks human renderer
+
+- **Probability:** Low
+- **Impact:** Medium — DocInput is shared across F3 (human) and F4 (plain/JSON). Adding
+  a new ID field to the struct is backward-compatible (zero value is empty string), but
+  the human renderer's doc block must not regress.
+- **Mitigation:** The human renderer (F3) does not iterate struct fields — it accesses
+  known fields by name. Adding a new field has no effect on existing rendering. Run the
+  full render test suite after the change.
+- **Affected tasks:** Task 7
+
 ### Risk: Document path lookup returns multiple records
 
 - **Probability:** Low
@@ -295,7 +392,7 @@ The dispatcher encapsulates the `synthesise*` → renderer pipeline. `format` is
 | AC-2: Plain format — feature with no plan | Integration test | Task 4 |
 | AC-3: Plain format — unregistered document | Integration test | Task 4 |
 | AC-4: Plain format — project overview health gate | Integration test | Task 4 |
-| AC-5: JSON format — feature results array | Integration test | Task 4 |
+| AC-5: JSON format — feature results array | Integration test | Task 4, Task 5 |
 | AC-6: JSON format — feature with null plan_id | Integration test | Task 4 |
 | AC-7: JSON format — unregistered document | Integration test | Task 4 |
 | AC-8: JSON format — project overview shape | Integration test | Task 4 |

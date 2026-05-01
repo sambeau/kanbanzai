@@ -3,7 +3,7 @@
 | Field  | Value                         |
 |--------|-------------------------------|
 | Date   | 2026-04-30                    |
-| Status | Draft                         |
+| Status | approved |
 | Author | Architect                     |
 | Feature | FEAT-01KQG1XWE9ABP           |
 | Spec   | B39-fix-worktree-dev-experience/spec-p40-spec-b39-worktree-dev-experience |

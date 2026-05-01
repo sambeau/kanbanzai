@@ -3,7 +3,7 @@
 | Field  | Value                         |
 |--------|-------------------------------|
 | Date   | 2026-04-30                    |
-| Status | Draft                         |
+| Status | approved |
 | Author | Architect                     |
 | Feature | FEAT-01KQG3V03PAM4           |
 | Spec   | B42-worktree-cleanup-automation/spec-p40-spec-b42-worktree-cleanup |

@@ -1,0 +1,83 @@
+document_id: FEAT-01KQG2Q5Q1HX9/dev-plan-p40-f4-dev-plan-finish-state-propagation
+document_path: work/P40-retro-batch-april-2026/P40-F4-dev-plan-finish-state-propagation.md
+content_hash: dbf776d11da952ec92ec4f59c93b2868e1fb5d84c4b92c41516c0bb0ade87ab2
+indexed_at: 2026-04-30T20:56:32.880958Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Unify finish() State Propagation (B40-F2)'
+      byte_offset: 0
+      byte_count: 2576
+      word_count: 368
+      content_hash: dbf776d11da952ec92ec4f59c93b2868e1fb5d84c4b92c41516c0bb0ade87ab2
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 392
+          byte_count: 354
+          word_count: 58
+          content_hash: 2878fb978a1edfce7df81d014d6d06665a13ee7d2aac94b0d5805216efa75a5a
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 746
+          byte_count: 1297
+          word_count: 177
+          content_hash: 69c855e76acb7c542fe7528d61573c9787c12b0fe8dab4ef2572efae0c5f9927
+          children:
+            - path: 1.2.1
+              level: 3
+              title: T1 — Unify finish() write-through path
+              byte_offset: 765
+              byte_count: 609
+              word_count: 81
+              content_hash: 83df1b69b5fc10d57071f64c8b282d371741776d8ed20a4ea8bd5f543fe65c6b
+            - path: 1.2.2
+              level: 3
+              title: T2 — Write integration test for state consistency
+              byte_offset: 1374
+              byte_count: 669
+              word_count: 93
+              content_hash: c997e75d1414fe7cd9282271310336d6048cbc9cefdf7277c94100ee395b6815
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 2043
+          byte_count: 89
+          word_count: 14
+          content_hash: 3d18784908d6703c8dc5fc12c7d6413761fa08d4ff270c968ffcf2b01fb1df07
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 2132
+          byte_count: 274
+          word_count: 44
+          content_hash: c403ef5d8baceff6a1fd2e3cca515434d974f7d716f5cdbd8af37c1ccbaa9394
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 2406
+          byte_count: 170
+          word_count: 36
+          content_hash: 2e7bddd6c5859302d2b2df0b101f311866a01768a0a13a1c000093ea8b7815ab
+entity_refs:
+    - entity_id: FEAT-01KQG2Q5Q1HX9
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 282
+    - entity_id: B40-fix-tool-correctness
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 324
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 3
+last_accessed_at: 2026-04-30T22:10:07.624069Z
+section_access:
+    "1":
+        access_count: 1
+        last_accessed_at: 2026-04-30T22:01:39.160087Z
+classified: false

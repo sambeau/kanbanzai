@@ -1,15 +1,21 @@
 | Field  | Value                                   |
 |--------|-----------------------------------------|
 | Date   | 2026-04-30                              |
-| Status | approved |
+| Status | approved (amended: 2026-04-30)          |
 | Author | architect                               |
 
 ## Overview
 
 This dev-plan covers the rendering layer of the `kbz status` command: converting structured
 status data (synthesised by the service layer) into human-readable prose output with TTY-aware
-formatting. The four tasks below deliver injectable TTY detection, five output views, column
-alignment, and integration into the status command handler.
+formatting. The five tasks below deliver injectable TTY detection, five output views, column
+alignment, review-driven remediation for the unregistered-document output format, and integration
+into the status command handler.
+
+> **Amended 2026-04-30:** Added Task 5 to address blocking findings from the B36 batch
+> conformance review (see `work/reviews/batch-review-b36-kbz-cli-and-status.md`). Task 5
+> fixes the unregistered-document human output format to match the spec verbatim (FR-2.1,
+> FR-2.2, FR-2.3).
 
 ## Scope
 
@@ -109,10 +115,30 @@ input types.
   - `kanbanzai/internal/cli/render/types.go` — shared input data types (referencing the MCP synthesis types)
   - `kanbanzai/cmd/kanbanzai/status_cmd.go` — `runStatus` function wiring resolution to rendering
   - Integration tests covering all AC-1 through AC-7
-- **Depends on:** Task 2, Task 3, and F2's interface contract (the data types can be defined and
+- **Depends on:** Task 2, Task 3, Task 5, and F2's interface contract (the data types can be defined and
   tested in isolation before F2 is complete, but the final wiring requires F2's argument resolution)
 - **Effort:** medium
 - **Spec requirement:** All FRs (integration), all ACs (verification), NFR-2, NFR-3
+
+### Task 5: Fix Unregistered-Document Human Output Format
+
+- **Description:** The unregistered-document human output in `runStatusPath` (~L571-574
+  in `cmd/kbz/workflow_cmd.go`) violates three spec requirements:
+  (FR-2.1) Line 1 uses `File: {normalised-path}` instead of the bare path as supplied
+  by the user — remove the `File:` prefix and do not normalise (strip `./`) the
+  displayed path.
+  (FR-2.2) The verbatim phrase `Not registered with Kanbanzai.` is absent — the
+  implementation outputs `Status: not registered` instead. Replace with the exact
+  spec phrase, preceded by a blank line and indentation.
+  (FR-2.3) The suggested register command uses `kbz doc register <path>` without the
+  required `--type` and `--title` placeholders. Change to
+  `kbz doc register <path> --type <type> --title <title>`.
+  Update the integration tests (Task 4) to assert the corrected output format per AC-2.
+- **Deliverable:** Modified `cmd/kbz/workflow_cmd.go` (unregistered-doc branch in
+  `runStatusPath`, ~L571-574).
+- **Depends on:** Task 2 (uses the RenderUnregisteredDoc call path).
+- **Effort:** Small.
+- **Spec requirement:** FR-2.1, FR-2.2, FR-2.3, AC-2.
 
 ## Dependency Graph
 
@@ -120,15 +146,17 @@ input types.
 Task 1 (no dependencies)
 Task 2 → depends on Task 1
 Task 3 → depends on Task 1
-Task 4 → depends on Task 2, Task 3, and F2 interface contract
+Task 5 → depends on Task 2
+Task 4 → depends on Task 2, Task 3, Task 5, and F2 interface contract
 
 Parallel groups: [Task 2, Task 3]
-Critical path: Task 1 → Task 3 → Task 4
+Critical path: Task 1 → Task 2 → Task 5 → Task 4
 ```
 
-Task 2 and Task 3 can proceed in parallel once Task 1 is done. Task 4 requires both Task 2 and
-Task 3, plus the F2 interface contract. The input types in Task 4 can be defined independently,
-allowing partial work before F2 is complete, but final wiring and integration tests require F2.
+Task 2 and Task 3 can proceed in parallel once Task 1 is done. Task 5 is a small fix on Task 2's
+output path. Task 4 requires both Task 2 and Task 3, Task 5, plus the F2 interface contract. The
+input types in Task 4 can be defined independently, allowing partial work before F2 is complete,
+but final wiring and integration tests require F2.
 
 ## Risk Assessment
 
@@ -187,7 +215,7 @@ The renderer writes exclusively to an `io.Writer` (stdout or a test buffer).
 | Spec Requirement | Task(s) | Verification |
 |-----------------|---------|-------------|
 | FR-1: TTY Detection | Task 1 | Unit tests: TTY and non-TTY symbol+colour output |
-| FR-2: Unregistered Document View | Task 2 | Unit tests: all sub-requirements and edge cases |
+| FR-2: Unregistered Document View | Task 2, Task 5 | Unit tests: all sub-requirements and edge cases; integration test via Task 4 |
 | FR-3: Registered Document with Owner View | Task 2 | Unit tests: with-owner, orphan, draft status |
 | FR-4: Direct Feature Lookup View | Task 3 | Unit tests: all sub-requirements and edge cases |
 | FR-5: Plan Lookup View | Task 3 | Unit tests: all sub-requirements and edge cases |
@@ -203,7 +231,7 @@ The renderer writes exclusively to an `io.Writer` (stdout or a test buffer).
 | Acceptance Criterion | Verification Method | Producing Task |
 |---------------------|--------------------| ---------------|
 | AC-1: TTY rendering — Unicode+ANSI on TTY, ASCII+no-colour when piped | Unit test (TTY flag injection) | Task 1 |
-| AC-2: Unregistered document view — path, "Not registered", suggested command; non-existent → "file not found", exit 0 | Unit test | Task 2 |
+| AC-2: Unregistered document view — path, "Not registered", suggested command; non-existent → "file not found", exit 0 | Unit test + integration test | Task 2, Task 5 |
 | AC-3: Registered document with owner — doc block then feature block; draft docs → attention; orphan → doc block only | Unit test | Task 2 |
 | AC-4: Direct feature lookup — header, plan, docs, tasks, attention; all edge cases (no dev-plan, no plan, no docs, no tasks) | Unit test | Task 3 |
 | AC-5: Plan lookup — feature list, aggregated tasks, per-feature attention; empty plan, all-done plan | Unit test | Task 3 |

@@ -3,7 +3,7 @@
 | Field  | Value                         |
 |--------|-------------------------------|
 | Date   | 2026-04-30                    |
-| Status | Draft                         |
+| Status | approved |
 | Author | Spec Author                   |
 | Feature | FEAT-01KQGBA8WD0GJ           |
 | Bug    | BUG-01KQGB83FXVKV             |

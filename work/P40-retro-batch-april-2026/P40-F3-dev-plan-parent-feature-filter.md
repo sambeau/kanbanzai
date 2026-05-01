@@ -3,7 +3,7 @@
 | Field  | Value                         |
 |--------|-------------------------------|
 | Date   | 2026-04-30                    |
-| Status | Draft                         |
+| Status | approved |
 | Author | Architect                     |
 | Feature | FEAT-01KQG2Q5MDC6E           |
 | Spec   | B40-fix-tool-correctness/spec-p40-spec-b40-tool-correctness |

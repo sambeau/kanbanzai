@@ -1,0 +1,83 @@
+document_id: FEAT-01KQG3TZR2JDP/dev-plan-p40-f11-dev-plan-worktree-gc
+document_path: work/P40-retro-batch-april-2026/P40-F11-dev-plan-worktree-gc.md
+content_hash: 33ffed68c75a22587aa326d3c625c2777b7f5ce0a8dcd2bf6dd8d001bdbf6db1
+indexed_at: 2026-04-30T21:15:37.046874Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Add worktree gc for Orphaned Records (B42-F1)'
+      byte_offset: 0
+      byte_count: 2176
+      word_count: 318
+      content_hash: 33ffed68c75a22587aa326d3c625c2777b7f5ce0a8dcd2bf6dd8d001bdbf6db1
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 403
+          byte_count: 265
+          word_count: 37
+          content_hash: d15e026af52c6cc5a24c3bf853d1a36db3f9a79ded1b9bb6e147fd38f7c6c0b0
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 668
+          byte_count: 1001
+          word_count: 143
+          content_hash: a49ff3fecd16a8d3548174107c0fffe7bd7832df8a0ee8f72a83de7610dc9026
+          children:
+            - path: 1.2.1
+              level: 3
+              title: T1 — Implement gc action with dry_run
+              byte_offset: 687
+              byte_count: 551
+              word_count: 79
+              content_hash: 3e012df530f6b186ef4c8e8a6d7c4c25ecb4ded437de696439ea3ab6b87fad81
+            - path: 1.2.2
+              level: 3
+              title: T2 — Write tests for gc action
+              byte_offset: 1238
+              byte_count: 431
+              word_count: 61
+              content_hash: f302c570e844e7e3369f11e6b5ef8398878aaf7a86678f9e4832b9a815dabdab
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 1669
+          byte_count: 71
+          word_count: 12
+          content_hash: 30e61e558e78b822b43a46567d512a4b8b23200b2513e525365ea13f4adcb83e
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 1740
+          byte_count: 227
+          word_count: 35
+          content_hash: 2da52536ed2500502cab2e31573cfea60c562a4a056825a9f5166c0ff1c5d2d9
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 1967
+          byte_count: 209
+          word_count: 50
+          content_hash: b609bec13f6850ebb54704308ccc14ad319710529b7eb970897b4ca6449058f2
+entity_refs:
+    - entity_id: FEAT-01KQG3TZR2JDP
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 286
+    - entity_id: B42-worktree-cleanup-automation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 328
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 3
+last_accessed_at: 2026-04-30T22:53:52.820771Z
+section_access:
+    "1":
+        access_count: 1
+        last_accessed_at: 2026-04-30T22:47:20.410124Z
+classified: false

@@ -289,11 +289,14 @@ func TestRunStatus_FilePathTarget_UnregisteredFile(t *testing.T) {
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, "not registered") {
-		t.Fatalf("stdout missing 'not registered':\n%s", stdout)
+	if !strings.Contains(stdout, "Not registered with Kanbanzai.") {
+		t.Fatalf("stdout missing 'Not registered with Kanbanzai.':\n%s", stdout)
 	}
 	if !strings.Contains(stdout, "kbz doc register") {
 		t.Fatalf("stdout missing register suggestion:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "--type <type> --title <title>") {
+		t.Fatalf("stdout missing --type/--title placeholders:\n%s", stdout)
 	}
 }
 
@@ -318,8 +321,11 @@ func TestRunStatus_FilePathTarget_UnregisteredFile_DotSlashPrefix(t *testing.T) 
 	}
 
 	stdout := output.String()
-	if !strings.Contains(stdout, "not registered") {
-		t.Fatalf("stdout missing 'not registered' for ./ prefix:\n%s", stdout)
+	if !strings.Contains(stdout, "Not registered with Kanbanzai.") {
+		t.Fatalf("stdout missing 'Not registered with Kanbanzai.' for ./ prefix:\n%s", stdout)
+	}
+	if !strings.Contains(stdout, "./unregistered.md") {
+		t.Fatalf("stdout missing ./unregistered.md (should use target as supplied):\n%s", stdout)
 	}
 }
 
@@ -580,20 +586,33 @@ func TestRunStatus_ViaMain_InvalidFormat(t *testing.T) {
 	}
 }
 
-// ─── Entity not found tests (D-6: query tool, exit 0) ───────────────────────
+// ─── Entity not found tests (FR-016: exit 1) ────────────────────────────────
 
 func TestRunStatus_EntityTarget_NotFound(t *testing.T) {
 	fake := newFakeEntityService()
-	deps, output := testDependenciesWithService(fake)
+	deps, _ := testDependenciesWithService(fake)
 
-	// D-6: entity ID that matches pattern but doesn't exist → informational, exit 0.
+	// FR-016: entity ID that matches pattern but doesn't exist → exit 1.
 	err := runStatus([]string{"FEAT-01ZZZZZZZZZZZ"}, deps)
-	if err != nil {
-		t.Fatalf("runStatus(FEAT-01ZZZZZZZZZZZ) error = %v, want nil (exit 0 for query)", err)
+	if err == nil {
+		t.Fatal("runStatus(FEAT-01ZZZZZZZZZZZ) error = nil, want non-nil (exit 1)")
 	}
-	stdout := output.String()
-	if stdout != "" {
-		t.Fatalf("expected empty output for not-found entity, got:\n%s", stdout)
+	if !strings.Contains(err.Error(), "entity not found") {
+		t.Fatalf("error missing 'entity not found': %v", err)
+	}
+}
+
+func TestRunStatus_EntityTarget_BugNotFound(t *testing.T) {
+	fake := newFakeEntityService()
+	deps, _ := testDependenciesWithService(fake)
+
+	// FR-016: not-found entity → exit 1.
+	err := runStatus([]string{"BUG-999"}, deps)
+	if err == nil {
+		t.Fatal("runStatus(BUG-999) error = nil, want non-nil (exit 1)")
+	}
+	if !strings.Contains(err.Error(), "entity not found") {
+		t.Fatalf("error missing 'entity not found': %v", err)
 	}
 }
 
@@ -627,21 +646,6 @@ func TestRunStatus_EntityTarget_BugRouting(t *testing.T) {
 	}
 	if !strings.Contains(stdout, "reported") {
 		t.Fatalf("stdout missing bug status:\n%s", stdout)
-	}
-}
-
-func TestRunStatus_EntityTarget_BugNotFound(t *testing.T) {
-	fake := newFakeEntityService()
-	deps, output := testDependenciesWithService(fake)
-
-	// D-6: not-found entity → informational, exit 0.
-	err := runStatus([]string{"BUG-999"}, deps)
-	if err != nil {
-		t.Fatalf("runStatus(BUG-999) error = %v, want nil (exit 0)", err)
-	}
-	stdout := output.String()
-	if stdout != "" {
-		t.Fatalf("expected empty output for not-found bug, got:\n%s", stdout)
 	}
 }
 
@@ -707,11 +711,11 @@ func TestRunStatus_ExitCodes(t *testing.T) {
 		}
 	})
 
-	t.Run("entity_not_found_success", func(t *testing.T) {
+	t.Run("entity_not_found_error", func(t *testing.T) {
 		deps, _ := testDependenciesWithService(fake)
-		// D-6: not-found query → exit 0.
-		if err := runStatus([]string{"FEAT-01ZZZZZZZZZZZ"}, deps); err != nil {
-			t.Errorf("runStatus(nonexistent) error = %v, want nil (exit 0)", err)
+		// FR-016: not-found entity → exit 1.
+		if err := runStatus([]string{"FEAT-01ZZZZZZZZZZZ"}, deps); err == nil {
+			t.Error("runStatus(nonexistent) error = nil, want non-nil (exit 1)")
 		}
 	})
 

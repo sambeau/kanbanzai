@@ -3,9 +3,68 @@
 | Field  | Value                         |
 |--------|-------------------------------|
 | Date   | 2026-04-30                    |
-| Status | Draft                         |
+| Status | approved |
 | Author | Architect                     |
 | Plan   | P40-retro-batch-april-2026    |
+
+---
+
+## Overview
+
+This design addresses 14 improvement items across four independent workstreams,
+drawn from the April 2026 retrospective batch's collated feedback report (85 findings
+from 16 agent reports). Each item is a targeted fix to an existing MCP tool, skill
+file, or lifecycle hook — no new architectural components are introduced. The
+workstream structure (A: worktree experience, B: tool correctness, C: document
+ownership, D: cleanup automation) enables parallel implementation within a batch
+and staggered delivery by priority.
+
+All changes are backward-compatible: new parameters are optional, existing
+behaviour is preserved when new parameters are omitted, and no existing tool
+signatures are removed.
+
+---
+
+## Goals and Non-Goals
+
+**Goals**
+
+- Make worktree file editing discoverable and reliable through the existing
+  `write_file` and `edit_file` tools, eliminating the triple-escaping workaround
+  patterns documented across five retro reports.
+- Fix four correctness bugs in the tool surface: the broken `parent_feature`
+  filter, inconsistent `finish()` state propagation, non-atomic multi-edit
+  application, and brittle decompose AC format recognition.
+- Auto-infer document ownership from file path context during registration,
+  eliminating the PROJECT/-owner default that causes 3+ re-registration cycles
+  per batch.
+- Automate worktree cleanup on merge and add garbage collection for orphaned
+  records, reducing the 60+ stale-worktree health warnings to zero.
+- Improve merge gate UX with bypassable signalling and a verification setter.
+
+**Non-Goals**
+
+- This design does not introduce new MCP tools (except possibly `worktree(action: gc)`).
+  All changes extend existing tools' parameter surfaces.
+- This design does not change the knowledge graph, context assembly budget, or
+  knowledge deduplication logic.
+- This design does not address bug lifecycle fast-forward, CLI/MCP health-check
+  unification, cross-feature dependency visibility, or session continuity auto-commit.
+  These are documented as out-of-scope follow-up work.
+- This design does not change entity lifecycle states, stage gate definitions, or
+  the plan/batch entity model.
+
+---
+
+## Dependencies
+
+| Dependency | Type | Notes |
+|------------|------|-------|
+| B38 — Plans and Batches (migration complete) | Runtime prerequisite | Document owner inference (C1) must correctly distinguish plan-owned from batch-owned paths. The P38 migration's `kbz migrate` must have completed before C1 can resolve owners from the new path conventions. |
+| P34 — Agent Workflow Ergonomics | Design precedent | A1–A3, B1–B4, C1–C4, and D1–D4 follow the same extension pattern established in P34: add optional parameters to existing tools, preserve backward compatibility, and ship independently. |
+| `write_file` `entity_id` parameter (P21) | Code dependency | A1 documents an existing capability; A2 mirrors the same worktree resolution logic in `edit_file`. Both depend on the worktree path resolution added in P21. |
+| `AutoDeleteRemoteBranch` config option | Config dependency | D3's auto-delete behaviour depends on this config flag existing and defaulting to `true`. If the flag defaults to `false`, D3 should change the default. |
+| `OnStatusTransition` hook (P19) | Code dependency | B2's unified state propagation may need to ensure the hook fires synchronously before the finish response returns. The hook contract (best-effort, must not block) must be preserved. |
 
 ---
 

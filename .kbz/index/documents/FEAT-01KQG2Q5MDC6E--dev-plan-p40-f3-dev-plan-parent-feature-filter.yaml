@@ -1,0 +1,76 @@
+document_id: FEAT-01KQG2Q5MDC6E/dev-plan-p40-f3-dev-plan-parent-feature-filter
+document_path: work/P40-retro-batch-april-2026/P40-F3-dev-plan-parent-feature-filter.md
+content_hash: 4bcc2b65619ed062e296fad248213dd4cadafc1282dee1fcc3a040928af12679
+indexed_at: 2026-04-30T20:56:32.879197Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Fix entity list parent_feature Filter (B40-F1)'
+      byte_offset: 0
+      byte_count: 1642
+      word_count: 234
+      content_hash: 4bcc2b65619ed062e296fad248213dd4cadafc1282dee1fcc3a040928af12679
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 397
+          byte_count: 221
+          word_count: 34
+          content_hash: a4bd2f1edf6bbd8b497cfb9b77de1f21f95fab8f7878b4f4ba47d86f2509693d
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 618
+          byte_count: 708
+          word_count: 101
+          content_hash: cb1d8ef865b95164c85a4ae12156dc8a52c8becd8bb3751a20bed516a60788cc
+          children:
+            - path: 1.2.1
+              level: 3
+              title: T1 — Fix parent_feature filter and add tests
+              byte_offset: 637
+              byte_count: 689
+              word_count: 98
+              content_hash: 03ebca035bca11314495a922a5950468906f1d2999687ca242dfb80e9b30642c
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 1326
+          byte_count: 90
+          word_count: 15
+          content_hash: 1fab609f6009b6185aceb1a037b69681cccb156ae0e1248f9ed09242a88ce1fe
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 1416
+          byte_count: 71
+          word_count: 10
+          content_hash: 7e737f9dc9d6955a0dec47e69c041bdd1774c9ae47078ba8254ca56c85114fcc
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 1487
+          byte_count: 155
+          word_count: 34
+          content_hash: eab46ea356019263bbafa8e01e7e28d83fbb035595e57a633841a91eb09b5358
+entity_refs:
+    - entity_id: FEAT-01KQG2Q5MDC6E
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 287
+    - entity_id: B40-fix-tool-correctness
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 329
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 3
+last_accessed_at: 2026-04-30T21:47:32.87852Z
+section_access:
+    "1":
+        access_count: 2
+        last_accessed_at: 2026-04-30T21:47:32.87852Z
+classified: false

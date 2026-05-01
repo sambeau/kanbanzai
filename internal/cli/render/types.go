@@ -36,6 +36,7 @@ type FeatureInput struct {
 
 // DocInput holds document info for rendering.
 type DocInput struct {
+	ID     string
 	Type   string
 	Path   string
 	Status string
@@ -58,27 +59,27 @@ type PlanInput struct {
 
 // PlanFeatureInput holds a feature summary within a plan dashboard.
 type PlanFeatureInput struct {
-	DisplayID   string
-	Slug        string
-	Status      string
-	HasDevPlan  bool
+	DisplayID  string
+	Slug       string
+	Status     string
+	HasDevPlan bool
 }
 
 // ProjectInput is the input for RenderProject.
 type ProjectInput struct {
-	Name       string
-	Plans      []ProjectPlanInput
-	Health     *StatusHealthSummary
-	Attention  []AttentionItem
-	WorkQueue  ProjectWorkQueue
+	Name      string
+	Plans     []ProjectPlanInput
+	Health    *StatusHealthSummary
+	Attention []AttentionItem
+	WorkQueue ProjectWorkQueue
 }
 
 // ProjectPlanInput holds a strategic plan summary for the project overview.
 type ProjectPlanInput struct {
-	DisplayID        string
-	Status           string
-	FeaturesActive   int
-	FeaturesTotal    int
+	DisplayID      string
+	Status         string
+	FeaturesActive int
+	FeaturesTotal  int
 }
 
 // ProjectWorkQueue holds the task queue counts for the project overview.

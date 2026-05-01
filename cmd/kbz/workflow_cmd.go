@@ -113,9 +113,39 @@ func runStatus(args []string, deps dependencies) error {
 	case resolution.ResolvePath:
 		return runStatusPath(target, format, r, deps)
 	default:
-		// ResolveNone: try entity first, then path, then give up.
-		return fmt.Errorf("unrecognised target %q — not an entity ID, plan prefix, or file path", target)
+		// ResolveNone: probe entity-ID lookup first, then path lookup.
+		return runStatusResolveNone(target, format, r, deps)
 	}
+}
+
+// runStatusResolveNone implements the FR-007 fallback probe for targets that
+// match no known disambiguation pattern. It attempts entity-ID lookup first,
+// then path lookup, and only returns an error when both fail.
+func runStatusResolveNone(target, format string, r *render.Renderer, deps dependencies) error {
+	stateRoot := core.StatePath()
+
+	// Probe 1: try entity-ID lookup.
+	entityType := deriveEntityType(target)
+	if entityType != "" {
+		entitySvc := deps.newEntityService(stateRoot)
+		if _, err := entitySvc.Get(entityType, target, ""); err == nil {
+			// Found as entity — route through the entity path.
+			return runStatusEntity(target, format, r, deps)
+		}
+	}
+
+	// Probe 2: try path lookup via document service.
+	normalised := strings.TrimPrefix(target, "./")
+	docSvc := deps.newDocumentService(stateRoot, ".")
+	if result, err := docSvc.LookupByPath(context.Background(), normalised); err == nil && result.ID != "" {
+		return runStatusPath(target, format, r, deps)
+	}
+	if result, err := docSvc.LookupByPath(context.Background(), target); err == nil && result.ID != "" {
+		return runStatusPath(target, format, r, deps)
+	}
+
+	// Both probes failed — target genuinely unrecognised.
+	return fmt.Errorf("unrecognised target %q — not an entity ID, plan prefix, or file path", target)
 }
 
 // buildRenderer creates a renderer using the dependencies' factory and/or
@@ -231,9 +261,8 @@ func runStatusEntity(target, format string, r *render.Renderer, deps dependencie
 
 	result, err := entitySvc.Get(entityType, target, "")
 	if err != nil {
-		// Entity not found in store — informational message, not an error.
-		// Per D-6: it's a query tool, so exit 0.
-		return nil
+		// Entity not found — exit 1 with descriptive message per FR-016.
+		return fmt.Errorf("entity not found: %s", target)
 	}
 
 	// Human format delegates to the existing human renderer.
@@ -253,7 +282,8 @@ func runStatusEntity(target, format string, r *render.Renderer, deps dependencie
 		return runStatusTaskFormatted(format, target, slug, status, parentFeature, deps)
 	case "bug":
 		severity, _ := result.State["severity"].(string)
-		return runStatusBugFormatted(format, target, slug, status, severity, deps)
+		parentFeature, _ := result.State["parent_feature"].(string)
+		return runStatusBugFormatted(format, target, slug, status, severity, parentFeature, deps)
 	default:
 		// Fallback for unknown entity types: simple key:value / JSON.
 		if format == "json" {
@@ -309,11 +339,12 @@ func runStatusFeatureFormatted(format, target string, result *service.GetResult,
 		if docList, ok := docs.([]any); ok {
 			for _, d := range docList {
 				if dm, ok := d.(map[string]any); ok {
+					docID, _ := dm["id"].(string)
 					t, _ := dm["type"].(string)
 					p, _ := dm["path"].(string)
 					s, _ := dm["status"].(string)
 					input.Documents = append(input.Documents, render.DocInput{
-						Type: t, Path: p, Status: s,
+						ID: docID, Type: t, Path: p, Status: s,
 					})
 				}
 			}
@@ -353,11 +384,11 @@ func runStatusTaskFormatted(format, id, slug, entityStatus, parentFeature string
 }
 
 // runStatusBugFormatted outputs a bug in plain or JSON format.
-func runStatusBugFormatted(format, id, slug, entityStatus, severity string, deps dependencies) error {
+func runStatusBugFormatted(format, id, slug, entityStatus, severity, parentFeature string, deps dependencies) error {
 	switch format {
 	case "json":
 		jr := &status.JSONRenderer{}
-		b, err := jr.RenderBug(id, slug, entityStatus, severity, nil)
+		b, err := jr.RenderBug(id, slug, entityStatus, severity, parentFeature, nil)
 		if err != nil {
 			return err
 		}
@@ -365,7 +396,7 @@ func runStatusBugFormatted(format, id, slug, entityStatus, severity string, deps
 		return err
 	default: // plain
 		pr := &status.PlainRenderer{}
-		return pr.RenderBug(deps.stdout, id, slug, entityStatus, severity, nil)
+		return pr.RenderBug(deps.stdout, id, slug, entityStatus, severity, parentFeature, nil)
 	}
 }
 
@@ -413,11 +444,12 @@ func runStatusEntityHuman(target, entityType string, result *service.GetResult, 
 		if docList, ok := docs.([]any); ok {
 			for _, d := range docList {
 				if dm, ok := d.(map[string]any); ok {
+					docID, _ := dm["id"].(string)
 					t, _ := dm["type"].(string)
 					p, _ := dm["path"].(string)
 					s, _ := dm["status"].(string)
 					input.Documents = append(input.Documents, render.DocInput{
-						Type: t, Path: p, Status: s,
+						ID: docID, Type: t, Path: p, Status: s,
 					})
 				}
 			}
@@ -435,8 +467,8 @@ func runStatusPlanPrefix(target, format string, r *render.Renderer, deps depende
 
 	result, err := entitySvc.GetPlan(target)
 	if err != nil {
-		// Plan not found — informational, exit 0.
-		return nil
+		// Plan not found — exit 1 with descriptive message per FR-008.
+		return fmt.Errorf("plan not found for prefix %q", target)
 	}
 
 	if format == "human" {
@@ -581,8 +613,8 @@ func runStatusPath(target, format string, r *render.Renderer, deps dependencies)
 			return pr.RenderDocument(deps.stdout, &doc)
 		default:
 			_, err = fmt.Fprintf(deps.stdout,
-				"File: %s\nStatus: not registered\n\nThis file exists on disk but is not registered in the document store.\nRegister it with:\n  kbz doc register %s\n",
-				lookupPath, lookupPath)
+				"%s\n\n  Not registered with Kanbanzai.\n\nRegister it with:\n  kbz doc register %s --type <type> --title <title>\n",
+				target, target)
 			return err
 		}
 	}

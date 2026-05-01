@@ -1,0 +1,90 @@
+document_id: FEAT-01KQG1XWE9ABP/dev-plan-p40-f2-dev-plan-edit-file-worktree
+document_path: work/P40-retro-batch-april-2026/P40-F2-dev-plan-edit-file-worktree.md
+content_hash: 7a75b55042e5c6dd809adb4dbd9f496a8348f23f49ae5b54e8e7cb9ea67cc986
+indexed_at: 2026-04-30T20:42:56.396807Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Make edit_file Worktree-Aware (B39-F2)'
+      byte_offset: 0
+      byte_count: 4245
+      word_count: 617
+      content_hash: 7a75b55042e5c6dd809adb4dbd9f496a8348f23f49ae5b54e8e7cb9ea67cc986
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 403
+          byte_count: 382
+          word_count: 56
+          content_hash: c339a67fd9ee144439b3452da73bd28fa9d6ff0e0fb28fd43ec00941d0ea0d57
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 785
+          byte_count: 2476
+          word_count: 341
+          content_hash: 6f40fb89bb0027ec4f40d6999303800b478f1924794f1e71fa66054800fa9cae
+          children:
+            - path: 1.2.1
+              level: 3
+              title: T1 — Add entity_id parameter to edit_file tool schema
+              byte_offset: 804
+              byte_count: 638
+              word_count: 86
+              content_hash: 07ff9832ffe59f87fcd051dec8c9390383807f311c749dd563491fc7a9495313
+            - path: 1.2.2
+              level: 3
+              title: T2 — Implement worktree path resolution in edit_file handler
+              byte_offset: 1442
+              byte_count: 1003
+              word_count: 139
+              content_hash: 2617e3a6dd980989f47d356e28d775910cae960a851e91a901403bc508e67d78
+            - path: 1.2.3
+              level: 3
+              title: T3 — Write tests for edit_file worktree-aware behaviour
+              byte_offset: 2445
+              byte_count: 816
+              word_count: 113
+              content_hash: 68403003e45b167a9f85e1a711a2a3c7298c5612d014bacab4b453165148e59e
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 3261
+          byte_count: 194
+          word_count: 27
+          content_hash: b06f0cb8dff6e3cf5f44c554b223889694485f5e8e4c15c15ed3569c9608c31b
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 3455
+          byte_count: 486
+          word_count: 79
+          content_hash: 8cc7c778e088e66195af64040ce6fd5fe1061d1c31dc0a48392b24882e245fe3
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 3941
+          byte_count: 304
+          word_count: 76
+          content_hash: 42229411df299c236850327a9d058a07e4cf1738923701c9585009d21da6209c
+entity_refs:
+    - entity_id: FEAT-01KQG1XWE9ABP
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 279
+    - entity_id: B39-fix-worktree-dev-experience
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 321
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 5
+last_accessed_at: 2026-04-30T21:36:57.674028Z
+section_access:
+    "1":
+        access_count: 3
+        last_accessed_at: 2026-04-30T21:36:57.674028Z
+classified: false

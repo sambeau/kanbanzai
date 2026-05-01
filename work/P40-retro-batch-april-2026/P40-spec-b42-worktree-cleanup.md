@@ -3,7 +3,7 @@
 | Field  | Value                         |
 |--------|-------------------------------|
 | Date   | 2026-04-30                    |
-| Status | Draft                         |
+| Status | approved |
 | Author | Spec Author                   |
 | Batch  | B42-worktree-cleanup-automation |
 | Design | P40-retro-batch-april-2026/design-p40-design-retro-batch-improvements |

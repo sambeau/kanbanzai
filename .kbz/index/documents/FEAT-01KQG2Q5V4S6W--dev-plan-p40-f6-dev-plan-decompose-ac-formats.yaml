@@ -1,0 +1,90 @@
+document_id: FEAT-01KQG2Q5V4S6W/dev-plan-p40-f6-dev-plan-decompose-ac-formats
+document_path: work/P40-retro-batch-april-2026/P40-F6-dev-plan-decompose-ac-formats.md
+content_hash: 5ce6fc0aec21871860326857f9d535ecddc00da7cd14317898b75e56a587eccd
+indexed_at: 2026-04-30T20:56:32.884843Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Expand Decompose AC Format Recognition (B40-F4)'
+      byte_offset: 0
+      byte_count: 3645
+      word_count: 509
+      content_hash: 5ce6fc0aec21871860326857f9d535ecddc00da7cd14317898b75e56a587eccd
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 398
+          byte_count: 382
+          word_count: 47
+          content_hash: 62772b83a24d946a74bb2cb5681f16eeaa78cca712c9d1f28ea826868e7119c4
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 780
+          byte_count: 2059
+          word_count: 277
+          content_hash: 63ceda985eb7d7f72cfe914d4f426d9215229457bf8f13e94b7e818032ebf56b
+          children:
+            - path: 1.2.1
+              level: 3
+              title: T1 — Add new AC format patterns to the decompose parser
+              byte_offset: 799
+              byte_count: 752
+              word_count: 98
+              content_hash: dbbb86726db557b0a746d5ecb85fad82db1e0655694606ea3afe6aefd0c5f591
+            - path: 1.2.2
+              level: 3
+              title: T2 — Add diagnostic error on parse failure
+              byte_offset: 1551
+              byte_count: 530
+              word_count: 75
+              content_hash: e9fd32ffe4c5f9faecdfb092d75a03111095316a750959f3bb0a2f172bbf9fe6
+            - path: 1.2.3
+              level: 3
+              title: T3 — Write tests for all AC formats and diagnostic
+              byte_offset: 2081
+              byte_count: 758
+              word_count: 101
+              content_hash: 2d56d8bd9bd0da87cfc659f4ed17f462425ea763f4811efa460aa07793fe4d7c
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 2839
+          byte_count: 213
+          word_count: 33
+          content_hash: 2cb622e36746809d9edd4f8eda32ed82c5750d6e83ec09dff30524e458e24583
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 3052
+          byte_count: 403
+          word_count: 68
+          content_hash: 78e52eab1e3b61b590bcdf213124bf4f7dd6a4e664075e7c17cfb2cfdb97e23b
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 3455
+          byte_count: 190
+          word_count: 44
+          content_hash: 8b32813013d5cbdfec26f2d1e266d7833946a4e63ff8a775032e3891b086c008
+entity_refs:
+    - entity_id: FEAT-01KQG2Q5V4S6W
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 288
+    - entity_id: B40-fix-tool-correctness
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 330
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 4
+last_accessed_at: 2026-04-30T21:59:29.137624Z
+section_access:
+    "1":
+        access_count: 1
+        last_accessed_at: 2026-04-30T21:49:47.780685Z
+classified: false

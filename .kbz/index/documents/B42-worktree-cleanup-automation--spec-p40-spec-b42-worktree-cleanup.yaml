@@ -1,0 +1,123 @@
+document_id: B42-worktree-cleanup-automation/spec-p40-spec-b42-worktree-cleanup
+document_path: work/P40-retro-batch-april-2026/P40-spec-b42-worktree-cleanup.md
+content_hash: ed27c4791801d5e30aa84418338200ac14fec93da79b0bdfaa96d504c26310d2
+indexed_at: 2026-04-30T21:11:04.899701Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Worktree and Cleanup Automation'
+      byte_offset: 0
+      byte_count: 9928
+      word_count: 1378
+      content_hash: ed27c4791801d5e30aa84418338200ac14fec93da79b0bdfaa96d504c26310d2
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem Statement
+          byte_offset: 399
+          byte_count: 2110
+          word_count: 264
+          content_hash: 8d98510ad7378d5d229cf59ec4ecf3f4bb417e650e0efdd01cfbbfee4376f92c
+        - path: "1.2"
+          level: 2
+          title: Requirements
+          byte_offset: 2509
+          byte_count: 2679
+          word_count: 372
+          content_hash: db7ecccd4a3b17a088a168a341496a73674bd45e7f1fddcca7b1354e82ffd8f9
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 2526
+              byte_count: 2106
+              word_count: 292
+              content_hash: 0684e1562d8de99922d67c32efc80090bfa4434fcb52fe002908725dfc0200a6
+            - path: 1.2.2
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 4632
+              byte_count: 556
+              word_count: 78
+              content_hash: f22e953b84dd0d61f316aafea064b10bf910f2cd8d76433988621625e53f13ad
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 5188
+          byte_count: 741
+          word_count: 109
+          content_hash: 8de9c1a7e72a055a9dbcfbf430cde1c42b3d7aab2af982a92675037a9b49ce34
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 5929
+          byte_count: 2641
+          word_count: 369
+          content_hash: b53b67d2a1cfbaf14bf0d78ba42ed20a06dd7e2125a9a0bcfcd47bd2331ccc01
+        - path: "1.5"
+          level: 2
+          title: Verification Plan
+          byte_offset: 8570
+          byte_count: 1358
+          word_count: 225
+          content_hash: 4f59d383c46837cb6518b09a1f438fe8f182719b071119e8f8bfc7a3df31f619
+entity_refs:
+    - entity_id: FEAT-XXXX
+      entity_type: feature
+      section_path: 1.2.1
+      byte_offset: 4313
+    - entity_id: FEAT-01KQG3J1RG3J3
+      entity_type: feature
+      section_path: 1.2.1
+      byte_offset: 4515
+    - entity_id: FEAT-01KQ7
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 7646
+    - entity_id: FEAT-01KQ7JDT511BZ
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 7823
+    - entity_id: FEAT-01KQG3J1RG3J3
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 7925
+    - entity_id: B42-worktree-cleanup-automation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 276
+    - entity_id: P40-retro-batch-april-2026
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 321
+    - entity_id: P40-retro-batch-april-2026
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 497
+    - entity_id: P40-design-retro-batch-improvements
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 524
+cross_doc_links:
+    - target_path: work/P40-retro-batch-april-2026/P40-design-retro-batch-improvements.md
+      link_text: work/P40-retro-batch-april-2026/P40-design-retro-batch-improvements.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+access_count: 2
+last_accessed_at: 2026-05-01T09:49:55.343678Z
+classified: false

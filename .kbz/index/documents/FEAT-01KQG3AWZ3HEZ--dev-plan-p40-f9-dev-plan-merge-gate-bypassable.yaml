@@ -1,0 +1,69 @@
+document_id: FEAT-01KQG3AWZ3HEZ/dev-plan-p40-f9-dev-plan-merge-gate-bypassable
+document_path: work/P40-retro-batch-april-2026/P40-F9-dev-plan-merge-gate-bypassable.md
+content_hash: 58af12cb9491aaf48c54f2ee95a547a4babe75ff3cc35a0dc06c9f63fe7c34b2
+indexed_at: 2026-04-30T21:07:03.270505Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Add bypassable Field to Merge Gate Results (B41-F3)'
+      byte_offset: 0
+      byte_count: 1562
+      word_count: 212
+      content_hash: 58af12cb9491aaf48c54f2ee95a547a4babe75ff3cc35a0dc06c9f63fe7c34b2
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 416
+          byte_count: 279
+          word_count: 40
+          content_hash: d0787a8f20e90753fb5bfd8ef7f13ba46d94eaf69a99e587b3f756782ab07a42
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 695
+          byte_count: 666
+          word_count: 93
+          content_hash: b8f0fb9216e88e244b6b26a118a0f18c06872d4f772e5a8257068ca99348f3b9
+          children:
+            - path: 1.2.1
+              level: 3
+              title: T1 — Add bypassable field and tests
+              byte_offset: 714
+              byte_count: 647
+              word_count: 90
+              content_hash: eb6df363c2f85fa420613af1ca673f25aa11b837cac92995c62c1d101ec584f7
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 1361
+          byte_count: 78
+          word_count: 13
+          content_hash: 21a33df2f44e009f3d6a70cd996434405432c2b9a8ac4e2b03c21b18a0f176fb
+        - path: "1.4"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 1439
+          byte_count: 123
+          word_count: 24
+          content_hash: 1676c3580efb0aa17a1a9ae8bcd69ed6a1b39b3b6c51afe62651a499815068d8
+entity_refs:
+    - entity_id: FEAT-01KQG3AWZ3HEZ
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 292
+    - entity_id: B41-fix-doc-ownership-lifecycle
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 334
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 2
+last_accessed_at: 2026-04-30T22:16:29.631412Z
+section_access:
+    "1":
+        access_count: 1
+        last_accessed_at: 2026-04-30T22:16:29.631412Z
+classified: false

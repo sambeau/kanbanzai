@@ -1,0 +1,83 @@
+document_id: FEAT-01KQG2Q5RS9G9/dev-plan-p40-f5-dev-plan-atomic-multi-edit
+document_path: work/P40-retro-batch-april-2026/P40-F5-dev-plan-atomic-multi-edit.md
+content_hash: 00382014e96862ae2bb5fc267433bf3aef7741bf13f1b5922ecad05e11f0e6d3
+indexed_at: 2026-04-30T20:56:32.884288Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Make Multi-Edit Calls Atomic (B40-F3)'
+      byte_offset: 0
+      byte_count: 2524
+      word_count: 367
+      content_hash: 00382014e96862ae2bb5fc267433bf3aef7741bf13f1b5922ecad05e11f0e6d3
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 388
+          byte_count: 381
+          word_count: 54
+          content_hash: 4b4ba93c25219a7717e6f0af105248e1687bb2ed33e142d810d06202e865b196
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 769
+          byte_count: 1178
+          word_count: 166
+          content_hash: 42bc7648ef8a96e3ffef675425e7ddb0090be809fa5151a9457d6e3024c9ec9e
+          children:
+            - path: 1.2.1
+              level: 3
+              title: T1 — Implement pre-flight match for multi-edit calls
+              byte_offset: 788
+              byte_count: 608
+              word_count: 85
+              content_hash: d54f3f773b7f6bfe702385349c0d18d7a70d40a782150a89b9ac434e2b548d60
+            - path: 1.2.2
+              level: 3
+              title: T2 — Write tests for multi-edit atomicity
+              byte_offset: 1396
+              byte_count: 551
+              word_count: 78
+              content_hash: e0fb78c9cd0fd2bd23d58e8716c1ed33cd84feae677a39cded87ae41f508b9e4
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 1947
+          byte_count: 78
+          word_count: 12
+          content_hash: 1218592ae20e3ff2954a8b910a92692a61ea713ad28b3f356dd40c34cda982c3
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 2025
+          byte_count: 275
+          word_count: 44
+          content_hash: e0f98d255f52df933b70d0181eb41cae7f43c75227e7738d8aa8ced8d0f1f54c
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 2300
+          byte_count: 224
+          word_count: 52
+          content_hash: 5c51496f587e04cc178e25ed4eae26a9beee27b1b5af218152ec6a6d1224943a
+entity_refs:
+    - entity_id: FEAT-01KQG2Q5RS9G9
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 278
+    - entity_id: B40-fix-tool-correctness
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 320
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 3
+last_accessed_at: 2026-04-30T21:59:57.176847Z
+section_access:
+    "1":
+        access_count: 2
+        last_accessed_at: 2026-04-30T21:59:57.176847Z
+classified: false

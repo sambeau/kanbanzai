@@ -1,0 +1,79 @@
+document_id: FEAT-01KQG3AWTYSEQ/dev-plan-p40-f7-dev-plan-auto-infer-doc-owner
+document_path: work/P40-retro-batch-april-2026/P40-F7-dev-plan-auto-infer-doc-owner.md
+content_hash: b6aaebe399d7e6645f92b7dcc9d2b6f36bd2af20c6c31ffe02f9410a01f0da85
+indexed_at: 2026-04-30T21:07:03.274177Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Auto-Infer Document Owner from Path Context (B41-F1)'
+      byte_offset: 0
+      byte_count: 2203
+      word_count: 324
+      content_hash: b6aaebe399d7e6645f92b7dcc9d2b6f36bd2af20c6c31ffe02f9410a01f0da85
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 417
+          byte_count: 292
+          word_count: 48
+          content_hash: 49bf61f71a6db812d6217b30c1e2a08ef1ab67f18c5467384cca82a16e9dda8b
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 709
+          byte_count: 1192
+          word_count: 168
+          content_hash: 3de140a6bbf68eb64db3c22d1fe39bb059dcb04e36e2f774feaabefc6a929d55
+          children:
+            - path: 1.2.1
+              level: 3
+              title: T1 — Implement owner inference and path conflict warning
+              byte_offset: 728
+              byte_count: 636
+              word_count: 88
+              content_hash: dcdda2c542c427cf0ddd01fedbc52a7f0a308214658d66910bfe87e60263078a
+            - path: 1.2.2
+              level: 3
+              title: T2 — Write tests for owner inference
+              byte_offset: 1364
+              byte_count: 537
+              word_count: 77
+              content_hash: d0fab950177884e7a6d39e4122863bf3a5a030d834a6e41a23d67b762cc54406
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 1901
+          byte_count: 77
+          word_count: 12
+          content_hash: 53011fa1ddc4d3439dfd3f7ed3463540b4f76b7f74dd97536ba46017ee840c32
+        - path: "1.4"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 1978
+          byte_count: 225
+          word_count: 55
+          content_hash: 978502753e4e8bf5671352e472c699d565af32089e1e5817e6dc885f2a08e02f
+entity_refs:
+    - entity_id: FEAT-01KQG3AWTYSEQ
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 293
+    - entity_id: B41-fix-doc-ownership-lifecycle
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 335
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 3
+last_accessed_at: 2026-04-30T22:27:07.085732Z
+section_access:
+    "1":
+        access_count: 2
+        last_accessed_at: 2026-04-30T22:27:07.085732Z
+classified: false

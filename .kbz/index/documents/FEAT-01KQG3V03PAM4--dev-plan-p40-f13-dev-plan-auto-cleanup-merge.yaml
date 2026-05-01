@@ -1,0 +1,76 @@
+document_id: FEAT-01KQG3V03PAM4/dev-plan-p40-f13-dev-plan-auto-cleanup-merge
+document_path: work/P40-retro-batch-april-2026/P40-F13-dev-plan-auto-cleanup-merge.md
+content_hash: d6de6cc524b16310de362cbeddd737ee0bfb7fed4d092fe71bf4f88830f54ef8
+indexed_at: 2026-04-30T21:15:37.047019Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Auto-Schedule Cleanup on Merge (B42-F3)'
+      byte_offset: 0
+      byte_count: 1578
+      word_count: 227
+      content_hash: d6de6cc524b16310de362cbeddd737ee0bfb7fed4d092fe71bf4f88830f54ef8
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 397
+          byte_count: 243
+          word_count: 39
+          content_hash: cecc45bd30137ee1f785a1bb56a840c3a8cd68ed8475aa64a45906f1383644da
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 640
+          byte_count: 617
+          word_count: 87
+          content_hash: d20683bdf8ce2a538028955806de88e2cc014742314834199852acbb27186744
+          children:
+            - path: 1.2.1
+              level: 3
+              title: T1 — Implement post-merge cleanup hook and tests
+              byte_offset: 659
+              byte_count: 598
+              word_count: 84
+              content_hash: 32242536b84d124c4cb0ed8a02361c60060e77a16ce37737e050b7e49cc4f78f
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 1257
+          byte_count: 78
+          word_count: 13
+          content_hash: 248c2de2c0105d0af2aac6c0bdfea8a2e67ba3e266f44a4076340f7b7f948779
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 1335
+          byte_count: 71
+          word_count: 10
+          content_hash: 7e737f9dc9d6955a0dec47e69c041bdd1774c9ae47078ba8254ca56c85114fcc
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 1406
+          byte_count: 172
+          word_count: 39
+          content_hash: 5e9a8cdef942c1b758ba714290d17098b675909480f29239a0b8a2ca8a7c8725
+entity_refs:
+    - entity_id: FEAT-01KQG3V03PAM4
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 280
+    - entity_id: B42-worktree-cleanup-automation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 322
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 2
+last_accessed_at: 2026-04-30T22:47:30.340069Z
+section_access:
+    "1":
+        access_count: 1
+        last_accessed_at: 2026-04-30T22:47:30.340069Z
+classified: false

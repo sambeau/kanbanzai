@@ -1,0 +1,72 @@
+document_id: FEAT-01KQG3AWX916X/dev-plan-p40-f8-dev-plan-preserve-approval
+document_path: work/P40-retro-batch-april-2026/P40-F8-dev-plan-preserve-approval.md
+content_hash: 20123124740e74c1a62851f2cf1596a3df24f26e2d202f574bd5d6142d204984
+indexed_at: 2026-04-30T21:07:03.266017Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Preserve Approval Status on Minor Doc Edits (B41-F2)'
+      byte_offset: 0
+      byte_count: 1510
+      word_count: 203
+      content_hash: 20123124740e74c1a62851f2cf1596a3df24f26e2d202f574bd5d6142d204984
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 417
+          byte_count: 253
+          word_count: 33
+          content_hash: ef4ef3bf17b0ac60d96416d61499134661b9fd59e314bc462b4823eb57ebf791
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 670
+          byte_count: 626
+          word_count: 86
+          content_hash: 86b0f10eb1a456fc78b9941e4a7022552c6ef9c6295be5258f8e25ae49041539
+          children:
+            - path: 1.2.1
+              level: 3
+              title: T1 — Implement change-scope detection and tests
+              byte_offset: 689
+              byte_count: 607
+              word_count: 83
+              content_hash: b35a1cbf77c5ccce0d9cad80503227dea721f82369c84a41dd6217e86a5259c1
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 1296
+          byte_count: 78
+          word_count: 13
+          content_hash: 5de8d9a86939734e016483a30d66cd19879390237b8d5d2a23fe4977a9e1308f
+        - path: "1.4"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 1374
+          byte_count: 136
+          word_count: 29
+          content_hash: be709759afc7e3b01c0169081785eab1dddf50295248c4f8f6fe142e9802f8de
+entity_refs:
+    - entity_id: FEAT-01KQG3AWX916X
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 293
+    - entity_id: B41-fix-doc-ownership-lifecycle
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 335
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+access_count: 2
+last_accessed_at: 2026-04-30T22:28:13.215091Z
+section_access:
+    "1":
+        access_count: 1
+        last_accessed_at: 2026-04-30T22:28:13.215091Z
+classified: false

@@ -1,0 +1,461 @@
+document_id: P40-retro-batch-april-2026/report-p40-report-collated-feedback
+document_path: work/P40-retro-batch-april-2026/P40-report-collated-feedback.md
+content_hash: fe5be2ec9e88f33417ae484ed84e8dcbe253f3d5ec052ca5a8e8feb6187a0975
+indexed_at: 2026-04-30T19:53:46.452504Z
+sections:
+    - path: "1"
+      level: 1
+      title: Collated Feedback Report — April 2026 Retrospective Batch
+      byte_offset: 0
+      byte_count: 48388
+      word_count: 6612
+      content_hash: fe5be2ec9e88f33417ae484ed84e8dcbe253f3d5ec052ca5a8e8feb6187a0975
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Executive Summary
+          byte_offset: 300
+          byte_count: 2664
+          word_count: 364
+          content_hash: 264799d40b64ff64eb7015c9109b33d9ef20f851b72434a577dfd75f516de99a
+        - path: "1.2"
+          level: 2
+          title: 2. Thematic Synthesis
+          byte_offset: 2964
+          byte_count: 24804
+          word_count: 3337
+          content_hash: b9698e5a19b4875a5b4ccde34782efdb1e699db368f0d35c748507841f8bb35b
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Theme 1: Worktree File Editing Is Broken and Undiscoverable'
+              byte_offset: 2990
+              byte_count: 2257
+              word_count: 296
+              content_hash: 25380196e0569bc8a15c56b24f7c1500c4ea661e7d39d55d50591ab454db1c82
+            - path: 1.2.2
+              level: 3
+              title: 'Theme 2: decompose Tool Has Brittle AC Format Recognition'
+              byte_offset: 5247
+              byte_count: 1861
+              word_count: 236
+              content_hash: b42e5c96e96ac945f4b2752e2ba03c463bedb66bcaa6002b9b1bce80ec9c4e2b
+            - path: 1.2.3
+              level: 3
+              title: 'Theme 3: State Consistency Bugs Between Tool Calls'
+              byte_offset: 7108
+              byte_count: 2055
+              word_count: 272
+              content_hash: 886a8165691fa0b8706a85589b649e6dd7539d6df827b822fb3039a1a53dc461
+            - path: 1.2.4
+              level: 3
+              title: 'Theme 4: Document Ownership and Registration Friction'
+              byte_offset: 9163
+              byte_count: 2012
+              word_count: 261
+              content_hash: 8e24fbc77fdce256668cc94b5c7c609a454fb6800e16a6e031e7dab3e5de5102
+            - path: 1.2.5
+              level: 3
+              title: 'Theme 5: Session Continuity and Context Window Gaps'
+              byte_offset: 11175
+              byte_count: 2364
+              word_count: 321
+              content_hash: 88b73f604bbbe78c0d67adbb4767d9f3863b5db38cd53904270c4e635e0cf34f
+            - path: 1.2.6
+              level: 3
+              title: 'Theme 6: Worktree Lifecycle and Cleanup Automation Gaps'
+              byte_offset: 13539
+              byte_count: 2373
+              word_count: 313
+              content_hash: ffb7c9a29f09dee5c4d03634deeedb32a0de955a6f206525b7015b429b68448f
+            - path: 1.2.7
+              level: 3
+              title: 'Theme 7: Merge and Lifecycle Gate Design Issues'
+              byte_offset: 15912
+              byte_count: 1972
+              word_count: 272
+              content_hash: da31b850f4216ae727e05e65f71fe5e441625c6729dc013aeb23c02ba80dadfa
+            - path: 1.2.8
+              level: 3
+              title: 'Theme 8: Bug Lifecycle Is Friction-Heavy'
+              byte_offset: 17884
+              byte_count: 1354
+              word_count: 203
+              content_hash: 944fbf0968aa64f0e80d285adb0cf8a3b86a642aeec562e31b52d0a9e9f287f5
+            - path: 1.2.9
+              level: 3
+              title: 'Theme 9: Tool Discoverability and Cross-Tool Consistency'
+              byte_offset: 19238
+              byte_count: 2139
+              word_count: 299
+              content_hash: 4028bdfc7b6a47e044c02661ea2a0c96e768fadd0aca101b5bc1a0ef499a874d
+            - path: 1.2.10
+              level: 3
+              title: 'Theme 10: edit_file Reliability Issues'
+              byte_offset: 21377
+              byte_count: 1253
+              word_count: 174
+              content_hash: d49ce9886cf97e1e86eb1442a2ec984ad37a61199905efd3938fad9d78507a5c
+            - path: 1.2.11
+              level: 3
+              title: 'Theme 11: Spec/Skill Validation Mismatches'
+              byte_offset: 22630
+              byte_count: 1070
+              word_count: 141
+              content_hash: e546b146e8b0e9b045306a4fa7bcba8322be334ddfdce6b3d0b0a8d1c1d39255
+            - path: 1.2.12
+              level: 3
+              title: 'Theme 12: Knowledge and Context Assembly Signal-to-Noise'
+              byte_offset: 23700
+              byte_count: 1139
+              word_count: 143
+              content_hash: b4009283a71fbec8a03732508661e3e6649cf9716c225493a963484dd9ce00d5
+            - path: 1.2.13
+              level: 3
+              title: 'Theme 13: CLI and MCP Health-Check Divergence'
+              byte_offset: 24839
+              byte_count: 852
+              word_count: 116
+              content_hash: 2b6bb11bd5b853b6e8b6c04e34a5ed4ab41df1f37d414e4465a6384abc13e4e1
+            - path: 1.2.14
+              level: 3
+              title: 'Theme 14: Cross-Feature Dependency Visibility'
+              byte_offset: 25691
+              byte_count: 729
+              word_count: 108
+              content_hash: 023bfa8179a9d7aa6c56b6dc7372fcfe92454e37350ef0f9a5a22eddd9be93f2
+            - path: 1.2.15
+              level: 3
+              title: 'Theme 15: Test Infrastructure Friction'
+              byte_offset: 26420
+              byte_count: 672
+              word_count: 84
+              content_hash: 3cc818df94b4422360e012c2bdc45e97f9f6b8f544224dec025e7a47f60f8935
+            - path: 1.2.16
+              level: 3
+              title: 'Theme 16: Stale Binary Diagnostics'
+              byte_offset: 27092
+              byte_count: 676
+              word_count: 94
+              content_hash: 923cab4acca2c6f02927b6e48dc71052b8ea18f836a83a339ccb58fb697a5500
+        - path: "1.3"
+          level: 2
+          title: 3. What Consistently Works Well
+          byte_offset: 27768
+          byte_count: 4553
+          word_count: 531
+          content_hash: c45f304854b576ee78ed7be046beef6fe106b117e4319e93f67328bf5faef751
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Sub-Agent Parallelism with Disjoint File Scopes
+              byte_offset: 27804
+              byte_count: 701
+              word_count: 73
+              content_hash: 1ff7e56ab49a8399706bbbde39fdd49ab496af6a97c8ad4ca744c783fc9ea30e
+            - path: 1.3.2
+              level: 3
+              title: The `health()` Diagnostic Tool
+              byte_offset: 28505
+              byte_count: 511
+              word_count: 61
+              content_hash: 84631022b79653dcf5497c7d8eb6e9698408a8294e46df1b573dd37ffb47fa87
+            - path: 1.3.3
+              level: 3
+              title: Stage Binding → Role → Skill Chain
+              byte_offset: 29016
+              byte_count: 540
+              word_count: 68
+              content_hash: f2a8315bcbf32d5bd4184271ab889462af69280d158deb4946d37d37afd1a65c
+            - path: 1.3.4
+              level: 3
+              title: Spec → Dev-Plan → Implement Traceability
+              byte_offset: 29556
+              byte_count: 605
+              word_count: 65
+              content_hash: d2c869b1c054f3c76c7c34e700870123592be7f6e657597dcae8daacb1e836d1
+            - path: 1.3.5
+              level: 3
+              title: '`merge(action: check)` Output Quality'
+              byte_offset: 30161
+              byte_count: 386
+              word_count: 49
+              content_hash: 91bb1ed562342babe1612c80ab13c90d8be9f64897e89426127b148e24956d16
+            - path: 1.3.6
+              level: 3
+              title: Handoff Context Assembly
+              byte_offset: 30547
+              byte_count: 384
+              word_count: 45
+              content_hash: d1ed42e404d9d658754117006e33534ffc956408fbb8ae51a04520643a26d3ae
+            - path: 1.3.7
+              level: 3
+              title: Status Dashboard as Single Source of Truth
+              byte_offset: 30931
+              byte_count: 400
+              word_count: 45
+              content_hash: 4f0ab4499a61c054fc3701b96b5a33ee29aa6113b6e6b17c0042674a0df8e9f9
+            - path: 1.3.8
+              level: 3
+              title: Entity Lifecycle Gate Enforcement
+              byte_offset: 31331
+              byte_count: 350
+              word_count: 42
+              content_hash: 5fb020fa4e356e8c160599c6d99536ee9b2d42fb619c0ec79364aa4174cdc1f9
+            - path: 1.3.9
+              level: 3
+              title: Document Pipeline and Sub-Agent Editorial Workflow
+              byte_offset: 31681
+              byte_count: 450
+              word_count: 51
+              content_hash: 5353dabeeead565adeafea81252b04c8ce13e1643ab384b53e65369577d1439a
+            - path: 1.3.10
+              level: 3
+              title: Display ID System
+              byte_offset: 32131
+              byte_count: 190
+              word_count: 26
+              content_hash: 985130d3285c99b4d0b5562e0cc9f4e72a33ad576b246345843fd73f9f2ae60f
+        - path: "1.4"
+          level: 2
+          title: 4. Quick Wins
+          byte_offset: 32321
+          byte_count: 2655
+          word_count: 387
+          content_hash: dbfaf30cc89036508af93c85d39fba52d68f63274bffc02fd2dbc8f462091f30
+        - path: "1.5"
+          level: 2
+          title: '5. Appendix: Finding Inventory'
+          byte_offset: 34976
+          byte_count: 13412
+          word_count: 1956
+          content_hash: 7798d0e4142e050c33aee995ad3415821b55d299892ae528b9c9b307e4d056ef
+entity_refs:
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.2.4
+      byte_offset: 10692
+    - entity_id: FEAT-01KQ7
+      entity_type: feature
+      section_path: 1.2.6
+      byte_offset: 14601
+    - entity_id: FEAT-X
+      entity_type: feature
+      section_path: 1.2.14
+      byte_offset: 26334
+    - entity_id: FEAT-01KQ7
+      entity_type: feature
+      section_path: 1.3.10
+      byte_offset: 32193
+    - entity_id: TASK-01KQFT5G5XMS7
+      entity_type: task
+      section_path: 1.2.3
+      byte_offset: 7555
+    - entity_id: BUG-01KQB
+      entity_type: bug
+      section_path: 1.2.3
+      byte_offset: 7851
+    - entity_id: BUG-01KQF
+      entity_type: bug
+      section_path: 1.2.3
+      byte_offset: 7874
+    - entity_id: P40-report-b38-implementation-session
+      entity_type: plan
+      section_path: 1.2.1
+      byte_offset: 3094
+    - entity_id: P40-report-retro-synthesis
+      entity_type: plan
+      section_path: 1.2.1
+      byte_offset: 3133
+    - entity_id: P40-retro-p38-plans-and-batches-implementation
+      entity_type: plan
+      section_path: 1.2.1
+      byte_offset: 3161
+    - entity_id: P40-report-b38-implementation-session
+      entity_type: plan
+      section_path: 1.2.2
+      byte_offset: 5352
+    - entity_id: P40-retro-p38-plans-and-batches-implementation
+      entity_type: plan
+      section_path: 1.2.2
+      byte_offset: 5391
+    - entity_id: P40-report-retro-agent-session-experience
+      entity_type: plan
+      section_path: 1.2.3
+      byte_offset: 7222
+    - entity_id: P40-retro-p38-plans-and-batches-implementation
+      entity_type: plan
+      section_path: 1.2.4
+      byte_offset: 9264
+    - entity_id: P40-report-retro-report-4
+      entity_type: plan
+      section_path: 1.2.4
+      byte_offset: 9344
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: 1.2.4
+      byte_offset: 10437
+    - entity_id: B38-spec-f2
+      entity_type: plan
+      section_path: 1.2.4
+      byte_offset: 10459
+    - entity_id: P40-report-b38-implementation-session
+      entity_type: plan
+      section_path: 1.2.5
+      byte_offset: 11308
+    - entity_id: P40-report-b38-implementation-session
+      entity_type: plan
+      section_path: 1.2.6
+      byte_offset: 13639
+    - entity_id: P40-report-retro-report-4
+      entity_type: plan
+      section_path: 1.2.6
+      byte_offset: 13678
+    - entity_id: P40-report-b38-implementation-session
+      entity_type: plan
+      section_path: 1.2.7
+      byte_offset: 16054
+    - entity_id: P40-report-retro-report-4
+      entity_type: plan
+      section_path: 1.2.8
+      byte_offset: 17969
+    - entity_id: P40-report-retro-agent-session-experience
+      entity_type: plan
+      section_path: 1.2.9
+      byte_offset: 19371
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: 1.2.9
+      byte_offset: 19619
+    - entity_id: P40-report-retro-report-4
+      entity_type: plan
+      section_path: 1.2.11
+      byte_offset: 22714
+    - entity_id: P40-report-b38-implementation-session
+      entity_type: plan
+      section_path: 1.2.12
+      byte_offset: 23798
+    - entity_id: P40-report-retro-synthesis
+      entity_type: plan
+      section_path: 1.2.16
+      byte_offset: 27168
+    - entity_id: P40-report-retro-synthesis
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 27873
+    - entity_id: P40-report-b38-implementation-session
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 27901
+    - entity_id: P40-retro-p38-plans-and-batches-implementation
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 27940
+    - entity_id: P40-report-retro-report-4
+      entity_type: plan
+      section_path: 1.3.2
+      byte_offset: 28557
+    - entity_id: P40-report-retro-agent-session-experience
+      entity_type: plan
+      section_path: 1.3.3
+      byte_offset: 29092
+    - entity_id: P40-report-b38-implementation-session
+      entity_type: plan
+      section_path: 1.3.3
+      byte_offset: 29151
+    - entity_id: P40-retro-p38-plans-and-batches-implementation
+      entity_type: plan
+      section_path: 1.3.4
+      byte_offset: 29622
+    - entity_id: P40-retro-p38-plans-and-batches-implementation
+      entity_type: plan
+      section_path: 1.3.7
+      byte_offset: 30995
+    - entity_id: P40-report-b38-implementation-session
+      entity_type: plan
+      section_path: 1.3.8
+      byte_offset: 31386
+    - entity_id: P40-report-retro-report-4
+      entity_type: plan
+      section_path: 1.3.8
+      byte_offset: 31425
+    - entity_id: P40-report-retro-synthesis
+      entity_type: plan
+      section_path: 1.3.9
+      byte_offset: 31753
+    - entity_id: P40-report-retro-report-4
+      entity_type: plan
+      section_path: 1.3.9
+      byte_offset: 31781
+    - entity_id: P40-report-b38
+      entity_type: plan
+      section_path: "1.4"
+      byte_offset: 32764
+    - entity_id: P40-report-retro-synthesis
+      entity_type: plan
+      section_path: "1.4"
+      byte_offset: 32780
+    - entity_id: P40-retro-p38
+      entity_type: plan
+      section_path: "1.4"
+      byte_offset: 32808
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: "1.4"
+      byte_offset: 33594
+    - entity_id: P40-report-retro-synthesis
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 35139
+    - entity_id: P40-report-b38-implementation-session
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 35255
+    - entity_id: P40-retro-p38-plans-and-batches-implementation
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 36033
+    - entity_id: P40-report-retro-agent-session-experience
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 36795
+    - entity_id: P40-report-retro-report-4
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 39665
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 41517
+cross_doc_links:
+    - target_path: work/B38-plans-and-batches/B38-spec-f2.md
+      link_text: work/B38-plans-and-batches/B38-spec-f2.md
+      section_path: 1.2.4
+    - target_path: write-spec/SKILL.md
+      link_text: write-spec/SKILL.md
+      section_path: 1.2.11
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.2.11
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.12
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.5
+      role: narrative
+      confidence: high
+    - section_path: 1.2.12
+      role: narrative
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: 1.3.6
+      role: narrative
+      confidence: high
+access_count: 3
+last_accessed_at: 2026-04-30T20:01:54.409085Z
+classified: false

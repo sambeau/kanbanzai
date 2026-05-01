@@ -3,7 +3,7 @@
 | Field  | Value                         |
 |--------|-------------------------------|
 | Date   | 2026-04-30                    |
-| Status | Draft                         |
+| Status | approved |
 | Author | Architect                     |
 | Feature | FEAT-01KQG3AX1AD0K           |
 | Spec   | B41-fix-doc-ownership-lifecycle/spec-p40-spec-b41-doc-ownership-lifecycle |
@@ -60,6 +60,14 @@ don't support verification fields.
 ```
 T1 (verification params) ──→ T2 (tests)
 ```
+
+---
+
+## Interface Contracts
+
+| Boundary | Contract |
+|----------|----------|
+| T1 → T2 | After T1, entity update accepts verification and verification_status params. T2 tests all scenarios: feature update, merge gate pass-through, batch rejection, backward compat. |
 
 ---
 

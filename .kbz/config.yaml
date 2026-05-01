@@ -2,3 +2,5 @@ version: "2"
 prefixes:
   - prefix: P
     name: Plan
+  - prefix: B
+    name: Batch

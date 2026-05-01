@@ -1,0 +1,359 @@
+document_id: B40-fix-tool-correctness/report-batch-review-b40-fix-tool-correctness-2026-05-01
+document_path: work/reviews/batch-review-b40-fix-tool-correctness-2026-05-01.md
+content_hash: 4acfb6d512d305a7e1532a1612a20d8eb6968e2a3e12e47c3e04b735f42b4927
+indexed_at: 2026-05-01T09:56:10.016142Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Batch Conformance Review: B40-fix-tool-correctness'
+      byte_offset: 0
+      byte_count: 11151
+      word_count: 1474
+      content_hash: 4acfb6d512d305a7e1532a1612a20d8eb6968e2a3e12e47c3e04b735f42b4927
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 54
+          byte_count: 271
+          word_count: 31
+          content_hash: 79b4f7ef1bcd1ee12057196e62c9e5bbd6b9ff244bea202015ff4ace6e47bcac
+        - path: "1.2"
+          level: 2
+          title: Feature Census
+          byte_offset: 325
+          byte_count: 2012
+          word_count: 277
+          content_hash: ea83f7d31db79fd708dbbfd0996163a8a3fe93c91add1956da7f5a38a0934043
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Spec and Design Status
+              byte_offset: 1300
+              byte_count: 461
+              word_count: 46
+              content_hash: 55fad09ecee64ea0bac57ec2d06b3eee802418571329d87f9a8fbf8f229bd851
+            - path: 1.2.2
+              level: 3
+              title: Task Status Detail
+              byte_offset: 1761
+              byte_count: 576
+              word_count: 74
+              content_hash: f123a76e6d4e982d2c1150536bcbc6de1993950addaf146d2c89eef89ed99e3e
+        - path: "1.3"
+          level: 2
+          title: Conformance Gaps
+          byte_offset: 2337
+          byte_count: 1356
+          word_count: 185
+          content_hash: 088810219ff6bc343587527900a411c4cd8e0071d97538006c77139bc8f317ac
+        - path: "1.4"
+          level: 2
+          title: Spec Conformance Verification
+          byte_offset: 3693
+          byte_count: 3415
+          word_count: 441
+          content_hash: 74d2fdc311b2e4f450a0903e6c0f1a6738ba0a4c5253da905e393950cd2c4a79
+          children:
+            - path: 1.4.1
+              level: 3
+              title: AC-001 (REQ-001 — parent_feature filter, 3 tasks returned)
+              byte_offset: 3727
+              byte_count: 325
+              word_count: 38
+              content_hash: c65419a55735fef02bec6ff59ba7936cfd207ac2c94e0a3798bf8232657dccc9
+            - path: 1.4.2
+              level: 3
+              title: AC-002 (REQ-001 — parent_feature filter, no tasks returns empty)
+              byte_offset: 4052
+              byte_count: 187
+              word_count: 20
+              content_hash: a099ac90136f8e47abe249f8c07090a640e64b00407870b7445d9d481f7fa18b
+            - path: 1.4.3
+              level: 3
+              title: AC-003 (REQ-002, REQ-003 — finish state consistency)
+              byte_offset: 4239
+              byte_count: 366
+              word_count: 49
+              content_hash: 7641a0a805359a9f45deace0d1aff98a5373cbce5c6d55ec5a2029e8436b4bea
+            - path: 1.4.4
+              level: 3
+              title: AC-004 (REQ-004, REQ-005 — multi-edit partial match fails atomic)
+              byte_offset: 4605
+              byte_count: 342
+              word_count: 50
+              content_hash: 8fbec7c4eb98be5af23fb06482e1ec21601d35412f125c3421ef3d0dfc1a3d0d
+            - path: 1.4.5
+              level: 3
+              title: AC-005 (REQ-004, REQ-006 — multi-edit all match succeeds)
+              byte_offset: 4947
+              byte_count: 189
+              word_count: 26
+              content_hash: 442fc4c8ce6126cb0381f6645ea9de9a05116865e2f503c05659c049ed2a1313
+            - path: 1.4.6
+              level: 3
+              title: AC-006 (REQ-007 — heading-based ACs)
+              byte_offset: 5136
+              byte_count: 247
+              word_count: 32
+              content_hash: 56a6cbcc9df1d489b2a5d7c44f4ab4198b0cf3ee721041a7b3e3e542a3c1ab86
+            - path: 1.4.7
+              level: 3
+              title: AC-007 (REQ-007 — bold-with-parenthetical ACs)
+              byte_offset: 5383
+              byte_count: 219
+              word_count: 26
+              content_hash: 0d95e822e2ec029350bac12f09c92493ae924164b8e56d2df38aa1d0897c5be4
+            - path: 1.4.8
+              level: 3
+              title: AC-008 (REQ-007 — Given/When/Then blocks)
+              byte_offset: 5602
+              byte_count: 188
+              word_count: 25
+              content_hash: 78acb9394633f33a66ee85e4044ad105dcde8314b28ce8a628216596b64ed8fc
+            - path: 1.4.9
+              level: 3
+              title: AC-009 (REQ-008 — diagnostic on parse failure)
+              byte_offset: 5790
+              byte_count: 282
+              word_count: 35
+              content_hash: af21a935b09cd6a01313dc291a79a7b1723c5cee5613974443e948282f896059
+            - path: 1.4.10
+              level: 3
+              title: AC-010 (REQ-007 — existing formats preserved)
+              byte_offset: 6072
+              byte_count: 205
+              word_count: 28
+              content_hash: 38bcabe84d63d4ecdd5bf2cd9a5a49704a88ee6d7f450a815d504ff9db96b9bd
+            - path: 1.4.11
+              level: 3
+              title: AC-011 (REQ-009, REQ-NF-003 — single-edit unchanged, one file read)
+              byte_offset: 6277
+              byte_count: 263
+              word_count: 36
+              content_hash: 99ca8cd6f861d9b0f1ebe794f6598b8759805ff09cbf2ab3ea402cc1cf88f3fb
+            - path: 1.4.12
+              level: 3
+              title: AC-012 (REQ-NF-001 — unfiltered list unchanged)
+              byte_offset: 6540
+              byte_count: 221
+              word_count: 24
+              content_hash: 8d25cc0a4164f0fc55f87a233bc523f0a9c68ca1d2d8df37f9207b1aef4bf86b
+            - path: 1.4.13
+              level: 3
+              title: AC-013 (REQ-NF-002 — finish latency ≤5ms p95 increase)
+              byte_offset: 6761
+              byte_count: 347
+              word_count: 48
+              content_hash: 09b4c7f291278354ffe0821ba01920acccf524a8b1385c6280760fa9747a4a33
+        - path: "1.5"
+          level: 2
+          title: Documentation Currency
+          byte_offset: 7108
+          byte_count: 725
+          word_count: 83
+          content_hash: 630140cadd00816a347803a4f389dbfdc91cf2317f474e4e2f787b8eb7fee69e
+        - path: "1.6"
+          level: 2
+          title: Cross-Cutting Checks
+          byte_offset: 7833
+          byte_count: 774
+          word_count: 116
+          content_hash: 749a00f350d39ceaf3ec899bd5032eedcef57466c26157330d5375fd99b46e6e
+          children:
+            - path: 1.6.1
+              level: 3
+              title: health() Findings Related to B40
+              byte_offset: 7858
+              byte_count: 588
+              word_count: 82
+              content_hash: 05d3b91fa643c8ffca3c0fa445e2e1d874157e78ad334ec7a62aadf4cced9b92
+            - path: 1.6.2
+              level: 3
+              title: Worktree Status
+              byte_offset: 8446
+              byte_count: 161
+              word_count: 31
+              content_hash: f9b7f46cbedf668dc4802bd7eabf20bfa48535293ace4abfd7f3cd8fb441c7c0
+        - path: "1.7"
+          level: 2
+          title: Retrospective Summary
+          byte_offset: 8607
+          byte_count: 438
+          word_count: 63
+          content_hash: f4abd0754c7bacfc75a18c4ea6dc336be5f05c69970ec4a867cfe927173683b5
+        - path: "1.8"
+          level: 2
+          title: Batch Verdict
+          byte_offset: 9045
+          byte_count: 950
+          word_count: 139
+          content_hash: 844cb258501dcb90439c1e96d269b820aa323cbbf0793217c0bb4f829503128c
+          children:
+            - path: 1.8.1
+              level: 3
+              title: '**PASS-WITH-NOTES** ⚠️'
+              byte_offset: 9063
+              byte_count: 32
+              word_count: 3
+              content_hash: 164bf455a66239b16c8095c027cf34affe702e47b8562f8a720df8a68e04abb2
+            - path: 1.8.2
+              level: 3
+              title: Rationale
+              byte_offset: 9095
+              byte_count: 900
+              word_count: 133
+              content_hash: 21c2c77bca88a9107e4cdc99e4ac990f56d67e6e419d164e3e5d235a4b7bfe41
+        - path: "1.9"
+          level: 2
+          title: Evidence
+          byte_offset: 9995
+          byte_count: 1156
+          word_count: 134
+          content_hash: b642b3a748616ce9c68996e018c4ef64870b854957d99538d546b197643e59e8
+entity_refs:
+    - entity_id: FEAT-01KQG2Q5MDC6E
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 538
+    - entity_id: FEAT-01KQG2Q5Q1HX9
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 719
+    - entity_id: FEAT-01KQG2Q5RS9G9
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 896
+    - entity_id: FEAT-01KQG2Q5V4S6W
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1112
+    - entity_id: FEAT-01KQG2Q5MDC6E
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 2511
+    - entity_id: FEAT-01KQG2Q5Q1HX9
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 2570
+    - entity_id: FEAT-01KQG2Q5RS9G9
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 7996
+    - entity_id: FEAT-01KQG2Q5V4S6W
+      entity_type: feature
+      section_path: 1.6.1
+      byte_offset: 8131
+    - entity_id: FEAT-01KQG2Q5MDC6E
+      entity_type: feature
+      section_path: "1.9"
+      byte_offset: 10579
+    - entity_id: FEAT-01KQG2Q5Q1HX9
+      entity_type: feature
+      section_path: "1.9"
+      byte_offset: 10629
+    - entity_id: FEAT-01KQG2Q5RS9G9
+      entity_type: feature
+      section_path: "1.9"
+      byte_offset: 10764
+    - entity_id: FEAT-01KQG2Q5V4S6W
+      entity_type: feature
+      section_path: "1.9"
+      byte_offset: 10794
+    - entity_id: TASK-01KQG2WSTPF5K
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 1798
+    - entity_id: TASK-01KQG2WSY70G5
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 1867
+    - entity_id: TASK-01KQG2WT0N1TR
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 1887
+    - entity_id: TASK-01KQG2WT3GC31
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 1957
+    - entity_id: TASK-01KQG2WT61X74
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 1977
+    - entity_id: TASK-01KQG2WT8EVFH
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 2143
+    - entity_id: TASK-01KQG2WTB2NFH
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 2163
+    - entity_id: TASK-01KQG2WTDZHQJ
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 2183
+    - entity_id: B40-fix-tool-correctness
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 28
+    - entity_id: B40-fix-tool-correctness
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 76
+    - entity_id: P40-retro-batch-april-2026
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 159
+    - entity_id: B40-fix-tool-correctness
+      entity_type: plan
+      section_path: 1.2.1
+      byte_offset: 1355
+    - entity_id: P40-retro-batch-april-2026
+      entity_type: plan
+      section_path: 1.2.1
+      byte_offset: 1473
+    - entity_id: B40-all
+      entity_type: plan
+      section_path: "1.3"
+      byte_offset: 3471
+    - entity_id: B40-fix-tool-correctness
+      entity_type: plan
+      section_path: "1.3"
+      byte_offset: 3502
+    - entity_id: B40-fix-tool-correctness
+      entity_type: plan
+      section_path: "1.9"
+      byte_offset: 10051
+    - entity_id: P40-retro-batch-april-2026
+      entity_type: plan
+      section_path: "1.9"
+      byte_offset: 10406
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: "1.5"
+    - target_path: kanbanzai-documents/SKILL.md
+      link_text: kanbanzai-documents/SKILL.md
+      section_path: "1.5"
+    - target_path: kanbanzai-getting-started/SKILL.md
+      link_text: kanbanzai-getting-started/SKILL.md
+      section_path: "1.5"
+    - target_path: kanbanzai-plan-review/SKILL.md
+      link_text: kanbanzai-plan-review/SKILL.md
+      section_path: "1.5"
+    - target_path: kanbanzai-workflow/SKILL.md
+      link_text: kanbanzai-workflow/SKILL.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.7"
+      role: narrative
+      confidence: high
+    - section_path: 1.8.2
+      role: rationale
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-01T09:56:11.006879Z
+classified: false

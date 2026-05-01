@@ -1,0 +1,126 @@
+document_id: B39-fix-worktree-dev-experience/spec-p40-spec-b39-worktree-dev-experience
+document_path: work/P40-retro-batch-april-2026/P40-spec-b39-worktree-dev-experience.md
+content_hash: 588fb4927ee86245b714a68595f14074fab00253f4668462461aaafa127629b1
+indexed_at: 2026-04-30T20:33:00.593561Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Fix Worktree Development Experience'
+      byte_offset: 0
+      byte_count: 10327
+      word_count: 1408
+      content_hash: 588fb4927ee86245b714a68595f14074fab00253f4668462461aaafa127629b1
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem Statement
+          byte_offset: 403
+          byte_count: 1828
+          word_count: 229
+          content_hash: 19beef135ccb9ab70ac43fddf5c077d221707b71612130313f7fc5993d1de2f8
+        - path: "1.2"
+          level: 2
+          title: Requirements
+          byte_offset: 2231
+          byte_count: 2484
+          word_count: 345
+          content_hash: b99f950114aef8bfa0ce3faded6f6cad7ea352e9715688704172d64c06dd1b7d
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 2248
+              byte_count: 1838
+              word_count: 257
+              content_hash: 8e83d7b8c863dd05153ae87c1ba82ffd2879b04fffbf75c1cb502686dd48f42e
+            - path: 1.2.2
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 4086
+              byte_count: 629
+              word_count: 86
+              content_hash: c7cabce1582e1c8eb21f9a6ecc4d087840e2f3cb3f044be7b11c49f500ef6c3c
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 4715
+          byte_count: 789
+          word_count: 106
+          content_hash: 42082b9709aac69a69d3f79046cec38c2da8cea15ecf16a3cb04ab27b61f77d4
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 5504
+          byte_count: 3080
+          word_count: 419
+          content_hash: 872e979512cf219ccb8d5def69af78acae8213c74e8c652d7c2016a98c565969
+        - path: "1.5"
+          level: 2
+          title: Verification Plan
+          byte_offset: 8584
+          byte_count: 1743
+          word_count: 270
+          content_hash: faff1bccc199db26107cef108115b5aafd7d3672dbebcb26da6e5a8465bde8ea
+entity_refs:
+    - entity_id: FEAT-01EXAMPLE
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 6363
+    - entity_id: FEAT-01NONEXISTENT
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 6879
+    - entity_id: B39-fix-worktree-dev-experience
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 280
+    - entity_id: P40-retro-batch-april-2026
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 325
+    - entity_id: P40-retro-batch-april-2026
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 501
+    - entity_id: P40-design-retro-batch-improvements
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 528
+cross_doc_links:
+    - target_path: work/P40-retro-batch-april-2026/P40-design-retro-batch-improvements.md
+      link_text: work/P40-retro-batch-april-2026/P40-design-retro-batch-improvements.md
+      section_path: "1.1"
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: "1.1"
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.2.1
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: 1.2.2
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: "1.4"
+    - target_path: implement-task/SKILL.md
+      link_text: implement-task/SKILL.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+access_count: 2
+last_accessed_at: 2026-05-01T09:49:47.271881Z
+classified: false

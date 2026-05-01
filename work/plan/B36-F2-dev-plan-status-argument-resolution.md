@@ -1,16 +1,21 @@
 | Field  | Value                                   |
 |--------|-----------------------------------------|
 | Date   | 2026-04-30                              |
-| Status | approved |
+| Status | approved (amended: 2026-04-30)          |
 | Author | architect                               |
 
 ## Overview
 
 This dev-plan decomposes the specification `work/spec/B36-F2-spec-status-argument-resolution.md`
-into six vertical slices covering argument parsing and validation for `kbz status [<target>]
-[--format <fmt>]`, disambiguation of `<target>` (file path vs entity ID vs plan prefix),
-file-path-to-document-record resolution, entity ID routing, `kbz doc approve` path resolution,
-and integration verification.
+into eight vertical slices: argument parsing and validation, disambiguation of `<target>`,
+file-path-to-document-record resolution, entity ID routing (including the FR-007 fallback probe),
+exit code conformance, `kbz doc approve` path resolution, review-driven remediation, and integration
+verification.
+
+> **Amended 2026-04-30:** Added Tasks 7–8 to address blocking findings from the B36 batch
+> conformance review (see `work/reviews/batch-review-b36-kbz-cli-and-status.md`). Task 7
+> implements the FR-007 ResolveNone fallback probe. Task 8 fixes exit codes on entity/plan
+> not-found paths (FR-008, FR-016).
 
 ## Scope
 
@@ -112,9 +117,42 @@ for kbz doc approve.
   routing decisions without depending on B36-F3/B36-F4.
 - Deliverable: cmd/kanbanzai/status_cmd_integration_test.go,
   modified cmd/kanbanzai/doc_cmd_test.go.
-- Depends on: Task 2, Task 3, Task 4, Task 5.
+- Depends on: Task 2, Task 3, Task 4, Task 5, Task 7, Task 8.
 - Effort: Large.
 - Spec requirement: All ACs; FR-017, FR-018, NFR-003.
+
+### Task 7: Implement FR-007 ResolveNone Fallback Probe
+
+- **Description:** The `ResolveNone` branch in `runStatus` currently returns an
+  error immediately. Implement the two-step fallback probe required by FR-007:
+  (1) attempt entity-ID lookup via `EntityService.Get`; if that fails,
+  (2) attempt path lookup via `DocumentService.ListDocuments` filtered by path.
+  Only after both fail should the command return an error. Each probe attempt
+  must use the same service calls as their dedicated code paths (Task 3 and
+  Task 4) so behaviour is consistent. The existing code comment "try entity
+  first, then path, then give up" documents the intent — implement it.
+- **Deliverable:** Modified `cmd/kbz/workflow_cmd.go` (`runStatus` ResolveNone
+  branch, ~L130-134).
+- **Depends on:** Task 2 (needs the runStatus structure), Task 3 (needs the path
+  lookup pattern), Task 4 (needs the entity lookup pattern).
+- **Effort:** Small.
+- **Spec requirement:** FR-007, AC-007.
+
+### Task 8: Fix Exit Codes on Entity/Plan Not-Found
+
+- **Description:** `runStatusEntity` returns `nil` (exit 0) when `entitySvc.Get`
+  fails; `runStatusPlanPrefix` returns `nil` (exit 0) when `GetPlan` fails. Both
+  must instead return descriptive errors so the caller `runStatus` can exit with
+  code 1 as required by FR-016 and FR-008 respectively. The error messages must
+  include the unresolved ID/prefix. Update integration tests (Task 6) to assert
+  exit code 1 for these paths. Also update the inline comment in
+  `runStatusPlanPrefix` that currently reads "Plan not found — informational, exit
+  0" to reflect the corrected behaviour.
+- **Deliverable:** Modified `cmd/kbz/workflow_cmd.go` (`runStatusEntity` ~L230-238,
+  `runStatusPlanPrefix` ~L435-439).
+- **Depends on:** Task 4 (these are the entity/plan routing functions).
+- **Effort:** Small.
+- **Spec requirement:** FR-008, FR-016, AC-006, AC-013.
 
 ## Dependency Graph
 
@@ -123,10 +161,12 @@ Task 2 -> depends on Task 1
 Task 3 -> depends on Task 1, Task 2
 Task 4 -> depends on Task 1, Task 2
 Task 5 -> depends on Task 1, Task 3
-Task 6 -> depends on Task 2, Task 3, Task 4, Task 5
+Task 7 -> depends on Task 2, Task 3, Task 4
+Task 8 -> depends on Task 4
+Task 6 -> depends on Task 2, Task 3, Task 4, Task 5, Task 7, Task 8
 
-Parallel groups: [Task 3, Task 4]
-Critical path: Task 1 -> Task 2 -> Task 3 -> Task 5 -> Task 6
+Parallel groups: [Task 3, Task 4], [Task 7, Task 8]
+Critical path: Task 1 -> Task 2 -> Task 4 -> Task 7 -> Task 6
 
 ## Risk Assessment
 
@@ -146,6 +186,27 @@ Critical path: Task 1 -> Task 2 -> Task 3 -> Task 5 -> Task 6
 - Mitigation: TSID has 13 characters of entropy; ambiguous matches
   are astronomically unlikely. ResolvePrefix already errors on ambiguity.
 - Affected tasks: Task 4.
+
+### Risk: FR-007 Fallback Probe Service Dependency
+
+- Probability: Low.
+- Impact: Medium. The ResolveNone probe needs both entity and document
+  services available. If either service initialisation path differs from
+  Task 3/Task 4, the probe could behave inconsistently.
+- Mitigation: Reuse the same service initialisation patterns from Task 3
+  (path lookup) and Task 4 (entity lookup) in the probe code. Integration
+  tests in Task 6 verify consistency.
+- Affected tasks: Task 7.
+
+### Risk: Exit Code Change May Break Downstream Scripts
+
+- Probability: Low.
+- Impact: Low. The previous exit-0-on-not-found behaviour was a bug
+  relative to the spec. Any scripts depending on it were relying on
+  incorrect behaviour.
+- Mitigation: Document the change in the batch completion summary.
+  The spec has always required exit 1.
+- Affected tasks: Task 8.
 
 ### Risk: DocumentService Interface Change Breaks MCP
 
@@ -231,8 +292,8 @@ FR-003: Task 2, AC-017
 FR-004: Task 2, AC-018
 FR-005: Task 1, Task 5, AC-001, AC-002
 FR-006: Task 1, AC-003, AC-004
-FR-007: Task 1, Task 4, AC-007
-FR-008: Task 1, Task 4, AC-005, AC-006
+FR-007: Task 1, Task 4, Task 7, AC-007
+FR-008: Task 1, Task 4, Task 8, AC-005, AC-006
 FR-009: Task 3, AC-008
 FR-010: Task 3, AC-009
 FR-011: Task 3, AC-009
@@ -240,9 +301,9 @@ FR-012: Task 3, AC-010, AC-011
 FR-013: Task 3, AC-012
 FR-014: Task 4, AC-014, AC-015
 FR-015: Task 4, AC-014
-FR-016: Task 4, AC-013
-FR-017: Task 3, Task 4, Task 6, AC-005, AC-009 through AC-011, AC-014, AC-015, AC-019, AC-022, AC-023
-FR-018: Task 3, Task 4, Task 6, AC-006 through AC-008, AC-013, AC-020, AC-021
+FR-016: Task 4, Task 8, AC-013
+FR-017: Task 3, Task 4, Task 7, Task 8, Task 6, AC-005, AC-009 through AC-011, AC-014, AC-015, AC-019, AC-022, AC-023
+FR-018: Task 3, Task 4, Task 7, Task 8, Task 6, AC-006 through AC-008, AC-013, AC-020, AC-021
 FR-019: Task 2, AC-016 through AC-018
 FR-020: Task 2, AC-016
 FR-021: Task 5, AC-021, AC-022, AC-024
