@@ -3,10 +3,10 @@ content: "[minor] worked-well: Narrowing exclusion checks to Type == 'open_criti
 created: "2026-04-21T01:58:27Z"
 created_by: unknown
 id: KE-01KPPW5973AA4
-last_accessed_at: "2026-05-01T09:53:09Z"
+last_accessed_at: "2026-05-01T10:05:36Z"
 learned_from: TASK-01KPPJHPM4FSC
 miss_count: 0
-recent_use_count: 241
+recent_use_count: 243
 scope: project
 status: contributed
 tags:
