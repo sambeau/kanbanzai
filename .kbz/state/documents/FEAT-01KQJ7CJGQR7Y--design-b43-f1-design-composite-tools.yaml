@@ -1,10 +1,12 @@
-content_hash: 07e690df178d1aa0be2356905666574998e82442542253c19effc385e57ae46d
+approved_at: "2026-05-01T17:01:27Z"
+approved_by: sambeau
+content_hash: ac69e18a1924b779d684e6a01ef840cac9578c896201c030bea2821f3c8e35a6
 created: "2026-05-01T16:59:19Z"
 created_by: sambeau
 id: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools
 owner: FEAT-01KQJ7CJGQR7Y
 path: work/design/B43-F1-design-composite-tools.md
-status: draft
+status: approved
 title: "Design: Composite Tools for Workflow Chaining"
 type: design
-updated: "2026-05-01T16:59:19Z"
+updated: "2026-05-01T17:01:27Z"
