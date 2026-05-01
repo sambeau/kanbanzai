@@ -1,0 +1,20 @@
+confidence: "0.5"
+content: "The health checker reports 7 features as \"orphaned reviewing\" (reviewing status with no registered review report), but all 7 are actually already done via override transitions. Root cause: when a feature uses entity(action: \"update\", override: true) to bypass reviewing and go straight to done, the health checker still checks for a registered review document and flags it as orphaned. The health checker needs to also check the feature's current lifecycle status — if status is \"done\", it should not be flagged regardless of whether a review doc exists. Affected features: FEAT-01KQG1XWAZE8V, FEAT-01KQG2Q5MDC6E, FEAT-01KQG2Q5Q1HX9, FEAT-01KQG3AWTYSEQ, FEAT-01KQG3AX1AD0K, FEAT-01KQG3TZR2JDP, FEAT-01KQG3V03PAM4 — all from P40 batches. Recorded from status health check on 2026-05-01."
+created: "2026-05-01T12:17:08Z"
+created_by: sambeau
+id: KE-01KQHQHA1GCFG
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - health-checker
+  - reviewing
+  - false-positive
+  - process-error
+  - override
+  - P40
+tier: 2
+topic: orphaned-reviewing-false-positive
+ttl_days: 90
+updated: "2026-05-01T12:17:08Z"
+use_count: 0
