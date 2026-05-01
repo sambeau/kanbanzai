@@ -503,6 +503,57 @@ func TestEntity_List_TasksFilteredByParent(t *testing.T) {
 	}
 }
 
+func TestEntity_List_TasksFilteredByParentFeature(t *testing.T) {
+	t.Parallel()
+	entitySvc := setupEntityToolTest(t)
+
+	planID := createEntityTestPlan(t, entitySvc, "ent-lpf1")
+	featID1 := createEntityTestFeature(t, entitySvc, planID, "feat-lpf1a")
+	featID2 := createEntityTestFeature(t, entitySvc, planID, "feat-lpf1b")
+
+	createEntityTestTask(t, entitySvc, featID1, "task-lpf1a1")
+	createEntityTestTask(t, entitySvc, featID1, "task-lpf1a2")
+	createEntityTestTask(t, entitySvc, featID1, "task-lpf1a3")
+	createEntityTestTask(t, entitySvc, featID2, "task-lpf1b1")
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action":         "list",
+		"type":           "task",
+		"parent_feature": featID1,
+	})
+
+	entities, _ := result["entities"].([]any)
+	if len(entities) != 3 {
+		t.Errorf("expected 3 tasks in feat1, got %d", len(entities))
+	}
+}
+
+func TestEntity_List_TasksFilteredByParentFeature_NoMatch(t *testing.T) {
+	t.Parallel()
+	entitySvc := setupEntityToolTest(t)
+
+	planID := createEntityTestPlan(t, entitySvc, "ent-lpfnm1")
+	featID := createEntityTestFeature(t, entitySvc, planID, "feat-lpfnm1a")
+
+	createEntityTestTask(t, entitySvc, featID, "task-lpfnm1a1")
+	createEntityTestTask(t, entitySvc, featID, "task-lpfnm1a2")
+
+	result := callEntityToolJSON(t, entitySvc, map[string]any{
+		"action":         "list",
+		"type":           "task",
+		"parent_feature": "FEAT-01ZZZZZZZZZZZ",
+	})
+
+	entities, _ := result["entities"].([]any)
+	if len(entities) != 0 {
+		t.Errorf("expected 0 tasks for nonexistent feature, got %d", len(entities))
+	}
+	total, _ := result["total"].(float64)
+	if int(total) != 0 {
+		t.Errorf("total = %v, want 0", total)
+	}
+}
+
 func TestEntity_List_FeaturesFilteredByParent(t *testing.T) {
 	t.Parallel()
 	entitySvc := setupEntityToolTest(t)
