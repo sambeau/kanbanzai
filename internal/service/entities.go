@@ -144,6 +144,20 @@ func (s *EntityService) SetCache(c *cache.Cache) {
 	s.cache = c
 }
 
+// CacheRefresh upserts an entity into the cache from a storage.EntityRecord.
+// This is used by callers (e.g. DispatchService) that write to the entity
+// store directly and need to keep the cache synchronised. The caller must
+// have already written the record to the YAML store.
+func (s *EntityService) CacheRefresh(record storage.EntityRecord) {
+	s.cacheUpsertFromResult(CreateResult{
+		Type:  record.Type,
+		ID:    record.ID,
+		Slug:  record.Slug,
+		Path:  filepath.Join(s.root, entityDirectory(record.Type), entityFileName(record.ID, record.Slug)),
+		State: record.Fields,
+	})
+}
+
 // RebuildCache scans all canonical entity files and repopulates the cache.
 // Returns the number of entities cached.
 func (s *EntityService) RebuildCache() (int, error) {

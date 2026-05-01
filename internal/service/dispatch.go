@@ -293,6 +293,10 @@ func (s *DispatchService) CompleteTask(input CompleteInput) (CompleteResult, err
 		return CompleteResult{}, fmt.Errorf("write completion fields: %w", err)
 	}
 
+	// Synchronise the cache after the direct store write so subsequent
+	// reads (entity list, gate checks) observe the completed task state.
+	s.entitySvc.CacheRefresh(taskRecord)
+
 	// Process knowledge entries (best-effort).
 	var kResult KnowledgeContributionResult
 	for _, entry := range input.KnowledgeEntries {
