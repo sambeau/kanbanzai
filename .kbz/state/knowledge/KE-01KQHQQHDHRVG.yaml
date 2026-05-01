@@ -1,5 +1,5 @@
 confidence: "0.5"
-content: "Tasks/features showing as \"done\" via entity(get) but still appearing as \"ready\" or \"reviewing\" in list/status dashboards. Root cause: finish() writes task status to the entity YAML store and SQLite cache, but the status dashboard and task-queue (next()) appear to read from a cached index that isn't reliably invalidated after write-through. Specific examples: TASK-01KQG2WT3GC31 shows status:done via get but status:ready via list; FEAT-01KQG2Q5MDC6E and FEAT-01KQG2Q5Q1HX9 show status:done via get but status:reviewing via list. The write-through pattern in finish() (CacheRefresh) needs to also refresh whatever the list/queue query uses, or the list/queue query needs to bypass cache for status fields. Without this, every override transition and finish() call risks leaving \"detritus\" where the source of truth is done but the index disagrees."
+content: "Tasks/features showing as \"done\" via entity(get) but still appearing as \"ready\", \"active\", or \"reviewing\" in list/status dashboards. Root cause: finish() writes task status to the entity YAML store and SQLite cache, but entity(action: list) and the task queue (next()) read from a cached index that isn't reliably invalidated after write-through. Specific examples: TASK-01KQG2WT3GC31 shows status:done via get but status:ready via list; TASK-01KQG2WTDZHQJ shows status:done via get with completion_summary+verification but status:active via list; FEAT-01KQG2Q5MDC6E and FEAT-01KQG2Q5Q1HX9 show status:done via get but status:reviewing via list. The write-through pattern in finish() (CacheRefresh) needs to also refresh whatever the list/queue query uses, or the list/queue query needs to bypass cache for status fields. Without this, every finish() call and override transition risks leaving \"detritus\" where the source of truth is done but the index disagrees. B40 has 4 features all fully done but the list view shows 2 as reviewing, 1 ready task that's actually done, and 1 active task that's actually done."
 created: "2026-05-01T12:20:32Z"
 created_by: sambeau
 id: KE-01KQHQQHDHRVG
@@ -16,5 +16,5 @@ tags:
 tier: 2
 topic: done-status-detritus-root-cause
 ttl_days: 90
-updated: "2026-05-01T12:20:32Z"
+updated: "2026-05-01T12:21:03Z"
 use_count: 0
