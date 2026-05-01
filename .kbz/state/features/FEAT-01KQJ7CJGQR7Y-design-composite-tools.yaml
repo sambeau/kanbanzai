@@ -2,7 +2,7 @@ id: FEAT-01KQJ7CJGQR7Y
 slug: design-composite-tools
 name: Composite Tools Architecture Design
 parent: B43-composite-tools
-status: proposed
+status: designing
 summary: "Write the architectural design document for composite MCP tools that chain multi-step workflow operations, reducing chat agent cognitive load and improving workflow state transition reliability."
 created: "2026-05-01T16:54:10Z"
 created_by: sambeau
