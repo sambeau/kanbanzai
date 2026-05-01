@@ -4,6 +4,7 @@ name: Composite Tools Architecture Design
 parent: B43-composite-tools
 status: designing
 summary: "Write the architectural design document for composite MCP tools that chain multi-step workflow operations, reducing chat agent cognitive load and improving workflow state transition reliability."
+design: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools
 created: "2026-05-01T16:54:10Z"
 created_by: sambeau
 display_id: B43-F1
