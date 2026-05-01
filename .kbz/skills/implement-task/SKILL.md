@@ -82,9 +82,10 @@ constraint_level: medium
 
 ## Worktree File Editing
 
-> **Note:** The `edit_file` tool only operates on the main working tree. Do not
-> use it for files inside a Git worktree — it will silently edit the wrong
-> location. Use `write_file(entity_id: ...)` for all worktree file writes.
+> **Note:** The `edit_file` tool supports worktrees via its `entity_id` parameter.
+> When `entity_id` is provided, `edit_file` resolves the worktree path and applies
+> edits there — mirroring `write_file`'s behaviour. `write_file(entity_id: ...)`
+> remains the primary recommendation for worktree file creation.
 
 When implementing tasks assigned to a worktree, use `write_file` with the
 `entity_id` parameter. This scopes the write to the worktree's directory
@@ -116,7 +117,7 @@ normal.
 ```
 Copy this checklist and track your progress:
 - [ ] Claimed the task with `next(id: "TASK-xxx")`
-- [ ] Confirmed whether this task runs inside a worktree — if yes, use `write_file(entity_id: ...)` for all file types, NOT `edit_file`
+- [ ] Confirmed whether this task runs inside a worktree — if yes, use `write_file(entity_id: ...)` for all file types; `edit_file(entity_id: ...)` is also supported for granular edits
 - [ ] Read the context packet — spec sections, knowledge entries, file paths
 - [ ] Called knowledge list with domain-relevant tags before writing any code
 - [ ] Listed all acceptance criteria for this task

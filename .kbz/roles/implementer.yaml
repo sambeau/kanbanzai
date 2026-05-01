@@ -24,6 +24,7 @@ tools:
   - status
   - next
   - finish
+  - write_file
   - read_file
   - grep
   - search_graph

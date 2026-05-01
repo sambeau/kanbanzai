@@ -2,7 +2,7 @@
 
 | Field  | Value                         |
 |--------|-------------------------------|
-| Date   | 2026-04-30                    |
+| Date   | 2026-04-30 (updated 2026-05-01) |
 | Status | approved |
 | Author | Architect                     |
 | Feature | FEAT-01KQG1XWAZE8V           |
@@ -60,6 +60,13 @@ in the developing-stage tool subset.
 in the developing-stage tool subset (AC-003).
 
 **Estimated effort:** 0.5 (one-line config change)
+
+**Status (2026-05-01):** ⚠️ T2 was marked `done` in the entity system but its
+deliverable (`write_file` in `implementer.yaml` tool list) was never produced.
+This was discovered during the B39 batch conformance review (CG-B39-1).
+**Remediated 2026-05-01:** `write_file` added to `.kbz/roles/implementer.yaml`
+tool list (commit pending). Since `implementer-go` inherits from `implementer`,
+this satisfies AC-003 for both roles.
 
 ---
 
