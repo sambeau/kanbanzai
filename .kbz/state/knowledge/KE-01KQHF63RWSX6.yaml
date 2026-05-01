@@ -3,7 +3,9 @@ content: "Batch P40 (Retrospective Batch — April 2026) was incorrectly set to 
 created: "2026-05-01T09:51:13Z"
 created_by: sambeau
 id: KE-01KQHF63RWSX6
+last_accessed_at: "2026-05-01T10:57:18Z"
 miss_count: 0
+recent_use_count: 1
 scope: project
 status: contributed
 tags:
