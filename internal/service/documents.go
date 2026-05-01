@@ -80,6 +80,7 @@ type RefreshResult struct {
 	NewHash          string
 	Status           string // final status after refresh
 	StatusTransition string // e.g., "approved → draft", or "" if unchanged
+	Message          string // human-readable explanation when status changes (or is preserved)
 }
 
 // DocumentResult is the result of a document operation.
@@ -269,6 +270,12 @@ func (s *DocumentService) SubmitDocument(input SubmitDocumentInput) (DocumentRes
 		return DocumentResult{}, fmt.Errorf("compute content hash: %w", err)
 	}
 
+	// Compute canonical content hash for change-scope detection
+	canonicalHash, err := storage.ComputeCanonicalContentHash(fullPath)
+	if err != nil {
+		return DocumentResult{}, fmt.Errorf("compute canonical content hash: %w", err)
+	}
+
 	// Generate document ID
 	owner := strings.TrimSpace(input.Owner)
 	slug := generateDocumentSlug(docType, docPath)
@@ -315,16 +322,17 @@ func (s *DocumentService) SubmitDocument(input SubmitDocumentInput) (DocumentRes
 
 	now := s.now()
 	doc := model.DocumentRecord{
-		ID:          docID,
-		Path:        docPath,
-		Type:        docType,
-		Title:       strings.TrimSpace(input.Title),
-		Status:      model.DocumentStatusDraft,
-		Owner:       owner,
-		ContentHash: contentHash,
-		Created:     now,
-		CreatedBy:   strings.TrimSpace(input.CreatedBy),
-		Updated:     now,
+		ID:                   docID,
+		Path:                 docPath,
+		Type:                 docType,
+		Title:                strings.TrimSpace(input.Title),
+		Status:               model.DocumentStatusDraft,
+		Owner:                owner,
+		ContentHash:          contentHash,
+		CanonicalContentHash: canonicalHash,
+		Created:              now,
+		CreatedBy:            strings.TrimSpace(input.CreatedBy),
+		Updated:              now,
 	}
 
 	// Write the record (new document, no fileHash for optimistic locking)
@@ -1070,11 +1078,30 @@ func (s *DocumentService) RefreshContentHash(input RefreshInput) (RefreshResult,
 	doc.ContentHash = currentHash
 	doc.Updated = s.now()
 
-	var statusTransition string
-	if doc.Status == model.DocumentStatusApproved {
-		doc.Status = model.DocumentStatusDraft
-		statusTransition = "approved → draft"
+	// Detect change scope: compute the canonical (whitespace-normalised) hash
+	// and compare against the stored canonical hash. If they match, the change
+	// is formatting-only and we preserve approval status.
+	currentCanonicalHash, canonErr := storage.ComputeCanonicalContentHash(fullPath)
+	if canonErr != nil {
+		return RefreshResult{}, fmt.Errorf("compute canonical content hash: %w", canonErr)
 	}
+
+	var statusTransition string
+	var message string
+	if doc.Status == model.DocumentStatusApproved {
+		if doc.CanonicalContentHash != "" && currentCanonicalHash == doc.CanonicalContentHash {
+			// Formatting-only change — preserve approval status (REQ-004).
+			message = "Document formatting has changed; approval status preserved."
+		} else {
+			// Substantive change — reset to draft (REQ-005).
+			doc.Status = model.DocumentStatusDraft
+			statusTransition = "approved → draft"
+			message = "Refreshing will reset approval status from approved to draft. Continue?"
+		}
+	}
+
+	// Always update the canonical hash to match current file content.
+	doc.CanonicalContentHash = currentCanonicalHash
 
 	updatedRecord := storage.DocumentToRecord(doc, record.FileHash)
 	if _, err := s.store.Write(updatedRecord); err != nil {
@@ -1087,6 +1114,7 @@ func (s *DocumentService) RefreshContentHash(input RefreshInput) (RefreshResult,
 		NewHash:          currentHash,
 		Status:           string(doc.Status),
 		StatusTransition: statusTransition,
+		Message:          message,
 		ID:               doc.ID,
 		Path:             doc.Path,
 	}, nil
@@ -1188,7 +1216,7 @@ func (s *DocumentService) RefreshDocument(input RefreshDocumentInput) (RefreshDo
 		}, nil
 	}
 
-	// Content has changed — update the hash and (if approved) reset to draft.
+	// Content has changed — update the hash and detect change scope.
 	doc.ContentHash = currentHash
 	doc.Updated = s.now()
 
@@ -1199,11 +1227,26 @@ func (s *DocumentService) RefreshDocument(input RefreshDocumentInput) (RefreshDo
 		Changed: true,
 	}
 
-	if doc.Status == model.DocumentStatusApproved {
-		doc.Status = model.DocumentStatusDraft
-		result.StatusTransition = "approved → draft"
-		result.Message = "Document content has changed; status reset to draft for re-review. Use doc_record_approve to re-approve after reviewing the changes."
+	// Compute canonical hash for change-scope detection.
+	currentCanonicalHash, canonErr := storage.ComputeCanonicalContentHash(fullPath)
+	if canonErr != nil {
+		return RefreshDocumentResult{}, fmt.Errorf("compute canonical content hash: %w", canonErr)
 	}
+
+	if doc.Status == model.DocumentStatusApproved {
+		if doc.CanonicalContentHash != "" && currentCanonicalHash == doc.CanonicalContentHash {
+			// Formatting-only change — preserve approval status (REQ-004).
+			result.Message = "Document formatting has changed; approval status preserved."
+		} else {
+			// Substantive change — reset to draft (REQ-005).
+			doc.Status = model.DocumentStatusDraft
+			result.StatusTransition = "approved → draft"
+			result.Message = "Refreshing will reset approval status from approved to draft. Continue?"
+		}
+	}
+
+	// Always update the canonical hash to match current file content.
+	doc.CanonicalContentHash = currentCanonicalHash
 
 	result.Status = string(doc.Status)
 
