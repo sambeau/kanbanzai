@@ -1,0 +1,140 @@
+document_id: PROJECT/research-planning-admin-layer-architecture
+document_path: work/research/planning-admin-layer-architecture.md
+content_hash: f1535435fbf044c1fc3852e9a16e4a78c8f0922e21dc62e75e842f0e23011925
+indexed_at: 2026-05-01T12:07:17.431724Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Planning & Admin Layer: Architecture and Product Boundary Analysis'
+      byte_offset: 0
+      byte_count: 20660
+      word_count: 2926
+      content_hash: f1535435fbf044c1fc3852e9a16e4a78c8f0922e21dc62e75e842f0e23011925
+      children:
+        - path: "1.1"
+          level: 2
+          title: Research Question
+          byte_offset: 286
+          byte_count: 654
+          word_count: 102
+          content_hash: 6fdb80b064bbd0d5b6dba121b3e865e6d61f5110e55e59aad56ccf1631f64266
+        - path: "1.2"
+          level: 2
+          title: Scope and Methodology
+          byte_offset: 940
+          byte_count: 905
+          word_count: 124
+          content_hash: efdb17d7eb2dab29051486f7c3b48e59d31eb238c3b1cfed33f3d474ef51639f
+        - path: "1.3"
+          level: 2
+          title: Findings
+          byte_offset: 1845
+          byte_count: 11898
+          word_count: 1677
+          content_hash: 62b2be454bcc8e5d036a5e028348a92ea2eff6474939cdb215edbf99a6f3636b
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Finding 1: Three Product Boundary Models, One Convergence Point'
+              byte_offset: 1858
+              byte_count: 3189
+              word_count: 482
+              content_hash: 18eae4179d56262cfd0c51d770d465ccd37f61041fe207a4f2184fb52d6f9231
+            - path: 1.3.2
+              level: 3
+              title: 'Finding 2: A `.plan/` Sidecar Separates Planning from Execution State Without Adding a New Store'
+              byte_offset: 5047
+              byte_count: 3010
+              word_count: 410
+              content_hash: 3c6522de3a691864f3310bd1f317e6aee4063682f12d03503d7a755086a8647b
+            - path: 1.3.3
+              level: 3
+              title: 'Finding 3: The Agent Interaction Model Should Be Hybrid — Chat Surface, API Engine'
+              byte_offset: 8057
+              byte_count: 2099
+              word_count: 292
+              content_hash: 2468499fcc546f9b6c153e3d33994c0dec444021a4303af34d7287e34e65e97d
+            - path: 1.3.4
+              level: 3
+              title: 'Finding 4: Existing Kanbanzai Entities Can Represent Most Planning Concepts'
+              byte_offset: 10156
+              byte_count: 2038
+              word_count: 288
+              content_hash: e08df44f10a73879df2e93898eca636299ba4c92fd683a84e4b422caea7e4220
+            - path: 1.3.5
+              level: 3
+              title: 'Finding 5: Multi-Human Collaboration Is the Hardest Constraint'
+              byte_offset: 12194
+              byte_count: 1549
+              word_count: 203
+              content_hash: c02693fceebcbabe75ba3be661645dc6b5b880e655cbbc09c0f0d80002341cdd
+        - path: "1.4"
+          level: 2
+          title: Trade-Off Analysis
+          byte_offset: 13743
+          byte_count: 1283
+          word_count: 201
+          content_hash: 48b1b3bc41f704786e5e8edd3cf5e070f852a9420490f3df26587af4ff994182
+        - path: "1.5"
+          level: 2
+          title: Recommendations
+          byte_offset: 15026
+          byte_count: 3952
+          word_count: 548
+          content_hash: 475ed4dd25b8964989a1727210845e84fa34e0e8ccd3b7e6ecfdd83fd7e6baf0
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'Recommendation 1: Start with the `.plan/` Sidecar Pattern'
+              byte_offset: 15046
+              byte_count: 820
+              word_count: 110
+              content_hash: 4ac40d3e3fd921fa1a480e8728edb5037400dfe10bd365744b8e92e30d5ddb5b
+            - path: 1.5.2
+              level: 3
+              title: 'Recommendation 2: Build Planning MCP Tools Within the Existing Server'
+              byte_offset: 15866
+              byte_count: 752
+              word_count: 110
+              content_hash: 083c198e3370f641d80fb07cabd41bb7fff12c7bc66e7cfbbfcecd20e470b55d
+            - path: 1.5.3
+              level: 3
+              title: 'Recommendation 3: Adopt the Hybrid Agent Interaction Model'
+              byte_offset: 16618
+              byte_count: 655
+              word_count: 91
+              content_hash: aa627a76d06c111887cbec2bf64b79bce725c61c1333f71415a39c4c143e41f1
+            - path: 1.5.4
+              level: 3
+              title: 'Recommendation 4: Defer Multi-Human Collaboration to Post-MVP'
+              byte_offset: 17273
+              byte_count: 772
+              word_count: 106
+              content_hash: 0fbd46c4f9339f5b93e2bd98f198570333d61175f80529973b50b10966fa6b82
+            - path: 1.5.5
+              level: 3
+              title: 'Recommendation 5: Use Existing Entities Where Possible, Add Minimal New Types'
+              byte_offset: 18045
+              byte_count: 933
+              word_count: 129
+              content_hash: c8a174068a8ff236328e0d0bf7fbdc8f169d4471eb923bf5ca15f5e6c4a0ed27
+        - path: "1.6"
+          level: 2
+          title: Limitations
+          byte_offset: 18978
+          byte_count: 1682
+          word_count: 243
+          content_hash: 7b8adcf233489de8b889d5577778f614bf575cea580dfcb1bef9b8733265bfa0
+conventional_roles:
+    - section_path: "1.1"
+      role: question
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.5
+      role: constraint
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-01T12:07:18.093634Z
+classified: false

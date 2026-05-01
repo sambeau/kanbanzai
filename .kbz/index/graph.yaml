@@ -1,4 +1,4 @@
-updated_at: 2026-05-01T12:02:06.28652Z
+updated_at: 2026-05-01T12:07:17.431724Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -94413,5 +94413,90 @@ edges:
     - from: PROJECT/report-report-planning-admin-roles-research#1
       from_type: section
       to: PROJECT/report-report-planning-admin-roles-research#1.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture
+      from_type: document
+      to: PROJECT/research-planning-admin-layer-architecture#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture#1
+      from_type: section
+      to: PROJECT/research-planning-admin-layer-architecture#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture#1
+      from_type: section
+      to: PROJECT/research-planning-admin-layer-architecture#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture#1
+      from_type: section
+      to: PROJECT/research-planning-admin-layer-architecture#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture#1.3
+      from_type: section
+      to: PROJECT/research-planning-admin-layer-architecture#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture#1.3
+      from_type: section
+      to: PROJECT/research-planning-admin-layer-architecture#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture#1.3
+      from_type: section
+      to: PROJECT/research-planning-admin-layer-architecture#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture#1.3
+      from_type: section
+      to: PROJECT/research-planning-admin-layer-architecture#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture#1.3
+      from_type: section
+      to: PROJECT/research-planning-admin-layer-architecture#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture#1
+      from_type: section
+      to: PROJECT/research-planning-admin-layer-architecture#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture#1
+      from_type: section
+      to: PROJECT/research-planning-admin-layer-architecture#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture#1.5
+      from_type: section
+      to: PROJECT/research-planning-admin-layer-architecture#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture#1.5
+      from_type: section
+      to: PROJECT/research-planning-admin-layer-architecture#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture#1.5
+      from_type: section
+      to: PROJECT/research-planning-admin-layer-architecture#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture#1.5
+      from_type: section
+      to: PROJECT/research-planning-admin-layer-architecture#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture#1.5
+      from_type: section
+      to: PROJECT/research-planning-admin-layer-architecture#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-planning-admin-layer-architecture#1
+      from_type: section
+      to: PROJECT/research-planning-admin-layer-architecture#1.6
       to_type: section
       edge_type: CONTAINS
