@@ -1,0 +1,19 @@
+confidence: "0.5"
+content: "Batch P40 (Retrospective Batch — April 2026) was incorrectly set to status \"idea\", which is a plan-level status, not a valid batch lifecycle value. Batches use: proposed → designing → active → reviewing → done. Plans use: idea → shaping → ready → active → done. This was a process error during the plan/batch distinction migration — P40 is a plan whose status should advance through the plan lifecycle, not be treated as a batch. The batch that belongs to P40 (B39, B40, B41, B42) have their own valid batch statuses. Recorded from status health check on 2026-05-01."
+created: "2026-05-01T09:51:13Z"
+created_by: sambeau
+id: KE-01KQHF63RWSX6
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - batch
+  - plan
+  - lifecycle
+  - process-error
+  - P40
+tier: 2
+topic: batch-status-lifecycle
+ttl_days: 90
+updated: "2026-05-01T09:51:13Z"
+use_count: 0
