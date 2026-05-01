@@ -1,0 +1,147 @@
+document_id: PROJECT/research-planning-admin-layer-exploration
+document_path: work/research/planning-admin-layer-exploration.md
+content_hash: d5398be49b1ed7652f0fe2131628e649c24737769c57fb8b1a725ceaeee225b4
+indexed_at: 2026-05-01T10:46:13.972628Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Planning and Administration Layer: Research Report'
+      byte_offset: 0
+      byte_count: 22508
+      word_count: 3175
+      content_hash: d5398be49b1ed7652f0fe2131628e649c24737769c57fb8b1a725ceaeee225b4
+      children:
+        - path: "1.1"
+          level: 2
+          title: Research Question
+          byte_offset: 270
+          byte_count: 716
+          word_count: 104
+          content_hash: 66ff7c405824e497e0d8c07ea37c6f11a33f723ab76f31b467e1fee112800f5e
+        - path: "1.2"
+          level: 2
+          title: Scope and Methodology
+          byte_offset: 986
+          byte_count: 1315
+          word_count: 189
+          content_hash: c7aca17de69f1ad332ea61e28860a1ee7bd444b48c990960d954f1c288d5f01d
+        - path: "1.3"
+          level: 2
+          title: Findings
+          byte_offset: 2301
+          byte_count: 13933
+          word_count: 1935
+          content_hash: a5739db4f4b7ec7192e3f8b4ae85ff29c904b1eb1a4ef7530e218ed4f14b88a7
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Finding 1: Kanbanzai''s Current Surface Ends at Structured Entity Creation'
+              byte_offset: 2314
+              byte_count: 1404
+              word_count: 173
+              content_hash: df13d40b044ac797bc05306e317689b05202a645a3671054d599580d0d8bcdd4
+            - path: 1.3.2
+              level: 3
+              title: 'Finding 2: The Gap Is Not in Tool Count but in Workflow Integration'
+              byte_offset: 3718
+              byte_count: 1811
+              word_count: 261
+              content_hash: dabaa9df1bfaaab19a861f757dc52a9fafa9ceb465c53a82656f23a47b8c9020
+            - path: 1.3.3
+              level: 3
+              title: 'Finding 3: Existing PM Tools Solve for Human-Only Teams, Not Human-AI Hybrid Teams'
+              byte_offset: 5529
+              byte_count: 2634
+              word_count: 353
+              content_hash: d55bd2a378fc8e5888def7291232a1615914dd1071761e5b7ddd2190edf00884
+            - path: 1.3.4
+              level: 3
+              title: 'Finding 4: Pre-Computer Clerical Roles Map Well to the Missing Cognitive Functions'
+              byte_offset: 8163
+              byte_count: 2577
+              word_count: 345
+              content_hash: 255d1bc81accd391c1c8dbcddc699ab72ede5a085c438fd8531c5cb0e4bb2e51
+            - path: 1.3.5
+              level: 3
+              title: 'Finding 5: Named Human Jobs vs. Decomposed Functional Roles — A Design Tension'
+              byte_offset: 10740
+              byte_count: 3830
+              word_count: 559
+              content_hash: 8eaca97adae5d7107efe0691e2bb2ef4c1cd6e8cfde1366353d15759ead44dac
+            - path: 1.3.6
+              level: 3
+              title: 'Finding 6: The CLI/MCP vs. Visual UI Question Depends on the Primary Interaction Mode'
+              byte_offset: 14570
+              byte_count: 1664
+              word_count: 242
+              content_hash: 611acc1cf21d805ddf5d14451a6349d7e9598210480583aca43306348843ba71
+        - path: "1.4"
+          level: 2
+          title: Trade-Off Analysis
+          byte_offset: 16234
+          byte_count: 1377
+          word_count: 216
+          content_hash: 2f02346fbd178c965f554a2f3a8d1dd4a5206ed4eb64800a40bd24a0b34fb161
+        - path: "1.5"
+          level: 2
+          title: Recommendations
+          byte_offset: 17611
+          byte_count: 3071
+          word_count: 445
+          content_hash: 1abd1239abd506a658d06e6edff1a6484ab8dc25fffd1d88897437d9c23361b8
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'Recommendation 1: Adopt a Tools-First Approach for the Intake Layer'
+              byte_offset: 17631
+              byte_count: 770
+              word_count: 105
+              content_hash: 122366690e5c5427436c6e9eb19eacec5a88719433fc9466b1b76446081ffca7
+            - path: 1.5.2
+              level: 3
+              title: 'Recommendation 2: Model the Tool Surface on Clerical Functions, Not on PM Feature Lists'
+              byte_offset: 18401
+              byte_count: 690
+              word_count: 98
+              content_hash: 59ec42c57a115e395ada76c88fbb7a0e5450b24112f20727c6648acec0960c86
+            - path: 1.5.3
+              level: 3
+              title: 'Recommendation 3: Keep the Intake Layer in CLI/MCP Initially'
+              byte_offset: 19091
+              byte_count: 705
+              word_count: 101
+              content_hash: b3419eb1209c15be65305a7f3180b02b3c97b3d46a525e82b316211f0515249f
+            - path: 1.5.4
+              level: 3
+              title: 'Recommendation 4: Defer the Role Question Until the Tool Shape Is Validated'
+              byte_offset: 19796
+              byte_count: 886
+              word_count: 139
+              content_hash: 991dfa3f9e74a83bd0826c7c0cbcfbbde2b03e03f05123fc1698ab107df29d16
+        - path: "1.6"
+          level: 2
+          title: Limitations
+          byte_offset: 20682
+          byte_count: 1826
+          word_count: 258
+          content_hash: fa2abaa0dbfcdb6f27d2116a22d0795bddcf4c2ad7182ebde080911bc9599464
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-planning/SKILL.md
+      link_text: .agents/skills/kanbanzai-planning/SKILL.md
+      section_path: 1.3.1
+conventional_roles:
+    - section_path: "1.1"
+      role: question
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.6
+      role: question
+      confidence: high
+    - section_path: 1.5.4
+      role: question
+      confidence: high
+access_count: 2
+last_accessed_at: 2026-05-01T10:56:52.6742Z
+classified: false

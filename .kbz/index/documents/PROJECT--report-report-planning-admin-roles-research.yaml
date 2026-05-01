@@ -1,0 +1,206 @@
+document_id: PROJECT/report-report-planning-admin-roles-research
+document_path: work/_project/report-planning-admin-roles-research.md
+content_hash: 13d904d4370a3a52aeae449943826392e292d05d292f10ce78d15167ca0963da
+indexed_at: 2026-05-01T12:02:06.28652Z
+sections:
+    - path: "1"
+      level: 1
+      title: Planning and Admin Roles for Kanbanzai — Research and Brainstorm
+      byte_offset: 0
+      byte_count: 15049
+      word_count: 2232
+      content_hash: 13d904d4370a3a52aeae449943826392e292d05d292f10ce78d15167ca0963da
+      children:
+        - path: "1.1"
+          level: 2
+          title: Context
+          byte_offset: 199
+          byte_count: 667
+          word_count: 102
+          content_hash: b12edda4bee72c012338eec6e3caefaf936bdf11260223f0067397159a1a391b
+        - path: "1.2"
+          level: 2
+          title: 'Research: What Existing Tools Do'
+          byte_offset: 866
+          byte_count: 1973
+          word_count: 303
+          content_hash: 11d9c1d1806e3b382caa954fceba9a2848ec217b78a149637b3131b4f1d49b0a
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Linear
+              byte_offset: 903
+              byte_count: 846
+              word_count: 132
+              content_hash: 7ffc9b1601319fd9e69cf875f41aaf1c55cf2b3fc00191bf33f7d0058fc6e1c5
+            - path: 1.2.2
+              level: 3
+              title: Trello Butler
+              byte_offset: 1749
+              byte_count: 238
+              word_count: 37
+              content_hash: 4cd515a9bdf2f719163cc18c34502e82385812df7e500006281335459ce0535d
+            - path: 1.2.3
+              level: 3
+              title: Other Notable Tools
+              byte_offset: 1987
+              byte_count: 852
+              word_count: 128
+              content_hash: 5019e27402701e272fa8f889a73eb306a97854a3b1090afd7466fe289d142979
+        - path: "1.3"
+          level: 2
+          title: 'The Fundamental Insight: Why Traditional Roles Existed'
+          byte_offset: 2839
+          byte_count: 1800
+          word_count: 285
+          content_hash: 080bcddd5d8a46d52480e5c0b216a81fddbfdb2bf3b826d5459bf95db3670f35
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Is there a "fundamental context size"?
+              byte_offset: 4145
+              byte_count: 494
+              word_count: 78
+              content_hash: d4b8c6a30e8c04df2de008baccb38c9cb0aff1a18c08362d0bbe487849416167
+        - path: "1.4"
+          level: 2
+          title: The Conceptual Gap Being Addressed
+          byte_offset: 4639
+          byte_count: 869
+          word_count: 140
+          content_hash: bf68969954fe6e74908d0f34e6420f35c810043fd2c4c062f6ed962b087ead48
+        - path: "1.5"
+          level: 2
+          title: 'Proposed Conceptual Model: Three Layers'
+          byte_offset: 5508
+          byte_count: 1731
+          word_count: 147
+          content_hash: e4430be3fde377f22eeff35a5f8f858dc4eacfa5ff934228f864214618fd8f79
+        - path: "1.6"
+          level: 2
+          title: Three Core Cognitive Functions
+          byte_offset: 7239
+          byte_count: 1244
+          word_count: 209
+          content_hash: 9d1b8a519997ca53e0d1ae0dab394bf49d94ce0dd66126f7f4faaf00e5564ae5
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 1. Memory
+              byte_offset: 7411
+              byte_count: 338
+              word_count: 60
+              content_hash: 644f882eb4a9221fc67fbd2e53ab442a5d74e9a7cb1abea1c2a2cbee3a8dbbdd
+            - path: 1.6.2
+              level: 3
+              title: 2. Structure
+              byte_offset: 7749
+              byte_count: 318
+              word_count: 55
+              content_hash: 4737b948353a1ea3665969706ad1e52dd1b2be326f1dac521b205102aedea5b9
+            - path: 1.6.3
+              level: 3
+              title: 3. Sequence
+              byte_offset: 8067
+              byte_count: 416
+              word_count: 70
+              content_hash: 61dfe5e473b8d0b36b612a599e5718093bef28887be09015b4158674e2039944
+        - path: "1.7"
+          level: 2
+          title: UI Considerations
+          byte_offset: 8483
+          byte_count: 1533
+          word_count: 240
+          content_hash: a273fbc70677b34bf722318c0b6b5e1203c78b42d8fe1386634112f57ef7b835
+          children:
+            - path: 1.7.1
+              level: 3
+              title: The Basecamp Hill Chart Analogy
+              byte_offset: 9667
+              byte_count: 349
+              word_count: 60
+              content_hash: 41a9b5c8a618876ff90896a2b02c397be1b9e3f63defcf0e74767df30a35de1d
+        - path: "1.8"
+          level: 2
+          title: The Greenfield Advantage
+          byte_offset: 10016
+          byte_count: 1632
+          word_count: 255
+          content_hash: e925170a9c655753898aab6021eb01cff49ec6eb6a2979e6397a4af1c1d6108b
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 1. AI-agent native handoff
+              byte_offset: 10111
+              byte_count: 344
+              word_count: 54
+              content_hash: 3e7f37145d80cc3380925b793b1040f495f8f746f23d139540fd72703f467aa1
+            - path: 1.8.2
+              level: 3
+              title: 2. Closed-loop feedback
+              byte_offset: 10455
+              byte_count: 325
+              word_count: 56
+              content_hash: 2270e5bfd8563a41fdd390e5c0e98d83de23d1d92fcb52ca47e6b7a511eb044a
+            - path: 1.8.3
+              level: 3
+              title: 3. Small team at large scale
+              byte_offset: 10780
+              byte_count: 290
+              word_count: 45
+              content_hash: fc22c2285a41fe55f59383f0ff4c178e4e1b5821198425f44c4638adfcfa6df3
+            - path: 1.8.4
+              level: 3
+              title: 4. No political overhead
+              byte_offset: 11070
+              byte_count: 259
+              word_count: 37
+              content_hash: 22709e9189ddcb16a04aee55fd0280c58794074ff104d43faf7ac293e752e349
+            - path: 1.8.5
+              level: 3
+              title: 5. Radical interface freedom
+              byte_offset: 11329
+              byte_count: 319
+              word_count: 49
+              content_hash: dd16e500677cdf5a8b4df13287a3e7bfe5619cac918f758067f7108a7c77a680
+        - path: "1.9"
+          level: 2
+          title: 'Roles: Known Titles vs. New Abstractions'
+          byte_offset: 11648
+          byte_count: 642
+          word_count: 88
+          content_hash: a1487b5723b72dc7c2528905712c065a6e440bbf0160357e1c35a67a0658eb7c
+        - path: "1.10"
+          level: 2
+          title: System Character
+          byte_offset: 12290
+          byte_count: 696
+          word_count: 102
+          content_hash: 9627e0ac5b2160fde75d0f6e38c04f6ea337f28a82b5d01b19ec285f64c81d90
+        - path: "1.11"
+          level: 2
+          title: Open Questions
+          byte_offset: 12986
+          byte_count: 1525
+          word_count: 246
+          content_hash: 1f5e2b4f18927ab35d2446787b56f9e9461c649b9c917cc67b420c0144cbab8a
+        - path: "1.12"
+          level: 2
+          title: Next Steps (Suggested)
+          byte_offset: 14511
+          byte_count: 538
+          word_count: 90
+          content_hash: 16deae778e53d9361933344e3b7d4e721928746dfab52e218d08cdce3516fcc0
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.1
+      role: narrative
+      confidence: high
+    - section_path: "1.11"
+      role: question
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-01T12:02:07.091386Z
+classified: false

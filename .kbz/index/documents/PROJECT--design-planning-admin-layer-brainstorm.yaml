@@ -1,0 +1,258 @@
+document_id: PROJECT/design-planning-admin-layer-brainstorm
+document_path: work/design/planning-admin-layer-brainstorm.md
+content_hash: 6db48f4556772c9a04b9c030b7fb6cbc7c7e03a27501d2516462dd5fcb449708
+indexed_at: 2026-05-01T11:05:54.561639Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design Brainstorm: A Human-Facing Planning & Admin Layer for Kanbanzai'
+      byte_offset: 0
+      byte_count: 38567
+      word_count: 5704
+      content_hash: 6db48f4556772c9a04b9c030b7fb6cbc7c7e03a27501d2516462dd5fcb449708
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem and Motivation
+          byte_offset: 297
+          byte_count: 2248
+          word_count: 320
+          content_hash: 688bf890b932ed24badaa0e4c6aa5c7b21f0cee7077ba47e4802eb0443a0f2ec
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Who is affected?
+              byte_offset: 1536
+              byte_count: 680
+              word_count: 95
+              content_hash: 8edc3e1deb875d8bdfcff66088bf04be798e4f79f964b7dd7fb3af13db8d008c
+            - path: 1.1.2
+              level: 3
+              title: What happens if we don't address this?
+              byte_offset: 2216
+              byte_count: 329
+              word_count: 52
+              content_hash: 77f8484aab493782d8a8b60f2808d283cbf1334606e9b2890653c03ae0667de5
+        - path: "1.2"
+          level: 2
+          title: Related Work
+          byte_offset: 2545
+          byte_count: 3130
+          word_count: 382
+          content_hash: feeb49912adfd3b1aa23d01b7dc63f4cd3a4ef098b849a64784496bcaf338ec6
+          children:
+            - path: 1.2.1
+              level: 3
+              title: What already exists in Kanbanzai
+              byte_offset: 2562
+              byte_count: 1512
+              word_count: 194
+              content_hash: c37ed745013c9a224c9d9d077dc6f548b655068c3e11ef9aad4a401eb2413e87
+            - path: 1.2.2
+              level: 3
+              title: Prior research
+              byte_offset: 4074
+              byte_count: 582
+              word_count: 67
+              content_hash: 1f09c54d7f32bf8cdee8b8a5aadc4b8c8ccde0029d73e2742cc2d7633c57fd16
+            - path: 1.2.3
+              level: 3
+              title: External inspiration
+              byte_offset: 4656
+              byte_count: 1019
+              word_count: 118
+              content_hash: be13613ccc8bc9e928e599f5714a49a78b004d59187bbbaebf4bb78338f0a930
+        - path: "1.3"
+          level: 2
+          title: Daily-Burden Inventory
+          byte_offset: 5675
+          byte_count: 5149
+          word_count: 886
+          content_hash: 9d1b36d1352a8fa6adaea47828c7466d71f072d482a43c5ef203ea703a182b35
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Themes that emerge from the inventory
+              byte_offset: 9927
+              byte_count: 897
+              word_count: 148
+              content_hash: 5ef9883f8fe77bf084f36fad72df69cd1c5d06b4d763823753dbadb32caf4b75
+        - path: "1.4"
+          level: 2
+          title: Experienced-Helper Empathy Exercise
+          byte_offset: 10824
+          byte_count: 5069
+          word_count: 817
+          content_hash: 4e1dd946a7343eb279e69590a3da8979b5916ca2ceaf65fe73a45b4a92a0d817
+          children:
+            - path: 1.4.1
+              level: 3
+              title: What themes emerge from the empathy exercise?
+              byte_offset: 14737
+              byte_count: 1156
+              word_count: 174
+              content_hash: 27107bf50e9bb5aca9cf7530b74c85cad2ee8d9a3e98c67cfded3ed9a7a8bff1
+        - path: "1.5"
+          level: 2
+          title: Role-Specific Needs
+          byte_offset: 15893
+          byte_count: 4951
+          word_count: 699
+          content_hash: 0ee5bec4f108c7688eaf6e9502e5073c3abba75d2481b74bb143d6b27b44df3d
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Product Manager
+              byte_offset: 16103
+              byte_count: 1594
+              word_count: 226
+              content_hash: 41d4de3f4a03187ea3ed5381915d1c8b1fd66b87c63ffebb8c467fc000570236
+            - path: 1.5.2
+              level: 3
+              title: Designer
+              byte_offset: 17697
+              byte_count: 1631
+              word_count: 232
+              content_hash: 6ab125385ab335f02f650fb3077635138690b8d3f9993c2ad7b5cc49f65ff071
+            - path: 1.5.3
+              level: 3
+              title: Where needs converge and diverge
+              byte_offset: 19328
+              byte_count: 1516
+              word_count: 212
+              content_hash: ba2b27bce5323d4b8becfe499501217ad3555a07aa6e4edddf6fc5ed005fe58d
+        - path: "1.6"
+          level: 2
+          title: Candidate Design Directions
+          byte_offset: 20844
+          byte_count: 9042
+          word_count: 1341
+          content_hash: 7504ce4cd558dc55d34d5d98dd0f52e5e8b1aa4a302e3ce1775a844c95499e9d
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Direction A: The Personal Assistant ("Mise en Place")'
+              byte_offset: 21077
+              byte_count: 2930
+              word_count: 436
+              content_hash: 52db35b74486dc8b670fad10c1dd794593ae7e4b646614bdb9c6e24dadc98448
+            - path: 1.6.2
+              level: 3
+              title: 'Direction B: The Planning Workbench'
+              byte_offset: 24007
+              byte_count: 3074
+              word_count: 452
+              content_hash: 455ed29ab59b1db7909bad658ef0ffff9a5dc5e69b08841871450e40807b7d45
+            - path: 1.6.3
+              level: 3
+              title: 'Direction C: The Team Librarian'
+              byte_offset: 27081
+              byte_count: 2805
+              word_count: 422
+              content_hash: 2162c4fa6542b6ab4404c02f031ffa816254c9ae66c86e14462de0814f9ea50a
+        - path: "1.7"
+          level: 2
+          title: Trade-Offs and Tensions
+          byte_offset: 29886
+          byte_count: 4227
+          word_count: 567
+          content_hash: 1a235a68f7643f25e5d79b02f7b312b34608fc7fa0953541e583fdabda375490
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Proactive vs. On-Demand
+              byte_offset: 29914
+              byte_count: 837
+              word_count: 118
+              content_hash: 4307b87be89ed11cf788cee1d8026d2c9729e19b4a0cb42bc158bac9f7aa519a
+            - path: 1.7.2
+              level: 3
+              title: Single Assistant vs. Role-Specific Assistants
+              byte_offset: 30751
+              byte_count: 923
+              word_count: 118
+              content_hash: 4cc070e2f4818ee4095a0a8fbbc509de0d6597aa8311769387e6309a924ab363
+            - path: 1.7.3
+              level: 3
+              title: Conversational vs. Visual
+              byte_offset: 31674
+              byte_count: 959
+              word_count: 115
+              content_hash: 20befeb15ba7278a66b1707f3588a38bbc82c1aebdffc6c2c134506b5b82b7c3
+            - path: 1.7.4
+              level: 3
+              title: Inside Kanbanzai vs. Separate Tool
+              byte_offset: 32633
+              byte_count: 869
+              word_count: 127
+              content_hash: 6714ffa58d07654eb4bc19e63750adeef0c77fa9f2c59f1bab6f1f101654b18b
+            - path: 1.7.5
+              level: 3
+              title: Greenfield vs. Retrofit
+              byte_offset: 33502
+              byte_count: 611
+              word_count: 85
+              content_hash: b165fd1602e396e5f141be21ff2a51059cf01fea76a4a596b53c0b47f10d165d
+        - path: "1.8"
+          level: 2
+          title: Questions for the Team
+          byte_offset: 34113
+          byte_count: 3642
+          word_count: 541
+          content_hash: df5151e593f88db6f11937e74164af522bebce2c26f09b0f4ee66403b55ad440
+          children:
+            - path: 1.8.1
+              level: 3
+              title: Direction and scope
+              byte_offset: 34348
+              byte_count: 990
+              word_count: 140
+              content_hash: 15203400bc595dfe391a210303d0466c577d854accca2e4101c31410cf974dab
+            - path: 1.8.2
+              level: 3
+              title: Interaction model
+              byte_offset: 35338
+              byte_count: 805
+              word_count: 120
+              content_hash: 83637b31746fd2a92a7745328e2f41287e7b570c36da4e5972c776c2dc45dfaf
+            - path: 1.8.3
+              level: 3
+              title: Role model
+              byte_offset: 36143
+              byte_count: 632
+              word_count: 94
+              content_hash: 7ee002418337a39935347345a02649c70ff6fbf85ab34083277b3f24692aeec7
+            - path: 1.8.4
+              level: 3
+              title: Specifics
+              byte_offset: 36775
+              byte_count: 980
+              word_count: 146
+              content_hash: a0b0786e91082f7e07fd894048030dafb498c93c00431e5e7209a54d35d92a83
+        - path: "1.9"
+          level: 2
+          title: What This Document Is and Isn't
+          byte_offset: 37755
+          byte_count: 812
+          word_count: 117
+          content_hash: ecf035f62183fa16588f49b7e2c79486437ba105c5602864daf2bbb8946f1215
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-planning/SKILL.md
+      link_text: .agents/skills/kanbanzai-planning/SKILL.md
+      section_path: 1.2.1
+    - target_path: work/research/planning-admin-layer-exploration.md
+      link_text: work/research/planning-admin-layer-exploration.md
+      section_path: 1.2.2
+    - target_path: work/research/planning-admin-layer-exploration.md
+      link_text: work/research/planning-admin-layer-exploration.md
+      section_path: "1.9"
+conventional_roles:
+    - section_path: "1.8"
+      role: question
+      confidence: high
+    - section_path: 1.8.1
+      role: constraint
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-01T11:05:55.339428Z
+classified: false
