@@ -1,0 +1,9 @@
+id: B43-composite-tools
+slug: composite-tools
+name: Composite Tools and Workflow Chaining
+status: proposed
+summary: "Introduce composite MCP tools that encapsulate multi-step workflow sequences currently requiring chat agents to chain multiple tool calls, reducing cognitive load and improving workflow reliability."
+created: "2026-05-01T16:53:51Z"
+created_by: sambeau
+updated: "2026-05-01T16:53:51Z"
+next_feature_seq: 1
