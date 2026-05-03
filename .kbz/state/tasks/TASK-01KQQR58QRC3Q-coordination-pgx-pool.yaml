@@ -1,0 +1,6 @@
+id: TASK-01KQQR58QRC3Q
+parent_feature: FEAT-01KQQQ3B9SVF9
+slug: coordination-pgx-pool
+name: Create coordination Go package with pgx pool
+summary: "Create internal/coordination/ package with DB struct wrapping pgxpool.Pool. New(), Close(), Ping(). Pool creation failure must not block server startup. Add jackc/pgx/v5 dependency."
+status: queued
