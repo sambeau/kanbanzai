@@ -1,0 +1,6 @@
+id: TASK-01KQQR51H12Y7
+parent_feature: FEAT-01KQQQ3B9SVF9
+slug: coordination-config
+name: Add CoordinationConfig and env var substitution
+summary: "Add Coordination struct with DatabaseURL and ProjectID to Config type. Implement ${ENV_VAR} substitution for all string config values. Add CoordinationEnabled() method."
+status: queued
