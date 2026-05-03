@@ -1,0 +1,9 @@
+id: B46-bootstrapping-gap-remediation
+slug: bootstrapping-gap-remediation
+name: Bootstrapping Gap Remediation
+status: proposed
+summary: Close bootstrapping gaps so kbz init produces a project that activates the 3.0 context assembly pipeline.
+created: "2026-05-03T16:52:47Z"
+created_by: sambeau
+updated: "2026-05-03T16:52:47Z"
+next_feature_seq: 1
