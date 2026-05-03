@@ -3,7 +3,7 @@
 | Field  | Value             |
 |--------|-------------------|
 | Date   | 2026-05-03        |
-| Status | Draft             |
+| Status | approved |
 | Author | Spec Author (AI)  |
 
 > This specification implements the design described in
