@@ -1,9 +1,10 @@
 id: B44-prompt-engineering-skill
 slug: prompt-engineering-skill
 name: Prompt Engineering Skill
-status: proposed
+status: designing
 summary: "Create a new prompt-engineering skill (based on refs/prompt-engineering-guide.md and skill-authoring-best-practices research) for the .agents/skills/ system, following the U-shaped attention curve and vocabulary routing principles"
+design: B44-prompt-engineering-skill/design-b44-design-prompt-engineering-skill
 created: "2026-05-03T12:50:12Z"
 created_by: sambeau
-updated: "2026-05-03T12:50:12Z"
+updated: "2026-05-03T12:59:40Z"
 next_feature_seq: 1
