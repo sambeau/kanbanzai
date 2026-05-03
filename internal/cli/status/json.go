@@ -79,7 +79,7 @@ type jsonTask struct {
 	ID              string `json:"id"`
 	Slug            string `json:"slug"`
 	Status          string `json:"status"`
-	ParentFeatureID string `json:"parent_feature_id"`
+	ParentFeatureID any    `json:"parent_feature_id"`
 }
 
 type bugResult struct {
@@ -209,13 +209,17 @@ func (r *JSONRenderer) RenderPlan(in *render.PlanInput) ([]byte, error) {
 // ─── RenderTask ───────────────────────────────────────────────────────────────
 
 func (r *JSONRenderer) RenderTask(id, slug, status, parentFeature string, attention []render.AttentionItem) ([]byte, error) {
+	var pfid any
+	if parentFeature != "" {
+		pfid = parentFeature
+	}
 	tr := taskResult{
 		Scope: "task",
 		Task: jsonTask{
 			ID:              id,
 			Slug:            slug,
 			Status:          status,
-			ParentFeatureID: parentFeature,
+			ParentFeatureID: pfid,
 		},
 		Attention: attnToJSON(attention),
 	}
@@ -296,14 +300,17 @@ func (r *JSONRenderer) RenderDocument(d *service.DocumentResult) ([]byte, error)
 func (r *JSONRenderer) RenderProject(in *render.ProjectInput) ([]byte, error) {
 	plans := make([]jsonProjectPlan, 0, len(in.Plans))
 	for _, p := range in.Plans {
+		// Slug falls back to DisplayID since ProjectPlanInput lacks a Slug field.
 		plans = append(plans, jsonProjectPlan{
 			ID:     p.DisplayID,
 			Slug:   p.DisplayID,
 			Status: p.Status,
 			Features: jsonFeatCnt{
 				Active: p.FeaturesActive,
-				Done:   p.FeaturesTotal - p.FeaturesActive,
-				Total:  p.FeaturesTotal,
+				// approximate: non-active features counted as done;
+				// ProjectPlanInput lacks FeaturesDone upstream.
+				Done:  p.FeaturesTotal - p.FeaturesActive,
+				Total: p.FeaturesTotal,
 			},
 		})
 	}

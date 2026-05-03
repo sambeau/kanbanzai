@@ -79,6 +79,29 @@ func TestPlainRenderer_RenderFeature_NoPlan(t *testing.T) {
 	assertPlainKey(t, buf.String(), "plan", "missing")
 }
 
+// ─── FR-3.3 Highest-severity attention ────────────────────────────────────────
+
+func TestPlainRenderer_RenderFeature_MultiSeverityAttention(t *testing.T) {
+	r := &PlainRenderer{}
+	in := &render.FeatureInput{
+		ID:     "FEAT-001",
+		Slug:   "multi-attn",
+		Status: "developing",
+		Attention: []render.AttentionItem{
+			{Severity: "info", Message: "info-level note"},
+			{Severity: "error", Message: "error-level issue"},
+			{Severity: "warning", Message: "warning-level note"},
+		},
+	}
+
+	var buf bytes.Buffer
+	if err := r.RenderFeature(&buf, in); err != nil {
+		t.Fatalf("RenderFeature error: %v", err)
+	}
+
+	assertPlainKey(t, buf.String(), "attention", "error-level issue")
+}
+
 // ─── FR-3.4 Empty attention → "none" ──────────────────────────────────────────
 
 func TestPlainRenderer_RenderFeature_EmptyAttention(t *testing.T) {
@@ -175,6 +198,19 @@ func TestPlainRenderer_RenderBug_WithParentFeature(t *testing.T) {
 	assertPlainKey(t, buf.String(), "parent_feature", "FEAT-042")
 }
 
+func TestPlainRenderer_RenderBug_WithAttention(t *testing.T) {
+	r := &PlainRenderer{}
+	attention := []render.AttentionItem{
+		{Severity: "error", Message: "critical bug impact"},
+	}
+	var buf bytes.Buffer
+	if err := r.RenderBug(&buf, "BUG-0017", "crash", "active", "high", "FEAT-042", attention); err != nil {
+		t.Fatalf("RenderBug error: %v", err)
+	}
+
+	assertPlainKey(t, buf.String(), "attention", "critical bug impact")
+}
+
 // ─── FR-6 Document plain ──────────────────────────────────────────────────────
 
 func TestPlainRenderer_RenderDocument_Registered(t *testing.T) {
@@ -220,6 +256,7 @@ func TestPlainRenderer_RenderDocument_Unregistered(t *testing.T) {
 	out := buf.String()
 	assertPlainKey(t, out, "registered", "false")
 	assertPlainKey(t, out, "id", "missing")
+	assertPlainContains(t, out, "attention", "not registered")
 }
 
 // ─── FR-7 Project overview plain ──────────────────────────────────────────────

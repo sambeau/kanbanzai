@@ -97,8 +97,10 @@ func (r *PlainRenderer) RenderBug(w io.Writer, id, slug, status, severity, paren
 // RenderDocument writes a plain key:value block for a document.
 func (r *PlainRenderer) RenderDocument(w io.Writer, d *service.DocumentResult) error {
 	registered := "true"
+	attn := "none"
 	if d.ID == "" {
 		registered = "false"
+		attn = "Document is not registered in the Kanbanzai document store"
 	}
 	return writePairs(w, []pair{
 		{"scope", "document"},
@@ -108,7 +110,7 @@ func (r *PlainRenderer) RenderDocument(w io.Writer, d *service.DocumentResult) e
 		{"status", d.Status},
 		{"registered", registered},
 		{"owner", val(d.Owner)},
-		{"attention", "none"},
+		{"attention", attn},
 	})
 }
 
@@ -126,7 +128,9 @@ func (r *PlainRenderer) RenderProject(w io.Writer, in *render.ProjectInput) erro
 	featuresActive := 0
 	for _, p := range in.Plans {
 		featuresTotal += p.FeaturesTotal
-		featuresDone += p.FeaturesTotal - p.FeaturesActive // approximate
+		// approximate: non-active features counted as done;
+		// ProjectPlanInput lacks FeaturesDone upstream.
+		featuresDone += p.FeaturesTotal - p.FeaturesActive
 		featuresActive += p.FeaturesActive
 	}
 

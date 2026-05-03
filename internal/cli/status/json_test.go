@@ -227,6 +227,52 @@ func TestJSONRenderer_RenderTask(t *testing.T) {
 	}
 }
 
+// ─── FR-9.3 Task with null parent_feature_id ──────────────────────────────────
+
+func TestJSONRenderer_RenderTask_NullParentFeatureID(t *testing.T) {
+	r := &JSONRenderer{}
+	out, err := r.RenderTask("TASK-0099", "standalone-task", "active", "", nil)
+	if err != nil {
+		t.Fatalf("RenderTask error: %v", err)
+	}
+
+	var wrapper struct {
+		Results []map[string]any `json:"results"`
+	}
+	json.Unmarshal(out, &wrapper)
+	task := wrapper.Results[0]["task"].(map[string]any)
+	if task["parent_feature_id"] != nil {
+		t.Errorf("task.parent_feature_id = %v, want nil", task["parent_feature_id"])
+	}
+}
+
+func TestJSONRenderer_RenderTask_WithAttention(t *testing.T) {
+	r := &JSONRenderer{}
+	attention := []render.AttentionItem{
+		{Severity: "warning", EntityID: "FEAT-042", Message: "task needs review"},
+	}
+	out, err := r.RenderTask("TASK-0099", "review-me", "active", "FEAT-042", attention)
+	if err != nil {
+		t.Fatalf("RenderTask error: %v", err)
+	}
+
+	var wrapper struct {
+		Results []map[string]any `json:"results"`
+	}
+	json.Unmarshal(out, &wrapper)
+	attn := wrapper.Results[0]["attention"].([]any)
+	if len(attn) != 1 {
+		t.Fatalf("attention len = %d, want 1", len(attn))
+	}
+	item := attn[0].(map[string]any)
+	if item["message"] != "task needs review" {
+		t.Errorf("attention message = %v, want 'task needs review'", item["message"])
+	}
+	if item["entity_id"] != "FEAT-042" {
+		t.Errorf("attention entity_id = %v, want FEAT-042", item["entity_id"])
+	}
+}
+
 // ─── FR-9.4 Bug JSON ──────────────────────────────────────────────────────────
 
 func TestJSONRenderer_RenderBug(t *testing.T) {
@@ -265,6 +311,30 @@ func TestJSONRenderer_RenderBug_WithParentFeature(t *testing.T) {
 	bug := wrapper.Results[0]["bug"].(map[string]any)
 	if bug["parent_feature_id"] != "FEAT-042" {
 		t.Errorf("bug.parent_feature_id = %v, want FEAT-042", bug["parent_feature_id"])
+	}
+}
+
+func TestJSONRenderer_RenderBug_WithAttention(t *testing.T) {
+	r := &JSONRenderer{}
+	attention := []render.AttentionItem{
+		{Severity: "error", EntityID: "", Message: "critical bug needs fixing"},
+	}
+	out, err := r.RenderBug("BUG-0017", "crash", "active", "high", "", attention)
+	if err != nil {
+		t.Fatalf("RenderBug error: %v", err)
+	}
+
+	var wrapper struct {
+		Results []map[string]any `json:"results"`
+	}
+	json.Unmarshal(out, &wrapper)
+	attn := wrapper.Results[0]["attention"].([]any)
+	if len(attn) != 1 {
+		t.Fatalf("attention len = %d, want 1", len(attn))
+	}
+	item := attn[0].(map[string]any)
+	if item["message"] != "critical bug needs fixing" {
+		t.Errorf("attention message = %v, want 'critical bug needs fixing'", item["message"])
 	}
 }
 
@@ -351,6 +421,44 @@ func TestJSONRenderer_RenderDocument_Unregistered(t *testing.T) {
 	attn := res["attention"].([]any)
 	if len(attn) == 0 {
 		t.Error("attention is empty, want warning for unregistered doc")
+	}
+}
+
+// ─── FR-9.1 Zero task counts ─────────────────────────────────────────────────
+
+func TestJSONRenderer_RenderFeature_ZeroTaskCounts(t *testing.T) {
+	r := &JSONRenderer{}
+	in := &render.FeatureInput{
+		ID:          "FEAT-001",
+		DisplayID:   "F-001",
+		Slug:        "empty",
+		Status:      "designing",
+		TasksActive: 0,
+		TasksReady:  0,
+		TasksDone:   0,
+		TasksTotal:  0,
+	}
+
+	out, err := r.RenderFeature(in)
+	if err != nil {
+		t.Fatalf("RenderFeature error: %v", err)
+	}
+
+	var wrapper struct {
+		Results []map[string]any `json:"results"`
+	}
+	json.Unmarshal(out, &wrapper)
+	tasks := wrapper.Results[0]["tasks"].(map[string]any)
+
+	for _, key := range []string{"active", "ready", "done", "total"} {
+		val, ok := tasks[key]
+		if !ok {
+			t.Errorf("tasks.%s missing, want 0", key)
+			continue
+		}
+		if val != float64(0) {
+			t.Errorf("tasks.%s = %v, want 0", key, val)
+		}
 	}
 }
 
@@ -490,6 +598,40 @@ func TestJSONRenderer_RenderProject_EmptyAttention(t *testing.T) {
 	attn := res["attention"]
 	if attn == nil {
 		t.Error("attention is null, want empty array []")
+	}
+}
+
+// ─── Nil attention regression test (N9) ───────────────────────────────────────
+
+func TestJSONRenderer_NilAttentionProducesEmptyArray(t *testing.T) {
+	r := &JSONRenderer{}
+	in := &render.FeatureInput{
+		ID:        "FEAT-001",
+		DisplayID: "F-001",
+		Slug:      "nil-attn",
+		Status:    "done",
+		Attention: nil,
+	}
+
+	out, err := r.RenderFeature(in)
+	if err != nil {
+		t.Fatalf("RenderFeature error: %v", err)
+	}
+
+	var wrapper struct {
+		Results []map[string]any `json:"results"`
+	}
+	json.Unmarshal(out, &wrapper)
+	attn := wrapper.Results[0]["attention"]
+	if attn == nil {
+		t.Error("attention is null, want empty array []")
+	}
+	arr, ok := attn.([]any)
+	if !ok {
+		t.Fatal("attention is not an array")
+	}
+	if len(arr) != 0 {
+		t.Errorf("attention len = %d, want 0", len(arr))
 	}
 }
 
