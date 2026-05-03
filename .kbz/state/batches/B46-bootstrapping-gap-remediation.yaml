@@ -1,9 +1,10 @@
 id: B46-bootstrapping-gap-remediation
 slug: bootstrapping-gap-remediation
 name: Bootstrapping Gap Remediation
-status: proposed
+status: designing
 summary: Close bootstrapping gaps so kbz init produces a project that activates the 3.0 context assembly pipeline.
+design: B46-bootstrapping-gap-remediation/design-p47-design-bootstrapping-gap-remediation
 created: "2026-05-03T16:52:47Z"
 created_by: sambeau
-updated: "2026-05-03T16:52:47Z"
+updated: "2026-05-03T16:54:06Z"
 next_feature_seq: 1
