@@ -1,0 +1,6 @@
+id: TASK-01KQQR5H995PP
+parent_feature: FEAT-01KQQQ3B9SVF9
+slug: coordination-schema-allocate
+name: Implement schema migration and allocate_id SQL
+summary: "Add Migrate() that runs CREATE TABLE IF NOT EXISTS for counters, batch_feature_seqs, allocations, and CREATE OR REPLACE FUNCTION allocate_id. Add AllocateID() and AllocateFeatureSeq() methods."
+status: queued
