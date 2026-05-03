@@ -1,0 +1,8 @@
+id: DEC-01KQPVGR1QM4R
+slug: web-ui-deferred
+name: Web UI deferred pending fast-track outcomes
+summary: Web UI/dashboard (Portal-inspired) is deprioritized because the fast-track architecture (Design B) is expected to eliminate most human gates. Revisit after fast-track deployment.
+rationale: "The primary use cases for a web UI (checkpoint response, document approval) are human gates. If fast-track automates them away, the value proposition shrinks to progress monitoring alone, which status already covers."
+decided_by: sambeau
+date: "2026-05-03T12:02:56Z"
+status: proposed
