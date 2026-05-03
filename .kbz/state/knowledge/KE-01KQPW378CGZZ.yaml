@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "When creating plan entities via the entity tool, also create a human-readable document in the plan's work/ folder (e.g. work/P41-opencode-ecosystem-features/P41-design-opencode-ecosystem-features.md). The entity YAML in .kbz/state/plans/ is agent-friendly but humans need a readable file they can open. Follow the canonical filename template: {PlanID}-{type}-{slug}.md. Register with doc(action: register). Consider whether the entity tool should auto-generate a scaffold document when creating plans."
+created: "2026-05-03T12:13:02Z"
+created_by: sambeau
+id: KE-01KQPW378CGZZ
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - usability
+  - plan-creation
+  - human-interface
+tier: 2
+topic: plan-human-readable-artifact
+ttl_days: 90
+updated: "2026-05-03T12:13:02Z"
+use_count: 0
