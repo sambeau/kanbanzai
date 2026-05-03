@@ -1,7 +1,7 @@
 id: BUG-01KQQXFNGEGWQ
 slug: skill-regression-april29
 name: Restore skill content lost in plan/batch migration
-status: triaged
+status: planned
 severity: high
 priority: high
 type: implementation-defect
