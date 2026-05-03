@@ -6,14 +6,14 @@ status: done
 review_cycle: "1"
 summary: "stage-bindings.yaml schema with stage-to-role-to-skill mappings, orchestration patterns, prerequisites, effort_budget, document_template, human_gate, max_review_cycles, sub_agents config. Loader and stage lookup API. Design §3.3."
 design: work/design/skills-system-redesign-v2.md
-spec: FEAT-01KN5-88PDPE8V/specification-30-binding-registry
+spec: ""
 dev_plan: FEAT-01KN588PDPE8V/dev-plan-30-binding-registry
 created: "2026-04-01T19:28:00Z"
 created_by: sambeau
-display_id: B16-F3
 overrides:
   -
     from_status: reviewing
     reason: "P16 plan review (review-P16-skills-and-roles-3.0.md) served as the aggregate review for all P16 features. Verdict: Pass with findings. All required findings addressed."
     timestamp: "2026-04-02T03:14:40+01:00"
     to_status: done
+display_id: B16-F3

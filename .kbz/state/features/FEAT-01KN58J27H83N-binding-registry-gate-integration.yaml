@@ -5,18 +5,18 @@ parent: B17-workflow-and-tooling-3.0
 status: done
 review_cycle: "1"
 summary: Read gate prerequisites from the binding registry instead of hardcoding them. Implement file-mtime-based cache invalidation for hot-reload. Source per-gate override_policy (agent or checkpoint) from the binding registry. Enables the skills design to evolve prerequisites without MCP server code changes.
-spec: FEAT-01KN5-8J27H83N/specification-30-binding-registry-gate-integration
-dev_plan: FEAT-01KN5-8J27H83N/dev-plan-30-binding-registry-gate-integration
+spec: ""
+dev_plan: ""
 tags:
   - phase-e
   - architecture
   - medium-impact
 created: "2026-04-01T19:33:07Z"
 created_by: sambeau
-display_id: B17-F8
 overrides:
   -
     from_status: reviewing
     reason: B-24 finding was based on incorrect analysis — custom Prerequisites.UnmarshalYAML correctly captures unknown prerequisite types into Extensions even with KnownFields(true). Extensibility test TestIntegration_Extensibility_CustomEvaluator passes. Original review at work/reviews/review-P17-workflow-and-tooling-3.0.md.
     timestamp: "2026-04-15T14:05:28+01:00"
     to_status: done
+display_id: B17-F8

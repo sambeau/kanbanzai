@@ -6,13 +6,13 @@ status: done
 review_cycle: "1"
 summary: "Add kanbanzai-review and kanbanzai-plan-review as two new embedded skills installed by kbz init. Update kanbanzai-workflow to cover reviewing/needs-rework lifecycle states. Update kanbanzai-documents to reflect the new document layout. Update doc-currency health checker to scan .agents/skills/kanbanzai-*/ instead of .skills/."
 spec: FEAT-01KMWJ3ZQKK7C/specification-spec-embedded-skills
-dev_plan: FEAT-01KMWJ3ZQKK7C/dev-plan-p11-dev-embedded-skills
+dev_plan: ""
 created: "2026-03-29T10:27:02Z"
 created_by: sambeau
-display_id: B11-F2
 overrides:
   -
     from_status: reviewing
     reason: "State repair: all 4 tasks complete, parent plan P11 already done. Lifecycle never advanced from developing."
     timestamp: "2026-04-15T12:26:00+01:00"
     to_status: done
+display_id: B11-F2
