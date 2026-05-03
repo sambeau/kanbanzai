@@ -132,7 +132,7 @@ type jsonHealth struct {
 
 type jsonAttn struct {
 	Severity string `json:"severity"`
-	EntityID any    `json:"entity_id,omitempty"`
+	EntityID any    `json:"entity_id"`
 	Message  string `json:"message"`
 }
 
@@ -268,7 +268,7 @@ func (r *JSONRenderer) RenderDocument(d *service.DocumentResult) ([]byte, error)
 		ownerID = d.Owner
 	}
 
-	var attention []jsonAttn
+	attention := []jsonAttn{}
 	if !registered {
 		attention = []jsonAttn{
 			{Severity: "warning", Message: "Document is not registered in the Kanbanzai document store"},
