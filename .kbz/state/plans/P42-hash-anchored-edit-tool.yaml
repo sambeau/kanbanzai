@@ -1,0 +1,14 @@
+id: P42-hash-anchored-edit-tool
+slug: hash-anchored-edit-tool
+name: Hash-anchored edit tool
+status: idea
+summary: "Implement a hash-anchored edit MCP tool that validates every change against per-line content hashes, preventing stale-line corruption. Inspired by oh-my-openagent's Hashline system. Standalone — no architectural dependencies."
+parent: P41-opencode-ecosystem-features
+order: 0
+tags:
+  - ecosystem
+  - edit-tool
+  - hashline
+created: "2026-05-03T12:16:54Z"
+created_by: sambeau
+updated: "2026-05-03T12:16:54Z"
