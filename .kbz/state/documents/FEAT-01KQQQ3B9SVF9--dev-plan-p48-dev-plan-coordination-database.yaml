@@ -1,10 +1,12 @@
-content_hash: 4c422d9ad99f94d758a578d22228cba293e540aaef1b661bc8b9fa881e447f33
+approved_at: "2026-05-03T20:22:46Z"
+approved_by: sambeau
+content_hash: 142e01c908ba64ff518e0d9584c45fcb31f3c4e54b3fdd39dc1838fd1eec0ced
 created: "2026-05-03T20:20:58Z"
 created_by: sambeau
 id: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database
 owner: FEAT-01KQQQ3B9SVF9
 path: work/P48-coordination-server/P48-dev-plan-coordination-database.md
-status: draft
+status: approved
 title: Coordination Database — Dev Plan
 type: dev-plan
-updated: "2026-05-03T20:20:58Z"
+updated: "2026-05-03T20:22:46Z"
