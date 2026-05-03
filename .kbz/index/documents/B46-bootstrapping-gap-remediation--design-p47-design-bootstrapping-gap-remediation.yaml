@@ -1,0 +1,275 @@
+document_id: B46-bootstrapping-gap-remediation/design-p47-design-bootstrapping-gap-remediation
+document_path: work/P47-bootstrapping-gap-remediation/P47-design-bootstrapping-gap-remediation.md
+content_hash: db4842046237e3d38f553b2e7a2f670015abc0912ddabf23bae24b40f57a16de
+indexed_at: 2026-05-03T16:54:06.790163Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Bootstrapping Gap Remediation'
+      byte_offset: 0
+      byte_count: 15503
+      word_count: 1945
+      content_hash: db4842046237e3d38f553b2e7a2f670015abc0912ddabf23bae24b40f57a16de
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Problem Statement
+          byte_offset: 370
+          byte_count: 718
+          word_count: 93
+          content_hash: e48e5a3e5be56a2ef6d241dd5bdb3f461a40c06d98df8b3421994a2a105c1859
+        - path: "1.2"
+          level: 2
+          title: 2. Design Principles
+          byte_offset: 1088
+          byte_count: 1436
+          word_count: 195
+          content_hash: f8ac6a5c2675e5884decf1382beb1fe38b7e7be828ea6609f652c9f149cc5f6f
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'DP-1: Single Source of Truth for Init Artifacts'
+              byte_offset: 1113
+              byte_count: 324
+              word_count: 47
+              content_hash: 8af52279c5c56168636d7f3397e11df6f250b4fc0c84916afd186c4af13b1aca
+            - path: 1.2.2
+              level: 3
+              title: 'DP-2: Co-install Interdependent Artifacts'
+              byte_offset: 1437
+              byte_count: 267
+              word_count: 36
+              content_hash: 4b85900c53dec0c64e77947d847c4915854f5d25cebb05025de26c18c9e708d2
+            - path: 1.2.3
+              level: 3
+              title: 'DP-3: Version-Aware Update for All Managed Files'
+              byte_offset: 1704
+              byte_count: 283
+              word_count: 36
+              content_hash: 7bcd7ca2316e55a7d58c9a53c1879c09f2f2dc252647862b0122c10b4f2070b1
+            - path: 1.2.4
+              level: 3
+              title: 'DP-4: Consumer Project Is the Primary Use Case'
+              byte_offset: 1987
+              byte_count: 282
+              word_count: 37
+              content_hash: a9c82cbb22aa20a0abebcf764b474e8c063a1d1c96ba20f5783a26bd80027d8a
+            - path: 1.2.5
+              level: 3
+              title: 'DP-5: Graceful Degradation for Optional Dependencies'
+              byte_offset: 2269
+              byte_count: 255
+              word_count: 35
+              content_hash: 84ef491449cf22e4d2805dd988bca22556333d109ca179920c929a31188ed8ec
+        - path: "1.3"
+          level: 2
+          title: 3. Design — Remediation Architecture
+          byte_offset: 2524
+          byte_count: 8772
+          word_count: 1022
+          content_hash: 3dd8ce87921abe0947ac5dd22e29969e06e593dad9d7604f7159aa7d95941855
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 New embedded filesystem structure
+              byte_offset: 2567
+              byte_count: 1358
+              word_count: 141
+              content_hash: 9260990efdb1e545f016f7ce4d17246fc66e4063688ae538c6bb678400cf6ff5
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Installation flow (revised)
+              byte_offset: 3925
+              byte_count: 544
+              word_count: 65
+              content_hash: fa007a2865d3961944202748ad5fcadfbd6fdd0b34c1e0cf8da6393e4ea1e6f2
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Detailed fix for each gap
+              byte_offset: 4469
+              byte_count: 6827
+              word_count: 810
+              content_hash: 6ebef9717f359b7b3242042b77fba62323dcee5f0f0210f21ba01127903a7bf2
+              children:
+                - path: 1.3.3.1
+                  level: 4
+                  title: 'G1: Install stage-bindings.yaml'
+                  byte_offset: 4504
+                  byte_count: 917
+                  word_count: 103
+                  content_hash: 1794615e78d7656f5af57b92513d18d0083e3f51238c485d2cafd69e74c77575
+                - path: 1.3.3.2
+                  level: 4
+                  title: 'G2: Install task-execution skills'
+                  byte_offset: 5421
+                  byte_count: 981
+                  word_count: 92
+                  content_hash: eb6e5cc49d359fee608600b7c800b9097357ba364b53c2b8b09bc2297cb541fe
+                - path: 1.3.3.3
+                  level: 4
+                  title: 'G3: Install all role files'
+                  byte_offset: 6402
+                  byte_count: 1255
+                  word_count: 174
+                  content_hash: b44a86904d3fcc64caa66d5c1fc4647e5eafc70fd2e5da218d8b672082b9723b
+                - path: 1.3.3.4
+                  level: 4
+                  title: 'G4: Enrich generated AGENTS.md'
+                  byte_offset: 7657
+                  byte_count: 710
+                  word_count: 96
+                  content_hash: 25f193255a6707aa3067e39bc706e58333a2c11f4e8f94228f99b625cedc3aa5
+                - path: 1.3.3.5
+                  level: 4
+                  title: 'G5: Extend --update-skills'
+                  byte_offset: 8367
+                  byte_count: 910
+                  word_count: 94
+                  content_hash: 8b22998d1da96d3d8841c5b77f58949df433b430f68a0254a6bf729d2c9ea994
+                - path: 1.3.3.6
+                  level: 4
+                  title: 'G6: Reconcile copilot-instructions divergence'
+                  byte_offset: 9277
+                  byte_count: 638
+                  word_count: 77
+                  content_hash: ff5cb660f36f7b816f22f87c1b2844e2ed068fb0eaa7db2fdefbe0d1b6eaf30f
+                - path: 1.3.3.7
+                  level: 4
+                  title: 'G7: CI staleness check for embedded skills'
+                  byte_offset: 9915
+                  byte_count: 610
+                  word_count: 63
+                  content_hash: d59e575e57dcf7a72f97730b1ac2eb8f2308c0ef3631b4e12702d6dcafca4c83
+                - path: 1.3.3.8
+                  level: 4
+                  title: 'G8: Codebase-memory skills'
+                  byte_offset: 10525
+                  byte_count: 606
+                  word_count: 82
+                  content_hash: 8fdbe114cdf13e01a026b0440c080d3c147b41fe1fe17be236fdce4810293e22
+                - path: 1.3.3.9
+                  level: 4
+                  title: 'G9: No action needed'
+                  byte_offset: 11131
+                  byte_count: 165
+                  word_count: 22
+                  content_hash: a3fac6468a5830ba8e88ec2c0a8331075a60b588b1e2267f80cd845cb1b44bed
+        - path: "1.4"
+          level: 2
+          title: 4. Implementation Sequence
+          byte_offset: 11296
+          byte_count: 1083
+          word_count: 134
+          content_hash: 5854072e7c91d841b3088e06f6a9c9f1cb37f5d07425f0a2b5b09a8993dbe375
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Phase 1: Critical path (G1 + G2, co-required)'
+              byte_offset: 11327
+              byte_count: 501
+              word_count: 56
+              content_hash: 88fe5b760a89996fc2acf314afe047a4ae79665e81743eed51ac00fe68103394
+            - path: 1.4.2
+              level: 3
+              title: 'Phase 2: Role completion (G3)'
+              byte_offset: 11828
+              byte_count: 217
+              word_count: 31
+              content_hash: a808f8bd028456f4b230ca9575c3b94275996beb12b34197fcc2805e079e0d43
+            - path: 1.4.3
+              level: 3
+              title: 'Phase 3: Documentation enrichment (G4 + G6)'
+              byte_offset: 12045
+              byte_count: 225
+              word_count: 27
+              content_hash: cfb0f53b19deb841a4600730d991a53bb520be42da7710d86910eefaea9fe3e2
+            - path: 1.4.4
+              level: 3
+              title: 'Phase 4: Quality (G7 + G8)'
+              byte_offset: 12270
+              byte_count: 109
+              word_count: 16
+              content_hash: 503d780ff00ecec3c6d85abd8103f114b119ff4496b3d8da5c85d4813968aa1a
+        - path: "1.5"
+          level: 2
+          title: 5. Prevention — Avoiding Future Dual-Source Bugs
+          byte_offset: 12379
+          byte_count: 1848
+          word_count: 259
+          content_hash: 66812894c0e38da711d9b31716fab0cee75758b638181a9247f7534520abb9d2
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Structural prevention
+              byte_offset: 12434
+              byte_count: 776
+              word_count: 101
+              content_hash: 4b7b013204d78d3ff90cb65b7c0054fec1b847252aed1f043de967eedb5b7ed2
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Process prevention
+              byte_offset: 13210
+              byte_count: 622
+              word_count: 89
+              content_hash: 56aabe4701fbb959b6fd485295c34498b8c9bd2b87537c76931ab166b22107ea
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Testing prevention
+              byte_offset: 13832
+              byte_count: 395
+              word_count: 61
+              content_hash: 94e7c8383573c209be397c56e5a89c256ee897d38be073cb6d2842fc4845e886
+        - path: "1.6"
+          level: 2
+          title: 6. Risks and Trade-offs
+          byte_offset: 14227
+          byte_count: 801
+          word_count: 123
+          content_hash: 4a957e1479728343bd282b6c663ddfb8e36012ece0833bdad747c23c78709ca5
+        - path: "1.7"
+          level: 2
+          title: 7. Success Criteria
+          byte_offset: 15028
+          byte_count: 475
+          word_count: 72
+          content_hash: 9fb3349afb117df037d4a03d29cdc7e84a53602dd7e68ecdcce99dc420a02f0a
+entity_refs:
+    - entity_id: P47-bootstrapping-gap-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 175
+cross_doc_links:
+    - target_path: work/P47-bootstrapping-gap-remediation/report-bootstrapping-gap-audit.md
+      link_text: work/P47-bootstrapping-gap-remediation/report-bootstrapping-gap-audit.md
+      section_path: "1"
+    - target_path: work/_project/design-fresh-install-experience.md
+      link_text: work/_project/design-fresh-install-experience.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.2
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.3.2
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.3.3.2
+    - target_path: .kbz/skills/<name>/SKILL.md
+      link_text: .kbz/skills/<name>/SKILL.md
+      section_path: 1.3.3.2
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.3.3.6
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: 1.4.3
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: 1.5.1
+conventional_roles:
+    - section_path: "1.6"
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T16:54:07.676149Z
+classified: false

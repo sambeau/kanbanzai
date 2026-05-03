@@ -225,8 +225,9 @@ func TestValidateFrontmatter(t *testing.T) {
 
 func TestValidStages(t *testing.T) {
 	stages := []string{
-		"designing", "specifying", "dev-planning", "developing",
-		"reviewing", "researching", "documenting", "plan-reviewing",
+		"auditing", "batch-reviewing", "designing", "dev-planning",
+		"developing", "doc-publishing", "documenting", "researching",
+		"reviewing", "specifying",
 	}
 	for _, stage := range stages {
 		t.Run(stage, func(t *testing.T) {

@@ -13,10 +13,18 @@ type AntiPattern struct {
 	Resolve string `yaml:"resolve" json:"resolve"`
 }
 
+// RoleMetadata holds kanbanzai-managed markers and version info.
+// Present in embedded role seeds; absent in hand-written roles.
+type RoleMetadata struct {
+	KanbanzaiManaged string `yaml:"kanbanzai-managed,omitempty"`
+	Version          string `yaml:"version,omitempty"`
+}
+
 // Role is a role definition as loaded from a YAML file.
 // Strict parsing: unknown fields are rejected (NFR-002).
 type Role struct {
 	ID           string        `yaml:"id"`
+	Metadata     RoleMetadata  `yaml:"metadata,omitempty"`
 	Inherits     string        `yaml:"inherits,omitempty"`
 	Identity     string        `yaml:"identity"`
 	Vocabulary   []string      `yaml:"vocabulary"`

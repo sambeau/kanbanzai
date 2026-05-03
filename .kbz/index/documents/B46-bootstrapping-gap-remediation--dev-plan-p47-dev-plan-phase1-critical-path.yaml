@@ -1,0 +1,137 @@
+document_id: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path
+document_path: work/P47-bootstrapping-gap-remediation/P47-dev-plan-phase1-critical-path.md
+content_hash: 4eee58eec82781f8009da06f0f4dcebbbff31149bed496bcb5f9f713fd2cece1
+indexed_at: 2026-05-03T16:54:07.677846Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Phase 1 — Critical Path (G1 + G2)'
+      byte_offset: 0
+      byte_count: 6881
+      word_count: 884
+      content_hash: 4eee58eec82781f8009da06f0f4dcebbbff31149bed496bcb5f9f713fd2cece1
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 417
+          byte_count: 795
+          word_count: 111
+          content_hash: 199560fa516ec8cca137824e47099725d66c059eed5eb3b909431c8e318db259
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1212
+          byte_count: 3482
+          word_count: 421
+          content_hash: 1d2fd46e0ed46adbcab27e94b2200b781b3529227248db20f88e35d5c658c1ee
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Embed stage-bindings.yaml and write install logic'
+              byte_offset: 1231
+              byte_count: 754
+              word_count: 82
+              content_hash: b391174f6750f651c74834a999ca6be04b143392c103ee8009e41169bc5e336f
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Embed task-execution skills and write install logic'
+              byte_offset: 1985
+              byte_count: 892
+              word_count: 102
+              content_hash: fc8b7b97148f291d6287c6b783624dd48ee7a9dd4ab15c3e503241b4ac5ef752
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Wire install calls into runNewProject and runExistingProject'
+              byte_offset: 2877
+              byte_count: 723
+              word_count: 85
+              content_hash: d1f3dacb2ff808d05f8422441b75d3a70aaa30099d35c645bca082073313eca5
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Wire into --update-skills path'
+              byte_offset: 3600
+              byte_count: 505
+              word_count: 71
+              content_hash: 45efb321d7436c1fd25622161df480c8e0d0f0c3ad028cf7eb9ab13f38672ed3
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Integration test — fresh init produces pipeline-ready project'
+              byte_offset: 4105
+              byte_count: 589
+              word_count: 78
+              content_hash: 2458dd15486cd528f67272d32a85a2a88acae52a6701354f8342d001303d39f3
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 4694
+          byte_count: 433
+          word_count: 56
+          content_hash: 1a1a1e1b69a54a09f4d4b6fd9178a0b10a14630e7baa75e4b8c2e674e77bfb31
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 5127
+          byte_count: 1242
+          word_count: 174
+          content_hash: 5cca3ddab4258c5a885878e445046616ad8f6742ba198c9a8026ead0949b1f75
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: Task-execution skill content has validation errors'
+              byte_offset: 5147
+              byte_count: 361
+              word_count: 51
+              content_hash: a35190413953e00e5be4bcdfa2fb72fc452e1560e8e5f1a765f76b91583d8dcf
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: `go:embed` directive naming collision with existing `//go:embed skills`'
+              byte_offset: 5508
+              byte_count: 493
+              word_count: 67
+              content_hash: b8bcc3faf055dfa94f935989b241c82b6166fd8e80b0bc116d86aaa0bb92aff7
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Stage-bindings version marker scheme conflicts with YAML parsing'
+              byte_offset: 6001
+              byte_count: 368
+              word_count: 53
+              content_hash: 3d00a071cf5d87db868d78a994fb871fccd708ce144ebbcc2c53d5a2f513bf4f
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 6369
+          byte_count: 512
+          word_count: 77
+          content_hash: f5a3d2b813a648668929e9877985f80f9f87eebfccbea970cd7e98ee34729f7c
+entity_refs:
+    - entity_id: P47-bootstrapping-gap-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 337
+cross_doc_links:
+    - target_path: work/P47-bootstrapping-gap-remediation/spec-bootstrapping-gap-remediation.md
+      link_text: work/P47-bootstrapping-gap-remediation/spec-bootstrapping-gap-remediation.md
+      section_path: "1"
+    - target_path: CONVENTIONS.md
+      link_text: CONVENTIONS.md
+      section_path: 1.2.2
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T16:54:08.195997Z
+classified: false

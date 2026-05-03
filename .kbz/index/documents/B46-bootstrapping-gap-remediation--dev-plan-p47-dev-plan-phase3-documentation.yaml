@@ -1,0 +1,150 @@
+document_id: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase3-documentation
+document_path: work/P47-bootstrapping-gap-remediation/P47-dev-plan-phase3-documentation.md
+content_hash: e45bcb1fcaa7cd818208c8d8337294b5d7871e5ddba972b30609027e06fab483
+indexed_at: 2026-05-03T16:54:06.778068Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Phase 3 — Documentation Enrichment (G4 + G6)'
+      byte_offset: 0
+      byte_count: 7799
+      word_count: 1063
+      content_hash: e45bcb1fcaa7cd818208c8d8337294b5d7871e5ddba972b30609027e06fab483
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 437
+          byte_count: 923
+          word_count: 126
+          content_hash: d0edeab8eb62619711de83523479b31d38ff1d582e10c911ee019de081102633
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1360
+          byte_count: 4019
+          word_count: 544
+          content_hash: 65f552a52a53cf726f5a82470560f9286b66820a889fa6ca8f79985b76b565b7
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Add task-execution skill table to generated AGENTS.md'
+              byte_offset: 1379
+              byte_count: 789
+              word_count: 104
+              content_hash: 7a58f2266366d3ef9e8eac59984ef5017b2d5b4a734e071e62f338407b2ada87
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Add role table to generated AGENTS.md'
+              byte_offset: 2168
+              byte_count: 654
+              word_count: 94
+              content_hash: e21e038a73e456b01c587975a120198d95f46ab9cf24d2dfc4cb83a6156f4f89
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Bump agentsMDVersion to 3'
+              byte_offset: 2822
+              byte_count: 589
+              word_count: 85
+              content_hash: 41fed86abd32b35376b8c8837b29b782fc662f5ee37dc73705180ad21392f3a6
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Enrich generated copilot-instructions.md with stage-bindings guidance'
+              byte_offset: 3411
+              byte_count: 506
+              word_count: 64
+              content_hash: 75e043f0f92d7f413d10e06fe287aeb8675b55565f2c94869be34ad8793b8788
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Reconcile project''s copilot-instructions.md'
+              byte_offset: 3917
+              byte_count: 840
+              word_count: 104
+              content_hash: 77e6d081e2ce179cc3a43defbef3e23e35a9508ae9ed777bdc45487a4aab268f
+            - path: 1.2.6
+              level: 3
+              title: 'Task 6: Verify generated content line counts and formatting'
+              byte_offset: 4757
+              byte_count: 622
+              word_count: 90
+              content_hash: 0841a5009e907938d10a221d5bd562cb244edaa81766e34afadc7fd910aae152
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 5379
+          byte_count: 674
+          word_count: 68
+          content_hash: b194a7d5caa2b058633ecfa94cd751ec0a81e4a1d01a85426901d47b07f646e4
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 6053
+          byte_count: 1142
+          word_count: 175
+          content_hash: 2dcedc7da89dcbfca776be07db468d37be2b3d23207c46eface836d8095902ad
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: Generated AGENTS.md exceeds 100-line budget with new tables'
+              byte_offset: 6073
+              byte_count: 395
+              word_count: 63
+              content_hash: b605db4f8047a7016455425e9f0e351b6e63dd8318e54494caa712dab496cb28
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: Skill/role counts in generated tables drift from stage-bindings.yaml'
+              byte_offset: 6468
+              byte_count: 378
+              word_count: 57
+              content_hash: 0aaeedc440c05699d08e3c66d3385ec90efe2ae8378d1b577c3503f9216c3e20
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Project copilot-instructions.md becomes out of sync with reality again'
+              byte_offset: 6846
+              byte_count: 349
+              word_count: 52
+              content_hash: c4114ef617899d666bf9a0a0eaf599ff4e2d90fba0545316d4624d94698dcb8a
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 7195
+          byte_count: 604
+          word_count: 104
+          content_hash: d770ec3ad9290521c01fbc7e6f79f69be9fd92f01daeb491289b034fc1e8a7f6
+entity_refs:
+    - entity_id: P47-bootstrapping-gap-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 357
+cross_doc_links:
+    - target_path: work/P47-bootstrapping-gap-remediation/spec-bootstrapping-gap-remediation.md
+      link_text: work/P47-bootstrapping-gap-remediation/spec-bootstrapping-gap-remediation.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.1"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.2.5
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T16:54:07.873611Z
+classified: false

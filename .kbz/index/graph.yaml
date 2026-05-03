@@ -1,4 +1,4 @@
-updated_at: 2026-05-03T12:31:52.798393Z
+updated_at: 2026-05-03T16:54:53.832331Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -96453,5 +96453,865 @@ edges:
     - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.5
       from_type: section
       to: .kbz/skills/write-spec/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17
+      from_type: document
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.5
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.5
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.1
+      from_type: section
+      to: P47-bootstrapping-gap-remediation
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.2
+      from_type: section
+      to: P47-bootstrapping-gap-remediation
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.6
+      from_type: section
+      to: P47-bootstrapping-gap-remediation
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.11
+      from_type: section
+      to: P47-bootstrapping-gap-remediation
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.6
+      from_type: section
+      to: work/P47-bootstrapping-gap-remediation/spec-bootstrapping-gap-remediation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.6
+      from_type: section
+      to: work/P47-bootstrapping-gap-remediation/design-bootstrapping-gap-remediation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.6
+      from_type: section
+      to: work/P47-bootstrapping-gap-remediation/report-bootstrapping-gap-audit.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.11
+      from_type: section
+      to: work/P47-bootstrapping-gap-remediation/design-bootstrapping-gap-remediation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation
+      from_type: document
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.3
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.3
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.9
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.9
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1
+      from_type: section
+      to: P47-bootstrapping-gap-remediation
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.1
+      from_type: section
+      to: P47-bootstrapping-gap-remediation
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.2
+      from_type: section
+      to: B16-skills-and-roles-3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.2
+      from_type: section
+      to: F3-spec-3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.2
+      from_type: section
+      to: F2-spec-3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.2
+      from_type: section
+      to: F1-spec-3
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.2
+      from_type: section
+      to: B11-fresh-install-experience
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.2
+      from_type: section
+      to: F2-spec-embedded-skills
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1
+      from_type: section
+      to: work/P47-bootstrapping-gap-remediation/design-bootstrapping-gap-remediation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.1
+      from_type: section
+      to: work/_project/design-fresh-install-experience.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.1
+      from_type: section
+      to: work/P47-bootstrapping-gap-remediation/design-bootstrapping-gap-remediation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.2
+      from_type: section
+      to: work/B16-skills-and-roles-3.0/B16-F3-spec-3.0-binding-registry.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.2
+      from_type: section
+      to: work/B16-skills-and-roles-3.0/B16-F2-spec-3.0-skill-system.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.2
+      from_type: section
+      to: <name>/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.2
+      from_type: section
+      to: work/B16-skills-and-roles-3.0/B16-F1-spec-3.0-role-system.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.1.2
+      from_type: section
+      to: work/B11-fresh-install-experience/B11-F2-spec-embedded-skills.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.2
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.3.1
+      from_type: section
+      to: .kbz/skills/<name>/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.3.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.3.1
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.3.2
+      from_type: section
+      to: refs/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.3.2
+      from_type: section
+      to: work/templates/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4.2
+      from_type: section
+      to: .kbz/skills/<name>/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4.2
+      from_type: section
+      to: SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4.4
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4.7
+      from_type: section
+      to: internal/kbzinit/skills/<name>/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4.7
+      from_type: section
+      to: .agents/skills/kanbanzai-<name>/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.4.8
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.7
+      from_type: section
+      to: SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.7
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.7
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation#1.8
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit
+      from_type: document
+      to: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.1
+      from_type: section
+      to: copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.1
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.2
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.2
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.2
+      from_type: section
+      to: .kbz/skills/<name>/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4.2
+      from_type: section
+      to: .kbz/skills/<name>/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4.6
+      from_type: section
+      to: copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4.7
+      from_type: section
+      to: internal/kbzinit/skills/*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4.9
+      from_type: section
+      to: work/templates/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4.9
+      from_type: section
+      to: refs/go-style.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.4.9
+      from_type: section
+      to: refs/testing.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.5
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.5
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit#1.5
+      from_type: section
+      to: work/README.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path
+      from_type: document
+      to: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.2
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.2
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.2
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.2
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.2
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1
+      from_type: section
+      to: P47-bootstrapping-gap-remediation
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1
+      from_type: section
+      to: work/P47-bootstrapping-gap-remediation/spec-bootstrapping-gap-remediation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase1-critical-path#1.2.2
+      from_type: section
+      to: CONVENTIONS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17
+      from_type: document
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.4.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.5
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.5
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1
+      from_type: section
+      to: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.1
+      from_type: section
+      to: P47-bootstrapping-gap-remediation
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.2
+      from_type: section
+      to: P47-bootstrapping-gap-remediation
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.6
+      from_type: section
+      to: P47-bootstrapping-gap-remediation
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.11
+      from_type: section
+      to: P47-bootstrapping-gap-remediation
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.6
+      from_type: section
+      to: work/P47-bootstrapping-gap-remediation/spec-bootstrapping-gap-remediation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.6
+      from_type: section
+      to: work/P47-bootstrapping-gap-remediation/design-bootstrapping-gap-remediation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.6
+      from_type: section
+      to: work/P47-bootstrapping-gap-remediation/report-bootstrapping-gap-audit.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.11
+      from_type: section
+      to: work/P47-bootstrapping-gap-remediation/design-bootstrapping-gap-remediation.md
       to_type: document
       edge_type: LINKS_TO

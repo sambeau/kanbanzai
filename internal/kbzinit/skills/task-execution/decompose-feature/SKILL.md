@@ -89,6 +89,18 @@ constraint_level: low
 - **BECAUSE:** Implementation tasks often include unit tests alongside code, but integration tests, end-to-end tests, and test infrastructure updates need their own tasks. Without explicit test tasks, testing becomes an afterthought that gets skipped under time pressure
 - **Resolve:** Add test tasks for integration verification, acceptance-criteria-level testing, and any test infrastructure that needs updating. Test tasks typically depend on the implementation tasks they verify
 
+## Checklist
+
+- [ ] Read the feature's specification and design documents
+- [ ] Used `decompose propose` to generate an initial decomposition
+- [ ] Verified every task has a clear, non-empty description with acceptance criteria
+- [ ] Verified all dependencies between tasks are explicitly declared
+- [ ] Verified each task is sized for single-agent completion
+- [ ] Verified no circular dependencies exist
+- [ ] Verified integration and test tasks are present where needed
+- [ ] Applied the decomposition with `decompose apply`
+- [ ] Recorded spec ambiguities or architectural concerns discovered
+
 ## Procedure
 
 ### Phase 1: Read Feature Context

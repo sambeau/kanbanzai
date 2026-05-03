@@ -1,0 +1,134 @@
+document_id: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase2-roles
+document_path: work/P47-bootstrapping-gap-remediation/P47-dev-plan-phase2-roles.md
+content_hash: 63c75ffec0c3395dae1c54c158bd545d9881eaa88777a61dd741eb60e15e3f6b
+indexed_at: 2026-05-03T16:54:06.778508Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Phase 2 — Role Completion (G3)'
+      byte_offset: 0
+      byte_count: 6940
+      word_count: 936
+      content_hash: 63c75ffec0c3395dae1c54c158bd545d9881eaa88777a61dd741eb60e15e3f6b
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 402
+          byte_count: 979
+          word_count: 113
+          content_hash: 58aeaf8523619626db3a7fe19a2e116717dde65a102a631bf044f22bcaaee921
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1381
+          byte_count: 3254
+          word_count: 452
+          content_hash: 15f43c053e29a58ad93dded73a783586c87c0e3e5ad479f71c17c65c30bf30aa
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Create embedded roles directory and add go:embed directive'
+              byte_offset: 1400
+              byte_count: 622
+              word_count: 81
+              content_hash: 70e3e54bea4f0b0693e06c22b85ffa2817cba4530e206fca7aa0fbca527eb33a
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Extend installRoles to iterate all embedded roles'
+              byte_offset: 2022
+              byte_count: 773
+              word_count: 100
+              content_hash: 6ee2eece9ebbb5c5ca57858e1e7f6da91cb4109b336a8138001d75d7ab99bd52
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Update install path to .kbz/roles/ (new location)'
+              byte_offset: 2795
+              byte_count: 781
+              word_count: 112
+              content_hash: 7ea63952da88484af284f3c39575d545a708e296ca73f61cfa5fddad9082ec1d
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Ensure --skip-roles suppresses all roles'
+              byte_offset: 3576
+              byte_count: 543
+              word_count: 77
+              content_hash: e4d99ca0a2d0b14b80b1c2dcf92cf8cbae6e975822b9431b9083d69b2d87277f
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Add managed marker to role files that lack it'
+              byte_offset: 4119
+              byte_count: 516
+              word_count: 79
+              content_hash: 1bc44c8746a24786dcf99029a0970ec2599258060aa6276e47745ec6ec502b7c
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 4635
+          byte_count: 608
+          word_count: 72
+          content_hash: b26c9591ae4a319d03c06f6e7a5586362d93bfbe8223628311c6187a0afa1f92
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 5243
+          byte_count: 1186
+          word_count: 174
+          content_hash: 1f3eef139f792e0224d7720d10976d2e09669cb8ae326d3c5cd98c45233dd674
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: Role files lack `kanbanzai-managed` marker'
+              byte_offset: 5263
+              byte_count: 369
+              word_count: 59
+              content_hash: 876891061d76d979c7953e6dc5ca0ee7c617614a8d52c1ddac89f55fdd39be5b
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: Legacy path compatibility — roles at both .kbz/roles/ and .kbz/context/roles/'
+              byte_offset: 5632
+              byte_count: 452
+              word_count: 64
+              content_hash: 0d0da4e6058da211fb2e2293bd5502c910e4050709ef8ed659a88d520a772b43
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Role YAML content fails RoleStore validation after embedding'
+              byte_offset: 6084
+              byte_count: 345
+              word_count: 48
+              content_hash: 006c29a51dd750a13b029fc50ae498a79bbfed1fa1f451309781fa21447800ae
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 6429
+          byte_count: 511
+          word_count: 84
+          content_hash: aedcd62a87c624fa7637da1e22940e327c82da8dc82d2f2d3b46ffd46118ae42
+entity_refs:
+    - entity_id: P47-bootstrapping-gap-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 322
+cross_doc_links:
+    - target_path: work/P47-bootstrapping-gap-remediation/spec-bootstrapping-gap-remediation.md
+      link_text: work/P47-bootstrapping-gap-remediation/spec-bootstrapping-gap-remediation.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: narrative
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T16:54:07.794007Z
+classified: false

@@ -1,0 +1,346 @@
+document_id: B46-bootstrapping-gap-remediation/spec-p47-spec-bootstrapping-gap-remediation
+document_path: work/P47-bootstrapping-gap-remediation/P47-spec-bootstrapping-gap-remediation.md
+content_hash: 53e6a5877689cdceb8620961a8488b3a0681dbfc71f83e136906bbc8066f3d26
+indexed_at: 2026-05-03T16:53:43.82847Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Bootstrapping Gap Remediation'
+      byte_offset: 0
+      byte_count: 21948
+      word_count: 2987
+      content_hash: 53e6a5877689cdceb8620961a8488b3a0681dbfc71f83e136906bbc8066f3d26
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 350
+          byte_count: 2718
+          word_count: 317
+          content_hash: 019678368d3b8907af5914e47c099b970af99130f5b54dd6140c0b8593b3a2ec
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Prior designs consulted
+              byte_offset: 367
+              byte_count: 650
+              word_count: 68
+              content_hash: 57cd154b51a17b940e3cf0b61c4435fcc0282942d1218ca5d80950a9f0e2f720
+            - path: 1.1.2
+              level: 3
+              title: Prior specs consulted
+              byte_offset: 1017
+              byte_count: 1268
+              word_count: 139
+              content_hash: 660b4d7648797dd4e1e4a211467dc9476897fdd14657eaedd8397aec4f3c352c
+            - path: 1.1.3
+              level: 3
+              title: Relationship to prior work
+              byte_offset: 2285
+              byte_count: 400
+              word_count: 58
+              content_hash: 175a342e1e70adcb1abd5c661ce7978835434e4ca649f541f34c6b6ac8cc047c
+            - path: 1.1.4
+              level: 3
+              title: Deliberate divergences
+              byte_offset: 2685
+              byte_count: 383
+              word_count: 49
+              content_hash: 906abfde19f18957776308f8f46bb058897961af3beddbcd22feecc7447c1044
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 3068
+          byte_count: 695
+          word_count: 95
+          content_hash: 07545b7a05fa399c6272b8d02a1e7ea79b7d8c1ba014d810f0a33d2d488cea7b
+        - path: "1.3"
+          level: 2
+          title: Scope
+          byte_offset: 3763
+          byte_count: 1486
+          word_count: 204
+          content_hash: f8e42ef3c0294366884cea26f8dda4e790224fc9c4b24108f46b2a7603373f3c
+          children:
+            - path: 1.3.1
+              level: 3
+              title: In scope
+              byte_offset: 3773
+              byte_count: 906
+              word_count: 121
+              content_hash: 667510d1446c06b70e339259ca2f12492df3932200e67fb4917cad7547f69d19
+            - path: 1.3.2
+              level: 3
+              title: Explicitly excluded
+              byte_offset: 4679
+              byte_count: 570
+              word_count: 81
+              content_hash: 37be722616a8ac4b183845e76aaa656da450d249c3f85326ad25d731958463f4
+        - path: "1.4"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 5249
+          byte_count: 9932
+          word_count: 1353
+          content_hash: c9f39285d280b9d14eb24d2b2b52632fc4d272332cb15edaeb53eec825f6a785
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'FR-001: stage-bindings.yaml embedded and installed'
+              byte_offset: 5277
+              byte_count: 1032
+              word_count: 153
+              content_hash: accbad42ad5b7c1188c30365347bd338510bad01fb4b0ccc124d565a824ae785
+            - path: 1.4.2
+              level: 3
+              title: 'FR-002: Task-execution skills embedded and installed'
+              byte_offset: 6309
+              byte_count: 1639
+              word_count: 206
+              content_hash: f9f4d88e3d9e1aebf5fefb8afce4d0c3010d8463d14be768eedf6f4d9ae086c2
+            - path: 1.4.3
+              level: 3
+              title: 'FR-003: Role files embedded and installed'
+              byte_offset: 7948
+              byte_count: 1324
+              word_count: 166
+              content_hash: a16a9d5680db44e0f8ae91b31d5519056729fa2f6ecb4a8e46d08253f581b798
+            - path: 1.4.4
+              level: 3
+              title: 'FR-004: Enriched generated AGENTS.md'
+              byte_offset: 9272
+              byte_count: 1548
+              word_count: 230
+              content_hash: a93a49a30f0ac4696cd2cc29fc77e3e921978654f69310971e4a7398c0216684
+            - path: 1.4.5
+              level: 3
+              title: 'FR-005: Enriched generated copilot-instructions.md'
+              byte_offset: 10820
+              byte_count: 519
+              word_count: 67
+              content_hash: 949c99aeccd02aa545d66d129b605ded6351751b1dce94cec6c2eb78269d9ede
+            - path: 1.4.6
+              level: 3
+              title: 'FR-006: --update-skills covers all managed artifacts'
+              byte_offset: 11339
+              byte_count: 834
+              word_count: 105
+              content_hash: 4ed48529c9c37625908c8b07f66243c01c25e76ec85299ce31f5fce2b2ce8252
+            - path: 1.4.7
+              level: 3
+              title: 'FR-007: CI staleness check for embedded workflow skills'
+              byte_offset: 12173
+              byte_count: 774
+              word_count: 109
+              content_hash: 24c3a533c4ffcdb811fb3a6dd819dc23368a622b34273240b843ee8935b73695
+            - path: 1.4.8
+              level: 3
+              title: 'FR-008: End-to-end init integration test'
+              byte_offset: 12947
+              byte_count: 895
+              word_count: 133
+              content_hash: 6318f8afba4f74044e4e7347d1944d67a0a446e3f1529d9a84aabc9390c63374
+            - path: 1.4.9
+              level: 3
+              title: 'FR-009: Project copilot-instructions.md reconciliation'
+              byte_offset: 13842
+              byte_count: 766
+              word_count: 98
+              content_hash: 924571d4614e659f006527b0123f7a4ecabce9c2ee9d15b1b6e3b9f050743c27
+            - path: 1.4.10
+              level: 3
+              title: 'FR-010: Skill store and role store load without errors'
+              byte_offset: 14608
+              byte_count: 573
+              word_count: 83
+              content_hash: 03f1a709d31501f541da7085dc19b950ca52e06027801470df6017fe3c344e0d
+        - path: "1.5"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 15181
+          byte_count: 956
+          word_count: 156
+          content_hash: aa703603e9f5d7e23b4be73ae86a53c8f40f4d515273a1f08cd2da35d4270f6a
+        - path: "1.6"
+          level: 2
+          title: Constraints
+          byte_offset: 16137
+          byte_count: 869
+          word_count: 121
+          content_hash: 505396d5d3aca6f484cc73975f3d107dc7186efac030d8e3d02820c25a66a143
+        - path: "1.7"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 17006
+          byte_count: 2260
+          word_count: 317
+          content_hash: 020e0512293590f7384eb704fb1a2bd3899bb52fd8daca6a9618c5d0a862b020
+        - path: "1.8"
+          level: 2
+          title: Verification Plan
+          byte_offset: 19266
+          byte_count: 1392
+          word_count: 201
+          content_hash: dc00925579cc87c2180870130f35eaffe8878d4d9697fdeda51318388a5f32dc
+        - path: "1.9"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 20658
+          byte_count: 1290
+          word_count: 184
+          content_hash: 168cea09a1561f76b962e5368d7c6bfb216c2d1bfb07ace0d0d75e267affee17
+          children:
+            - path: 1.9.1
+              level: 3
+              title: Dependencies
+              byte_offset: 20691
+              byte_count: 548
+              word_count: 76
+              content_hash: 8477bd2a628764c2baf3d14d6a5a1e807b1952d19bd9a6065f8e1dd5da331c99
+            - path: 1.9.2
+              level: 3
+              title: Assumptions
+              byte_offset: 21239
+              byte_count: 709
+              word_count: 104
+              content_hash: 8fe1c14855bfe4938b9bdbb449a4be5ec7555ffe5a58d85ee0bf54a3694b636b
+entity_refs:
+    - entity_id: P47-bootstrapping-gap-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 268
+    - entity_id: P47-bootstrapping-gap-remediation
+      entity_type: plan
+      section_path: 1.1.1
+      byte_offset: 765
+    - entity_id: B16-skills-and-roles-3
+      entity_type: plan
+      section_path: 1.1.2
+      byte_offset: 1054
+    - entity_id: F3-spec-3
+      entity_type: plan
+      section_path: 1.1.2
+      byte_offset: 1083
+    - entity_id: F2-spec-3
+      entity_type: plan
+      section_path: 1.1.2
+      byte_offset: 1408
+    - entity_id: F1-spec-3
+      entity_type: plan
+      section_path: 1.1.2
+      byte_offset: 1714
+    - entity_id: B11-fresh-install-experience
+      entity_type: plan
+      section_path: 1.1.2
+      byte_offset: 2022
+    - entity_id: F2-spec-embedded-skills
+      entity_type: plan
+      section_path: 1.1.2
+      byte_offset: 2055
+cross_doc_links:
+    - target_path: work/P47-bootstrapping-gap-remediation/design-bootstrapping-gap-remediation.md
+      link_text: work/P47-bootstrapping-gap-remediation/design-bootstrapping-gap-remediation.md
+      section_path: "1"
+    - target_path: work/_project/design-fresh-install-experience.md
+      link_text: work/_project/design-fresh-install-experience.md
+      section_path: 1.1.1
+    - target_path: work/P47-bootstrapping-gap-remediation/design-bootstrapping-gap-remediation.md
+      link_text: work/P47-bootstrapping-gap-remediation/design-bootstrapping-gap-remediation.md
+      section_path: 1.1.1
+    - target_path: work/B16-skills-and-roles-3.0/B16-F3-spec-3.0-binding-registry.md
+      link_text: work/B16-skills-and-roles-3.0/B16-F3-spec-3.0-binding-registry.md
+      section_path: 1.1.2
+    - target_path: work/B16-skills-and-roles-3.0/B16-F2-spec-3.0-skill-system.md
+      link_text: work/B16-skills-and-roles-3.0/B16-F2-spec-3.0-skill-system.md
+      section_path: 1.1.2
+    - target_path: <name>/SKILL.md
+      link_text: <name>/SKILL.md
+      section_path: 1.1.2
+    - target_path: work/B16-skills-and-roles-3.0/B16-F1-spec-3.0-role-system.md
+      link_text: work/B16-skills-and-roles-3.0/B16-F1-spec-3.0-role-system.md
+      section_path: 1.1.2
+    - target_path: work/B11-fresh-install-experience/B11-F2-spec-embedded-skills.md
+      link_text: work/B11-fresh-install-experience/B11-F2-spec-embedded-skills.md
+      section_path: 1.1.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.2"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.2"
+    - target_path: .kbz/skills/<name>/SKILL.md
+      link_text: .kbz/skills/<name>/SKILL.md
+      section_path: 1.3.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.1
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.3.1
+    - target_path: refs/*.md
+      link_text: refs/*.md
+      section_path: 1.3.2
+    - target_path: work/templates/*.md
+      link_text: work/templates/*.md
+      section_path: 1.3.2
+    - target_path: .kbz/skills/<name>/SKILL.md
+      link_text: .kbz/skills/<name>/SKILL.md
+      section_path: 1.4.2
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.4.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.4
+    - target_path: internal/kbzinit/skills/<name>/SKILL.md
+      link_text: internal/kbzinit/skills/<name>/SKILL.md
+      section_path: 1.4.7
+    - target_path: .agents/skills/kanbanzai-<name>/SKILL.md
+      link_text: .agents/skills/kanbanzai-<name>/SKILL.md
+      section_path: 1.4.7
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.8
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: "1.7"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.7"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.7"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.8"
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: constraint
+      confidence: high
+    - section_path: "1.7"
+      role: requirement
+      confidence: high
+    - section_path: "1.9"
+      role: assumption
+      confidence: high
+    - section_path: 1.9.2
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T16:53:44.520859Z
+classified: false

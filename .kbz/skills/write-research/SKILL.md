@@ -83,7 +83,7 @@ constraint_level: medium
 - **BECAUSE:** Retrospective signals and knowledge entries accumulate across sessions. In-session memory only captures the current session. Reports written from memory systematically miss recurring patterns and prior decisions, producing incomplete analysis that cannot support reliable recommendations.
 - **Resolve:** Always call `retro(action: "synthesise")` and `knowledge(action: "list")` before writing any report. Treat the synthesised output as the primary input, not a supplement.
 
-## Pre-Writing Checklist
+## Checklist
 
 Before beginning to write the research report:
 

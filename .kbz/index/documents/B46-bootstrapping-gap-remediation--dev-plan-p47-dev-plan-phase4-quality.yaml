@@ -1,0 +1,143 @@
+document_id: B46-bootstrapping-gap-remediation/dev-plan-p47-dev-plan-phase4-quality
+document_path: work/P47-bootstrapping-gap-remediation/P47-dev-plan-phase4-quality.md
+content_hash: 411cbc911b1f06d4f6c7cadb108a9a89eb409e11e036639428961150084e3728
+indexed_at: 2026-05-03T16:54:06.778726Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Phase 4 — Quality Hardening (G5 + G7 + G8)'
+      byte_offset: 0
+      byte_count: 7277
+      word_count: 1010
+      content_hash: 411cbc911b1f06d4f6c7cadb108a9a89eb409e11e036639428961150084e3728
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 463
+          byte_count: 633
+          word_count: 94
+          content_hash: f3cf38c6e8cfa3f7dadc8b2b086450d8f9389af91dbbc2fb2a1b29c26219dc10
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1096
+          byte_count: 3762
+          word_count: 494
+          content_hash: fd51a8945ac4c1967ff4f262681da5b405e8f702b852df3e4eb85776f1a3a787
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Extend --update-skills to cover stage-bindings, task skills, and all roles'
+              byte_offset: 1115
+              byte_count: 934
+              word_count: 124
+              content_hash: bd776e34bb771398635639ec03642d3d12952857432dce2a99cc4687ec7dbce0
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Resolve codebase-memory skills disposition (G8)'
+              byte_offset: 2049
+              byte_count: 760
+              word_count: 106
+              content_hash: b63d5dcf8008069e7b9bcc30783b3a6e58802204cb8e267c2ff2f8accfaeeb5b
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Add CI staleness check for embedded workflow skills'
+              byte_offset: 2809
+              byte_count: 734
+              word_count: 90
+              content_hash: e96851a1348b779414bb7e69a513ad68d4e3898b3e03320bcdc6fc54b4100f80
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Extend staleness check to task-execution skills and roles'
+              byte_offset: 3543
+              byte_count: 732
+              word_count: 85
+              content_hash: 0c8f2d52b0cd9acf64f11ed3910febf07df3ecd0d690c5194a179f0cd4ceb727
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: End-to-end --update-skills integration test'
+              byte_offset: 4275
+              byte_count: 583
+              word_count: 86
+              content_hash: 87b265e5a649a9640f4eee87350abca604b729fe023ef0bd8e2f0c43d8091362
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 4858
+          byte_count: 555
+          word_count: 74
+          content_hash: 47e3ce56663779dd3a78216e1edbd20b6445ebb9a58ea6bce1be157727d5291d
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 5413
+          byte_count: 1225
+          word_count: 192
+          content_hash: e25f0fd793908c8c012f71c40a65a80c72f481468a0a52a1e5fc7729e6a38ee7
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: --update-skills integration test is fragile'
+              byte_offset: 5433
+              byte_count: 380
+              word_count: 60
+              content_hash: ef36724afba00995e1082ff774e2886016c77bbe0828b877ead3691ae6e5debe
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: Staleness check fails immediately due to existing drift'
+              byte_offset: 5813
+              byte_count: 440
+              word_count: 74
+              content_hash: abd75259867839c5f63ce3e1479d3ca1080c4485709a61a75c30bb9895a7bfc2
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Staleness check path resolution breaks in CI'
+              byte_offset: 6253
+              byte_count: 385
+              word_count: 55
+              content_hash: be9079fd8088942b3435492d904fa9402223a3970d51e6100f05ad1b3f2a87a1
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 6638
+          byte_count: 639
+          word_count: 105
+          content_hash: 633446c174faf68061372f10c3c22e067bc3714efb1983c4eef55c7e267d20d7
+entity_refs:
+    - entity_id: P47-bootstrapping-gap-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 383
+cross_doc_links:
+    - target_path: work/P47-bootstrapping-gap-remediation/spec-bootstrapping-gap-remediation.md
+      link_text: work/P47-bootstrapping-gap-remediation/spec-bootstrapping-gap-remediation.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.2
+    - target_path: skills/task-execution/<name>/SKILL.md
+      link_text: skills/task-execution/<name>/SKILL.md
+      section_path: 1.2.4
+    - target_path: .kbz/skills/<name>/SKILL.md
+      link_text: .kbz/skills/<name>/SKILL.md
+      section_path: 1.2.4
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T16:54:07.689199Z
+classified: false

@@ -129,6 +129,7 @@ or prior session context — read the skill file first.
 ## Critical rules
 
 - **Check `git status` before every task.** Commit or stash previous work first.
+- **Verify entity existence before working on it.** When asked to work on a plan, batch, or feature by name, call `status(id: "...")` or `entity(action: "get", id: "...")` first. If the entity does not exist, STOP and ask the human whether to create it. Never proceed with work under an unregistered entity name — unregistered entities have no lifecycle state, no worktree isolation, and no task tracking. P47/B46 is the canonical example: documents and a branch used the name, but no entity was ever created, so implementation happened on main with no guardrails.
 - **Read the stage binding, role, and skill before starting work.** They define your vocabulary, procedure, and constraints.
 - **Do not read `.kbz/state/` files directly.** Use MCP tools (`entity`, `doc`, `status`, `knowledge`, etc.). Role, skill, and stage-binding files in `.kbz/` are meant to be read directly.
 - **Use graph tools over grep** for structural code questions. Project: `Users-samphillips-Dev-kanbanzai`. Read the relevant `.github/skills/codebase-memory-*/SKILL.md` before using any graph tool.

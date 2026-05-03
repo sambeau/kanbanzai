@@ -120,6 +120,14 @@ Call `next` (without an ID) to see what tasks are ready. If the queue is
 empty, call `status` or `entity` action: `list` to understand the current
 project state — active features, open bugs, what stage things are in.
 
+### Verify the entity exists (if working on one)
+
+If your task refers to a plan (P{n}), batch (B{n}), or feature (FEAT-xxx) ID,
+call `entity(action: "get", id: "...")` to confirm it exists before doing
+any work. If the entity does not exist, STOP and ask the human whether to
+create it. Never proceed with work under an unregistered entity name — it has
+no lifecycle state, no worktree isolation, and no task tracking.
+
 ### Claim your task
 
 Call `next` with a task ID to claim it and get your instructions and

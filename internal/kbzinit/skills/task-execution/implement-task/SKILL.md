@@ -179,6 +179,25 @@ Copy this checklist and track your progress:
 5. For each knowledge entry that proved accurate and useful during this task, call `knowledge(action: "confirm", id: "KE-xxx")`.
 6. For each knowledge entry that proved inaccurate or misleading, call `knowledge(action: "flag", id: "KE-xxx", reason: "...")`. **BECAUSE** confirmation is the mechanism by which the knowledge base self-curates, and unflagged inaccurate entries continue to mislead future agents indefinitely.
 
+## Output Format
+
+The task completion call:
+
+```
+finish(
+  task_id: "TASK-xxx",
+  summary: "Brief description of what was accomplished",
+  files_modified: ["path/to/file.go", "path/to/test.go"],
+  verification: "All tests pass; acceptance criteria AC-1 through AC-3 verified",
+  knowledge: [
+    {topic: "topic-name", content: "what was learned", scope: "project"}
+  ],
+  retrospective: [
+    {category: "worked-well", observation: "what went well", severity: "minor"}
+  ]
+)
+```
+
 ## Examples
 
 ### BAD: Scope creep with missing tests

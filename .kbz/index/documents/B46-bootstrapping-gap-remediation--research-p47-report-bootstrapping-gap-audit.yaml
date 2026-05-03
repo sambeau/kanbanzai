@@ -1,0 +1,169 @@
+document_id: B46-bootstrapping-gap-remediation/research-p47-report-bootstrapping-gap-audit
+document_path: work/P47-bootstrapping-gap-remediation/P47-report-bootstrapping-gap-audit.md
+content_hash: 327d913539f718003dd76648e1e7001e5276ef6a722564b443f87fcb8427596c
+indexed_at: 2026-05-03T16:54:06.78326Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Bootstrapping Gap Audit: Dogfooding Asymmetry in Kanbanzai'
+      byte_offset: 0
+      byte_count: 20342
+      word_count: 2602
+      content_hash: 327d913539f718003dd76648e1e7001e5276ef6a722564b443f87fcb8427596c
+      children:
+        - path: "1.1"
+          level: 2
+          title: Executive Summary
+          byte_offset: 222
+          byte_count: 1059
+          word_count: 147
+          content_hash: 26425440027ec112ffa96b30434e4c801f97fb4a2444b2dadf27da4eced283b7
+        - path: "1.2"
+          level: 2
+          title: Methodology
+          byte_offset: 1281
+          byte_count: 2361
+          word_count: 237
+          content_hash: ae88bc344eb39340fc4dd973053dda654bd400bb846ed4b8e59c3507cd8f7aa9
+        - path: "1.3"
+          level: 2
+          title: Gap Table
+          byte_offset: 3642
+          byte_count: 2187
+          word_count: 344
+          content_hash: dd8373b315272c4ad3688e6160254b0b01b2b645801dd7c50a1e2af4694c282a
+        - path: "1.4"
+          level: 2
+          title: Detailed Findings
+          byte_offset: 5829
+          byte_count: 11689
+          word_count: 1443
+          content_hash: 68aa243fcab39291aa31219eba35d4b2116db5f622a613d8406a1e9448712ab5
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'G1: stage-bindings.yaml missing after kbz init'
+              byte_offset: 5851
+              byte_count: 1682
+              word_count: 204
+              content_hash: 9f8aac75576652663dc6a2f5d91d7320cd4947541e9ddaf12eb60e02e5e48f39
+            - path: 1.4.2
+              level: 3
+              title: 'G2: Task-execution skills missing after kbz init'
+              byte_offset: 7533
+              byte_count: 1825
+              word_count: 192
+              content_hash: 1edfd65c3f929c51448c5daf8238d16b0bd61fd41bf091d8e3d1d30284a64e82
+            - path: 1.4.3
+              level: 3
+              title: 'G3: Role files missing after kbz init'
+              byte_offset: 9358
+              byte_count: 1766
+              word_count: 199
+              content_hash: ee118ba3d861788da6a1ea78f7f26454e65fdb27a8644d8831d3b6a5d9783b12
+            - path: 1.4.4
+              level: 3
+              title: 'G4: Generated AGENTS.md lacks skill/role reference tables'
+              byte_offset: 11124
+              byte_count: 1125
+              word_count: 160
+              content_hash: 53afb2f64a449b35b0642442802f4e03c8e99e4526431f30049c970c19c127d1
+            - path: 1.4.5
+              level: 3
+              title: 'G5: --update-skills doesn''t update stage-bindings or .kbz/skills/'
+              byte_offset: 12249
+              byte_count: 1182
+              word_count: 141
+              content_hash: 1240227f8f3ff5f5d6b6527e0ad44e85e96e244ac43db7eb98eab06d540a20f0
+            - path: 1.4.6
+              level: 3
+              title: 'G6: Project copilot-instructions.md diverges from generated version'
+              byte_offset: 13431
+              byte_count: 1254
+              word_count: 166
+              content_hash: ee0e4c6458a8f0489071b65f55d53f17ad00a75f4d9251808346f434174bdfbe
+            - path: 1.4.7
+              level: 3
+              title: 'G7: Embedded skill seeds may be stale'
+              byte_offset: 14685
+              byte_count: 915
+              word_count: 127
+              content_hash: ab6f5eccf6ebc57cd2ef85518f0c2af53e4235f04582ccc3d2e3e9188235b6b2
+            - path: 1.4.8
+              level: 3
+              title: 'G8: Codebase-memory skills not installed'
+              byte_offset: 15600
+              byte_count: 1163
+              word_count: 157
+              content_hash: 796f1ee2fedfeff3d096ec288d75ff338120c890fd9e9f4c78f099a661c27c3f
+            - path: 1.4.9
+              level: 3
+              title: 'G9: refs/ and work/templates/ are project-local only'
+              byte_offset: 16763
+              byte_count: 755
+              word_count: 94
+              content_hash: d8ae675062add18614a8875d4c9e2460a37281b1cd26d6d4ade766c98d9fff84
+        - path: "1.5"
+          level: 2
+          title: Upgrade Path Analysis
+          byte_offset: 17518
+          byte_count: 1526
+          word_count: 218
+          content_hash: 4aa97be4390ea5a814c3fe5fae443d7b2df2403a82435f4faeb4208dfaf2abe9
+        - path: "1.6"
+          level: 2
+          title: Recommendations
+          byte_offset: 19044
+          byte_count: 1298
+          word_count: 182
+          content_hash: 5ebaff97b05faa8378df4ff6cfadf478440b21767e359864e63a792d9ef1e562
+cross_doc_links:
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.2"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.2"
+    - target_path: .kbz/skills/<name>/SKILL.md
+      link_text: .kbz/skills/<name>/SKILL.md
+      section_path: "1.2"
+    - target_path: .kbz/skills/<name>/SKILL.md
+      link_text: .kbz/skills/<name>/SKILL.md
+      section_path: 1.4.2
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: 1.4.6
+    - target_path: internal/kbzinit/skills/*/SKILL.md
+      link_text: internal/kbzinit/skills/*/SKILL.md
+      section_path: 1.4.7
+    - target_path: work/templates/*.md
+      link_text: work/templates/*.md
+      section_path: 1.4.9
+    - target_path: refs/go-style.md
+      link_text: refs/go-style.md
+      section_path: 1.4.9
+    - target_path: refs/testing.md
+      link_text: refs/testing.md
+      section_path: 1.4.9
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.5"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.5"
+    - target_path: work/README.md
+      link_text: work/README.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T16:54:07.732843Z
+classified: false

@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "After the P47/B46 unregistered-entity incident, two safeguards were added: (1) copilot-instructions.md now has a \"Verify entity existence before working on it\" critical rule directing agents to call status/entity get before working on any named entity, with P47/B46 as the canonical example; (2) kanbanzai-getting-started skill now includes a \"Verify the entity exists\" checklist item after \"Check the work queue\". Both rules mandate stopping and asking the human if the entity doesn't exist."
+created: "2026-05-03T17:03:20Z"
+created_by: sambeau
+id: KE-01KQQCPS0EYCT
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - safeguard
+  - entity-verification
+  - P47
+  - retro-fix
+tier: 2
+topic: entity-verification-safeguards-added
+ttl_days: 90
+updated: "2026-05-03T17:03:20Z"
+use_count: 0

@@ -1,0 +1,19 @@
+confidence: "0.5"
+content: "When creating work that is not yet registered as a Kanbanzai entity, the entity MUST be created first — before writing documents or implementation code. P47/B46 was created as a design branch (design/P47-bootstrapping-gap-remediation) with documents committed but no entity registration. The implementation (5 commits) was then done directly on main with no worktree, no feature entities, and no task tracking. This created three problems: (1) no worktree isolation meant implementation happened on main, risking conflicts with other parallel work and making it impossible to revert cleanly; (2) no entity tracking meant the work was invisible to the workflow system — status queries, next, and health checks could not see it; (3) the P47 name in documents and branch names had no corresponding entity record, creating a phantom reference with no lifecycle state. The root cause: P47 was treated as a name (like a document prefix) rather than as a workflow entity that needs formal creation before work begins."
+created: "2026-05-03T16:56:50Z"
+created_by: sambeau
+id: KE-01KQQCAWVM89V
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - bootstrapping
+  - workflow-discipline
+  - entity-registration
+  - worktree
+  - P47
+tier: 2
+topic: always-create-entity-before-starting-work
+ttl_days: 90
+updated: "2026-05-03T16:56:50Z"
+use_count: 0

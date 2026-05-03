@@ -1964,24 +1964,33 @@ func TestP12_Integration_NewProject(t *testing.T) {
 		t.Error("specification skill missing name in frontmatter")
 	}
 
-	// AC-C1: getting-started skill contains the MCP-tools write rule.
+	// AC-C1: getting-started skill directs agents to use MCP tools
+	// exclusively and warns against reading .kbz/state/ directly.
 	gsPath := filepath.Join(dir, ".agents", "skills", "kanbanzai-getting-started", "SKILL.md")
 	gsData, err := os.ReadFile(gsPath)
 	if err != nil {
 		t.Fatalf("kanbanzai-getting-started/SKILL.md not installed: %v", err)
 	}
-	if !strings.Contains(string(gsData), "edit_file") {
-		t.Error("getting-started skill missing MCP-tools write rule (edit_file reference)")
+	gsText := string(gsData)
+	if !strings.Contains(gsText, "MCP tools") {
+		t.Error("getting-started skill missing MCP tools guidance")
+	}
+	if !strings.Contains(gsText, ".kbz/state/") {
+		t.Error("getting-started skill missing .kbz/state/ direct-read warning")
 	}
 
-	// AC-C2: workflow skill emergency brake includes direct-write condition.
+	// AC-C2: workflow skill contains the emergency brake section.
 	wfPath := filepath.Join(dir, ".agents", "skills", "kanbanzai-workflow", "SKILL.md")
 	wfData, err := os.ReadFile(wfPath)
 	if err != nil {
 		t.Fatalf("kanbanzai-workflow/SKILL.md not installed: %v", err)
 	}
-	if !strings.Contains(string(wfData), "work/") || !strings.Contains(string(wfData), ".kbz/state/") {
-		t.Error("workflow skill emergency brake missing direct-write condition")
+	wfText := string(wfData)
+	if !strings.Contains(wfText, "The Emergency Brake") {
+		t.Error("workflow skill missing emergency brake section")
+	}
+	if !strings.Contains(wfText, "stop and ask") {
+		t.Error("workflow skill emergency brake missing stop-and-ask directive")
 	}
 
 	// Idempotency: second run must not modify AGENTS.md or copilot-instructions.md.

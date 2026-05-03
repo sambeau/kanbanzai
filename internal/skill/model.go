@@ -12,14 +12,16 @@ var skillNameRegexp = regexp.MustCompile(`^[a-z0-9][a-z0-9-]{0,38}[a-z0-9]$|^[a-
 var roleIDRegexp = regexp.MustCompile(`^[a-z0-9][a-z0-9-]{0,28}[a-z0-9]$|^[a-z0-9]{2}$`)
 
 var validStages = map[string]bool{
-	"designing":      true,
-	"specifying":     true,
-	"dev-planning":   true,
-	"developing":     true,
-	"reviewing":      true,
-	"researching":    true,
-	"documenting":    true,
-	"plan-reviewing": true,
+	"auditing":        true,
+	"batch-reviewing": true,
+	"designing":       true,
+	"dev-planning":    true,
+	"developing":      true,
+	"doc-publishing":  true,
+	"documenting":     true,
+	"researching":     true,
+	"reviewing":       true,
+	"specifying":      true,
 }
 
 var validConstraintLevels = map[string]bool{

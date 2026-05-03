@@ -1,0 +1,225 @@
+document_id: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17
+document_path: work/reviews/batch-review-P47-bootstrapping-gap-remediation-2026-07-17.md
+content_hash: 93f88f4b597e6b7b825070e8ba6a801ebcc734742c8922edfbd15c1f01faec9b
+indexed_at: 2026-05-03T16:54:53.832331Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Batch Conformance Review: P47 Bootstrapping Gap Remediation'
+      byte_offset: 0
+      byte_count: 12762
+      word_count: 1593
+      content_hash: 93f88f4b597e6b7b825070e8ba6a801ebcc734742c8922edfbd15c1f01faec9b
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 63
+          byte_count: 297
+          word_count: 36
+          content_hash: c05ec222c4d1abcec85ef19cfcefcc0c24e021e12905decc048f13c8eeea18dd
+        - path: "1.2"
+          level: 2
+          title: Context
+          byte_offset: 360
+          byte_count: 508
+          word_count: 59
+          content_hash: 671db95c0d0c59d81633603b55c2d1de5042766b5238fdee885b1b83f142f9ae
+        - path: "1.3"
+          level: 2
+          title: Feature Census
+          byte_offset: 868
+          byte_count: 190
+          word_count: 31
+          content_hash: 13b1f36364da3932eb04e1c22cf31ccf5ba5a87293edeb76b636b9957c9b097e
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria Conformance Matrix
+          byte_offset: 1058
+          byte_count: 6655
+          word_count: 799
+          content_hash: 7905b0a796142b1ba0511fa95b6c63d6a480a014b126d119e792cf208d571354
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'AC-001: stage-bindings.yaml installed — ✅ PASS'
+              byte_offset: 1101
+              byte_count: 763
+              word_count: 81
+              content_hash: d7889d4b24cced999c891ebab9970fa851004e2afb19772f93e1c5c3d447949c
+            - path: 1.4.2
+              level: 3
+              title: 'AC-002: Task-execution skills installed — ⚠️ PASS-WITH-NOTES'
+              byte_offset: 1864
+              byte_count: 784
+              word_count: 91
+              content_hash: 7e299fca52b8f7f56ccbcc4cf67c22e4e9d163c52d642460da618794eb968d62
+            - path: 1.4.3
+              level: 3
+              title: 'AC-003: Role files installed — ✅ PASS'
+              byte_offset: 2648
+              byte_count: 629
+              word_count: 72
+              content_hash: 50968fd8777a2c296f7a65bb8dd156a6937b79a3e26690ddacbe7961b497e20e
+            - path: 1.4.4
+              level: 3
+              title: 'AC-004: AGENTS.md skill + role tables — ✅ PASS'
+              byte_offset: 3277
+              byte_count: 913
+              word_count: 126
+              content_hash: 92960c90cc9eadba9dfd49f569c3629772272abfca8599ea477994ad7b1d4d12
+            - path: 1.4.5
+              level: 3
+              title: 'AC-005: --update-skills covers all artifacts — ✅ PASS'
+              byte_offset: 4190
+              byte_count: 784
+              word_count: 91
+              content_hash: 3af03b51a7d90d5f68b48898bb83f7f4fb36797510985959d29866146434589a
+            - path: 1.4.6
+              level: 3
+              title: 'AC-006: CI staleness check — ✅ PASS'
+              byte_offset: 4974
+              byte_count: 551
+              word_count: 62
+              content_hash: 2063e6ff8b95aa2c5ad349ad25348258d0ddf9f8c6ea30f7d06f7b6cea6c30c9
+            - path: 1.4.7
+              level: 3
+              title: 'AC-007: End-to-end integration test — ⚠️ PASS-WITH-NOTES'
+              byte_offset: 5525
+              byte_count: 800
+              word_count: 94
+              content_hash: e33021748fad51234f0cdc8311d859ad8cb95e6995cba98c68cee5b97dcbe5b1
+            - path: 1.4.8
+              level: 3
+              title: 'AC-008: Pipeline activation message — ❓ NOT DIRECTLY VERIFIED'
+              byte_offset: 6325
+              byte_count: 381
+              word_count: 50
+              content_hash: eef88c370466982dbe03398d87184455cd1dfab2a41b632120d14000cf557f2e
+            - path: 1.4.9
+              level: 3
+              title: 'AC-009: SkillStore + RoleStore load without errors — ❓ NOT DIRECTLY VERIFIED'
+              byte_offset: 6706
+              byte_count: 385
+              word_count: 55
+              content_hash: d7da98cc5a69da34c212328f85b837707eb9107bd119ed373d47b4bd24abbf00
+            - path: 1.4.10
+              level: 3
+              title: 'AC-010: copilot-instructions.md reconciliation — ✅ PASS'
+              byte_offset: 7091
+              byte_count: 622
+              word_count: 72
+              content_hash: fe0152fc2e045de5b39807be5a91393e023910485ed04b52bd80b87b31da74e5
+        - path: "1.5"
+          level: 2
+          title: Additional Conformance Gaps
+          byte_offset: 7713
+          byte_count: 1068
+          word_count: 135
+          content_hash: 86a334c2bb5a5405ad82cffbcfbc5629fbd689db929a155563e3c358ecc1b036
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'CG-4: Roles install path still writes to legacy `.kbz/context/roles/` (non-blocking)'
+              byte_offset: 7745
+              byte_count: 662
+              word_count: 83
+              content_hash: 8b1d807b2f4abedab5557a3aaaa9b7d34df76e75c11c8c3eeff92e3958b4c4c9
+            - path: 1.5.2
+              level: 3
+              title: 'CG-5: Missing `prompt-engineering` in taskSkillNames (non-blocking, noted above)'
+              byte_offset: 8407
+              byte_count: 374
+              word_count: 48
+              content_hash: 8beba3291ae24d5eddffed9205cc885c948097185b891e54d208a14cc5964e5a
+        - path: "1.6"
+          level: 2
+          title: Documentation Currency
+          byte_offset: 8781
+          byte_count: 730
+          word_count: 77
+          content_hash: 5dba1f49f717a673079de360a5d72f19cbc53d2249899edd7acbe33b1ae2ecbb
+        - path: "1.7"
+          level: 2
+          title: Implementation-to-Spec Traceability
+          byte_offset: 9511
+          byte_count: 871
+          word_count: 130
+          content_hash: b406c55362d97c10f08330baf9c818e856b37a5d9538f5aa046324bca91e81f9
+        - path: "1.8"
+          level: 2
+          title: Commits
+          byte_offset: 10382
+          byte_count: 605
+          word_count: 85
+          content_hash: 6ec116ef7215343757f3de1cf84720dee731f3453e057eaa31c2f5be3ba2e05b
+        - path: "1.9"
+          level: 2
+          title: Retrospective Summary
+          byte_offset: 10987
+          byte_count: 536
+          word_count: 76
+          content_hash: b41c46199449927eb615d523a817f4778483fe708db1ee70131cbc28a18eb260
+        - path: "1.10"
+          level: 2
+          title: Batch Verdict
+          byte_offset: 11523
+          byte_count: 779
+          word_count: 114
+          content_hash: 2831e602b4bc94bc7a7f42ce53029a56bcf0d9c9bc7b87c868b9534e6bbaaf34
+        - path: "1.11"
+          level: 2
+          title: Evidence
+          byte_offset: 12302
+          byte_count: 460
+          word_count: 43
+          content_hash: ea6d2936ec1367ca5a654738f8cea1f630ee03f7a6fe4b0041a3b53d5f30443b
+entity_refs:
+    - entity_id: P47-bootstrapping-gap-remediation
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 85
+    - entity_id: P47-bootstrapping-gap-remediation
+      entity_type: plan
+      section_path: "1.2"
+      byte_offset: 642
+    - entity_id: P47-bootstrapping-gap-remediation
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 8835
+    - entity_id: P47-bootstrapping-gap-remediation
+      entity_type: plan
+      section_path: "1.11"
+      byte_offset: 12329
+cross_doc_links:
+    - target_path: work/P47-bootstrapping-gap-remediation/spec-bootstrapping-gap-remediation.md
+      link_text: work/P47-bootstrapping-gap-remediation/spec-bootstrapping-gap-remediation.md
+      section_path: "1.6"
+    - target_path: work/P47-bootstrapping-gap-remediation/design-bootstrapping-gap-remediation.md
+      link_text: work/P47-bootstrapping-gap-remediation/design-bootstrapping-gap-remediation.md
+      section_path: "1.6"
+    - target_path: work/P47-bootstrapping-gap-remediation/report-bootstrapping-gap-audit.md
+      link_text: work/P47-bootstrapping-gap-remediation/report-bootstrapping-gap-audit.md
+      section_path: "1.6"
+    - target_path: work/P47-bootstrapping-gap-remediation/design-bootstrapping-gap-remediation.md
+      link_text: work/P47-bootstrapping-gap-remediation/design-bootstrapping-gap-remediation.md
+      section_path: "1.11"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: 1.5.1
+      role: narrative
+      confidence: high
+    - section_path: "1.9"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T16:54:54.343944Z
+classified: false
