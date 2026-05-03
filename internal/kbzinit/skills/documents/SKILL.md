@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: kanbanzai-documents
 description: >
   Use when creating, editing, registering, or approving documents in a
@@ -8,9 +10,6 @@ description: >
   or lifecycle. Use whenever any markdown file is created or modified in a
   configured document root — even if the edit seems minor, registration
   and refresh rules still apply.
-metadata:
-  kanbanzai-managed: "true"
-  version: "0.4.0"
 ---
 
 # SKILL: Kanbanzai Documents

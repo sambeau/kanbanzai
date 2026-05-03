@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: kanbanzai-agents
 description: >
   Use when dispatching implementation tasks to sub-agents, committing
@@ -6,9 +8,6 @@ description: >
   there is a task to implement, a commit to make, or an entity to
   complete. Also activates for entity creation, naming, and data
   entry decisions.
-metadata:
-  kanbanzai-managed: "true"
-  version: "0.4.0"
 ---
 
 # SKILL: Kanbanzai Agents

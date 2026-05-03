@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: kanbanzai-design
 description: >
   Use this skill whenever you are drafting, reviewing, or discussing a design document,

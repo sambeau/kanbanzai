@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: kanbanzai-plan-review
 description: >
   Use this skill when conducting a plan review after all features in a plan are

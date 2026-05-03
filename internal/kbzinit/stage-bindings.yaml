@@ -1,0 +1,156 @@
+# kanbanzai-managed: true
+# kanbanzai-version: dev
+stage_bindings:
+  designing:
+    description: "Creating or revising a design document"
+    orchestration: single-agent
+    roles: [architect]
+    skills: [write-design]
+    human_gate: false
+    document_type: design
+    effort_budget: "5-15 tool calls"
+    notes: "Design review is human-led via document approval. The specifying stage's prerequisites enforce design approval."
+    document_template:
+      required_sections:
+        - "Overview"
+        - "Goals and Non-Goals"
+        - "Design"
+        - "Alternatives Considered"
+        - "Dependencies"
+
+  specifying:
+    description: "Writing a formal specification with acceptance criteria"
+    orchestration: single-agent
+    roles: [spec-author]
+    skills: [write-spec]
+    human_gate: true
+    document_type: specification
+    effort_budget: "5-15 tool calls"
+    notes: "Human gate enforces that the spec author's requirements are reviewed and approved before implementation begins. A spec-author role (not architect) is used to keep the language precise and acceptance-criteria focused."
+    prerequisites:
+      documents:
+        - type: design
+          status: approved
+    document_template:
+      required_sections:
+        - "Overview"
+        - "Scope"
+        - "Functional Requirements"
+        - "Non-Functional Requirements"
+        - "Acceptance Criteria"
+      acceptance_criteria_format: "checkbox"
+
+  dev-planning:
+    description: "Breaking a spec into an implementation plan and tasks"
+    orchestration: single-agent
+    roles: [architect]
+    skills: [write-dev-plan, decompose-feature]
+    human_gate: true
+    document_type: dev-plan
+    effort_budget: "5-10 tool calls"
+    notes: "Human gate ensures the task decomposition and dependency graph are reviewed before parallel implementation work begins. Architect role owns the dev-plan because it requires systems-level judgment about interface contracts and sequencing."
+    prerequisites:
+      documents:
+        - type: specification
+          status: approved
+    document_template:
+      required_sections:
+        - "Overview"
+        - "Task Breakdown"
+        - "Dependency Graph"
+        - "Interface Contracts"
+        - "Traceability Matrix"
+
+  developing:
+    description: "Implementing tasks from the dev plan"
+    orchestration: orchestrator-workers
+    roles: [orchestrator]
+    skills: [orchestrate-development]
+    human_gate: false
+    effort_budget: "10-50 tool calls per task"
+    prerequisites:
+      documents:
+        - type: dev-plan
+          status: approved
+      tasks:
+        min_count: 1
+    sub_agents:
+      roles: [implementer]
+      skills: [implement-task]
+      topology: parallel
+    notes: "Implementer role carries language-specific vocabulary (e.g. implementer-go). Start single agent, escalate only if below 45% threshold."
+
+  reviewing:
+    description: "Evaluating implementation against the specification"
+    orchestration: orchestrator-workers
+    roles: [orchestrator]
+    skills: [orchestrate-review]
+    human_gate: true
+    document_type: report
+    effort_budget: "5-10 tool calls per review dimension"
+    max_review_cycles: 3
+    prerequisites:
+      tasks:
+        all_terminal: true
+    sub_agents:
+      roles:
+        [
+          reviewer-conformance,
+          reviewer-quality,
+          reviewer-security,
+          reviewer-testing,
+        ]
+      skills: [review-code]
+      topology: parallel
+      max_agents: 4
+    notes: "DeepMind saturation point for specialist panels is 4. Escalate to human after 3 fail-rework cycles."
+
+  batch-reviewing:
+    description: "Reviewing a completed batch for aggregate delivery"
+    orchestration: single-agent
+    roles: [reviewer-conformance]
+    skills: [review-plan]
+    human_gate: true
+    document_type: report
+    effort_budget: "5-10 tool calls"
+    notes: "Conformance reviewer is authoritative on spec-to-implementation mapping at the batch level. Human gate ensures the aggregate delivery review is approved before the batch is closed."
+
+  researching:
+    description: "Producing a research report or analysis"
+    orchestration: single-agent
+    roles: [researcher]
+    skills: [write-research]
+    human_gate: false
+    document_type: research
+    effort_budget: "10-30 tool calls"
+    notes: "No human gate — research outputs are informational and feed into design and spec decisions, which carry their own gates. Higher effort budget reflects open-ended investigation scope."
+
+  documenting:
+    description: "Updating project documentation for currency"
+    orchestration: single-agent
+    roles: [documenter]
+    skills: [update-docs]
+    human_gate: false
+    effort_budget: "5-15 tool calls"
+    notes: "No human gate — documentation updates are low-risk currency fixes verified by the author. Any structural documentation changes that affect workflow behaviour should go through a design or spec stage instead."
+
+  doc-publishing:
+    description: "Running a document through the five-stage editorial pipeline"
+    orchestration: pipeline-coordinator
+    roles: [doc-pipeline-orchestrator]
+    skills: [orchestrate-doc-pipeline]
+    human_gate: false
+    effort_budget: "5-15 tool calls per stage"
+    sub_agents:
+      roles: [documenter, doc-editor, doc-checker, doc-stylist, doc-copyeditor]
+      skills: [write-docs, edit-docs, check-docs, style-docs, copyedit-docs]
+      topology: sequential
+    notes: >
+      Pipeline coordinator — lighter than a full orchestrator. Sequential
+      dispatch only, no parallelism. No mandatory human gates; advisory
+      checkpoints after Edit and after Copyedit. The coordinator passes
+      the document and the previous stage's changelog to each successive
+      stage, handles re-entry when a later stage flags an earlier-stage
+      problem, and collates all changelogs into a completion summary.
+      All documents run through all five stages. Individual stages can
+      also be triggered independently via their own skill triggers.

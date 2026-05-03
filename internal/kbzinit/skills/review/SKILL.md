@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: kanbanzai-review
 description: >
   Use this skill when conducting a code review for a kanbanzai feature. Provides

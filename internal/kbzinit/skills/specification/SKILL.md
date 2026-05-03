@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: kanbanzai-specification
 description: >
   Use this skill whenever you are writing, reviewing, or refining a specification

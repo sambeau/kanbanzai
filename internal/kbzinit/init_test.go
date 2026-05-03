@@ -1642,7 +1642,7 @@ func TestRun_NewProject_CreatesBaseRole(t *testing.T) {
 		t.Fatalf("Run: %v", err)
 	}
 
-	data, err := os.ReadFile(filepath.Join(dir, ".kbz", "context", "roles", "base.yaml"))
+	data, err := os.ReadFile(filepath.Join(dir, ".kbz", "roles", "base.yaml"))
 	if err != nil {
 		t.Fatalf("read base.yaml: %v", err)
 	}
@@ -1651,8 +1651,8 @@ func TestRun_NewProject_CreatesBaseRole(t *testing.T) {
 	if !strings.Contains(content, "id: base") {
 		t.Error("base.yaml missing 'id: base'")
 	}
-	if !strings.Contains(content, "conventions: []") {
-		t.Error("base.yaml missing 'conventions: []'")
+	if !strings.Contains(content, "identity:") {
+		t.Error("base.yaml missing 'identity:'")
 	}
 	// No managed marker
 	if strings.Contains(content, "kanbanzai-managed") {
@@ -1670,7 +1670,7 @@ func TestRun_NewProject_CreatesReviewerRole(t *testing.T) {
 		t.Fatalf("Run: %v", err)
 	}
 
-	data, err := os.ReadFile(filepath.Join(dir, ".kbz", "context", "roles", "reviewer.yaml"))
+	data, err := os.ReadFile(filepath.Join(dir, ".kbz", "roles", "reviewer.yaml"))
 	if err != nil {
 		t.Fatalf("read reviewer.yaml: %v", err)
 	}
@@ -1688,17 +1688,11 @@ func TestRun_NewProject_CreatesReviewerRole(t *testing.T) {
 	if !strings.Contains(content, `version: "1.0.0"`) {
 		t.Error("missing version 1.0.0")
 	}
-	if !strings.Contains(content, "review_approach:") {
-		t.Error("missing review_approach key")
+	if !strings.Contains(content, "vocabulary:") {
+		t.Error("missing vocabulary key")
 	}
-	if !strings.Contains(content, "output_format:") {
-		t.Error("missing output_format key")
-	}
-	if !strings.Contains(content, "dimensions:") {
-		t.Error("missing dimensions key")
-	}
-	if !strings.Contains(content, "kanbanzai-review") {
-		t.Error("reviewer.yaml should reference kanbanzai-review skill")
+	if !strings.Contains(content, "anti_patterns:") {
+		t.Error("missing anti_patterns key")
 	}
 }
 
@@ -1712,7 +1706,7 @@ func TestRun_SkipRoles_CreatesNeither(t *testing.T) {
 		t.Fatalf("Run: %v", err)
 	}
 
-	rolesDir := filepath.Join(dir, ".kbz", "context", "roles")
+	rolesDir := filepath.Join(dir, ".kbz", "roles")
 	if _, err := os.Stat(filepath.Join(rolesDir, "base.yaml")); !os.IsNotExist(err) {
 		t.Error("base.yaml should not be created with --skip-roles")
 	}
@@ -1727,7 +1721,7 @@ func TestRun_BaseRole_NotOverwritten(t *testing.T) {
 	dir := makeGitRepoNoCommits(t)
 
 	// Pre-create a custom base.yaml inside .kbz (which also creates the .kbz dir).
-	rolesDir := filepath.Join(dir, ".kbz", "context", "roles")
+	rolesDir := filepath.Join(dir, ".kbz", "roles")
 	if err := os.MkdirAll(rolesDir, 0o755); err != nil {
 		t.Fatal(err)
 	}
@@ -1758,7 +1752,7 @@ func TestRun_ReviewerRole_UnmanagedSkipsWithWarning(t *testing.T) {
 	t.Parallel()
 	dir := makeGitRepoNoCommits(t)
 
-	rolesDir := filepath.Join(dir, ".kbz", "context", "roles")
+	rolesDir := filepath.Join(dir, ".kbz", "roles")
 	if err := os.MkdirAll(rolesDir, 0o755); err != nil {
 		t.Fatal(err)
 	}
@@ -1792,7 +1786,7 @@ func TestRun_ReviewerRole_OlderVersion_Overwritten(t *testing.T) {
 	t.Parallel()
 	dir := makeGitRepoNoCommits(t)
 
-	rolesDir := filepath.Join(dir, ".kbz", "context", "roles")
+	rolesDir := filepath.Join(dir, ".kbz", "roles")
 	if err := os.MkdirAll(rolesDir, 0o755); err != nil {
 		t.Fatal(err)
 	}
@@ -1828,7 +1822,7 @@ func TestRun_ReviewerRole_CurrentVersion_NoOp(t *testing.T) {
 	if err := in1.Run(Options{}); err != nil {
 		t.Fatalf("first Run: %v", err)
 	}
-	reviewerPath := filepath.Join(dir, ".kbz", "context", "roles", "reviewer.yaml")
+	reviewerPath := filepath.Join(dir, ".kbz", "roles", "reviewer.yaml")
 	original, _ := os.ReadFile(reviewerPath)
 
 	// Second run at same version — should be a no-op for reviewer.yaml.
@@ -1853,7 +1847,7 @@ func TestRun_NoDeveloperYaml(t *testing.T) {
 		t.Fatalf("Run: %v", err)
 	}
 
-	developerPath := filepath.Join(dir, ".kbz", "context", "roles", "developer.yaml")
+	developerPath := filepath.Join(dir, ".kbz", "roles", "developer.yaml")
 	if _, err := os.Stat(developerPath); !os.IsNotExist(err) {
 		t.Error("developer.yaml should not be created by kbz init")
 	}
@@ -1866,7 +1860,7 @@ func TestRun_UpdateSkills_UpdatesManagedReviewer(t *testing.T) {
 
 	// Pre-create .kbz with a managed reviewer.yaml at an older version.
 	kbzDir := filepath.Join(dir, ".kbz")
-	rolesDir := filepath.Join(kbzDir, "context", "roles")
+	rolesDir := filepath.Join(kbzDir, "roles")
 	if err := os.MkdirAll(rolesDir, 0o755); err != nil {
 		t.Fatal(err)
 	}
@@ -1892,7 +1886,7 @@ func TestRun_UpdateSkills_DoesNotTouchBaseRole(t *testing.T) {
 	dir := makeGitRepoWithCommit(t)
 
 	kbzDir := filepath.Join(dir, ".kbz")
-	rolesDir := filepath.Join(kbzDir, "context", "roles")
+	rolesDir := filepath.Join(kbzDir, "roles")
 	if err := os.MkdirAll(rolesDir, 0o755); err != nil {
 		t.Fatal(err)
 	}

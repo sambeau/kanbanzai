@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: kanbanzai-getting-started
 description: >
   Use at the start of every agent session, even if the task seems obvious and
@@ -7,9 +9,6 @@ description: >
   beginning any new session. Also activates for "where do I start?", "what
   should I work on?", "what is the current state?". Skipping orientation leads
   to wasted effort and missed context.
-metadata:
-  kanbanzai-managed: "true"
-  version: "0.4.0"
 ---
 
 # SKILL: Kanbanzai Getting Started

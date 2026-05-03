@@ -86,21 +86,27 @@ func (i *Initializer) Run(opts Options) error {
 	kbzDir, kbzExists := i.findKbzDir(gitRoot)
 	configPath := filepath.Join(kbzDir, "config.yaml")
 
-	// --update-skills: only update skill files, skip everything else.
+	// --update-skills: update all managed artifacts, skip everything else.
 	if opts.UpdateSkills {
 		// Detect stale MCP configs before updating skills.
 		if !opts.SkipMCP {
 			i.detectStaleMCPConfigs(gitRoot)
 		}
-		fmt.Fprintln(i.stdout, "Updating skill files...")
+		fmt.Fprintln(i.stdout, "Updating managed artifacts...")
+		if err := i.installStageBindings(kbzDir); err != nil {
+			return err
+		}
 		if err := i.installSkills(gitRoot); err != nil {
+			return err
+		}
+		if err := i.installTaskSkills(gitRoot); err != nil {
 			return err
 		}
 		// Also update managed role files.
 		if err := i.updateManagedRoles(kbzDir); err != nil {
 			return err
 		}
-		fmt.Fprintln(i.stdout, "Skill update complete.")
+		fmt.Fprintln(i.stdout, "Update complete.")
 		return nil
 	}
 
@@ -210,8 +216,16 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 		}
 	}
 
+	// Install stage-bindings.yaml after config is written (G1 fix).
+	if err := i.installStageBindings(kbzDir); err != nil {
+		return err
+	}
+
 	if !opts.SkipSkills {
 		if err := i.installSkills(baseDir); err != nil {
+			return err
+		}
+		if err := i.installTaskSkills(baseDir); err != nil {
 			return err
 		}
 	}
@@ -315,8 +329,16 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 		}
 	}
 
+	// Install stage-bindings.yaml after config is written (G1 fix).
+	if err := i.installStageBindings(kbzDir); err != nil {
+		return err
+	}
+
 	if !opts.SkipSkills {
 		if err := i.installSkills(baseDir); err != nil {
+			return err
+		}
+		if err := i.installTaskSkills(baseDir); err != nil {
 			return err
 		}
 	}
