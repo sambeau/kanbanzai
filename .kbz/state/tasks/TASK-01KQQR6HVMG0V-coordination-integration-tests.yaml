@@ -1,0 +1,6 @@
+id: TASK-01KQQR6HVMG0V
+parent_feature: FEAT-01KQQQ3B9SVF9
+slug: coordination-integration-tests
+name: Integration tests for coordination database
+summary: "Write integration tests covering all acceptance criteria. Use test Postgres instance (testcontainer or TEST_DATABASE_URL env var). Cover: single-user mode, team mode, idempotency, concurrency, fallback, recovery, TLS."
+status: queued
