@@ -1,10 +1,10 @@
 id: B45-reopen-status-machine-output
 slug: reopen-status-machine-output
 name: Reopen Status Machine Output Formats
-status: designing
+status: active
 summary: Reopen the status machine output format work that was prematurely closed in B36-F4. Two renderer tasks (JSON and plain format) were left in ready status when the feature was overridden through reviewing to done. This batch covers completing those remaining tasks.
 design: B45-reopen-status-machine-output/design-b45-design-reopen-status-machine-output
 created: "2026-05-03T12:58:10Z"
 created_by: sambeau
-updated: "2026-05-03T12:58:44Z"
+updated: "2026-05-03T12:58:58Z"
 next_feature_seq: 1
