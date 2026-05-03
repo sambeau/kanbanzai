@@ -359,6 +359,7 @@ func (s *EntityService) writeBatch(entity model.Batch) (CreateResult, error) {
 
 func (s *EntityService) loadBatch(id, slug string) (ListResult, error) {
 	record, err := s.store.Load(string(model.EntityKindBatch), id, slug)
+	entityType := string(model.EntityKindBatch)
 	fallbackDir := "batches"
 	if err != nil {
 		log.Printf("INFO: batch %s not found in batches/ directory, falling back to plans/ (deprecated legacy path)", id)
@@ -367,15 +368,36 @@ func (s *EntityService) loadBatch(id, slug string) (ListResult, error) {
 		if err != nil {
 			return ListResult{}, fmt.Errorf("load batch %s: %w", id, err)
 		}
+		// Plans loaded from the legacy plans/ directory may be StrategicPlan
+		// entities with planning-only statuses (idea, shaping, ready, active).
+		// Detect these and return the correct entity type so downstream
+		// validation uses the StrategicPlan lifecycle machine.
+		if isStrategicPlanStatus(stringFromState(record.Fields, "status")) {
+			entityType = string(model.EntityKindStrategicPlan)
+		}
 	}
 
 	return ListResult{
-		Type:  string(model.EntityKindBatch),
+		Type:  entityType,
 		ID:    id,
 		Slug:  slug,
 		Path:  filepath.Join(s.root, fallbackDir, id+".yaml"),
 		State: record.Fields,
 	}, nil
+}
+
+// isStrategicPlanStatus returns true if status is exclusive to the StrategicPlan
+// lifecycle (not valid in the Batch lifecycle). Shared terminal statuses
+// (done, superseded, cancelled) are not strategic-plan–only.
+func isStrategicPlanStatus(status string) bool {
+	switch status {
+	case string(model.PlanningStatusIdea),
+		string(model.PlanningStatusShaping),
+		string(model.PlanningStatusReady),
+		string(model.PlanningStatusActive):
+		return true
+	}
+	return false
 }
 
 func (s *EntityService) listAllPlanIDs() ([]string, error) {
