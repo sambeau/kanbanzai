@@ -1,0 +1,8 @@
+id: DEC-01KQPVHJ9DG2B
+slug: model-routing-feasibility-first
+name: Model routing feasibility design before implementation
+summary: Design C begins with a feasibility design document. Implementation deferred until A and B are stable and the design is approved.
+rationale: Model routing is the largest architectural change. The separate-server alternative should be evaluated before committing. Start with a design document; do not build until A and B are stable.
+decided_by: sambeau
+date: "2026-05-03T12:03:23Z"
+status: proposed
