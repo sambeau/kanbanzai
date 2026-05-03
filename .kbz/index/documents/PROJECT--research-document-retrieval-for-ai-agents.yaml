@@ -1,0 +1,204 @@
+document_id: PROJECT/research-document-retrieval-for-ai-agents
+document_path: work/research/document-retrieval-for-ai-agents.md
+content_hash: e651a7398c51b5e514cd4beeffb56c2c0477b65e5315024ef1e53448f8625ce0
+indexed_at: 2026-05-03T22:12:45.872282Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Document Retrieval for AI Agents: Research Report'
+      byte_offset: 0
+      byte_count: 30120
+      word_count: 4232
+      content_hash: e651a7398c51b5e514cd4beeffb56c2c0477b65e5315024ef1e53448f8625ce0
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Executive Summary
+          byte_offset: 145
+          byte_count: 1686
+          word_count: 222
+          content_hash: 19c04f200b02e1c36c2776edcc034c0b1794d9d313e1b92eea9b840c970d1107
+        - path: "1.2"
+          level: 2
+          title: 2. Literature Review
+          byte_offset: 1831
+          byte_count: 6316
+          word_count: 861
+          content_hash: 9768dfdcceedf86088fc43d09a0b218b93d23393ab7852b9526291318fdc155b
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2a. RAG Pipeline Architectures for Documentation
+              byte_offset: 1856
+              byte_count: 1590
+              word_count: 207
+              content_hash: c79e349dab39b71b54626b868383556fff301d1bac677959e643030b3f72d873
+            - path: 1.2.2
+              level: 3
+              title: 2b. Knowledge Graph Approaches
+              byte_offset: 3446
+              byte_count: 1938
+              word_count: 271
+              content_hash: ca488062ef9b8b5f11821ded26c683e7238fb920aac123a8419f1c332e30cd29
+            - path: 1.2.3
+              level: 3
+              title: 2c. Hybrid Retrieval Strategies
+              byte_offset: 5384
+              byte_count: 1310
+              word_count: 185
+              content_hash: f29d33bc54fe4cf73d0f17329052baa0eedfdaa867969feff62213980e01c725
+            - path: 1.2.4
+              level: 3
+              title: 2d. Token-Efficient Context Delivery
+              byte_offset: 6694
+              byte_count: 1453
+              word_count: 194
+              content_hash: deb492b1446089e8246183c95efdf4f17424acffee22748e8fb507ade24366cb
+        - path: "1.3"
+          level: 2
+          title: 3. Current System Audit
+          byte_offset: 8147
+          byte_count: 7855
+          word_count: 1161
+          content_hash: 1189ee38d7c7bd4093145ba6b3317c5e04d6954264e28692cbb2048f1793553b
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3a. What doc_intel Does Today
+              byte_offset: 8175
+              byte_count: 1597
+              word_count: 273
+              content_hash: 70b85515d2dbea4472ff30b4beed7523857a46fc45ff6f42b550ef212c2a70e4
+            - path: 1.3.2
+              level: 3
+              title: 3b. What the Knowledge System Does Today
+              byte_offset: 9772
+              byte_count: 1072
+              word_count: 169
+              content_hash: 48fe207c538365ea50a53a2f94662658b23191f0e36a73b9490acbd4f3b20e9b
+            - path: 1.3.3
+              level: 3
+              title: 3c. Strengths of the Current Approach
+              byte_offset: 10844
+              byte_count: 1272
+              word_count: 167
+              content_hash: 5517ecc8a03e0f394247bf8dc8d5c7d21372da383f1912277eedfccd8ebe5dbc
+            - path: 1.3.4
+              level: 3
+              title: 3d. Weaknesses and Failure Modes
+              byte_offset: 12116
+              byte_count: 2134
+              word_count: 300
+              content_hash: 5993754eee86d68d7a0a029b6c6a53fefe381ba7e860dbf0c6c87c2d338cfbc0
+            - path: 1.3.5
+              level: 3
+              title: 3e. Token Cost Analysis
+              byte_offset: 14250
+              byte_count: 1752
+              word_count: 247
+              content_hash: 1538f914a60c4244f87c4e98c6d13558a8bb6b644cb4ef9f40da237e9bab1a7c
+        - path: "1.4"
+          level: 2
+          title: 4. Architectural Options
+          byte_offset: 16002
+          byte_count: 6328
+          word_count: 897
+          content_hash: e94a42db9f7b7a581456cccd5d5e0f58f7e5be18e67526173299db493b7cef80
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Option A: Fully Activate and Enhance the Existing System'
+              byte_offset: 16031
+              byte_count: 1481
+              word_count: 216
+              content_hash: 1c770ae8cdb5da1d3461448479b7ff1139e5a9290eb1ef686e9b239d40232007
+            - path: 1.4.2
+              level: 3
+              title: 'Option B: Standalone Document-Retrieval MCP Server'
+              byte_offset: 17512
+              byte_count: 2950
+              word_count: 403
+              content_hash: 64863f8c1319bcd844336c3d701d4595eeb669a4731ad3b625fcb6e996bf6875
+            - path: 1.4.3
+              level: 3
+              title: 'Option C: Status Quo — Greppable Markdown Is Enough'
+              byte_offset: 20462
+              byte_count: 1868
+              word_count: 274
+              content_hash: fa62e492d327429609c445061c70086583cba1aa38c97636dbbf27657a0476da
+        - path: "1.5"
+          level: 2
+          title: 5. Recommendations
+          byte_offset: 22330
+          byte_count: 4630
+          word_count: 660
+          content_hash: 909574ca85c6aaa1d44108c9fa652d9253fe0240cfa52cfb6b56e3d7fc368eec
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'Primary Recommendation: Option A First, Then Evaluate Option B'
+              byte_offset: 22353
+              byte_count: 1715
+              word_count: 238
+              content_hash: 1030df89f2f25232c14bd445fc187ae624f4e31d03959bbe86c1f499eb223126
+            - path: 1.5.2
+              level: 3
+              title: Suggested Next Steps (Ordered by Priority)
+              byte_offset: 24068
+              byte_count: 1464
+              word_count: 216
+              content_hash: 68726844ca0eb3748a31f1abc5e7b5479e082e2e11f11afff544f2f4ae3d9b17
+            - path: 1.5.3
+              level: 3
+              title: Open Questions Requiring Further Investigation
+              byte_offset: 25532
+              byte_count: 1428
+              word_count: 203
+              content_hash: d7e86eeff4bcf8435b0b6ec7674c2c0d6b31ca9d2c2bf802ca15944e8b09d0eb
+        - path: "1.6"
+          level: 2
+          title: 6. References
+          byte_offset: 26960
+          byte_count: 3160
+          word_count: 411
+          content_hash: fad629fd94319d1688a13bb4a93d012bda62d3a26ddd26c819d25ec1b35899e0
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Academic Papers
+              byte_offset: 26978
+              byte_count: 2157
+              word_count: 294
+              content_hash: 12ef362cdd8861747ec765935b014b63b6102ff2e80f15441dbd8f512e9a8d92
+            - path: 1.6.2
+              level: 3
+              title: Tools and Implementations
+              byte_offset: 29135
+              byte_count: 478
+              word_count: 57
+              content_hash: d9a70c80b9ee095d49ad426593dc0fc72d9a5f73f108b63178af68a1aaa8e017
+            - path: 1.6.3
+              level: 3
+              title: Kanbanzai Internal
+              byte_offset: 29613
+              byte_count: 507
+              word_count: 57
+              content_hash: 7ce97d92dab4787bdd4c09484af4e0e107a143ed29b9f8624a908a3884da9145
+entity_refs:
+    - entity_id: FEAT-01KMKRQRRX3CC
+      entity_type: feature
+      section_path: 1.4.3
+      byte_offset: 20939
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.4
+      role: narrative
+      confidence: high
+    - section_path: 1.5.3
+      role: question
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T22:12:47.253255Z
+classified: false

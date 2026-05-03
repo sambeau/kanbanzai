@@ -1,0 +1,369 @@
+document_id: PROJECT/report-documentation-pipeline
+document_path: work/design/documentation-pipeline.md
+content_hash: 7a1f47fd5f41567ebf854e3275ec186591a6a41d65227b3247ce16ac3dd93d6a
+indexed_at: 2026-05-03T22:12:05.724304Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Documentation Editorial Pipeline'
+      byte_offset: 0
+      byte_count: 28449
+      word_count: 3927
+      content_hash: 7a1f47fd5f41567ebf854e3275ec186591a6a41d65227b3247ce16ac3dd93d6a
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Problem Statement
+          byte_offset: 441
+          byte_count: 1577
+          word_count: 219
+          content_hash: 3373ea2318580cac43af4bc52b0125e83ba9609e9bc1004966baf4543c5dba73
+          children:
+            - path: 1.1.1
+              level: 3
+              title: What happens if nothing changes
+              byte_offset: 1607
+              byte_count: 411
+              word_count: 61
+              content_hash: 20734faacdbe2464d90eaae01addac5a83f8c83a4f2d78eb948f6d1b6d99ebb8
+        - path: "1.2"
+          level: 2
+          title: 2. Goals and Non-Goals
+          byte_offset: 2018
+          byte_count: 1035
+          word_count: 158
+          content_hash: 5a3871d12104cd171e3c54323dc37177ed41d89c79088f96993cd991531a4095
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Goals
+              byte_offset: 2045
+              byte_count: 515
+              word_count: 80
+              content_hash: 5c9c4ff397f7e3927209804675541ed353b7e626a9e4679f96a772143ee3ef7d
+            - path: 1.2.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 2560
+              byte_count: 493
+              word_count: 73
+              content_hash: e2102ef6519dd52d35b62bc2fb1a4d79fad4118c7fbe093727ed07109bcd6066
+        - path: "1.3"
+          level: 2
+          title: 3. Design
+          byte_offset: 3053
+          byte_count: 14698
+          word_count: 1993
+          content_hash: d196ca72ef718335a93122f456163538bc6a56e034b4d9ea65fd261ff00e6bff
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 The pipeline
+              byte_offset: 3067
+              byte_count: 1148
+              word_count: 178
+              content_hash: 29c48535b055d31ec0ce970c5537245f5128631950ea41a0c59a9861475082cb
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Stage boundaries
+              byte_offset: 4215
+              byte_count: 1774
+              word_count: 233
+              content_hash: 3728160d81c4cad29cee4aab5667c81c231f7a7e635ba932a6140e33a11cb0ef
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Styleguide slicing
+              byte_offset: 5989
+              byte_count: 1105
+              word_count: 134
+              content_hash: 803b84a08a88f4b6ecb3aedccfee7a64fdd7c149771df40dd46e35e1108cf172
+            - path: 1.3.4
+              level: 3
+              title: 3.4 SKILLs
+              byte_offset: 7094
+              byte_count: 1607
+              word_count: 179
+              content_hash: c32445bc93c1d6759e6b7ee363d778196ba35c1e2c9b330373986a2fba383e22
+            - path: 1.3.5
+              level: 3
+              title: 3.5 Roles
+              byte_offset: 8701
+              byte_count: 3989
+              word_count: 541
+              content_hash: 37f3cd55858be48f72d3ccb02ad63668aee503dbc28a2697e02507889c82853d
+            - path: 1.3.6
+              level: 3
+              title: 3.6 Workflow integration
+              byte_offset: 12690
+              byte_count: 5061
+              word_count: 725
+              content_hash: e72c82291025a15269f88d871fb5939ea553fd610b255e07051318095becd0bf
+              children:
+                - path: 1.3.6.1
+                  level: 4
+                  title: 'Stage binding: `doc-publishing`'
+                  byte_offset: 13077
+                  byte_count: 1012
+                  word_count: 114
+                  content_hash: d5208931099b68985216ab9c2f97b08cd7d9b9b23cd66e6929b74c95df26cbc6
+                - path: 1.3.6.2
+                  level: 4
+                  title: Automation over approval
+                  byte_offset: 14089
+                  byte_count: 1715
+                  word_count: 252
+                  content_hash: 53e06c7df855f36d4e9bef9cbc977afe735fc15f9812dfef24ae4edc5ebc71dd
+                - path: 1.3.6.3
+                  level: 4
+                  title: Individual stage invocation
+                  byte_offset: 15804
+                  byte_count: 482
+                  word_count: 72
+                  content_hash: c4acac2a5305a91a3989620f2e68107d2b5ef317de7d1896529d9501c1bd2025
+                - path: 1.3.6.4
+                  level: 4
+                  title: Change tracking
+                  byte_offset: 16286
+                  byte_count: 564
+                  word_count: 91
+                  content_hash: ba48e7c0b2346eb08594c03363dd531f388abf5b60eea850c564a1e00489ec3a
+                - path: 1.3.6.5
+                  level: 4
+                  title: Re-entry rules
+                  byte_offset: 16850
+                  byte_count: 606
+                  word_count: 95
+                  content_hash: 01b672173b84705920fa37cdeab3e56cb11a9fd5c3f09a02b41a35920e855872
+                - path: 1.3.6.6
+                  level: 4
+                  title: Idempotency
+                  byte_offset: 17456
+                  byte_count: 295
+                  word_count: 49
+                  content_hash: cbc92decebdeba0aa94234723de4b323d772dbad2ec721ac5ce1b89b43a512c1
+        - path: "1.4"
+          level: 2
+          title: 4. Alternatives Considered
+          byte_offset: 17751
+          byte_count: 2665
+          word_count: 386
+          content_hash: a06d5721739f30127cff3486204274b0b7f9bd0378b9a9be48745c6b398679f6
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Three stages instead of five
+              byte_offset: 17782
+              byte_count: 795
+              word_count: 111
+              content_hash: e106fb4d90cbe5e432a3a72eead8ab62e861f129ef44762e6968750fdf2e3e9e
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Mandatory human gates at every stage
+              byte_offset: 18577
+              byte_count: 632
+              word_count: 89
+              content_hash: d930ee03115d8cf178c6dd71efab07ef0b0ab41adcdc12953c8b261b90846bc6
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Parallel editorial stages
+              byte_offset: 19209
+              byte_count: 592
+              word_count: 87
+              content_hash: fd5b592e2eff01eac1701409fe5d1de83bde313a3014648d9d90b0f6ee14cdf5
+            - path: 1.4.4
+              level: 3
+              title: 4.4 A single omnibus SKILL with all editorial guidance
+              byte_offset: 19801
+              byte_count: 615
+              word_count: 95
+              content_hash: 2179a801aecbbfae77b7239dd3317c9b646b0f0fe821b225b84d2797c355e4fb
+        - path: "1.5"
+          level: 2
+          title: 5. Dependencies
+          byte_offset: 20416
+          byte_count: 1862
+          word_count: 240
+          content_hash: ddc9027d661eeb2da2fee835f43e9bef02f59480fabd021985348720f205659f
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Existing infrastructure (no changes needed)
+              byte_offset: 20436
+              byte_count: 447
+              word_count: 58
+              content_hash: 6f33bb39297773c39b193a4b5893c89151dbff689d2452792a5f9b0d8bfbb87e
+            - path: 1.5.2
+              level: 3
+              title: New artifacts to create
+              byte_offset: 20883
+              byte_count: 1023
+              word_count: 131
+              content_hash: 351ef4bb8f30c443a706303ad40550cde47a0c97fd3c893deaa490c0dac946b4
+            - path: 1.5.3
+              level: 3
+              title: Relationship to existing documentation skills
+              byte_offset: 21906
+              byte_count: 372
+              word_count: 48
+              content_hash: dfdae18cfc7768e628665e82bdb5996a92f78b3ee0fa8fddd39842656005bd05
+        - path: "1.6"
+          level: 2
+          title: 6. Implementation Status
+          byte_offset: 22278
+          byte_count: 1056
+          word_count: 137
+          content_hash: 67654dc278bbf79ca817cdb1e70e1335b86c593d93cf623e0b4c9b371410dc36
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Phase 1: Roles — ✅ Complete'
+              byte_offset: 22307
+              byte_count: 291
+              word_count: 35
+              content_hash: 66861a9cfbdc4ab73b5f8cba8edb95eba707d5f20de00d607a2e0765a6b22450
+            - path: 1.6.2
+              level: 3
+              title: 'Phase 2: Stage binding and orchestration — ✅ Complete'
+              byte_offset: 22598
+              byte_count: 321
+              word_count: 39
+              content_hash: 7d07bad3ba3bd772e13ebbf76a96f65d9ca7bcc337feead8caa558390db8f283
+            - path: 1.6.3
+              level: 3
+              title: 'Phase 3: Testing and calibration — next'
+              byte_offset: 22919
+              byte_count: 415
+              word_count: 59
+              content_hash: 335a9609c7d66cb4dd573b11c9206bdb987eb429d17e71b49e917cb222a383f0
+        - path: "1.7"
+          level: 2
+          title: 7. Decisions (formerly Open Questions)
+          byte_offset: 23334
+          byte_count: 5115
+          word_count: 737
+          content_hash: b102d2c65d6adc63f3f5fbda5bc857640a35127c430f3620c71d342843de8020
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 Orchestration scope → lightweight pipeline coordinator
+              byte_offset: 23377
+              byte_count: 1147
+              word_count: 165
+              content_hash: e67869a5fe549826a7e05a01dd1e5da4730288e242f772b4d0767531fa0ca551
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Document tracking → doc records, not entities
+              byte_offset: 24524
+              byte_count: 1159
+              word_count: 166
+              content_hash: afad13807246bda528ecfcacab24a8d1b999b19b18cac80598117ea9f1662c61
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Feedback to the Write stage → yes, with guardrails
+              byte_offset: 25683
+              byte_count: 1767
+              word_count: 245
+              content_hash: 06a83f2695016464728add85c991e14435c44a38f74de7b5e681dc72c88b042c
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Selective pipeline → no, all stages for v1
+              byte_offset: 27450
+              byte_count: 999
+              word_count: 155
+              content_hash: c6e1cb9e7fcc6a26f007f2fd9b117615bd019cf934deb6095b49659e07deb17a
+cross_doc_links:
+    - target_path: ../../.kbz/skills/write-docs/SKILL.md
+      link_text: '`.kbz/skills/write-docs/SKILL.md`'
+      section_path: 1.3.4
+    - target_path: ../../.kbz/skills/edit-docs/SKILL.md
+      link_text: '`.kbz/skills/edit-docs/SKILL.md`'
+      section_path: 1.3.4
+    - target_path: ../../.kbz/skills/check-docs/SKILL.md
+      link_text: '`.kbz/skills/check-docs/SKILL.md`'
+      section_path: 1.3.4
+    - target_path: ../../.kbz/skills/style-docs/SKILL.md
+      link_text: '`.kbz/skills/style-docs/SKILL.md`'
+      section_path: 1.3.4
+    - target_path: ../../.kbz/skills/copyedit-docs/SKILL.md
+      link_text: '`.kbz/skills/copyedit-docs/SKILL.md`'
+      section_path: 1.3.4
+    - target_path: refs/documentation-structure-guide.md
+      link_text: refs/documentation-structure-guide.md
+      section_path: "1"
+    - target_path: refs/technical-writing-guide.md
+      link_text: refs/technical-writing-guide.md
+      section_path: "1"
+    - target_path: refs/humanising-ai-prose.md
+      link_text: refs/humanising-ai-prose.md
+      section_path: "1"
+    - target_path: refs/punctuation-guide.md
+      link_text: refs/punctuation-guide.md
+      section_path: "1"
+    - target_path: refs/documentation-pipeline.md
+      link_text: refs/documentation-pipeline.md
+      section_path: "1"
+    - target_path: documentation-structure-guide.md
+      link_text: documentation-structure-guide.md
+      section_path: 1.3.3
+    - target_path: technical-writing-guide.md
+      link_text: technical-writing-guide.md
+      section_path: 1.3.3
+    - target_path: humanising-ai-prose.md
+      link_text: humanising-ai-prose.md
+      section_path: 1.3.3
+    - target_path: punctuation-guide.md
+      link_text: punctuation-guide.md
+      section_path: 1.3.3
+    - target_path: .kbz/skills/write-docs/SKILL.md
+      link_text: .kbz/skills/write-docs/SKILL.md
+      section_path: 1.3.4
+    - target_path: .kbz/skills/edit-docs/SKILL.md
+      link_text: .kbz/skills/edit-docs/SKILL.md
+      section_path: 1.3.4
+    - target_path: .kbz/skills/check-docs/SKILL.md
+      link_text: .kbz/skills/check-docs/SKILL.md
+      section_path: 1.3.4
+    - target_path: .kbz/skills/style-docs/SKILL.md
+      link_text: .kbz/skills/style-docs/SKILL.md
+      section_path: 1.3.4
+    - target_path: .kbz/skills/copyedit-docs/SKILL.md
+      link_text: .kbz/skills/copyedit-docs/SKILL.md
+      section_path: 1.3.4
+    - target_path: refs/documentation-pipeline.md
+      link_text: refs/documentation-pipeline.md
+      section_path: 1.5.2
+    - target_path: .kbz/skills/write-docs/SKILL.md
+      link_text: .kbz/skills/write-docs/SKILL.md
+      section_path: 1.5.2
+    - target_path: .kbz/skills/edit-docs/SKILL.md
+      link_text: .kbz/skills/edit-docs/SKILL.md
+      section_path: 1.5.2
+    - target_path: .kbz/skills/check-docs/SKILL.md
+      link_text: .kbz/skills/check-docs/SKILL.md
+      section_path: 1.5.2
+    - target_path: .kbz/skills/style-docs/SKILL.md
+      link_text: .kbz/skills/style-docs/SKILL.md
+      section_path: 1.5.2
+    - target_path: .kbz/skills/copyedit-docs/SKILL.md
+      link_text: .kbz/skills/copyedit-docs/SKILL.md
+      section_path: 1.5.2
+    - target_path: .kbz/skills/orchestrate-doc-pipeline/SKILL.md
+      link_text: .kbz/skills/orchestrate-doc-pipeline/SKILL.md
+      section_path: 1.5.2
+conventional_roles:
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: "1.7"
+      role: question
+      confidence: high
+    - section_path: 1.7.1
+      role: constraint
+      confidence: high
+classified: false

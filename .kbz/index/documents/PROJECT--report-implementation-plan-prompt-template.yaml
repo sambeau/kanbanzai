@@ -1,0 +1,20 @@
+document_id: PROJECT/report-implementation-plan-prompt-template
+document_path: work/templates/implementation-plan-prompt-template.md
+content_hash: 97fdc0361f6be195435b1fc67f226f56499d7077efa3806d47ae77eb166fc81a
+indexed_at: 2026-05-03T22:12:08.178682Z
+sections:
+    - path: "1"
+      level: 2
+      title: 'Instruction: Create an Implementation Plan'
+      byte_offset: 0
+      byte_count: 3173
+      word_count: 446
+      content_hash: 18459640786d33a3e6ea936ff0e45e576978a18af2e53ec0f10bff82de6cbc34
+    - path: "2"
+      level: 2
+      title: Merge Schedule
+      byte_offset: 3173
+      byte_count: 503
+      word_count: 72
+      content_hash: 2a436b383f5d6cc16986f2deb57594329a96e9f40c5616a4afd36badb3aaeea7
+classified: false

@@ -1,0 +1,13 @@
+document_id: PROJECT/report-review-prompt-template
+document_path: work/templates/review-prompt-template.md
+content_hash: 50a6901c51acf721674485def5188b45210df907e6767e43ee50df3ce0d8066f
+indexed_at: 2026-05-03T22:12:08.53812Z
+sections:
+    - path: "1"
+      level: 2
+      title: 'Instruction: Review Implementation'
+      byte_offset: 0
+      byte_count: 3267
+      word_count: 423
+      content_hash: 50a6901c51acf721674485def5188b45210df907e6767e43ee50df3ce0d8066f
+classified: false

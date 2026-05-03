@@ -1,0 +1,15 @@
+document_id: PROJECT/design-specification-prompt-template
+document_path: work/templates/specification-prompt-template.md
+content_hash: 70c2e3d1519185d8cc86f284a4dc245557f5409f5496026dacf2e88bd346962d
+indexed_at: 2026-05-03T22:12:45.863403Z
+sections:
+    - path: "1"
+      level: 2
+      title: 'Instruction: Produce a Design Specification'
+      byte_offset: 0
+      byte_count: 3269
+      word_count: 483
+      content_hash: 70c2e3d1519185d8cc86f284a4dc245557f5409f5496026dacf2e88bd346962d
+access_count: 1
+last_accessed_at: 2026-05-03T22:12:46.849295Z
+classified: false

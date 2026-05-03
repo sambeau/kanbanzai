@@ -1,0 +1,318 @@
+document_id: PROJECT/research-skill-authoring-best-practices
+document_path: work/research/skill-authoring-best-practices.md
+content_hash: 3e63a645a3727c9d872842ca63a3b65586fa11e158a4c943de6944ae0c8b7d71
+indexed_at: 2026-05-03T22:12:47.259439Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Skill Authoring Best Practices: Research-Backed Guide'
+      byte_offset: 0
+      byte_count: 23155
+      word_count: 3336
+      content_hash: 3e63a645a3727c9d872842ca63a3b65586fa11e158a4c943de6944ae0c8b7d71
+      children:
+        - path: "1.1"
+          level: 2
+          title: Purpose
+          byte_offset: 306
+          byte_count: 518
+          word_count: 81
+          content_hash: 326bc3b15f2b768cb51013f3d928573f2785dca30be36f2e1aefe252ea30a760
+        - path: "1.2"
+          level: 2
+          title: 'Part 1: The Science Behind Skill Design'
+          byte_offset: 824
+          byte_count: 11082
+          word_count: 1538
+          content_hash: d282a7b9385310da98b37f73347fd6f2e806d1d389f812d86ac3dc352f129991
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 1.1 The Attention Curve Determines Section Ordering
+              byte_offset: 868
+              byte_count: 1081
+              word_count: 155
+              content_hash: 80b4c4a2901000a38ab12d6567751e2fc87d236a2f2728ab6177b55602d1a030
+            - path: 1.2.2
+              level: 3
+              title: 1.2 Vocabulary Routing Is the Primary Quality Lever
+              byte_offset: 1949
+              byte_count: 1379
+              word_count: 197
+              content_hash: 9f021250a74b21c0abe27bff48352bb9eed4d982b18170417b4e8228167a3ae6
+            - path: 1.2.3
+              level: 3
+              title: 1.3 Context Is Scarce — Treat It Like Embedded Memory
+              byte_offset: 3328
+              byte_count: 1248
+              word_count: 172
+              content_hash: 4bb694fe454d39b72fbdbbb302fb33103174476bf8b6f31df68f7f1e213e46c0
+            - path: 1.2.4
+              level: 3
+              title: 1.4 Conciseness Is a Design Constraint
+              byte_offset: 4576
+              byte_count: 1001
+              word_count: 156
+              content_hash: 5036dc3882fa4d8f90df1ed74f154c958b7698a15b3a9a822fd5dd0324d091aa
+            - path: 1.2.5
+              level: 3
+              title: 1.5 Examples Beat Rules
+              byte_offset: 5577
+              byte_count: 887
+              word_count: 117
+              content_hash: eff7f9a6f090c242f24a0d74a221bb68037c287a3283fda3e946529f6605e348
+            - path: 1.2.6
+              level: 3
+              title: 1.6 Enforceable Constraints Beat Advisory Instructions
+              byte_offset: 6464
+              byte_count: 1205
+              word_count: 161
+              content_hash: e2f65f2c0f3f62d16fb614fbe3d7c980104b13e532ed15180ba2d42103de341f
+            - path: 1.2.7
+              level: 3
+              title: 1.7 Decomposition Quality Is the Critical Path
+              byte_offset: 7669
+              byte_count: 1106
+              word_count: 143
+              content_hash: 7bd8a11c281f32b4096fc0a64ecbc312b844bda3a690a9a743036d12dd84e175
+            - path: 1.2.8
+              level: 3
+              title: 1.8 Explain Why, Not Just What
+              byte_offset: 8775
+              byte_count: 1189
+              word_count: 179
+              content_hash: 86faa2c6db28d8f622b631c671088278b408fca15467431c6de9fb355af302a3
+            - path: 1.2.9
+              level: 3
+              title: 1.9 Feedback Loops and Checklists Prevent Skipping
+              byte_offset: 9964
+              byte_count: 933
+              word_count: 113
+              content_hash: b60704061243f5e6de9e7cd0b677a92ffa1e488f891ab01954fd10e22e92f75b
+            - path: 1.2.10
+              level: 3
+              title: 1.10 Match Constraint Level to Task Risk
+              byte_offset: 10897
+              byte_count: 1009
+              word_count: 137
+              content_hash: 235a2ab4d675993c8af50788d455e3d7beef20a8d597ea3175cf848564ccfa8d
+        - path: "1.3"
+          level: 2
+          title: 'Part 2: Designing Features That Will Require Skills'
+          byte_offset: 11906
+          byte_count: 4164
+          word_count: 575
+          content_hash: fdac65c0d0e5fa1e30e01c00eda4028076d941223f2ee1ce6ee804696dab79f0
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 2.1 Map the Task Structure Before Choosing an Orchestration Pattern
+              byte_offset: 12133
+              byte_count: 952
+              word_count: 144
+              content_hash: 60235ceee5e6e479c5eb4cd4f2148b9cc7016a809be39feef130837b70b3ed16
+            - path: 1.3.2
+              level: 3
+              title: 2.2 Identify Hard vs. Soft Constraints
+              byte_offset: 13085
+              byte_count: 732
+              word_count: 94
+              content_hash: edfa451198015d1fc53c6c9554be188f65b3be91e797e84afa79e9857873d075
+            - path: 1.3.3
+              level: 3
+              title: 2.3 Define Effort Budgets
+              byte_offset: 13817
+              byte_count: 597
+              word_count: 83
+              content_hash: 8174ab387644b583fee997f4fed63b6ae06a89d5bfaa3f06b03db013bbcc29f4
+            - path: 1.3.4
+              level: 3
+              title: 2.4 Design the Verification Gates
+              byte_offset: 14414
+              byte_count: 593
+              word_count: 69
+              content_hash: 551f7d0325f75d2066ab4de17dcd2b59fbec56d885bcfdae985ac8a5b9998666
+            - path: 1.3.5
+              level: 3
+              title: 2.5 Define the Output Templates
+              byte_offset: 15007
+              byte_count: 579
+              word_count: 76
+              content_hash: 233c725feec97c2ef020b9e953d3583634bd0303df84a7cdf41cdd617a2ec259
+            - path: 1.3.6
+              level: 3
+              title: 2.6 Plan for Institutional Memory
+              byte_offset: 15586
+              byte_count: 484
+              word_count: 72
+              content_hash: e8bfe9fca4206802b695950177152ac4fcb1d21a3308ee47dc3ee20e99294428
+        - path: "1.4"
+          level: 2
+          title: 'Part 3: Skill Authoring Checklist'
+          byte_offset: 16070
+          byte_count: 2280
+          word_count: 368
+          content_hash: f49bc328123f6d6fca6502de943b6575da20cf85960c1ba7fc835e8e47527086
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Structure
+              byte_offset: 16225
+              byte_count: 618
+              word_count: 92
+              content_hash: 6101dc939ca96eef49b8486e9d34bd8c8a3e96c23be8fbf61600c6ed7ab0c461
+            - path: 1.4.2
+              level: 3
+              title: Vocabulary
+              byte_offset: 16843
+              byte_count: 232
+              word_count: 38
+              content_hash: 7f9b20f161e343ecdbfe2f95012dd85b81abd60c2a1fd02c7bcc54c25d75e40e
+            - path: 1.4.3
+              level: 3
+              title: Anti-Patterns
+              byte_offset: 17075
+              byte_count: 185
+              word_count: 32
+              content_hash: 426ac23236b517c8acf4494fd670631cfa38b9b7d2b99fbeccae9d9e92b87a2b
+            - path: 1.4.4
+              level: 3
+              title: Procedure
+              byte_offset: 17260
+              byte_count: 276
+              word_count: 43
+              content_hash: f221cf34709623b1b3ba55c0f5ac6928ae4978af56d735e27ffddccfb97ca677
+            - path: 1.4.5
+              level: 3
+              title: Content Quality
+              byte_offset: 17536
+              byte_count: 315
+              word_count: 53
+              content_hash: eee6409775c568612863eb52cd4d95885f6e269ff36605592d402588c9d71fca
+            - path: 1.4.6
+              level: 3
+              title: Examples
+              byte_offset: 17851
+              byte_count: 165
+              word_count: 30
+              content_hash: f1cdafbcd559a2dacf75d713971e9091868d74cfdc855be872bb99720d0b16fe
+            - path: 1.4.7
+              level: 3
+              title: Evaluation
+              byte_offset: 18016
+              byte_count: 193
+              word_count: 32
+              content_hash: fa9962684e97c442c0a1438b50a2a0998ae82940187a86de9fac7a2d13fae9fe
+            - path: 1.4.8
+              level: 3
+              title: Retrieval Anchors
+              byte_offset: 18209
+              byte_count: 141
+              word_count: 24
+              content_hash: c1d6ded1f6f3fd3bf91378f7199ba0ac362d411a635c034e709f7574820bb54a
+        - path: "1.5"
+          level: 2
+          title: 'Part 4: Common Mistakes in Skill Authoring'
+          byte_offset: 18350
+          byte_count: 2391
+          word_count: 354
+          content_hash: 5e8f7a9bfe3403a3b3c8772cd9c36876d575edb5c38b50fc3d1f1e6b28335f9b
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Explaining What the Model Already Knows
+              byte_offset: 18463
+              byte_count: 473
+              word_count: 73
+              content_hash: 2ecd88ada919d4d5c96430156a2af3f0119ae4eb4b1cfb3adfef359d4d93b922
+            - path: 1.5.2
+              level: 3
+              title: Uniform Constraint Levels
+              byte_offset: 18936
+              byte_count: 362
+              word_count: 43
+              content_hash: 521ffff839589a14ed8e69c540773102abc354911b7f92dade378220c0064742
+            - path: 1.5.3
+              level: 3
+              title: Missing Examples
+              byte_offset: 19298
+              byte_count: 293
+              word_count: 39
+              content_hash: 922a9f65eec6912356f5ae6b640cc77c0639376337f1643bbcaefb4d493adbe0
+            - path: 1.5.4
+              level: 3
+              title: Over-Specification
+              byte_offset: 19591
+              byte_count: 403
+              word_count: 62
+              content_hash: 4a39c414a0ed900d0835e35533db30e558489c6d7c0217180f013caccc3e07f0
+            - path: 1.5.5
+              level: 3
+              title: Unexplained Imperatives
+              byte_offset: 19994
+              byte_count: 324
+              word_count: 51
+              content_hash: 01b4a328111f99580614324c475cdba0b129a6f913f5670d137941f646e87d61
+            - path: 1.5.6
+              level: 3
+              title: Loading Everything at Once
+              byte_offset: 20318
+              byte_count: 423
+              word_count: 68
+              content_hash: bc0c530a8799df991f4d6ff010bb9d5ecf154f37fe8b453ae9da14d70212b3ee
+        - path: "1.6"
+          level: 2
+          title: 'Part 5: Key Research Sources'
+          byte_offset: 20741
+          byte_count: 2414
+          word_count: 380
+          content_hash: f1616fa744c53da27c8e200c9e8200e1e89e90eab9f706f0c179107ad4144c21
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Peer-Reviewed
+              byte_offset: 20889
+              byte_count: 967
+              word_count: 165
+              content_hash: 9c676be360070ed4c93b97b7e3f4d2ffd76849267e013e20e7554f1a329ef2f5
+            - path: 1.6.2
+              level: 3
+              title: Industry (Empirically Validated)
+              byte_offset: 21856
+              byte_count: 1299
+              word_count: 193
+              content_hash: dc1cda09836f113a2cee0e673e4d47eb84e471366cf7645edd2cdb1bef5f5882
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.3
+      role: narrative
+      confidence: high
+    - section_path: 1.2.4
+      role: constraint
+      confidence: high
+    - section_path: 1.2.5
+      role: example
+      confidence: high
+    - section_path: 1.2.6
+      role: constraint
+      confidence: high
+    - section_path: 1.2.10
+      role: constraint
+      confidence: high
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+    - section_path: 1.4.6
+      role: example
+      confidence: high
+    - section_path: 1.5.2
+      role: constraint
+      confidence: high
+    - section_path: 1.5.3
+      role: example
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T22:12:48.175275Z
+classified: false

@@ -1,0 +1,83 @@
+document_id: PROJECT/report-workflow-ux-gaps
+document_path: work/reports/workflow-ux-gaps.md
+content_hash: b5b366c53a18cf70f29d96bcf095a053711688a1d518e0f95b3a0bd05030d79b
+indexed_at: 2026-05-03T22:12:06.687402Z
+sections:
+    - path: "1"
+      level: 1
+      title: Workflow UX Gaps — Findings Report
+      byte_offset: 0
+      byte_count: 10188
+      word_count: 1538
+      content_hash: b5b366c53a18cf70f29d96bcf095a053711688a1d518e0f95b3a0bd05030d79b
+      children:
+        - path: "1.1"
+          level: 2
+          title: 'Gap 1: Entity creation timing — contradicting rules between two skills'
+          byte_offset: 456
+          byte_count: 1799
+          word_count: 250
+          content_hash: f34446f367fbd38122745ea1c08aeb641b4492b78b652e2ada6e923e711d57cb
+        - path: "1.2"
+          level: 2
+          title: 'Gap 2: Dev-plan approval is a silent non-event'
+          byte_offset: 2255
+          byte_count: 1538
+          word_count: 234
+          content_hash: cd6d41133740b26f280571e772bdc6ff1f755903ab63661915f18b2176ba7e58
+        - path: "1.3"
+          level: 2
+          title: 'Gap 3: `write-dev-plan` and `decompose-feature` are separately triggered with no compound default'
+          byte_offset: 3793
+          byte_count: 1451
+          word_count: 223
+          content_hash: c599a8ca0a51294a01c78f7a0e39fc75cb118b363f46b6e43fb0b04cc60a95bb
+        - path: "1.4"
+          level: 2
+          title: 'Gap 4: No orchestrated specification path for multi-feature plans'
+          byte_offset: 5244
+          byte_count: 1351
+          word_count: 199
+          content_hash: cab46ef4262c2e91adde959a6c820d41cb9d636b3957654d7bd338c60e3bddbe
+        - path: "1.5"
+          level: 2
+          title: 'Gap 5: Approve-and-advance not consistently connected across stages'
+          byte_offset: 6595
+          byte_count: 1437
+          word_count: 221
+          content_hash: d150a448841ad68bc68fdcec8c7f235e18e722e2fdc8f7ff1732905fb2f7059e
+        - path: "1.6"
+          level: 2
+          title: 'Gap 6: Design document can be written without a Feature entity'
+          byte_offset: 8032
+          byte_count: 1165
+          word_count: 176
+          content_hash: 6824859af159073d348a791c70176a129b5f57a78ca68422023812ec1f5652e6
+        - path: "1.7"
+          level: 2
+          title: Summary
+          byte_offset: 9197
+          byte_count: 991
+          word_count: 167
+          content_hash: e62c292a119cccb2de67dc15be5e4dceaec9e86cf6c4853d98c6bd8ad63460f9
+cross_doc_links:
+    - target_path: .kbz/skills/kanbanzai-workflow/SKILL.md
+      link_text: .kbz/skills/kanbanzai-workflow/SKILL.md
+      section_path: "1.1"
+    - target_path: .kbz/skills/kanbanzai-planning/SKILL.md
+      link_text: .kbz/skills/kanbanzai-planning/SKILL.md
+      section_path: "1.1"
+    - target_path: .kbz/skills/write-dev-plan/SKILL.md
+      link_text: .kbz/skills/write-dev-plan/SKILL.md
+      section_path: "1.2"
+    - target_path: .kbz/skills/write-spec/SKILL.md
+      link_text: .kbz/skills/write-spec/SKILL.md
+      section_path: "1.4"
+    - target_path: .kbz/skills/write-design/SKILL.md
+      link_text: .kbz/skills/write-design/SKILL.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.7"
+      role: narrative
+      confidence: high
+classified: false

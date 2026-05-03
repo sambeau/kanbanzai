@@ -1,4 +1,4 @@
-updated_at: 2026-05-03T20:20:58.112521Z
+updated_at: 2026-05-03T22:12:47.259439Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -98570,3 +98570,2443 @@ edges:
       to: work/P48-coordination-server/P48-spec-coordination-database.md
       to_type: document
       edge_type: LINKS_TO
+    - from: PROJECT/report-research-initial-workflow-analysis-review
+      from_type: document
+      to: PROJECT/report-research-initial-workflow-analysis-review#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.3
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.3
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.3
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.3
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.3
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.3
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.3
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.3
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.3.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.3
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.3.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.3
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.3.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.5
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.5
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.5
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.5
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.5
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.6
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.6
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.6
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1
+      from_type: section
+      to: PROJECT/report-research-initial-workflow-analysis-review#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1
+      from_type: section
+      to: work/design/workflow-design-basis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.1
+      from_type: section
+      to: initial-workflow-analysis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-research-initial-workflow-analysis-review#1.1
+      from_type: section
+      to: workflow-system-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-docs-memory-mcp-design
+      from_type: document
+      to: PROJECT/report-docs-memory-mcp-design#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.2
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.2
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.2
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.2
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.2
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.2
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.3
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.3
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.3
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.3
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.4
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.4
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.4
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.5
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.5
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.5
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6.1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6.1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6.2
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6.2
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6.3
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6.3
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6.3
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6.4
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6.4
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6.4
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6.5
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.6.5
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.6.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.7
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.7
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.8
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.8
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.8
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.9
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.9
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.10
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.10.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.10
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.10.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.11
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.11.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.11
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.11.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.13
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.13
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.13.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.13
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.13.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.14
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.14
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.14.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.14
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.14.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.15
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.15
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.15.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.15
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.15.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.15
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.15.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: PROJECT/report-docs-memory-mcp-design#1.16
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-docs-memory-mcp-design#1.3.3
+      from_type: section
+      to: FEAT-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-docs-memory-mcp-design#1.4.3
+      from_type: section
+      to: FEAT-01KMKRQRRX3CC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-docs-memory-mcp-design#1.5.1
+      from_type: section
+      to: FEAT-01KMKRQRRX3CC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-docs-memory-mcp-design#1.9.1
+      from_type: section
+      to: FEAT-01KMKRQRRX3CC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-docs-memory-mcp-design#1.9.1
+      from_type: section
+      to: TASK-01KN3V9C5E12
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-docs-memory-mcp-design#1.9.1
+      from_type: section
+      to: BUG-01KN5X2M8P4Q
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-docs-memory-mcp-design#1.3.3
+      from_type: section
+      to: DEC-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-docs-memory-mcp-design#1.9.1
+      from_type: section
+      to: DEC-042
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-docs-memory-mcp-design#1.9.1
+      from_type: section
+      to: DEC-008
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: work/research/document-retrieval-for-ai-agents.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: work/design/document-intelligence-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: work/design/document-centric-interface.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-docs-memory-mcp-design#1
+      from_type: section
+      to: work/design/machine-context-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-docs-memory-mcp-design#1.1.1
+      from_type: section
+      to: work/design/document-intelligence-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-docs-memory-mcp-design#1.2.1
+      from_type: section
+      to: work/design/document-intelligence-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-docs-memory-mcp-design#1.2.2
+      from_type: section
+      to: work/research/document-retrieval-for-ai-agents.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-docs-memory-mcp-design#1.2.5
+      from_type: section
+      to: work/research/document-retrieval-for-ai-agents.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline
+      from_type: document
+      to: PROJECT/report-documentation-pipeline#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.1
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.2
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.2
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.3
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.3
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.3
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.3
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.3
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.3
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.3.6
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.3.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.3.6
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.3.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.3.6
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.3.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.3.6
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.3.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.3.6
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.3.6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.3.6
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.3.6.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.4
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.4
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.4
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.4
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.5
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.5
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.5
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.6
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.6
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.6
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.7
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.7
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.7
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.7
+      from_type: section
+      to: PROJECT/report-documentation-pipeline#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-documentation-pipeline#1.3.4
+      from_type: section
+      to: ../../.kbz/skills/write-docs/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.3.4
+      from_type: section
+      to: ../../.kbz/skills/edit-docs/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.3.4
+      from_type: section
+      to: ../../.kbz/skills/check-docs/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.3.4
+      from_type: section
+      to: ../../.kbz/skills/style-docs/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.3.4
+      from_type: section
+      to: ../../.kbz/skills/copyedit-docs/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1
+      from_type: section
+      to: refs/documentation-structure-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1
+      from_type: section
+      to: refs/technical-writing-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1
+      from_type: section
+      to: refs/humanising-ai-prose.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1
+      from_type: section
+      to: refs/punctuation-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1
+      from_type: section
+      to: refs/documentation-pipeline.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.3.3
+      from_type: section
+      to: documentation-structure-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.3.3
+      from_type: section
+      to: technical-writing-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.3.3
+      from_type: section
+      to: humanising-ai-prose.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.3.3
+      from_type: section
+      to: punctuation-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.3.4
+      from_type: section
+      to: .kbz/skills/write-docs/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.3.4
+      from_type: section
+      to: .kbz/skills/edit-docs/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.3.4
+      from_type: section
+      to: .kbz/skills/check-docs/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.3.4
+      from_type: section
+      to: .kbz/skills/style-docs/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.3.4
+      from_type: section
+      to: .kbz/skills/copyedit-docs/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.5.2
+      from_type: section
+      to: refs/documentation-pipeline.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.5.2
+      from_type: section
+      to: .kbz/skills/write-docs/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.5.2
+      from_type: section
+      to: .kbz/skills/edit-docs/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.5.2
+      from_type: section
+      to: .kbz/skills/check-docs/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.5.2
+      from_type: section
+      to: .kbz/skills/style-docs/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.5.2
+      from_type: section
+      to: .kbz/skills/copyedit-docs/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-documentation-pipeline#1.5.2
+      from_type: section
+      to: .kbz/skills/orchestrate-doc-pipeline/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt
+      from_type: document
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.6
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.6
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.6
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.6
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.6
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.6
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.6.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.8
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.8
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.8
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.8
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.8.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1
+      from_type: section
+      to: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.6.6
+      from_type: section
+      to: work/design/planning-admin-layer-brainstorm.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-planning-admin-layer-brainstorm-prompt#1.7
+      from_type: section
+      to: work/design/planning-admin-layer-brainstorm.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2
+      from_type: document
+      to: PROJECT/report-skills-system-redesign-v2#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.2.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.2.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.2.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.2.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.2.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.3
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.3
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.3
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.3
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.4
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.4.1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.4
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.4.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.4.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.4.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.4.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.4.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.4
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.4.3
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.4.3
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.4.3
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.4.3
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.4.3
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.4
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.4.4
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.4.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.5
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.5.1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.5.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.5.1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.5.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.5
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.5
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.5
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.6
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.6
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.6
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.6
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.7
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.7
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.7
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.7
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.8
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.8
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.8
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.8.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.8
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.8.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.8
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.8.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.9
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.9
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.9
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.10
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.10.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.10
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.10.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.12
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.12.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.12.1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.12.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.12
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.12.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.12.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.12.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.12.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.12.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.12.2
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.12.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.12
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.12.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.12.3
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.12.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.12
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.12.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.12.4
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.12.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.12.4
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.12.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.12.4
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.12.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: PROJECT/report-skills-system-redesign-v2#1.13
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skills-system-redesign-v2#1.6.1
+      from_type: section
+      to: TASK-01KN
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: work/design/skills-system-redesign.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: work/research/ai-agent-best-practices-research.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: work/research/agent-skills-research.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: work/research/agent-orchestration-research.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1
+      from_type: section
+      to: work/reviews/3.0-design-cross-document-alignment.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.1
+      from_type: section
+      to: .skills/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.3.2
+      from_type: section
+      to: '**SKILL.md'
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.3.2
+      from_type: section
+      to: references/evaluation-criteria.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.6.4
+      from_type: section
+      to: .kbz/skills/*/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.7.1
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.7.1
+      from_type: section
+      to: .kbz/skills/review-code/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.7.1
+      from_type: section
+      to: orchestrate-review/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.7.1
+      from_type: section
+      to: .skills/plan-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.7.1
+      from_type: section
+      to: .kbz/skills/review-plan/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.7.1
+      from_type: section
+      to: .skills/document-creation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.7.4
+      from_type: section
+      to: .skills/code-review.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.12.4.1
+      from_type: section
+      to: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.13
+      from_type: section
+      to: work/research/ai-agent-best-practices-research.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.13
+      from_type: section
+      to: work/research/agent-orchestration-research.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.13
+      from_type: section
+      to: work/design/orchestration-recommendations.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.13
+      from_type: section
+      to: work/design/machine-context-design.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.13
+      from_type: section
+      to: work/design/agent-interaction-protocol.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.13
+      from_type: section
+      to: work/design/quality-gates-and-review-policy.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.13
+      from_type: section
+      to: work/design/document-centric-interface.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.13
+      from_type: section
+      to: work/spec/phase-2b-specification.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.13
+      from_type: section
+      to: work/research/agent-skills-research.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-skills-system-redesign-v2#1.13
+      from_type: section
+      to: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-workflow-ux-gaps
+      from_type: document
+      to: PROJECT/report-workflow-ux-gaps#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-workflow-ux-gaps#1
+      from_type: section
+      to: PROJECT/report-workflow-ux-gaps#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-workflow-ux-gaps#1
+      from_type: section
+      to: PROJECT/report-workflow-ux-gaps#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-workflow-ux-gaps#1
+      from_type: section
+      to: PROJECT/report-workflow-ux-gaps#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-workflow-ux-gaps#1
+      from_type: section
+      to: PROJECT/report-workflow-ux-gaps#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-workflow-ux-gaps#1
+      from_type: section
+      to: PROJECT/report-workflow-ux-gaps#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-workflow-ux-gaps#1
+      from_type: section
+      to: PROJECT/report-workflow-ux-gaps#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-workflow-ux-gaps#1
+      from_type: section
+      to: PROJECT/report-workflow-ux-gaps#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-workflow-ux-gaps#1.1
+      from_type: section
+      to: .kbz/skills/kanbanzai-workflow/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-workflow-ux-gaps#1.1
+      from_type: section
+      to: .kbz/skills/kanbanzai-planning/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-workflow-ux-gaps#1.2
+      from_type: section
+      to: .kbz/skills/write-dev-plan/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-workflow-ux-gaps#1.4
+      from_type: section
+      to: .kbz/skills/write-spec/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-workflow-ux-gaps#1.6
+      from_type: section
+      to: .kbz/skills/write-design/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt
+      from_type: document
+      to: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1
+      from_type: section
+      to: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1
+      from_type: section
+      to: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1
+      from_type: section
+      to: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1
+      from_type: section
+      to: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1
+      from_type: section
+      to: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1
+      from_type: section
+      to: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1
+      from_type: section
+      to: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1
+      from_type: section
+      to: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1
+      from_type: section
+      to: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.9
+      from_type: section
+      to: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.9
+      from_type: section
+      to: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.9
+      from_type: section
+      to: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.9
+      from_type: section
+      to: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.9.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1
+      from_type: section
+      to: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1
+      from_type: section
+      to: work/research/doc-intel-recurring-issues-investigation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.6
+      from_type: section
+      to: work/reports/doc-intel-p27-retrospective.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.6
+      from_type: section
+      to: work/reports/doc-intel-layer3-classification-pilot.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.6
+      from_type: section
+      to: work/research/document-retrieval-for-ai-agents.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.6
+      from_type: section
+      to: work/research/skill-authoring-best-practices.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.7
+      from_type: section
+      to: work/reports/doc-intel-p27-retrospective.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.7
+      from_type: section
+      to: work/reports/doc-intel-layer3-classification-pilot.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.7
+      from_type: section
+      to: work/research/document-retrieval-for-ai-agents.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.7
+      from_type: section
+      to: work/research/skill-authoring-best-practices.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.7
+      from_type: section
+      to: document-retrieval-for-ai-agents.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.7
+      from_type: section
+      to: skill-authoring-best-practices.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.7
+      from_type: section
+      to: work/research/doc-intel-recurring-issues-investigation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.8
+      from_type: section
+      to: work/research/doc-intel-recurring-issues-investigation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-doc-intel-recurring-issues-investigation-prompt#1.9.2
+      from_type: section
+      to: skill-authoring-best-practices.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/report-document-retrieval-for-ai-agents
+      from_type: document
+      to: PROJECT/report-document-retrieval-for-ai-agents#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.2
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.2
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.2
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.2
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.3
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.3
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.3
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.3
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.3
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.4
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.4
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.4
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.5
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.5
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.5
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.6
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.6
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.6
+      from_type: section
+      to: PROJECT/report-document-retrieval-for-ai-agents#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-document-retrieval-for-ai-agents#1.4.3
+      from_type: section
+      to: FEAT-01KMKRQRRX3CC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/report-skill-authoring-best-practices
+      from_type: document
+      to: PROJECT/report-skill-authoring-best-practices#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.2.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.2.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.2.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.2.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.3
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.3
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.3
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.3
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.3
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.3
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.4
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.4
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.4
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.4
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.4
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.4
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.4
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.4.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.4
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.4.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.5
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.5
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.5
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.5
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.5
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.5
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.5.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.6
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-skill-authoring-best-practices#1.6
+      from_type: section
+      to: PROJECT/report-skill-authoring-best-practices#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-implementation-plan-prompt-template
+      from_type: document
+      to: PROJECT/report-implementation-plan-prompt-template#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-implementation-plan-prompt-template
+      from_type: document
+      to: PROJECT/report-implementation-plan-prompt-template#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-review-prompt-template
+      from_type: document
+      to: PROJECT/report-review-prompt-template#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/report-specification-prompt-template
+      from_type: document
+      to: PROJECT/report-specification-prompt-template#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents
+      from_type: document
+      to: PROJECT/research-document-retrieval-for-ai-agents#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.2
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.2
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.2
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.2
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.3
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.3
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.3
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.3
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.3
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.4
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.4
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.4
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.5
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.5
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.5
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.6
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.6
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.6
+      from_type: section
+      to: PROJECT/research-document-retrieval-for-ai-agents#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-document-retrieval-for-ai-agents#1.4.3
+      from_type: section
+      to: FEAT-01KMKRQRRX3CC
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/research-skill-authoring-best-practices
+      from_type: document
+      to: PROJECT/research-skill-authoring-best-practices#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.2.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.2.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.2.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.2
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.2.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.3
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.3
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.3
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.3
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.3
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.3
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.4
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.4
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.4
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.4
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.4
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.4
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.4
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.4.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.4
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.4.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.5
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.5
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.5
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.5
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.5
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.5
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.5.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.6
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-skill-authoring-best-practices#1.6
+      from_type: section
+      to: PROJECT/research-skill-authoring-best-practices#1.6.2
+      to_type: section
+      edge_type: CONTAINS

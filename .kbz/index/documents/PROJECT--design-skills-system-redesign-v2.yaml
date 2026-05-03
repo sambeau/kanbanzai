@@ -1,0 +1,714 @@
+document_id: PROJECT/design-skills-system-redesign-v2
+document_path: work/design/skills-system-redesign-v2.md
+content_hash: f2e8bba593149f9d716112725adf06b86c3402f760f6557e634225f29746e8c0
+indexed_at: 2026-05-03T22:12:45.899882Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Evidence-Based Skills and Roles System for Kanbanzai 3.0'
+      byte_offset: 0
+      byte_count: 113193
+      word_count: 14847
+      content_hash: f2e8bba593149f9d716112725adf06b86c3402f760f6557e634225f29746e8c0
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Problem Statement
+          byte_offset: 645
+          byte_count: 3388
+          word_count: 465
+          content_hash: 09a696eb2783d90521fa3ff34bd83c730983536e0b169c72e2eb265b096b8d41
+        - path: "1.2"
+          level: 2
+          title: 2. Design Principles
+          byte_offset: 4033
+          byte_count: 7597
+          word_count: 1077
+          content_hash: 70b17860741e6078b079dff2fa5222ea35663cef2c517401861b906dd02089dd
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'DP-1: Vocabulary Is the Primary Routing Mechanism'
+              byte_offset: 4147
+              byte_count: 408
+              word_count: 65
+              content_hash: f8fab53a05b1c2d8f7d5365eb3ced1e18b4a3abc4e9f4b6d147a83bc50c8e8b8
+            - path: 1.2.2
+              level: 3
+              title: 'DP-2: Follow the Attention Curve'
+              byte_offset: 4555
+              byte_count: 542
+              word_count: 73
+              content_hash: 1df480b09586eed67e42f2d40f16a6f1008343d0288f0379af9c2eedaa0727dd
+            - path: 1.2.3
+              level: 3
+              title: 'DP-3: Brief Identities, No Flattery'
+              byte_offset: 5097
+              byte_count: 320
+              word_count: 43
+              content_hash: f85a3f74cc5a87d55d4df0ef799b9771918851d7c5130a431d8e69811319e2f1
+            - path: 1.2.4
+              level: 3
+              title: 'DP-4: Named Anti-Patterns with BECAUSE Clauses'
+              byte_offset: 5417
+              byte_count: 425
+              word_count: 53
+              content_hash: 350347144a07f2dda5ba9e297507a716c215f6db5a1d8d088c74043a8473a608
+            - path: 1.2.5
+              level: 3
+              title: 'DP-5: Composition Over Inheritance'
+              byte_offset: 5842
+              byte_count: 520
+              word_count: 77
+              content_hash: fc21a3427dadcac429b2a7c464fc6a105168486eb445745e69e1beb90f1cdf1a
+            - path: 1.2.6
+              level: 3
+              title: 'DP-6: Lean by Default — n=5 Beats n=19'
+              byte_offset: 6362
+              byte_count: 518
+              word_count: 77
+              content_hash: 313245171f119f9b8af0caae83e3f8f974cdb3dd8f9242654352ab7592815a9f
+            - path: 1.2.7
+              level: 3
+              title: 'DP-7: Separate Generation from Evaluation'
+              byte_offset: 6880
+              byte_count: 408
+              word_count: 59
+              content_hash: 69e306090ebcedf352f68a42a2317ffd2f1f039aca284fa88fc36a3225997417
+            - path: 1.2.8
+              level: 3
+              title: 'DP-8: Stage Bindings Are Explicit'
+              byte_offset: 7288
+              byte_count: 299
+              word_count: 48
+              content_hash: 92d590fe7260e9943c2f3a81324ae7495ab9f81ecf00bb47d9deb49560613aeb
+            - path: 1.2.9
+              level: 3
+              title: 'DP-9: Match Constraint Level to Task Risk'
+              byte_offset: 7587
+              byte_count: 2350
+              word_count: 317
+              content_hash: 37068c78d67a8bb0bf86b9f7da9920c047a5929a4346db909da94e3945792278
+            - path: 1.2.10
+              level: 3
+              title: 'DP-10: Only Add What the Model Doesn''t Know'
+              byte_offset: 9937
+              byte_count: 881
+              word_count: 130
+              content_hash: 3d09289ed219741e068d05f4205d1309fb9a78be8c40e334f6adf0ff90963eb4
+            - path: 1.2.11
+              level: 3
+              title: 'DP-11: Descriptions Must Be Assertive'
+              byte_offset: 10818
+              byte_count: 812
+              word_count: 117
+              content_hash: 7fa0e3b745a2312acf3eaa45087961daec78c1f47d38c7da3c084e877e3b7f1b
+        - path: "1.3"
+          level: 2
+          title: 3. Conceptual Architecture
+          byte_offset: 11630
+          byte_count: 33047
+          word_count: 4068
+          content_hash: e29b4e29fa34f9ae7e5a9600405d9eb30cef63dd814327bc0b06ba0943e2388b
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Roles — "Who You Are"
+              byte_offset: 15017
+              byte_count: 3679
+              word_count: 494
+              content_hash: c4821f3a921352c11937b4587e4dd0f3a95e6b2b6f0bd32b0e4bd0c644cf2e74
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Skills — "What You're Doing Right Now"
+              byte_offset: 18696
+              byte_count: 13402
+              word_count: 1828
+              content_hash: 33e4b2a75f6cc75f454bc8c31600d4e0357c9d04d89fe0b571c849ea2727585b
+            - path: 1.3.3
+              level: 3
+              title: 3.3 The Binding Registry — "When to Use What"
+              byte_offset: 32098
+              byte_count: 10033
+              word_count: 1117
+              content_hash: c6ef991ff9ced8cab93b17677edacb26c569a14bbad07b426c2359ef61b65138
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Assembled Context — "The Final Product"
+              byte_offset: 42131
+              byte_count: 2546
+              word_count: 398
+              content_hash: 0a220dd0db9d4bf5ff1e1094c14a6ea191b3aa9c8e9c16ba5d1da069edc2cdd9
+        - path: "1.4"
+          level: 2
+          title: 4. The Role Taxonomy
+          byte_offset: 44677
+          byte_count: 10627
+          word_count: 1264
+          content_hash: 50162fd5d57653d4b07b19971b3c45aa8290231c5d4da66ea7b598c402253c88
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Base Roles
+              byte_offset: 44797
+              byte_count: 2412
+              word_count: 327
+              content_hash: dafd7058d1bf6efcc525ee75a3f770d6acea11945e993b883333a213dd439573
+              children:
+                - path: 1.4.1.1
+                  level: 4
+                  title: '`base`'
+                  byte_offset: 44916
+                  byte_count: 2293
+                  word_count: 309
+                  content_hash: 5f0b0acca9af363c933cb908f9a7c80ddfdc63d7455439288e5fb12b859e7a97
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Authoring Roles
+              byte_offset: 47209
+              byte_count: 2705
+              word_count: 283
+              content_hash: 1e93a360f1460d56be5e7a392a8ebda696aafe63bafbf1f4ca6ded4e9100f173
+              children:
+                - path: 1.4.2.1
+                  level: 4
+                  title: '`architect`'
+                  byte_offset: 47289
+                  byte_count: 505
+                  word_count: 54
+                  content_hash: f288f00fd728cc41e830dc0dd6a7f8496a27f6c5d65b4138474f4ca9dad91176
+                - path: 1.4.2.2
+                  level: 4
+                  title: '`spec-author`'
+                  byte_offset: 47794
+                  byte_count: 539
+                  word_count: 53
+                  content_hash: f60ccdf97c75c3c6970e409e36aeb8942ea9e0d211dfc80efbd474bc0b9adee9
+                - path: 1.4.2.3
+                  level: 4
+                  title: '`implementer` (abstract — project-specific subtypes)'
+                  byte_offset: 48333
+                  byte_count: 674
+                  word_count: 73
+                  content_hash: 2dd74a85bdf914a15d733530b820eb5577011200a1e30924173846903c286717
+                - path: 1.4.2.4
+                  level: 4
+                  title: '`researcher`'
+                  byte_offset: 49007
+                  byte_count: 433
+                  word_count: 43
+                  content_hash: d069e9def7e5cae9b8dec4965e8ce1f5670ea27b8705ef7d14233375caa3befe
+                - path: 1.4.2.5
+                  level: 4
+                  title: '`documenter`'
+                  byte_offset: 49440
+                  byte_count: 474
+                  word_count: 47
+                  content_hash: 852331e7bfda4c5d5d23a61a7c64ad45e2ef07967297035ea77ebdcf11ac048e
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Review Roles
+              byte_offset: 49914
+              byte_count: 2453
+              word_count: 277
+              content_hash: 0a20c2b7d4fd17e127791ecd8f5a615c0de2078382864afbd40dd35ebbd04477
+              children:
+                - path: 1.4.3.1
+                  level: 4
+                  title: '`reviewer` (base review role)'
+                  byte_offset: 49997
+                  byte_count: 433
+                  word_count: 47
+                  content_hash: 11c925841b9e2f23de174ceb66913926151bfd683a6e53cfcbd12b011303604f
+                - path: 1.4.3.2
+                  level: 4
+                  title: '`reviewer-conformance`'
+                  byte_offset: 50430
+                  byte_count: 527
+                  word_count: 54
+                  content_hash: 7e4cee3ad20e82794b875b194f885e16adc6c077b2fdeadb4986a00a49d45337
+                - path: 1.4.3.3
+                  level: 4
+                  title: '`reviewer-quality`'
+                  byte_offset: 50957
+                  byte_count: 532
+                  word_count: 58
+                  content_hash: 980d2570cf5da204b3ac3c41fb2cdb18990a0dab5f5db00555142d2f2f569f15
+                - path: 1.4.3.4
+                  level: 4
+                  title: '`reviewer-security`'
+                  byte_offset: 51489
+                  byte_count: 246
+                  word_count: 31
+                  content_hash: 3247c6961006c6249c27569af8f44095b5e73fb056aca93b7556b022f8b1b373
+                - path: 1.4.3.5
+                  level: 4
+                  title: '`reviewer-testing`'
+                  byte_offset: 51735
+                  byte_count: 632
+                  word_count: 73
+                  content_hash: c9e5c751bddfde26ee4df9fa7abf1fa9d3183918577006ff2536811db2940897
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Coordination Roles
+              byte_offset: 52367
+              byte_count: 2937
+              word_count: 356
+              content_hash: 19d29c0c529940b123ea1640649baaff93397a4f35e7807ab23fac64f4a98fef
+              children:
+                - path: 1.4.4.1
+                  level: 4
+                  title: '`orchestrator`'
+                  byte_offset: 52395
+                  byte_count: 2909
+                  word_count: 352
+                  content_hash: f1c47a195f53f61531bf3d6982e5fe88c308a1de14690844f0486a6c34537e3b
+        - path: "1.5"
+          level: 2
+          title: 5. The Skill Catalog
+          byte_offset: 55304
+          byte_count: 12700
+          word_count: 1653
+          content_hash: cc0806e44f8818cd4429c87f2c04bbee9c0150b6a7d79cd0666b8f3419b56e56
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Document Authoring Skills
+              byte_offset: 55445
+              byte_count: 5718
+              word_count: 754
+              content_hash: 324c29b112edfc4365594c05fbabee647aae048f5bcdbb9253ab1356d6e630e8
+              children:
+                - path: 1.5.1.1
+                  level: 4
+                  title: Document type–skill alignment
+                  byte_offset: 56400
+                  byte_count: 760
+                  word_count: 99
+                  content_hash: 1cd3bf658cadf74b09c300f38429ec3b1b1863f5e728fffc186fdea57bd082cb
+                - path: 1.5.1.2
+                  level: 4
+                  title: Gate-checkable document templates
+                  byte_offset: 57160
+                  byte_count: 4003
+                  word_count: 520
+                  content_hash: 21a2813934f0a1c276e52336a22585eb4a4c97e62c195c7d4bb8484fc58e4248
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Implementation Skills
+              byte_offset: 61163
+              byte_count: 3772
+              word_count: 489
+              content_hash: 3af632c7ddaa63ad4a8ad2c1d043cf568907620c6d004bb3818466f5c8891bed
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Review Skills
+              byte_offset: 64935
+              byte_count: 1285
+              word_count: 161
+              content_hash: a14f793a5eead29f10ea35d59ee49a837c8bf56d2a6fee4112c7644e416c8150
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Skill Composition During Review
+              byte_offset: 66220
+              byte_count: 1784
+              word_count: 229
+              content_hash: 1e95103ad04cbf93b6ea5839b2c4e7b21cba92cb7fae04ba8fa6981a989e62c6
+        - path: "1.6"
+          level: 2
+          title: 6. How Context Assembly Works
+          byte_offset: 68004
+          byte_count: 7631
+          word_count: 1034
+          content_hash: 3a8ae1d759a518762fd3e16ecc338867cde1ac370319d1d61c2974f4696451ed
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 The Assembly Pipeline
+              byte_offset: 68038
+              byte_count: 3788
+              word_count: 469
+              content_hash: f05cc76207e482be6bb309e4ca0c74679bfa196a076852cbdb72b834dfba57e9
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Token Budget Management
+              byte_offset: 71826
+              byte_count: 968
+              word_count: 144
+              content_hash: 40d8038a9c93eaddf06b7426d9ac6831e74411591fffd4eda6380085d2542fcf
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Knowledge Auto-Surfacing
+              byte_offset: 72794
+              byte_count: 1640
+              word_count: 235
+              content_hash: 67ef2c9475069024cb84421076f14760705510ccaea393e523ff2cd70c66b602
+            - path: 1.6.4
+              level: 3
+              title: 6.4 Freshness Tracking for Skills and Roles
+              byte_offset: 74434
+              byte_count: 1201
+              word_count: 180
+              content_hash: ad54646e1c20b4ba934001d2248ad2c4358eef0465db14c74e52cefb9bd95405
+        - path: "1.7"
+          level: 2
+          title: 7. Migration from Current System
+          byte_offset: 75635
+          byte_count: 4325
+          word_count: 514
+          content_hash: 3b46c437c660a0a98b067246d4bf56050b50875c5ffea562d4fedead8432a2ab
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 What Changes
+              byte_offset: 75672
+              byte_count: 1063
+              word_count: 130
+              content_hash: 444eed9039e975e84e981aa0021c41ce49203e0f9f9c509aaeed5a20f2a649af
+            - path: 1.7.2
+              level: 3
+              title: 7.2 What Stays the Same
+              byte_offset: 76735
+              byte_count: 844
+              word_count: 110
+              content_hash: 32e7bd73aa7c43bd1172c6996da5c547686c14ec2ffdb92321689cb1b5611e8f
+            - path: 1.7.3
+              level: 3
+              title: 7.3 New Files Location
+              byte_offset: 77579
+              byte_count: 1871
+              word_count: 196
+              content_hash: f5b2a797f6772da7f13667fe99b68fef0a8ccb20f0ca97ffe3e9b3225b3af8ee
+            - path: 1.7.4
+              level: 3
+              title: 7.4 Compatibility
+              byte_offset: 79450
+              byte_count: 510
+              word_count: 72
+              content_hash: 7a59fc65fb83d39a3d70e2170b66ffc4ae92b5c859e122a5a8a682e39f8ba655
+        - path: "1.8"
+          level: 2
+          title: 8. Skill Content Authoring Guidelines
+          byte_offset: 79960
+          byte_count: 4276
+          word_count: 618
+          content_hash: 56c882d1b9637171915b49633fd593133f9be6230bc28fe97c2ede173e87d908
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 The Novelty Test
+              byte_offset: 80261
+              byte_count: 671
+              word_count: 98
+              content_hash: 34efaf2cd92a26bdafbf76aa99d87d0104c09a69a003e9eda7f748ac1a06083c
+            - path: 1.8.2
+              level: 3
+              title: '8.2 Tone: Explain Why, Not Rigid Imperatives'
+              byte_offset: 80932
+              byte_count: 842
+              word_count: 134
+              content_hash: 999ffe8661f689bb93f0f2de5b7a86a619ce47206c37f975f3052c7a6eaadd42
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Uncertainty Protocol
+              byte_offset: 81774
+              byte_count: 879
+              word_count: 126
+              content_hash: 50faa838d751129b85a756044b03dbf322b6ce4bdaec1c23a22a5c39fd43abe5
+            - path: 1.8.4
+              level: 3
+              title: 8.4 Spec Citation for Implementation Decisions
+              byte_offset: 82653
+              byte_count: 861
+              word_count: 120
+              content_hash: 10e5ae8720e690fbdfd256d7ec39c85a18aeb59146443ea109dc06019ad42b44
+            - path: 1.8.5
+              level: 3
+              title: 8.5 Terminology Consistency Within Skills
+              byte_offset: 83514
+              byte_count: 722
+              word_count: 100
+              content_hash: 2bc718ff396734e226a0831bcaafdbcb9020c9be48e43baad945ca79ea3c6585
+        - path: "1.9"
+          level: 2
+          title: 9. Skill Development Process
+          byte_offset: 84236
+          byte_count: 5265
+          word_count: 809
+          content_hash: cc9dc4d980d2a36bd3eda5083eddd84f700c7945fa470dd52539cf71e633b9cb
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 The Development Loop
+              byte_offset: 84529
+              byte_count: 2471
+              word_count: 384
+              content_hash: 675924d529167f8005e3f778d12690c9767c40cea91e14611be99ef9ab3e878b
+            - path: 1.9.2
+              level: 3
+              title: 9.2 Skill Quality Gate
+              byte_offset: 87000
+              byte_count: 1669
+              word_count: 266
+              content_hash: 35fbe6ed16de655cd03dcb8b741060d1145b43f6fb53cdf2479c262ff5d2050a
+            - path: 1.9.3
+              level: 3
+              title: 9.3 Description Optimization
+              byte_offset: 88669
+              byte_count: 832
+              word_count: 116
+              content_hash: fc9616eda934be40def9bb4f04f61f1bd58778733cd34d45c2b15b8963d0a10e
+        - path: "1.10"
+          level: 2
+          title: 10. Expected Impact
+          byte_offset: 89501
+          byte_count: 2828
+          word_count: 400
+          content_hash: 794f1bfd868c34302ffed439d808183524a9d54b86ec7de50b67484e22af914c
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 10.1 Metrics to Track
+              byte_offset: 89525
+              byte_count: 1652
+              word_count: 240
+              content_hash: 54a9cbbf4f58a7b77e1c1f77e9d7c307117946178c54c77fc0c4a2e2441d26d0
+            - path: 1.10.2
+              level: 3
+              title: 10.2 Research-Backed Predictions
+              byte_offset: 91177
+              byte_count: 1152
+              word_count: 156
+              content_hash: d9fee71aab79458f45e2c075771a380aea44853c69e1f8b687b383c714e550b9
+        - path: "1.11"
+          level: 2
+          title: 11. Design Decisions
+          byte_offset: 92329
+          byte_count: 8085
+          word_count: 1152
+          content_hash: 2b75557744aa70e4d4f4ce071a38b91f9ca442449e3c66d2c3d11edd7ef10f73
+        - path: "1.12"
+          level: 2
+          title: 12. Open Questions — Resolutions and Recommendations
+          byte_offset: 100414
+          byte_count: 11021
+          word_count: 1517
+          content_hash: 0c2e133bbf3b62684d6bc0de11dfc661a847bc71e8d8562db5f080fdc71d1958
+          children:
+            - path: 1.12.1
+              level: 3
+              title: 12.1 Human Designer Decisions
+              byte_offset: 100912
+              byte_count: 3705
+              word_count: 506
+              content_hash: c3764690d1e68ec0a1e578336678f610f06057d9ecc5c45526f7d43b4618b582
+              children:
+                - path: 1.12.1.1
+                  level: 4
+                  title: 'Q1. Vocabulary payloads: per-project or shipped defaults? — RESOLVED'
+                  byte_offset: 101054
+                  byte_count: 3563
+                  word_count: 485
+                  content_hash: b81217ae583b671008925e993ee689937280ada610ce029c4962c4f59ced77ce
+            - path: 1.12.2
+              level: 3
+              title: 12.2 Previously Resolved Questions
+              byte_offset: 104617
+              byte_count: 1940
+              word_count: 273
+              content_hash: e808ff954ea45f2b6b7a7d16d3f5290364c6d0aef3b62a3e73fdc86c0c7a26ee
+              children:
+                - path: 1.12.2.1
+                  level: 4
+                  title: Q2. How should the system handle roles that don't exist yet? — RESOLVED (earlier)
+                  byte_offset: 104739
+                  byte_count: 588
+                  word_count: 91
+                  content_hash: 81863f0dae92137f8a251e1530c719e5ea3f8d9d80221ad757fd11294d85eac6
+                - path: 1.12.2.2
+                  level: 4
+                  title: Q4. How does this interact with the `decompose` tool's task creation? — RESOLVED (earlier)
+                  byte_offset: 105327
+                  byte_count: 620
+                  word_count: 85
+                  content_hash: ce7cc66a5078139406d7d3a92fc89e3efaac48cd3fc4f836377c17b11c303962
+                - path: 1.12.2.3
+                  level: 4
+                  title: Q6. What is the right granularity for reviewer specialisation? — RESOLVED (earlier)
+                  byte_offset: 105947
+                  byte_count: 610
+                  word_count: 82
+                  content_hash: d1d61d4f712097db0c0662d60d73dd3b7caa01bc3fc3f49266a758c0b40c1639
+            - path: 1.12.3
+              level: 3
+              title: 12.3 AI Agent Interface Decisions
+              byte_offset: 106557
+              byte_count: 1158
+              word_count: 161
+              content_hash: cf6b77ef6e4e3de3b6c1f9404f66f6d013865c184efa1b343edc8435825a8073
+              children:
+                - path: 1.12.3.1
+                  level: 4
+                  title: Q8. Should we adopt a skill-creator meta-skill? — RECOMMENDATION (deferred for 3.0)
+                  byte_offset: 106802
+                  byte_count: 913
+                  word_count: 128
+                  content_hash: 3e510b5050e33d8e25f1e76c5a17922ef22c49b13b816c18b025b67877eb9b27
+            - path: 1.12.4
+              level: 3
+              title: 12.4 Implementation Decisions
+              byte_offset: 107715
+              byte_count: 3720
+              word_count: 511
+              content_hash: 75e220aa5b1f45d0ca452f0bea8d84b0d6de2e21f64bd7ddb998855759bdbbd5
+              children:
+                - path: 1.12.4.1
+                  level: 4
+                  title: Q3. Should skills carry their own test fixtures? — RECOMMENDATION
+                  byte_offset: 107879
+                  byte_count: 1175
+                  word_count: 147
+                  content_hash: d90503ec520d9a1fd39af88aecab38a122028b25a965e78d0b8cc891039f16fb
+                - path: 1.12.4.2
+                  level: 4
+                  title: Q5. Should vocabulary payloads have expiry dates? — RECOMMENDATION (deferred for 3.0)
+                  byte_offset: 109054
+                  byte_count: 1069
+                  word_count: 151
+                  content_hash: 4bb3d602106e1afd5f9c29f2778e975be9b3d9c834b88acc525cd839d0c3f824
+                - path: 1.12.4.3
+                  level: 4
+                  title: Q7. How should skills be versioned and tracked? — RECOMMENDATION
+                  byte_offset: 110123
+                  byte_count: 1312
+                  word_count: 194
+                  content_hash: c3062e4e4bf36dc8d3399857c48b4cf58fe7245f6f855bddc9e9f02da9782daa
+        - path: "1.13"
+          level: 2
+          title: 13. Relationship to Other Documents
+          byte_offset: 111435
+          byte_count: 1758
+          word_count: 198
+          content_hash: 0430f06585a225121d8ea81d0af9a5507dd813c120d4f9e796a0a90e76099289
+entity_refs:
+    - entity_id: TASK-01KN
+      entity_type: task
+      section_path: 1.6.1
+      byte_offset: 68090
+cross_doc_links:
+    - target_path: work/design/skills-system-redesign.md
+      link_text: work/design/skills-system-redesign.md
+      section_path: "1"
+    - target_path: work/research/ai-agent-best-practices-research.md
+      link_text: work/research/ai-agent-best-practices-research.md
+      section_path: "1"
+    - target_path: work/research/agent-skills-research.md
+      link_text: work/research/agent-skills-research.md
+      section_path: "1"
+    - target_path: work/research/agent-orchestration-research.md
+      link_text: work/research/agent-orchestration-research.md
+      section_path: "1"
+    - target_path: work/reviews/3.0-design-cross-document-alignment.md
+      link_text: work/reviews/3.0-design-cross-document-alignment.md
+      section_path: "1"
+    - target_path: .skills/*.md
+      link_text: .skills/*.md
+      section_path: "1.1"
+    - target_path: '**SKILL.md'
+      link_text: |4+
+
+        **SKILL.md section ordering** (attention curve optimized):
+
+      section_path: 1.3.2
+    - target_path: references/evaluation-criteria.md
+      link_text: references/evaluation-criteria.md
+      section_path: 1.3.2
+    - target_path: .kbz/skills/*/SKILL.md
+      link_text: .kbz/skills/*/SKILL.md
+      section_path: 1.6.4
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.7.1
+    - target_path: .kbz/skills/review-code/SKILL.md
+      link_text: .kbz/skills/review-code/SKILL.md
+      section_path: 1.7.1
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: 1.7.1
+    - target_path: .skills/plan-review.md
+      link_text: .skills/plan-review.md
+      section_path: 1.7.1
+    - target_path: .kbz/skills/review-plan/SKILL.md
+      link_text: .kbz/skills/review-plan/SKILL.md
+      section_path: 1.7.1
+    - target_path: .skills/document-creation.md
+      link_text: .skills/document-creation.md
+      section_path: 1.7.1
+    - target_path: .skills/code-review.md
+      link_text: .skills/code-review.md
+      section_path: 1.7.4
+    - target_path: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: 1.12.4.1
+    - target_path: work/research/ai-agent-best-practices-research.md
+      link_text: work/research/ai-agent-best-practices-research.md
+      section_path: "1.13"
+    - target_path: work/research/agent-orchestration-research.md
+      link_text: work/research/agent-orchestration-research.md
+      section_path: "1.13"
+    - target_path: work/design/orchestration-recommendations.md
+      link_text: work/design/orchestration-recommendations.md
+      section_path: "1.13"
+    - target_path: work/design/machine-context-design.md
+      link_text: work/design/machine-context-design.md
+      section_path: "1.13"
+    - target_path: work/design/agent-interaction-protocol.md
+      link_text: work/design/agent-interaction-protocol.md
+      section_path: "1.13"
+    - target_path: work/design/quality-gates-and-review-policy.md
+      link_text: work/design/quality-gates-and-review-policy.md
+      section_path: "1.13"
+    - target_path: work/design/document-centric-interface.md
+      link_text: work/design/document-centric-interface.md
+      section_path: "1.13"
+    - target_path: work/spec/phase-2b-specification.md
+      link_text: work/spec/phase-2b-specification.md
+      section_path: "1.13"
+    - target_path: work/research/agent-skills-research.md
+      link_text: work/research/agent-skills-research.md
+      section_path: "1.13"
+    - target_path: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      link_text: work/design/kanbanzai-3.0-workflow-and-tooling-v2.md
+      section_path: "1.13"
+conventional_roles:
+    - section_path: 1.2.9
+      role: constraint
+      confidence: high
+    - section_path: 1.3.4
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+    - section_path: 1.8.4
+      role: decision
+      confidence: high
+    - section_path: "1.11"
+      role: decision
+      confidence: high
+    - section_path: "1.12"
+      role: question
+      confidence: high
+    - section_path: 1.12.1
+      role: decision
+      confidence: high
+    - section_path: 1.12.2
+      role: question
+      confidence: high
+    - section_path: 1.12.3
+      role: decision
+      confidence: high
+    - section_path: 1.12.4
+      role: decision
+      confidence: high
+classified: false

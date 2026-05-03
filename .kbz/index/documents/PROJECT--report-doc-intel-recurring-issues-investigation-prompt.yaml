@@ -1,0 +1,164 @@
+document_id: PROJECT/report-doc-intel-recurring-issues-investigation-prompt
+document_path: work/research/doc-intel-recurring-issues-investigation-prompt.md
+content_hash: 6382a20286bffa2069ba19d79b962c9598c2c9351bc8c26dfc9909e984d697ee
+indexed_at: 2026-05-03T22:12:07.078267Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Doc-Intel Recurring Issues: Investigation Prompt'
+      byte_offset: 0
+      byte_count: 18608
+      word_count: 2626
+      content_hash: 6382a20286bffa2069ba19d79b962c9598c2c9351bc8c26dfc9909e984d697ee
+      children:
+        - path: "1.1"
+          level: 2
+          title: Identity
+          byte_offset: 517
+          byte_count: 200
+          word_count: 25
+          content_hash: c403e9145ddbddd26b721200d4df81e3d6a4141739503b64ba4a59b5c69afd19
+        - path: "1.2"
+          level: 2
+          title: Vocabulary
+          byte_offset: 717
+          byte_count: 768
+          word_count: 82
+          content_hash: 80ab117f2961749ef0db9954259254406656fd494f6090329fbeccb913840e9c
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 1485
+          byte_count: 1688
+          word_count: 248
+          content_hash: a742852de85e97f2a8f222c6c8ba748b6cb3dd936e566d55d723b234a4116939
+        - path: "1.4"
+          level: 2
+          title: Anti-Patterns
+          byte_offset: 3173
+          byte_count: 2323
+          word_count: 342
+          content_hash: 932099f11dcbb8c550cd36f936c06988b8362778f7f529c792d03670a2b98514
+        - path: "1.5"
+          level: 2
+          title: Task
+          byte_offset: 5496
+          byte_count: 1945
+          word_count: 300
+          content_hash: 6878ad141274628a47a77925ffea4d46bb3bb861d84c64559125219742705132
+        - path: "1.6"
+          level: 2
+          title: Source Documents
+          byte_offset: 7441
+          byte_count: 1619
+          word_count: 196
+          content_hash: 278147c85ac60cabe7813268ae1ddc9d1f1622243b59ed431a09e1ace0c5f684
+        - path: "1.7"
+          level: 2
+          title: Procedure
+          byte_offset: 9060
+          byte_count: 3526
+          word_count: 474
+          content_hash: 5f9f6934548e3b5722153f262474dfc56b2ee377c99df24b3f46a027b71e784c
+        - path: "1.8"
+          level: 2
+          title: Output Format
+          byte_offset: 12586
+          byte_count: 2260
+          word_count: 334
+          content_hash: 29ede0d0a04e9aa72ae4d4ca7f32a8c1781a36edf6bd5dafb00b4d8c2617dd20
+        - path: "1.9"
+          level: 2
+          title: Examples
+          byte_offset: 14846
+          byte_count: 3119
+          word_count: 482
+          content_hash: d91578d4d1aaa40595f38db5ac7e844e6ca21d0a87f4daade46509f5fbce5460
+          children:
+            - path: 1.9.1
+              level: 3
+              title: BAD finding
+              byte_offset: 14859
+              byte_count: 743
+              word_count: 108
+              content_hash: e504f932c75588574c4814185a3daaed85874f8a2fd297a10b82faf2e410a1ba
+            - path: 1.9.2
+              level: 3
+              title: GOOD finding
+              byte_offset: 15602
+              byte_count: 886
+              word_count: 136
+              content_hash: 8f7a10fe793fe5f8ac616ce34951d5222055217617263ae45694409bd16920ed
+            - path: 1.9.3
+              level: 3
+              title: BAD planning recommendation
+              byte_offset: 16488
+              byte_count: 555
+              word_count: 87
+              content_hash: 08af082ef232a22085ab5aeaa29cd7c12735a3a0db2fdc913eb32e82fe3efecb
+            - path: 1.9.4
+              level: 3
+              title: GOOD planning recommendation
+              byte_offset: 17043
+              byte_count: 922
+              word_count: 149
+              content_hash: 3b3ae41816bc4110fe4d56e6a89d6836b3d387cf51f25964d1aa70c52eeb1f4b
+        - path: "1.10"
+          level: 2
+          title: Retrieval Anchors
+          byte_offset: 17965
+          byte_count: 643
+          word_count: 104
+          content_hash: e18b9f825c26e415ba450030b0d087dd3e0e21025230f1e449e662dda6f7927a
+cross_doc_links:
+    - target_path: work/research/doc-intel-recurring-issues-investigation.md
+      link_text: work/research/doc-intel-recurring-issues-investigation.md
+      section_path: "1"
+    - target_path: work/reports/doc-intel-p27-retrospective.md
+      link_text: work/reports/doc-intel-p27-retrospective.md
+      section_path: "1.6"
+    - target_path: work/reports/doc-intel-layer3-classification-pilot.md
+      link_text: work/reports/doc-intel-layer3-classification-pilot.md
+      section_path: "1.6"
+    - target_path: work/research/document-retrieval-for-ai-agents.md
+      link_text: work/research/document-retrieval-for-ai-agents.md
+      section_path: "1.6"
+    - target_path: work/research/skill-authoring-best-practices.md
+      link_text: work/research/skill-authoring-best-practices.md
+      section_path: "1.6"
+    - target_path: work/reports/doc-intel-p27-retrospective.md
+      link_text: work/reports/doc-intel-p27-retrospective.md
+      section_path: "1.7"
+    - target_path: work/reports/doc-intel-layer3-classification-pilot.md
+      link_text: work/reports/doc-intel-layer3-classification-pilot.md
+      section_path: "1.7"
+    - target_path: work/research/document-retrieval-for-ai-agents.md
+      link_text: work/research/document-retrieval-for-ai-agents.md
+      section_path: "1.7"
+    - target_path: work/research/skill-authoring-best-practices.md
+      link_text: work/research/skill-authoring-best-practices.md
+      section_path: "1.7"
+    - target_path: document-retrieval-for-ai-agents.md
+      link_text: document-retrieval-for-ai-agents.md
+      section_path: "1.7"
+    - target_path: skill-authoring-best-practices.md
+      link_text: skill-authoring-best-practices.md
+      section_path: "1.7"
+    - target_path: work/research/doc-intel-recurring-issues-investigation.md
+      link_text: work/research/doc-intel-recurring-issues-investigation.md
+      section_path: "1.7"
+    - target_path: work/research/doc-intel-recurring-issues-investigation.md
+      link_text: |4
+        work/research/doc-intel-recurring-issues-investigation.md
+      section_path: "1.8"
+    - target_path: skill-authoring-best-practices.md
+      link_text: skill-authoring-best-practices.md
+      section_path: 1.9.2
+conventional_roles:
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.9"
+      role: example
+      confidence: high
+classified: false

@@ -1,0 +1,165 @@
+document_id: PROJECT/design-planning-admin-layer-brainstorm-prompt
+document_path: work/design/planning-admin-layer-brainstorm-prompt.md
+content_hash: aef735e689bacfa4ac6b6a0ed3d20e50c7bbdaa06020c81df4f29de6cff06f32
+indexed_at: 2026-05-03T22:12:46.952938Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design Brainstorm: A Human-Facing Planning & Admin Assistant for Kanbanzai'
+      byte_offset: 0
+      byte_count: 17224
+      word_count: 2462
+      content_hash: aef735e689bacfa4ac6b6a0ed3d20e50c7bbdaa06020c81df4f29de6cff06f32
+      children:
+        - path: "1.1"
+          level: 2
+          title: Vocabulary
+          byte_offset: 166
+          byte_count: 804
+          word_count: 81
+          content_hash: f661d89f8aeea907335741e98e6cde837402d46c7f900bc578733b1e7c255f5e
+        - path: "1.2"
+          level: 2
+          title: Constraints
+          byte_offset: 970
+          byte_count: 1409
+          word_count: 202
+          content_hash: 29bc2e6529d44c079c28a69961e965b0955a493068fa35049e5dee17dad6dc85
+        - path: "1.3"
+          level: 2
+          title: Anti-Patterns
+          byte_offset: 2379
+          byte_count: 1631
+          word_count: 215
+          content_hash: cbdf27967509f4bf4da30b0b2c5dd11c8849bf6118fc3d6dcd0ec15b5d58d10f
+        - path: "1.4"
+          level: 2
+          title: Design Stance
+          byte_offset: 4010
+          byte_count: 846
+          word_count: 131
+          content_hash: 20bcbbcdc75d02a0a10167048930641f146bd358ab14f62cb409b9a7b0e41cad
+        - path: "1.5"
+          level: 2
+          title: Task
+          byte_offset: 4856
+          byte_count: 3224
+          word_count: 464
+          content_hash: 9e8ee64f5d83ab2035ded6dda6a22ad2a66697767c7177ae0087685b814b9b83
+        - path: "1.6"
+          level: 2
+          title: Procedure
+          byte_offset: 8080
+          byte_count: 3108
+          word_count: 451
+          content_hash: 933843fd6f5e992e43459d10dd8ea548e8299d410b7a1b4c20b4d8209ebe44b1
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Phase 0: Corpus Discovery'
+              byte_offset: 8094
+              byte_count: 651
+              word_count: 90
+              content_hash: 6ed5c924a317d9c180f393c342e7b9f116641506a680ea5086cfcb26f2ce1470
+            - path: 1.6.2
+              level: 3
+              title: 'Step 1: Build the Daily-Burden Inventory'
+              byte_offset: 8745
+              byte_count: 609
+              word_count: 90
+              content_hash: 099b64d4f12d50169399b2307313eceff442823c1efe701da3581350ec60738f
+            - path: 1.6.3
+              level: 3
+              title: 'Step 2: Run the Experienced-Helper Empathy Exercise'
+              byte_offset: 9354
+              byte_count: 407
+              word_count: 63
+              content_hash: 698a87093b83986d8882583590c9b8c3accbf83aacea43e2c9cce983f93f5161
+            - path: 1.6.4
+              level: 3
+              title: 'Step 3: Explore Role-Specific Needs'
+              byte_offset: 9761
+              byte_count: 521
+              word_count: 77
+              content_hash: 6024e040e712ca3355af5946b8f91346c3fb5b3c69d5898f7feba3d8acd12f9e
+            - path: 1.6.5
+              level: 3
+              title: 'Step 4: Synthesise Candidate Design Directions'
+              byte_offset: 10282
+              byte_count: 505
+              word_count: 68
+              content_hash: 88c868bd1cb179eb3a2eaff3ca08b9db83cbc5037e10b87fd7f781a329416c5e
+            - path: 1.6.6
+              level: 3
+              title: 'Step 5: Present for Brainstorming'
+              byte_offset: 10787
+              byte_count: 401
+              word_count: 61
+              content_hash: cdf0f5988d26957b67b64a942c37e4e220948b016ae142aae5243651ffef14e6
+        - path: "1.7"
+          level: 2
+          title: Output Format
+          byte_offset: 11188
+          byte_count: 3530
+          word_count: 519
+          content_hash: 3894569ca4128f488ee15bd0fd12f95afe2c84c79afe27d12df2b32bfd510726
+        - path: "1.8"
+          level: 2
+          title: Examples
+          byte_offset: 14718
+          byte_count: 1953
+          word_count: 289
+          content_hash: 09d0c9980c515304f1b5c6aa12be5e81c0b15094facd5d21b868c208cddf7f89
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 'Bad: Solution-first, no burden grounding'
+              byte_offset: 14731
+              byte_count: 428
+              word_count: 61
+              content_hash: e2a46335275944e262d9197eb912e379098a64e53f602a8beec52dec11a6082f
+            - path: 1.8.2
+              level: 3
+              title: 'Good: Burden-grounded, multiple options, prompts reaction'
+              byte_offset: 15159
+              byte_count: 647
+              word_count: 100
+              content_hash: 31056dd671d38e643c4c2e08136b65d0cdb69bcb53979707e9256c3415b3dabd
+            - path: 1.8.3
+              level: 3
+              title: 'Bad: Collapses to a single recommendation'
+              byte_offset: 15806
+              byte_count: 302
+              word_count: 43
+              content_hash: 9ae3e795382d8e67ffe357007f41d12e1eaae84aebb9c3ceca2310b35adbc132
+            - path: 1.8.4
+              level: 3
+              title: 'Good: Surfaces tension and asks'
+              byte_offset: 16108
+              byte_count: 563
+              word_count: 83
+              content_hash: dfcf649a3e1b0943259940e755a03ca64344710fadcb7204c8f5f5ebcd5cd9ce
+        - path: "1.9"
+          level: 2
+          title: Retrieval Anchors
+          byte_offset: 16671
+          byte_count: 553
+          word_count: 87
+          content_hash: c88f208f3f510357f4341a9d88de4374844a7c2d3cc82691b04aba6d890751b4
+cross_doc_links:
+    - target_path: work/design/planning-admin-layer-brainstorm.md
+      link_text: work/design/planning-admin-layer-brainstorm.md
+      section_path: 1.6.6
+    - target_path: work/design/planning-admin-layer-brainstorm.md
+      link_text: work/design/planning-admin-layer-brainstorm.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.8"
+      role: example
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T22:12:48.110747Z
+classified: false
