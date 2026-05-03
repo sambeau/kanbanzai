@@ -1,0 +1,6 @@
+id: TASK-01KQPYRS393VN
+parent_feature: FEAT-01KQPYQJH0KS5
+slug: json-format-renderer
+name: JSON format renderer
+summary: "Implement a JSON-format renderer that consumes service-layer structs and emits RFC 8259 JSON. Entity/document queries wrapped in results array (D-7), project overview uses distinct {scope: project} shape (D-8). Full schemas per FR-9 and FR-10. Edge cases: null for missing references, [] for empty attention, registered: false with id: null for unregistered docs. Deliverable: internal/cli/status/json.go."
+status: queued
