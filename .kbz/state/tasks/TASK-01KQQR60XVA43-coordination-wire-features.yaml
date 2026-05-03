@@ -3,9 +3,12 @@ parent_feature: FEAT-01KQQQ3B9SVF9
 slug: coordination-wire-features
 name: Wire coordination into feature display ID allocation
 summary: "Modify feature creation: atomically increment batch_feature_seqs.next_seq for display ID. Canonical ID remains TSID-based. Single-user mode uses local counter."
-status: active
+status: done
 estimate: "2"
+completed: "2026-05-03T21:00:18Z"
 claimed_at: "2026-05-03T20:38:10Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-03T20:38:10Z"
 dispatched_by: sambeau
+completion_summary: "Wired coordination into CreateFeature display ID allocation. When coordination DB is available, calls AllocateFeatureSeq(projectID, batchID) for atomic sequence allocation instead of reading next_feature_seq from parent state. Canonical TSID allocation unchanged. On DB error, falls back to local parent state counter with warning."
+verification: go build ./... and go test ./internal/service/... pass (70+ tests).
