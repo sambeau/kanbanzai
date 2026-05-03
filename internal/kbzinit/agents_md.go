@@ -13,7 +13,7 @@ import (
 // agentsMDVersion is the current schema version for both AGENTS.md and
 // .github/copilot-instructions.md. Increment when the generated content
 // changes in a way that warrants overwriting existing managed files.
-const agentsMDVersion = 2
+const agentsMDVersion = 3
 
 // agentsMDMarkerPrefix is the HTML comment marker written on line 1 of
 // managed markdown files. It is invisible to agents reading the file as
@@ -25,8 +25,8 @@ const agentsMDMarkerSuffix = " -->"
 
 // agentsMDContent is the generated content for AGENTS.md.
 // Must start with the managed marker comment on line 1.
-// Must not exceed 50 lines.
-const agentsMDContent = `<!-- kanbanzai-managed: v2 -->
+// Must not exceed 100 lines.
+const agentsMDContent = `<!-- kanbanzai-managed: v3 -->
 
 # Agent Instructions
 
@@ -43,51 +43,91 @@ workflow state is managed through the kanbanzai MCP server.
 
 - **Use kanbanzai MCP tools** (` + "`status`, `next`, `entity`, `doc`, `finish`" + `) for all
   workflow operations. Do not create or modify entities or documents by writing
-  files directly — this bypasses lifecycle enforcement and health checks.
-- **Follow the stage gates**: Planning → Design → Features → Specification →
-  Dev plan → Implementation. Skipping forward is not allowed. See
-  ` + "`.agents/skills/kanbanzai-workflow/SKILL.md`" + `.
+  files directly.
+- **Follow the stage gates.** Read ` + "`.kbz/stage-bindings.yaml`" + ` to find the
+  correct role and skill for each stage. See
+  ` + "`.agents/skills/kanbanzai-workflow/SKILL.md`" + ` for lifecycle rules.
 - **Human approval is required** at stage gates. When in doubt, stop and ask.
 
 ## Skills Reference
 
+### Workflow Skills (.agents/skills/)
+
 | Skill | When to read |
 |---|---|
 | ` + "`kanbanzai-getting-started`" + ` | Start of every session |
-| ` + "`kanbanzai-workflow`" + ` | Before any stage transition or entity creation |
-| ` + "`kanbanzai-design`" + ` | During design work |
-| ` + "`kanbanzai-specification`" + ` | During specification work |
-| ` + "`kanbanzai-documents`" + ` | When creating or registering any document |
-| ` + "`kanbanzai-agents`" + ` | During implementation: task dispatch, commits, knowledge |
-| ` + "`kanbanzai-planning`" + ` | During planning conversations |
-| ` + "`kanbanzai-review`" + ` | When reviewing completed features |
-| ` + "`kanbanzai-plan-review`" + ` | When reviewing plans |
+| ` + "`kanbanzai-workflow`" + ` | Before any stage transition |
+| ` + "`kanbanzai-documents`" + ` | Creating or registering documents |
+| ` + "`kanbanzai-agents`" + ` | Task dispatch, commits, knowledge |
+| ` + "`kanbanzai-planning`" + ` | Planning conversations |
+| ` + "`kanbanzai-plan-review`" + ` | Reviewing plans |
 
-## Optional: Code Graph Integration
+### Task-Execution Skills (.kbz/skills/)
+
+| Skill | Stage |
+|---|---|
+| ` + "`write-design`" + ` | designing |
+| ` + "`write-spec`" + ` | specifying |
+| ` + "`write-dev-plan`" + ` | dev-planning |
+| ` + "`decompose-feature`" + ` | dev-planning |
+| ` + "`orchestrate-development`" + ` | developing |
+| ` + "`implement-task`" + ` | developing (sub-agent) |
+| ` + "`orchestrate-review`" + ` | reviewing |
+| ` + "`review-code`" + ` | reviewing (sub-agent) |
+| ` + "`review-plan`" + ` | batch-reviewing |
+| ` + "`write-research`" + ` | researching |
+| ` + "`update-docs`" + ` | documenting |
+| ` + "`orchestrate-doc-pipeline`" + ` | doc-publishing |
+| ` + "`write-docs`" + `, ` + "`edit-docs`" + `, ` + "`check-docs`" + `, ` + "`style-docs`" + `, ` + "`copyedit-docs`" + ` | doc-publishing (sub-stages) |
+
+## Roles (.kbz/roles/)
+
+Read the role file specified in .kbz/stage-bindings.yaml for your stage.
+
+| Role | Stage |
+|---|---|
+| ` + "`architect`" + ` | designing, dev-planning |
+| ` + "`spec-author`" + ` | specifying |
+| ` + "`orchestrator`" + ` | developing, reviewing |
+| ` + "`implementer`" + ` | developing (sub-agent) |
+| ` + "`reviewer-conformance`" + ` | reviewing, batch-reviewing |
+| ` + "`reviewer-quality`" + ` | reviewing (sub-agent) |
+| ` + "`reviewer-security`" + ` | reviewing (sub-agent) |
+| ` + "`reviewer-testing`" + ` | reviewing (sub-agent) |
+| ` + "`researcher`" + ` | researching |
+| ` + "`documenter`" + ` | documenting |
+| ` + "`doc-pipeline-orchestrator`" + ` | doc-publishing |
+| ` + "`doc-editor`" + `, ` + "`doc-checker`" + `, ` + "`doc-stylist`" + `, ` + "`doc-copyeditor`" + ` | doc-publishing (sub-agents) |
+
+## Stage Bindings
+
+.kbz/stage-bindings.yaml is the authoritative source of truth. Read it before
+entering any workflow stage — it tells you which role and skill to adopt.
+
+## Code Graph Integration (Optional)
 
 If your project uses codebase-memory-mcp, set graph_project in
-.kbz/local.yaml once per machine. The worktree tool uses it automatically
-when creating worktrees.
+.kbz/local.yaml once per machine. The worktree tool uses it automatically.
 
     codebase_memory:
       graph_project: YOUR-GRAPH-PROJECT-NAME
 
-Derive the name: take the repo absolute path, drop the leading slash, and
-replace remaining slashes with hyphens. For example /Users/alice/Dev/myrepo
-becomes Users-alice-Dev-myrepo.
+To install graph tool skills, copy .github/skills/ from the kanbanzai repo.
 `
 
 // copilotInstructionsContent is the generated content for
 // .github/copilot-instructions.md.
 // Must start with the managed marker comment on line 1.
 // Must not exceed 25 lines.
-const copilotInstructionsContent = `<!-- kanbanzai-managed: v2 -->
+const copilotInstructionsContent = `<!-- kanbanzai-managed: v3 -->
 
 # Copilot Instructions
 
 This project uses **Kanbanzai** for workflow management. Read ` + "`AGENTS.md`" + ` in
-the project root before doing any work — it contains the essential rules and
-skill pointers for this project.
+the project root before doing any work.
+
+Read ` + "`.kbz/stage-bindings.yaml`" + ` before entering any workflow stage to find
+the correct role and skill to adopt.
 
 ## Quick Reference
 

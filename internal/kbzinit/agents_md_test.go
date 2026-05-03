@@ -201,11 +201,15 @@ func TestWriteAgentsMD_ContentRequirements_SkillsTable(t *testing.T) {
 	for _, skill := range []string{
 		"kanbanzai-getting-started",
 		"kanbanzai-workflow",
-		"kanbanzai-design",
-		"kanbanzai-specification",
 		"kanbanzai-documents",
 		"kanbanzai-agents",
 		"kanbanzai-planning",
+		"kanbanzai-plan-review",
+		"write-design",
+		"write-spec",
+		"implement-task",
+		"orchestrate-development",
+		"review-code",
 	} {
 		if !strings.Contains(text, skill) {
 			t.Errorf("AGENTS.md skills table missing skill %q", skill)
@@ -213,7 +217,7 @@ func TestWriteAgentsMD_ContentRequirements_SkillsTable(t *testing.T) {
 	}
 }
 
-// AC-A6: The file does not exceed 50 lines.
+// AC-A6: The file does not exceed 100 lines.
 func TestWriteAgentsMD_LineCountLimit(t *testing.T) {
 	dir := t.TempDir()
 	init, _ := newTestInit(dir, "")
@@ -227,8 +231,8 @@ func TestWriteAgentsMD_LineCountLimit(t *testing.T) {
 	}
 
 	lines := strings.Split(string(content), "\n")
-	if len(lines) > 50 {
-		t.Errorf("AGENTS.md has %d lines, must not exceed 50", len(lines))
+	if len(lines) > 100 {
+		t.Errorf("AGENTS.md has %d lines, must not exceed 100", len(lines))
 	}
 }
 

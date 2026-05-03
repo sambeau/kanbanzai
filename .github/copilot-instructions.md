@@ -1,3 +1,7 @@
+<!-- kanbanzai-project: this file is hand-maintained for kanbanzai's own development.
+It contains project-local references not present in generated consumer installs.
+See internal/kbzinit/agents_md.go for the canonical consumer version. -->
+
 # Copilot Instructions for Kanbanzai
 
 This project is a Git-native workflow system for human-AI collaborative software development.
