@@ -1,10 +1,12 @@
-content_hash: 167b49ac149805c7fb393b2cc1e2a4fdb4b57be7a0cdadf152055f498023db9e
+approved_at: "2026-05-03T20:16:10Z"
+approved_by: sambeau
+content_hash: bf3af3e726ad97a8977cb9154560bc6e7046ed77633eb0f55ad8bafe93b18019
 created: "2026-05-03T20:07:16Z"
 created_by: sambeau
 id: P48-coordination-server/spec-p48-spec-coordination-database
 owner: P48-coordination-server
 path: work/P48-coordination-server/P48-spec-coordination-database.md
-status: draft
+status: approved
 title: Coordination Database — Specification
 type: spec
-updated: "2026-05-03T20:07:16Z"
+updated: "2026-05-03T20:16:10Z"
