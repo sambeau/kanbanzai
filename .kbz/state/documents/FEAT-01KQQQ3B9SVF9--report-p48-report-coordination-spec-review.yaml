@@ -1,3 +1,5 @@
+approved_at: "2026-05-03T23:46:47Z"
+approved_by: sambeau
 canonical_content_hash: 4ccc1e09ed15e5eccf82a8464d294427b72c6866b5d896e9c98288f5d640a1d5
 content_hash: 16c9b226e89783c8e7b3882d61675639bf21769c6b8faa9503425dbcb1967879
 created: "2026-05-03T23:46:41Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KQQQ3B9SVF9/report-p48-report-coordination-spec-review
 owner: FEAT-01KQQQ3B9SVF9
 path: work/P48-coordination-server/P48-report-coordination-spec-review.md
-status: draft
+status: approved
 title: "Review: coordination-spec"
 type: report
-updated: "2026-05-03T23:46:41Z"
+updated: "2026-05-03T23:46:47Z"
