@@ -2,7 +2,7 @@
 
 **Plan ID:** P41-opencode-ecosystem-features  
 **Status:** Shaping  
-**Source:** [Competitive Analysis: OpenCode Plugin Ecosystem vs. Kanbanzai](../research/competitive-analysis-openagent-ecosystem.md)
+**Source:** [Competitive Analysis: OpenCode Plugin Ecosystem vs. Kanbanzai](P41-research-competitive-analysis.md)
 
 ## Summary
 
@@ -13,26 +13,31 @@ Adopt the most valuable features from the OpenCode plugin ecosystem (oh-my-opena
 ```
 Plan: "OpenCode ecosystem features" (P41)
 │
-├── Sub-plan A: Hash-Anchored Edit Tool
-│   Standalone. Zero dependencies. Ready to design now.
+├── Sub-plan A: Hash-Anchored Edit Tool → **P42 created**
+│   [P42: Hash-Anchored Edit Tool](../P42-hash-anchored-edit-tool/P42-design-hash-anchored-edit-tool.md)
+│   Standalone. Zero dependencies. Design document written. Ready for spec.
 │   Source: §6.1 of the competitive analysis report
 │
-├── Sub-plan B: Fast-Track Architecture
+├── Sub-plan B: Fast-Track Architecture → **P43 created**
+│   [P43: Fast-Track Architecture](../P43-fast-track-architecture/P43-design-fast-track-architecture.md)
 │   Standalone. No dependencies on A or C. Can start in parallel with A.
 │   Phased: spec validator → plan validator → review gate validator → risk tiers
 │   Source: §11 of the competitive analysis report
 │   Side effect: deprioritizes web UI (§6.7) if successful
 │
-├── Sub-plan C: Model Routing & Agent Launcher
-│   Start with feasibility design only. Do not commit to build until A and B are stable.
+├── Sub-plan C: Model Routing & Agent Launcher → **P44 created**
+│   [P44: Model Routing & Agent Launcher](../P44-model-routing-agent-launcher/P44-design-model-routing-agent-launcher.md)
+│   Feasibility design only. Do not commit to build until A and B are stable.
 │   Unlocks: auto-compaction (§6.6), thinking-level control, true Ralph Loop (§6.8)
 │   Source: §6.5, §7.1 of the competitive analysis report
 │
-├── Enhancement: Wisdom Forwarding
+├── Enhancement: Wisdom Forwarding → **P45 created**
+│   [P45: Wisdom Forwarding](../P45-wisdom-forwarding/P45-design-wisdom-forwarding.md)
 │   Small, standalone. Modify handoff to auto-surface sibling task knowledge.
 │   Source: §6.4
 │
-└── Enhancement: Elicitation Checklist
+└── Enhancement: Elicitation Checklist → **P46 created**
+    [P46: Elicitation Checklist](../P46-elicitation-checklist/P46-design-elicitation-checklist.md)
     Small, standalone. Adopt Prometheus-style checklist into spec-author skill.
     Source: §6.3
 ```
@@ -41,11 +46,11 @@ Plan: "OpenCode ecosystem features" (P41)
 
 | Order | Sub-plan | Can start | Depends on | Estimated effort |
 |-------|----------|-----------|------------|------------------|
-| 1 | A: Hash-Anchored Edits | Immediately | Nothing | Medium (new MCP tool) |
-| 2 | Wisdom Forwarding | Immediately | Nothing | Small (handoff enhancement) |
-| 3 | Elicitation Checklist | Immediately | Nothing | Small (skill update) |
-| 4 | B: Fast-Track Architecture | Immediately (parallel with A) | Nothing | Medium-Large (3 roles, 3 skills, config, pipeline) |
-| 5 | C: Feasibility Design | After A and B stable | Nothing (design-only phase) | Small (design document) |
+| 1 | A: Hash-Anchored Edits | **Done — P42 created** | Nothing | Medium (new MCP tool) |
+| 2 | Wisdom Forwarding | **Done — P45 created** | Nothing | Small (handoff enhancement) |
+| 3 | Elicitation Checklist | **Done — P46 created** | Nothing | Small (skill update) |
+| 4 | B: Fast-Track Architecture | **Done — P43 created** | Nothing | Medium-Large (3 roles, 3 skills, config, pipeline) |
+| 5 | C: Feasibility Design | **Done — P44 created** | Nothing (design-only phase) | Small (design document) |
 | 6 | C: Implementation | After feasibility approved | C feasibility design | Large (provider integration, agent runtime) |
 
 A and B can proceed in parallel — they touch different parts of the system (edit tools vs. stage gates). The two small enhancements can be done at any point. C is intentionally deferred: start the design to capture thinking while it's fresh, but don't build until A and B prove the pattern.
@@ -76,6 +81,6 @@ These are intentionally NOT sub-plans. They're captured here so the intention is
 
 ## Related Documents
 
-- [Competitive Analysis: OpenCode Plugin Ecosystem vs. Kanbanzai](../research/competitive-analysis-openagent-ecosystem.md) — the shaping artifact
-- [OpenCode Ecosystem Evaluation (Independent)](../_project/research-opencode-ecosystem-evaluation.md) — companion evaluation
+- [Competitive Analysis: OpenCode Plugin Ecosystem vs. Kanbanzai](P41-research-competitive-analysis.md) — the shaping artifact
+- [OpenCode Ecosystem Evaluation (Independent)](P41-research-independent-evaluation.md) — companion evaluation
 - [Prompt Engineering Guide](../../refs/prompt-engineering-guide.md) — referenced in compaction artifact design
