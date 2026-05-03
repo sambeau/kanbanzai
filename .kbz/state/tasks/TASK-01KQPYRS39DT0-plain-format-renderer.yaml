@@ -3,5 +3,14 @@ parent_feature: FEAT-01KQPYQJH0KS5
 slug: plain-format-renderer
 name: Plain format renderer
 summary: "Implement a plain-format renderer that consumes existing service-layer synthesis structs and emits key:value pairs per FR-3 through FR-7 for all six scope types (feature, plan, task, bug, document, project). Handle edge cases: missing for null values, registered: true/false on documents, single attention: line (highest severity), none for empty attention. Deliverable: internal/cli/status/plain.go."
-status: ready
+status: done
 estimate: "3"
+files_planned:
+  - internal/cli/status/plain_test.go
+completed: "2026-05-03T13:15:11Z"
+claimed_at: "2026-05-03T13:01:56Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-03T13:01:56Z"
+dispatched_by: sambeau
+completion_summary: "Added unit tests and contract tests for the plain renderer. The plain renderer implementation was already complete; added 11 unit tests covering all scope types (feature, plan, task, bug, document, project) and a schema contract test verifying all required keys per FR-3 through FR-7 (NFR-1.5/AC-11)."
+verification: "All 31 tests pass (go test ./internal/cli/status/...), cmd/kbz integration tests pass. go build succeeds."

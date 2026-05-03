@@ -3,9 +3,9 @@ content: "When creating plan entities via the entity tool, also create a human-r
 created: "2026-05-03T12:13:02Z"
 created_by: sambeau
 id: KE-01KQPW378CGZZ
-last_accessed_at: "2026-05-03T12:52:11Z"
+last_accessed_at: "2026-05-03T13:01:56Z"
 miss_count: 0
-recent_use_count: 1
+recent_use_count: 3
 scope: project
 status: contributed
 tags:
