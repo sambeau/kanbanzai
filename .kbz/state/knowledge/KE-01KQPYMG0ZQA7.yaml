@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "Feature lifecycle has no \"reopen\" path from done back to a working state. Valid transitions from done are only cancelled and superseded. When a feature is closed in error (e.g., overrides claim all tasks done but tasks remain in ready), the only recourse is to supersede it with a new feature. This causes entity ID churn and loses the connection to the original feature's documents. A done→developing or done→reviewing transition (with override required) would handle this case without creating replacement entities. Observed 2026-05-03 with FEAT-01KQ2VHKJB5V8 (B36-F4)."
+created: "2026-05-03T12:57:25Z"
+created_by: sambeau
+id: KE-01KQPYMG0ZQA7
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - lifecycle-gap
+  - feature-reopen
+  - needs-design
+tier: 2
+topic: lifecycle-model
+ttl_days: 90
+updated: "2026-05-03T12:57:25Z"
+use_count: 0

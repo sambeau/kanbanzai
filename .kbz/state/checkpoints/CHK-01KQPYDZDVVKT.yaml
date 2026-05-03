@@ -1,0 +1,9 @@
+id: CHK-01KQPYDZDVVKT
+question: "Feature B36-F4 (Status command machine output formats) and its parent batch B36 are both in `done` status, but 2 tasks remain in `ready`:\n\n- **TASK-01KQFCZ3AWCSX** — JSON format renderer (3 pts)\n- **TASK-01KQFCZ3AZTTQ** — Plain format renderer (3 pts)\n\nThese tasks can't be claimed because `next()` requires the parent feature to be in an active working state (designing, specifying, dev-planning, developing, or reviewing). The feature was overridden through `reviewing → done`.\n\nOptions:\n1. **Reopen the feature** — transition it back to `developing` (override), implement the tasks, then re-review.\n2. **Create a new feature** — scoped to just these remaining renderer tasks.\n3. **Leave them** — if these tasks were intentionally skipped and the feature is truly done.\n4. **Something else** — if you have a different approach in mind.\n\nWhich path would you like to take?"
+context: "B36 has 28 total tasks, 26 done, 2 ready. These are the only remaining undone tasks across the entire batch. The feature was fast-tracked through review gates with overrides that noted \"All 8 tasks are done\" — but that was incorrect; only 6 of 8 were done. The overrides were applied on 2026-04-30."
+orchestration_summary: "Session start: found 2 ready tasks in B36. Attempted to claim TASK-01KQFCZ3AWCSX but blocked because parent feature FEAT-01KQ2VHKJB5V8 is in 'done' status. The feature was overridden through reviewing→done despite having unfinished tasks."
+status: pending
+created_at: "2026-05-03T12:53:51Z"
+created_by: orchestrator
+responded_at: null
+response: null
