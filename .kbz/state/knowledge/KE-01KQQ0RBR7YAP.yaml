@@ -1,0 +1,19 @@
+confidence: "0.5"
+content: "Filename consistency across work/ documents is currently enforced by agent discipline alone — there's no deterministic tool that generates the correct path given a document type and optional entity context. Filenames follow patterns like {entity-id}-design-{slug}.md or {entity-id}-{type}-{slug}.md, but variations creep in (e.g. P41-prompt-design-review.md vs. the standard naming). A tool — potentially a 'path' or 'filename' action on the doc tool, or a new utility — that takes type (design, spec, research, prompt, etc.) and an optional Plan/Batch/Feature ID and returns the canonical path would eliminate naming drift. A naming template per document type would be the single source of truth. This would also help with the prompt-file-location problem (KE-01KQQ0MPDMYVV) by encoding the convention in code rather than documentation."
+created: "2026-05-03T13:34:29Z"
+created_by: sambeau
+id: KE-01KQQ0RBR7YAP
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - file-organization
+  - tool-gap
+  - conventions
+  - work-directory
+  - filenames
+tier: 3
+topic: filename-consistency-tool
+ttl_days: 30
+updated: "2026-05-03T13:34:29Z"
+use_count: 0

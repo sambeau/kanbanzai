@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "Prompt files (like bootstrapping-gap-audit-prompt.md) are currently saved to ad-hoc locations because there is no defined convention for where standalone prompts belong. The work/ directory has design/, spec/, plan/, research/, reviews/ — but prompts don't cleanly fit into any of these. This causes prompts to be scattered based on individual judgment. Consider either a dedicated work/prompts/ directory, a *.prompt.md naming convention, or a rule that prompts go in the directory matching the stage they serve. Also consider adding a 'prompt' document type to the doc tool for registration and discovery."
+created: "2026-05-03T13:32:28Z"
+created_by: sambeau
+id: KE-01KQQ0MPDMYVV
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - file-organization
+  - prompts
+  - conventions
+  - work-directory
+tier: 3
+topic: prompt-file-location-convention
+ttl_days: 30
+updated: "2026-05-03T13:32:28Z"
+use_count: 0
