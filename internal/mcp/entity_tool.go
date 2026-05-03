@@ -44,7 +44,7 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		mcp.WithString("type", mcp.Description("Entity type: batch, feature, task, bug, decision, strategic-plan")),
 		mcp.WithString("id", mcp.Description("Entity ID")),
 		mcp.WithString("status", mcp.Description("Target status (transition) or status filter (list)")),
-		mcp.WithString("parent", mcp.Description("Parent batch/plan ID for features (list filter)")),
+		mcp.WithString("parent", mcp.Description("Parent plan ID for batches or features (list filter)")),
 		mcp.WithArray("tags", mcp.WithStringItems(), mcp.Description("Tag filter (list) or tags to set (create/update)")),
 		mcp.WithArray("entities", mcp.Items(map[string]any{"type": "object"}), mcp.Description("Batch create: array of entity objects")),
 		mcp.WithString("slug", mcp.Description("URL-friendly identifier")),
@@ -323,7 +323,7 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 			return entityListResponse(entityType, entitySummaries(plans)), nil
 		}
 		if entityType == "batch" || entityType == "plan" {
-			batches, err := entitySvc.ListBatches(service.BatchFilters{Status: statusFilter, Tags: tagsFilter})
+			batches, err := entitySvc.ListBatches(service.BatchFilters{Status: statusFilter, Parent: parentFilter, Tags: tagsFilter})
 			if err != nil {
 				return nil, fmt.Errorf("cannot list batches: %w", err)
 			}
