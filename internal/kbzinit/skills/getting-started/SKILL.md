@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: kanbanzai-getting-started
 description: >
   Use at the start of every agent session, even if the task seems obvious and
