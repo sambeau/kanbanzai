@@ -2,8 +2,14 @@ id: FEAT-01KQPYQJH0KS5
 slug: status-machine-output-renderers
 name: Status Machine Output Renderers
 parent: B45-reopen-status-machine-output
-status: designing
+status: specifying
 summary: "Complete the JSON and plain-format renderers for kbz status that were left unfinished when B36-F4 was prematurely closed. JSON renderer: internal/cli/status/json.go. Plain renderer: internal/cli/status/plain.go."
 created: "2026-05-03T12:59:06Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: designing
+    reason: Spec already approved in original B36-F4 cycle (FEAT-01KQ2VHKJB5V8/spec-b36-f4-spec-status-machine-output).
+    timestamp: "2026-05-03T13:59:18+01:00"
+    to_status: specifying
 display_id: B45-F1
