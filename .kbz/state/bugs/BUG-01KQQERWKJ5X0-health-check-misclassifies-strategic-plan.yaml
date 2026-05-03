@@ -1,0 +1,11 @@
+id: BUG-01KQQERWKJ5X0
+slug: health-check-misclassifies-strategic-plan
+name: Health check misclassifies StrategicPlan as batch
+status: reported
+severity: medium
+priority: medium
+type: implementation-defect
+reported_by: samphillips
+reported: "2026-05-03T17:39:26Z"
+observed: "Running `status` shows 7 health errors:\n\n1. `batch P40-retro-batch-april-2026: unknown batch status \"idea\"`\n2–7. `batch P41–P46: unknown batch status \"shaping\"` (six instances)\n\nP40's status \"idea\" and P41–P46's status \"shaping\" are valid StrategicPlan lifecycle states (idea → shaping → ready → active → done) but are not valid Batch lifecycle states (proposed → designing → active → reviewing → done)."
+expected: "Entities stored with StrategicPlan lifecycle statuses should be validated against the StrategicPlan status machine, not the Batch status machine. Either:\n\nA. loadBatch() detects StrategicPlan-only statuses and returns Type \"strategic-plan\" instead of \"batch\", OR\nB. StrategicPlan entities are stored in a separate directory from legacy batch/plan entities and loaded with correct type."
