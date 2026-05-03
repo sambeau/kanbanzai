@@ -1,9 +1,9 @@
-id: P47-coordination-server
+id: P48-coordination-server
 slug: coordination-server
-name: Coordination Server
+name: "Coordination Server"
 status: idea
 summary: "A lightweight coordination server for team deployments — provides centralized ID allocation for plans, batches, features, and bugs, with dual-mode support so single-user projects continue unchanged."
-order: 0
-created: "2026-05-03T19:10:41Z"
-created_by: sambeau
-updated: "2026-05-03T19:10:41Z"
+tags: []
+created: "2026-05-03T19:01:38Z"
+created_by: "sambeau"
+updated: "2026-05-03T19:01:38Z"

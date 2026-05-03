@@ -1,0 +1,10 @@
+id: P48-coordination-server
+slug: coordination-server
+name: Coordination Server
+status: idea
+summary: "A lightweight coordination server for team deployments — provides centralized ID allocation for plans, batches, features, and bugs, with dual-mode support so single-user projects continue unchanged."
+design: P48-coordination-server/design-p48-design-coordination-server
+tags: "[]"
+created: "2026-05-03T19:01:38Z"
+created_by: sambeau
+updated: "2026-05-03T19:11:12Z"
