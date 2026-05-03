@@ -1,0 +1,15 @@
+id: P41-opencode-ecosystem-features
+slug: opencode-ecosystem-features
+name: OpenCode ecosystem features
+status: shaping
+summary: "Adopt the most valuable features from the OpenCode plugin ecosystem (oh-my-openagent, micode, opencode-background-agents, Portal) into Kanbanzai. Three design efforts: hash-anchored edit tool, fast-track architecture, and model routing — plus two small enhancements and five deferred items."
+design: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features
+tags:
+  - research-backed
+  - ecosystem
+  - fast-track
+  - model-routing
+created: "2026-05-03T12:02:10Z"
+created_by: sambeau
+updated: "2026-05-03T12:12:48Z"
+order: 0
