@@ -1,7 +1,7 @@
 id: P46-elicitation-checklist
 slug: elicitation-checklist
 name: Elicitation checklist
-status: idea
+status: shaping
 summary: "Adopt OmO's Prometheus-style systematic checklist into the spec-author skill. Prevents implicit assumptions from surviving into specs by ensuring core objective, scope boundaries, ambiguities, approach, and test strategy are explicitly addressed. No new role — just a prompt enhancement."
 parent: P41-opencode-ecosystem-features
 order: 0
@@ -13,4 +13,4 @@ tags:
   - skill-update
 created: "2026-05-03T12:30:46Z"
 created_by: sambeau
-updated: "2026-05-03T12:30:46Z"
+updated: "2026-05-03T12:30:51Z"
