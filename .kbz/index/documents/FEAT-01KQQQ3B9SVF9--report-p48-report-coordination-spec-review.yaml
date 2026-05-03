@@ -1,0 +1,87 @@
+document_id: FEAT-01KQQQ3B9SVF9/report-p48-report-coordination-spec-review
+document_path: work/P48-coordination-server/P48-report-coordination-spec-review.md
+content_hash: 16c9b226e89783c8e7b3882d61675639bf21769c6b8faa9503425dbcb1967879
+indexed_at: 2026-05-03T23:46:41.072487Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: FEAT-01KQQQ3B9SVF9 — coordination-spec'
+      byte_offset: 0
+      byte_count: 6813
+      word_count: 904
+      content_hash: 16c9b226e89783c8e7b3882d61675639bf21769c6b8faa9503425dbcb1967879
+      children:
+        - path: "1.1"
+          level: 2
+          title: 'Verdict: APPROVED_WITH_FOLLOWUPS'
+          byte_offset: 221
+          byte_count: 142
+          word_count: 16
+          content_hash: 64b4fd845a8f66e440d8850a8724f524d730c700176b528e2a2fd4561969da7d
+        - path: "1.2"
+          level: 2
+          title: Per-Dimension Verdicts
+          byte_offset: 363
+          byte_count: 401
+          word_count: 69
+          content_hash: fe243fecab2c4966badb0f18dffe8ae17acb7e57773ee12a2abfc1573b154f93
+        - path: "1.3"
+          level: 2
+          title: Spec Conformance Detail
+          byte_offset: 764
+          byte_count: 3186
+          word_count: 428
+          content_hash: 58650febaa61bb7d3991160439f326ab4d72faa63c0e986c459642753368f4c8
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Feature: coordination-spec'
+              byte_offset: 792
+              byte_count: 3158
+              word_count: 424
+              content_hash: 4329ad901e6a946cede56bc7bb49c4e20ba6966b68b38b6b533eebd160f6b1d3
+        - path: "1.4"
+          level: 2
+          title: Non-Blocking Findings
+          byte_offset: 3950
+          byte_count: 1293
+          word_count: 172
+          content_hash: 16df781c5a16bd9fd16cc574c55ddfe8e1bcdb366401d2d61c3e152338f42c01
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'NBF-01: Per-call fallback vs. session-scoped DB availability'
+              byte_offset: 3976
+              byte_count: 1267
+              word_count: 169
+              content_hash: 27297b1b1bc440409a2a6a79b45c1883ce22515e7193a93a75dc53c3c4ef7b92
+        - path: "1.5"
+          level: 2
+          title: Cross-Cutting Checks
+          byte_offset: 5243
+          byte_count: 792
+          word_count: 120
+          content_hash: 3b3bdc773ff071f9905174f8dc3449a1b2093f8d98de80d371f1b2d705bf0223
+        - path: "1.6"
+          level: 2
+          title: Review Unit Breakdown
+          byte_offset: 6035
+          byte_count: 778
+          word_count: 79
+          content_hash: bf5ef3e709f71f55920ac4d62b4fead0aed24d1d2d5c3db96c684cb1fc8b40f7
+entity_refs:
+    - entity_id: FEAT-01KQQQ3B9SVF9
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 10
+    - entity_id: BUG-1
+      entity_type: bug
+      section_path: 1.3.1
+      byte_offset: 2365
+conventional_roles:
+    - section_path: 1.4.1
+      role: constraint
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T23:46:42.040674Z
+classified: false
