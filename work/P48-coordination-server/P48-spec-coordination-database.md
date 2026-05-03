@@ -1,12 +1,12 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-03T20:05:20Z           |
-| Status | Draft                          |
+| Status | approved |
 | Author | Sambeau                        |
 
 # Coordination Database — Specification
 
-## Problem Statement
+## Overview
 
 This specification covers the PostgreSQL-backed coordination database for Kanbanzai team deployments. It implements the design described in `work/P48-coordination-server/P48-design-coordination-server.md` (P48-coordination-server/design-p48-design-coordination-server).
 
@@ -20,6 +20,8 @@ This specification implements the following design decisions from the parent des
 - **D4**: Bugs get project-scoped sequential IDs (`BUG-1`, `BUG-2`, ...).
 - **D5**: Feature canonical IDs remain TSID-based; only display IDs are database-allocated.
 - **D7**: PostgreSQL is the sole coordination backend.
+
+## Scope
 
 **In scope:**
 
@@ -37,59 +39,57 @@ This specification implements the following design decisions from the parent des
 - A standalone coordination binary. PostgreSQL is the sole backend.
 - Task IDs (remain TSID-based) and document IDs (remain path-derived).
 
-## Requirements
+## Functional Requirements
 
-### Functional Requirements
-
-#### Configuration
+### Configuration
 
 - **REQ-CFG-001:** Kanbanzai MUST accept a `coordination` section in `.kbz/config.yaml` with keys `database_url` and `project_id`.
 - **REQ-CFG-002:** When `coordination.database_url` is absent or empty, Kanbanzai MUST operate in single-user mode: ID allocation scans local `.kbz/state/` directories and increments, with no database connection attempted.
 - **REQ-CFG-003:** When `coordination.database_url` is present and non-empty, Kanbanzai MUST operate in team mode: ID allocation calls the coordination database.
 - **REQ-CFG-004:** String values in `.kbz/config.yaml` containing `${ENV_VAR}` MUST be replaced with the value of the named environment variable at load time. If the environment variable is unset, Kanbanzai MUST report a clear error identifying the variable name.
 
-#### Schema migration
+### Schema migration
 
 - **REQ-SCH-001:** On first connection to the coordination database, Kanbanzai MUST ensure the coordination tables and the `allocate_id` function exist, using `CREATE TABLE IF NOT EXISTS` and `CREATE OR REPLACE FUNCTION` statements.
 - **REQ-SCH-002:** The schema MUST match the design document exactly: `counters` table with `(project_id, entity_type)` primary key and `next_value` column; `batch_feature_seqs` table with `(project_id, batch_id)` primary key and `next_seq` column; `allocations` table with `(project_id, entity_type, slug)` primary key and `allocated_id`, `allocated_at` columns.
 
-#### ID allocation — plan and batch
+### ID allocation — plan and batch
 
 - **REQ-ALLOC-001:** When creating a plan in team mode, Kanbanzai MUST call `allocate_id(project_id, 'plan_{prefix}', '{prefix}', '{slug}')` and use the returned ID as the plan's canonical ID.
 - **REQ-ALLOC-002:** When creating a batch in team mode, Kanbanzai MUST call `allocate_id(project_id, 'batch_{prefix}', '{prefix}', '{slug}')` and use the returned ID as the batch's canonical ID.
 - **REQ-ALLOC-003:** The `allocate_id` function MUST allocate IDs atomically: two concurrent calls for the same `(project_id, entity_type)` MUST receive distinct, monotonically increasing numeric components.
 - **REQ-ALLOC-004:** The `allocate_id` function MUST be idempotent: calling it twice with the same `(project_id, entity_type, slug)` MUST return the same ID both times. The counter MUST NOT be incremented on the second call.
 
-#### ID allocation — bugs
+### ID allocation — bugs
 
 - **REQ-ALLOC-005:** When creating a bug in team mode, Kanbanzai MUST call `allocate_id(project_id, 'bug', 'BUG', '{slug}')` and use the returned ID as the bug's display ID.
 - **REQ-ALLOC-006:** Bug IDs allocated by the database MUST follow the format `BUG-{n}-{slug}` where `n` is a project-scoped sequential integer starting at 1.
 
-#### ID allocation — feature display IDs
+### ID allocation — feature display IDs
 
 - **REQ-ALLOC-007:** When creating a feature in team mode, the feature's canonical ID MUST remain TSID-based (no change from current behaviour).
 - **REQ-ALLOC-008:** When creating a feature in team mode, Kanbanzai MUST atomically increment `next_seq` in `batch_feature_seqs` for the parent batch's `(project_id, batch_id)` and return the incremented value as the feature's display sequence number.
 - **REQ-ALLOC-009:** The feature display ID allocation MUST prevent two concurrent feature creations in the same batch from receiving the same display sequence number.
 
-#### ID allocation — single-user mode
+### ID allocation — single-user mode
 
 - **REQ-ALLOC-010:** In single-user mode, plan, batch, and bug ID allocation MUST behave identically to the current Kanbanzai behaviour: scan local `.kbz/state/` directories, find the highest existing number, and increment.
 - **REQ-ALLOC-011:** In single-user mode, feature display ID allocation MUST behave identically to the current Kanbanzai behaviour: use the batch's local `next_feature_seq` counter.
 
-#### Failure modes
+### Failure modes
 
 - **REQ-FAIL-001:** When the coordination database is unreachable (connection refused, timeout, or authentication failure), Kanbanzai MUST fall back to local allocation for that single allocation attempt and MUST emit a warning to the user.
 - **REQ-FAIL-002:** The fallback allocation in REQ-FAIL-001 MUST use the same local scan-and-increment logic as single-user mode.
 - **REQ-FAIL-003:** After a successful fallback allocation, Kanbanzai MUST continue attempting to use the database for subsequent allocations (i.e., fallback is per-attempt, not session-wide).
 - **REQ-FAIL-004:** When the database becomes reachable after a period of fallback allocations, the `allocate_id` function's idempotency check MUST prevent collisions: if a locally-allocated ID matches a slug already in the `allocations` table, the database returns the existing allocation. If the local counter has advanced past the database counter, the counter fast-forwards naturally on the next successful allocation.
 
-#### Connection management
+### Connection management
 
 - **REQ-CONN-001:** Kanbanzai MUST use `jackc/pgx/v5` with `pgxpool` for database connections.
 - **REQ-CONN-002:** The connection pool MUST be created once at startup (when `database_url` is configured) and reused for all coordination operations during the session.
 - **REQ-CONN-003:** The connection pool MUST use TLS for all connections (pgx's default behaviour).
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 - **REQ-NF-001:** An ID allocation in team mode (excluding network latency) MUST complete within 100ms under normal database load.
 - **REQ-NF-002:** The coordination database schema MUST use only standard SQL features available in PostgreSQL 14 and later. No extensions (beyond what pgx provides) are required.
