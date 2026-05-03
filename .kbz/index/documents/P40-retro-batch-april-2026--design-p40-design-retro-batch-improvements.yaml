@@ -267,6 +267,6 @@ conventional_roles:
     - section_path: "1.6"
       role: constraint
       confidence: high
-access_count: 4
-last_accessed_at: 2026-05-01T10:57:27.257333Z
+access_count: 6
+last_accessed_at: 2026-05-03T19:01:29.194712Z
 classified: false

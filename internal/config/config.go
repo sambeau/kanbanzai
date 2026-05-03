@@ -165,6 +165,10 @@ func (m MergeConfig) RequiresHumanReview() bool {
 	return m.RequireHumanReview != nil && *m.RequireHumanReview
 }
 
+// CoordinationEnabled returns true when a coordination database is configured.
+func (c Config) CoordinationEnabled() bool {
+	return c.Coordination.DatabaseURL != ""
+}
 
 // PlanPrefixesOrDefault returns the effective plan prefixes, defaulting to [{P, Plan}] (REQ-005).
 func (c Config) PlanPrefixesOrDefault() []PrefixEntry {
@@ -237,12 +241,22 @@ type QualityEvaluationConfig struct {
 	Threshold float64 `yaml:"quality_evaluation_threshold"`
 }
 
+// CoordinationConfig holds settings for the coordination database (team mode).
+// When DatabaseURL is empty, Kanbanzai operates in single-user mode.
+type CoordinationConfig struct {
+	// DatabaseURL is the PostgreSQL connection string for the coordination database.
+	// Supports ${ENV_VAR} substitution. When empty, single-user mode is active.
+	DatabaseURL string `yaml:"database_url,omitempty"`
+	// ProjectID scopes coordination state to this project within a shared database.
+	ProjectID string `yaml:"project_id,omitempty"`
+}
+
 // ProjectConfig holds the optional project singleton section (P38 D5).
 type ProjectConfig struct {
-	Name string `yaml:"name,omitempty"`
-	Vision string `yaml:"vision,omitempty"`
-	Architecture string `yaml:"architecture,omitempty"`
-	Constraints []string `yaml:"constraints,omitempty"`
+	Name         string   `yaml:"name,omitempty"`
+	Vision       string   `yaml:"vision,omitempty"`
+	Architecture string   `yaml:"architecture,omitempty"`
+	Constraints  []string `yaml:"constraints,omitempty"`
 }
 
 // Config is the project configuration structure stored in .kbz/config.yaml.
@@ -256,10 +270,10 @@ type Config struct {
 	// format changes. See the public schema interface specification §6.
 	SchemaVersion string `yaml:"schema_version,omitempty"`
 	// Prefixes is the registry of Plan ID prefixes.
-	Prefixes []PrefixEntry `yaml:"prefixes"`
-	PlanPrefixes []PrefixEntry `yaml:"plan_prefixes,omitempty"`
+	Prefixes      []PrefixEntry `yaml:"prefixes"`
+	PlanPrefixes  []PrefixEntry `yaml:"plan_prefixes,omitempty"`
 	BatchPrefixes []PrefixEntry `yaml:"batch_prefixes,omitempty"`
-	Project ProjectConfig `yaml:"project,omitempty"`
+	Project       ProjectConfig `yaml:"project,omitempty"`
 	// Import holds configuration for batch document import.
 	Import ImportConfig `yaml:"import,omitempty"`
 	// BranchTracking holds settings for branch staleness and drift detection.
@@ -284,6 +298,8 @@ type Config struct {
 	QualityEvaluation QualityEvaluationConfig `yaml:"quality_evaluation,omitempty"`
 	// Lifecycle holds settings for feature lifecycle behaviour.
 	Lifecycle LifecycleConfig `yaml:"lifecycle,omitempty"`
+	// Coordination holds settings for the coordination database (team mode).
+	Coordination CoordinationConfig `yaml:"coordination,omitempty"`
 	// ToolHints maps role IDs to opaque tool guidance strings injected into agent prompts.
 	ToolHints map[string]string `yaml:"tool_hints,omitempty"`
 }
@@ -411,6 +427,10 @@ func LoadFrom(path string) (*Config, error) {
 		}
 		return nil, fmt.Errorf("read config: %w", err)
 	}
+
+	// Expand ENV_VAR references before YAML unmarshalling.
+	// Unset variables cause an error rather than silently expanding to empty.
+	data = expandEnv(data)
 
 	var cfg Config
 	if err := yaml.Unmarshal(data, &cfg); err != nil {
@@ -972,3 +992,17 @@ func parsePlanIDParts(id string) (prefix, number, slug string) {
 
 	return prefix, number, slug
 }
+
+// expandEnv replaces ENV_VAR references in data with their environment values.
+// Unset variables produce a warning on stderr and expand to empty string.
+func expandEnv(data []byte) []byte {
+	s := os.Expand(string(data), func(key string) string {
+		val, ok := os.LookupEnv(key)
+		if !ok {
+			fmt.Fprintf(os.Stderr, "config: environment variable $%s is not set\n", key)
+		}
+		return val
+	})
+	return []byte(s)
+}
+

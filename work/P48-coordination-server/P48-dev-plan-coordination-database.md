@@ -1,10 +1,14 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-03T20:19:17Z           |
-| Status | Draft                          |
+| Status | approved |
 | Author | Sambeau                        |
 
 # Coordination Database — Dev Plan
+
+## Overview
+
+This dev-plan breaks the coordination database specification into 7 implementation tasks. The plan follows a bottom-up dependency order: config and connection infrastructure first (T1–T3), then wiring into entity creation (T4–T5), then fallback logic (T6), and finally integration tests (T7). T4 and T5 are parallelisable once T1 and T3 complete. The critical path is T1 → T2 → T3 → T4 → T6 → T7.
 
 ## Scope
 
@@ -125,6 +129,38 @@ Every acceptance criterion in the specification maps to a verification method in
 | AC-CONN-01 through AC-CONN-03 (connection) | T7 | Automated tests: pool lifecycle, TLS connection, graceful startup with unreachable DB |
 
 Additionally, T2 should include a unit test for pool creation with an invalid URL (confirming it doesn't panic), and T1 should include unit tests for env var substitution edge cases.
+
+## Interface Contracts
+
+### T1 → T2: CoordinationConfig
+- **Provided by T1:** `config.Coordination` struct with `DatabaseURL string` and `ProjectID string` fields. `config.CoordinationEnabled() bool` method. All string config values have `${ENV_VAR}` expanded at load time.
+- **Consumed by T2:** `DatabaseURL` is passed to `coordination.New()`.
+
+### T2 → T3: coordination.DB pool
+- **Provided by T2:** `coordination.DB` struct wrapping `*pgxpool.Pool`. Constructor `New(ctx, databaseURL) (*DB, error)`. `Close()` and `Ping(ctx) error` methods. Pool is nil-safe (callers check `db != nil`).
+- **Consumed by T3:** `Migrate(ctx)` and `AllocateID(ctx, projectID, entityType, prefix, slug)` are methods added to `*DB`.
+
+### T3 → T4, T5: AllocateID and feature sequence methods
+- **Provided by T3:** `(*DB).AllocateID(ctx, projectID, entityType, prefix, slug) (string, error)`. `(*DB).AllocateFeatureSeq(ctx, projectID, batchID) (int, error)`.
+- **Consumed by T4:** `AllocateID` for plan, batch, and bug entity creation.
+- **Consumed by T5:** `AllocateFeatureSeq` for feature display ID allocation.
+
+### T4, T5 → T6: Allocation call sites
+- **Provided by T4, T5:** Entity creation code paths call `coordinationDB.AllocateID(...)` or `coordinationDB.AllocateFeatureSeq(...)` gated on `config.CoordinationEnabled()`.
+- **Consumed by T6:** Fallback wrapper intercepts these calls, catches connectivity errors, and delegates to local allocation.
+
+## Traceability Matrix
+
+| Spec requirement | Task(s) |
+|---|---|
+| REQ-CFG-001, REQ-CFG-002, REQ-CFG-003, REQ-CFG-004 | T1 |
+| REQ-CONN-001, REQ-CONN-002, REQ-CONN-003, REQ-NF-005 | T2 |
+| REQ-SCH-001, REQ-SCH-002, REQ-ALLOC-001 through REQ-ALLOC-004 | T3 |
+| REQ-ALLOC-001, REQ-ALLOC-002, REQ-ALLOC-005, REQ-ALLOC-006, REQ-ALLOC-010 | T4 |
+| REQ-ALLOC-007, REQ-ALLOC-008, REQ-ALLOC-009, REQ-ALLOC-011 | T5 |
+| REQ-FAIL-001, REQ-FAIL-002, REQ-FAIL-003, REQ-FAIL-004 | T6 |
+| REQ-NF-001, REQ-NF-002, REQ-NF-003, REQ-NF-004 (non-functional verification) | T7 |
+| All acceptance criteria (AC-CFG-* through AC-CONN-*) | T7 |
 
 ## Dependencies
 

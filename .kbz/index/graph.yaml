@@ -1,4 +1,4 @@
-updated_at: 2026-05-03T16:54:53.832331Z
+updated_at: 2026-05-03T20:20:58.112521Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -97313,5 +97313,1260 @@ edges:
     - from: B46-bootstrapping-gap-remediation/report-batch-review-p47-bootstrapping-gap-remediation-2026-07-17#1.11
       from_type: section
       to: work/P47-bootstrapping-gap-remediation/design-bootstrapping-gap-remediation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P47-coordination-server/design-p47-design-coordination-server
+      from_type: document
+      to: P47-coordination-server/design-p47-design-coordination-server#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.1
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.1
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.1
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.3
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.3
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.2
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.5.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.2
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.5.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.2
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.5.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.2
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.5.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.3
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.5.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.3
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.5.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.3
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.5.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.4
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.5.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.4
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.5.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.4
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.5.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.6
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.6
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.6
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.6
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.7
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.7
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.7
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.7
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.7
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.7.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.7
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.7.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1
+      from_type: section
+      to: P47-coordination-server/design-p47-design-coordination-server#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.7.5
+      from_type: section
+      to: FEAT-01KMRX1SEQV49
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.2.2
+      from_type: section
+      to: BUG-47
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.2.4
+      from_type: section
+      to: BUG-23
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.7.4
+      from_type: section
+      to: BUG-1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.7.4
+      from_type: section
+      to: BUG-2
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.7.4
+      from_type: section
+      to: BUG-01J4AR7WHN4F2
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.7.4
+      from_type: section
+      to: BUG-47
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.1.1
+      from_type: section
+      to: B38-plans-and-batches
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.1.1
+      from_type: section
+      to: B38-design-meta-planning-plans-and-batches
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.2.2
+      from_type: section
+      to: B47-my-batch
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.2.2
+      from_type: section
+      to: B24-auth-system
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.2.4
+      from_type: section
+      to: B24-auth-system
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.2.4
+      from_type: section
+      to: P47-coordination-server
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.2.4
+      from_type: section
+      to: B48-something-else
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.3.2
+      from_type: section
+      to: B47-my-batch
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.5.3.3
+      from_type: section
+      to: B47-my-batch
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.9
+      from_type: section
+      to: B38-plans-and-batches
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.9
+      from_type: section
+      to: B38-design-meta-planning-plans-and-batches
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.1.1
+      from_type: section
+      to: work/_project/design-centralized-state-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.1.1
+      from_type: section
+      to: work/_project/design-transition-history-storage.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.1.1
+      from_type: section
+      to: work/_project/research-storage-architecture-and-progress-visibility.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.1.1
+      from_type: section
+      to: work/B38-plans-and-batches/B38-design-meta-planning-plans-and-batches.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.1.2
+      from_type: section
+      to: design-centralized-state-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.1.2
+      from_type: section
+      to: design-meta-planning-plans-and-batches.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.6.2
+      from_type: section
+      to: design-centralized-state-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.9
+      from_type: section
+      to: work/_project/design-centralized-state-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.9
+      from_type: section
+      to: work/B38-plans-and-batches/B38-design-meta-planning-plans-and-batches.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P47-coordination-server/design-p47-design-coordination-server#1.9
+      from_type: section
+      to: work/_project/research-storage-architecture-and-progress-visibility.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P48-coordination-server/design-p48-design-coordination-server
+      from_type: document
+      to: P48-coordination-server/design-p48-design-coordination-server#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.1
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.1
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.1
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.3
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.3
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.2
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.5.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.2
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.5.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.2
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.5.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.2
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.5.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.3
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.5.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.3
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.5.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.3
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.5.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.4
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.5.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.4
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.5.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.4
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.5.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.6
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.6
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.6
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.6
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.7
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.7
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.7
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.7
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.7.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.7
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.7.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.7
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.7.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1
+      from_type: section
+      to: P48-coordination-server/design-p48-design-coordination-server#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.7.5
+      from_type: section
+      to: FEAT-01KMRX1SEQV49
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.2.2
+      from_type: section
+      to: BUG-47
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.2.4
+      from_type: section
+      to: BUG-23
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.7.4
+      from_type: section
+      to: BUG-1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.7.4
+      from_type: section
+      to: BUG-2
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.7.4
+      from_type: section
+      to: BUG-01J4AR7WHN4F2
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.7.4
+      from_type: section
+      to: BUG-47
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.1.1
+      from_type: section
+      to: B38-plans-and-batches
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.1.1
+      from_type: section
+      to: B38-design-meta-planning-plans-and-batches
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.2.2
+      from_type: section
+      to: B47-my-batch
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.2.2
+      from_type: section
+      to: B24-auth-system
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.2.4
+      from_type: section
+      to: B24-auth-system
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.2.4
+      from_type: section
+      to: P47-coordination-server
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.2.4
+      from_type: section
+      to: B48-something-else
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.3.2
+      from_type: section
+      to: B47-my-batch
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.5.3.3
+      from_type: section
+      to: B47-my-batch
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.9
+      from_type: section
+      to: B38-plans-and-batches
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.9
+      from_type: section
+      to: B38-design-meta-planning-plans-and-batches
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.1.1
+      from_type: section
+      to: work/_project/design-centralized-state-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.1.1
+      from_type: section
+      to: work/_project/design-transition-history-storage.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.1.1
+      from_type: section
+      to: work/_project/research-storage-architecture-and-progress-visibility.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.1.1
+      from_type: section
+      to: work/B38-plans-and-batches/B38-design-meta-planning-plans-and-batches.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.1.2
+      from_type: section
+      to: design-centralized-state-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.1.2
+      from_type: section
+      to: design-meta-planning-plans-and-batches.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.6.2
+      from_type: section
+      to: design-centralized-state-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.9
+      from_type: section
+      to: work/_project/design-centralized-state-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.9
+      from_type: section
+      to: work/B38-plans-and-batches/B38-design-meta-planning-plans-and-batches.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P48-coordination-server/design-p48-design-coordination-server#1.9
+      from_type: section
+      to: work/_project/research-storage-architecture-and-progress-visibility.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P48-coordination-server/spec-p48-spec-coordination-database
+      from_type: document
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.2
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.2.1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.2
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.4
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.4
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.4
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.4
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.4
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.4
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1
+      from_type: section
+      to: P48-coordination-server/spec-p48-spec-coordination-database#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.4.3
+      from_type: section
+      to: FEAT-01KMRX1SEQV49
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.1
+      from_type: section
+      to: BUG-1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.1
+      from_type: section
+      to: BUG-2
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.4.3
+      from_type: section
+      to: BUG-1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.5
+      from_type: section
+      to: BUG-1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.1
+      from_type: section
+      to: P48-coordination-server
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.1
+      from_type: section
+      to: P48-design-coordination-server
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.4.3
+      from_type: section
+      to: B5-slug-a
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.4.3
+      from_type: section
+      to: B6-slug-b
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.4.3
+      from_type: section
+      to: B5-auth-system
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.4.3
+      from_type: section
+      to: B12-payments
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.4.4
+      from_type: section
+      to: B5-new-batch
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.4.5
+      from_type: section
+      to: B10-some-slug
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.4.5
+      from_type: section
+      to: B11-other-slug
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.6
+      from_type: section
+      to: P48-coordination-server
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.6
+      from_type: section
+      to: P48-design-coordination-server
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.6
+      from_type: section
+      to: B38-plans-and-batches
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.6
+      from_type: section
+      to: B38-design-meta-planning-plans-and-batches
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.1
+      from_type: section
+      to: work/P48-coordination-server/P48-design-coordination-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.6
+      from_type: section
+      to: work/P48-coordination-server/P48-design-coordination-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.6
+      from_type: section
+      to: work/_project/design-centralized-state-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P48-coordination-server/spec-p48-spec-coordination-database#1.6
+      from_type: section
+      to: work/B38-plans-and-batches/B38-design-meta-planning-plans-and-batches.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database
+      from_type: document
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.3.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6.3
+      from_type: section
+      to: FEAT-01KMRX1SEQV49
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.1
+      from_type: section
+      to: BUG-1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.1
+      from_type: section
+      to: BUG-2
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6.3
+      from_type: section
+      to: BUG-1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.7
+      from_type: section
+      to: BUG-1
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.1
+      from_type: section
+      to: P48-coordination-server
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.1
+      from_type: section
+      to: P48-design-coordination-server
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6.3
+      from_type: section
+      to: B5-slug-a
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6.3
+      from_type: section
+      to: B6-slug-b
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6.3
+      from_type: section
+      to: B5-auth-system
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6.3
+      from_type: section
+      to: B12-payments
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6.4
+      from_type: section
+      to: B5-new-batch
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6.5
+      from_type: section
+      to: B10-some-slug
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.6.5
+      from_type: section
+      to: B11-other-slug
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.8
+      from_type: section
+      to: P48-coordination-server
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.8
+      from_type: section
+      to: P48-design-coordination-server
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.8
+      from_type: section
+      to: B38-plans-and-batches
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.8
+      from_type: section
+      to: B38-design-meta-planning-plans-and-batches
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.1
+      from_type: section
+      to: work/P48-coordination-server/P48-design-coordination-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.8
+      from_type: section
+      to: work/P48-coordination-server/P48-design-coordination-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.8
+      from_type: section
+      to: work/_project/design-centralized-state-server.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database#1.8
+      from_type: section
+      to: work/B38-plans-and-batches/B38-design-meta-planning-plans-and-batches.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database
+      from_type: document
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.2
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.2
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.2
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.2
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.2
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.2
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.2.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.2
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.2.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.4
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.4
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.4
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.4
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.1
+      from_type: section
+      to: FEAT-01KQQQ3B9SVF9
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.1
+      from_type: section
+      to: P48-coordination-server
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.1
+      from_type: section
+      to: P48-spec-coordination-database
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.6
+      from_type: section
+      to: P48-coordination-server
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.6
+      from_type: section
+      to: P48-spec-coordination-database
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.1
+      from_type: section
+      to: work/P48-coordination-server/P48-spec-coordination-database.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: FEAT-01KQQQ3B9SVF9/dev-plan-p48-dev-plan-coordination-database#1.6
+      from_type: section
+      to: work/P48-coordination-server/P48-spec-coordination-database.md
       to_type: document
       edge_type: LINKS_TO

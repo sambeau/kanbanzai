@@ -1,0 +1,438 @@
+document_id: P48-coordination-server/design-p48-design-coordination-server
+document_path: work/P48-coordination-server/P48-design-coordination-server.md
+content_hash: fee8d4774310112283ab9629d6af2a8c2c07f7fc532f77a4b195a0bfaa82cbe8
+indexed_at: 2026-05-03T19:11:12.437427Z
+sections:
+    - path: "1"
+      level: 1
+      title: Coordination Server — Design
+      byte_offset: 221
+      byte_count: 22208
+      word_count: 3147
+      content_hash: 266a2e265df19488d476a642a42624332b013182aaf717a73729057fcd51c59e
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 255
+          byte_count: 2693
+          word_count: 338
+          content_hash: 625079d0cb455f816c6eb05282a75f9f6f5ae68b20695b9985036fa7d6cd2ce6
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Prior documents consulted
+              byte_offset: 272
+              byte_count: 1085
+              word_count: 117
+              content_hash: dbd3928c07b98a4cfce1a4f1c90bfe45eade1b59fe1bbdb90104b75a89104614
+            - path: 1.1.2
+              level: 3
+              title: Decisions that constrain this design
+              byte_offset: 1357
+              byte_count: 682
+              word_count: 91
+              content_hash: df0afdc7c8e9e5f8ca0106b1b549ddbd7638d9de5e89631ccef2e42a64280de8
+            - path: 1.1.3
+              level: 3
+              title: How this design extends prior work
+              byte_offset: 2039
+              byte_count: 909
+              word_count: 127
+              content_hash: eebea9e664f09213a42410c58036029a6d8ac92e1881aefec33ae13912cc689c
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 2948
+          byte_count: 506
+          word_count: 69
+          content_hash: 57e1c35f533e779ae3c7923734a5b6a283f247ed6b794be3a2739dbbd25f5c48
+        - path: "1.3"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 3454
+          byte_count: 1099
+          word_count: 162
+          content_hash: 388773408afe2deae3aa140e3c3c6157094ca86837cb68be551bdf13a07d5ac3
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Goals
+              byte_offset: 3478
+              byte_count: 528
+              word_count: 76
+              content_hash: 1f19decc4eddc45e3d9363e132f41af0b1e8c03f4f15780df429c49f1a24ac7b
+            - path: 1.3.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 4006
+              byte_count: 547
+              word_count: 82
+              content_hash: 70e7914347b81dcb46c6acd6db3eb4fe261e9293c717e5758e5809f96a137647
+        - path: "1.4"
+          level: 2
+          title: Problem and Motivation
+          byte_offset: 4553
+          byte_count: 1732
+          word_count: 266
+          content_hash: 88891d81be5b3aea5c7008dba070dd1267957e09ab9fb46f8975fe414ccac430
+        - path: "1.5"
+          level: 2
+          title: Design
+          byte_offset: 6285
+          byte_count: 7096
+          word_count: 1009
+          content_hash: a2569e533f7301eb4e0d25d1e0c2ddda730acc80e6769b4a455fe08748040a78
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Single-user mode (no change)
+              byte_offset: 6296
+              byte_count: 355
+              word_count: 51
+              content_hash: 042c96009d1bc92ba9b18873cdfcbf8e3c47043ffdcd98c2534d33010033ca87
+            - path: 1.5.2
+              level: 3
+              title: Team mode (coordination server)
+              byte_offset: 6651
+              byte_count: 2989
+              word_count: 396
+              content_hash: eb78b847dffcedc9125c55842a7cb04f77e105076ab4016bb415ef9433ca1c65
+              children:
+                - path: 1.5.2.1
+                  level: 4
+                  title: Configuration
+                  byte_offset: 7214
+                  byte_count: 425
+                  word_count: 50
+                  content_hash: cff9acec5a57abdf83ed3dd41ed1816f59c9e98bbf9d757ad22d1557dfcd2284
+                - path: 1.5.2.2
+                  level: 4
+                  title: API surface
+                  byte_offset: 7639
+                  byte_count: 806
+                  word_count: 100
+                  content_hash: 89edec301ee44dca49c969f9a764c8bb3d3caa4a325225406ea18796be5057ee
+                - path: 1.5.2.3
+                  level: 4
+                  title: ID allocation flow (team mode)
+                  byte_offset: 8445
+                  byte_count: 735
+                  word_count: 106
+                  content_hash: d7bd62b4898984b568d03b4666b486ed051f76b525c2cc71fa5c07950118edd3
+                - path: 1.5.2.4
+                  level: 4
+                  title: What the coordination server stores
+                  byte_offset: 9180
+                  byte_count: 460
+                  word_count: 54
+                  content_hash: 7415b800b2b47c569bab91a412a7c14964378da1de6edf0316f8fd2f19f4fad0
+            - path: 1.5.3
+              level: 3
+              title: Additional coordination functions
+              byte_offset: 9640
+              byte_count: 1572
+              word_count: 234
+              content_hash: 5c955d46a9efdaa47ed4ec5ae341539010851e40187b6f30fafb46057a20d2e0
+              children:
+                - path: 1.5.3.1
+                  level: 4
+                  title: 1. Feature sequence counters
+                  byte_offset: 9872
+                  byte_count: 108
+                  word_count: 15
+                  content_hash: 0ab712889e4365d72fb1c1eb12756fb1927a6740525b9c9be015213c8c0aa8e8
+                - path: 1.5.3.2
+                  level: 4
+                  title: 2. Batch/Plan status visibility
+                  byte_offset: 9980
+                  byte_count: 597
+                  word_count: 94
+                  content_hash: be2db7263617d0c8647dfd938f99aeb2f9f0d8490b8afc0f1d1efb83ce51e872
+                - path: 1.5.3.3
+                  level: 4
+                  title: 3. Merge gating
+                  byte_offset: 10577
+                  byte_count: 635
+                  word_count: 93
+                  content_hash: 73f955720f81beeb25c18fc4be36b7d2894aceefb1fa9485d9e3c2a1ea6d812a
+            - path: 1.5.4
+              level: 3
+              title: Failure modes
+              byte_offset: 11212
+              byte_count: 1299
+              word_count: 204
+              content_hash: 16ede34be14aee639c3e7a33d6efacaaadaa03fdf300388d0c99862a1236003f
+              children:
+                - path: 1.5.4.1
+                  level: 4
+                  title: Server unavailable
+                  byte_offset: 11231
+                  byte_count: 516
+                  word_count: 80
+                  content_hash: 1c7e960cfe2140071c15223b401b5de7c4e04b0214d5f7bacf45b27012494b3a
+                - path: 1.5.4.2
+                  level: 4
+                  title: Network partition
+                  byte_offset: 11747
+                  byte_count: 257
+                  word_count: 43
+                  content_hash: 0cbc1da36e7eb34d1b937c05a272a0654ea28aef87442beac987fab01ce6d67f
+                - path: 1.5.4.3
+                  level: 4
+                  title: Server data loss
+                  byte_offset: 12004
+                  byte_count: 507
+                  word_count: 78
+                  content_hash: 0387b7a8c3f93532557d21bbfb4dedb591a36437543f2cceab159566f632deb4
+            - path: 1.5.5
+              level: 3
+              title: Relationship to the full centralized state server
+              byte_offset: 12511
+              byte_count: 870
+              word_count: 122
+              content_hash: 62066375ac1a4d447d836518e4661dfbf26a029e8e471c906a0a19feb3925705
+        - path: "1.6"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 13381
+          byte_count: 3056
+          word_count: 460
+          content_hash: efd2959774cec4be797eada0f87d229af2b952218b292ac97cd3678e8c8b547b
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Alternative A: Do nothing — accept collisions as merge conflicts'
+              byte_offset: 13409
+              byte_count: 820
+              word_count: 126
+              content_hash: 4083cb1a7b7ed5fb0b509031295184ce38834ecbe1c0889c236a02b297f0459b
+            - path: 1.6.2
+              level: 3
+              title: 'Alternative B: Jump directly to the full centralized state server'
+              byte_offset: 14229
+              byte_count: 851
+              word_count: 115
+              content_hash: 4d59da713e4871b916c5fb65b6cc7feb18bf56a0a3879267a51e02fd2ca86f3a
+            - path: 1.6.3
+              level: 3
+              title: 'Alternative C: Namespace batch IDs by user'
+              byte_offset: 15080
+              byte_count: 646
+              word_count: 103
+              content_hash: ba9a18ab02eac0410ab259880eab43c97fa1d067dc9037833ad826b327e4aacf
+            - path: 1.6.4
+              level: 3
+              title: 'Alternative D: Use TSID for all entity types'
+              byte_offset: 15726
+              byte_count: 711
+              word_count: 113
+              content_hash: fe54c48160d0eebe3ddc19ef2a8858b6ee2cb1a1c088c06e67faa89dee475b53
+        - path: "1.7"
+          level: 2
+          title: Decisions
+          byte_offset: 16437
+          byte_count: 4407
+          word_count: 632
+          content_hash: f56b0499c1df09590bd668bce81622327a083eabcf5f8d6c28924a51557dbc1d
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 'D1: Introduce a coordination server as a lightweight intermediary, not a full state server'
+              byte_offset: 16451
+              byte_count: 911
+              word_count: 127
+              content_hash: 1377d8cdb5808bc194e71c090993682b83d25ce50588a3c38c7fe6782959819e
+            - path: 1.7.2
+              level: 3
+              title: 'D2: Single-user mode is the default; team mode is opt-in via configuration'
+              byte_offset: 17362
+              byte_count: 559
+              word_count: 77
+              content_hash: ff3471fa1dfb6aa427c42329c983a548eccbe5ada73158555e4839e7fc5fd1da
+            - path: 1.7.3
+              level: 3
+              title: 'D3: The coordination server stores counters and allocation registries, not entity state'
+              byte_offset: 17921
+              byte_count: 609
+              word_count: 94
+              content_hash: 287d233726e852908682a1bed488b1560c59b8c3f2d9cbd72d18f98db4492a7a
+            - path: 1.7.4
+              level: 3
+              title: 'D4: Bugs get project-scoped sequential IDs (`BUG-1`, `BUG-2`, ...)'
+              byte_offset: 18530
+              byte_count: 791
+              word_count: 115
+              content_hash: df2dc305a0678dd68200542813966d4a8b01d92956d6d66dc8b117f62eaab368
+            - path: 1.7.5
+              level: 3
+              title: 'D5: Feature canonical IDs remain TSID-based; only display IDs are server-allocated'
+              byte_offset: 19321
+              byte_count: 735
+              word_count: 105
+              content_hash: 33b669ccdfc6d853e089ccebb862761dad47850a6034cd10fcf06aa44fa40f01
+            - path: 1.7.6
+              level: 3
+              title: 'D6: The coordination server is forward-compatible with the centralized state server'
+              byte_offset: 20056
+              byte_count: 788
+              word_count: 112
+              content_hash: 25dbe024f1666f9e8eaadc8125b092c37d8a4dc25008e97848061e8622d18218
+        - path: "1.8"
+          level: 2
+          title: Open Questions
+          byte_offset: 20844
+          byte_count: 1248
+          word_count: 181
+          content_hash: 8a4d7e7a8ebaed0c9909e7b68d3027586ff57e4b9ff466c0d8e24f1de6013aa0
+        - path: "1.9"
+          level: 2
+          title: Dependencies
+          byte_offset: 22092
+          byte_count: 337
+          word_count: 25
+          content_hash: dca67ff7334b1e232ba0f444cd51dd5b863c7f6229c5391285bfbef22fd0acf0
+entity_refs:
+    - entity_id: FEAT-01KMRX1SEQV49
+      entity_type: feature
+      section_path: 1.7.5
+      byte_offset: 19868
+    - entity_id: BUG-47
+      entity_type: bug
+      section_path: 1.5.2.2
+      byte_offset: 8067
+    - entity_id: BUG-23
+      entity_type: bug
+      section_path: 1.5.2.4
+      byte_offset: 9450
+    - entity_id: BUG-1
+      entity_type: bug
+      section_path: 1.7.4
+      byte_offset: 18579
+    - entity_id: BUG-2
+      entity_type: bug
+      section_path: 1.7.4
+      byte_offset: 18588
+    - entity_id: BUG-01J4AR7WHN4F2
+      entity_type: bug
+      section_path: 1.7.4
+      byte_offset: 19057
+    - entity_id: BUG-47
+      entity_type: bug
+      section_path: 1.7.4
+      byte_offset: 19093
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: 1.1.1
+      byte_offset: 1154
+    - entity_id: B38-design-meta-planning-plans-and-batches
+      entity_type: plan
+      section_path: 1.1.1
+      byte_offset: 1176
+    - entity_id: B47-my-batch
+      entity_type: plan
+      section_path: 1.5.2.2
+      byte_offset: 7795
+    - entity_id: B24-auth-system
+      entity_type: plan
+      section_path: 1.5.2.2
+      byte_offset: 7911
+    - entity_id: B24-auth-system
+      entity_type: plan
+      section_path: 1.5.2.4
+      byte_offset: 9332
+    - entity_id: P47-coordination-server
+      entity_type: plan
+      section_path: 1.5.2.4
+      byte_offset: 9395
+    - entity_id: B48-something-else
+      entity_type: plan
+      section_path: 1.5.2.4
+      byte_offset: 9425
+    - entity_id: B47-my-batch
+      entity_type: plan
+      section_path: 1.5.3.2
+      byte_offset: 10425
+    - entity_id: B47-my-batch
+      entity_type: plan
+      section_path: 1.5.3.3
+      byte_offset: 10919
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: "1.9"
+      byte_offset: 22213
+    - entity_id: B38-design-meta-planning-plans-and-batches
+      entity_type: plan
+      section_path: "1.9"
+      byte_offset: 22235
+cross_doc_links:
+    - target_path: work/_project/design-centralized-state-server.md
+      link_text: work/_project/design-centralized-state-server.md
+      section_path: 1.1.1
+    - target_path: work/_project/design-transition-history-storage.md
+      link_text: work/_project/design-transition-history-storage.md
+      section_path: 1.1.1
+    - target_path: work/_project/research-storage-architecture-and-progress-visibility.md
+      link_text: work/_project/research-storage-architecture-and-progress-visibility.md
+      section_path: 1.1.1
+    - target_path: work/B38-plans-and-batches/B38-design-meta-planning-plans-and-batches.md
+      link_text: work/B38-plans-and-batches/B38-design-meta-planning-plans-and-batches.md
+      section_path: 1.1.1
+    - target_path: design-centralized-state-server.md
+      link_text: design-centralized-state-server.md
+      section_path: 1.1.2
+    - target_path: design-meta-planning-plans-and-batches.md
+      link_text: design-meta-planning-plans-and-batches.md
+      section_path: 1.1.2
+    - target_path: design-centralized-state-server.md
+      link_text: design-centralized-state-server.md
+      section_path: 1.6.2
+    - target_path: work/_project/design-centralized-state-server.md
+      link_text: work/_project/design-centralized-state-server.md
+      section_path: "1.9"
+    - target_path: work/B38-plans-and-batches/B38-design-meta-planning-plans-and-batches.md
+      link_text: work/B38-plans-and-batches/B38-design-meta-planning-plans-and-batches.md
+      section_path: "1.9"
+    - target_path: work/_project/research-storage-architecture-and-progress-visibility.md
+      link_text: work/_project/research-storage-architecture-and-progress-visibility.md
+      section_path: "1.9"
+conventional_roles:
+    - section_path: 1.1.2
+      role: decision
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: alternative
+      confidence: high
+    - section_path: 1.6.1
+      role: alternative
+      confidence: high
+    - section_path: 1.6.2
+      role: alternative
+      confidence: high
+    - section_path: 1.6.3
+      role: alternative
+      confidence: high
+    - section_path: 1.6.4
+      role: alternative
+      confidence: high
+    - section_path: "1.7"
+      role: decision
+      confidence: high
+    - section_path: 1.7.4
+      role: constraint
+      confidence: high
+    - section_path: "1.8"
+      role: question
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T19:11:13.078195Z
+classified: false

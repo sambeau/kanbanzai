@@ -1,13 +1,14 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"log"
+	"os"
 	"path/filepath"
 	"strings"
 	"time"
 
-	"github.com/sambeau/kanbanzai/internal/config"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/storage"
 	"github.com/sambeau/kanbanzai/internal/validate"
@@ -53,7 +54,7 @@ func (s *EntityService) CreateBatch(input CreateBatchInput) (CreateResult, error
 		return CreateResult{}, nameErr
 	}
 
-	cfg := config.LoadOrDefault()
+	cfg := s.cfg
 	prefix := strings.TrimSpace(input.Prefix)
 	if !cfg.IsActivePrefix(prefix) {
 		if cfg.IsValidPrefix(prefix) {
@@ -62,15 +63,28 @@ func (s *EntityService) CreateBatch(input CreateBatchInput) (CreateResult, error
 		return CreateResult{}, fmt.Errorf("undeclared prefix %q: add it to .kbz/config.yaml prefixes", prefix)
 	}
 
-	nextNum, err := cfg.NextPlanNumber(prefix, func() ([]string, error) {
-		return s.listAllPlanIDs()
-	})
-	if err != nil {
-		return CreateResult{}, fmt.Errorf("allocate batch number: %w", err)
-	}
-
 	slug := normalizeSlug(input.Slug)
-	idValue := fmt.Sprintf("%s%d-%s", prefix, nextNum, slug)
+
+	var idValue string
+	entityType := "batch_" + prefix
+	if s.coordinationDB != nil {
+		allocatedID, allocErr := s.coordinationDB.AllocateID(context.Background(), s.cfg.Coordination.ProjectID, entityType, prefix, slug)
+		if allocErr != nil {
+			fmt.Fprintf(os.Stderr, "warning: coordination database error, falling back to local allocation: %v\n", allocErr)
+			// fall through to local allocation
+		} else {
+			idValue = allocatedID
+		}
+	}
+	if idValue == "" {
+		nextNum, err := cfg.NextPlanNumber(prefix, func() ([]string, error) {
+			return s.listAllPlanIDs()
+		})
+		if err != nil {
+			return CreateResult{}, fmt.Errorf("allocate batch number: %w", err)
+		}
+		idValue = fmt.Sprintf("%s%d-%s", prefix, nextNum, slug)
+	}
 	now := s.now()
 
 	entity := model.Batch{

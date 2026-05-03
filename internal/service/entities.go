@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -13,6 +14,8 @@ import (
 	"time"
 
 	"github.com/sambeau/kanbanzai/internal/cache"
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/coordination"
 	"github.com/sambeau/kanbanzai/internal/core"
 	"github.com/sambeau/kanbanzai/internal/id"
 	"github.com/sambeau/kanbanzai/internal/model"
@@ -96,12 +99,14 @@ type ListResult struct {
 }
 
 type EntityService struct {
-	root       string
-	store      *storage.EntityStore
-	allocator  *id.Allocator
-	now        func() time.Time
-	cache      *cache.Cache
-	statusHook StatusTransitionHook // optional, for automatic worktree creation
+	root           string
+	store          *storage.EntityStore
+	allocator      *id.Allocator
+	now            func() time.Time
+	cache          *cache.Cache
+	statusHook     StatusTransitionHook // optional, for automatic worktree creation
+	coordinationDB *coordination.DB
+	cfg            *config.Config
 }
 
 func NewEntityService(root string) *EntityService {
@@ -109,14 +114,32 @@ func NewEntityService(root string) *EntityService {
 		root = core.StatePath()
 	}
 
-	return &EntityService{
+	cfg := config.LoadOrDefault()
+	svc := &EntityService{
 		root:      root,
 		store:     storage.NewEntityStore(root),
 		allocator: id.NewAllocator(),
+		cfg:       cfg,
 		now: func() time.Time {
 			return time.Now().UTC()
 		},
 	}
+
+	if cfg.CoordinationEnabled() {
+		db, err := coordination.New(context.Background(), cfg.Coordination.DatabaseURL)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "warning: coordination database unavailable: %v\n", err)
+		} else {
+			svc.coordinationDB = db
+			if err := db.Migrate(context.Background()); err != nil {
+				fmt.Fprintf(os.Stderr, "warning: coordination migration failed: %v\n", err)
+				db.Close()
+				svc.coordinationDB = nil
+			}
+		}
+	}
+
+	return svc
 }
 
 // SetStatusTransitionHook attaches an optional hook that fires after
@@ -213,14 +236,27 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 		return CreateResult{}, fmt.Errorf("parent %s: %w", parentID, ErrReferenceNotFound)
 	}
 
-	// Read next_feature_seq (default 1 if absent).
-	seq := intFromState(planResult.State, "next_feature_seq", 1)
+	// Read next_feature_seq — use coordination DB if available, else local counter.
+	var seq int
+	if s.coordinationDB != nil {
+		allocSeq, allocErr := s.coordinationDB.AllocateFeatureSeq(context.Background(), s.cfg.Coordination.ProjectID, parentID)
+		if allocErr != nil {
+			fmt.Fprintf(os.Stderr, "warning: coordination database error, falling back to local feature seq: %v\n", allocErr)
+			seq = intFromState(planResult.State, "next_feature_seq", 1)
+		} else {
+			seq = allocSeq
+		}
+	} else {
+		seq = intFromState(planResult.State, "next_feature_seq", 1)
+	}
 
 	// Compute display_id: {Prefix}{number}-F{seq} (e.g. "B24-F1" for batch, "P37-F5" for legacy plan).
 	parentPrefix, planNum, _ := model.ParsePlanID(parentID)
 	displayID := fmt.Sprintf("%s%s-F%d", parentPrefix, planNum, seq)
 
 	// Write parent with incremented counter BEFORE writing feature (REQ-006).
+	// When using coordination DB, the DB already atomically incremented, so this
+	// local write keeps the on-disk counter consistent for fallback scenarios.
 	planResult.State["next_feature_seq"] = seq + 1
 	planRecord := storage.EntityRecord{
 		Type:   string(model.EntityKindBatch),
@@ -324,9 +360,23 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 		return CreateResult{}, err
 	}
 
-	idValue, err := s.allocateID(model.EntityKindBug)
-	if err != nil {
-		return CreateResult{}, err
+	var idValue string
+	slug := normalizeSlug(input.Slug)
+	if s.coordinationDB != nil {
+		allocatedID, allocErr := s.coordinationDB.AllocateID(context.Background(), s.cfg.Coordination.ProjectID, "bug", "BUG-", slug)
+		if allocErr != nil {
+			fmt.Fprintf(os.Stderr, "warning: coordination database error, falling back to local allocation: %v\n", allocErr)
+			// fall through to local allocation
+		} else {
+			idValue = allocatedID
+		}
+	}
+	if idValue == "" {
+		var err error
+		idValue, err = s.allocateID(model.EntityKindBug)
+		if err != nil {
+			return CreateResult{}, err
+		}
 	}
 
 	bugName, nameErr := validate.ValidateName(input.Name)
@@ -351,7 +401,7 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 
 	entity := model.Bug{
 		ID:         idValue,
-		Slug:       normalizeSlug(input.Slug),
+		Slug:       slug,
 		Name:       bugName,
 		Status:     model.BugStatus("reported"),
 		Severity:   model.BugSeverity(severity),

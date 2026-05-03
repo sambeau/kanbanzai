@@ -110,38 +110,38 @@ This specification implements the following design decisions from the parent des
 
 ### Configuration and mode selection
 
-- **AC-CFG-01 (REQ-CFG-001, REQ-CFG-002):** Given a `.kbz/config.yaml` with no `coordination` section, when Kanbanzai allocates a batch ID, then it scans local `.kbz/state/batches/` and no database connection is attempted.
-- **AC-CFG-02 (REQ-CFG-001, REQ-CFG-003):** Given a `.kbz/config.yaml` with `coordination.database_url` set to a valid Postgres URI and `coordination.project_id` set to `"test-project"`, when Kanbanzai allocates a batch ID, then it calls `allocate_id('test-project', 'batch_B', 'B', '<slug>')` on the database.
-- **AC-CFG-03 (REQ-CFG-004):** Given a config value `"${TEST_DB_URL}"` and an environment variable `TEST_DB_URL=postgres://localhost/test`, when the config is loaded, then the value resolves to `postgres://localhost/test`.
-- **AC-CFG-04 (REQ-CFG-004):** Given a config value `"${NONEXISTENT_VAR}"` and no such environment variable set, when the config is loaded, then Kanbanzai reports an error naming `NONEXISTENT_VAR`.
+- [ ] **AC-CFG-01 (REQ-CFG-001, REQ-CFG-002):** Given a `.kbz/config.yaml` with no `coordination` section, when Kanbanzai allocates a batch ID, then it scans local `.kbz/state/batches/` and no database connection is attempted.
+- [ ] **AC-CFG-02 (REQ-CFG-001, REQ-CFG-003):** Given a `.kbz/config.yaml` with `coordination.database_url` set to a valid Postgres URI and `coordination.project_id` set to `"test-project"`, when Kanbanzai allocates a batch ID, then it calls `allocate_id('test-project', 'batch_B', 'B', '<slug>')` on the database.
+- [ ] **AC-CFG-03 (REQ-CFG-004):** Given a config value `"${TEST_DB_URL}"` and an environment variable `TEST_DB_URL=postgres://localhost/test`, when the config is loaded, then the value resolves to `postgres://localhost/test`.
+- [ ] **AC-CFG-04 (REQ-CFG-004):** Given a config value `"${NONEXISTENT_VAR}"` and no such environment variable set, when the config is loaded, then Kanbanzai reports an error naming `NONEXISTENT_VAR`.
 
 ### Schema migration
 
-- **AC-SCH-01 (REQ-SCH-001, REQ-SCH-002):** Given an empty coordination database with no coordination tables, when Kanbanzai connects for the first allocation, then the `counters`, `batch_feature_seqs`, and `allocations` tables exist, and the `allocate_id` function is defined.
-- **AC-SCH-02 (REQ-SCH-001):** Given a coordination database that already has the coordination tables from a previous run, when Kanbanzai connects, then the `CREATE TABLE IF NOT EXISTS` statements succeed without error (idempotent).
+- [ ] **AC-SCH-01 (REQ-SCH-001, REQ-SCH-002):** Given an empty coordination database with no coordination tables, when Kanbanzai connects for the first allocation, then the `counters`, `batch_feature_seqs`, and `allocations` tables exist, and the `allocate_id` function is defined.
+- [ ] **AC-SCH-02 (REQ-SCH-001):** Given a coordination database that already has the coordination tables from a previous run, when Kanbanzai connects, then the `CREATE TABLE IF NOT EXISTS` statements succeed without error (idempotent).
 
 ### ID allocation — atomicity and idempotency
 
-- **AC-ALLOC-01 (REQ-ALLOC-001, REQ-ALLOC-003):** Given a coordination database with `counters` showing `next_value = 5` for `('test-project', 'batch_B')`, when two concurrent batch creations are made with different slugs, then one receives `B5-slug-a` and the other receives `B6-slug-b` (or vice versa), and the counter advances to 7.
-- **AC-ALLOC-02 (REQ-ALLOC-004):** Given a batch with slug `"auth-system"` has already been allocated as `B5-auth-system`, when `allocate_id('test-project', 'batch_B', 'B', 'auth-system')` is called again, then it returns `B5-auth-system` and the `counters.next_value` is unchanged.
-- **AC-ALLOC-03 (REQ-ALLOC-005, REQ-ALLOC-006):** Given a coordination database with no prior bug allocations, when a bug with slug `"login-failure"` is created, then its ID is `BUG-1-login-failure`.
-- **AC-ALLOC-04 (REQ-ALLOC-007, REQ-ALLOC-008):** Given a batch `B12-payments` with `next_seq = 3` in the database, when a feature is created in that batch, then its canonical ID is a TSID (e.g., `FEAT-01KMRX1SEQV49-add-paypal`) and its display ID is `B12-F3`.
+- [ ] **AC-ALLOC-01 (REQ-ALLOC-001, REQ-ALLOC-003):** Given a coordination database with `counters` showing `next_value = 5` for `('test-project', 'batch_B')`, when two concurrent batch creations are made with different slugs, then one receives `B5-slug-a` and the other receives `B6-slug-b` (or vice versa), and the counter advances to 7.
+- [ ] **AC-ALLOC-02 (REQ-ALLOC-004):** Given a batch with slug `"auth-system"` has already been allocated as `B5-auth-system`, when `allocate_id('test-project', 'batch_B', 'B', 'auth-system')` is called again, then it returns `B5-auth-system` and the `counters.next_value` is unchanged.
+- [ ] **AC-ALLOC-03 (REQ-ALLOC-005, REQ-ALLOC-006):** Given a coordination database with no prior bug allocations, when a bug with slug `"login-failure"` is created, then its ID is `BUG-1-login-failure`.
+- [ ] **AC-ALLOC-04 (REQ-ALLOC-007, REQ-ALLOC-008):** Given a batch `B12-payments` with `next_seq = 3` in the database, when a feature is created in that batch, then its canonical ID is a TSID (e.g., `FEAT-01KMRX1SEQV49-add-paypal`) and its display ID is `B12-F3`.
 
 ### Single-user mode
 
-- **AC-ALLOC-05 (REQ-ALLOC-010):** Given a project with no `coordination.database_url` and existing state files for batches B1 through B4, when a new batch with slug `"new-batch"` is created, then its ID is `B5-new-batch` and no database connection is attempted.
+- [ ] **AC-ALLOC-05 (REQ-ALLOC-010):** Given a project with no `coordination.database_url` and existing state files for batches B1 through B4, when a new batch with slug `"new-batch"` is created, then its ID is `B5-new-batch` and no database connection is attempted.
 
 ### Failure modes
 
-- **AC-FAIL-01 (REQ-FAIL-001, REQ-FAIL-002):** Given a configured `database_url` pointing to an unreachable host, when a batch is created, then Kanbanzai falls back to local allocation, uses the local counter, emits a warning, and the batch is created successfully.
-- **AC-FAIL-02 (REQ-FAIL-003):** Given the database was unreachable for one allocation (causing a fallback), when the database becomes reachable again, then the next allocation uses the database (does not remain in permanent fallback mode).
-- **AC-FAIL-03 (REQ-FAIL-004):** Given a local fallback allocated `B10-some-slug` while the database counter was at 9, when the database becomes reachable and a new batch `"other-slug"` is created, then the database allocates `B11-other-slug` (counter fast-forwards past 10) or returns the existing allocation for `"some-slug"` if re-requested.
+- [ ] **AC-FAIL-01 (REQ-FAIL-001, REQ-FAIL-002):** Given a configured `database_url` pointing to an unreachable host, when a batch is created, then Kanbanzai falls back to local allocation, uses the local counter, emits a warning, and the batch is created successfully.
+- [ ] **AC-FAIL-02 (REQ-FAIL-003):** Given the database was unreachable for one allocation (causing a fallback), when the database becomes reachable again, then the next allocation uses the database (does not remain in permanent fallback mode).
+- [ ] **AC-FAIL-03 (REQ-FAIL-004):** Given a local fallback allocated `B10-some-slug` while the database counter was at 9, when the database becomes reachable and a new batch `"other-slug"` is created, then the database allocates `B11-other-slug` (counter fast-forwards past 10) or returns the existing allocation for `"some-slug"` if re-requested.
 
 ### Connection management
 
-- **AC-CONN-01 (REQ-CONN-001, REQ-CONN-002):** Given a configured `database_url`, when Kanbanzai starts, then a `pgxpool` is created and reused for all subsequent allocations in the session.
-- **AC-CONN-02 (REQ-CONN-003):** Given a Supabase `database_url` (which requires TLS), when Kanbanzai connects, then the TLS handshake succeeds without additional configuration.
-- **AC-CONN-03 (REQ-NF-005):** Given a configured `database_url` pointing to an unreachable host, when Kanbanzai starts, then it starts successfully, emits a warning about the unavailable database, and operates in fallback mode.
+- [ ] **AC-CONN-01 (REQ-CONN-001, REQ-CONN-002):** Given a configured `database_url`, when Kanbanzai starts, then a `pgxpool` is created and reused for all subsequent allocations in the session.
+- [ ] **AC-CONN-02 (REQ-CONN-003):** Given a Supabase `database_url` (which requires TLS), when Kanbanzai connects, then the TLS handshake succeeds without additional configuration.
+- [ ] **AC-CONN-03 (REQ-NF-005):** Given a configured `database_url` pointing to an unreachable host, when Kanbanzai starts, then it starts successfully, emits a warning about the unavailable database, and operates in fallback mode.
 
 ## Verification Plan
 

@@ -1,12 +1,17 @@
 package service
 
 import (
+	"context"
+	"os"
 	"path/filepath"
 	"reflect"
 	"strings"
 	"testing"
 	"time"
 
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/coordination"
+	"github.com/sambeau/kanbanzai/internal/id"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/storage"
 	"github.com/sambeau/kanbanzai/internal/validate"
@@ -726,6 +731,152 @@ func writeTestPlan(t *testing.T, svc *EntityService, id string) {
 	})
 	if err != nil {
 		t.Fatalf("writeTestPlan(%s) error = %v", id, err)
+	}
+}
+
+// TestE2E_CoordinationFullFlow verifies that EntityService uses the
+// coordination database for ID allocation when wired up. It exercises
+// CreateBatch, CreateBug, and CreateFeature with a real coordination DB.
+func TestE2E_CoordinationFullFlow(t *testing.T) {
+	databaseURL := os.Getenv("TEST_DATABASE_URL")
+	if databaseURL == "" {
+		t.Skip("TEST_DATABASE_URL not set; skipping integration test")
+	}
+
+	root := t.TempDir()
+
+	// Build a config with coordination enabled and a unique project ID.
+	cfg := config.Config{
+		Name:          "e2e-test",
+		Prefixes:      []config.PrefixEntry{{Prefix: "P"}, {Prefix: "B"}},
+		SchemaVersion: "1.0.0",
+		Coordination: config.CoordinationConfig{
+			DatabaseURL: databaseURL,
+			ProjectID:   t.Name()+"-ffe0d78a"		},
+	}
+
+	// Connect the coordination DB directly.
+	coordDB, err := coordination.New(context.Background(), databaseURL)
+	if err != nil {
+		t.Fatalf("coordination.New: %v", err)
+	}
+	t.Cleanup(func() { coordDB.Close() })
+
+	if err := coordDB.Migrate(context.Background()); err != nil {
+		t.Fatalf("coordination Migrate: %v", err)
+	}
+
+	// Build EntityService by hand (bypassing NewEntityService which reads
+	// global config from disk).
+	svc := &EntityService{
+		root:           root,
+		store:          storage.NewEntityStore(root),
+		allocator:      id.NewAllocator(),
+		cfg:            &cfg,
+		coordinationDB: coordDB,
+		now: func() time.Time {
+			ts, _ := time.Parse(time.RFC3339, "2026-03-19T12:00:00Z")
+			return ts
+		},
+	}
+
+	// --- Test 1: CreateBatch uses coordination DB ---
+	batchResult, err := svc.CreateBatch(CreateBatchInput{
+		Prefix:    "B",
+		Slug:      "coordination-batch",
+		Name:      "Coordination Batch",
+		Summary:   "Testing coordination DB batch ID allocation",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("CreateBatch: %v", err)
+	}
+	if batchResult.ID != "B1-coordination-batch" {
+		t.Errorf("batch ID: expected B1-coordination-batch, got %q", batchResult.ID)
+	}
+
+	// --- Test 2: CreateBug uses coordination DB ---
+	bugResult, err := svc.CreateBug(CreateBugInput{
+		Slug:       "coordination-bug",
+		Name:       "Test Bug",
+		ReportedBy: "tester",
+		Observed:   "Something broke",
+		Expected:   "It should work",
+	})
+	if err != nil {
+		t.Fatalf("CreateBug: %v", err)
+	}
+	if bugResult.ID != "BUG-1-coordination-bug" {
+		t.Errorf("bug ID: expected BUG-1-coordination-bug, got %q", bugResult.ID)
+	}
+
+	// --- Test 3: CreateFeature uses coordinated sequence ---
+	batchID := batchResult.ID // e.g. "B1-coordination-batch"
+	// Write the batch entity record so the feature can find its parent.
+	_, _, batchSlug := model.ParsePlanID(batchID)
+	_, err = svc.store.Write(storage.EntityRecord{
+		Type: string(model.EntityKindPlan),
+		ID:   batchID,
+		Slug: batchSlug,
+		Fields: map[string]any{
+			"id":               batchID,
+			"slug":             batchSlug,
+			"name":             "Coordination Batch",
+			"status":           "active",
+			"summary":          "Testing coordination",
+			"next_feature_seq": 1,
+			"created":          "2026-03-19T12:00:00Z",
+			"created_by":       "tester",
+			"updated":          "2026-03-19T12:00:00Z",
+		},
+	})
+	if err != nil {
+		t.Fatalf("write batch entity: %v", err)
+	}
+
+	featureResult, err := svc.CreateFeature(CreateFeatureInput{
+		Parent:    batchID,
+		Slug:      "coordination-feature",
+		Name:      "Coordination Feature",
+		Summary:   "Testing coordination DB feature seq allocation",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature: %v", err)
+	}
+	// Feature display_id uses format {Prefix}{num}-F{seq}.
+	if featureResult.State["display_id"] != "B1-F1" {
+		t.Errorf("feature display_id: expected B1-F1, got %v", featureResult.State["display_id"])
+	}
+
+	// Second feature increments sequence.
+	featureResult2, err := svc.CreateFeature(CreateFeatureInput{
+		Parent:    batchID,
+		Slug:      "coordination-feature-2",
+		Name:      "Coordination Feature 2",
+		Summary:   "Second feature to verify seq increment",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature 2: %v", err)
+	}
+	if featureResult2.State["display_id"] != "B1-F2" {
+		t.Errorf("feature2 display_id: expected B1-F2, got %q", featureResult2.State["display_id"])
+	}
+
+	// --- Test 4: Second bug increments independently ---
+	bugResult2, err := svc.CreateBug(CreateBugInput{
+		Slug:       "another-bug",
+		Name:       "Another Bug",
+		ReportedBy: "tester",
+		Observed:   "Another issue",
+		Expected:   "Another fix",
+	})
+	if err != nil {
+		t.Fatalf("CreateBug 2: %v", err)
+	}
+	if bugResult2.ID != "BUG-2-another-bug" {
+		t.Errorf("second bug ID: expected BUG-2-another-bug, got %q", bugResult2.ID)
 	}
 }
 
@@ -1566,5 +1717,57 @@ func TestEntityService_Get_WithEmptySlug(t *testing.T) {
 	_, err = svc.Get("feature", "FEAT-ZZZZZZZZZZZZZ", "")
 	if err == nil {
 		t.Fatal("Get() with non-existent prefix error = nil, want non-nil")
+	}
+}
+
+func TestEntityService_CoordinationDisabled_UsesLocalAllocation(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	// coordinationDB is nil by default (no DATABASE_URL in test config)
+	if svc.coordinationDB != nil {
+		t.Fatal("coordinationDB should be nil in tests (no DATABASE_URL)")
+	}
+
+	// CreateBug should use local TSID allocation
+	bug, err := svc.CreateBug(CreateBugInput{
+		Slug:       "local-bug",
+		Name:       "Local Bug",
+		ReportedBy: "tester",
+		Observed:   "something went wrong",
+		Expected:   "everything should work",
+	})
+	if err != nil {
+		t.Fatalf("CreateBug() error = %v", err)
+	}
+	if !strings.HasPrefix(bug.ID, "BUG-") {
+		t.Errorf("CreateBug() ID = %q, want BUG- prefix", bug.ID)
+	}
+	if bug.Slug != "local-bug" {
+		t.Errorf("CreateBug() slug = %q, want %q", bug.Slug, "local-bug")
+	}
+
+	// CreateFeature should use local sequence from parent state
+	planID := "P1-local-allocation"
+	writeTestPlan(t, svc, planID)
+
+	feat, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
+		Slug:      "local-feature",
+		Parent:    planID,
+		Summary:   "Feature with local allocation",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+	if !strings.HasPrefix(feat.ID, "FEAT-") {
+		t.Errorf("CreateFeature() ID = %q, want FEAT- prefix", feat.ID)
+	}
+	// Display ID should use local seq from parent (starts at 1 for new plans)
+	if feat.State["display_id"] != "P1-F1" {
+		t.Errorf("CreateFeature() display_id = %q, want P1-F1", feat.State["display_id"])
 	}
 }
