@@ -1,0 +1,15 @@
+id: P45-wisdom-forwarding
+slug: wisdom-forwarding
+name: Wisdom forwarding
+status: idea
+summary: Modify handoff to automatically surface knowledge entries from completed sibling tasks when dispatching new tasks in the same feature. Small enhancement to context assembly — no new roles or entities. Both reports identify this gap.
+parent: P41-opencode-ecosystem-features
+order: 0
+tags:
+  - enhancement
+  - knowledge
+  - handoff
+  - wisdom-accumulation
+created: "2026-05-03T12:27:40Z"
+created_by: sambeau
+updated: "2026-05-03T12:27:40Z"
