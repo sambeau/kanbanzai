@@ -1,0 +1,175 @@
+document_id: FEAT-01KQPYQJH0KS5/report-b45-f1-review-status-machine-output-renderers
+document_path: work/B45-reopen-status-machine-output/B45-F1-review-status-machine-output-renderers.md
+content_hash: dc27980abc8e8454850a923d6f97b004fef25a6e19338fea9a629552423dadcc
+indexed_at: 2026-05-03T13:40:52.240415Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: Status Machine Output Renderers'
+      byte_offset: 0
+      byte_count: 6944
+      word_count: 891
+      content_hash: dc27980abc8e8454850a923d6f97b004fef25a6e19338fea9a629552423dadcc
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary Verdict
+          byte_offset: 195
+          byte_count: 751
+          word_count: 106
+          content_hash: 32e5cad578b0ebf80026cea77736cc07ded9c273b76c4a0332d4cee282240de2
+        - path: "1.2"
+          level: 2
+          title: Per-Dimension Verdicts
+          byte_offset: 946
+          byte_count: 271
+          word_count: 32
+          content_hash: 5eb27805bc58ba0a187293a1b4c9d0a700c507607382bee1f44118042b345646
+        - path: "1.3"
+          level: 2
+          title: Review Unit Breakdown
+          byte_offset: 1217
+          byte_count: 493
+          word_count: 42
+          content_hash: 8aa7bbc0d767888cbaaa99ad9ec8811115b7ce981168c25757c0dc8934575b3a
+        - path: "1.4"
+          level: 2
+          title: Blocking Findings
+          byte_offset: 1710
+          byte_count: 801
+          word_count: 110
+          content_hash: 3cafacdca13676156612118972ec35b898950e78706841bbe681872c840b3723
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'B1: JSON task `parent_feature_id` serializes as `""` instead of `null`'
+              byte_offset: 1732
+              byte_count: 779
+              word_count: 107
+              content_hash: 13ed136d44c78e5aa2db7a21fb4d25025b54114a1058e6dd87dd90687d91894f
+        - path: "1.5"
+          level: 2
+          title: Non-Blocking Findings
+          byte_offset: 2511
+          byte_count: 2693
+          word_count: 352
+          content_hash: 77543eff974a07299a070da539ed410d0739d906a73db432c3c81b15b2eca988
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'N1: No multi-severity attention sort test for plain renderer'
+              byte_offset: 2537
+              byte_count: 397
+              word_count: 52
+              content_hash: 93753d9e622dd9fc86e0fbda6ce1525c2e79e6d387640f74c7cd7710299719ff
+            - path: 1.5.2
+              level: 3
+              title: 'N2: `features.done` approximation in plain.go RenderProject'
+              byte_offset: 2934
+              byte_count: 451
+              word_count: 54
+              content_hash: dfc7f79e70ed372b5961c77457ea201c04c164a701fd6340e6da9243e6b15d22
+            - path: 1.5.3
+              level: 3
+              title: 'N3: `RenderDocument` hardcodes `attention: "none"` in plain renderer'
+              byte_offset: 3385
+              byte_count: 331
+              word_count: 39
+              content_hash: eec0cf797721dfc0811f985f9139474bc1596617b24f11fb5bf29954d8f0de47
+            - path: 1.5.4
+              level: 3
+              title: 'N4: `jsonTaskSummary.Ready` field never populated'
+              byte_offset: 3716
+              byte_count: 224
+              word_count: 28
+              content_hash: 844a31cba7dbf38957b03014116e76ac3baf5ba539c948f1c0c57301f76cbc6c
+            - path: 1.5.5
+              level: 3
+              title: 'N5: `jsonProjectPlan.Slug` populated from `DisplayID`'
+              byte_offset: 3940
+              byte_count: 294
+              word_count: 39
+              content_hash: b22fc091e8faf021bdccba76a7e4b78d1df018802c7fe78f178c21f1fd0343ee
+            - path: 1.5.6
+              level: 3
+              title: 'N6: No boundary test for task counts with all-zero values'
+              byte_offset: 4234
+              byte_count: 240
+              word_count: 36
+              content_hash: 976008108dcc67aed3e269c14e29bb837fde724390c00b2075d5e00680b4733f
+            - path: 1.5.7
+              level: 3
+              title: 'N7: No non-empty attention test for JSON task/bug renderers'
+              byte_offset: 4474
+              byte_count: 245
+              word_count: 32
+              content_hash: d1eee31650bfa141cfe9d764523f7694be1434aec0859ee9fb80fe59d3acffc5
+            - path: 1.5.8
+              level: 3
+              title: 'N8: No non-nil attention test for plain bug renderer'
+              byte_offset: 4719
+              byte_count: 224
+              word_count: 32
+              content_hash: aa0f29c45cab6f3e2fc92a52711a64fdb6e8d64a4ae244ab4517a6627ef4c774
+            - path: 1.5.9
+              level: 3
+              title: 'N9: No regression test for nil attention → `[]` in JSON'
+              byte_offset: 4943
+              byte_count: 261
+              word_count: 37
+              content_hash: a9a111930ff0f3e6effbafbe715eff96cd5e5e4a2500f712367611f838f15f27
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria Traceability
+          byte_offset: 5204
+          byte_count: 1157
+          word_count: 156
+          content_hash: 1e68771e6f8e961eaf7877382d5e6d5b70e2f8f61c5475014e781adcde0c68ae
+        - path: "1.7"
+          level: 2
+          title: Remediation Plan
+          byte_offset: 6361
+          byte_count: 583
+          word_count: 77
+          content_hash: 1ede6df4704c3204ba072a35be1bea14c6cc7083b40a3df62d6dfe80f2844299
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Required (blocking)
+              byte_offset: 6382
+              byte_count: 282
+              word_count: 32
+              content_hash: 4aa0e7eefa6b0f18524e4f93026170b04918372daaae971710d4f80e45723acd
+            - path: 1.7.2
+              level: 3
+              title: Recommended (non-blocking)
+              byte_offset: 6664
+              byte_count: 280
+              word_count: 42
+              content_hash: 4bc0f974aaf3000b42af4a726a22a0a77bcb1a42fd2f2e59c5a229cbdfd3ac38
+entity_refs:
+    - entity_id: FEAT-01KQPYQJH0KS5
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 56
+    - entity_id: FEAT-01KQ2VHKJB5V8
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 1534
+    - entity_id: B45-reopen-status-machine-output
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 120
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.5.4
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T13:40:52.880454Z
+classified: false
