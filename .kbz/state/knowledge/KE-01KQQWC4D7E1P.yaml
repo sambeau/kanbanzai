@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "The April 29 plan/batch migration (85f3e789) rewrote .agents/skills/kanbanzai-agents/SKILL.md, collapsing the detailed 11-point task lifecycle checklist into a 4-point skeleton. The old checklist included critical pre-implementation steps: \"Read the assembled context,\" \"Called knowledge(action: list) with domain-relevant tags before starting implementation,\" and \"Confirmed the parent feature is in the correct lifecycle state.\" The new checklist omits all of these. The vocabulary section was also reduced from 9 terms to 6, and the \"When to Use\" section dropped \"Before starting implementation work on any task\" in favor of \"When dispatching a task to a sub-agent.\" This shift from agent-implementation guidance to dispatch-only protocol removed the step that told agents to read the stage binding, role, and skill before starting work. The developing stage's orchestrate-development skill and orchestrator role were never read during P48 implementation because the checklist that mandated reading them was removed."
+created: "2026-05-03T21:37:08Z"
+created_by: sambeau
+id: KE-01KQQWC4D7E1P
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - skill-regression
+  - plan-batch-migration
+  - agent-behavior
+tier: 3
+topic: kanbanzai-agents-skill-checklist-regression
+ttl_days: 30
+updated: "2026-05-03T21:37:08Z"
+use_count: 0

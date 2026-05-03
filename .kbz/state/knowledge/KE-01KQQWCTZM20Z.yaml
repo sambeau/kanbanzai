@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "When claiming a task via next(id), the assembled context includes impl_guidance, test_expectations, knowledge entries, and the orchestration_pattern field — but does NOT include a directive to read the stage binding or skill file. The stage bindings (.kbz/stage-bindings.yaml) map developing → [orchestrate-development] skill and [orchestrator] role, but this mapping is not surfaced in the next output. Agents must proactively remember to read the skill file. The kanbanzai-agents skill previously included a checklist item to read the assembled context, but this was lost in the April 29 rewrite. Suggestion: either (a) restore the pre-implementation checklist items to kanbanzai-agents, or (b) have the next tool include a \"read .kbz/skills/{skill}/SKILL.md and .kbz/roles/{role}.yaml\" instruction when stage_aware is true."
+created: "2026-05-03T21:37:31Z"
+created_by: sambeau
+id: KE-01KQQWCTZM20Z
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - context-assembly
+  - agent-behavior
+tier: 3
+topic: next-context-missing-skill-directive
+ttl_days: 30
+updated: "2026-05-03T21:37:31Z"
+use_count: 0

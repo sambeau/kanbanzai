@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "The MCP server binary at GOBIN/kanbanzai was 3 days stale (April 30) while the kbz binary was freshly rebuilt (May 3). Root cause: the Makefile sets BINARY := kbz, so go install produces kbz not kanbanzai. The editor's MCP config points to kanbanzai, which is correct (the binary announces itself as kanbanzai over MCP). But go install never updates the kanbanzai binary because it outputs to kbz. The stale binary was discovered via server_info showing git_sha: unknown vs the kbz binary at a known SHA. Fix: the Makefile install target or go install needs to also update the kanbanzai-named binary, or the editor MCP config should point to kbz instead."
+created: "2026-05-03T21:37:42Z"
+created_by: sambeau
+id: KE-01KQQWD5JHJWT
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - tool-friction
+  - build-system
+tier: 3
+topic: stale-kanbanzai-binary-kbz-install-mismatch
+ttl_days: 30
+updated: "2026-05-03T21:37:42Z"
+use_count: 0

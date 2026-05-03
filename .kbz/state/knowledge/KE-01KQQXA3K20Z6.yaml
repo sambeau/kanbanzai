@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "46 files control agent behavior (skills, roles, stage bindings, agent instructions) with zero automated structural validation. The 85f3e789 regressions exposed this gap. Minimum viable test suite design: (1) Content thresholds — minimum line count >= 50, vocabulary >= 15 terms, anti-patterns >= 5 per skill. (2) Required sections present — every SKILL.md must have Vocabulary, Anti-Patterns, Procedure, Output Format, Examples, Evaluation Criteria, Questions sections. (3) Agent skill structure — vocabulary >= 5 terms, checklist >= 5 items. (4) Cross-reference integrity — every role/skill referenced in stage-bindings exists as a file. (5) Mirror consistency — .agents/skills/ matches internal/kbzinit/skills/. Implementation: a Go test file (internal/skills/validate_test.go) that walks the filesystem, runs table-driven assertions, with per-skill threshold override mechanism for legitimate exceptions. Tests 1-3 alone (~200 lines) would have caught every 85f3e789 regression."
+created: "2026-05-03T21:53:30Z"
+created_by: sambeau
+id: KE-01KQQXA3K20Z6
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - testing-gap
+  - skill-regression
+  - ci
+tier: 3
+topic: skill-validation-test-suite-design
+ttl_days: 30
+updated: "2026-05-03T21:53:30Z"
+use_count: 0

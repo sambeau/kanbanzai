@@ -1,0 +1,11 @@
+id: BUG-01KQQXFNGEGWQ
+slug: skill-regression-april29
+name: Restore skill content lost in plan/batch migration
+status: reported
+severity: high
+priority: high
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-05-03T21:56:32Z"
+observed: "Commit befa7c3a (squashed into 85f3e789) rewrote multiple skill files from scratch instead of updating terminology. kanbanzai-agents lost its 11-item checklist, vocabulary terms, and verification field. review-plan lost criterion-by-criterion spec verification procedure. write-design lost 9 vocabulary terms. write-spec was temporarily truncated to 46 lines. AGENTS.md has duplicate directory trees."
+expected: "Skill files should contain all content present before the April 29 migration, plus the new plan/batch vocabulary additions. No content should have been removed beyond mechanical terminology changes."

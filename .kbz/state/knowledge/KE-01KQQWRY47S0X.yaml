@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "Full audit of commit 85f3e789 (April 29 plan/batch migration) across 19 files. Findings: (1) CRITICAL — kanbanzai-agents task lifecycle checklist gutted from 11 items to 4, losing: read context, query knowledge, confirm feature state, run tests, confirm/flag knowledge, retrospective prompt. verification field removed from finish signature. Active knowledge querying replaced with contradictory \"do not append\" guidance. go test removed from checklist and evaluation criteria. (2) CRITICAL — review-plan lost criterion-by-criterion spec verification procedure, \"do not treat approval as proof of conformance\" guidance, spec conformance detail output table, go test -race check, and contradictory state STOP rule. (3) HIGH — write-design lost 9 vocabulary terms (invariant, design constraint, composability, abstraction boundary, extension point, migration path, failure mode, blast radius, design debt) plus truncated backward compatibility definition. (4) MEDIUM — AGENTS.md has duplicate state/ directory tree. (5) write-spec was temporarily truncated to 46 lines but immediately fixed in next commit. (6) MEDIUM — kanbanzai-agents lost: handoff definition, commit type decision, breaking change notation, knowledge tiers explanation, .kbz/state/ auto-commit note, per-task knowledge confirm/flag. (7) MEDIUM — kanbanzai-planning lost plan document vocabulary entry, has batch-only scope statements in 4 places where plan should also be mentioned. (8) review-plan anti-pattern heading still says \"Rubber-Stamp Plan Review\" instead of Batch. Files with no regressions: kanbanzai-workflow, kanbanzai-getting-started, copilot-instructions, decompose-feature, orchestrator.yaml, orchestrate-review, stage-bindings.yaml, document-map."
+created: "2026-05-03T21:44:08Z"
+created_by: sambeau
+id: KE-01KQQWRY47S0X
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - skill-regression
+  - audit
+tier: 3
+topic: plan-batch-migration-skill-audit
+ttl_days: 30
+updated: "2026-05-03T21:44:08Z"
+use_count: 0
