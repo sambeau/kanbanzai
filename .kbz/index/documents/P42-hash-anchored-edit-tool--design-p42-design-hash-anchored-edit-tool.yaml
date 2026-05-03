@@ -1,0 +1,160 @@
+document_id: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool
+document_path: work/P42-hash-anchored-edit-tool/P42-design-hash-anchored-edit-tool.md
+content_hash: 4787e2e3c2e0685cc141be77bfcc58b5398c284c86b85a4e169824500682f112
+indexed_at: 2026-05-03T12:18:12.239682Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Hash-Anchored Edit Tool'
+      byte_offset: 0
+      byte_count: 7980
+      word_count: 1175
+      content_hash: 4787e2e3c2e0685cc141be77bfcc58b5398c284c86b85a4e169824500682f112
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 358
+          byte_count: 781
+          word_count: 125
+          content_hash: 8df756b7c57b935bea7d741c6b91ea32b897d94ed49c7e1e399c52af21be7f69
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 1139
+          byte_count: 757
+          word_count: 118
+          content_hash: f70d254e7dadc918d95fdfd88bf943698583baacf271c8f5858192dc8117b55c
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 1896
+          byte_count: 3951
+          word_count: 599
+          content_hash: 36e60899515469e0eb590269b32c4bbb479e9b2081c15313cbe369395864ae30
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Hashline Format
+              byte_offset: 1907
+              byte_count: 364
+              word_count: 60
+              content_hash: b622143b0257b5ef11852bba77e2c02d2dbedd5e253d781050a5db2475abbd8a
+            - path: 1.3.2
+              level: 3
+              title: Edit Submission
+              byte_offset: 2271
+              byte_count: 514
+              word_count: 83
+              content_hash: 743cfad91017200aece83dfa774ece9e06f6d77bdf7f334de3b72783757c6b5d
+            - path: 1.3.3
+              level: 3
+              title: Hash Computation
+              byte_offset: 2785
+              byte_count: 544
+              word_count: 87
+              content_hash: a7e9f7193260ba9a2f79dc04df2a6d5839c9786f03340f57041d940b5a4457f1
+            - path: 1.3.4
+              level: 3
+              title: Read Tool Integration
+              byte_offset: 3329
+              byte_count: 701
+              word_count: 99
+              content_hash: f708bc25045a22864f9b4969daba565e28b4858b449b19b8a8a4d94774407057
+            - path: 1.3.5
+              level: 3
+              title: Edit Tool Integration
+              byte_offset: 4030
+              byte_count: 494
+              word_count: 62
+              content_hash: 5c0ab854c6fe6923e40a43caa44fa71732b9a999a46fcb31137dab7c0bf62728
+            - path: 1.3.6
+              level: 3
+              title: Knowledge Graph Compatibility
+              byte_offset: 4524
+              byte_count: 743
+              word_count: 106
+              content_hash: f83b8a99d43ade9eb8c7d0f360eaac0757de1d6ff3430daf6266c4001e349b80
+            - path: 1.3.7
+              level: 3
+              title: Error Modes
+              byte_offset: 5267
+              byte_count: 580
+              word_count: 100
+              content_hash: 67ebc0e4ed75dfee81f7570a20695a1417291222ac62d5fb3f35112b102f359e
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 5847
+          byte_count: 1101
+          word_count: 153
+          content_hash: ec68ef609ef78bff05fe18077cd0d5c227c83f9b8403f0d83ac778fe44b7a76f
+          children:
+            - path: 1.4.1
+              level: 3
+              title: New `hash_edit` tool vs. enhanced `edit_file`
+              byte_offset: 5875
+              byte_count: 677
+              word_count: 91
+              content_hash: 9ebd287fa0579770a5c251dae3a539336954924f908ab9e4bedb2632f9957c6f
+            - path: 1.4.2
+              level: 3
+              title: 2-char vs. 4-char hashes
+              byte_offset: 6552
+              byte_count: 396
+              word_count: 59
+              content_hash: 9dc38cc1b0af26e791a38e70490c7603981b3447a48af637fe0a7da519143dff
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 6948
+          byte_count: 342
+          word_count: 51
+          content_hash: dcc313c2d48544f485566a304ad76a5ad0e6a03c3169a4b97d664498a6e5fa0d
+        - path: "1.6"
+          level: 2
+          title: Open Questions
+          byte_offset: 7290
+          byte_count: 690
+          word_count: 107
+          content_hash: 92a0e34fe5148e6f85ff03e2ee87b389f04ed1647f6a46b97f606aae0c400faf
+entity_refs:
+    - entity_id: P42-hash-anchored-edit-tool
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 48
+    - entity_id: P41-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 133
+    - entity_id: P41-design-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 165
+    - entity_id: P41-research-competitive-analysis
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 306
+cross_doc_links:
+    - target_path: ../P41-opencode-ecosystem-features/P41-design-opencode-ecosystem-features.md
+      link_text: 'P41: OpenCode Ecosystem Features'
+      section_path: "1"
+    - target_path: ../P41-opencode-ecosystem-features/P41-research-competitive-analysis.md
+      link_text: P41 Competitive Analysis
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: "1.6"
+      role: question
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T12:18:12.786178Z
+classified: false

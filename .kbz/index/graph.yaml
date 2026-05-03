@@ -1,4 +1,4 @@
-updated_at: 2026-05-01T12:07:17.431724Z
+updated_at: 2026-05-03T12:31:52.798393Z
 edges:
     - from: PROJECT/design-kanbanzai-20-design-vision
       from_type: document
@@ -94500,3 +94500,1958 @@ edges:
       to: PROJECT/research-planning-admin-layer-architecture#1.6
       to_type: section
       edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor
+      from_type: document
+      to: PROJECT/research-hill-chart-shaping-metaphor#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.3
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.3
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.3
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.3
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.3
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.3
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.3
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.4
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.4
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.5
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.5
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.5
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.5
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.5
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1
+      from_type: section
+      to: PROJECT/research-hill-chart-shaping-metaphor#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.3.5
+      from_type: section
+      to: planning-admin-layer-exploration.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.3.7
+      from_type: section
+      to: planning-admin-layer-exploration.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-hill-chart-shaping-metaphor#1.6
+      from_type: section
+      to: planning-admin-layer-exploration.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-shaping-layer-entity-model
+      from_type: document
+      to: PROJECT/research-shaping-layer-entity-model#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-shaping-layer-entity-model#1
+      from_type: section
+      to: PROJECT/research-shaping-layer-entity-model#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-shaping-layer-entity-model#1
+      from_type: section
+      to: PROJECT/research-shaping-layer-entity-model#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-shaping-layer-entity-model#1
+      from_type: section
+      to: PROJECT/research-shaping-layer-entity-model#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-shaping-layer-entity-model#1.3
+      from_type: section
+      to: PROJECT/research-shaping-layer-entity-model#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-shaping-layer-entity-model#1.3
+      from_type: section
+      to: PROJECT/research-shaping-layer-entity-model#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-shaping-layer-entity-model#1.3
+      from_type: section
+      to: PROJECT/research-shaping-layer-entity-model#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-shaping-layer-entity-model#1.3
+      from_type: section
+      to: PROJECT/research-shaping-layer-entity-model#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-shaping-layer-entity-model#1.3
+      from_type: section
+      to: PROJECT/research-shaping-layer-entity-model#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-shaping-layer-entity-model#1.3
+      from_type: section
+      to: PROJECT/research-shaping-layer-entity-model#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-shaping-layer-entity-model#1
+      from_type: section
+      to: PROJECT/research-shaping-layer-entity-model#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-shaping-layer-entity-model#1
+      from_type: section
+      to: PROJECT/research-shaping-layer-entity-model#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-shaping-layer-entity-model#1
+      from_type: section
+      to: PROJECT/research-shaping-layer-entity-model#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-shaping-layer-entity-model#1
+      from_type: section
+      to: PROJECT/research-shaping-layer-entity-model#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools
+      from_type: document
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.1
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.1
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.1
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.1
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.2
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.2
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.2
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.2
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.2
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.3
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.3
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.3
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.4
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.4
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.4
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.4
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.4
+      from_type: section
+      to: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.2.5
+      from_type: section
+      to: FEAT-01KQJ
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.2.2
+      from_type: section
+      to: DOC-01KQJ
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.2.5
+      from_type: section
+      to: DOC-01KQJ
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.2.2.5
+      from_type: section
+      to: B43-composite-tools
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation
+      from_type: document
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation
+      from_type: document
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation
+      from_type: document
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.1
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.1
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.1
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.1
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.2
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.2
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.2
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.2
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.2
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.3
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.3
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.3
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.3
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.3
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.4
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.4
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.4
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.4
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.4
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.4
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.5
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.5
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.5
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.5
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.6
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.6
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.6
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.6
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#3.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation
+      from_type: document
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation
+      from_type: document
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#5
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#5
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#5
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#5
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#5
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#5
+      from_type: section
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#5.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation
+      from_type: document
+      to: PROJECT/research-research-opencode-ecosystem-evaluation#6
+      to_type: section
+      edge_type: CONTAINS
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#1
+      from_type: section
+      to: research-orchestration-landscape-2025.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.2.2
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.2.5
+      from_type: section
+      to: thoughts/ledgers/CONTINUITY_{session}.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: PROJECT/research-research-opencode-ecosystem-evaluation#3.3.4
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem
+      from_type: document
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.2
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.2
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.2
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.2
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.3.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.4
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.4
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.4
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.4
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.4
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.7
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.7.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.7
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.7.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.7
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.7.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.8
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.8.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.8
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.8.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.9
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.9.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.9
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.9.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.9
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.9.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.9
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.9.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.9
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.9.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.9
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.9.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.10
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.4
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.4
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.4
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.8
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.9
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.12
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.13
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.13
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.13.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.13
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.13.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.13
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.13.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.13
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.13.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.14
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.5.2
+      from_type: section
+      to: FEAT-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.7.2
+      from_type: section
+      to: DOC-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.4.1
+      from_type: section
+      to: DOC-ID
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.4.2
+      from_type: section
+      to: DOC-ID
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.11.5.3
+      from_type: section
+      to: DOC-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.5.2
+      from_type: section
+      to: .sisyphus/plans/{name}.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.5.4
+      from_type: section
+      to: .sisyphus/plans/*.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem#1.6.6
+      from_type: section
+      to: refs/prompt-engineering-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation
+      from_type: document
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation
+      from_type: document
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation
+      from_type: document
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.1
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.2
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.2.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.2
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.2.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.2
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.2.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.2
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.2.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.2
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.2.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.4
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.4
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.4
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.4
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.4.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.4
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.4.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.4
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.4.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.6
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.6.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.6
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.6.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.6
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.6.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.6
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.6.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation
+      from_type: document
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation
+      from_type: document
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#5.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#5.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#5.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#5.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#5.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#5
+      from_type: section
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#5.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation
+      from_type: document
+      to: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#1
+      from_type: section
+      to: research-orchestration-landscape-2025.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.2.2
+      from_type: section
+      to: .github/copilot-instructions.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.2.5
+      from_type: section
+      to: thoughts/ledgers/CONTINUITY_{session}.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation#3.3.4
+      from_type: section
+      to: AGENTS.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features
+      from_type: document
+      to: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1
+      from_type: section
+      to: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1.5
+      from_type: section
+      to: DEC-01KQP
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1
+      from_type: section
+      to: P41-opencode-ecosystem-features
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1
+      from_type: section
+      to: ../research/competitive-analysis-openagent-ecosystem.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1.7
+      from_type: section
+      to: ../research/competitive-analysis-openagent-ecosystem.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1.7
+      from_type: section
+      to: ../_project/research-opencode-ecosystem-evaluation.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features#1.7
+      from_type: section
+      to: ../../refs/prompt-engineering-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool
+      from_type: document
+      to: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1
+      from_type: section
+      to: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1
+      from_type: section
+      to: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1
+      from_type: section
+      to: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.3
+      from_type: section
+      to: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.3
+      from_type: section
+      to: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.3
+      from_type: section
+      to: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.3
+      from_type: section
+      to: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.3
+      from_type: section
+      to: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.3
+      from_type: section
+      to: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.3
+      from_type: section
+      to: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.3.7
+      to_type: section
+      edge_type: CONTAINS
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1
+      from_type: section
+      to: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.4
+      from_type: section
+      to: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.4
+      from_type: section
+      to: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1
+      from_type: section
+      to: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1
+      from_type: section
+      to: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1
+      from_type: section
+      to: P42-hash-anchored-edit-tool
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1
+      from_type: section
+      to: P41-opencode-ecosystem-features
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1
+      from_type: section
+      to: P41-design-opencode-ecosystem-features
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1
+      from_type: section
+      to: P41-research-competitive-analysis
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1
+      from_type: section
+      to: ../P41-opencode-ecosystem-features/P41-design-opencode-ecosystem-features.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P42-hash-anchored-edit-tool/design-p42-design-hash-anchored-edit-tool#1
+      from_type: section
+      to: ../P41-opencode-ecosystem-features/P41-research-competitive-analysis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture
+      from_type: document
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3.1
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3.1
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3.1
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.3.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.4
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.4
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1
+      from_type: section
+      to: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1
+      from_type: section
+      to: P43-fast-track-architecture
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1
+      from_type: section
+      to: P41-opencode-ecosystem-features
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1
+      from_type: section
+      to: P41-design-opencode-ecosystem-features
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1
+      from_type: section
+      to: P41-research-competitive-analysis
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1
+      from_type: section
+      to: ../P41-opencode-ecosystem-features/P41-design-opencode-ecosystem-features.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P43-fast-track-architecture/design-p43-design-fast-track-architecture#1
+      from_type: section
+      to: ../P41-opencode-ecosystem-features/P41-research-competitive-analysis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher
+      from_type: document
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3.1
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3.1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3.1
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3.1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3.1
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3.1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.4
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.4
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.4
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1
+      from_type: section
+      to: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3.5
+      from_type: section
+      to: FEAT-xxx
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1
+      from_type: section
+      to: P44-model-routing-agent-launcher
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1
+      from_type: section
+      to: P41-opencode-ecosystem-features
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1
+      from_type: section
+      to: P41-design-opencode-ecosystem-features
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1
+      from_type: section
+      to: P41-research-competitive-analysis
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1
+      from_type: section
+      to: ../P41-opencode-ecosystem-features/P41-design-opencode-ecosystem-features.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1
+      from_type: section
+      to: ../P41-opencode-ecosystem-features/P41-research-competitive-analysis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher#1.3.5
+      from_type: section
+      to: refs/prompt-engineering-guide.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding
+      from_type: document
+      to: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1
+      from_type: section
+      to: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1
+      from_type: section
+      to: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1
+      from_type: section
+      to: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3
+      from_type: section
+      to: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3
+      from_type: section
+      to: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3
+      from_type: section
+      to: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3
+      from_type: section
+      to: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3
+      from_type: section
+      to: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1
+      from_type: section
+      to: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.4
+      from_type: section
+      to: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.4
+      from_type: section
+      to: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1
+      from_type: section
+      to: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1
+      from_type: section
+      to: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3.4
+      from_type: section
+      to: FEAT-yyy
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3.1
+      from_type: section
+      to: TASK-003
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3.2
+      from_type: section
+      to: TASK-003
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3.2
+      from_type: section
+      to: TASK-001
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3.2
+      from_type: section
+      to: TASK-002
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3.3
+      from_type: section
+      to: TASK-XXX
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3.4
+      from_type: section
+      to: TASK-001
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3.4
+      from_type: section
+      to: TASK-002
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1.3.5
+      from_type: section
+      to: TASK-001
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1
+      from_type: section
+      to: P45-wisdom-forwarding
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1
+      from_type: section
+      to: P41-opencode-ecosystem-features
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1
+      from_type: section
+      to: P41-design-opencode-ecosystem-features
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1
+      from_type: section
+      to: P41-research-competitive-analysis
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1
+      from_type: section
+      to: ../P41-opencode-ecosystem-features/P41-design-opencode-ecosystem-features.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding#1
+      from_type: section
+      to: ../P41-opencode-ecosystem-features/P41-research-competitive-analysis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist
+      from_type: document
+      to: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1
+      from_type: section
+      to: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1
+      from_type: section
+      to: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1
+      from_type: section
+      to: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.3
+      from_type: section
+      to: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.3.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.3
+      from_type: section
+      to: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.3.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.3
+      from_type: section
+      to: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.3.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.3
+      from_type: section
+      to: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.3.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1
+      from_type: section
+      to: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.4
+      to_type: section
+      edge_type: CONTAINS
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.4
+      from_type: section
+      to: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.4.1
+      to_type: section
+      edge_type: CONTAINS
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.4
+      from_type: section
+      to: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.4.2
+      to_type: section
+      edge_type: CONTAINS
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.4
+      from_type: section
+      to: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.4.3
+      to_type: section
+      edge_type: CONTAINS
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1
+      from_type: section
+      to: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.5
+      to_type: section
+      edge_type: CONTAINS
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1
+      from_type: section
+      to: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.6
+      to_type: section
+      edge_type: CONTAINS
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1
+      from_type: section
+      to: P46-elicitation-checklist
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1
+      from_type: section
+      to: P41-opencode-ecosystem-features
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1
+      from_type: section
+      to: P41-design-opencode-ecosystem-features
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1
+      from_type: section
+      to: P41-research-competitive-analysis
+      to_type: entity_ref
+      edge_type: REFERENCES
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1
+      from_type: section
+      to: ../P41-opencode-ecosystem-features/P41-design-opencode-ecosystem-features.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1
+      from_type: section
+      to: ../P41-opencode-ecosystem-features/P41-research-competitive-analysis.md
+      to_type: document
+      edge_type: LINKS_TO
+    - from: P46-elicitation-checklist/design-p46-design-elicitation-checklist#1.5
+      from_type: section
+      to: .kbz/skills/write-spec/SKILL.md
+      to_type: document
+      edge_type: LINKS_TO

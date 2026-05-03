@@ -1,0 +1,149 @@
+document_id: P46-elicitation-checklist/design-p46-design-elicitation-checklist
+document_path: work/P46-elicitation-checklist/P46-design-elicitation-checklist.md
+content_hash: 800c3043058188a8229580d74e2979e6d90f9ccaaa4aa11780828e6fc0d8e99b
+indexed_at: 2026-05-03T12:31:52.798393Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Elicitation Checklist'
+      byte_offset: 0
+      byte_count: 7257
+      word_count: 1038
+      content_hash: 800c3043058188a8229580d74e2979e6d90f9ccaaa4aa11780828e6fc0d8e99b
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 347
+          byte_count: 964
+          word_count: 135
+          content_hash: 790668bc5063f7357e2d700271c82a74004e22bf0ec416d43a5ce7ad06faaef6
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 1311
+          byte_count: 687
+          word_count: 97
+          content_hash: d8570646c9398eab4bc8a3bbc035e14723f9eca122979debc931de05274e25b2
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 1998
+          byte_count: 2619
+          word_count: 397
+          content_hash: 7508261891b5405d9b7fb738418adf703317aa3c4a2d697a9e9b7228ea11be75
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Checklist Addition to `write-spec` Skill
+              byte_offset: 2009
+              byte_count: 1442
+              word_count: 214
+              content_hash: 88e10ce8c32b71f015e83f947b5c8649d037ba12a60079ba2707566008d33eef
+            - path: 1.3.2
+              level: 3
+              title: When the Checklist Fires
+              byte_offset: 3451
+              byte_count: 285
+              word_count: 46
+              content_hash: 30bea52f1ff6bb3422afad0a14969d269bc7cc5f76b7ce5238cfd1aa2e985936
+            - path: 1.3.3
+              level: 3
+              title: Integration with Existing Procedure
+              byte_offset: 3736
+              byte_count: 520
+              word_count: 77
+              content_hash: 012906e3eddfff041e2a0c46c087afeb77ece626b3c1683d1651e930be0e9253
+            - path: 1.3.4
+              level: 3
+              title: Relationship to Design
+              byte_offset: 4256
+              byte_count: 361
+              word_count: 58
+              content_hash: 782497557f11eb49dd69d5d4a5c06dbb81c2b4cc7f1ca292bacb6dcbb313b6f7
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 4617
+          byte_count: 1355
+          word_count: 199
+          content_hash: 85bba2ceac754ed917d1729c624d68f70fb4595b57806f74c9f865582f1946a6
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Full interview mode (Prometheus-style)
+              byte_offset: 4645
+              byte_count: 571
+              word_count: 78
+              content_hash: 8200605326954b0b731b7ad0fb67779189a4e4200eef6e1f413a2c3f52b13e52
+            - path: 1.4.2
+              level: 3
+              title: No change (status quo)
+              byte_offset: 5216
+              byte_count: 418
+              word_count: 66
+              content_hash: 5988c02f77ff86157a584ed5fce9d77350bd21b2db9675c3591427cec3802f32
+            - path: 1.4.3
+              level: 3
+              title: Checklist as a separate skill
+              byte_offset: 5634
+              byte_count: 338
+              word_count: 52
+              content_hash: a54a4b772bd4513d36211f6247dfe91a2869798968aee0e00f733f3ecc8bf5ca
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 5972
+          byte_count: 275
+          word_count: 43
+          content_hash: 8f2c03e3e5f7ba894087b5156a38eebd260dc60fbbff79996b725be604365edb
+        - path: "1.6"
+          level: 2
+          title: Open Questions
+          byte_offset: 6247
+          byte_count: 1010
+          word_count: 147
+          content_hash: 9165f403a695254cf170391d6b30a350da643747488e7edcd72055d7f55a1f3c
+entity_refs:
+    - entity_id: P46-elicitation-checklist
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 46
+    - entity_id: P41-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 129
+    - entity_id: P41-design-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 161
+    - entity_id: P41-research-competitive-analysis
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 302
+cross_doc_links:
+    - target_path: ../P41-opencode-ecosystem-features/P41-design-opencode-ecosystem-features.md
+      link_text: 'P41: OpenCode Ecosystem Features'
+      section_path: "1"
+    - target_path: ../P41-opencode-ecosystem-features/P41-research-competitive-analysis.md
+      link_text: P41 Competitive Analysis
+      section_path: "1"
+    - target_path: .kbz/skills/write-spec/SKILL.md
+      link_text: .kbz/skills/write-spec/SKILL.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: "1.6"
+      role: question
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T12:31:53.359679Z
+classified: false

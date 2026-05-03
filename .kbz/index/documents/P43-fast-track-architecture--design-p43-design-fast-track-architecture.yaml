@@ -1,0 +1,178 @@
+document_id: P43-fast-track-architecture/design-p43-design-fast-track-architecture
+document_path: work/P43-fast-track-architecture/P43-design-fast-track-architecture.md
+content_hash: 0f0641eb03d89cd973206cc953e90f3cb120210a4e674de11bede209066716cb
+indexed_at: 2026-05-03T12:23:35.34055Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Fast-Track Architecture'
+      byte_offset: 0
+      byte_count: 10085
+      word_count: 1429
+      content_hash: 0f0641eb03d89cd973206cc953e90f3cb120210a4e674de11bede209066716cb
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 350
+          byte_count: 685
+          word_count: 87
+          content_hash: 2370a13ca3d9b4b3a7b7aa5404c33157cc7c7ef27230b943875a504027782868
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 1035
+          byte_count: 887
+          word_count: 128
+          content_hash: c543ed119e93b19fae818ec8d9cbdc29d9108999131bcbcd5c9692d7856744ef
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 1922
+          byte_count: 5859
+          word_count: 890
+          content_hash: 613f22a33263543ac349fa9874868abacc87e0346f5559c839fb49c67306f4b3
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Three Validator Roles
+              byte_offset: 1933
+              byte_count: 3481
+              word_count: 544
+              content_hash: 3235cf039c3b45bd33073f382a3ce6f2138bc551dae470d8bb0e9c1aa46e5afc
+              children:
+                - path: 1.3.1.1
+                  level: 4
+                  title: Spec Validator
+                  byte_offset: 1960
+                  byte_count: 1166
+                  word_count: 177
+                  content_hash: 8b1297246cca0e7be304446ca5b5e08eb7708035acb929c59ab6dda5333a1ccc
+                - path: 1.3.1.2
+                  level: 4
+                  title: Plan Validator
+                  byte_offset: 3126
+                  byte_count: 1282
+                  word_count: 209
+                  content_hash: 25001169b40905b75b74acddb0dea3c8ea7c21ea448cce965a6c515c6caf94cf
+                - path: 1.3.1.3
+                  level: 4
+                  title: Review Gate Validator
+                  byte_offset: 4408
+                  byte_count: 1006
+                  word_count: 154
+                  content_hash: 1faee4823cecdf20768843b35ccde64920afd5a0729870b45fae5b71a1215f5e
+            - path: 1.3.2
+              level: 3
+              title: Risk Tiers
+              byte_offset: 5414
+              byte_count: 583
+              word_count: 100
+              content_hash: 7fa4303c8aeb8246bccba008f5bbdbf681b93b68270323c95f5fe071c619141f
+            - path: 1.3.3
+              level: 3
+              title: Tier Inference
+              byte_offset: 5997
+              byte_count: 245
+              word_count: 37
+              content_hash: 75bef8e56d25012693ec7b50dd5eb0c066e9609005cfe713990311aa5dc42202
+            - path: 1.3.4
+              level: 3
+              title: Validation Pipeline
+              byte_offset: 6242
+              byte_count: 397
+              word_count: 51
+              content_hash: dc7feb8381f76d3618b9328ec5503d0476d780f7cc7c0e08480917a289d002e1
+            - path: 1.3.5
+              level: 3
+              title: Session Management
+              byte_offset: 6639
+              byte_count: 540
+              word_count: 73
+              content_hash: 7bf6cadc61521b85f52809fd1f9fa28d57bd6a6af39c7795ee3238453d76c307
+            - path: 1.3.6
+              level: 3
+              title: Failure Mode Guards
+              byte_offset: 7179
+              byte_count: 602
+              word_count: 83
+              content_hash: b993c06c5a0a0ea73ac61fb4445c92d768df57af915e3480798ae6970ac576e9
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 7781
+          byte_count: 1012
+          word_count: 128
+          content_hash: 6425ac9d1b8aa563b0cedb18fd326104a2423fd5c5b314221116607bbe262ce1
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Per-feature vs. per-batch tiering
+              byte_offset: 7809
+              byte_count: 481
+              word_count: 66
+              content_hash: 41334b221ba941d775396368be4f6f30d2f96d88e8d90f7f75ab16ab724f8e9f
+            - path: 1.4.2
+              level: 3
+              title: Validator inheritance
+              byte_offset: 8290
+              byte_count: 503
+              word_count: 59
+              content_hash: b520106ae8059d140b8d3cfabe89956f9995eb20ef80c5899a287c0803fecebd
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 8793
+          byte_count: 363
+          word_count: 45
+          content_hash: f9f4ddf273a150a2f0032431f9d560f2635e59dccab45195cf8d4bb47466756b
+        - path: "1.6"
+          level: 2
+          title: Open Questions
+          byte_offset: 9156
+          byte_count: 929
+          word_count: 131
+          content_hash: 6d43e5ad833e9d211692a71cec7cdcd6d662388fc8d9edc11bbf679c75ed1223
+entity_refs:
+    - entity_id: P43-fast-track-architecture
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 48
+    - entity_id: P41-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 133
+    - entity_id: P41-design-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 165
+    - entity_id: P41-research-competitive-analysis
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 306
+cross_doc_links:
+    - target_path: ../P41-opencode-ecosystem-features/P41-design-opencode-ecosystem-features.md
+      link_text: 'P41: OpenCode Ecosystem Features'
+      section_path: "1"
+    - target_path: ../P41-opencode-ecosystem-features/P41-research-competitive-analysis.md
+      link_text: P41 Competitive Analysis
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.2
+      role: risk
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: "1.6"
+      role: question
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T12:23:35.855882Z
+classified: false

@@ -1,0 +1,182 @@
+document_id: P45-wisdom-forwarding/design-p45-design-wisdom-forwarding
+document_path: work/P45-wisdom-forwarding/P45-design-wisdom-forwarding.md
+content_hash: fcfb9fe42d7b76ddcd2fd006c7de8873617c4196e03c03f757a4f3d35c1a1b71
+indexed_at: 2026-05-03T12:28:48.07351Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Wisdom Forwarding'
+      byte_offset: 0
+      byte_count: 5694
+      word_count: 799
+      content_hash: fcfb9fe42d7b76ddcd2fd006c7de8873617c4196e03c03f757a4f3d35c1a1b71
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 339
+          byte_count: 530
+          word_count: 72
+          content_hash: 459d80cd35aa1252c676dd7649c9f6a44ad28c9afbc5c2fa5c13bf121da55f9e
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 869
+          byte_count: 737
+          word_count: 115
+          content_hash: 740c54b66b9edc019be1a458e59426cdebd8111564b7c1cc3b2dc5da9af0644f
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 1606
+          byte_count: 2397
+          word_count: 348
+          content_hash: 8ed043601c380f878abd801ef18400726a2b62f50cddbb61336c7acede65b19f
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Current Flow
+              byte_offset: 1617
+              byte_count: 422
+              word_count: 64
+              content_hash: d25845d97dbf8f90d717902faa1dd9582aa03986ba875abc122b3444de0b2eba
+            - path: 1.3.2
+              level: 3
+              title: Proposed Flow
+              byte_offset: 2039
+              byte_count: 270
+              word_count: 37
+              content_hash: 90c46d19116f0a354eaf9433031c8415cdd7d9cf363fd1feff6644c0084e02bc
+            - path: 1.3.3
+              level: 3
+              title: Implementation
+              byte_offset: 2309
+              byte_count: 837
+              word_count: 116
+              content_hash: ea1c1e6596c4f5a03f9c1bee110d183e0c107228fd80610b86e2c42bc6d86aa9
+            - path: 1.3.4
+              level: 3
+              title: Prompt Format
+              byte_offset: 3146
+              byte_count: 466
+              word_count: 75
+              content_hash: 1042b562e9f79e237a532d8fb46bbd97e4a8c88aa282fe52744b552b68dc0830
+            - path: 1.3.5
+              level: 3
+              title: Opt-Out
+              byte_offset: 3612
+              byte_count: 391
+              word_count: 54
+              content_hash: c544b20b3e17cc41ee993b331d0a826d01f33dc4cd39c22d035a0181657236b8
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 4003
+          byte_count: 865
+          word_count: 117
+          content_hash: a553ccc673676cf836f74b427a9f031ac8d84f3dc19faffae71edbe315cf1fd8
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Full notepad system (OmO-style)
+              byte_offset: 4031
+              byte_count: 550
+              word_count: 75
+              content_hash: 10ec3447feb621fa0a16e3e870f04e121c57993ec59029e09b9593356c5826ac
+            - path: 1.4.2
+              level: 3
+              title: Orchestrator-managed forwarding
+              byte_offset: 4581
+              byte_count: 287
+              word_count: 39
+              content_hash: a8658268ce3066da30c387e1e1458b3b6277bcee35240edce0cc0878635ebd95
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 4868
+          byte_count: 182
+          word_count: 31
+          content_hash: 35a38ed817a27bdd2e002ac030adca10a0d1d4d43ae6967be14de21aa22e26ac
+        - path: "1.6"
+          level: 2
+          title: Open Questions
+          byte_offset: 5050
+          byte_count: 644
+          word_count: 96
+          content_hash: 5e7e29817c3e1d030a3d9f76a694714b4b45e8280f2c8021476cb041636051cd
+entity_refs:
+    - entity_id: FEAT-yyy
+      entity_type: feature
+      section_path: 1.3.4
+      byte_offset: 3579
+    - entity_id: TASK-003
+      entity_type: task
+      section_path: 1.3.1
+      byte_offset: 1694
+    - entity_id: TASK-003
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 2117
+    - entity_id: TASK-001
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 2266
+    - entity_id: TASK-002
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 2276
+    - entity_id: TASK-XXX
+      entity_type: task
+      section_path: 1.3.3
+      byte_offset: 2778
+    - entity_id: TASK-001
+      entity_type: task
+      section_path: 1.3.4
+      byte_offset: 3427
+    - entity_id: TASK-002
+      entity_type: task
+      section_path: 1.3.4
+      byte_offset: 3515
+    - entity_id: TASK-001
+      entity_type: task
+      section_path: 1.3.5
+      byte_offset: 3800
+    - entity_id: P45-wisdom-forwarding
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 42
+    - entity_id: P41-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 121
+    - entity_id: P41-design-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 153
+    - entity_id: P41-research-competitive-analysis
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 294
+cross_doc_links:
+    - target_path: ../P41-opencode-ecosystem-features/P41-design-opencode-ecosystem-features.md
+      link_text: 'P41: OpenCode Ecosystem Features'
+      section_path: "1"
+    - target_path: ../P41-opencode-ecosystem-features/P41-research-competitive-analysis.md
+      link_text: P41 Competitive Analysis
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: "1.6"
+      role: question
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T12:28:48.594287Z
+classified: false

@@ -146,8 +146,8 @@ conventional_roles:
     - section_path: 1.2.11
       role: constraint
       confidence: high
-access_count: 1
-last_accessed_at: 2026-04-22T18:38:38.884849Z
+access_count: 2
+last_accessed_at: 2026-05-01T16:53:13.420291Z
 classified: true
 classified_at: 2026-04-22T18:45:59.419385Z
 classified_by: claude-sonnet-4-6

@@ -1,0 +1,379 @@
+document_id: P41-opencode-ecosystem-features/research-research-opencode-ecosystem-evaluation
+document_path: work/_project/research-opencode-ecosystem-evaluation.md
+content_hash: 399d6bc025a8429fc999938c85493fcd6307c5926419a84c02d796dcd259f850
+indexed_at: 2026-05-03T12:02:36.185168Z
+sections:
+    - path: "1"
+      level: 2
+      title: Research Question
+      byte_offset: 216
+      byte_count: 699
+      word_count: 82
+      content_hash: c3bc072f53caa73a0da72d870175edfdfc8c794865357b92df164797846d66eb
+    - path: "2"
+      level: 2
+      title: Scope and Methodology
+      byte_offset: 915
+      byte_count: 1165
+      word_count: 137
+      content_hash: 2f1eeb7d4a359c06b7c2a4f4a1143056c65e3e1ff25f7146b551218cf6f5a8bb
+    - path: "3"
+      level: 2
+      title: Findings
+      byte_offset: 2080
+      byte_count: 33554
+      word_count: 4437
+      content_hash: ad3d9d14a93b33c5c6201c38943cf742a0bca3a4ea4ba586fe55b3c3cd4fdf0c
+      children:
+        - path: "3.1"
+          level: 3
+          title: 'Finding Set 1: What do they do better?'
+          byte_offset: 2093
+          byte_count: 5178
+          word_count: 649
+          content_hash: 54f458bb60d66db8b297b2b064c76046ac1ea96524865e0d88ad0997da987c0a
+          children:
+            - path: 3.1.1
+              level: 4
+              title: '1.1 oh-my-openagent: Multi-Model Orchestration with Category-Based Delegation'
+              byte_offset: 2137
+              byte_count: 1381
+              word_count: 169
+              content_hash: 2d43b4a8332fbea8de4c256a2bb622a099b6f7e7f481476e28e4b5fb86a96d62
+            - path: 3.1.2
+              level: 4
+              title: '1.2 micode: Batch-First Parallelism with 10-20 Concurrent Agents'
+              byte_offset: 3518
+              byte_count: 1194
+              word_count: 149
+              content_hash: 76d3e2f24aed3f6faa347148ac679d80e79c4f034892621624d7fab72f7fb929
+            - path: 3.1.3
+              level: 4
+              title: '1.3 opencode-background-agents: Async Fire-and-Forget with Disk Persistence'
+              byte_offset: 4712
+              byte_count: 1645
+              word_count: 191
+              content_hash: 2450a97ab5e07cd19b72d8cb8324839f01ce38b38876c8839aa3d276bb4ea547
+            - path: 3.1.4
+              level: 4
+              title: '1.4 portal: Web UI for Session Visibility'
+              byte_offset: 6357
+              byte_count: 914
+              word_count: 131
+              content_hash: 5aac058e7bffb271450cc12c57c82caed6cae13153011ce9177ca2a2c946df1f
+        - path: "3.2"
+          level: 3
+          title: 'Finding Set 2: Interesting features worth exploring'
+          byte_offset: 7271
+          byte_count: 6288
+          word_count: 790
+          content_hash: e573e5adfc0af20abe40b6e7312374c5d4b2e0f652e3a1170f6268416033c866
+          children:
+            - path: 3.2.1
+              level: 4
+              title: '2.1 oh-my-openagent: Hash-Anchored Edit Tool (Hashline)'
+              byte_offset: 7328
+              byte_count: 1287
+              word_count: 178
+              content_hash: 4e92882e32ffd10b9b1f84ab03b29168e19a6189f95661df017bd4070bf2064a
+            - path: 3.2.2
+              level: 4
+              title: '2.2 micode: Mindmodel System'
+              byte_offset: 8615
+              byte_count: 1466
+              word_count: 173
+              content_hash: 3c3acb144a74beb8c99eafc1db97e1a7ae0eee447c37e48028edf6f8bd60067d
+            - path: 3.2.3
+              level: 4
+              title: '2.3 oh-my-openagent: Wisdom Accumulation (Notepad System)'
+              byte_offset: 10081
+              byte_count: 1154
+              word_count: 135
+              content_hash: 05c14104353f63c2c8a86a0a7c41a64b3477d196db0ea149b97a2793d9f7903b
+            - path: 3.2.4
+              level: 4
+              title: '2.4 oh-my-openagent: Ralph Loop — Self-Referential Agent Loop'
+              byte_offset: 11235
+              byte_count: 1249
+              word_count: 168
+              content_hash: d6c9d42726737dbc4a64340f418e87871e4ec70c3f21f942341cfa11f3eafbf6
+            - path: 3.2.5
+              level: 4
+              title: '2.5 micode: Session Continuity via Ledger System'
+              byte_offset: 12484
+              byte_count: 1075
+              word_count: 128
+              content_hash: 765932eb4254a2635c7cebb36d1d957dfe5b16f9310d534119db245c7ba10dbc
+        - path: "3.3"
+          level: 3
+          title: 'Finding Set 3: Candidates for kanbanzai adoption'
+          byte_offset: 13559
+          byte_count: 5913
+          word_count: 791
+          content_hash: 674b1f3a885ed81adcfd731099d0a7df6301636b44daf98b901c7cfe7c66b996
+          children:
+            - path: 3.3.1
+              level: 4
+              title: 3.1 Category-Based Model Routing for Sub-Agent Dispatch
+              byte_offset: 13613
+              byte_count: 1299
+              word_count: 165
+              content_hash: 7ccb75d80f5bf13ad565458bcea60f96156eacef612a8fea592f8e3c2e3d71cb
+            - path: 3.3.2
+              level: 4
+              title: 3.2 Hash-Anchored Edit Verification
+              byte_offset: 14912
+              byte_count: 1291
+              word_count: 180
+              content_hash: f287448c277660c4e67195e562d31f7d638bdaca11d3a5d4d505c74d7a8086b7
+            - path: 3.3.3
+              level: 4
+              title: 3.3 Async Background Dispatch with Result Persistence
+              byte_offset: 16203
+              byte_count: 1241
+              word_count: 159
+              content_hash: 15937de77631628e9ab5055c010008f1599ffe4f5c36f0b20f29bf20ace2b7ff
+            - path: 3.3.4
+              level: 4
+              title: 3.4 Structured Project Convention System (Mindmodel-Inspired)
+              byte_offset: 17444
+              byte_count: 1283
+              word_count: 169
+              content_hash: dc38f6baf4483a974b6d99b58acaff0bff8e334285ce45b7f6966480fd1fff1f
+            - path: 3.3.5
+              level: 4
+              title: 3.5 Web Dashboard for Entity Visibility
+              byte_offset: 18727
+              byte_count: 745
+              word_count: 110
+              content_hash: 29c85dd41689ec8749d37091ebb856ec94bae23ed2b4871ac35d1c54810e9a1c
+        - path: "3.4"
+          level: 3
+          title: 'Finding Set 4: What kanbanzai does better'
+          byte_offset: 19472
+          byte_count: 6118
+          word_count: 800
+          content_hash: 970eff0a472c2839a3329e82e3dc66c8e12b4a02aeefa9e7f0ba44637c56214a
+          children:
+            - path: 3.4.1
+              level: 4
+              title: 4.1 Entity Hierarchy as Context Scoping Instrument
+              byte_offset: 19519
+              byte_count: 1311
+              word_count: 175
+              content_hash: 5d6f778adb06a2ac8688d5abde3c1bebefa97dc8cee9eab17457285ad94cddca
+            - path: 3.4.2
+              level: 4
+              title: 4.2 Document Intelligence Pipeline
+              byte_offset: 20830
+              byte_count: 992
+              word_count: 122
+              content_hash: 46a73aae6138d6058061f600dccbff1dd75a0f5046301b6d14b6ec24cfd02412
+            - path: 3.4.3
+              level: 4
+              title: 4.3 Tiered Knowledge with Lifecycle Management
+              byte_offset: 21822
+              byte_count: 970
+              word_count: 122
+              content_hash: 232c7f9a758a6ad211cd244129de17fac9162b291de131e084765beda3bd34ae
+            - path: 3.4.4
+              level: 4
+              title: 4.4 Byte-Budgeted, Priority-Trimmed Context Assembly
+              byte_offset: 22792
+              byte_count: 1134
+              word_count: 144
+              content_hash: 1b7bb5021ffd7dbbaffa930b5461ba15286ee6e8b18b4fd175ff3227b6fcd4fa
+            - path: 3.4.5
+              level: 4
+              title: 4.5 Semantic Merge Gates
+              byte_offset: 23926
+              byte_count: 445
+              word_count: 69
+              content_hash: 40958c40dccdc60c823bec88977dce8c644bd84443dc6d2a2dc212b755ac0351
+            - path: 3.4.6
+              level: 4
+              title: 4.6 Role + Skill System as a Formal Protocol
+              byte_offset: 24371
+              byte_count: 1219
+              word_count: 160
+              content_hash: fc472c80f3fd4fdc8838b7aecd489da1aaa3d36784fdd83220675d9981adb569
+        - path: "3.5"
+          level: 3
+          title: 'Finding Set 5: Same problem, different approach'
+          byte_offset: 25590
+          byte_count: 4381
+          word_count: 573
+          content_hash: e7ff22e9e6e0c82fb6dca4a509d06f916ca203130f72846c2896d0445954f00c
+          children:
+            - path: 3.5.1
+              level: 4
+              title: '5.1 Task Decomposition: `decompose` tool vs. Prometheus Interview + Metis Review'
+              byte_offset: 25643
+              byte_count: 1180
+              word_count: 147
+              content_hash: 0c487b9cfc3b430f6a63007ea05253bb465ae2d7a64406d741710d81d6e04441
+            - path: 3.5.2
+              level: 4
+              title: '5.2 Parallel Agent Dispatch: `spawn_agent` + `handoff` vs. Batch-First `spawn_agent`'
+              byte_offset: 26823
+              byte_count: 1135
+              word_count: 153
+              content_hash: f9081ffc3ff0fb9704e69c62090730158d75ab1a8779b6c5aba8b0a365667e86
+            - path: 3.5.3
+              level: 4
+              title: '5.3 Context Compaction: Document-Based Offloading vs. Auto-Compaction + Ledger'
+              byte_offset: 27958
+              byte_count: 942
+              word_count: 120
+              content_hash: 5281348a1cbe01d29b45c92c53d4cadfcbb373004c7245d8a473e86da0855c6d
+            - path: 3.5.4
+              level: 4
+              title: '5.4 Sub-Agent Isolation: Worktrees vs. Shared Directory'
+              byte_offset: 28900
+              byte_count: 1071
+              word_count: 145
+              content_hash: 8ac361db2bd0cc5e15c7288415ffd6f79aaef344ce0920d0fefd3a90eb7978a8
+        - path: "3.6"
+          level: 3
+          title: 'Finding Set 6: Architectural deltas'
+          byte_offset: 29971
+          byte_count: 5663
+          word_count: 832
+          content_hash: da6d430444da659dcf189c9b446d8a683b80ef5b12a39f48955801cdc8b0493b
+          children:
+            - path: 3.6.1
+              level: 4
+              title: 6.1 What would it take to add category-based model routing to kanbanzai?
+              byte_offset: 30012
+              byte_count: 1249
+              word_count: 184
+              content_hash: 97a09df845a5581be30b3c8a64500337b254f554ccd04a93a797e93f5aab88b4
+            - path: 3.6.2
+              level: 4
+              title: 6.2 What would it take to add async background dispatch to kanbanzai?
+              byte_offset: 31261
+              byte_count: 1764
+              word_count: 249
+              content_hash: a7f061f99aa56527620184287a69e48c85e3019c87b1ddf26a2f435fb8298437
+            - path: 3.6.3
+              level: 4
+              title: 6.3 What would it take to add a web UI to kanbanzai?
+              byte_offset: 33025
+              byte_count: 1049
+              word_count: 160
+              content_hash: c3cc2d6b0be8e7cb16cd8269c33acec6975b9740e51a724ec908354ab33aabff
+            - path: 3.6.4
+              level: 4
+              title: 6.4 What would it take to enable kanbanzai to launch agents directly to AI providers?
+              byte_offset: 34074
+              byte_count: 1560
+              word_count: 233
+              content_hash: cf92818fc6ca838ca1dce5c83a9508f741f159672abc255c6bb39d7480bedd2b
+    - path: "4"
+      level: 2
+      title: Trade-Off Analysis
+      byte_offset: 35634
+      byte_count: 3546
+      word_count: 477
+      content_hash: f168a4c3718e1b23db93948946549d1f2b33fdc0c60d80ed111d8c484cb7f59e
+    - path: "5"
+      level: 2
+      title: Recommendations
+      byte_offset: 39180
+      byte_count: 2373
+      word_count: 317
+      content_hash: 8abc1767fa5435b3b60ec6bb6a1a7f8d362f5de89498cb32ca62bd303e331d1b
+      children:
+        - path: "5.1"
+          level: 3
+          title: 'Recommendation 1: Hash-Anchored Edit Verification'
+          byte_offset: 39200
+          byte_count: 363
+          word_count: 45
+          content_hash: c8587b53d713101cc8ce0f00d60f4c4cf5a0e9613f58dfb1627cb495fd672279
+        - path: "5.2"
+          level: 3
+          title: 'Recommendation 2: Async Background Dispatch (Phase 4b)'
+          byte_offset: 39563
+          byte_count: 423
+          word_count: 54
+          content_hash: f39ff1e86382940f91f3fe70a105e885a84f01b405355abd06a8e884020c263f
+        - path: "5.3"
+          level: 3
+          title: 'Recommendation 3: Category-Based Model Routing (Phase 4b+)'
+          byte_offset: 39986
+          byte_count: 399
+          word_count: 55
+          content_hash: 7296defb6e3261aed1afa388e15e1d43f7121d3ae09f17b2f3b5a10b473e4079
+        - path: "5.4"
+          level: 3
+          title: 'Recommendation 4: Web Dashboard (Phase 5)'
+          byte_offset: 40385
+          byte_count: 371
+          word_count: 54
+          content_hash: da61e87cc2c5f9664976724bb98767608875db038552db4ce9d1ddff301d25c5
+        - path: "5.5"
+          level: 3
+          title: 'Recommendation 5: Structured Project Convention Layer'
+          byte_offset: 40756
+          byte_count: 331
+          word_count: 47
+          content_hash: dc3a3ec329e5c0539526c7b0db69dc0e2533f335bfb649349abf7db9063da580
+        - path: "5.6"
+          level: 3
+          title: 'Recommendation 6: Intra-Plan Knowledge Accumulation'
+          byte_offset: 41087
+          byte_count: 466
+          word_count: 60
+          content_hash: 05f05af0b8d3c24d74fa116a078faa0d7268781d4083c972f7b558dd0a0a9b1a
+    - path: "6"
+      level: 2
+      title: Limitations
+      byte_offset: 41553
+      byte_count: 2992
+      word_count: 410
+      content_hash: aba20a30f425cfa6dad93725ea4fc659d2405dec764a33cb38b072e117181930
+cross_doc_links:
+    - target_path: research-orchestration-landscape-2025.md
+      link_text: research-orchestration-landscape-2025.md
+      section_path: "1"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 3.2.2
+    - target_path: thoughts/ledgers/CONTINUITY_{session}.md
+      link_text: thoughts/ledgers/CONTINUITY_{session}.md
+      section_path: 3.2.5
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 3.3.4
+conventional_roles:
+    - section_path: "1"
+      role: question
+      confidence: high
+    - section_path: "2"
+      role: constraint
+      confidence: high
+    - section_path: 3.1.3
+      role: narrative
+      confidence: high
+    - section_path: 3.3.3
+      role: narrative
+      confidence: high
+    - section_path: 3.4.1
+      role: narrative
+      confidence: high
+    - section_path: 3.4.4
+      role: narrative
+      confidence: high
+    - section_path: 3.5.3
+      role: narrative
+      confidence: high
+    - section_path: 3.6.2
+      role: narrative
+      confidence: high
+    - section_path: "5.2"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T12:02:36.817931Z
+classified: false

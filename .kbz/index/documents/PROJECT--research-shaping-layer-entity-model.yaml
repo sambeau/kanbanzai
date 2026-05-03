@@ -1,0 +1,118 @@
+document_id: PROJECT/research-shaping-layer-entity-model
+document_path: work/research/shaping-layer-entity-model.md
+content_hash: 0f0c572adcf8b4601cad593fbb3ef9e40301168526da8ef75a9fa7a269e91910
+indexed_at: 2026-05-01T13:24:04.055081Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Shaping Layer: Entity Model and Data Flow'
+      byte_offset: 0
+      byte_count: 16105
+      word_count: 2296
+      content_hash: 0f0c572adcf8b4601cad593fbb3ef9e40301168526da8ef75a9fa7a269e91910
+      children:
+        - path: "1.1"
+          level: 2
+          title: Research Question
+          byte_offset: 261
+          byte_count: 526
+          word_count: 73
+          content_hash: 8fb66d66aff8acc99ad496cef4db8a63a2685fa3b6643918aca91a2ab0c99978
+        - path: "1.2"
+          level: 2
+          title: Scope and Methodology
+          byte_offset: 787
+          byte_count: 953
+          word_count: 130
+          content_hash: ef5f763d8c00dd97f615d5be532ae852a0bd3571a05fbbe76ef07f90792dd92b
+        - path: "1.3"
+          level: 2
+          title: Findings
+          byte_offset: 1740
+          byte_count: 8897
+          word_count: 1359
+          content_hash: 21c810e591333970b3e07cafd3633c50b3a4024ae4cb9f40609006d03fa5a128
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Finding 1: Existing Tools Solve the Wrong Problem'
+              byte_offset: 1753
+              byte_count: 1038
+              word_count: 148
+              content_hash: 4450b0081bd1495161f43f2b4db0ad35c31611abc26ee41faf3691e6ffb2a0ee
+            - path: 1.3.2
+              level: 3
+              title: 'Finding 2: The Entity Model — Ideas, Plans, Milestones'
+              byte_offset: 2791
+              byte_count: 3087
+              word_count: 464
+              content_hash: e795cebae0e4d811c28a0e76fdc3de85084064ded432cd8afbe1da47c5cef9ec
+            - path: 1.3.3
+              level: 3
+              title: 'Finding 3: Hill Position Is Derived from Documents, Not Stored'
+              byte_offset: 5878
+              byte_count: 1205
+              word_count: 190
+              content_hash: 0b4e9364b5f454722cee0f446ed832be2ab4315999f52a4c11b0ab8fd4705aa7
+            - path: 1.3.4
+              level: 3
+              title: 'Finding 4: The AI Clerk''s Responsibilities'
+              byte_offset: 7083
+              byte_count: 1315
+              word_count: 203
+              content_hash: 2608e69dade8492a46f1c8832839d1af88bc54264050f74fedcca0f6864e7743
+            - path: 1.3.5
+              level: 3
+              title: 'Finding 5: The Human Interaction Surface'
+              byte_offset: 8398
+              byte_count: 1324
+              word_count: 210
+              content_hash: 9230585598a0faebf222f916487e3ee3d33f5b7d7964ab67a17e94e8d6f0eeae
+            - path: 1.3.6
+              level: 3
+              title: 'Finding 6: Views, Not Entities'
+              byte_offset: 9722
+              byte_count: 915
+              word_count: 142
+              content_hash: e276065770c8cff572791b5bb3c54e0e683429c386d71b42411575e6542609bc
+        - path: "1.4"
+          level: 2
+          title: The Data Flow
+          byte_offset: 10637
+          byte_count: 1844
+          word_count: 188
+          content_hash: bc50a4cea9d288525be9bc89936854dec3fd13d86711b33d1cddf3862d11eb2d
+        - path: "1.5"
+          level: 2
+          title: MVP Scope
+          byte_offset: 12481
+          byte_count: 762
+          word_count: 112
+          content_hash: 0f4c972141693a55822fddb7c2fbd02120146f83c77bd9c4859dae836e91127e
+        - path: "1.6"
+          level: 2
+          title: Relationship to Prior Research
+          byte_offset: 13243
+          byte_count: 1558
+          word_count: 211
+          content_hash: ffc8797d83aa6f561b6852f0a0e0d73d28fe88b2307d98c2644e8e0580e4f1cf
+        - path: "1.7"
+          level: 2
+          title: Limitations
+          byte_offset: 14801
+          byte_count: 1304
+          word_count: 194
+          content_hash: 95a752f099e64b5e3f0721aea149139f85f1c46d87a9ad4615c34088872fd7c0
+conventional_roles:
+    - section_path: "1.1"
+      role: question
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-01T13:24:04.66314Z
+classified: false

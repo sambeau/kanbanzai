@@ -1,0 +1,182 @@
+document_id: P44-model-routing-agent-launcher/design-p44-design-model-routing-agent-launcher
+document_path: work/P44-model-routing-agent-launcher/P44-design-model-routing-agent-launcher.md
+content_hash: 2b737f4944e055946b05a5b29c48ebbb395d6f828f8dde272d6f725a545c0eca
+indexed_at: 2026-05-03T12:26:48.915937Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Model Routing & Agent Launcher (Feasibility)'
+      byte_offset: 0
+      byte_count: 10653
+      word_count: 1448
+      content_hash: 2b737f4944e055946b05a5b29c48ebbb395d6f828f8dde272d6f725a545c0eca
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 412
+          byte_count: 816
+          word_count: 125
+          content_hash: 781714b6bdc86c84f9f88c33632921a38a5f985d74855398096004940142cfcf
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 1228
+          byte_count: 1091
+          word_count: 157
+          content_hash: 360cbc8b9e4189eab63a6586ae10e3b022054f04771cd0953b5479b0be7c8dca
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 2319
+          byte_count: 5541
+          word_count: 736
+          content_hash: 83fab26dc1fdbe7163ae1ae1a4463d427010312cb0c2269185b45b51b99b2312
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Architecture Options
+              byte_offset: 2330
+              byte_count: 2464
+              word_count: 299
+              content_hash: db9a34a471997fcb8abd524df7d7a8db21a1f63fe939014326d62242aa714461
+              children:
+                - path: 1.3.1.1
+                  level: 4
+                  title: 'Option A: Embedded (`internal/routing/` package in `kbz serve`)'
+                  byte_offset: 2356
+                  byte_count: 902
+                  word_count: 112
+                  content_hash: 1a4c72e894a70656f1a3fce4d0c9867ed3a47b5b9efc63069da6042a05e5f255
+                - path: 1.3.1.2
+                  level: 4
+                  title: 'Option B: Separate MCP Server (`kbz-route`)'
+                  byte_offset: 3258
+                  byte_count: 1038
+                  word_count: 113
+                  content_hash: c9f544484763ad7f7d6e9156679fac7699d5f81be7ee57b1d0c6199c36169c72
+                - path: 1.3.1.3
+                  level: 4
+                  title: 'Option C: Middle Ground (build together, extract later)'
+                  byte_offset: 4296
+                  byte_count: 498
+                  word_count: 71
+                  content_hash: 3d9f3760b0bb75afd9c02e598a22c8842a0dd9c7826f8e9f4712b0405cad2b9b
+            - path: 1.3.2
+              level: 3
+              title: Provider Integration Surface
+              byte_offset: 4794
+              byte_count: 456
+              word_count: 68
+              content_hash: c3f8eb21278a045d7e597f819a42b9857f6d91ac6fbf76acc6be0965c2e18812
+            - path: 1.3.3
+              level: 3
+              title: Category System
+              byte_offset: 5250
+              byte_count: 903
+              word_count: 131
+              content_hash: 8125484567f243c1c4d23965438f65e2548f79302f0070fd686abead912fa593
+            - path: 1.3.4
+              level: 3
+              title: What Becomes Possible
+              byte_offset: 6153
+              byte_count: 913
+              word_count: 129
+              content_hash: 1e19d8de3bd76bb46eeafb427cca02c0928ee2b01c090bb6555c51e269fbe821
+            - path: 1.3.5
+              level: 3
+              title: 'Compaction: U-Shaped Continuation Prompt'
+              byte_offset: 7066
+              byte_count: 794
+              word_count: 107
+              content_hash: e555bc9b244c7295431754d9a57fd53925ca8355f002d39b8307ad0ede02ebaa
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 7860
+          byte_count: 1308
+          word_count: 188
+          content_hash: def0014185756bdeb100ac67858858a999a37931dddb2cc9f3e5cf1cc87af94d
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Single-model approach (status quo)
+              byte_offset: 7888
+              byte_count: 415
+              word_count: 60
+              content_hash: af752f187d10d0ca156dcb21a0c3c7099ecae0e0ed95d0cf1d2b520314267a4d
+            - path: 1.4.2
+              level: 3
+              title: MCP protocol extension
+              byte_offset: 8303
+              byte_count: 396
+              word_count: 56
+              content_hash: 8b7ac258a4fb4506952bb653f0a3e10fc51e626faf5a1479840119cd8d5f4d1b
+            - path: 1.4.3
+              level: 3
+              title: Only build the thinking-level feature, skip routing
+              byte_offset: 8699
+              byte_count: 469
+              word_count: 69
+              content_hash: 7d391e2e35e3d3be85834a7b5eadb5121d3b51990d2e9b1d0de0744a82a7edc1
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 9168
+          byte_count: 359
+          word_count: 57
+          content_hash: 3703623ffd6f7ad914a3e5f2ffb537b5d25a120bdfaf4eac5fb37b1c288869ea
+        - path: "1.6"
+          level: 2
+          title: Open Questions
+          byte_offset: 9527
+          byte_count: 1126
+          word_count: 156
+          content_hash: 4f731c5889ff06346217a8008cfe1e2d2e25f7561576207a3e31e72afd62a9c3
+entity_refs:
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.3.5
+      byte_offset: 7367
+    - entity_id: P44-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 69
+    - entity_id: P41-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 159
+    - entity_id: P41-design-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 191
+    - entity_id: P41-research-competitive-analysis
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 360
+cross_doc_links:
+    - target_path: ../P41-opencode-ecosystem-features/P41-design-opencode-ecosystem-features.md
+      link_text: 'P41: OpenCode Ecosystem Features'
+      section_path: "1"
+    - target_path: ../P41-opencode-ecosystem-features/P41-research-competitive-analysis.md
+      link_text: P41 Competitive Analysis
+      section_path: "1"
+    - target_path: refs/prompt-engineering-guide.md
+      link_text: refs/prompt-engineering-guide.md
+      section_path: 1.3.5
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: "1.6"
+      role: question
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T12:26:49.411196Z
+classified: false

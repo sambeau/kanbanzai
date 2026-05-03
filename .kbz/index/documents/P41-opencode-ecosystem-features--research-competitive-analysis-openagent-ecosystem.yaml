@@ -1,0 +1,619 @@
+document_id: P41-opencode-ecosystem-features/research-competitive-analysis-openagent-ecosystem
+document_path: work/research/competitive-analysis-openagent-ecosystem.md
+content_hash: 30b893ce9ae37ada47d6b7e4e5cf757ffd927d8a41e16bcf4bf3c4307ee5acd4
+indexed_at: 2026-05-03T12:02:24.966567Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Competitive Analysis: OpenCode Plugin Ecosystem vs. Kanbanzai'
+      byte_offset: 0
+      byte_count: 76165
+      word_count: 10647
+      content_hash: 30b893ce9ae37ada47d6b7e4e5cf757ffd927d8a41e16bcf4bf3c4307ee5acd4
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Executive Summary
+          byte_offset: 208
+          byte_count: 1057
+          word_count: 129
+          content_hash: df90661e493c9d48203f3b839f99a032e342bae6f9cd841af195fa51f809f897
+        - path: "1.2"
+          level: 2
+          title: 2. Project Summaries
+          byte_offset: 1265
+          byte_count: 2888
+          word_count: 360
+          content_hash: b22270ced44c038daa48af1f3ad21c0580b9b29f8db08384bbde5cf041c9324b
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 oh-my-openagent (OmO)
+              byte_offset: 1290
+              byte_count: 1141
+              word_count: 138
+              content_hash: dd73ede0cd1c7a3b3a981d6508ba89c44e9753e02c29536d29c33599610e2918
+            - path: 1.2.2
+              level: 3
+              title: 2.2 micode
+              byte_offset: 2431
+              byte_count: 669
+              word_count: 82
+              content_hash: e24c91ef9a85f7891d9e025546ba1ab2893b7cb1310532f42fe5463052fb97fd
+            - path: 1.2.3
+              level: 3
+              title: 2.3 opencode-background-agents
+              byte_offset: 3100
+              byte_count: 590
+              word_count: 71
+              content_hash: 98ef9e8a9b1cebae2c408fd0544f28e4705e798fee7f320a10bdea21a65b0ecf
+            - path: 1.2.4
+              level: 3
+              title: 2.4 Portal
+              byte_offset: 3690
+              byte_count: 463
+              word_count: 65
+              content_hash: 02f7e27ae286b08d0390530551df93d60844328dcc45c1f5c85104c38fa5e81b
+        - path: "1.3"
+          level: 2
+          title: 3. What They Do Better
+          byte_offset: 4153
+          byte_count: 5918
+          word_count: 807
+          content_hash: 10b554a482055e2cc4fd1db3c83f3cac041026fb24b6b990d38510584eca2504
+          children:
+            - path: 1.3.1
+              level: 3
+              title: '3.1 OmO: Runtime Agent Autonomy'
+              byte_offset: 4180
+              byte_count: 1317
+              word_count: 183
+              content_hash: f02c7c10a5ed3e595f25d6d2ef140aa02faff2abd06f8cb47eac54de88bc0e83
+            - path: 1.3.2
+              level: 3
+              title: '3.2 OmO: Hash-Anchored Edit Tool'
+              byte_offset: 5497
+              byte_count: 606
+              word_count: 99
+              content_hash: 219648e7296d462986b168cdbd2c0019fd587bb23fed5c248d748130f28d66a2
+            - path: 1.3.3
+              level: 3
+              title: '3.3 OmO: LSP + AST-Grep Integration'
+              byte_offset: 6103
+              byte_count: 377
+              word_count: 45
+              content_hash: 72862e4dfa2cf9e1e59a77675284dbcae9c2b3fe4d022c171baefb5a613f5e78
+            - path: 1.3.4
+              level: 3
+              title: '3.4 OmO: Model Category System'
+              byte_offset: 6480
+              byte_count: 507
+              word_count: 72
+              content_hash: 0dc0eee1b6dbec0b42f52192e56862c0e03353c3f3a9d25441886c92a68ad7c2
+            - path: 1.3.5
+              level: 3
+              title: '3.5 micode: Mindmodel Pattern Enforcement'
+              byte_offset: 6987
+              byte_count: 688
+              word_count: 80
+              content_hash: d0396d07a8afbdcaacd188c39f1a49ee411a2402b98655c2fb1ff3917e758efc
+            - path: 1.3.6
+              level: 3
+              title: '3.6 micode: Batch-First Parallelism (10-20 Concurrent Agents)'
+              byte_offset: 7675
+              byte_count: 522
+              word_count: 72
+              content_hash: d0edcc1d3e88514b10cd9d0a823517017453e0d4e8679cd5f6f68740e7319cec
+            - path: 1.3.7
+              level: 3
+              title: '3.7 micode: Auto-Compaction at Threshold'
+              byte_offset: 8197
+              byte_count: 325
+              word_count: 43
+              content_hash: 9948d4de8dd095c721e97aa912264e96423ddd8636cf7d3ddc13038f84629b95
+            - path: 1.3.8
+              level: 3
+              title: '3.8 opencode-background-agents: Async Fire-and-Forget Dispatch'
+              byte_offset: 8522
+              byte_count: 1083
+              word_count: 139
+              content_hash: f39e5cfb8975829707a86160a655a7ed9e9fa67197ebecc3efb772f71790f13d
+            - path: 1.3.9
+              level: 3
+              title: '3.9 Portal: Multi-Interface Access'
+              byte_offset: 9605
+              byte_count: 466
+              word_count: 68
+              content_hash: ea1c47b44c4413f951d33f6b1d051798791f226a1470e3a0f48f8147b73fd99b
+        - path: "1.4"
+          level: 2
+          title: 4. What We Do Better
+          byte_offset: 10071
+          byte_count: 4021
+          word_count: 564
+          content_hash: 17483da82e9a8505ab8557095fdd28081136807a12835e18647b6e8326e80e17
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Structured Governance and Entity Hierarchy
+              byte_offset: 10096
+              byte_count: 2302
+              word_count: 342
+              content_hash: ee6c501f99136bb53a96aaee0a22ed032e0454fd0971ebb2edbd66cd62a9e885
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Git-Native Architecture
+              byte_offset: 12398
+              byte_count: 561
+              word_count: 73
+              content_hash: c9f0ae11717ddca05149d3e1098f83d8dc30b94282831e70b63d24fb1628357c
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Document Intelligence
+              byte_offset: 12959
+              byte_count: 418
+              word_count: 54
+              content_hash: a2ae2680733a78431f88376cc44881b313a44b6c65ed8c3a1003ba8b31634d99
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Knowledge Management
+              byte_offset: 13377
+              byte_count: 377
+              word_count: 43
+              content_hash: 1e9b4076bf18a2655a111b6d7fb44be11ecbfebdb231764ef77da4a95bd58eed
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Entity Model Coherence
+              byte_offset: 13754
+              byte_count: 338
+              word_count: 46
+              content_hash: 5a70b2afe101c7fd46e553e21406b54d35cc6f7dc927190f1752cc29c0986c4e
+        - path: "1.5"
+          level: 2
+          title: 5. What We Already Do But Differently
+          byte_offset: 14092
+          byte_count: 2725
+          word_count: 399
+          content_hash: c2ae2473861130f82b695e9afe3244d5e536cff957ab403b3f0dbda54c7dddeb
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Orchestration Model
+              byte_offset: 14134
+              byte_count: 878
+              word_count: 126
+              content_hash: 89714cef299b3ea3ffbb2f42891a2500b824f8322001513c8a9cee1e72836606
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Planning
+              byte_offset: 15012
+              byte_count: 894
+              word_count: 134
+              content_hash: ced65f9b9dfb978a17e3791efeba2f95ccfb567e93addd732b61471438fdfdd4
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Session Continuity
+              byte_offset: 15906
+              byte_count: 501
+              word_count: 75
+              content_hash: 6276dabee9aba26bf9c9292806b39bbe58124eab2142f6765405648165d358a5
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Document Management
+              byte_offset: 16407
+              byte_count: 410
+              word_count: 56
+              content_hash: 4b6abedc15062ee4fae60f6f848a2fcc9bcbc806ae5c69df3c6cd4f6f1fc3d0c
+        - path: "1.6"
+          level: 2
+          title: 6. Features Worth Exploring / Adding to Kanbanzai
+          byte_offset: 16817
+          byte_count: 13743
+          word_count: 1931
+          content_hash: ebd6e2d0784f506fbd3a8323eacc7fc7bc886d87dde17a7259de005e374783a8
+          children:
+            - path: 1.6.1
+              level: 3
+              title: '6.1 High Priority: Hash-Anchored Edit Validation'
+              byte_offset: 16871
+              byte_count: 1576
+              word_count: 228
+              content_hash: 83f16ed601a3164ba5d1af6156fb8725bcb3c518268b9ee2fd8f92baedbd297c
+            - path: 1.6.2
+              level: 3
+              title: '6.2 High Priority: Automated Plan Quality Validation'
+              byte_offset: 18447
+              byte_count: 1063
+              word_count: 148
+              content_hash: ca1168fad227235cd4ec4474a3d09c320c1023686bb60ef77c122d53f9be5600
+            - path: 1.6.3
+              level: 3
+              title: '6.3 Medium Priority: Agent-Led Requirement Elicitation'
+              byte_offset: 19510
+              byte_count: 1730
+              word_count: 244
+              content_hash: 269a74e12de682f835eba1dddd772d98f8fb79a380aa52c0758101a402b3befd
+            - path: 1.6.4
+              level: 3
+              title: '6.4 Medium Priority: Automated Wisdom Forwarding'
+              byte_offset: 21240
+              byte_count: 736
+              word_count: 97
+              content_hash: 86de994c07213df1829afbe030916fbc6aae9912bcb5cb1863b8f2d83fd6005a
+            - path: 1.6.5
+              level: 3
+              title: '6.5 High Priority: Model Routing & Thinking-Level Control (capability unlock)'
+              byte_offset: 21976
+              byte_count: 1806
+              word_count: 260
+              content_hash: 7ab5a96987f28b05f1c070a5d14e424a534630c366d3dc68e3499fe8b83e8374
+            - path: 1.6.6
+              level: 3
+              title: '6.6 Medium Priority: Auto-Compaction at Threshold'
+              byte_offset: 23782
+              byte_count: 3579
+              word_count: 486
+              content_hash: 857b3c377bafb3f2122980fc53f4a106c91ed3387c07182951df931dbe76a583
+            - path: 1.6.7
+              level: 3
+              title: '6.7 Low Priority: Web UI / Dashboard'
+              byte_offset: 27361
+              byte_count: 1293
+              word_count: 191
+              content_hash: c308ffec51990da51937edf02a5629e7e872faaf107449ab3d6b9225089bd6c1
+            - path: 1.6.8
+              level: 3
+              title: '6.8 Low Priority: Ralph Loop / Continuous Execution'
+              byte_offset: 28654
+              byte_count: 1906
+              word_count: 268
+              content_hash: 449044898a73f015e04760aaf588225e9cecb25ba6eb6bb098bb46a128548ac3
+        - path: "1.7"
+          level: 2
+          title: 7. Architectural Implications
+          byte_offset: 30560
+          byte_count: 3594
+          word_count: 526
+          content_hash: e1cbf0538ec665d06aa6ac2cc5b947d007cacea55d0a954e11d706af5e1d40c4
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 What We'd Need to Change for Model Routing
+              byte_offset: 30594
+              byte_count: 2380
+              word_count: 341
+              content_hash: e959f6a354499f36d099dd797b61425b64ff8db3a60bfa51afb9bdebb14a812c
+            - path: 1.7.2
+              level: 3
+              title: 7.2 What We'd Need to Change for Beyond-Chat Interface
+              byte_offset: 32974
+              byte_count: 624
+              word_count: 97
+              content_hash: 6400b14690e9a22a39981598d6fb52d7553c7101ee077968af9e33e1f8ac9d88
+            - path: 1.7.3
+              level: 3
+              title: 7.3 What We'd Need to Change for Hash-Anchored Edits
+              byte_offset: 33598
+              byte_count: 556
+              word_count: 84
+              content_hash: d49970853563da791862440add8251446bf66bf1f5a34e7c5e41eea048b30d5b
+        - path: "1.8"
+          level: 2
+          title: 8. Assessment of OmO's Claims
+          byte_offset: 34154
+          byte_count: 1447
+          word_count: 202
+          content_hash: 53c789d50955b0140f671c88ddad34158f83297977f3e7097e3d9a4ed1c2beb8
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Claims That Need Validation
+              byte_offset: 34188
+              byte_count: 770
+              word_count: 111
+              content_hash: 2a43230fe4086d7ffa4a6bceb781fd6da1f62d3c38af668ed7aebffe84d181c6
+            - path: 1.8.2
+              level: 3
+              title: 8.2 Claims That Are Architecturally Sound
+              byte_offset: 34958
+              byte_count: 643
+              word_count: 85
+              content_hash: 4b271ce1ade4027523d4e1bd9d666c9526f201ed5406d020087cb60d1fde18c8
+        - path: "1.9"
+          level: 2
+          title: 9. Implementation Roadmap
+          byte_offset: 35601
+          byte_count: 6941
+          word_count: 944
+          content_hash: 8644f1a303e7a0709c8be59b9fa6cc05583ba861586cfac0d36ea0cf9198172d
+          children:
+            - path: 1.9.1
+              level: 3
+              title: '9.1 Design A: Hash-Anchored Edit Tool'
+              byte_offset: 36358
+              byte_count: 1180
+              word_count: 162
+              content_hash: 36ea9c861a1dd417a23efd066628637e5bcd889c8e88f1b059f5374255e3f06f
+            - path: 1.9.2
+              level: 3
+              title: '9.2 Design B: Fast-Track Architecture'
+              byte_offset: 37538
+              byte_count: 2112
+              word_count: 268
+              content_hash: 5f818dd77da39255ac6feb55016d279b9489cf9d82fcaf40b710a614b1922a72
+            - path: 1.9.3
+              level: 3
+              title: '9.3 Design C: Model Routing & Agent Launcher'
+              byte_offset: 39650
+              byte_count: 1357
+              word_count: 189
+              content_hash: 8e269ef964d210525ad0c367f4e571aa673866f53699881d472d22d5061db5ba
+            - path: 1.9.4
+              level: 3
+              title: 9.4 Small Enhancements (build anytime)
+              byte_offset: 41007
+              byte_count: 730
+              word_count: 103
+              content_hash: 0dd8dba4e3afe6cdc7a7e89be7a458fcd0fd57d5b703a97836553d8d9bfef7f6
+            - path: 1.9.5
+              level: 3
+              title: 9.5 Deferred (revisit later)
+              byte_offset: 41737
+              byte_count: 436
+              word_count: 59
+              content_hash: a250d6874dfd8fc5254fb5ef3b6a0d02b554d68081b21e9d3d0d1cdf36667af0
+            - path: 1.9.6
+              level: 3
+              title: 9.6 Do Not Pursue
+              byte_offset: 42173
+              byte_count: 369
+              word_count: 55
+              content_hash: 63d8834eec0687f2dc4a50a4605e969ce83fe0e1cf2ccf82be06107bd7b3db66
+        - path: "1.10"
+          level: 2
+          title: 10. Open Questions
+          byte_offset: 42542
+          byte_count: 1831
+          word_count: 262
+          content_hash: 215bc7b82ca38b73f89018b2e8cb6433d1b592f6dfdd85c001fa5a986d1c20f9
+        - path: "1.11"
+          level: 2
+          title: 11. Automated Gate Validation & Fast-Track Architecture
+          byte_offset: 44373
+          byte_count: 25004
+          word_count: 3481
+          content_hash: 1b1de30ff9f04fd811b7b72a5ee19cab0ad8b7706c9c20b8c0fd796e8e3090de
+          children:
+            - path: 1.11.1
+              level: 3
+              title: 11.1 Motivation
+              byte_offset: 44433
+              byte_count: 1085
+              word_count: 162
+              content_hash: 9e08349cb45ead0f77975f8872bd837fd6f1860eac6e0808df0e47002a1283a8
+            - path: 1.11.2
+              level: 3
+              title: '11.2 Validator vs. Reviewer: A Critical Distinction'
+              byte_offset: 45518
+              byte_count: 1981
+              word_count: 299
+              content_hash: 2b717f5262660a3e26addca58ddd03d0bb17265fe080a5baf41146a8488af7dd
+            - path: 1.11.3
+              level: 3
+              title: '11.3 OmO Workflow Comparison: Apples and Oranges'
+              byte_offset: 47499
+              byte_count: 2080
+              word_count: 292
+              content_hash: ba6e68fe33caadfef5b1f20199b1f4e92739a8af2a715a41e2c348fb4279509b
+            - path: 1.11.4
+              level: 3
+              title: 11.4 Automated Validator Design
+              byte_offset: 49579
+              byte_count: 6950
+              word_count: 1043
+              content_hash: 88adf9b3db2d6d74cc564f5756260e42091bf9f6d07feab5f7bf2abda6f5131f
+              children:
+                - path: 1.11.4.1
+                  level: 4
+                  title: 11.4.1 Spec Validator
+                  byte_offset: 49616
+                  byte_count: 2769
+                  word_count: 397
+                  content_hash: 9822c73c32e04cb982a650d57f34cfdfd0db1bf80dd014b96b169ec73483d93b
+                - path: 1.11.4.2
+                  level: 4
+                  title: 11.4.2 Dev-Plan Validator
+                  byte_offset: 52385
+                  byte_count: 2347
+                  word_count: 368
+                  content_hash: dbc575ba62f6b23930ccb84288d3ddae8b4afc72badbad8a52004156a7b293ea
+                - path: 1.11.4.3
+                  level: 4
+                  title: 11.4.3 Review Gate Validator
+                  byte_offset: 54732
+                  byte_count: 1797
+                  word_count: 273
+                  content_hash: f4843e81e5cef88228b1672019225b11a1bdfb4a1ca4dbb8287f7798982382b2
+            - path: 1.11.5
+              level: 3
+              title: 11.5 Fast-Track Architecture
+              byte_offset: 56529
+              byte_count: 6709
+              word_count: 808
+              content_hash: 9b30d18b521aba30a64046f514539eee3a0a2162f59e31410d47637d301eff9a
+              children:
+                - path: 1.11.5.1
+                  level: 4
+                  title: 11.5.1 Risk Tiers
+                  byte_offset: 56563
+                  byte_count: 2724
+                  word_count: 258
+                  content_hash: ad5b77f1b4b55cdde413e3484a91fc74c0f42f570a7a78aec3ddcb097213008a
+                - path: 1.11.5.2
+                  level: 4
+                  title: 11.5.2 Tier Inference
+                  byte_offset: 59287
+                  byte_count: 580
+                  word_count: 80
+                  content_hash: 6b8c54816fff45554de016c10d8bec97f5dd062079836be60accd5ac97ebd120
+                - path: 1.11.5.3
+                  level: 4
+                  title: 11.5.3 Validation Pipeline
+                  byte_offset: 59867
+                  byte_count: 674
+                  word_count: 87
+                  content_hash: e2fa198c93af89bbfe5b5581e0d745ea7a584b6b5cbc64ab18db4289b427d98c
+                - path: 1.11.5.4
+                  level: 4
+                  title: 11.5.4 Session and Context Management
+                  byte_offset: 60541
+                  byte_count: 900
+                  word_count: 126
+                  content_hash: ccd5ae39f27663569df2ff151c12a922d9bb64810332974f9a7478b50d6a4ee6
+                - path: 1.11.5.5
+                  level: 4
+                  title: 11.5.5 Guarding Against Fast-Track Failure Modes
+                  byte_offset: 61441
+                  byte_count: 1797
+                  word_count: 253
+                  content_hash: 26f99e6e886426e9d6dfb5742c7421c0a05f4ad80915132dbc9ce6456ce9e596
+            - path: 1.11.6
+              level: 3
+              title: '11.6 The Retro Fixup: Zero Human Gates'
+              byte_offset: 63238
+              byte_count: 1694
+              word_count: 247
+              content_hash: 5bcf2836ef2d33339a4e52c4402253346641c457fcfa11329340e2482f5a71bb
+            - path: 1.11.7
+              level: 3
+              title: 11.7 Implementation Sequence
+              byte_offset: 64932
+              byte_count: 1110
+              word_count: 145
+              content_hash: 79de74390be48714c534d970151542a59df6e196268b6116b9912bca075329c3
+            - path: 1.11.8
+              level: 3
+              title: 11.8 Design Decisions and Rationale
+              byte_offset: 66042
+              byte_count: 1850
+              word_count: 269
+              content_hash: 962a404f3aeeab1088e48ebbd45ae888009fc8ad0be0ec0992fa825e64e2a587
+            - path: 1.11.9
+              level: 3
+              title: 11.9 Open Design Questions
+              byte_offset: 67892
+              byte_count: 1485
+              word_count: 208
+              content_hash: c9899885db94eca8d021749238291ce5be50ee82b9be8ded06857c97b0b5ebaa
+        - path: "1.12"
+          level: 2
+          title: 12. Limitations and Cross-Validation
+          byte_offset: 69377
+          byte_count: 1540
+          word_count: 199
+          content_hash: 54d74ff475117dfe4b0023e5e13e8e60003b5009946c682ea1954045c9fc86c2
+        - path: "1.13"
+          level: 2
+          title: '13. Plan-of-Plans: Post-Research Initiative'
+          byte_offset: 70917
+          byte_count: 4149
+          word_count: 640
+          content_hash: 94fee708a4134d103690f8875988f86353164cdc5c1f252fb1d54d89961e8bc3
+          children:
+            - path: 1.13.1
+              level: 3
+              title: 13.1 Dependency Structure
+              byte_offset: 71298
+              byte_count: 1085
+              word_count: 153
+              content_hash: 640378b3d214c148c115eb8e8697b17c21d435d7f00a546bbbd541a58197a775
+            - path: 1.13.2
+              level: 3
+              title: 13.2 Sub-Plan Sequencing
+              byte_offset: 72383
+              byte_count: 1100
+              word_count: 185
+              content_hash: 1149f444b4b63a5460428df0c1107aa7ae5f83695f710731c42a85e973c14fa5
+            - path: 1.13.3
+              level: 3
+              title: 13.3 Deferred Items
+              byte_offset: 73483
+              byte_count: 831
+              word_count: 132
+              content_hash: 7e97480fd700c258ff2f2c462456a714ecbc0043cbc453ee9ea658d6684e56ee
+            - path: 1.13.4
+              level: 3
+              title: 13.4 Plan Lifecycle
+              byte_offset: 74314
+              byte_count: 752
+              word_count: 118
+              content_hash: 058d7dbdc5e36d96bb3c93ab6bfbc6f6ebb30bd3d36050c5e3557413d6b0f191
+        - path: "1.14"
+          level: 2
+          title: 'Appendix: Quick Comparison Matrix'
+          byte_offset: 75066
+          byte_count: 1099
+          word_count: 181
+          content_hash: 8e567819b4dda62dd537c29c2fd43e14659b589993afab528c8ce041ae6a464e
+entity_refs:
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.11.5.2
+      byte_offset: 59825
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.7.2
+      byte_offset: 33162
+    - entity_id: DOC-ID
+      entity_type: document
+      section_path: 1.11.4.1
+      byte_offset: 50949
+    - entity_id: DOC-ID
+      entity_type: document
+      section_path: 1.11.4.2
+      byte_offset: 53556
+    - entity_id: DOC-xxx
+      entity_type: document
+      section_path: 1.11.5.3
+      byte_offset: 60314
+cross_doc_links:
+    - target_path: .sisyphus/plans/{name}.md
+      link_text: .sisyphus/plans/{name}.md
+      section_path: 1.5.2
+    - target_path: .sisyphus/plans/*.md
+      link_text: .sisyphus/plans/*.md
+      section_path: 1.5.4
+    - target_path: refs/prompt-engineering-guide.md
+      link_text: refs/prompt-engineering-guide.md
+      section_path: 1.6.6
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.3
+      role: narrative
+      confidence: high
+    - section_path: 1.3.8
+      role: narrative
+      confidence: high
+    - section_path: 1.6.3
+      role: requirement
+      confidence: high
+    - section_path: "1.10"
+      role: question
+      confidence: high
+    - section_path: 1.11.5.1
+      role: risk
+      confidence: high
+    - section_path: 1.11.5.4
+      role: narrative
+      confidence: high
+    - section_path: 1.11.8
+      role: decision
+      confidence: high
+    - section_path: 1.11.9
+      role: question
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T12:02:25.635597Z
+classified: false

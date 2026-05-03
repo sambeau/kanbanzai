@@ -1,0 +1,94 @@
+document_id: P41-opencode-ecosystem-features/design-p41-design-opencode-ecosystem-features
+document_path: work/P41-opencode-ecosystem-features/P41-design-opencode-ecosystem-features.md
+content_hash: 3bc7b332166c58e774014a1e806ec08996c84d311e1646a90fcc20bd6c4431f4
+indexed_at: 2026-05-03T12:12:48.846195Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Plan: OpenCode Ecosystem Features'
+      byte_offset: 0
+      byte_count: 4976
+      word_count: 703
+      content_hash: 3bc7b332166c58e774014a1e806ec08996c84d311e1646a90fcc20bd6c4431f4
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 240
+          byte_count: 230
+          word_count: 28
+          content_hash: fbc616bf1152f7a5c5e03dedecb8fd126b11b2e08bb1a8f763143a02961bade9
+        - path: "1.2"
+          level: 2
+          title: Dependency Structure
+          byte_offset: 470
+          byte_count: 1159
+          word_count: 162
+          content_hash: c7db2ba224aad73bb2520f581ba9be3d018d104f8a8e5a5db107d447bcacb8de
+        - path: "1.3"
+          level: 2
+          title: Sub-Plan Sequencing
+          byte_offset: 1629
+          byte_count: 1048
+          word_count: 178
+          content_hash: bfae182c34c23c4de560f1b3af16e1458bd1c71a3efd808f3774c16753867555
+        - path: "1.4"
+          level: 2
+          title: Deferred Items
+          byte_offset: 2677
+          byte_count: 810
+          word_count: 127
+          content_hash: bfff046669130276b0b8d4c5720403a2e300632c34cee0999edf0ed69a4c8dd9
+        - path: "1.5"
+          level: 2
+          title: Decisions
+          byte_offset: 3487
+          byte_count: 557
+          word_count: 75
+          content_hash: 52c0b35fd19dbb75c82fa2bbecf534391e50741ad6150e7898799118980bc1ff
+        - path: "1.6"
+          level: 2
+          title: Plan Lifecycle
+          byte_offset: 4044
+          byte_count: 520
+          word_count: 82
+          content_hash: 02f1a07c96361dd6a307b4ea8a1adc1dbea9c4866650bf581eaa45f094c21e98
+        - path: "1.7"
+          level: 2
+          title: Related Documents
+          byte_offset: 4564
+          byte_count: 412
+          word_count: 33
+          content_hash: b78f8f28debb7b324b3efdec310dd8829b15bbe7acf0d4ab5d326155a787b127
+entity_refs:
+    - entity_id: DEC-01KQP
+      entity_type: decision
+      section_path: "1.5"
+      byte_offset: 3505
+    - entity_id: P41-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 50
+cross_doc_links:
+    - target_path: ../research/competitive-analysis-openagent-ecosystem.md
+      link_text: 'Competitive Analysis: OpenCode Plugin Ecosystem vs. Kanbanzai'
+      section_path: "1"
+    - target_path: ../research/competitive-analysis-openagent-ecosystem.md
+      link_text: 'Competitive Analysis: OpenCode Plugin Ecosystem vs. Kanbanzai'
+      section_path: "1.7"
+    - target_path: ../_project/research-opencode-ecosystem-evaluation.md
+      link_text: OpenCode Ecosystem Evaluation (Independent)
+      section_path: "1.7"
+    - target_path: ../../refs/prompt-engineering-guide.md
+      link_text: Prompt Engineering Guide
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: decision
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-03T12:12:49.529421Z
+classified: false

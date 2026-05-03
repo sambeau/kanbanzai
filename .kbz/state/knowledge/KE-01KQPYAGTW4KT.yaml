@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "Recurring issue: at session start, .kbz/ state files are frequently found modified or untracked in git status. Observed on 2026-05-03: 10 modified index files, 12 untracked index files. This happens repeatedly across sessions. Root cause unknown — needs investigation into why MCP tools are not auto-committing state changes reliably (race conditions? interruptions? tool timeouts before commit?). The untracked files are especially concerning since they suggest documents were registered but never committed, which means other agents cannot see them."
+created: "2026-05-03T12:51:58Z"
+created_by: sambeau
+id: KE-01KQPYAGTW4KT
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - store-hygiene
+  - git
+  - recurring-issue
+  - needs-investigation
+tier: 2
+topic: store-consistency
+ttl_days: 90
+updated: "2026-05-03T12:51:58Z"
+use_count: 0
