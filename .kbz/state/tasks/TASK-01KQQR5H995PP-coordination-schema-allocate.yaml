@@ -3,5 +3,8 @@ parent_feature: FEAT-01KQQQ3B9SVF9
 slug: coordination-schema-allocate
 name: Implement schema migration and allocate_id SQL
 summary: "Add Migrate() that runs CREATE TABLE IF NOT EXISTS for counters, batch_feature_seqs, allocations, and CREATE OR REPLACE FUNCTION allocate_id. Add AllocateID() and AllocateFeatureSeq() methods."
-status: ready
+status: done
 estimate: "3"
+completed: "2026-05-03T20:46:41Z"
+completion_summary: "Added Migrate(), AllocateID(), and AllocateFeatureSeq() methods to coordination.DB. DDL stored as Go constants. Migrate creates counters, batch_feature_seqs, allocations tables and the allocate_id PL/pgSQL function — all idempotent. AllocateID wraps the SQL function for atomic, idempotent ID allocation. AllocateFeatureSeq atomically increments per-batch feature sequence numbers. 10 tests total (1 invalid-URL passes without DB, 9 DB-dependent tests skip when TEST_DATABASE_URL unset)."
+verification: "go build ./... and go vet ./internal/coordination/... pass. Tests: 1 pass (invalid URL), 9 skip (no TEST_DATABASE_URL). Test coverage includes: table creation, migration idempotency, ID format, idempotency, per-entity-type increments, feature sequences, independent batch sequences, and concurrent allocation."
