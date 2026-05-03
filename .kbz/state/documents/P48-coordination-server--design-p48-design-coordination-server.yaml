@@ -1,10 +1,12 @@
-content_hash: fee8d4774310112283ab9629d6af2a8c2c07f7fc532f77a4b195a0bfaa82cbe8
+approved_at: "2026-05-03T20:04:31Z"
+approved_by: sambeau
+content_hash: 3122a5a9e8bd02ae6c1bac0d5b0e54f814f16ea309762fbaccbd6c62f95b79ee
 created: "2026-05-03T19:11:12Z"
 created_by: sambeau
 id: P48-coordination-server/design-p48-design-coordination-server
 owner: P48-coordination-server
 path: work/P48-coordination-server/P48-design-coordination-server.md
-status: draft
+status: approved
 title: Coordination Server — Design
 type: design
-updated: "2026-05-03T19:11:12Z"
+updated: "2026-05-03T20:04:31Z"
