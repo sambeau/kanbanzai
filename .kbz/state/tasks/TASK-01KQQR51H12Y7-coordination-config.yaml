@@ -3,5 +3,12 @@ parent_feature: FEAT-01KQQQ3B9SVF9
 slug: coordination-config
 name: Add CoordinationConfig and env var substitution
 summary: "Add Coordination struct with DatabaseURL and ProjectID to Config type. Implement ${ENV_VAR} substitution for all string config values. Add CoordinationEnabled() method."
-status: ready
+status: done
 estimate: "2"
+completed: "2026-05-03T20:38:06Z"
+claimed_at: "2026-05-03T20:28:26Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-03T20:28:26Z"
+dispatched_by: sambeau
+completion_summary: "Added CoordinationConfig struct with DatabaseURL and ProjectID fields to the project Config type. Implemented ${ENV_VAR} substitution via os.Expand in LoadFrom, applied before YAML unmarshalling. Added CoordinationEnabled() method. Added 5 test functions covering: enabled/disabled states, env var expansion, unset var warning, multiple vars, YAML round-trip parsing, and env var expansion through LoadFrom."
+verification: "go build ./... passes, go test ./internal/config/ -count=1 passes (all 39 tests), new tests specifically cover CoordinationEnabled, expandEnv, YAML round-trip, and env var expansion in config files."
