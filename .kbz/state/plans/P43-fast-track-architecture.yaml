@@ -1,7 +1,7 @@
 id: P43-fast-track-architecture
 slug: fast-track-architecture
 name: Fast-track architecture
-status: idea
+status: shaping
 summary: "Automated gate validation system with risk-tiered approval: spec-validator, plan-validator, and review-gate-validator roles that replace mechanical human gates. Phased rollout — spec first, then dev-plan, then review auto-close."
 parent: P41-opencode-ecosystem-features
 order: 0
@@ -14,4 +14,4 @@ tags:
   - review-gate-validator
 created: "2026-05-03T12:21:53Z"
 created_by: sambeau
-updated: "2026-05-03T12:21:53Z"
+updated: "2026-05-03T12:21:59Z"
