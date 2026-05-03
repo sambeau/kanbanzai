@@ -3,5 +3,9 @@ parent_feature: FEAT-01KQQQ3B9SVF9
 slug: coordination-wire-features
 name: Wire coordination into feature display ID allocation
 summary: "Modify feature creation: atomically increment batch_feature_seqs.next_seq for display ID. Canonical ID remains TSID-based. Single-user mode uses local counter."
-status: ready
+status: active
 estimate: "2"
+claimed_at: "2026-05-03T20:38:10Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-03T20:38:10Z"
+dispatched_by: sambeau

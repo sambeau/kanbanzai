@@ -3,5 +3,8 @@ parent_feature: FEAT-01KQQQ3B9SVF9
 slug: coordination-pgx-pool
 name: Create coordination Go package with pgx pool
 summary: "Create internal/coordination/ package with DB struct wrapping pgxpool.Pool. New(), Close(), Ping(). Pool creation failure must not block server startup. Add jackc/pgx/v5 dependency."
-status: ready
+status: done
 estimate: "3"
+completed: "2026-05-03T20:42:02Z"
+completion_summary: "Created internal/coordination/ package with DB struct wrapping pgxpool.Pool. New() creates pool and pings for connectivity verification, returning errors rather than panicking. Close() and Ping() methods provided. TLS enabled by default via pgx. Added jackc/pgx/v5 dependency. Tests: invalid URL returns error (no panic), valid URL test gated on TEST_DATABASE_URL env var."
+verification: "go build ./... passes, go test ./internal/coordination/... passes (1 pass, 1 skip). go vet clean."
