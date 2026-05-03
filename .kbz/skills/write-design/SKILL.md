@@ -28,9 +28,18 @@ constraint_level: high
 - **design rationale** — the reasoning that justifies a design decision, making the "why" explicit so future readers can evaluate whether it still holds
 - **coupling** — the degree to which one component depends on the internals of another; lower coupling enables independent change
 - **surface area** — the set of public interfaces or extension points a component exposes; larger surface area means more to maintain and test
+- **invariant** — a property that must hold true throughout a component's lifetime, enforced by design rather than by convention
+- **design constraint** — a limitation imposed by existing systems, requirements, or prior decisions that narrows the space of valid designs
+- **composability** — the property of components that allows them to combine without modification to produce new behaviour
+- **abstraction boundary** — the point at which implementation details are hidden from consumers, enabling independent evolution
+- **extension point** — a deliberate mechanism for adding behaviour without modifying existing code (plugin interface, hook, callback)
+- **migration path** — the plan for moving from the current state to the proposed design without disruption to running systems
+- **failure mode** — a specific way a component can fail, along with its blast radius and recovery strategy
+- **blast radius** — the scope of impact when a component fails or a change introduces a defect
+- **design debt** — deliberate simplifications in the design that will need future work, documented so they are not forgotten
+- **design owner** — the entity (plan or batch) that owns the design; designs for strategic direction belong to a plan, designs for implementation belong to a batch
 - **backward compatibility** — the guarantee that existing consumers continue to work when a component evolves
 - **separation of concerns** — organising a system so each part addresses a distinct aspect, minimising cross-cutting dependencies
-- **design owner** — the entity (plan or batch) that owns the design; designs for strategic direction belong to a plan, designs for implementation belong to a batch
 
 ## Design Stance
 
@@ -39,8 +48,6 @@ constraint_level: high
 **Human/agent role contract.** The human is the Design Manager — they own design decisions, make the final call, and approve. The agent is the Senior Designer — proposes designs, drafts documents, conducts research, presents design alternatives, and makes recommendations. The agent cannot make final design decisions or approve its own work. When the agent disagrees with a decision, it states its design rationale clearly, once. If the human decides otherwise, the agent documents the decision and moves on.
 
 **Design is iterative.** There is no single right path. Stages can be revisited. A design that seemed complete can turn out to need revision after new design constraints surface or trade-off analysis reveals a better approach. That is normal and not a failure.
-
-**Design document ownership.** Design documents can be owned by either a plan (strategic design — cross-batch architecture, long-term direction) or a batch (operational design — feature-level implementation). The owning entity determines which stage gates apply. When starting a design, identify whether it belongs to a plan or a batch and register the document against the appropriate owner.
 
 ## Anti-Patterns
 
@@ -88,12 +95,6 @@ Three tiers for surfacing technical risk during design:
 - **Security or data-integrity risk** — do not proceed without explicit acknowledgment from the human. Repeat until acknowledged. These risks affect system invariants and cannot be accepted implicitly.
 
 If the human acknowledges a risk and decides to proceed anyway, accept the decision. Document the risk, the decision, and the design rationale in the Decisions section so the trade-off is visible to future readers.
-
-## Checklist
-
-- [ ] Conducted corpus discovery (concept search, entity search, decision extraction)
-- [ ] Wrote Related Work section before writing any design content
-- [ ] Cross-referenced at least one prior decision that constrains this design, OR attested that corpus search found no related work
 
 ## Procedure
 
@@ -327,6 +328,12 @@ Each decision entry:
 - If `doc(action: "approve")` fails due to content hash drift, call `doc(action: "refresh")` first to re-sync.
 
 **Next steps after design.** Use `work/templates/specification-prompt-template.md` for the specification. See the `kanbanzai-documents` skill for the full registration and approval procedure.
+
+## Checklist
+
+- [ ] Conducted corpus discovery (concept search, entity search, decision extraction)
+- [ ] Wrote Related Work section before writing any design content
+- [ ] Cross-referenced at least one prior decision that constrains this design, OR attested that corpus search found no related work
 
 ## Evaluation Criteria
 
