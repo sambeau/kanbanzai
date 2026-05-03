@@ -1,0 +1,19 @@
+confidence: "0.5"
+content: "Files accumulate on main through three mechanisms: (1) MCP server commits lifecycle transitions, document registrations, and task completions directly to main because it operates on the currently checked-out branch — 121 register commits in 8 days; (2) the \"commit WIP before review\" anti-pattern (e.g., commit 0995651f \"chore(P40): commit work-in-progress state before plan review\") dumps all working-tree state onto main to make cross-worktree work visible for review; (3) direct edits on main for batches and plans that have no worktree support (worktrees only work for FEAT/BUG entities). Root structural gap: worktree isolation is only enforced for features and bugs; batches and plans have no branch isolation mechanism, and the MCP server commits to whatever branch is checked out."
+created: "2026-05-03T14:53:36Z"
+created_by: sambeau
+id: KE-01KQQ5981YMN0
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retro
+  - workflow-friction
+  - git
+  - branch-isolation
+  - architecture
+tier: 2
+topic: main-branch-leakage
+ttl_days: 90
+updated: "2026-05-03T14:53:36Z"
+use_count: 0
