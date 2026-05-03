@@ -1,0 +1,9 @@
+id: P49-skill-validation-tests
+slug: skill-validation-tests
+name: Skill validation test suite
+status: idea
+summary: "Build automated structural validation tests for the 46 files that control agent behavior (skills, roles, stage bindings, agent instructions). These files currently have zero test coverage. Minimum viable: content thresholds, required section presence, cross-reference integrity, and mirror consistency checks. ~200 lines of Go would have caught every regression in the April 29 migration."
+order: 0
+created: "2026-05-03T21:56:48Z"
+created_by: sambeau
+updated: "2026-05-03T21:56:48Z"
