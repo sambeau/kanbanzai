@@ -2,8 +2,9 @@ id: FEAT-01KQQQ3B9SVF9
 slug: coordination-spec
 name: Specify coordination database
 parent: P48-coordination-server
-status: dev-planning
+status: specifying
 summary: "Write the formal specification for the PostgreSQL-backed coordination database, covering ID allocation, configuration, authentication, and failure modes."
+spec: FEAT-01KQQQ3B9SVF9/spec-p48-spec-coordination-database
 created: "2026-05-03T20:04:57Z"
 created_by: sambeau
 overrides:
