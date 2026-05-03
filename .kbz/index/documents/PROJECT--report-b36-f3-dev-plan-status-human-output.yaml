@@ -1,0 +1,171 @@
+document_id: PROJECT/report-b36-f3-dev-plan-status-human-output
+document_path: work/B36-kbz-cli-and-status/B36-F3-dev-plan-status-human-output.md
+content_hash: 571436664b961afcb00c21927bb1e015ded955de35f8d157ca3501992167ae8b
+indexed_at: 2026-05-03T23:00:10.709862Z
+sections:
+    - path: "1"
+      level: 2
+      title: Overview
+      byte_offset: 266
+      byte_count: 711
+      word_count: 93
+      content_hash: a4133f7d2ee87ed1a28b702f864f432364b95575cd33ce2a0be30a33025131f9
+    - path: "2"
+      level: 2
+      title: Scope
+      byte_offset: 977
+      byte_count: 1477
+      word_count: 197
+      content_hash: e6de2a99cc492447ae9150d2777c40cd378943bae57502c20879f95866ff20ec
+    - path: "3"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 2454
+      byte_count: 6438
+      word_count: 877
+      content_hash: 664b7dcca08bbe2ee7263156946f025fe8737ca82efaf4e8155b5b0ccd060be6
+      children:
+        - path: "3.1"
+          level: 3
+          title: 'Task 1: TTY Detection and Rendering Infrastructure'
+          byte_offset: 2473
+          byte_count: 1090
+          word_count: 157
+          content_hash: 0ab0c6f53bbedb7bdc3d162d6f553b9120a7fbb0d8ec15144c6822b6879910d1
+        - path: "3.2"
+          level: 3
+          title: 'Task 2: Document Views (Unregistered and Registered)'
+          byte_offset: 3563
+          byte_count: 1185
+          word_count: 159
+          content_hash: 4a4d412a2e429fdd1a3ecfb3a1622ddf02c9b747a5ccd5b8fe3763f602c2cbfe
+        - path: "3.3"
+          level: 3
+          title: 'Task 3: Entity Views (Feature, Plan, Project Overview)'
+          byte_offset: 4748
+          byte_count: 1588
+          word_count: 209
+          content_hash: 5475296f309a8dc4552f13827534a3207dc8466702eb93f85eecb763eb4361f7
+        - path: "3.4"
+          level: 3
+          title: 'Task 4: Integration and Edge-Case Handling'
+          byte_offset: 6336
+          byte_count: 1388
+          word_count: 195
+          content_hash: f572275633a2c8ae942ee095a28151a91da50695b1aa372798f1552a85cd1b76
+        - path: "3.5"
+          level: 3
+          title: 'Task 5: Fix Unregistered-Document Human Output Format'
+          byte_offset: 7724
+          byte_count: 1168
+          word_count: 154
+          content_hash: 1e8442c63ad2a950e77d64f9e549e83505410fdfa021f032c34a256761a3df00
+    - path: "4"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 8892
+      byte_count: 647
+      word_count: 130
+      content_hash: 0426fa99b57d03fc85fc9831beb757b048c6ccf74b1d6a365996c1e8ec0c8eaa
+    - path: "5"
+      level: 2
+      title: Risk Assessment
+      byte_offset: 9539
+      byte_count: 1612
+      word_count: 224
+      content_hash: 486d1ac6939b920b35733b2d32a6f49f29bdb4ca8ed3eca148ba7757b56dc7be
+      children:
+        - path: "5.1"
+          level: 3
+          title: 'Risk: F2 interface contract mismatch'
+          byte_offset: 9559
+          byte_count: 494
+          word_count: 68
+          content_hash: bbe661e04b10bff87480599ac94c7bc5cf161339e55b80022db46857defee1d4
+        - path: "5.2"
+          level: 3
+          title: 'Risk: TTY detection false negatives in CI'
+          byte_offset: 10053
+          byte_count: 292
+          word_count: 41
+          content_hash: 239f0fe4f9cd461bc42a6ecfdabf95e8bd093d5db3391b0afb677d1f94272de8
+        - path: "5.3"
+          level: 3
+          title: 'Risk: Alignment logic complexity across varying content widths'
+          byte_offset: 10345
+          byte_count: 332
+          word_count: 46
+          content_hash: cd1b718483905c1b353b13c8e046c0590b3c57ebaf1945748e402fb775a17429
+        - path: "5.4"
+          level: 3
+          title: 'Risk: Spec ambiguity around plan-level doc inheritance rendering'
+          byte_offset: 10677
+          byte_count: 474
+          word_count: 66
+          content_hash: 14b98676a701b3646dfedb87a68072cd3cdc2c879b1ab71b6cba7ad187016c33
+    - path: "6"
+      level: 2
+      title: Interface Contracts
+      byte_offset: 11151
+      byte_count: 1145
+      word_count: 157
+      content_hash: f083ca18f7055179a69b9d783c02e3a467184cc07db88ba8ba8318b84e0285ac
+    - path: "7"
+      level: 2
+      title: Traceability Matrix
+      byte_offset: 12296
+      byte_count: 1102
+      word_count: 197
+      content_hash: eb63aaaff6789d4d7fa6a08c25492b3ab8a86553471cca39f717399588720ae2
+    - path: "8"
+      level: 2
+      title: Verification Approach
+      byte_offset: 13398
+      byte_count: 1378
+      word_count: 242
+      content_hash: 99b7c28c96b52cb83a5277a2d4d22c2ef3e5db16677eb057a182a3e8555a5bd8
+entity_refs:
+    - entity_id: FEAT-01KQ2VGTRZHPC
+      entity_type: feature
+      section_path: "2"
+      byte_offset: 1128
+    - entity_id: F3-spec-status-human-output
+      entity_type: plan
+      section_path: "2"
+      byte_offset: 1086
+cross_doc_links:
+    - target_path: work/reviews/batch-review-b36-kbz-cli-and-status.md
+      link_text: work/reviews/batch-review-b36-kbz-cli-and-status.md
+      section_path: "1"
+    - target_path: work/spec/B36-F3-spec-status-human-output.md
+      link_text: work/spec/B36-F3-spec-status-human-output.md
+      section_path: "2"
+    - target_path: work/_project/design-kbz-cli-and-binary-rename.md
+      link_text: work/_project/design-kbz-cli-and-binary-rename.md
+      section_path: "2"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "2"
+      role: constraint
+      confidence: high
+    - section_path: "3.3"
+      role: narrative
+      confidence: high
+    - section_path: "5"
+      role: risk
+      confidence: high
+    - section_path: "5.1"
+      role: risk
+      confidence: high
+    - section_path: "5.2"
+      role: risk
+      confidence: high
+    - section_path: "5.3"
+      role: risk
+      confidence: high
+    - section_path: "5.4"
+      role: risk
+      confidence: high
+classified: false

@@ -1,0 +1,755 @@
+# Kanbanzai user feedback report
+
+My observations have been that `kanbanzai` isn’t being used as often as I expected. It also seems very ‘chatty’.
+
+In my role as manager, I have found that it asks for too many permissions, so I have to baby the process ready to approve even the smallest of actions—despite always taking the time to allow all, I still seem to be permitting actions. I thought we’d come up with a solution, using MCP standards, but maybe we never implemented it?
+
+My feeling, also, is that we’re burning though token at a higher rate than before. I haven’t made an empirical study of this—it’s just a gut feeling from watching the context burn up, but it’s something I need to be aware of. If it’s going to cost more then there will have to be real advantages in other areas: accuracy of implementation, ease of tracking, ease of parallel development.
+
+What *I* the designer/manager hoped to get out of Kanbazai
+
+- Consistent documentation
+- Consistent Workflow
+- More efficient use of tokens
+- Faster development due to fewer document searches by agents
+- Sub-agents that could start quickly with everything they need
+- a knowledge-base that grows as the project progresses
+- Focused agents that quickly fill their context and get-going right away.
+
+It doesn’t feel like I got that. But I’m only one voice in the team …
+
+… so, I asked for honest feedback from developers, in this case a variety of AI Agents:-
+
+---
+
+# FEEDBACK 1 
+
+How often I actually used Kanbanzai
+
+Looking back at this session, I called Kanbanzai tools **very little**. Here's what I actually used:
+
+- `work_queue` — once, at the start, to see what was ready
+- `list_plans` — once, to understand the plan structure
+- `query_plan_tasks` — once, to see all tasks under P3
+
+That's it. **Three calls total** out of a session that involved understanding and implementing ~10 tasks across 5 features.
+
+## What I used instead
+
+Almost everything was done through:
+- `terminal` with `grep` on `.kbz/state/` YAML files to check statuses
+- `terminal` with `cat` to read task summaries
+- `read_file` on specs and the delivery plan document
+- `git log` to understand branch state
+- Direct file editing of `.kbz/state/` YAML files to mark tasks done
+
+## Why
+
+**1. The entity tools are too granular for how I actually work.**
+
+When I'm planning, I need to see the whole picture at once — "what features exist, what's their status, what tasks remain, what depends on what." That requires chaining `list_plans` → `query_plan_tasks` → multiple `get_entity` calls. A single `grep "status:" .kbz/state/tasks/TASK-01KM*.yaml` gives me the same information in one call.
+
+What would help: a **dashboard or summary tool** — "give me the full status of plan P3-kanbanzai-1.0" that returns features, their statuses, task counts by status, blockers, all in one response. The `query_plan_tasks` tool is close but returns too much detail (full task records) without enough synthesis.
+
+**2. I never used `dispatch_task` or `complete_task`.**
+
+I was acting as an orchestrator spawning sub-agents, but I managed task lifecycle by editing YAML files directly. Why? Because:
+- `dispatch_task` requires `role` and `dispatched_by` parameters that feel ceremonial when I'm the one doing the work
+- `complete_task` requires the task to be in `active` status, but I often skipped the `ready → active` transition entirely
+- Writing the YAML directly is one operation; using the tools would be dispatch + do work + complete = three calls minimum, with status validation at each step
+
+The lifecycle enforcement is **correct by design** but **friction in practice** when the orchestrator and implementer are the same agent session. There might be a "solo mode" or simplified flow worth considering.
+
+**3. I never used `context_assemble` or `context_report`.**
+
+When spawning sub-agents, I wrote the context manually in the `spawn_agent` message. Why? Because I know the project better than the context profiles do — I'd read the specs, I know the code structure, I know what the agent needs. The assembled context would be generic project knowledge entries, not the specific "here's the spec section, here's the existing code, here's what to implement" that the sub-agent actually needs.
+
+This might work better when there are **established knowledge entries** from prior work, or when the orchestrator doesn't have deep project familiarity.
+
+**4. I never used `worktree_create` or any worktree tools.**
+
+The worktrees already existed. But even if they didn't, I'd probably use `git worktree add` directly because I know the branch naming convention and it's one command vs. a tool call.
+
+**5. Document intelligence tools — zero usage.**
+
+`doc_outline`, `doc_classify`, `doc_find_by_concept`, etc. — I never called any of these. I just read the spec files directly with `read_file`. The document intelligence layer adds value for agents that don't know *which* document to read, but when I already know "read `work/spec/init-command.md` §11 for acceptance criteria," the indirection doesn't help.
+
+## What would make me use it more
+
+**A. Fewer, richer tools instead of many granular ones.**
+
+Instead of:
+```
+work_queue → dispatch_task → [do work] → complete_task → update_status
+```
+
+Something like:
+```
+claim_and_work(task_id) → returns context + marks active
+finish_work(task_id, summary, files) → marks done + contributes knowledge
+```
+
+**B. A plan dashboard tool.**
+
+One call that returns:
+- Feature status summary (3 done, 1 developing, 1 ready)
+- Task status rollup per feature
+- Current blockers
+- What's next (ready queue filtered to this plan)
+
+**C. Batch status updates.**
+
+I frequently need to mark 3-5 tasks done at once after a sub-agent finishes. One call to mark multiple entities instead of editing YAML files or making N `update_status` calls.
+
+**D. The `spawn_agent` integration gap.**
+
+The biggest missing piece: there's no integration between Kanbanzai's dispatch model and the actual `spawn_agent` tool. I dispatch conceptually (read task, plan work, spawn agent with instructions) but Kanbanzai doesn't know about the agent session. If `dispatch_task` could return a pre-formatted prompt for `spawn_agent` — including relevant spec sections, existing code references, and constraints — that would be genuinely useful.
+
+## What works well
+
+- **`work_queue`** is the right concept — showing what's ready is exactly what an orchestrator needs at the start
+- **`query_plan_tasks`** gave a useful full picture in one call
+- **The YAML-on-disk model** is actually great — it means when the tools are too chatty or rigid, I can fall back to direct file operations and nothing breaks
+- **The delivery plan document** (`work/dev/kanbanzai-1.0.md`) was the most useful artefact for orchestration — more useful than any tool call
+
+## Summary
+
+Kanbanzai is conceptually sound but in practice I bypass it because **grep + direct YAML editing is faster and more flexible** for most operations. The tools are designed for a multi-agent protocol where lifecycle enforcement matters, but in a single-session orchestration, the ceremony outweighs the benefit. The path forward is probably: fewer tools with richer responses, batch operations, and tighter integration with the actual agent spawning mechanism.
+
+---
+
+# FEEDBACK 2 
+
+This is really useful to reflect on. Here's my honest assessment from having used it throughout this session.
+
+---
+
+## What worked well
+
+**`work_queue`** is the single best tool in the system. One call, and I know exactly what's ready, what's blocked, and what order to pick things up in. It's doing real work — the automatic promotion of queued→ready tasks as a side effect is clever and saves explicit state management.
+
+**Entity lifecycle enforcement** worked as intended. The "self-transition" errors when I tried to manually advance features that `doc_record_approve` had already auto-advanced were *correct* — the system did the right thing. I just didn't know it had.
+
+**`worktree_create` × 5 in parallel** was seamless. One call per feature, isolated branches, clear paths for the subagents. This felt like the system working exactly as designed.
+
+**Document records as the authoritative datetime source.** Even though document *content* had wrong dates, the `.kbz/state/documents/*.yaml` records had correct `created` timestamps throughout. The system's metadata was reliable even when agent content wasn't.
+
+---
+
+## Chattiness — the biggest friction point
+
+The most significant issue is that the most common orchestration operations have no batch form:
+
+| Operation | Calls I made | What I wanted |
+|---|---|---|
+| Approve 5 specs | 5 × `doc_record_approve` | 1 call with a list |
+| Advance 6 features to `dev-planning` | 6 × `update_status` | 1 call with a list |
+| Create 31 tasks | 31 × `create_task` | Some batch form |
+| Register 6 dev-plan docs | 6 × `doc_record_submit` | Could have used `batch_import_documents` — but I forgot about it |
+
+The task creation was the worst. Even grouping independent calls into parallel batches of 5, it was still ~7 round trips just to create tasks. A `create_tasks(parent_feature, tasks: [{slug, summary}, ...])` would be a significant improvement.
+
+---
+
+## Auto-transitions not surfaced in responses
+
+When I called `doc_record_approve` on 5 specs, all 5 feature entities auto-transitioned from `specifying` to `dev-planning`. The approve responses said nothing about this. I only found out when my subsequent `update_status` calls returned "self-transition not allowed."
+
+This caused two wasted tool calls and brief confusion. The response from `doc_record_approve` should include something like:
+```
+"side_effects": [{"entity": "FEAT-01KMKRQRRX3CC", "transition": "specifying → dev-planning"}]
+```
+
+The system did the right thing — I just couldn't see it.
+
+---
+
+## Tools I never called, and why
+
+| Tool | Why unused |
+|---|---|
+| `health_check` | Should have called this at the start — I went straight to `get_plan` instead. Nothing prompted me to run it. |
+| `check_duplicates` | Created 31 tasks without checking any of them for duplicates. The gap between "should do this" and "remembered to do this" is large. |
+| `conflict_domain_check` | Should have called before launching 5 parallel agents. AGENTS.md mentions it but I skipped it. |
+| `decompose_feature` | This is the purpose-built tool for exactly what I did manually. I skipped it because (a) I wasn't sure the document intelligence had classified the specs well enough, (b) it requires one call per feature — 6 calls — and (c) I had already read the specs and had the context. It felt faster to do it directly. |
+| `context_assemble` | I bypassed this entirely when spawning subagents, writing context manually in the `spawn_agent` messages instead. The tool is designed for the dispatch/complete pattern with pre-existing context profiles. For spawning fresh isolated agents, it doesn't naturally fit. |
+| `knowledge_contribute` | Learned things in this session — "feature status auto-transitions on spec approval", "Go package named `init` is invalid" — and contributed none of them. The tool exists but nothing prompts me to use it at task completion time. |
+| `estimate_set` | Zero estimates on any of the 31 tasks. The work queue sorted by estimate (null-last) so all tasks ranked equally. |
+| `doc_find_by_role` / `doc_trace` | Document intelligence tools for extracting entities from documents. I read the specs directly with `read_file` instead. These tools probably need the specs to be classified (Layer 3) first, which hadn't happened. |
+
+---
+
+## Things that are missing
+
+**A plan overview compound query.** To understand the state of `P3-kanbanzai-1.0` I called: `get_plan` + `list_entities_filtered` + `doc_record_list` (type=specification) + `doc_record_list` (type=dev-plan). That's 4 calls for something I want constantly. A `get_plan_overview(id)` returning plan + features + their docs in one shot would be very useful.
+
+**Cross-feature task dependencies.** The hard dependency (skills-content must finish before init-command skill embedding) is recorded in prose in the dev-plan documents, but not in the entity model. The system has no way to enforce or surface it. When the `init-skill-embedding` task showed up as `ready` in the work queue immediately, nothing indicated it was actually gated on the skills-content feature completing. I had to instruct the subagent manually.
+
+**Side-effect surfacing in general.** Beyond spec approval, any operation that has lifecycle cascade effects should say what it changed. Right now the system does the right thing silently.
+
+**`now()` needs to be called proactively.** This whole session I called it exactly once — when fixing the date bug — and that was only because you pointed it out. Nothing in the tool flow prompts an agent to get the current time before writing a document. Even a note in `doc_record_submit`'s response like "tip: use the `created` timestamp from this response in your document's Created field" would close this loop.
+
+---
+
+## A note on `decompose_feature`
+
+This one deserves more attention. It exists specifically to replace what I did manually — but I didn't use it. The gap seems to be:
+
+1. It requires document intelligence classification (Layer 3) to have run on the spec first. I'm not sure it had.
+2. It works one feature at a time, so it's still 6 calls for 6 features.
+3. After calling it I'd need `decompose_review` to validate, then manually create the tasks anyway. The round-trip wasn't obviously faster than reading the spec myself.
+
+If the goal is that agents routinely use `decompose_feature`, there needs to be either a trigger (classification happened, decomposition is now possible) or the tool needs to work more robustly without requiring pre-classified docs.
+
+---
+
+## Summary
+
+The core loop — plan → features → specs → dev-plans → tasks → work queue → dispatch → complete — is sound and mostly works. The main rough edges are: **no batch operations**, **silent side effects**, and **several good tools that nothing in the flow naturally prompts you to use**. The `work_queue` is excellent; `decompose_feature` and `context_assemble` are underused because their entry conditions aren't obvious in the flow.
+
+---
+
+# FEEDBACK 3
+
+This was after writing docs rather than coding:-
+
+## Kanbanzai Tool Usage Report
+
+Here is the detailed meta-analysis you requested:
+
+### Tool Call Inventory
+
+| # | Tool | Purpose | Category |
+|---|------|---------|----------|
+| 1 | `work_queue` | See what tasks are ready | **kanbanzai** |
+| 2 | `read_file` (spec) | Read the user-documentation spec | traditional |
+| 3 | `list_directory` (root) | Explore project structure | traditional |
+| 4 | `find_path` (*.go) | Find Go source files | traditional |
+| 5 | `list_directory` (.kbz) | Understand .kbz structure | traditional |
+| 6 | `read_file` (server.go) | Understand MCP server wiring | traditional |
+| 7 | `find_path` (entity/*.go) | Look for entity type defs | traditional |
+| 8 | `find_path` (config/*.go) | Find config struct defs | traditional |
+| 9 | `find_path` (docs/*.md) | Check existing docs | traditional |
+| 10 | `read_file` (main.go) | CLI structure | traditional |
+| 11 | `read_file` (config.go) | Config struct definitions | traditional |
+| 12 | `read_file` (user.go) | Local config structure | traditional |
+| 13 | `grep` (NewTool) | Find MCP tool registrations | traditional |
+| 14 | `read_file` (getting-started.md) | Check existing doc | traditional |
+| 15-18 | `grep`, `read_file` (entity_tools.go, core/paths.go) | Source exploration | traditional |
+| 19-22 | `terminal` (ls state dirs) | Explore YAML entity files | traditional |
+| 23-26 | `terminal` (cat YAML files) | Read entity examples | traditional |
+| 27 | `terminal` (grep NewTool) | Get complete tool list | traditional |
+| 28 | `read_file` (config.go defaults) | Get default values | traditional |
+| 29 | `read_file` (base.yaml, developer.yaml) | Context profile examples | traditional |
+| 30 | `read_file` (lifecycle.go) | Complete state machines | traditional |
+| 31 | `read_file` (model/entities.go) | Entity field definitions | traditional |
+| 32 | `read_file` (model/knowledge.go) | Knowledge entry model | traditional |
+| 33-37 | `update_status` ×5 | Transition all tasks to active | **kanbanzai** |
+| 38-42 | `spawn_agent` ×5 | Write all 5 docs in parallel | traditional |
+| 43-47 | `doc_record_submit` ×5 | Register docs | **kanbanzai** |
+| 48-52 | `complete_task` ×5 | Complete all tasks | **kanbanzai** |
+| 53 | `work_queue` | Verify completion | **kanbanzai** |
+
+### Summary Counts
+
+| Category | Calls | % |
+|----------|-------|---|
+| **Kanbanzai MCP tools** | 17 | 32% |
+| **Traditional tools** (read_file, grep, terminal, find_path, list_directory, spawn_agent) | 36 | 68% |
+| **Total** | 53 | 100% |
+
+### When I Used Kanbanzai (and it was the right call)
+
+1. **`work_queue`** (2 calls) — This was essential. It told me exactly what tasks were ready and let me verify completion at the end. No traditional tool could replace this.
+
+2. **`update_status`** (5 calls) — Transitioning tasks to active. The first call auto-created a worktree for the feature, which was a nice side-effect. These were necessary for workflow correctness.
+
+3. **`doc_record_submit`** (5 calls) — Registering documents. This is domain-specific functionality with no traditional equivalent.
+
+4. **`complete_task`** (5 calls) — Closing the loop. Records completion metadata, timestamps, and could have contributed knowledge entries. Necessary for workflow.
+
+### When I Used Traditional Tools (and why)
+
+The overwhelming majority of my work was **research** — understanding the codebase to write accurate documentation. For this, kanbanzai had nothing to offer:
+
+- **Reading source code**: `read_file`, `grep`, `terminal` — I read ~15 source files to understand entity types, config structure, lifecycle state machines, MCP tool definitions, and model types. Kanbanzai has no "tell me about the codebase" tool.
+- **Exploring file structure**: `list_directory`, `find_path` — mapping out the .kbz directory, finding Go source files, checking what exists.
+- **Writing docs**: `spawn_agent` — parallel doc authoring. Not a kanbanzai concern.
+
+### Tools I Considered But Didn't Use
+
+| Tool | Why I skipped it |
+|------|-----------------|
+| `dispatch_task` | Would have been the "proper" way to claim tasks, but it assembles a context packet for an *agent role* (Go development conventions, architecture info). For documentation writing, that context is irrelevant — I needed codebase understanding, not coding conventions. `update_status` was cleaner. |
+| `context_assemble` | Same issue — the context profiles are about Go development, not documentation writing. |
+| `get_entity` | I never needed to look up an individual entity. The `work_queue` gave me everything for the doc tasks. |
+| `decompose_feature` / `slice_analysis` | Tasks were already decomposed. |
+| `review_task_output` | The docs need human review, not automated spec-matching. |
+| `knowledge_contribute` | Could have contributed knowledge entries about the docs written, but `complete_task` supports this inline and I didn't have novel insights to capture. |
+| `doc_record_approve` | That's your job as human reviewer. |
+
+### Observations and Suggestions
+
+**1. Kanbanzai is chatty for status transitions.**
+I made 5 × `update_status` + 5 × `complete_task` = 10 calls for lifecycle management on 5 tasks. A `batch_update_status` or `batch_complete_tasks` tool that accepts an array of task IDs would have saved 8 calls. For wave-style work where you claim and complete batches, this adds up.
+
+**2. `dispatch_task` vs. `update_status` — confused purpose.**
+I chose `update_status` over `dispatch_task` because dispatch assembles a coding-focused context packet. But the "right" tool semantically was `dispatch_task` (it's designed for claiming tasks). The issue is that dispatch forces you into the context assembly path, which is wasteful when the context isn't useful. A simpler `claim_task(task_id)` that transitions without assembling context would fit common use better. Or make context assembly optional in dispatch.
+
+**3. No "what tools exist?" self-documentation.**
+I had to `grep` the source code to find the complete list of 97 MCP tools. Kanbanzai could expose a `list_tools` or `tool_inventory` MCP tool that returns all registered tool names grouped by domain. This would be especially useful for documentation tasks and onboarding.
+
+**4. Research phase has zero kanbanzai involvement.**
+The first ~30 calls (60% of total) were pure codebase research using traditional tools. Kanbanzai contributes nothing to "understand the codebase" tasks. This is arguably fine — kanbanzai is workflow management, not code intelligence — but it means that for documentation and research tasks, the kanbanzai overhead (task claiming, context assembly, completion) is a minority of the actual work.
+
+**5. `doc_record_submit` type field could be smarter.**
+I registered all 5 docs as type `report` because the valid types are `design, specification, dev-plan, research, report, policy`. None of these map to "user documentation." A `documentation` type would be more natural.
+
+**6. What worked well:**
+- `work_queue` is excellent — one call shows everything ready, and the final verification call confirms clean state
+- Auto-worktree creation on first task→active was a surprise but makes sense
+- `complete_task` recording `files_planned` and `completion_summary` is good provenance
+- The lifecycle enforcement (can't skip states) provides guardrails without being annoying
+
+**7. The 68/32 split is telling.**
+For documentation tasks, kanbanzai provides scaffolding (what to do, when you're done) but not substance (how to do it). For *implementation* tasks where context assembly and coding conventions matter, I'd expect the ratio to shift more toward kanbanzai. The tool is optimised for the implementation loop, and documentation is an edge case.
+
+--- 
+# WHAT WOULD YOU CHANGE 1
+
+I asked this agent what they would change:
+
+The big one: tool count vs. context budget
+
+There are 97 tools. Every MCP client loads all 97 tool schemas into the context window at connection time. That's thousands of tokens of tool descriptions before the conversation even starts. And most sessions use fewer than 10 of them.
+
+This is the fundamental tension: **the API is designed as a flat namespace of fine-grained CRUD operations, but it's consumed inside a context window that has a fixed budget.**
+
+If I were redesigning, I'd start here.
+
+### 1. Resource-oriented tools instead of action-per-tool
+
+The current API has separate tools for every operation on every resource type:
+
+```/dev/null/current.txt#L1-10
+create_epic          create_feature        create_task
+create_bug           create_plan           record_decision
+get_entity           get_plan              list_entities
+list_entities_filtered  list_plans          list_by_tag
+list_tags            update_status         update_entity
+update_plan          update_plan_status    validate_candidate
+query_plan_tasks
+```
+
+That's 17 tools just for entity CRUD. Collapse them into one:
+
+```/dev/null/proposed.txt#L1-7
+entity:
+  action: create | get | list | update | update_status | validate
+  type: plan | feature | task | bug | decision | epic
+  # ...params vary by action+type
+```
+
+One tool schema, one description. The LLM already understands "call entity with action=create, type=task" — it doesn't need 5 separate `create_*` tools to figure this out. The action parameter can have an enum; the type parameter can have an enum. The LLM will fill in the right params.
+
+Apply the same pattern across domains:
+
+| Current | Proposed | Tools saved |
+|---------|----------|-------------|
+| 17 entity tools | 1 `entity` tool | 16 |
+| 11 doc_record_* tools | 1 `document` tool | 10 |
+| 9 doc intelligence tools | 1 `doc_intel` tool | 8 |
+| 12 knowledge_* tools | 1 `knowledge` tool | 11 |
+| 4 human_checkpoint_* tools | 1 `checkpoint` tool | 3 |
+| 4 estimation tools | 1 `estimate` tool | 3 |
+| 4 incident tools | 1 `incident` tool | 3 |
+| 4 worktree tools | 1 `worktree` tool | 3 |
+| 4 config tools | 1 `config` tool | 3 |
+| 3 PR tools | 1 `pr` tool | 2 |
+| 3 decompose/slice/review tools | 1 `decompose` tool | 2 |
+| 2 cleanup tools | 1 `cleanup` tool | 1 |
+| 2 merge tools | 1 `merge` tool | 1 |
+| 2 profile tools | 1 `profile` tool | 1 |
+
+That takes 97 tools down to roughly **15–18 resource tools**. The context window savings would be significant — probably 60–70% fewer tokens in tool schemas. And the agent still has full functionality; the routing just happens via parameters instead of tool names.
+
+The tradeoff is discoverability: with 97 named tools, an agent can scan the list and see `incident_link_bug` exists. With resource tools, it needs to know the action vocabulary. But in practice, agents learn action vocabularies fine — this is how every REST API works.
+
+### 2. Composite operations for common workflows
+
+The session revealed a recurring pattern: **do the same thing to N entities**. I made 5 `update_status` calls, then 5 `doc_record_submit` calls, then 5 `complete_task` calls. Each call is a round-trip with serialisation, processing, and response parsing.
+
+I'd add batch variants for the highest-frequency operations:
+
+```/dev/null/batch.txt#L1-14
+# Claim a batch of tasks
+claim_tasks:
+  task_ids: ["TASK-01...", "TASK-02...", "TASK-03..."]
+  # transitions all from ready→active in one call
+
+# Complete a batch of tasks
+complete_tasks:
+  tasks:
+    - id: "TASK-01..."
+      summary: "Wrote getting-started.md"
+      files_modified: ["docs/getting-started.md"]
+    - id: "TASK-02..."
+      summary: "Wrote workflow-overview.md"
+      files_modified: ["docs/workflow-overview.md"]
+```
+
+This isn't just about saving calls — it's about **expressing intent at the right level of abstraction**. "I'm starting Wave 4" is a single thought. Forcing it through 5 sequential tool calls fragments that intent.
+
+### 3. Separate claiming from context assembly
+
+`dispatch_task` currently does two things that shouldn't be coupled:
+
+1. Transition the task from ready → active (claim it)
+2. Assemble a context packet for the executing agent
+
+I needed #1 but not #2. The context packet is designed for implementation agents (Go coding conventions, architecture info). For documentation tasks, it's wasted tokens. I ended up using `update_status` instead, which felt like a workaround.
+
+Split these:
+
+```/dev/null/split.txt#L1-6
+claim_task(task_id)         # just transitions ready→active
+context_assemble(...)       # standalone, call when wanted
+
+# dispatch_task becomes sugar:
+dispatch_task(task_id, role) = claim_task(task_id) + context_assemble(role, task_id)
+```
+
+This way, agents that want the full dispatch experience still get it, but agents doing non-standard work (docs, research, triage) can claim without the overhead.
+
+### 4. Richer queries — the "give me everything" problem
+
+The most common real-world question is: "What's the current state of feature X?" To answer that today:
+
+```/dev/null/current-queries.txt#L1-5
+get_entity(type: feature, id: "FEAT-...")     # feature itself
+list_entities_filtered(type: task, parent: "FEAT-...")  # its tasks
+doc_record_list(owner: "FEAT-...")             # its documents
+doc_gaps(feature_id: "FEAT-...")               # what docs are missing
+```
+
+Four calls, four round-trips, and the agent has to mentally join them. A single `feature_summary` (or a `query` tool with includes) would be far more useful:
+
+```/dev/null/proposed-query.txt#L1-6
+query:
+  type: feature
+  id: "FEAT-01KMKRQVKBPRX"
+  include: [tasks, documents, gaps, worktree]
+  # Returns: the feature + all tasks with statuses + all doc records + gap analysis + worktree info
+```
+
+This is the graph-query pattern: fetch an entity and its immediate neighbourhood in one call. It mirrors how agents actually think — they want a situation picture, not individual records.
+
+### 5. Tool groups / lazy loading
+
+Even with the resource-tool consolidation above, 15–18 tools is still a lot of schema. But not every session needs all of them. A documentation session needs entity + document + queue tools. An implementation session needs entity + queue + dispatch + knowledge + worktree tools. An incident response session needs incident + bug + entity tools.
+
+If the MCP protocol supported lazy tool loading (or if kanbanzai exposed capability groups), the client could load only what's relevant:
+
+```/dev/null/groups.txt#L1-7
+kanbanzai.capabilities:
+  core: [entity, queue, health]           # always loaded
+  documents: [document, doc_intel]         # on demand
+  knowledge: [knowledge, profile, context] # on demand
+  git: [worktree, merge, pr, cleanup, branch] # on demand
+  incidents: [incident]                    # on demand
+  planning: [decompose, estimate, conflict] # on demand
+```
+
+This is an MCP protocol limitation more than a kanbanzai one, but it's worth designing for.
+
+### 6. A `documentation` document type
+
+Minor but telling: the valid document types are `design, specification, dev-plan, research, report, policy, rca`. User documentation doesn't fit any of these. I used `report` which is wrong semantically. Adding `documentation` (or even `guide`) to the enum would be trivial and would make the taxonomy complete.
+
+### 7. Self-description
+
+I had to `grep` the Go source to find the complete tool list. An MCP server should be able to describe itself:
+
+```/dev/null/self-describe.txt#L1-3
+introspect:
+  action: list_tools | describe_tool | list_entity_types | list_statuses
+  # Returns structured metadata about what the server offers
+```
+
+This is especially important for documentation tasks and onboarding new agents.
+
+### What I wouldn't change
+
+- **`work_queue`** is perfectly designed. One call, complete picture, promotes eligible tasks as a side effect. It's the best tool in the API.
+- **Lifecycle enforcement** via state machines. The fact that you can't skip states is a feature, not a limitation.
+- **The document → entity lifecycle coupling** (approving a spec advances the feature). This is elegant and the core insight of the stage-gate model.
+- **Knowledge confidence scoring** with use_count/miss_count/Wilson score. It's self-tuning.
+- **`health_check`** as a single comprehensive diagnostic. Good first tool to call.
+
+### The meta-observation
+
+The current API is designed like a **database schema** — one tool per operation per table. But it's consumed like a **conversation** — agents think in workflows, not CRUD operations. The redesign would shift the abstraction from "what operations exist on what entity types" to "what workflows does an agent need to execute, and what's the minimum round-trip way to express each one."
+
+The 97→18 consolidation plus batch operations plus richer queries would probably cut total MCP calls per session by 40–50%, and context window usage by 60–70%. For a tool that's literally paying per token on every invocation, that's significant.
+
+---
+
+# WHAT WOULD YOU CHANGE 2
+
+This is a question I can engage with concretely, having just spent a session fighting the API's grain. Here are my priorities, roughly in order of impact:
+
+---
+
+## 1. Batch mutations — the highest-value change
+
+Almost every orchestration workflow touches N entities of the same kind. Right now that costs N tool calls.
+
+```
+# What I actually did (31 calls):
+create_task(parent_feature="FEAT-...", slug="task-1", summary="...")
+create_task(parent_feature="FEAT-...", slug="task-2", summary="...")
+...
+
+# What I wanted:
+create_tasks(parent_feature="FEAT-...", tasks=[
+  {slug: "task-1", summary: "..."},
+  {slug: "task-2", summary: "..."},
+  ...
+])
+```
+
+The same applies to:
+- `approve_documents(ids: [...])` instead of 5 × `doc_record_approve`
+- `transition_entities(ids: [...], status: "dev-planning")` instead of 6 × `update_status`
+- `register_documents(documents: [{path, type, title, owner}, ...])` instead of 6 × `doc_record_submit`
+
+This one change would cut token usage roughly in half for most orchestration sessions.
+
+---
+
+## 2. Cascade-aware responses
+
+When `doc_record_approve` auto-transitions a feature, the response says nothing about it. I only found out when subsequent `update_status` calls returned "self-transition not allowed." The information the system *acted on* should be in the response it *returns*.
+
+Every mutation that has cascading side effects should surface them:
+
+```json
+{
+  "document": { "id": "FEAT-.../specification-init-command", "status": "approved" },
+  "side_effects": [
+    { "entity": "FEAT-01KMKRQRRX3CC", "from": "specifying", "to": "dev-planning",
+      "reason": "specification approved" }
+  ]
+}
+```
+
+This applies everywhere cascades happen: spec approval, worktree creation, merge execution, task completion that unblocks other tasks. The rule should be: if the system changed something you didn't explicitly ask it to change, the response tells you.
+
+---
+
+## 3. A plan/feature overview compound query
+
+To understand the state of `P3-kanbanzai-1.0` I had to call: `get_plan` + `list_entities_filtered` + `doc_record_list(type=specification)` + `doc_record_list(type=dev-plan)`. Four round trips for something I need every time I start a session or pick up a task.
+
+```
+get_plan_overview("P3-kanbanzai-1.0")
+
+# Returns:
+{
+  "plan": { ... },
+  "features": [
+    {
+      "id": "FEAT-...",
+      "slug": "init-command",
+      "status": "developing",
+      "task_counts": { "ready": 2, "active": 1, "done": 3 },
+      "docs": { "spec": "approved", "dev_plan": "draft" }
+    },
+    ...
+  ]
+}
+```
+
+Similarly, `get_feature_overview` should return the feature + its tasks (with statuses) + its docs in one call. I currently need 3 calls for that. These are the two "I need to understand the situation" queries that happen constantly.
+
+---
+
+## 4. Cross-entity dependency modeling in tasks
+
+The hard dependency — `init-skill-embedding` cannot start until the `skills-content` feature is complete — is currently prose in a dev-plan document. The system has no idea about it. The task showed up in the work queue as `ready` immediately, and I had to instruct the subagent manually not to start it.
+
+Tasks need to be able to declare dependencies on *features*, not just other tasks:
+
+```
+create_task(
+  parent_feature="FEAT-01KMKRQRRX3CC",
+  slug="init-skill-embedding",
+  summary="...",
+  depends_on_features=["FEAT-01KMKRQSD1TKK"]  # blocked until skills-content is done
+)
+```
+
+`work_queue` would then only surface this task when all skills-content tasks are done. This would make the dependency model actually enforceable rather than advisory.
+
+---
+
+## 5. Push timestamps rather than expecting agents to pull them
+
+The date bug we just fixed is a symptom of a design gap: the system knows what time it is and records it correctly on entity records, but it expects agents to separately call `now()` and use the result in document content. That step gets skipped.
+
+The fix is to push the timestamp at the moment it's most needed:
+
+- `doc_record_submit` response should include: `"hint": {"created_field": "2026-03-26T15:44:49Z", "instruction": "put this in your document's Created metadata field"}` — or better, an option to have the system inject it
+- `create_task` / `create_feature` responses already return `created` timestamps — this is fine, agents just don't think to use them in document content
+
+More broadly: any tool that creates a record with a timestamp should actively surface that timestamp in a way that signals "use this in your document." Passive availability in the response isn't enough — agents don't go looking for it.
+
+---
+
+## 6. Tool surface organisation — too many tools, no wayfinding
+
+There are 85+ MCP tools. The useful ones I gravitated to naturally. The ones I never used (`decompose_feature`, `context_assemble`, `conflict_domain_check`, `check_duplicates`, `health_check`, `knowledge_contribute`) weren't hidden — they were just in a flat list with no obvious on-ramp.
+
+Two things would help:
+
+**Group tools by workflow phase.** When I'm in orchestration mode I need: `work_queue`, `dispatch_task`, `get_plan_overview`. When I'm in document mode I need: `doc_record_submit`, `doc_record_approve`, `doc_record_refresh`. The tools could declare their phase/domain as metadata so an agent (or user) can ask "what tools do I need for X?"
+
+**Make high-leverage tools more self-advertising.** `work_queue` should mention `conflict_domain_check` in its response when parallel tasks exist. `create_task` could prompt `check_duplicates` if similarity is high. `dispatch_task` returning context could note if `knowledge_list` has relevant entries for this task. The tools know enough to guide the agent toward the next right thing — they just don't do it.
+
+---
+
+## 7. Make `decompose_feature` the default path
+
+I ignored `decompose_feature` and manually decomposed all 6 features. The tool exists for exactly this purpose. Why didn't I use it?
+
+- I wasn't sure Layer 3 classification had run on the specs, which the tool probably needs
+- It returns a *proposal* requiring a follow-up `decompose_review` call, then I'd still need to call `create_tasks` — the round trip wasn't obviously faster
+- The proposal format wasn't clear to me without trying it
+
+The issue is that `decompose_feature` is in the middle of a 3-step loop (`decompose_feature` → `decompose_review` → `create_tasks`) when it should feel like one action. If the output of `decompose_feature` could be passed directly to a `create_tasks` call, and if the tool worked without requiring pre-classification, it would become the natural path rather than the optional one.
+
+---
+
+## The underlying principle
+
+Most of these changes share a root: **the API is designed around individual entity operations, but orchestration workflows operate on sets of entities**. The gap shows up everywhere — approving a set of specs, advancing a set of features, creating a set of tasks, querying the state of a set of related entities.
+
+The entity-level operations are correct and well-designed. The layer above them — the one that works on *collections* in the context of a workflow — is thin or missing. That's where I'd focus redesign energy.
+
+---
+
+# WHAT WOULD YOU CHANGE 3
+
+The core problem
+
+The current API is **entity CRUD dressed up as workflow**. There are 85+ tools that map roughly to "create X, get X, list X, update X" for each entity type. That's the right API for a storage layer. It's the wrong API for an agent that's trying to get work done.
+
+When I'm working, my mental model isn't "I need to call `update_status` on entity type `task` with ID `TASK-01KM...` and status `done`." It's "I'm done with this task, here's what I did." The tool should meet me where I am, not make me translate into database operations.
+
+## What I'd change
+
+### 1. Collapse the entity CRUD into two generic tools
+
+Right now there are separate tools for `create_feature`, `create_task`, `create_bug`, `create_plan`, `create_epic`, `create_decision`, plus `get_entity`, `list_entities`, `list_entities_filtered`, `update_entity`, `update_status`, etc. That's a lot of tool registrations that clutter the tool list and dilute attention.
+
+Replace with:
+
+- **`entity(action, type, ...params)`** — one tool for all CRUD. The action is `create`, `get`, `list`, or `update`. The type is `plan`, `feature`, `task`, `bug`, `decision`. Parameters vary by action+type. This is how the CLI already works (`kanbanzai create feature`, `kanbanzai get task`).
+
+- **`entity_batch(operations[])`** — apply multiple entity operations atomically. This is the one I kept wanting: "mark these 3 tasks done and update the feature status" in one call.
+
+That's 2 tools instead of ~15. Same functionality, less noise in the tool list.
+
+### 2. Replace the dispatch/complete ceremony with claim/finish
+
+Current flow:
+```
+work_queue → dispatch_task(task_id, role, dispatched_by) → [work] → complete_task(task_id, summary, ...)
+```
+
+That's 3 tool calls with mandatory parameters (`role`, `dispatched_by`) that are almost always the same values. And `dispatch_task` requires the task be in `ready` status, `complete_task` requires `active` — so if anything goes wrong with status tracking, you're stuck.
+
+Replace with:
+
+- **`next_task(plan_id?, feature_id?, role?)`** — "What should I work on?" Returns the top task from the queue with full context assembled (spec sections, related knowledge, file references). Optional filters. This combines `work_queue` + `dispatch_task` + `context_assemble` into the thing the agent actually wants: "give me work and tell me everything I need to know."
+
+- **`finish_task(task_id, summary, files_modified?, knowledge?)`** — "I'm done." Handles the status transition, records completion metadata, contributes knowledge entries, all in one call. Doesn't care whether the task was formally dispatched — if it's in `ready` or `active`, it transitions to `done`. Lenient on lifecycle, strict on data (summary is required).
+
+### 3. Add the dashboard tool
+
+This was the single biggest gap. I need one tool that answers "what's the state of this plan/feature/project?"
+
+- **`status(entity_id?)`** — Returns a synthesised view, not raw records. For a plan: feature count by status, task count by status per feature, blockers, what's ready next, completion percentage. For a feature: task breakdown, which are blocked and why, estimated remaining. For the whole project (no ID): active plans, overall health, what needs attention.
+
+The key insight is **synthesis over data**. I don't want 32 task records — I want "12 done, 3 ready, 2 blocked on FEAT-X, estimated 8 SP remaining."
+
+### 4. Rethink document tools entirely
+
+The document intelligence layer has 15+ tools (`doc_outline`, `doc_section`, `doc_classify`, `doc_find_by_concept`, `doc_find_by_entity`, `doc_find_by_role`, `doc_trace`, `doc_impact`, `doc_extraction_guide`, `doc_pending`, `doc_gaps`, `doc_supersession_chain`, `doc_record_get`, `doc_record_list`, `doc_record_submit`, `doc_record_approve`, `doc_record_validate`, `doc_record_get_content`, `doc_record_supersede`).
+
+I used zero of them. I read files directly.
+
+The problem: these tools are designed for a hypothetical agent workflow where you discover documents through the intelligence layer. In practice, the agent either already knows which document to read (because the task summary or a human said so), or needs to find something specific (which `grep` handles better).
+
+What would I actually use?
+
+- **`read_spec(entity_id)`** — "Give me the specification for this feature." Follows the entity → spec document link, returns the relevant content. No need to know document IDs or call `doc_record_get` then `doc_record_get_content`.
+
+- **`doc_register(path, type?, owner?)`** — Simplified registration. Merge `doc_record_submit` with the common case. Auto-detect type from path if possible.
+
+- **`doc_approve(path_or_id)`** — Approve by path (which I know) rather than requiring me to look up the document record ID first.
+
+The intelligence tools (`doc_classify`, `doc_find_by_concept`, etc.) might be valuable for a future "research agent" that's exploring an unfamiliar codebase, but for task execution they're overhead. I'd move them to an optional "intelligence" namespace that's off by default.
+
+### 5. Make context assembly automatic, not explicit
+
+`context_assemble` and `context_report` are never called because they require explicit invocation for something that should be implicit.
+
+If `next_task` returns context automatically, and `finish_task` accepts knowledge contributions inline, the context system becomes invisible infrastructure rather than a tool the agent has to remember to call.
+
+The knowledge system itself is sound — the problem is that contributing and consuming knowledge are separate steps that agents skip because they're not on the critical path.
+
+### 6. The agent handoff tool that doesn't exist
+
+The biggest missing feature: **a tool that generates a sub-agent prompt from a task.**
+
+Something like:
+
+- **`prepare_handoff(task_id, agent_role?)`** — Returns a complete, ready-to-use prompt string containing: task summary, relevant spec sections, acceptance criteria, existing code context (from codebase-memory), file paths to modify, constraints, and the commit message format. The output goes directly into `spawn_agent`'s `message` parameter.
+
+Right now I manually assemble these prompts by reading specs, checking file structures, understanding code patterns, and writing a big message. It takes 3-5 tool calls just to gather the information, plus significant token spend composing the prompt. If Kanbanzai could do that in one call, it would be the single most valuable tool in the system.
+
+### 7. Proposed minimal API
+
+If I were starting over, the tool list would be:
+
+| Tool | Purpose |
+|---|---|
+| `status` | Dashboard — synthesised state of plan/feature/project |
+| `next_task` | Claim work + get full context |
+| `finish_task` | Complete work + record results + contribute knowledge |
+| `prepare_handoff` | Generate a sub-agent prompt from a task |
+| `entity` | Generic CRUD for plans, features, tasks, bugs, decisions |
+| `entity_batch` | Multiple entity operations in one call |
+| `doc_register` | Register a document (simplified) |
+| `doc_approve` | Approve a document by path or ID |
+| `read_spec` | Get the spec content for an entity |
+| `decide` | Record a decision (shortcut — decisions are frequent) |
+
+That's **10 tools** instead of 85+. Every tool maps to something an agent actually wants to do during a work session. The entity lifecycle enforcement still happens — it's just inside `next_task` and `finish_task` instead of being the agent's responsibility to manage.
+
+The remaining tools (knowledge management, worktrees, merge gates, incidents, profiles, etc.) become **optional extensions** that can be enabled per-project or per-role. Most agents most of the time need the core 10.
+
+### 8. What I wouldn't change
+
+- **YAML on disk in Git** — this is genuinely good. It means agents can always fall back to direct file operations, nothing is locked behind the API, and everything is version-controlled.
+
+- **The lifecycle model** — the state machines are correct. The problem is exposing them as explicit tool calls rather than embedding them in higher-level operations.
+
+- **Knowledge entries** — the concept is right. The contribution mechanism just needs to be inline with task completion rather than a separate workflow.
+
+- **The delivery plan document** — the most useful artefact in the whole session was a markdown file a human wrote. That's not a failure of the tooling; it's a signal that the document-centric approach works. The tools should make it easier to reference and follow these documents, not replace them.
+
+## The meta-observation
+
+The current API is designed from the **system's perspective** — "here are all the operations you can perform on all the entities in the system." A better API would be designed from the **agent's perspective** — "here are the 5 things you need to do during a work session, and each one handles the bookkeeping for you."

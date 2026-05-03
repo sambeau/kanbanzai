@@ -1,0 +1,255 @@
+document_id: PROJECT/report-b40-report-batch-review-2026-05-01
+document_path: work/B40-fix-tool-correctness/B40-report-batch-review-2026-05-01.md
+content_hash: a4dce29b09c510cfef5a922bbeff857771441f534ef679e473d0c605441ea2db
+indexed_at: 2026-05-03T23:00:13.011756Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Batch Conformance Review: B40-fix-tool-correctness'
+      byte_offset: 0
+      byte_count: 8937
+      word_count: 1201
+      content_hash: a4dce29b09c510cfef5a922bbeff857771441f534ef679e473d0c605441ea2db
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 54
+          byte_count: 376
+          word_count: 44
+          content_hash: bcb8d088f01c76d787275b45c1afff97d760aae0a9fcd2643f2ca93d8663329c
+        - path: "1.2"
+          level: 2
+          title: Re-Review Context
+          byte_offset: 430
+          byte_count: 453
+          word_count: 61
+          content_hash: 0c1b23bac05b15397146e892c3e6b723403c31272211068294d13cc481c3d028
+        - path: "1.3"
+          level: 2
+          title: Feature Census
+          byte_offset: 883
+          byte_count: 1816
+          word_count: 243
+          content_hash: f0ebc9256e00f4223361be269a1038f8df12e24993bf135664b4906efbf2cb69
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Spec and Design Status
+              byte_offset: 1817
+              byte_count: 423
+              word_count: 41
+              content_hash: 43db545e558b06f2c307d7be85e54d85f958504ecf1fcd13eed9b99d7a936ce8
+            - path: 1.3.2
+              level: 3
+              title: Task Status Detail
+              byte_offset: 2240
+              byte_count: 459
+              word_count: 52
+              content_hash: 64f9b1ae25d74f91ddd6866eea98bf258bb747819b300ca07abd84f5fed0029e
+        - path: "1.4"
+          level: 2
+          title: Prior Finding Re-Examination
+          byte_offset: 2699
+          byte_count: 2860
+          word_count: 382
+          content_hash: 44460d1f20c4a1de14aa461195af0b3317a219bf978539f7e11659c95e9014dc
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'CG-1 (blocking): F1 and F2 Branches Not Merged to Main'
+              byte_offset: 2732
+              byte_count: 807
+              word_count: 108
+              content_hash: 12925416d9b9b7e46cfcba22d8f678db964427e3126fd9b5c48d8f59cb195835
+            - path: 1.4.2
+              level: 3
+              title: 'CG-2 (non-blocking): F3 and F4 Worktrees Still Active'
+              byte_offset: 3539
+              byte_count: 598
+              word_count: 75
+              content_hash: c7db7433c3aa0d02a6e5a320681ab8eb2d0eb7da62901d7fde8c4d5058d5ef39
+            - path: 1.4.3
+              level: 3
+              title: 'CG-3 (non-blocking): Cache/Index Staleness'
+              byte_offset: 4137
+              byte_count: 890
+              word_count: 126
+              content_hash: 40b5a71a6ed9ec9d2ed38c1cddbf8360b14f3bccdf62be849ca58bd18787b37a
+            - path: 1.4.4
+              level: 3
+              title: 'CG-4 (non-blocking): Scope Guard Gap'
+              byte_offset: 5027
+              byte_count: 532
+              word_count: 69
+              content_hash: 45eb0f396cbb573009e8b3ee05a7374e77c89da30c7cc2cda82dd861dd0462b1
+        - path: "1.5"
+          level: 2
+          title: Spec Conformance Verification (from Prior Review — Not Re-Examined)
+          byte_offset: 5559
+          byte_count: 543
+          word_count: 77
+          content_hash: a53d886825cd5140be28197976d5e1222aebc662e33bc9c615c96d336d149ead
+        - path: "1.6"
+          level: 2
+          title: Worktree Status Summary
+          byte_offset: 6102
+          byte_count: 690
+          word_count: 85
+          content_hash: 3594e64b4f83cc418e5010bccaf00995377f5392c016950646b878fe78b00a42
+        - path: "1.7"
+          level: 2
+          title: Documentation Currency
+          byte_offset: 6792
+          byte_count: 401
+          word_count: 53
+          content_hash: 027d4f25d33c5c123d06473ed52778edb25b81be1aeb5f14670dd154fb942330
+        - path: "1.8"
+          level: 2
+          title: Batch Verdict
+          byte_offset: 7193
+          byte_count: 1132
+          word_count: 160
+          content_hash: ca9e8c88220ec4c625ac14ee66e2feb0c315fec76e17f1695ff5f77d1312f9a2
+          children:
+            - path: 1.8.1
+              level: 3
+              title: '**FAIL** ❌'
+              byte_offset: 7211
+              byte_count: 1114
+              word_count: 157
+              content_hash: 91958245d6640d1a2469ae3c44baeddbee9b7de17689282ce0c1793af9d44352
+        - path: "1.9"
+          level: 2
+          title: Evidence
+          byte_offset: 8325
+          byte_count: 612
+          word_count: 91
+          content_hash: 386b24af9581a4ca6e766273cc0f74610d850c74ac602b39bc47c246e542c543
+entity_refs:
+    - entity_id: FEAT-01KQG2Q5MDC6E
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 1130
+    - entity_id: FEAT-01KQG2Q5Q1HX9
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 1354
+    - entity_id: FEAT-01KQG2Q5RS9G9
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 1574
+    - entity_id: FEAT-01KQG2Q5V4S6W
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 1722
+    - entity_id: FEAT-01KQG2Q5MDC6E
+      entity_type: feature
+      section_path: 1.4.1
+      byte_offset: 2827
+    - entity_id: FEAT-01KQG2Q5Q1HX9
+      entity_type: feature
+      section_path: 1.4.1
+      byte_offset: 2886
+    - entity_id: FEAT-01KQG2Q5MDC6E
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 6318
+    - entity_id: FEAT-01KQG2Q5Q1HX9
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 6442
+    - entity_id: FEAT-01KQG2Q5RS9G9
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 6571
+    - entity_id: FEAT-01KQG2Q5V4S6W
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 6693
+    - entity_id: FEAT-01KQG2Q5MDC6E
+      entity_type: feature
+      section_path: 1.8.1
+      byte_offset: 8061
+    - entity_id: FEAT-01KQG2Q5Q1HX9
+      entity_type: feature
+      section_path: 1.8.1
+      byte_offset: 8133
+    - entity_id: FEAT-01KQG2Q5
+      entity_type: feature
+      section_path: "1.9"
+      byte_offset: 8392
+    - entity_id: FEAT-01KQG2Q5MDC6E
+      entity_type: feature
+      section_path: "1.9"
+      byte_offset: 8472
+    - entity_id: TASK-01KQG2WSTPF5K
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 2277
+    - entity_id: TASK-01KQG2WSY70G5
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 2332
+    - entity_id: TASK-01KQG2WT0N1TR
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 2352
+    - entity_id: TASK-01KQG2WT3GC31
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 2408
+    - entity_id: TASK-01KQG2WT61X74
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 2428
+    - entity_id: TASK-01KQG2WT8EVFH
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 2550
+    - entity_id: TASK-01KQG2WTB2NFH
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 2570
+    - entity_id: TASK-01KQG2WTDZHQJ
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 2590
+    - entity_id: B40-fix-tool-correctness
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 28
+    - entity_id: B40-fix-tool-correctness
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 76
+    - entity_id: P40-retro-batch-april-2026
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 159
+    - entity_id: B40-fix-tool-correctness
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 1872
+    - entity_id: P40-retro-batch-april-2026
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 1990
+    - entity_id: B40-fix-tool-correctness
+      entity_type: plan
+      section_path: 1.4.4
+      byte_offset: 5086
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: 1.4.4
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+classified: false

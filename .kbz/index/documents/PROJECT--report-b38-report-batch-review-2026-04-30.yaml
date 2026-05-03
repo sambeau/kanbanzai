@@ -1,0 +1,177 @@
+document_id: PROJECT/report-b38-report-batch-review-2026-04-30
+document_path: work/B38-plans-and-batches/B38-report-batch-review-2026-04-30.md
+content_hash: 81d739064aef19a6e3892594a37e140d668af229e6516e5fc2c834e2304f69a7
+indexed_at: 2026-05-03T23:00:12.36293Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Batch Conformance Review: B38-plans-and-batches'
+      byte_offset: 0
+      byte_count: 6740
+      word_count: 971
+      content_hash: 81d739064aef19a6e3892594a37e140d668af229e6516e5fc2c834e2304f69a7
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 51
+          byte_count: 277
+          word_count: 37
+          content_hash: 8e91d113f48fa5e9ec676d170b78c00dd61aea7792e1b85a86edb9154dfa2e07
+        - path: "1.2"
+          level: 2
+          title: Feature Census
+          byte_offset: 328
+          byte_count: 1282
+          word_count: 242
+          content_hash: 3e1d9fae5535c80cb5b13e536c634d615c80875064bd352346aeabe1bcf481c2
+        - path: "1.3"
+          level: 2
+          title: Conformance Gaps
+          byte_offset: 1610
+          byte_count: 1942
+          word_count: 248
+          content_hash: 2bda9c7bdbb8258f60f1e3d705fa794940cca5b1f8cdfbab37261c4ac92fad57
+        - path: "1.4"
+          level: 2
+          title: Documentation Currency
+          byte_offset: 3552
+          byte_count: 546
+          word_count: 73
+          content_hash: 1bf4da564284f116727158c048d8bb0f2101e5f6e21c58c8aeae41e095e07826
+        - path: "1.5"
+          level: 2
+          title: Retrospective Summary
+          byte_offset: 4098
+          byte_count: 522
+          word_count: 69
+          content_hash: c0463b33064719785b7d41ceb80b385dd112633415098ff158307685c93a3f42
+        - path: "1.6"
+          level: 2
+          title: Batch Verdict
+          byte_offset: 4620
+          byte_count: 1462
+          word_count: 210
+          content_hash: 6ad523051db45d106321fbc8e198fffb950815b46d3280e9d1c0e154cdad4543
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Summary of blocking issues
+              byte_offset: 4723
+              byte_count: 727
+              word_count: 109
+              content_hash: 402b5e4e7b214b9b503fe2ef56d32eac2c8d4c5f72b9eeeed1917c7712332e0e
+            - path: 1.6.2
+              level: 3
+              title: Resolution path to `done`
+              byte_offset: 5450
+              byte_count: 632
+              word_count: 86
+              content_hash: 13c0730db375db216cc0e51b0a5efe73536a6113f57d20bda29db2ec28175d3d
+        - path: "1.7"
+          level: 2
+          title: Evidence
+          byte_offset: 6082
+          byte_count: 658
+          word_count: 87
+          content_hash: b9d8f99a088c8dcb862bc2764f09022cfe6cc39d51bbc7ffc18ae15e404c54b9
+entity_refs:
+    - entity_id: FEAT-01KQ7YQKBDNAP
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 497
+    - entity_id: FEAT-01KQ7YQKEEHFY
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 593
+    - entity_id: FEAT-01KQ7YQKHK2GV
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 686
+    - entity_id: FEAT-01KQ7YQKMCM6T
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 779
+    - entity_id: FEAT-01KQ7YQKPT8HF
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 878
+    - entity_id: FEAT-01KQ7YQKWTBRP
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 973
+    - entity_id: FEAT-01KQ7JDT511BZ
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1069
+    - entity_id: FEAT-01KQ7YQK6DDDA
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1210
+    - entity_id: FEAT-01KQ7YQKT04M7
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1340
+    - entity_id: FEAT-01KQAGMVQABXH
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1487
+    - entity_id: FEAT-01KQ7YQKT04M7
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 1754
+    - entity_id: FEAT-01KQ7YQK6DDDA
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 2554
+    - entity_id: FEAT-01KQ7JDT511BZ
+      entity_type: feature
+      section_path: "1.3"
+      byte_offset: 2786
+    - entity_id: FEAT-01KQ7YQK6DDDA
+      entity_type: feature
+      section_path: 1.6.2
+      byte_offset: 5681
+    - entity_id: FEAT-01KQ7YQK6DDDA
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 6415
+    - entity_id: FEAT-01KQ7JDT511BZ
+      entity_type: feature
+      section_path: "1.7"
+      byte_offset: 6468
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 28
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 73
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: "1.3"
+      byte_offset: 2996
+    - entity_id: P38-plans-and-batches
+      entity_type: plan
+      section_path: "1.3"
+      byte_offset: 3064
+    - entity_id: B38-plans-and-batches
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 6139
+    - entity_id: F10-superseded
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 6724
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+    - section_path: 1.6.1
+      role: narrative
+      confidence: high
+classified: false

@@ -1,0 +1,253 @@
+document_id: PROJECT/report-b36-f2-dev-plan-status-argument-resolution
+document_path: work/B36-kbz-cli-and-status/B36-F2-dev-plan-status-argument-resolution.md
+content_hash: 7ffe4156a2756892a5f6cf52d3b64cfcde50471678eff9a48769e406f0b616c8
+indexed_at: 2026-05-03T23:00:09.995825Z
+sections:
+    - path: "1"
+      level: 2
+      title: Overview
+      byte_offset: 266
+      byte_count: 724
+      word_count: 82
+      content_hash: 13e67ba8460fa9d8cc6ccc193e99fd8467e5639875ba948607804dcd6d351049
+    - path: "2"
+      level: 2
+      title: Scope
+      byte_offset: 990
+      byte_count: 632
+      word_count: 74
+      content_hash: 0f7a5b9b38f3f494b0ef507c4362e28e1077bea867606f23f8eb12bf3bfd9817
+    - path: "3"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 1622
+      byte_count: 6107
+      word_count: 840
+      content_hash: 079817ece6204ad971e2a6902101b3cde5a72c36c4c34cf3cb223258ceace115
+      children:
+        - path: "3.1"
+          level: 3
+          title: 'Task 1: Define Resolution Interfaces and Contracts'
+          byte_offset: 1641
+          byte_count: 716
+          word_count: 89
+          content_hash: 8db26a07b665bc9e68d646088c5282724bb7ab8ab78912760702f4dd35d928fe
+        - path: "3.2"
+          level: 3
+          title: 'Task 2: Wire --format Flag and Argument Validation into kbz status'
+          byte_offset: 2357
+          byte_count: 776
+          word_count: 100
+          content_hash: 5ae9cafc14a8dce1a6adf9e0cd4ecbb263def9150c132bc671ec719f616c154f
+        - path: "3.3"
+          level: 3
+          title: 'Task 3: Implement File Path Resolution'
+          byte_offset: 3133
+          byte_count: 842
+          word_count: 122
+          content_hash: dabae0d8db2b3169e99a0807f644727c99aa035add2df59588a85816e4bd0ec4
+        - path: "3.4"
+          level: 3
+          title: 'Task 4: Implement Entity ID Routing and Plan Prefix Resolution'
+          byte_offset: 3975
+          byte_count: 599
+          word_count: 86
+          content_hash: 14ad84aac4ed89a49a634a9016e084910933f6bda205434dc47debf3bd32af1d
+        - path: "3.5"
+          level: 3
+          title: 'Task 5: Implement kbz doc approve Path Resolution'
+          byte_offset: 4574
+          byte_count: 723
+          word_count: 108
+          content_hash: 0d7afba7f4a5f3cb69a35abd20b455d29e9aa03096f7c7bdf8180eb30af079a1
+        - path: "3.6"
+          level: 3
+          title: 'Task 6: Integration and Verification'
+          byte_offset: 5297
+          byte_count: 540
+          word_count: 75
+          content_hash: 77effac096cd1d99ad6cc371ef972e1cb047a79265f19da0277f7166a6aa0586
+        - path: "3.7"
+          level: 3
+          title: 'Task 7: Implement FR-007 ResolveNone Fallback Probe'
+          byte_offset: 5837
+          byte_count: 975
+          word_count: 136
+          content_hash: 6b60d6df5a2a46e655ba3e036413e0e42f59e63488924cc772a9d45dab578217
+        - path: "3.8"
+          level: 3
+          title: 'Task 8: Fix Exit Codes on Entity/Plan Not-Found'
+          byte_offset: 6812
+          byte_count: 917
+          word_count: 121
+          content_hash: 5dd40cb99e3d859d09ece672e2329fa1b0c3e453b31f5dd91217ba53e17c4dfc
+    - path: "4"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 7729
+      byte_count: 438
+      word_count: 102
+      content_hash: 3167d625053ddb20e2ad9aaa40bcbed86c089d28a16f9784138805988e622af4
+    - path: "5"
+      level: 2
+      title: Risk Assessment
+      byte_offset: 8167
+      byte_count: 2162
+      word_count: 326
+      content_hash: 5ad04f44e828426611835987aca1c05e70ff712e2a8d74253547c724d8974fda
+      children:
+        - path: "5.1"
+          level: 3
+          title: 'Risk: LookupByPath Requires O(n) Scan'
+          byte_offset: 8187
+          byte_count: 360
+          word_count: 61
+          content_hash: 247674cb06f4df724f3ac828b17c3f171e202973087f6449854416b3dcda726a
+        - path: "5.2"
+          level: 3
+          title: 'Risk: Display ID Resolution Ambiguity'
+          byte_offset: 8547
+          byte_count: 293
+          word_count: 40
+          content_hash: 0bbe86e9906601636b1cbf95618a399babc1a71abb9922ed6a4dc5933cfcc0ec
+        - path: "5.3"
+          level: 3
+          title: 'Risk: FR-007 Fallback Probe Service Dependency'
+          byte_offset: 8840
+          byte_count: 484
+          word_count: 72
+          content_hash: 704bddcf60dee76826bda3d189c597a6f171dd8d3cc08885bc16f9fd02744a7f
+        - path: "5.4"
+          level: 3
+          title: 'Risk: Exit Code Change May Break Downstream Scripts'
+          byte_offset: 9324
+          byte_count: 369
+          word_count: 58
+          content_hash: 9dcaba68e54154cc39cbe294c8efa6f2b5abdddeb88daddfabf18b4a91939c7a
+        - path: "5.5"
+          level: 3
+          title: 'Risk: DocumentService Interface Change Breaks MCP'
+          byte_offset: 9693
+          byte_count: 336
+          word_count: 49
+          content_hash: f6a0079b31626d3707213595a278f50f166280a18ad256bf118a8bd782e54165
+        - path: "5.6"
+          level: 3
+          title: 'Risk: Integration Test Fixture Complexity'
+          byte_offset: 10029
+          byte_count: 300
+          word_count: 43
+          content_hash: af91863b0dd5b00f2942eef1f82d6ffcbeb9706934af32507ead8826f0703d86
+    - path: "6"
+      level: 2
+      title: Verification Approach
+      byte_offset: 10329
+      byte_count: 363
+      word_count: 54
+      content_hash: 7a9269784f28af5e27ee3c542dbcf510f6cceb1ee4cf7a3c243b79658c0fef15
+    - path: "7"
+      level: 2
+      title: Interface Contracts
+      byte_offset: 10692
+      byte_count: 1474
+      word_count: 175
+      content_hash: ee2d3b8bd1187889cf54c842d187bfb7d37fa9e25690346fc0587be80b3ea88f
+      children:
+        - path: "7.1"
+          level: 3
+          title: ResolutionKind enum (Task 1)
+          byte_offset: 10716
+          byte_count: 397
+          word_count: 41
+          content_hash: bb8d4c8c9145a4aaa696aff3255a137011eae92f904516c29f24c6ae7689c22a
+        - path: "7.2"
+          level: 3
+          title: Disambiguate(target string) ResolutionKind (Task 1)
+          byte_offset: 11113
+          byte_count: 138
+          word_count: 18
+          content_hash: c0b6ebcda710435e1f88698333d34e51496f9ebe0ca517496e73e986063a3bd6
+        - path: "7.3"
+          level: 3
+          title: LookupByPath(path string) (DocumentResult, error) (Task 3)
+          byte_offset: 11251
+          byte_count: 177
+          word_count: 21
+          content_hash: dc4e216eaa7ca0e15ddf3efebc23916789be60f375dc1eeaea54e89639d0bf22
+        - path: "7.4"
+          level: 3
+          title: runStatus signature (Task 2)
+          byte_offset: 11428
+          byte_count: 169
+          word_count: 24
+          content_hash: a191ebb7776e247df8af2d360ba515cf9099d50e98c2d87b47e51bf6fed75491
+        - path: "7.5"
+          level: 3
+          title: runDocApprove extended signature (Task 5)
+          byte_offset: 11597
+          byte_count: 196
+          word_count: 28
+          content_hash: 681c5ab0262296a3977a0d67898f6ec1223b97f5fb065ee55cd9b2950fc24e33
+        - path: "7.6"
+          level: 3
+          title: Renderer interface (Tasks 3, 4, 6)
+          byte_offset: 11793
+          byte_count: 373
+          word_count: 40
+          content_hash: e747b3dc13f9a1b2007b2c9d4d5edd736d62922c9724db0ea824e2af5f95e479
+    - path: "8"
+      level: 2
+      title: Traceability Matrix
+      byte_offset: 12166
+      byte_count: 1036
+      word_count: 178
+      content_hash: c53d67635269ebecefb9d22a4e522951ab0d45acae0df97dd3e1198165588bde
+entity_refs:
+    - entity_id: FEAT-01KQ2VFTWD1W2
+      entity_type: feature
+      section_path: "2"
+      byte_offset: 1110
+    - entity_id: F2-spec-status-argument-resolution
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 337
+    - entity_id: F2-spec-status-argument-resolution
+      entity_type: plan
+      section_path: "2"
+      byte_offset: 1063
+cross_doc_links:
+    - target_path: work/spec/B36-F2-spec-status-argument-resolution.md
+      link_text: work/spec/B36-F2-spec-status-argument-resolution.md
+      section_path: "1"
+    - target_path: work/reviews/batch-review-b36-kbz-cli-and-status.md
+      link_text: work/reviews/batch-review-b36-kbz-cli-and-status.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "2"
+      role: constraint
+      confidence: high
+    - section_path: "5"
+      role: risk
+      confidence: high
+    - section_path: "5.1"
+      role: risk
+      confidence: high
+    - section_path: "5.2"
+      role: risk
+      confidence: high
+    - section_path: "5.3"
+      role: risk
+      confidence: high
+    - section_path: "5.4"
+      role: risk
+      confidence: high
+    - section_path: "5.5"
+      role: risk
+      confidence: high
+    - section_path: "5.6"
+      role: risk
+      confidence: high
+classified: false

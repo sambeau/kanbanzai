@@ -1,0 +1,155 @@
+document_id: PROJECT/report-b36-f3-spec-status-human-output
+document_path: work/B36-kbz-cli-and-status/B36-F3-spec-status-human-output.md
+content_hash: 62ea8b49a66230482f256ee828175a08b1138b696a17225ebc85bc1046625178
+indexed_at: 2026-05-03T23:00:11.014286Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Status Command Human Output'
+      byte_offset: 0
+      byte_count: 17133
+      word_count: 2681
+      content_hash: 62ea8b49a66230482f256ee828175a08b1138b696a17225ebc85bc1046625178
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 258
+          byte_count: 774
+          word_count: 112
+          content_hash: a70636cda3fac94611ee3a39102cbd744f09bfb2bb7b8ae0970b18a73977c9c6
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 1032
+          byte_count: 430
+          word_count: 64
+          content_hash: 754294cb52ac20bea540fa2b28b3eb39a9054880b8494128986c59721efd5982
+        - path: "1.3"
+          level: 2
+          title: Scope
+          byte_offset: 1462
+          byte_count: 748
+          word_count: 120
+          content_hash: 8505f76327b1b82bac11d47c5ee30d68a05a7cb0716930658aa3992758d6a8ef
+        - path: "1.4"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2210
+          byte_count: 9353
+          word_count: 1490
+          content_hash: 74e8a7758ca0a0abc003c6a5584813f2a3ef82d3a6f4bdc13c112818683402c0
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'FR-1: TTY Detection'
+              byte_offset: 2238
+              byte_count: 1038
+              word_count: 168
+              content_hash: 308d61ec9ba28257c8d7d1f945dce3d3b7c74d872798070cde9feb1e8ec05856
+            - path: 1.4.2
+              level: 3
+              title: 'FR-2: View — Unregistered Document'
+              byte_offset: 3276
+              byte_count: 1159
+              word_count: 192
+              content_hash: 69c5b7db194fc3bec58fba86abfc8d406381fac38697b8bdf20cef8351c612cc
+            - path: 1.4.3
+              level: 3
+              title: 'FR-3: View — Registered Document with Owner Entity'
+              byte_offset: 4435
+              byte_count: 1012
+              word_count: 160
+              content_hash: 355b1d3a96f29a806350fe3852fa36e84115355f8c45be9ae007956201e38b8b
+            - path: 1.4.4
+              level: 3
+              title: 'FR-4: View — Direct Feature Lookup'
+              byte_offset: 5447
+              byte_count: 2390
+              word_count: 375
+              content_hash: 8d5e79adf030708e7b7a29b22ebf0a797048521c25c6228c3abc7ebfcaf061ae
+            - path: 1.4.5
+              level: 3
+              title: 'FR-5: View — Plan Lookup'
+              byte_offset: 7837
+              byte_count: 1561
+              word_count: 251
+              content_hash: 840cafbfe2c38e960b822f16cc0fb15c9f78a7e8ad24ead925fd8729acfc5265
+            - path: 1.4.6
+              level: 3
+              title: 'FR-6: View — Project Overview (No Target)'
+              byte_offset: 9398
+              byte_count: 1490
+              word_count: 236
+              content_hash: 670a0269a394f606ab3acef51d112ce4540c30e041795c09f6242c7156b98a8b
+            - path: 1.4.7
+              level: 3
+              title: 'FR-7: Alignment and Layout'
+              byte_offset: 10888
+              byte_count: 675
+              word_count: 105
+              content_hash: 767c6770e0e7c81efa5d6149a3c0420cb654a013235fa26847fb4625b45db369
+        - path: "1.5"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 11563
+          byte_count: 941
+          word_count: 147
+          content_hash: aefb5a21ed30c44cb632f2752c396f175da0840dba6dc1169853b97165ce7b2c
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 12504
+          byte_count: 1962
+          word_count: 319
+          content_hash: 51b97f7784eae51d48bc136dbaa658f1421830c2ee47b8742468d1406eaec1e0
+        - path: "1.7"
+          level: 2
+          title: Verification Plan
+          byte_offset: 14466
+          byte_count: 1175
+          word_count: 182
+          content_hash: 6fa395269f62d73a06f9b5fda6b70b34651b8d36204ba59a30381beb088c7902
+        - path: "1.8"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 15641
+          byte_count: 1492
+          word_count: 219
+          content_hash: deb76b850aa9459691b80fc0f227b3251b7daf20115cfe4766baa5b9b648ca3d
+entity_refs:
+    - entity_id: P1-my-plan
+      entity_type: plan
+      section_path: 1.4.4
+      byte_offset: 5930
+    - entity_id: P1-main-plan
+      entity_type: plan
+      section_path: 1.4.5
+      byte_offset: 8053
+cross_doc_links:
+    - target_path: work/_project/design-kbz-cli-and-binary-rename.md
+      link_text: work/_project/design-kbz-cli-and-binary-rename.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: 1.4.6
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.8"
+      role: assumption
+      confidence: high
+classified: false

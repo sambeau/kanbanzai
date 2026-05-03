@@ -1,0 +1,88 @@
+# Research AI Agent Best Practices
+
+As part of Kanbanzai Workflow System 3.0 we need to research best practices for managing AI Agents. This task is to review, understand and collate the practices outlined in “10 CLAUDE CODE PRINCIPLES” a research-base distillation of best practices gleaned from 17 research papers.
+
+- [Overview: 10 Claude Code Principles](https://jdforsythe.github.io/10-principles/overview/), “Most AI coding advice is wrong. Here's what the research actually says.”
+
+## What is Kanbanzai?
+
+**Kanbanzai** — Git-native workflow system for human-AI software development.
+
+- **Humans** own intent: goals, designs, documents, approvals.
+- **AI agents** own execution: decomposition, implementation, review, status tracking.
+- **Document-led**, not ticket-led — work flows through design → spec → dev-plan → review, each with its own draft lifecycle.
+- **Features** travel a state machine from proposal → specification → done, with stage gates enforced by the system.
+
+**`kanbanzai` MCP server** — the tool agents use to manage all of this:
+
+- Stores structured workflow state (plans, features, tasks, bugs, decisions) as YAML in `.kbz/`, synced via Git.
+- Orchestrates work: decomposes specs into tasks, delegates to sub-agents, manages parallelism, reviews output.
+- Acts as a knowledge graph / long-term memory — agents query it for project context, specs, decisions, and constraints.
+- Tracks documents with structural metadata (concepts, facts, classifications) — not just workflow state.
+- Humans are mostly invisible to it; they interact by writing docs and talking to an AI.
+
+**Key technical facts:**
+
+- Written in Go, runs as an MCP server.
+- No database — YAML files in `.kbz/`, deterministically serialised, merge-friendly in Git.
+- All documents are Markdown.
+
+## Kanbanzai System Goals
+
+The goals of the Kanbanzai system is to:
+
+- Orchestrate AI Agents to produce high-quality code that meets the specifications 
+- Reduce project drift problems by adding focused, highly organised persistent memory to the workflow
+- Efficiently manage context by providing focused, highly organised information for each new context
+- Provide tools for AI Agents to find focused information in a large document store without having to read and grep hundreds of documents
+- Provide a system for humans to manage large AI-driven software projects
+
+Sub-goals:
+
+- Speed the process of creating large software projects
+- Minimise token usage of AI Agents when creating large software projects
+
+Non-goals:
+- Speed up or reduce token usage in small software projects
+
+## 10 Principals Research 
+
+Please read the following “10 Principals” web pages, in turn, to distill the most important and relevant points for the Kanbanzai system. 
+
+In particular we will be seeking to use the advice here to create SKILLs and instructions for AI Agents that use this advice to create better SKILLS, documentation, sub-agent prompts—anything in the Kanbanzai system that might benefit from the advice.
+
+We are looking for ways to improve our:
+- roles
+- SKILLS
+- MCP tools
+- knowledge intelligence system
+- prompts (and sub-agent prompts)
+- documentation generation
+- document-led workflow system in general
+
+What can we take away from each ***principal***? In particular, how would we apply the principal to these.
+
+## Pages
+
+Each page is thorough and detailed, but it has a “Fact Sheet” included: pay specially attention to that part as that is the author’s distillation. However, there may be more relevant lessons for the Kanbanzai System in other parts of the documents, so look out for any gems.
+
+Please take them individually to work out how they apply to our system and its parts. 
+- Can we apply this advice in any meaningful way? 
+- How can we apply this advice in a meaningful way?
+
+It will also be useful to record the places where we are already  following the advice so we know what we’ve got right (an won’t change it).
+
+At the end, collate them as a research report that we can use to inform a design for Kanbanzai 3.0.
+
+1. [The Hardening Principle](https://jdforsythe.github.io/10-principles/principles/hardening/)
+2. [The Context Hygiene Principle](https://jdforsythe.github.io/10-principles/principles/context-hygiene/)
+3. [The Living Documentation Principle](https://jdforsythe.github.io/10-principles/principles/living-documentation/)
+4. [The Disposable Blueprint Principle](https://jdforsythe.github.io/10-principles/principles/disposable-blueprint/)
+5. [The Institutional Memory Principle](https://jdforsythe.github.io/10-principles/principles/institutional-memory/)
+6. [The Specialized Review Principle](https://jdforsythe.github.io/10-principles/principles/specialized-review/)
+7. [The Observability Imperative](https://jdforsythe.github.io/10-principles/principles/observability/) 
+8. [The Strategic Human Gate Principle](https://jdforsythe.github.io/10-principles/principles/strategic-human-gate/)
+9. [The Token Economy Principle](https://jdforsythe.github.io/10-principles/principles/token-economy/)
+10. [The Toolkit Principle](https://jdforsythe.github.io/10-principles/principles/toolkit/)
+
+ 
