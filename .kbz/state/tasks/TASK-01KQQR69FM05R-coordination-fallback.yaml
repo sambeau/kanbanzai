@@ -3,4 +3,5 @@ parent_feature: FEAT-01KQQQ3B9SVF9
 slug: coordination-fallback
 name: Implement fallback logic for database unavailability
 summary: "Wrap allocation calls with fallback: on connectivity error, fall back to local allocation with a warning. Per-attempt fallback, not session-wide. Idempotency in allocate_id handles recovery."
-status: queued
+status: ready
+estimate: "2"
