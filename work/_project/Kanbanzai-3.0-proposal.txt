@@ -1,0 +1,192 @@
+# Kanbanzai 3.0 Proposal
+
+| Field | Value |
+|-------|-------|
+| Author | Sam |
+| Created | 2026-04-01 |
+
+## Overview
+
+Kanbanzai 3.0 is an ambitious upgrade to the Kanbanzai system that aims to:
+
+- Apply modern thinking and best practices to AI Agents in the system
+- Improve consistency to the parts of the system managed by AI Agents
+- Remove inefficiencies in Kanbanzai 2.0
+- Upgrade the skills and methods of AI Agent profiles
+
+## What is Kanbanzai?
+
+**Kanbanzai** — Git-native workflow system for human-AI software development.
+
+- **Humans** own intent: goals, designs, documents, approvals.
+- **AI agents** own execution: decomposition, implementation, review, status tracking.
+- **Document-led**, not ticket-led — work flows through design → spec → dev-plan → review, each with its own draft lifecycle.
+- **Features** travel a state machine from proposal → specification → done, with stage gates enforced by the system.
+
+**`kanbanzai` MCP server** — the tool agents use to manage all of this:
+
+- Stores structured workflow state (plans, features, tasks, bugs, decisions) as YAML in `.kbz/`, synced via Git.
+- Orchestrates work: decomposes specs into tasks, delegates to sub-agents, manages parallelism, reviews output.
+- Acts as a knowledge graph / long-term memory — agents query it for project context, specs, decisions, and constraints.
+- Tracks documents with structural metadata (concepts, facts, classifications) — not just workflow state.
+- Humans are mostly invisible to it; they interact by writing docs and talking to an AI.
+
+**Key technical facts:**
+
+- Written in Go, runs as an MCP server.
+- No database — YAML files in `.kbz/`, deterministically serialised, merge-friendly in Git.
+- All documents are Markdown.
+
+## Goal
+
+The goals of the Kanbanzai system is to:
+
+- Orchestrate AI Agents to produce high-quality code that meets the specifications 
+- Reduce project drift problems by adding focused, highly organised persistent memory to the workflow
+- Efficiently manage context by providing focused, highly organised information for each new context
+- Provide tools for AI Agents to find focused information in a large document store without having to read and grep hundreds of documents
+- Provide a system for humans to manage large AI-driven software projects
+
+Sub-goals:
+
+- Speed the process of creating large software projects
+- Minimise token usage of AI Agents when creating large software projects
+
+Non-goals:
+- Speed up or reduce token usage in small software projects
+
+## Problem
+
+The `kanbanzai` MCP Server and `.kbz/` store are working incredibly well.
+
+However it feels like our instructions, SKILLs, etc. aren’t working well and working together. The feel more like an ad-hoc cobbling together of knowledge, rather than a focused attempt to formalise the system processes at each stage of the workflow.
+
+### Inconsistency
+
+However, AI Agents are working with it inconsistently:
+
+- They don’t discover it
+- They forget to use it
+- They skip steps in the workflow
+- They are too keen to get to implementation
+- They write inconsistent specifications and plans
+- They don’t appear to understand the workflow system
+
+There is an overall inconsistent quality to the output. Mostly is great, occasionally it’s not. We need to work out why.
+
+### Efficiency
+
+The Kanbanzai system seems to waste time and tokens by repeating itself. There is a lack of clarity about what each stage is and what it is for. This burns tokens and increases the time length of development cycles.
+
+For Kanbanzai’s large projects, the issue isn’t so much the total use of tokens, but fitting each feature implementation stage into a single context: efficient orchestration of subagents to maintain enough context to complete a multi-task feature in one context window.
+
+## Solution
+
+- We should apply a high level of formality to all stages of the workflow
+- We need clear, consistent, accurate instructions given to all AI Agents during each stage of the workflow
+- We therefore need a bank of clear, consistent, accurate instructions for AI Agents to discover and use. 
+- We therefore need to work out how to ensure all AI Agents find and use the clear, consistent, accurate instructions.
+
+### Orchestration & Context
+
+We also need to work out how to optimise the orchestration step of the workflow to break plans into features and features into tasks that can fit into context windows. 
+- FEATs should be of a size that can be completed in a context window with judicious orchestration of sub-agents
+- TASKs should be of a size that a sub-agent can complete them in one context
+- Multi-feature plans need to be broken into phases that can be orchestrated efficiently in one context
+
+## Best practices research
+
+We should begin this endeavour with research.
+
+We need to learn:
+- How to create efficient (clear, consistent, accurate) skills for AI Agents
+- What is the current best practice for increasing the quality of output
+- What can we embed in our tools; what can only be in skills
+- What format is best for instructing AI Agents (is YAML or other structured formats better than Markdown?) and when should each format be presented?
+- Should we be using ‘roles’?
+
+### Research topics:
+
+#### Creating skills:
+
+- [Agent Skills Overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview#pre-built-agent-skills)
+- [Get started with Agent Skills in the API](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/quickstart)
+- [Skill authoring best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
+
+#### Best practices:
+
+- [Skill authoring best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
+- [Increase output consistency](https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/increase-consistency)
+- [Reduce hallucinations](https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations)
+
+#### SKILL creation SKILL
+
+- [A skill for creating new skills and iteratively improving them](https://github.com/anthropics/skills/tree/main/skills/skill-creator)
+
+#### Modern thinking
+
+- [10 CLAUDE CODE PRINCIPLES—What the Research Actually Says](https://jdforsythe.github.io/10-principles): “Most AI coding advice is measurably wrong. This series distills 17 peer-reviewed papers into 10 actionable principles for production-grade agentic workflows — plus the two open-source tools that make them automatic.”
+- [**Forge** - science-backed agent team assembly](https://github.com/jdforsythe/forge): Vocabulary routing, PRISM identities, the 45% threshold, all encoded into a Claude Code plugin
+- [**jig** - selective context loading for Claude Code](https://github.com/jdforsythe/jig) Define profiles with specific tools per session. Load only what you need so your context stays clean.
+- Reddit post: [I read 17 papers on agentic AI workflows. Most Claude Code advice is measurably wrong](https://www.reddit.com/r/ClaudeAI/comments/1s8mbqm/i_read_17_papers_on_agentic_ai_workflows_most/)
+	- Telling Claude "you are the world's best programmer" degrades output quality. PRISM persona research shows flattery activates motivational and marketing text in the training distribution instead of technical expertise. Brief identities under 50 tokens outperform elaborate persona descriptions.
+	- At 19 requirements in a system prompt, accuracy is lower than at 5. More instructions isn't better - it's measurably worse.
+	- A 5-agent team costs 7x the tokens of a single agent but produces only 3.1x the output (DeepMind, 2025). At 7+ agents, you're likely getting less output than a team of 4.
+	- If a single well-prompted agent achieves >45% of optimal performance on a task, adding more agents yields diminishing returns. Always start with one. Measure. Escalate only when the data justifies it.
+	- Rubber-stamp approval is the single most frequently observed quality failure in multi-agent systems (MAST FM-3.1). Your review agent says "LGTM" to everything because agreement is the path of least resistance in the training distribution.
+	- When critical information is placed in the middle of long context (rather than beginning or end), accuracy drops by >30% (Liu et al., 2024). MIT traced this to architectural causes in the transformer itself.
+
+
+## Things we need to encapsulate
+
+- What is each document for?
+- What is each stage in the workflow for?
+- When should you use the MCP servers tools?
+- Which tool is best for each job?
+
+We also need to add clarity to each Agent:
+
+- What it’s role is
+- What the project is
+- What it’s task is
+- Where it’s instructions are
+- What tools it has to use
+- Where the data/code is
+- How best to find things
+
+In particular we have to formalise the roles and match them to skills and tools.
+
+e.g.
+- Plan writer role
+- Design writer role
+- Specification writer role
+- Orchestrator role
+- Implementer role
+- Tester role
+- Reviewer role
+- Documenter role
+
+### Subagent instructions
+
+These are good and appear to be very effective. We need to encapsulate a similar approach for AI Agents that find themselves in the middle of a workflow: “here’s your map; here’s your compass; here’s the rules of the road; here’s your destination.:
+
+## Next steps
+
+Research the topics of: 
+- Best place for instructions
+- Best practice for orchestration
+- SKILLs, 
+- Agent roles, 
+- Modern thinking
+
+I suggest we create a research document on each.
+
+Once we have enough research we can proceed to a draft design, but we should start by creating research documents.
+
+## Proposal is start of discussion
+
+This is the beginning of a discussion, rather than a proposal of a design. The proposition is: “What would ‘Kanbanzai 3.0’ look like? How can we make it better than 2.0?”
+
+So, can I please have your thoughts and suggestions. In particular I would value your expertise on all aspects to do with AI Agents. 
+
+Also, looking at the feedback documents, and the retrospective entries in the system, what aspects of the Kanbazai Workflow System are working well for you, and what one’s aren’t?

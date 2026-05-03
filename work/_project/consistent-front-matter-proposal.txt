@@ -1,0 +1,40 @@
+# Consistent Front Matter Proposal
+
+## The problem
+
+Front matter in our documents is inconsistent, often-stale so cannot be trusted.
+
+The metadata in our front matter often duplicates what is in the  `.kbz` store’s metadata.
+
+Documents regularly have draft status in their front matter, despite the system showing them as approved.
+
+## Proposed Solution
+
+Any front-matter metadata that needs to be kept up-to-date should be in `.kbz` store, not in front matter.
+
+A document’s front matter should only contain metadata that will never go out of date: 
+
+Examples
+- author
+- creation date
+- document it replaces
+- acceptance into system date
+- Plan of feature it became part of
+
+Draft documents that have not been added to the store may contain other front matter metadata destined for the `.kbz` store metadata, but this should be removed once copied into the `.kbz` store metadata.
+
+Examples of metadata that is allowed in unmanaged documents that should be ingested and removed:
+
+- STATUS e.g. Draft
+
+## Templates
+
+Documents created by an AI Agent should follow a simple front matter template.
+
+## Skills 
+
+There should be a document creator skill that clarifies this.
+
+## Summary
+
+The Kanbanzai System should enforce consistent, up-to-date front matter.
