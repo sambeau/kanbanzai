@@ -356,6 +356,35 @@ step. If the skill proves valuable, hardening structural checks into MCP
 tools follows the Hardening Principle (replace fuzzy LLM steps with
 deterministic tools).
 
+## Dependencies
+
+### Upstream dependencies
+
+- **`refs/prompt-engineering-guide.md`** — the source material this skill
+  distills into agent-executable form. The skill must stay consistent with
+  this guide's 10 principles and template.
+- **`work/research/skill-authoring-best-practices.md`** — the research
+  defining how skills should be structured (progressive disclosure,
+  U-curve ordering, vocabulary routing, dual-register descriptions).
+- **`.agents/skills/` directory** — the skill system this new skill
+  lives within. Uses the same YAML frontmatter conventions and SKILL.md
+  naming as existing `.agents/skills/kanbanzai-*` skills.
+
+### Downstream dependencies
+
+- **All `.agents/skills/kanbanzai-*` skills** — this skill defines the
+  methodology for prompt and skill authoring. Future skill revisions and
+  new skill creation should use this skill's procedure. However,
+  retrofitting existing skills is out of scope for this batch.
+- **`.kbz/skills/*` task-execution skills** — same methodology applies
+  to the task-execution skill system, though this skill is placed in
+  `.agents/skills/` for discovery reasons.
+
+### No code dependencies
+
+This skill is pure documentation. It creates no Go code changes, requires
+no MCP server modifications, and has no build or test dependencies.
+
 ## Decisions
 
 - **Decision:** Create a standalone `prompt-engineering` skill (no
