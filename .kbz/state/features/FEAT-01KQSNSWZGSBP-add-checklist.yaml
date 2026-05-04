@@ -1,0 +1,9 @@
+id: FEAT-01KQSNSWZGSBP
+slug: add-checklist
+name: Add elicitation checklist to write-spec skill
+parent: P46-elicitation-checklist
+status: proposed
+summary: "Add a 7-item pre-spec elicitation checklist to the write-spec skill. The checklist runs once before specification content is written and ensures core objective, scope boundaries, ambiguities, technical approach, test strategy, constraints, and dependencies are explicitly addressed."
+created: "2026-05-04T14:20:48Z"
+created_by: sambeau
+display_id: P46-F1
