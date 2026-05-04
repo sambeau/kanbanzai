@@ -1,0 +1,10 @@
+canonical_content_hash: 7ec35483c5c5d6f9cc6180a4bf883da9e7b938ce29a6001e82ce4f253137d24f
+content_hash: 7ec35483c5c5d6f9cc6180a4bf883da9e7b938ce29a6001e82ce4f253137d24f
+created: "2026-05-04T11:13:34Z"
+created_by: sambeau
+id: PROJECT/report-user-guide
+path: docs/user-guide.md
+status: draft
+title: User guide
+type: report
+updated: "2026-05-04T11:13:34Z"

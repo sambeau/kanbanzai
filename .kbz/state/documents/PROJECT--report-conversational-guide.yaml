@@ -1,0 +1,10 @@
+canonical_content_hash: 28e9357565dd067d40c9b0b954ba322042a203129c77d3b3dee26329b547bcf9
+content_hash: d20d93bfaf0b873a49d5e30074e4c2e68ea9986cb64bc3859d613a1818ca83c4
+created: "2026-05-04T11:13:33Z"
+created_by: sambeau
+id: PROJECT/report-conversational-guide
+path: docs/conversational-guide.md
+status: draft
+title: Conversational guide
+type: report
+updated: "2026-05-04T11:13:33Z"

@@ -1,0 +1,10 @@
+canonical_content_hash: 37f963eb83df6c8313f635a1f743c0efa1764143fa33095e861a4aea3277f73f
+content_hash: c09772e7549abdfca5dc2521d1f8e4652e62cee8bf3ba4f828fe11000cbcffde
+created: "2026-05-04T11:13:34Z"
+created_by: sambeau
+id: PROJECT/report-trigger-reference
+path: docs/trigger-reference.md
+status: draft
+title: Trigger reference
+type: report
+updated: "2026-05-04T11:13:34Z"
