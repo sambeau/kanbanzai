@@ -3,11 +3,14 @@ parent_feature: FEAT-01KQSP2DDATWT
 slug: wisdom-forwarding-add-forward-flag-to-finish-tool-knowledge-parsing
 name: Add forward flag to finish tool knowledge parsing
 summary: Add forward flag to finish tool knowledge parsing
-status: active
+status: done
 estimate: "1"
 depends_on:
   - TASK-01KQSP6D6PGVM
+completed: "2026-05-04T14:35:32Z"
 claimed_at: "2026-05-04T14:34:32Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T14:34:32Z"
 dispatched_by: sambeau
+completion_summary: "Added forward flag parsing to finish tool: parseFinishKnowledge reads optional forward boolean, finish tool schema documents forward parameter. Forward flows through KnowledgeEntryInput to ContributeInput to storage."
+verification: "go build ./... passes, all finish-related tests pass (go test ./internal/mcp/ -run Finish)"
