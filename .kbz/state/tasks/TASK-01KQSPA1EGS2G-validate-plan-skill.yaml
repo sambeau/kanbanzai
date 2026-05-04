@@ -1,0 +1,6 @@
+id: TASK-01KQSPA1EGS2G
+parent_feature: FEAT-01KQSP41PE6JP
+slug: validate-plan-skill
+name: Create plan-validator skill
+summary: "Create .kbz/skills/validate-plan/SKILL.md with the plan-validator procedure. Define all 13 validation checks (D1-D13) with blocking/non-blocking classification: D1,D2,D3,D4,D5,D6,D9,D13 blocking; D7,D8,D10,D11,D12 non-blocking. Procedure: read dev-plan doc, read parent spec doc, execute each check with rubrics for LLM-classification checks, produce summary and full report. Verify dependency graph is acyclic, task descriptions are adequate (50+ words, states inputs/outputs/done), every spec requirement is covered."
+status: queued

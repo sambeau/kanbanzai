@@ -1,0 +1,6 @@
+id: TASK-01KQSPA1EJQP4
+parent_feature: FEAT-01KQSP41PE6JP
+slug: validate-spec-skill
+name: Create spec-validator skill
+summary: "Create .kbz/skills/validate-spec/SKILL.md with the spec-validator procedure. Define all 10 validation checks (S1-S10) with blocking/non-blocking classification: S1,S2,S3,S4,S5,S10 blocking; S6,S7,S8,S9 non-blocking. Procedure: read spec doc, read parent design doc, execute each check, produce summary and full report. Output: verdict (pass/pass_with_notes/fail), blocking/non-blocking finding counts, evidence score, reference to full report written to document store. Must run in fresh session — receives only the document, parent document, and checklist with rubrics."
+status: queued

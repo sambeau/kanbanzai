@@ -1,0 +1,6 @@
+id: TASK-01KQSPA1EH8E9
+parent_feature: FEAT-01KQSP41PE6JP
+slug: validate-review-skill
+name: Create review-gate-validator skill
+summary: "Create .kbz/skills/validate-review/SKILL.md with the review-gate-validator procedure. Define all 8 validation checks (R1-R8) with blocking/non-blocking classification: R1,R2,R4,R5,R7 blocking; R3,R6,R8 non-blocking. Procedure: read review documents, execute each check (detect rubber-stamp reviews, verify blocking findings cite spec requirements, check aggregate verdict consistency), produce summary and full report. Audit the review process, not the code."
+status: queued
