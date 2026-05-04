@@ -125,21 +125,40 @@ func NewEntityService(root string) *EntityService {
 		},
 	}
 
-	if cfg.CoordinationEnabled() {
-		db, err := coordination.New(context.Background(), cfg.Coordination.DatabaseURL)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "warning: coordination database unavailable: %v\n", err)
-		} else {
-			svc.coordinationDB = db
-			if err := db.Migrate(context.Background()); err != nil {
-				fmt.Fprintf(os.Stderr, "warning: coordination migration failed: %v\n", err)
-				db.Close()
-				svc.coordinationDB = nil
-			}
-		}
-	}
+	// Note: coordination DB is connected lazily on first allocation attempt
+	// (see ensureCoordinationDB), not at service construction. This implements
+	// per-attempt fallback: if the database is unreachable at startup but
+	// becomes reachable later, subsequent allocations will use it.
 
 	return svc
+}
+
+// ensureCoordinationDB returns the coordination database handle, connecting
+// lazily on first call if not already connected. If coordination is not
+// configured, it returns nil. If the database is unreachable, it warns and
+// returns nil — the caller falls back to local allocation. Subsequent calls
+// retry the connection if a previous attempt failed (per-attempt fallback).
+func (s *EntityService) ensureCoordinationDB() *coordination.DB {
+	if !s.cfg.CoordinationEnabled() {
+		return nil
+	}
+	if s.coordinationDB != nil {
+		return s.coordinationDB
+	}
+
+	db, err := coordination.New(context.Background(), s.cfg.Coordination.DatabaseURL)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "warning: coordination database unavailable: %v\n", err)
+		return nil
+	}
+	if err := db.Migrate(context.Background()); err != nil {
+		fmt.Fprintf(os.Stderr, "warning: coordination migration failed: %v\n", err)
+		db.Close()
+		return nil
+	}
+
+	s.coordinationDB = db
+	return db
 }
 
 // SetStatusTransitionHook attaches an optional hook that fires after
@@ -238,8 +257,8 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 
 	// Read next_feature_seq — use coordination DB if available, else local counter.
 	var seq int
-	if s.coordinationDB != nil {
-		allocSeq, allocErr := s.coordinationDB.AllocateFeatureSeq(context.Background(), s.cfg.Coordination.ProjectID, parentID)
+	if cdb := s.ensureCoordinationDB(); cdb != nil {
+		allocSeq, allocErr := cdb.AllocateFeatureSeq(context.Background(), s.cfg.Coordination.ProjectID, parentID)
 		if allocErr != nil {
 			fmt.Fprintf(os.Stderr, "warning: coordination database error, falling back to local feature seq: %v\n", allocErr)
 			seq = intFromState(planResult.State, "next_feature_seq", 1)
@@ -362,8 +381,8 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 
 	var idValue string
 	slug := normalizeSlug(input.Slug)
-	if s.coordinationDB != nil {
-		allocatedID, allocErr := s.coordinationDB.AllocateID(context.Background(), s.cfg.Coordination.ProjectID, "bug", "BUG-", slug)
+	if cdb := s.ensureCoordinationDB(); cdb != nil {
+		allocatedID, allocErr := cdb.AllocateID(context.Background(), s.cfg.Coordination.ProjectID, "bug", "BUG-", slug)
 		if allocErr != nil {
 			fmt.Fprintf(os.Stderr, "warning: coordination database error, falling back to local allocation: %v\n", allocErr)
 			// fall through to local allocation

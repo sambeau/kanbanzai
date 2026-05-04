@@ -67,8 +67,8 @@ func (s *EntityService) CreateBatch(input CreateBatchInput) (CreateResult, error
 
 	var idValue string
 	entityType := "batch_" + prefix
-	if s.coordinationDB != nil {
-		allocatedID, allocErr := s.coordinationDB.AllocateID(context.Background(), s.cfg.Coordination.ProjectID, entityType, prefix, slug)
+	if cdb := s.ensureCoordinationDB(); cdb != nil {
+		allocatedID, allocErr := cdb.AllocateID(context.Background(), s.cfg.Coordination.ProjectID, entityType, prefix, slug)
 		if allocErr != nil {
 			fmt.Fprintf(os.Stderr, "warning: coordination database error, falling back to local allocation: %v\n", allocErr)
 			// fall through to local allocation
