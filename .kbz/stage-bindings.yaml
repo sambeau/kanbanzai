@@ -25,6 +25,10 @@ stage_bindings:
     document_type: specification
     effort_budget: "5-15 tool calls"
     notes: "Human gate enforces that the spec author's requirements are reviewed and approved before implementation begins. A spec-author role (not architect) is used to keep the language precise and acceptance-criteria focused."
+    transition_validator:
+      role: spec-validator
+      skill: validate-spec
+      gate_mode: auto
     prerequisites:
       documents:
         - type: design
@@ -47,6 +51,10 @@ stage_bindings:
     document_type: dev-plan
     effort_budget: "5-10 tool calls"
     notes: "Human gate ensures the task decomposition and dependency graph are reviewed before parallel implementation work begins. Architect role owns the dev-plan because it requires systems-level judgment about interface contracts and sequencing."
+    transition_validator:
+      role: plan-validator
+      skill: validate-plan
+      gate_mode: auto
     prerequisites:
       documents:
         - type: specification
@@ -87,6 +95,10 @@ stage_bindings:
     document_type: report
     effort_budget: "5-10 tool calls per review dimension"
     max_review_cycles: 3
+    transition_validator:
+      role: review-gate-validator
+      skill: validate-review
+      gate_mode: auto
     prerequisites:
       tasks:
         all_terminal: true
