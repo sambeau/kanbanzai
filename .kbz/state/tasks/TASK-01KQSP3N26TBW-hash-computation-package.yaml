@@ -3,8 +3,11 @@ parent_feature: FEAT-01KQSP3BMFF98
 slug: hash-computation-package
 name: Implement hash computation package
 summary: "Create internal/hashvalidate/ package with SHA-256 line-hashing. Expose HashLine(content string) string returning a 2-char uppercase hex hash tag. Include unit tests for determinism, newline exclusion, and uniform distribution. Deliverable: hash.go + hash_test.go. Effort: Small. Addresses REQ-HC-001, REQ-HC-002, REQ-HC-003, REQ-NF-003."
-status: active
+status: done
+completed: "2026-05-04T14:42:01Z"
 claimed_at: "2026-05-04T14:34:05Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T14:34:05Z"
 dispatched_by: sambeau
+completion_summary: "Created internal/hashvalidate/ package with SHA-256 line hashing. HashLine(content string) string returns 2-char uppercase hex hash tag. Strips trailing newlines before hashing. Deterministic within process. 7 unit tests pass (determinism, newline exclusion, empty/blank strings, uppercase check, differing content, uniform distribution)."
+verification: go test ./internal/hashvalidate/ -v — all 7 tests PASS
