@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
 	"github.com/sambeau/kanbanzai/internal/fsutil"
+	"github.com/sambeau/kanbanzai/internal/hashvalidate"
 	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
@@ -50,10 +52,13 @@ func editFileTool(repoRoot string, worktreeStore *worktree.Store) server.ServerT
 		),
 		mcp.WithArray("edits",
 			mcp.Items(map[string]any{"type": "object"}),
-			mcp.Description("List of edit operations to apply sequentially (required for 'edit' mode). Each edit finds old_text and replaces it with new_text."),
+			mcp.Description("List of edit operations to apply sequentially (required for 'edit' mode). Each edit provides old_text and new_text for fuzzy matching, or hash_ref and new_text for hash-validated mode (when hash_validate is true)."),
 		),
 		mcp.WithString("entity_id",
 			mcp.Description("Entity ID (FEAT-... or BUG-...) to scope writes to the entity's active worktree. Omit to use the repository root."),
+		),
+		mcp.WithBoolean("hash_validate",
+			mcp.Description("When true, each edit must provide a hash_ref field (format: line_number#hash) instead of old_text. The tool validates that the referenced line has not changed since the hash was computed. When false or absent, fuzzy text matching is used (current behavior)."),
 		),
 	)
 
@@ -144,6 +149,9 @@ func editFileTool(repoRoot string, worktreeStore *worktree.Store) server.ServerT
 
 			display := req.GetString("display_description", "")
 
+			// Determine whether to use hash validation or fuzzy matching.
+			hashValidate := req.GetBool("hash_validate", false)
+
 			// Apply edits sequentially.
 			modified := string(current)
 			for i, editRaw := range edits {
@@ -151,6 +159,44 @@ func editFileTool(repoRoot string, worktreeStore *worktree.Store) server.ServerT
 				if !ok {
 					return inlineErr("invalid_parameter", fmt.Sprintf("edits[%d] must be an object", i))
 				}
+
+				if hashValidate {
+					// Hash-validated mode: require hash_ref, validate against current file content.
+					hashRef, _ := editMap["hash_ref"].(string)
+					newText, _ := editMap["new_text"].(string)
+					if hashRef == "" {
+						return inlineErr("missing_parameter",
+							fmt.Sprintf("edits[%d]: hash_ref is required when hash_validate is true", i+1))
+					}
+
+					// Parse line number from hash_ref (format: "line#hash").
+					lineNum, expectedHash := parseHashRef(hashRef)
+					if lineNum <= 0 {
+						return inlineErr("invalid_parameter",
+							fmt.Sprintf("edits[%d]: hash_ref %q has invalid format; expected {line_number}#{hash}", i+1, hashRef))
+					}
+
+					// Split current file content into lines to find the referenced line.
+					lines := strings.Split(modified, "\n")
+					if lineNum > len(lines) {
+						return inlineErr("edit_failed",
+							fmt.Sprintf("edits[%d]: line %d no longer exists (file has %d lines)", i+1, lineNum, len(lines)))
+					}
+
+					// Compute hash of the current line content.
+					actualHash := hashvalidate.HashLine(lines[lineNum-1])
+					if actualHash != expectedHash {
+						return inlineErr("hash_mismatch",
+							fmt.Sprintf("edits[%d]: line %d hash mismatch: expected %s, got %s — file may have changed since last read", i+1, lineNum, expectedHash, actualHash))
+					}
+
+					// Hash matches — apply the edit by replacing the line.
+					lines[lineNum-1] = newText
+					modified = strings.Join(lines, "\n")
+					continue
+				}
+
+				// Fuzzy matching mode (existing behavior).
 				oldText, _ := editMap["old_text"].(string)
 				newText, _ := editMap["new_text"].(string)
 				if oldText == "" && newText == "" {
@@ -285,4 +331,19 @@ func normalizeWhitespace(s string) string {
 		}
 	}
 	return b.String()
+}
+
+// parseHashRef parses a hash reference string of the form "line#hash"
+// (e.g., "22#XJ") and returns the line number and hash string.
+// Returns 0, "" if the format is invalid.
+func parseHashRef(ref string) (lineNum int, hash string) {
+	parts := strings.SplitN(ref, "#", 2)
+	if len(parts) != 2 {
+		return 0, ""
+	}
+	n, err := strconv.Atoi(parts[0])
+	if err != nil || n <= 0 {
+		return 0, ""
+	}
+	return n, parts[1]
 }
