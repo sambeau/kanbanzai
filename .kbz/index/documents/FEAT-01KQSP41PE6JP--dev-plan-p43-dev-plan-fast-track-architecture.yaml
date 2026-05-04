@@ -298,12 +298,12 @@ conventional_roles:
     - section_path: 1.4.5
       role: risk
       confidence: high
-access_count: 17
-last_accessed_at: 2026-05-04T15:12:46.462932Z
+access_count: 44
+last_accessed_at: 2026-05-04T17:15:03.85629Z
 section_access:
     "1.1":
-        access_count: 7
-        last_accessed_at: 2026-05-04T15:12:46.449523Z
+        access_count: 16
+        last_accessed_at: 2026-05-04T17:15:03.846193Z
     1.2.10:
         access_count: 1
         last_accessed_at: 2026-05-04T15:01:16.708075Z

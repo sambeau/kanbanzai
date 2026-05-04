@@ -38,8 +38,9 @@ type Record struct {
 	Status               Status     `yaml:"status"`
 	CreatedAt            time.Time  `yaml:"created_at"`
 	CreatedBy            string     `yaml:"created_by"`
-	RespondedAt          *time.Time `yaml:"responded_at"` // null until responded
-	Response             *string    `yaml:"response"`     // null until responded
+	RespondedAt          *time.Time `yaml:"responded_at"`         // null until responded
+	Response             *string    `yaml:"response"`             // null until responded
+	FeatureID            string     `yaml:"feature_id,omitempty"` // linked feature for auto-unblock
 
 	FileHash string `yaml:"-"` // for optimistic locking
 }
@@ -56,6 +57,7 @@ func FieldOrder() []string {
 		"created_by",
 		"responded_at",
 		"response",
+		"feature_id",
 	}
 }
 
@@ -78,6 +80,9 @@ func (r Record) Fields() map[string]any {
 	}
 	if r.Response != nil {
 		m["response"] = *r.Response
+	}
+	if r.FeatureID != "" {
+		m["feature_id"] = r.FeatureID
 	}
 	return m
 }
@@ -407,6 +412,9 @@ func unmarshalRecord(content string) (Record, error) {
 	}
 	if v, ok := fields["response"].(string); ok && v != "" {
 		record.Response = &v
+	}
+	if v, ok := fields["feature_id"].(string); ok && v != "" {
+		record.FeatureID = v
 	}
 
 	return record, nil

@@ -1,0 +1,192 @@
+document_id: FEAT-01KQSP41PE6JP/report-report-review-fast-track-core-cycle3
+document_path: work/_project/report-review-fast-track-core-cycle3.md
+content_hash: f1e69240953f409866be80e2ac6c05330bb0e6545b95135952ea360020ba97ae
+indexed_at: 2026-05-04T19:07:31.431248Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: FEAT-01KQSP41PE6JP — Fast-Track Architecture Core Implementation (Cycle 3)'
+      byte_offset: 0
+      byte_count: 12114
+      word_count: 1536
+      content_hash: f1e69240953f409866be80e2ac6c05330bb0e6545b95135952ea360020ba97ae
+      children:
+        - path: "1.1"
+          level: 2
+          title: 'Aggregate Verdict: **rejected** (needs_remediation)'
+          byte_offset: 733
+          byte_count: 356
+          word_count: 51
+          content_hash: 17baa2e8523b8dc2a1772d16e390beca2cf34931bd4d7e767c28ec204d97a15c
+        - path: "1.2"
+          level: 2
+          title: 'Structural Issue: Fixes on Main, Not on Feature Branch'
+          byte_offset: 1089
+          byte_count: 661
+          word_count: 100
+          content_hash: 0b2fa19c6fff8f3f0db06ec8757d8d863f7181afffc6a411d0ba4588b86243b8
+        - path: "1.3"
+          level: 2
+          title: Cycle-2 Finding Closure
+          byte_offset: 1750
+          byte_count: 1882
+          word_count: 213
+          content_hash: 2ea68bd055c3fa50a5204540302fc5746f956b19b2f8e71f01882a905188fe46
+        - path: "1.4"
+          level: 2
+          title: Per-Dimension Verdicts
+          byte_offset: 3632
+          byte_count: 801
+          word_count: 116
+          content_hash: 630c29e7aabbcc49cfe9954348cc1ed53fde7fba8b7d955bf6c13bc98b467d68
+        - path: "1.5"
+          level: 2
+          title: Review Unit Dispatch
+          byte_offset: 4433
+          byte_count: 340
+          word_count: 56
+          content_hash: d66bd250548885beba69c104f424e54246566346c5eb338f4cf18c0b7922d0f6
+        - path: "1.6"
+          level: 2
+          title: Blocking Findings
+          byte_offset: 4773
+          byte_count: 3422
+          word_count: 395
+          content_hash: 3e7ccc5a6824e4238d5ec175cc9374b90834fdb62afcfe36a8c333ac21b332ad
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'B1: dispatchSvc never wired — auto-validation pipeline is a no-op'
+              byte_offset: 4795
+              byte_count: 1105
+              word_count: 116
+              content_hash: 219198b692d939a3fce816e628189e642c07c01cbb875076df55aff10ffbe0e7
+            - path: 1.6.2
+              level: 3
+              title: 'B2: Test regression — `TestEntityService_CreateBug_AppliesDefaults` fails'
+              byte_offset: 5900
+              byte_count: 439
+              word_count: 50
+              content_hash: c47f28f3882656468ff12d4906b24d936e7f87ed1627415d0752c79fc1b017df
+            - path: 1.6.3
+              level: 3
+              title: 'B3: Key-name mismatch — `tv["blocking_fail"]` vs `tv["blocking"]`'
+              byte_offset: 6339
+              byte_count: 532
+              word_count: 61
+              content_hash: 559c57d278bc8ea5de920c36f5a6a175cabdd10c02d8694c7705cf4181222f82
+            - path: 1.6.4
+              level: 3
+              title: 'B4: PersistFeatureOverrides errors silently discarded'
+              byte_offset: 6871
+              byte_count: 376
+              word_count: 44
+              content_hash: 86c3a30906e3865bcdb5b09050a14cdfd9df4a50029d092fb519cc991d2c76a4
+            - path: 1.6.5
+              level: 3
+              title: 'B5: Deliverable files missing from worktree'
+              byte_offset: 7247
+              byte_count: 436
+              word_count: 61
+              content_hash: a9864394352044f970baa306f54708fc0aa143600ab1f0695b5cd1334ca47768
+            - path: 1.6.6
+              level: 3
+              title: 'B6: Tier downgrade via UpdateEntity — privilege escalation'
+              byte_offset: 7683
+              byte_count: 512
+              word_count: 60
+              content_hash: b0020f5fb45955d677326f1052cbb3bcb740ff7c27b207fb852a6e7588c0afa1
+        - path: "1.7"
+          level: 2
+          title: Non-Blocking Findings
+          byte_offset: 8195
+          byte_count: 1741
+          word_count: 225
+          content_hash: 25329f1b468cdf0d382337936db67a310dfd4f5ccd93bc9394387315a78550f0
+        - path: "1.8"
+          level: 2
+          title: Finding Summary
+          byte_offset: 9936
+          byte_count: 142
+          word_count: 25
+          content_hash: adc01892a03b2c0a68b11e699fba48983110f0f07645cdb4bb5a3400f5c4f2b5
+        - path: "1.9"
+          level: 2
+          title: What Went Well
+          byte_offset: 10078
+          byte_count: 761
+          word_count: 97
+          content_hash: 63441ea06ecbe51842d21eac714c941d838c62a8a05106a09a1ae0fbd7b9f3cd
+        - path: "1.10"
+          level: 2
+          title: Remediation Plan
+          byte_offset: 10839
+          byte_count: 980
+          word_count: 151
+          content_hash: 80fbef206cdd2bf2eaf3e8382b06db81c1fef1cc9350748b8359a22db6a8d402
+          children:
+            - path: 1.10.1
+              level: 3
+              title: 'Immediate (fixes exist on main — port to worktree):'
+              byte_offset: 10860
+              byte_count: 739
+              word_count: 114
+              content_hash: ef42b0e4719391f4452d191c158459a323fc8582c96f0c4d0231351e70ab29b1
+            - path: 1.10.2
+              level: 3
+              title: 'Structural remediation (before merge):'
+              byte_offset: 11599
+              byte_count: 220
+              word_count: 34
+              content_hash: bb4f0a4ded8ec3af656ab8fade630f9720bfcaf40e44628aa5c59f25fc0d6966
+        - path: "1.11"
+          level: 2
+          title: Escalation Note
+          byte_offset: 11819
+          byte_count: 295
+          word_count: 45
+          content_hash: 9ff439613b5552d8605c45067a21f0e0da24dc5ff60ad0f320adef2f7487471b
+entity_refs:
+    - entity_id: FEAT-01KQSP41PE6JP
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 10
+    - entity_id: FEAT-01KQSP41PE6JP
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 1263
+    - entity_id: P43-fast-track-architecture
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 369
+    - entity_id: B48-fast-track-impl
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 435
+    - entity_id: P43-fast-track-architecture
+      entity_type: plan
+      section_path: "1.3"
+      byte_offset: 3294
+cross_doc_links:
+    - target_path: .kbz/skills/validate-spec/SKILL.md
+      link_text: .kbz/skills/validate-spec/SKILL.md
+      section_path: "1.3"
+    - target_path: .kbz/skills/validate-review/SKILL.md
+      link_text: .kbz/skills/validate-review/SKILL.md
+      section_path: "1.3"
+    - target_path: work/P43-fast-track-architecture/validator-rubrics/spec-validator-rubrics.md
+      link_text: work/P43-fast-track-architecture/validator-rubrics/spec-validator-rubrics.md
+      section_path: "1.3"
+    - target_path: work/P43-fast-track-architecture/validator-rubrics/plan-validator-rubrics.md
+      link_text: work/P43-fast-track-architecture/validator-rubrics/plan-validator-rubrics.md
+      section_path: "1.3"
+    - target_path: work/P43-fast-track-architecture/validator-rubrics/review-gate-validator-rubrics.md
+      link_text: work/P43-fast-track-architecture/validator-rubrics/review-gate-validator-rubrics.md
+      section_path: "1.3"
+conventional_roles:
+    - section_path: "1.8"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-04T19:07:32.160667Z
+classified: false

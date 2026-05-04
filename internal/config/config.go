@@ -259,14 +259,11 @@ type ProjectConfig struct {
 	Constraints  []string `yaml:"constraints,omitempty"`
 }
 
-// GateMode is the automation mode for a stage gate: auto (agent validates)
-// or human (checkpoint required).
-type GateMode string
-
+// Valid gate mode constants per REQ-TIER-002.
 const (
-	GateModeAuto        GateMode = "auto"
-	GateModeHuman       GateMode = "human"
-	GateModeConditional GateMode = "conditional"
+	GateModeAuto        = "auto"
+	GateModeHuman       = "human"
+	GateModeConditional = "conditional"
 )
 
 // Tier name constants for the built-in risk tiers.
@@ -298,15 +295,19 @@ type FastTrackConfig struct {
 	Tiers       map[string]TierConfig `yaml:"tiers,omitempty"`
 }
 
-// IsEnabled returns true if fast-track is enabled and has at least one tier.
+// IsEnabled returns true if fast-track is enabled.
+// A zero-value Config (not configured) defaults to enabled.
 func (f FastTrackConfig) IsEnabled() bool {
-	return f.Enabled && len(f.Tiers) > 0
+	if f.DefaultTier == "" && !f.Enabled && len(f.Tiers) == 0 {
+		return true // zero config → enabled by default
+	}
+	return f.Enabled
 }
 
 // DefaultFastTrackConfig returns the built-in tier configuration.
 func DefaultFastTrackConfig() FastTrackConfig {
 	return FastTrackConfig{
-		Enabled:     false,
+		Enabled:     true,
 		DefaultTier: TierFeature,
 		Tiers: map[string]TierConfig{
 			TierRetroFix: {

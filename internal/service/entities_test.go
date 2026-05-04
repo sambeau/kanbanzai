@@ -177,6 +177,7 @@ func TestEntityService_CreateBug_AppliesDefaults(t *testing.T) {
 		"reported":    "2026-03-19T12:00:00Z",
 		"observed":    "Repeated writes produce different output",
 		"expected":    "Repeated writes should be stable",
+		"tier":        "bug_fix",
 	}
 	if !reflect.DeepEqual(got.State, wantState) {
 		t.Fatalf("CreateBug() state mismatch\nwant: %#v\ngot:  %#v", wantState, got.State)

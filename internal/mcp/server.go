@@ -275,7 +275,7 @@ func newServerWithConfig(entityRoot string, version string, cfg *config.Config) 
 
 	// GroupCheckpoints: checkpoint.
 	if groups[config.GroupCheckpoints] {
-		mcpServer.AddTools(CheckpointTool(checkpointStore)...)
+		mcpServer.AddTools(CheckpointTool(checkpointStore, entitySvc)...)
 	}
 
 	// Register health tool last so DocCurrencyHealthChecker can see all tool names.

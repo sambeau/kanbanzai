@@ -1,0 +1,175 @@
+document_id: FEAT-01KQSP41PE6JP/report-report-review-fast-track-core
+document_path: work/_project/report-review-fast-track-core.md
+content_hash: 72158bc7cf60638a3baf617d6ea5225792f92877aaeeff568495ad11991111bc
+indexed_at: 2026-05-04T16:55:23.191893Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: FEAT-01KQSP41PE6JP — Fast-Track Architecture Core Implementation'
+      byte_offset: 0
+      byte_count: 6879
+      word_count: 812
+      content_hash: 72158bc7cf60638a3baf617d6ea5225792f92877aaeeff568495ad11991111bc
+      children:
+        - path: "1.1"
+          level: 2
+          title: 'Aggregate Verdict: **rejected** (needs_remediation)'
+          byte_offset: 531
+          byte_count: 132
+          word_count: 17
+          content_hash: c49cf1b7988b893db36a0b8050d7ef06acac576d4b91cd07728ba1daa723b4cd
+        - path: "1.2"
+          level: 2
+          title: Per-Dimension Verdicts
+          byte_offset: 663
+          byte_count: 843
+          word_count: 109
+          content_hash: 2b0e44d0ebd73b666592c20a5f61f6f7f0aa2785a89b066a966d51f767125c82
+        - path: "1.3"
+          level: 2
+          title: Review Unit Dispatch
+          byte_offset: 1506
+          byte_count: 339
+          word_count: 58
+          content_hash: 0108a5c19218ea2ce455a5a9201c4b4e1005a6b849e5fb4b5f3d0181d1e6ec45
+        - path: "1.4"
+          level: 2
+          title: Blocking Findings
+          byte_offset: 1845
+          byte_count: 2198
+          word_count: 240
+          content_hash: c313d454b38d2e17046ff92ebbe58555b87692567590690f733cd562399c1fc5
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'F1: Validator dispatch is a stub — validation pipeline not wired'
+              byte_offset: 1867
+              byte_count: 971
+              word_count: 100
+              content_hash: 621b8d77064dba2381bf57039a6750e74c6e1573194a1ca455262f85027168da
+            - path: 1.4.2
+              level: 3
+              title: 'F2: Bug entities cannot receive a tier — AC-INFER-001 not satisfied'
+              byte_offset: 2838
+              byte_count: 431
+              word_count: 51
+              content_hash: bb0b3955998ca8901b9d72c236b99879057c02fcc43e2858884e09d042e5657a
+            - path: 1.4.3
+              level: 3
+              title: 'F3: Retro signal inference not implemented — REQ-INFER-002(a) not satisfied'
+              byte_offset: 3269
+              byte_count: 354
+              word_count: 39
+              content_hash: 857ffc5132c767f816d974a8eced6728c150b660303ddea6ec9d3c82dd322c9b
+            - path: 1.4.4
+              level: 3
+              title: 'F4: Conditional gate logic for retro_fix deferred — AC-TIER-002, AC-TIER-003 not implemented'
+              byte_offset: 3623
+              byte_count: 420
+              word_count: 47
+              content_hash: 221dd7087674662ad8d75bb9e56b1312b7ff97d878d4527a16cc6c95a16c5148
+        - path: "1.5"
+          level: 2
+          title: Non-Blocking Findings
+          byte_offset: 4043
+          byte_count: 1776
+          word_count: 197
+          content_hash: 062d30d76c3f7f1d07526894a5e3352446e527e2882596f18b51bbe0e575958d
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'N1: Quality review signal heuristic fragile for critical tier'
+              byte_offset: 4069
+              byte_count: 199
+              word_count: 22
+              content_hash: 9245c2f293c5e32ea8276a5af6ad59dd37c06f9559e5607fabddfc18f888dd21
+            - path: 1.5.2
+              level: 3
+              title: 'N2: tryAutoValidate swallows PersistFeatureBlockedReason errors'
+              byte_offset: 4268
+              byte_count: 164
+              word_count: 16
+              content_hash: 122726af48954ac8a6de1cf9a44ec088cb4ba8b5b7c00e75f772edcdabd52720
+            - path: 1.5.3
+              level: 3
+              title: 'N3: tryAutoValidate has wide import surface'
+              byte_offset: 4432
+              byte_count: 190
+              word_count: 17
+              content_hash: dc345307b152d7991da0684fd2ee3179da31173f324a492862bdfa18d36c819d
+            - path: 1.5.4
+              level: 3
+              title: 'N4: ValidatorResult vs ValidatorSummary naming collision'
+              byte_offset: 4622
+              byte_count: 263
+              word_count: 18
+              content_hash: d173edba5cf02aee2cc93c685572107c93a364d8f69bb478b28dc298737d3d43
+            - path: 1.5.5
+              level: 3
+              title: 'N5: Wall-clock timing tests for AC-NF-001 are flaky'
+              byte_offset: 4885
+              byte_count: 195
+              word_count: 20
+              content_hash: 27ee2d09abdba85c0b1fe3dad6f17344629b3730f4919c0f1c429053f547ef39
+            - path: 1.5.6
+              level: 3
+              title: 'N6: Integration tests log without asserting blocking'
+              byte_offset: 5080
+              byte_count: 192
+              word_count: 19
+              content_hash: 9115c0be1901cb2510e3699dfa5c470228e8f26cb6db4512040941099d1397a1
+            - path: 1.5.7
+              level: 3
+              title: N7–N17
+              byte_offset: 5272
+              byte_count: 547
+              word_count: 82
+              content_hash: c67428668a674a3a5ca3da9a529b6ca90123a03fd1539bde126c717209c12327
+        - path: "1.6"
+          level: 2
+          title: Finding Summary
+          byte_offset: 5819
+          byte_count: 137
+          word_count: 24
+          content_hash: 7902d8a3a17a7988c24bd432dfbe493a18cc521a20921bad4ba87e6a4fe0cf63
+        - path: "1.7"
+          level: 2
+          title: What Went Well
+          byte_offset: 5956
+          byte_count: 596
+          word_count: 74
+          content_hash: 2dd6dfdbb98201d408d4f9a19282016bb7175a6936d6c23b6b13a3607fd2330e
+        - path: "1.8"
+          level: 2
+          title: Remediation Plan
+          byte_offset: 6552
+          byte_count: 327
+          word_count: 46
+          content_hash: ca30b3c0291217a42ce1c270b8a99a3f80a44cba7db1b1a070e6ba8c5f1bd024
+entity_refs:
+    - entity_id: FEAT-01KQSP41PE6JP
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 10
+    - entity_id: P43-fast-track-architecture
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 295
+    - entity_id: B48-fast-track-impl
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 345
+conventional_roles:
+    - section_path: 1.5.4
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: narrative
+      confidence: high
+access_count: 5
+last_accessed_at: 2026-05-04T17:15:03.846594Z
+section_access:
+    "1":
+        access_count: 4
+        last_accessed_at: 2026-05-04T17:15:03.846594Z
+classified: false

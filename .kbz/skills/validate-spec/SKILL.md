@@ -13,7 +13,7 @@ triggers:
   - review a specification against the 10 checks
   - produce a spec validation report
 roles: [spec-validator]
-stage: validating
+stage: specifying
 constraint_level: low
 ---
 

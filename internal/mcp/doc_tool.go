@@ -1373,12 +1373,12 @@ func tryAutoValidate(entitySvc *service.EntityService, docSvc *service.DocumentS
 	// Check the automation matrix for this tier+stage.
 	gateMode := tierGateMode(tierCfg, stageForDoc)
 	// Only "auto" gates trigger the automatic validation pipeline.
-	if gateMode != string(config.GateModeAuto) {
+	if gateMode != config.GateModeAuto {
 		return map[string]any{
-			"triggered":      false,
-			"reason":         fmt.Sprintf("gate mode is %q for tier %q stage %q", gateMode, tier, stageForDoc),
-			"feature_id":     feature.ID,
-			"feature_tier":   tier,
+			"triggered":    false,
+			"reason":       fmt.Sprintf("gate mode is %q for tier %q stage %q", gateMode, tier, stageForDoc),
+			"feature_id":   feature.ID,
+			"feature_tier": tier,
 		}
 	}
 
@@ -1418,6 +1418,7 @@ func tryAutoValidate(entitySvc *service.EntityService, docSvc *service.DocumentS
 			Status:    checkpoint.StatusPending,
 			CreatedAt: time.Now().UTC(),
 			CreatedBy: "system",
+			FeatureID: feature.ID,
 		})
 
 		result := map[string]any{
@@ -1447,7 +1448,13 @@ func tryAutoValidate(entitySvc *service.EntityService, docSvc *service.DocumentS
 		log.Printf("[doc] WARNING: failed to increment review_cycle for %s: %v", feature.ID, err)
 	}
 
-	// Dispatch the validator (REQ-PIPE-002).
+	// Dispatch the validator. The validator sub-agent produces a report with
+	// the verdict; auto-approval occurs only on pass/pass_with_notes.
+	// When using SpawnAgentDispatcher, the dispatch is deferred — the prompt
+	// is returned but the sub-agent hasn't run yet. In that case, we skip
+	// auto-approval and let the caller handle it after the sub-agent returns.
+	// When P44 model routing arrives with synchronous dispatch, the verdict
+	// will be available immediately and auto-approval can proceed inline.
 	result := map[string]any{
 		"triggered":    true,
 		"status":       "dispatched",

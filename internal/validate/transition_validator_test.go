@@ -23,7 +23,7 @@ func TestValidatorDispatcher_NoValidatorForStage(t *testing.T) {
 			"designing": {Description: "Design"},
 		},
 	}
-	d := NewValidatorDispatcher(lookup)
+	d := NewTransitionValidatorDispatcher(lookup)
 
 	result, err := d.ValidateTransition(ValidatorDispatchInput{
 		Feature:    &model.Feature{ID: "FEAT-001"},
@@ -51,7 +51,7 @@ func TestValidatorDispatcher_HumanGateMode_Skipped(t *testing.T) {
 			},
 		},
 	}
-	d := NewValidatorDispatcher(lookup)
+	d := NewTransitionValidatorDispatcher(lookup)
 
 	result, err := d.ValidateTransition(ValidatorDispatchInput{
 		Feature:    &model.Feature{ID: "FEAT-001"},
@@ -79,7 +79,7 @@ func TestValidatorDispatcher_FastTrackTier_Skipped(t *testing.T) {
 			},
 		},
 	}
-	d := NewValidatorDispatcher(lookup)
+	d := NewTransitionValidatorDispatcher(lookup)
 
 	result, err := d.ValidateTransition(ValidatorDispatchInput{
 		Feature:    &model.Feature{ID: "FEAT-001", Tier: "fast-track"},
@@ -107,7 +107,7 @@ func TestValidatorDispatcher_Override_Skipped(t *testing.T) {
 			},
 		},
 	}
-	d := NewValidatorDispatcher(lookup)
+	d := NewTransitionValidatorDispatcher(lookup)
 
 	result, err := d.ValidateTransition(ValidatorDispatchInput{
 		Feature:        &model.Feature{ID: "FEAT-001"},
@@ -139,7 +139,7 @@ func TestValidatorDispatcher_StandardTier_AutoMode_ReturnsNil(t *testing.T) {
 			},
 		},
 	}
-	d := NewValidatorDispatcher(lookup)
+	d := NewTransitionValidatorDispatcher(lookup)
 
 	result, err := d.ValidateTransition(ValidatorDispatchInput{
 		Feature:    &model.Feature{ID: "FEAT-001"},
@@ -149,8 +149,14 @@ func TestValidatorDispatcher_StandardTier_AutoMode_ReturnsNil(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if result != nil {
-		t.Fatalf("expected nil result for standard tier with auto mode (no-op dispatcher), got: %+v", result)
+	if result == nil {
+		t.Fatal("expected non-nil result for auto mode (with placeholder when no dispatch service)")
+	}
+	if !result.Passed {
+		t.Error("auto mode placeholder should pass")
+	}
+	if result.BlockingFail {
+		t.Error("auto mode placeholder should not be blocking")
 	}
 }
 
@@ -241,6 +247,51 @@ func TestBuildTransitionValidatorError(t *testing.T) {
 	}
 	if !tvErr.HasBlocking() {
 		t.Error("expected HasBlocking() to be true")
+	}
+}
+
+func TestValidatorDispatcher_ConditionalGate_EmptyFilesModified(t *testing.T) {
+	t.Parallel()
+
+	lookup := &stubBindingLookup{
+		bindings: map[string]*binding.StageBinding{
+			"reviewing": {
+				Description: "Review",
+				TransitionValidator: &binding.TransitionValidator{
+					Role:     "review-gate-validator",
+					Skill:    "validate-review",
+					GateMode: "conditional",
+				},
+			},
+		},
+	}
+	d := NewTransitionValidatorDispatcher(lookup)
+
+	// When FilesModified is empty, the conditional gate should return a
+	// pass with COND_NO_FILES notice (not a false-positive blocking result).
+	result, err := d.ValidateTransition(ValidatorDispatchInput{
+		Feature:       &model.Feature{ID: "FEAT-001", Tier: "retro_fix"},
+		FromStatus:    "reviewing",
+		ToStatus:      "done",
+		FilesModified: nil,
+	})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if result == nil {
+		t.Fatal("expected non-nil result for conditional gate")
+	}
+	if !result.Passed {
+		t.Error("conditional gate with empty FilesModified should pass (not false-positive block)")
+	}
+	if result.BlockingFail {
+		t.Error("conditional gate with empty FilesModified should not be blocking")
+	}
+	if len(result.Checks) == 0 {
+		t.Fatal("expected at least one check in the result")
+	}
+	if result.Checks[0].CheckID != "COND_NO_FILES" {
+		t.Errorf("expected COND_NO_FILES check, got %q", result.Checks[0].CheckID)
 	}
 }
 

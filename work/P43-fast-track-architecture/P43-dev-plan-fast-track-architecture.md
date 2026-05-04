@@ -3,10 +3,10 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-04                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | AI architect                   |
 
-## Scope
+## Overview
 
 This plan implements the fast-track architecture specification defined in
 `work/P43-fast-track-architecture/P43-spec-fast-track-architecture.md` (DOC-`FEAT-01KQSP41PE6JP/spec-p43-spec-fast-track-architecture`). It covers all functional requirements (REQ-SPEC-001 through REQ-SESS-004) and non-functional requirements (REQ-NF-001 through REQ-NF-003).
@@ -230,3 +230,110 @@ Task 14 (integration-tests)              -> depends on Task 12
 | AC-NF-001: spec-validator completes within 5 tool calls | Performance test | Task 14 |
 | AC-NF-002: transition check adds <2s when no validator runs | Performance test | Task 14 |
 | AC-NF-003: error message contains check IDs, severity, report ref | Integration test | Task 14 |
+
+## Interface Contracts
+
+### ValidatorDispatcher interface
+
+```go
+// ValidatorContext carries the document and rubric context for a validation run.
+type ValidatorContext struct {
+    DocumentPath    string // path to document under validation
+    DocumentType    string // "specification", "dev-plan", or "report"
+    ParentDocPath   string // path to parent document (design for spec, spec for dev-plan)
+    RubricPath      string // path to the rubric file for this validator
+    FeatureID       string // owning feature ID
+}
+
+// ValidatorSummary is the lightweight result returned to the orchestrator.
+type ValidatorSummary struct {
+    Verdict             string // "pass", "pass_with_notes", or "fail"
+    BlockingCount       int
+    NonBlockingCount    int
+    EvidenceScore       float64 // 0.0-1.0
+    ReportDocID         string  // document ID of the full report
+}
+
+// ValidatorDispatcher dispatches a validator in a fresh session.
+type ValidatorDispatcher interface {
+    Dispatch(ctx context.Context, role string, skill string, vctx ValidatorContext) (ValidatorSummary, error)
+}
+```
+
+**Contract between orchestrator and validator:** The dispatcher passes `ValidatorContext` to the spawned agent. The agent reads the document, parent document, and rubric; runs validation checks; produces a `ValidatorSummary` (returned to the orchestrator) and a full report (written to the document store). The orchestrator never needs to read the full report — it uses the summary for flow control. The report is retrievable via `doc(action: content, id: summary.ReportDocID)` for human audit.
+
+**Contract between dispatcher and P44:** The `ValidatorDispatcher` interface is the abstraction boundary. P44 model routing provides an alternative `ValidatorDispatcher` implementation that routes through the model routing dispatch loop. Validator code (`validate-spec`, `validate-plan`, `validate-review` skills) calls `Dispatch()` on the interface — they never reference `spawn_agent` directly. Switching to P44 is a configuration change (inject different `ValidatorDispatcher` implementation), not a code change in validators.
+
+### FastTrackConfig shape
+
+```go
+type FastTrackConfig struct {
+    Enabled     bool              `yaml:"enabled"`
+    DefaultTier string            `yaml:"default_tier"` // "feature"
+    Tiers       map[string]TierConfig `yaml:"tiers"`
+}
+
+type TierConfig struct {
+    Design   string `yaml:"design"`    // "auto", "human", or "conditional"
+    Spec     string `yaml:"spec"`      // "auto" or "human"
+    DevPlan  string `yaml:"dev-plan"`  // "auto" or "human"
+    Review   string `yaml:"review"`    // "auto", "human", or "conditional"
+    MaxCycles int   `yaml:"max_cycles"`
+}
+```
+
+**Contract between config and transition hooks:** `entity(action: transition)` reads the feature's tier from the entity model, looks up `TierConfig` for that tier, and checks the gate mode for the current stage transition. If mode is `auto`, the validator is dispatched. If `human`, the transition proceeds without validation (current behavior). If `conditional` (review gate for `retro_fix`), change scope detection runs to decide.
+
+### Entity model extension
+
+```go
+// Feature entity gains a Tier field
+type Feature struct {
+    // ... existing fields ...
+    Tier string `yaml:"tier,omitempty"` // "retro_fix", "bug_fix", "feature", "critical"
+}
+```
+
+**Contract between entity creation and tier inference:** `entity(action: create, type: feature)` calls tier inference before persisting. If `tier` is explicitly set, it is used as-is. Otherwise, inference rules run: retro signal -> `retro_fix`, bug type -> `bug_fix`, `critical`/`security` tag -> `critical`, else -> `FastTrackConfig.DefaultTier`. The inferred or explicit tier is stored on the entity and never re-inferred.
+
+### Stage binding extension
+
+```yaml
+stage_bindings:
+  # ... existing bindings ...
+  specifying:
+    transition_validator:
+      role: spec-validator
+      skill: validate-spec
+      blocking: true
+  dev-planning:
+    transition_validator:
+      role: plan-validator
+      skill: validate-plan
+      blocking: true
+  reviewing:
+    transition_validator:
+      role: review-gate-validator
+      skill: validate-review
+      blocking: true
+```
+
+**Contract between stage bindings and transition logic:** The `transition_validator` block defines which validator to run before a feature can transition OUT of this stage. `blocking: true` means validator blocking failures prevent transition. The transition logic reads this from `.kbz/stage-bindings.yaml`, not from hardcoded constants.
+
+## Traceability Matrix
+
+| Spec Requirement | Task(s) | Acceptance Criteria |
+|-----------------|---------|-------------------|
+| REQ-SPEC-001, REQ-SPEC-004 | Task 2 (spec-validator role) | AC-SPEC-001 |
+| REQ-SPEC-002, REQ-SPEC-003 | Task 6 (validate-spec skill) | AC-SPEC-002, AC-SPEC-003, AC-SPEC-004 |
+| REQ-PLAN-001, REQ-PLAN-004 | Task 3 (plan-validator role) | AC-PLAN-001 |
+| REQ-PLAN-002, REQ-PLAN-003 | Task 7 (validate-plan skill) | AC-PLAN-002, AC-PLAN-003, AC-PLAN-004 |
+| REQ-RVW-001, REQ-RVW-004 | Task 4 (review-gate-validator role) | AC-RVW-001 |
+| REQ-RVW-002, REQ-RVW-003 | Task 8 (validate-review skill) | AC-RVW-002, AC-RVW-003 |
+| REQ-RUB-001, REQ-RUB-002, REQ-RUB-003 | Task 5 (validator rubrics) | AC-RUB-001, AC-RUB-002 |
+| REQ-TRANS-001 through REQ-TRANS-007 | Task 11 (transition hooks), Task 13 (cycle tracking) | AC-TRANS-001 through AC-TRANS-005 |
+| REQ-TIER-001 through REQ-TIER-006 | Task 1 (fast-track config), Task 12 (pipeline) | AC-TIER-001 through AC-TIER-004 |
+| REQ-INFER-001, REQ-INFER-002, REQ-INFER-003 | Task 9 (tier inference) | AC-INFER-001, AC-INFER-002, AC-INFER-003 |
+| REQ-PIPE-001 through REQ-PIPE-007 | Task 12 (validation pipeline) | AC-PIPE-001 through AC-PIPE-005 |
+| REQ-SESS-001 through REQ-SESS-004 | Task 6, Task 7, Task 8, Task 10 (dispatch) | AC-SESS-001 through AC-SESS-004 |
+| REQ-NF-001, REQ-NF-002, REQ-NF-003 | Task 14 (integration tests) | AC-NF-001, AC-NF-002, AC-NF-003 |

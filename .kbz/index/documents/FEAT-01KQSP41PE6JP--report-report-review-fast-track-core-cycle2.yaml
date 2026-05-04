@@ -1,0 +1,230 @@
+document_id: FEAT-01KQSP41PE6JP/report-report-review-fast-track-core-cycle2
+document_path: work/_project/report-review-fast-track-core-cycle2.md
+content_hash: a07dc9e9fd4cc1addd17aa901c48e873a9378fa4eb194ee3593a0e45658976bc
+indexed_at: 2026-05-04T17:36:02.010333Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: FEAT-01KQSP41PE6JP — Fast-Track Architecture Core (Cycle 2)'
+      byte_offset: 0
+      byte_count: 9047
+      word_count: 1129
+      content_hash: a07dc9e9fd4cc1addd17aa901c48e873a9378fa4eb194ee3593a0e45658976bc
+      children:
+        - path: "1.1"
+          level: 2
+          title: 'Aggregate Verdict: **needs_remediation**'
+          byte_offset: 595
+          byte_count: 257
+          word_count: 36
+          content_hash: d6ee669a3b71fb07992ec752f96957a62a70a956478ba6a07f9b1231176cc98a
+        - path: "1.2"
+          level: 2
+          title: Cycle 1 Fix Verification
+          byte_offset: 852
+          byte_count: 583
+          word_count: 83
+          content_hash: 6690ab1322fcdb9ed65efc6786c6724887eb41eec6d96518cf5b09a8afbc20a5
+        - path: "1.3"
+          level: 2
+          title: Per-Dimension Verdicts
+          byte_offset: 1435
+          byte_count: 300
+          word_count: 39
+          content_hash: f0078aff5e2b80df106c38805a234213e4feef23a1b95961e9317facc72c3198
+        - path: "1.4"
+          level: 2
+          title: Review Unit Dispatch
+          byte_offset: 1735
+          byte_count: 384
+          word_count: 60
+          content_hash: 24c6d2979c19eeca58f14b5beaaef359cb3b7eb6381cdee7795039381b130b40
+        - path: "1.5"
+          level: 2
+          title: Blocking Findings
+          byte_offset: 2119
+          byte_count: 3794
+          word_count: 481
+          content_hash: e1e0ca8deac9586d976d5e89c5756d63a1ef69ae6c0355f8b02a92a96110d063
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'B1: `inferTier` cannot distinguish bugs from features — REQ-INFER-002(b) unimplementable'
+              byte_offset: 2141
+              byte_count: 948
+              word_count: 128
+              content_hash: e44db52b700b78fa5a4891ca9a6e8861d7dc834a95778b17e1aeb528646a5e7b
+            - path: 1.5.2
+              level: 3
+              title: 'B2: MCP entity tool does not pass `Tags` or `Tier` to `CreateBugInput` — inference path unreachable'
+              byte_offset: 3089
+              byte_count: 684
+              word_count: 90
+              content_hash: a91f79b0c8cdbceb09f76d814c7e31abd912b4ebc7c688db4154042f981fdaeb
+            - path: 1.5.3
+              level: 3
+              title: 'B3: `evaluateConditional` produces false-positive blocking when `FilesModified` is empty'
+              byte_offset: 3773
+              byte_count: 738
+              word_count: 90
+              content_hash: fd8da178eb883b4ef1f9e45aa8101217ad09fd1ac7f3cf0b072ad5a2cb8a1c7a
+            - path: 1.5.4
+              level: 3
+              title: 'B4: Integration tests are assertion-free logging stubs'
+              byte_offset: 4511
+              byte_count: 653
+              word_count: 78
+              content_hash: 8e7940b55c465afaa196676cd9b13e67c85be17ee7672095f79cf938cbf31dda
+            - path: 1.5.5
+              level: 3
+              title: 'B5: 17 acceptance criteria lack test coverage or have only assertion-free coverage'
+              byte_offset: 5164
+              byte_count: 749
+              word_count: 92
+              content_hash: 8c13d438b7a78aae07eb4106fb5e6bc95d5c0aaee7c8987ef4006e5fdacb664d
+        - path: "1.6"
+          level: 2
+          title: Non-Blocking Findings
+          byte_offset: 5913
+          byte_count: 1635
+          word_count: 177
+          content_hash: 57fac5b414efc2dd62a34e9d03e55daecca63f21e02b09eb1aeeff03b85933c3
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'N1: Prompt injection risk via document content in `buildPrompt`'
+              byte_offset: 5939
+              byte_count: 365
+              word_count: 42
+              content_hash: 5fbae8c60f4df6092a7e577a20870c8308f0bec7b98d844b9ac4b086d6a72e16
+            - path: 1.6.2
+              level: 3
+              title: 'N2: `PersistFeatureBlockedReason` error swallowed in cycle cap path'
+              byte_offset: 6304
+              byte_count: 226
+              word_count: 24
+              content_hash: 251ae5638877d0473222e47a9c9fe0fc65b348869fcfd762cbb41363095c02be
+            - path: 1.6.3
+              level: 3
+              title: 'N3: Doc comment mismatch in `SpawnAgentDispatcher.Dispatch`'
+              byte_offset: 6530
+              byte_count: 133
+              word_count: 10
+              content_hash: b2c6c83590f211cb4e1ca169235ae3ff103cbe800d7f851b9b318827f650cd59
+            - path: 1.6.4
+              level: 3
+              title: 'N4: `inferTier` does not validate explicit tier value'
+              byte_offset: 6663
+              byte_count: 118
+              word_count: 12
+              content_hash: 2265230108722d346510ab5974174c0e600a76add583d294a3fa52961a9c5357
+            - path: 1.6.5
+              level: 3
+              title: 'N5: Missing dedicated `quality_review_test.go`'
+              byte_offset: 6781
+              byte_count: 104
+              word_count: 8
+              content_hash: 1b8ca837d2dcc75f149b37e3c17ba0ce019a4857c9ca337dafcd967b7c3ff293
+            - path: 1.6.6
+              level: 3
+              title: 'N6: Root Bug struct lacks `Tier` field (merge consistency)'
+              byte_offset: 6885
+              byte_count: 121
+              word_count: 15
+              content_hash: d5d6ab6046b4f4d3e7c55ffac20f680227971d5c18a6d0aa4644bb204225c2a1
+            - path: 1.6.7
+              level: 3
+              title: 'N7: No documented evidence of rubric testing against 15–20 documents'
+              byte_offset: 7006
+              byte_count: 146
+              word_count: 14
+              content_hash: 7af00a7839320dce3b75171c406de24d97660e1e4c826e75bdc2f92d9c8c7a3b
+            - path: 1.6.8
+              level: 3
+              title: 'N8: Document path traversal risk in `readDoc` (CWE-22)'
+              byte_offset: 7152
+              byte_count: 60
+              word_count: 9
+              content_hash: c15a10e12692f1feb8eebbd12ef7164bd7d2307ad571f8a6957173fcf50f5a7a
+            - path: 1.6.9
+              level: 3
+              title: 'N9: Override records missing agent identity'
+              byte_offset: 7212
+              byte_count: 49
+              word_count: 7
+              content_hash: 4fa6f6d8d79fac7e21d356de2fa5866d43bdf3c960f7463aff32212b12411419
+            - path: 1.6.10
+              level: 3
+              title: 'N10: Missing content integrity check before validator dispatch'
+              byte_offset: 7261
+              byte_count: 68
+              word_count: 9
+              content_hash: 7355b5e431a56ad7235237ffe9fbcb19e6bdf07d8777283a7286467a6d009287
+            - path: 1.6.11
+              level: 3
+              title: 'N11: Checkpoint deduplication could prevent spam on cycle cap'
+              byte_offset: 7329
+              byte_count: 67
+              word_count: 10
+              content_hash: 0a232861b55d3c2c2f0185662b52d1d1a8e59dca1bd4a377f41b1a5e01670c3f
+            - path: 1.6.12
+              level: 3
+              title: 'N12: Performance tests use wall-clock timing instead of tool-call counting'
+              byte_offset: 7396
+              byte_count: 152
+              word_count: 14
+              content_hash: 2854522e5dbef6cff6143e3376ed100864723d9c2b3685cfb7e6484a5ecd3255
+        - path: "1.7"
+          level: 2
+          title: Finding Summary
+          byte_offset: 7548
+          byte_count: 137
+          word_count: 24
+          content_hash: 792e6458b4e9ae92fa321fc3f50f4c96b178d26e1cdbdc62866e346ed3bc1e1d
+        - path: "1.8"
+          level: 2
+          title: What Went Well
+          byte_offset: 7685
+          byte_count: 867
+          word_count: 109
+          content_hash: 530bca9bbf96e16cda16c8a5b40e64b4d7e18975be7d7f5d2eda9c18602bec0a
+        - path: "1.9"
+          level: 2
+          title: Remediation Plan
+          byte_offset: 8552
+          byte_count: 495
+          word_count: 65
+          content_hash: f0d184c17d972a48398516bae4c5cfae19e448df3fe7ca8ed2a5f5e71b593660
+entity_refs:
+    - entity_id: FEAT-01KQSP41PE6JP
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 10
+    - entity_id: P43-fast-track-architecture
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 290
+    - entity_id: B48-fast-track-impl
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 340
+    - entity_id: P43-fast-track-architecture
+      entity_type: plan
+      section_path: 1.6.7
+      byte_offset: 7103
+conventional_roles:
+    - section_path: 1.5.5
+      role: requirement
+      confidence: high
+    - section_path: 1.6.1
+      role: risk
+      confidence: high
+    - section_path: 1.6.8
+      role: risk
+      confidence: high
+    - section_path: "1.7"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-04T17:36:02.883349Z
+classified: false

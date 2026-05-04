@@ -26,7 +26,7 @@ type ContributeInput struct {
 	LearnedFrom string
 	CreatedBy   string
 	Tags        []string
-	Forward     *bool // nil = default (true for tier-2, false for tier-3); false = explicitly not-forwardable
+	Forward     *bool // nil = forwardable when tier-2 (excluded by tier filter at query time when tier-3); false = explicitly not-forwardable
 }
 
 // KnowledgeFilters holds optional filter criteria for listing knowledge entries.

@@ -31,6 +31,7 @@ type CreateFeatureInput struct {
 	Summary   string
 	CreatedBy string
 	Name      string
+	Tier      string // explicit tier (overrides inference); empty means infer
 }
 
 type CreateTaskInput struct {
@@ -49,6 +50,8 @@ type CreateBugInput struct {
 	Severity   string
 	Priority   string
 	Type       string
+	Tags       []string
+	Tier       string // explicit tier (overrides inference); empty means infer
 }
 
 type CreateDecisionInput struct {
@@ -297,6 +300,8 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 		return CreateResult{}, nameErr
 	}
 
+	tier := inferTier(input.Tier, input.Tags, "feature", s.cfg)
+
 	entity := model.Feature{
 		ID:        idValue,
 		Slug:      normalizeSlug(input.Slug),
@@ -307,6 +312,7 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 		Summary:   strings.TrimSpace(input.Summary),
 		Design:    strings.TrimSpace(input.Design),
 		Tags:      append([]string(nil), input.Tags...),
+		Tier:      tier,
 		Created:   s.now(),
 		CreatedBy: strings.TrimSpace(input.CreatedBy),
 	}
@@ -418,6 +424,8 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 		return CreateResult{}, err
 	}
 
+	tier := inferTier(input.Tier, input.Tags, "bug", s.cfg)
+
 	entity := model.Bug{
 		ID:         idValue,
 		Slug:       slug,
@@ -430,6 +438,8 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 		Reported:   s.now(),
 		Observed:   strings.TrimSpace(input.Observed),
 		Expected:   strings.TrimSpace(input.Expected),
+		Tags:       append([]string(nil), input.Tags...),
+		Tier:       tier,
 	}
 
 	if err := validate.ValidateInitialState(validate.EntityBug, string(entity.Status)); err != nil {
@@ -894,6 +904,13 @@ func (s *EntityService) UpdateEntity(input UpdateEntityInput) (GetResult, error)
 		return GetResult{}, err
 	}
 
+	// Tier downgrade protection: prevent changing tier after creation.
+	// Tiers gate human vs automated validation; mutable tiers would allow
+	// privilege escalation by downgrading a critical feature to bypass gates.
+	if newTier, ok := input.Fields["tier"]; ok && newTier != "" && newTier != record.Fields["tier"] {
+		return GetResult{}, fmt.Errorf("cannot update tier: tier is immutable after creation (use override path for explicit tier changes)")
+	}
+
 	oldSlug := record.Slug
 
 	for k, v := range input.Fields {
@@ -1053,6 +1070,53 @@ func defaultString(value, fallback string) string {
 	return value
 }
 
+// inferTier applies the tier inference rules per REQ-INFER-001 through REQ-INFER-003.
+// If explicitTier is non-empty, it is used as-is (override).
+// Otherwise: tags containing "retro" → retro_fix;
+// tags containing "critical" or "security" → critical;
+// otherwise → config FastTrack.DefaultTier (defaults to "feature").
+// inferTier applies the tier inference rules per REQ-INFER-001 through REQ-INFER-003.
+// entityType must be one of "feature" or "bug".
+// Rules (in priority order):
+//
+//	(a) explicitTier overrides everything
+//	(b) "critical" or "security" tag → critical
+//	(c) "retro" tag → retro_fix
+//	(d) entityType="bug" → bug_fix
+//	(e) config default_tier
+//	(f) fallback: feature
+func inferTier(explicitTier string, tags []string, entityType string, cfg *config.Config) string {
+	if explicitTier != "" {
+		return explicitTier
+	}
+
+	// Scan for critical/security first: these dominate all other tags.
+	for _, tag := range tags {
+		t := strings.ToLower(strings.TrimSpace(tag))
+		if t == "critical" || t == "security" {
+			return config.TierCritical
+		}
+	}
+
+	// Then scan for retro.
+	for _, tag := range tags {
+		t := strings.ToLower(strings.TrimSpace(tag))
+		if t == "retro" {
+			return config.TierRetroFix
+		}
+	}
+
+	// REQ-INFER-002(b): bug entities default to bug_fix.
+	if entityType == "bug" {
+		return config.TierBugFix
+	}
+
+	if cfg != nil && cfg.FastTrack.DefaultTier != "" {
+		return cfg.FastTrack.DefaultTier
+	}
+	return config.TierFeature
+}
+
 func validateKindForType(entityType string) (validate.EntityKind, error) {
 	switch entityType {
 	case string(model.EntityKindPlan):
@@ -1189,9 +1253,6 @@ func featureFields(e model.Feature) map[string]any {
 		"created":    e.Created.Format(time.RFC3339),
 		"created_by": e.CreatedBy,
 	}
-	if e.Tier != "" {
-		fields["tier"] = e.Tier
-	}
 	if e.DisplayID != "" {
 		fields["display_id"] = e.DisplayID
 	}
@@ -1217,6 +1278,9 @@ func featureFields(e model.Feature) map[string]any {
 		fields["decisions"] = append([]string(nil), e.Decisions...)
 	}
 	fields["name"] = e.Name
+	if e.Tier != "" {
+		fields["tier"] = e.Tier
+	}
 	if len(e.Tags) > 0 {
 		fields["tags"] = append([]string(nil), e.Tags...)
 	}
@@ -1374,6 +1438,9 @@ func bugFields(e model.Bug) map[string]any {
 	}
 	if e.ReleaseTarget != "" {
 		fields["release_target"] = e.ReleaseTarget
+	}
+	if e.Tier != "" {
+		fields["tier"] = e.Tier
 	}
 	return fields
 }

@@ -5,6 +5,8 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
+	"path/filepath"
 
 	"sort"
 	"strings"
@@ -141,7 +143,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 		result, err = entitySvc.CreateFeature(service.CreateFeatureInput{
 			Slug: entityArgStr(args, "slug"), Parent: entityArgStr(args, "parent"),
 			Summary: entityArgStr(args, "summary"), Design: entityArgStr(args, "design"),
-			Tags: entityArgStringSlice(args, "tags"), CreatedBy: createdBy, Name: name,
+			Tags: entityArgStringSlice(args, "tags"), Tier: entityArgStr(args, "tier"), CreatedBy: createdBy, Name: name,
 		})
 	case "batch", "plan":
 		result, err = entitySvc.CreateBatch(service.CreateBatchInput{
@@ -166,6 +168,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 			ReportedBy: entityArgStr(args, "reported_by"), Observed: entityArgStr(args, "observed"),
 			Expected: entityArgStr(args, "expected"), Severity: entityArgStr(args, "severity"),
 			Priority: entityArgStr(args, "priority"), Type: entityArgStr(args, "bug_type"),
+			Tags: entityArgStringSlice(args, "tags"), Tier: entityArgStr(args, "tier"),
 		})
 	case "decision":
 		result, err = entitySvc.CreateDecision(service.CreateDecisionInput{
@@ -621,13 +624,20 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			currentStatus := string(feature.Status)
 
 			// Transition validator check (exit-stage validation before gate check).
-			if tvErr := checkTransitionValidator(gateRouter, feature, currentStatus, newStatus, override); tvErr != nil {
+			tvResult := map[string]any{"stage": currentStatus}
+			if tvErr := checkTransitionValidator(gateRouter, feature, currentStatus, newStatus, override, docSvc, entitySvc); tvErr != nil {
 				if !override {
 					return map[string]any{
 						"error":                tvErr.Error(),
-						"transition_validator": map[string]any{"stage": currentStatus, "blocking": true},
+						"transition_validator": map[string]any{"stage": currentStatus, "passed": false, "blocking": true},
 					}, nil
 				}
+				tvResult["passed"] = false
+				tvResult["blocking"] = true
+				tvResult["overridden"] = true
+			} else {
+				tvResult["passed"] = true
+				tvResult["blocking"] = false
 			}
 
 			if isPhase2Transition(currentStatus, newStatus) {
@@ -685,13 +695,17 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 						feature.Overrides = append(feature.Overrides, model.OverrideRecord{
 							FromStatus: currentStatus, ToStatus: newStatus, Reason: overrideReason, Timestamp: time.Now(), CheckpointID: chkR.CheckpointID,
 						})
-						entitySvc.PersistFeatureOverrides(feature.ID, feature.Slug, feature.Overrides)
+						if err := entitySvc.PersistFeatureOverrides(feature.ID, feature.Slug, feature.Overrides); err != nil {
+							log.Printf("[entity] WARNING: failed to persist feature overrides for %s: %v", feature.ID, err)
+						}
 						return map[string]any{"checkpoint_created": true, "checkpoint_id": chkR.CheckpointID, "message": chkR.Message, "feature_id": entityID}, nil
 					}
 					feature.Overrides = append(feature.Overrides, model.OverrideRecord{
 						FromStatus: currentStatus, ToStatus: newStatus, Reason: overrideReason, Timestamp: time.Now(),
 					})
-					entitySvc.PersistFeatureOverrides(feature.ID, feature.Slug, feature.Overrides)
+					if err := entitySvc.PersistFeatureOverrides(feature.ID, feature.Slug, feature.Overrides); err != nil {
+						log.Printf("[entity] WARNING: failed to persist feature overrides for %s: %v", feature.ID, err)
+					}
 				}
 			}
 		}
@@ -774,12 +788,6 @@ func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService,
 	advCfg := &service.AdvanceConfig{RequiresHumanReview: requiresHumanReview}
 	if gateRouter != nil {
 		advCfg.CheckGate = func(from, to string, f *model.Feature, ds *service.DocumentService, es *service.EntityService) service.GateResult {
-			// Run transition validator for exit-stage before the gate check.
-			if tvErr := checkTransitionValidator(gateRouter, f, from, to, override); tvErr != nil {
-				if tvErr.HasBlocking() {
-					return service.GateResult{Stage: from, Satisfied: false, Reason: tvErr.Error()}
-				}
-			}
 			routerCtx := buildGateEvalContext(f, ds, es)
 			routerResult := gateRouter.CheckGate(from, to, routerCtx)
 			if routerResult.Source == "registry" {
@@ -836,8 +844,7 @@ func featureFromState(entityID, slug string, state map[string]any) *model.Featur
 	return &model.Feature{
 		ID: entityID, Slug: slug, Parent: entityStateStr(state, "parent"),
 		Status: model.FeatureStatus(entityStateStr(state, "status")), ReviewCycle: rc,
-		Tier: entityStateStr(state, "tier"), BlockedReason: br,
-		Design: entityStateStr(state, "design"), Spec: entityStateStr(state, "spec"),
+		Tier: entityStateStr(state, "tier"), BlockedReason: br, Design: entityStateStr(state, "design"), Spec: entityStateStr(state, "spec"),
 		DevPlan: entityStateStr(state, "dev_plan"), Overrides: overridesFromState(state),
 	}
 }
@@ -911,27 +918,58 @@ func isPhase2Transition(from, to string) bool { return phase2Statuses[from] && p
 // checkTransitionValidator runs the transition validator for the from-stage if one is
 // configured. Returns nil if validation passes or no validator is configured.
 // Returns a *validate.TransitionValidatorError on blocking failure.
-func checkTransitionValidator(gateRouter *gate.GateRouter, feature *model.Feature, fromStatus, toStatus string, override bool) *validate.TransitionValidatorError {
+func checkTransitionValidator(gateRouter *gate.GateRouter, feature *model.Feature, fromStatus, toStatus string, override bool, docSvc *service.DocumentService, entitySvc *service.EntityService) *validate.TransitionValidatorError {
 	if gateRouter == nil {
 		return nil
 	}
 
 	// Create a binding lookup from the gate router's cache.
-	// We access the cache indirectly via the gate package — the RegistryCache
-	// is the same instance used by GateRouter.
 	cache := gate.GetRegistryCache(gateRouter)
 	if cache == nil {
 		return nil
 	}
 
 	lookup := &validate.RegistryCacheBindingLookup{Cache: cache}
-	dispatcher := validate.NewValidatorDispatcher(lookup)
+	dispatcher := validate.NewTransitionValidatorDispatcher(lookup)
+
+	// Wire the dispatch service for auto-mode validation (BLOCK-1 fix).
+	// SpawnAgentDispatcher generates validator handoff prompts for the
+	// orchestrator to pass to spawn_agent. Without this wiring, auto gate
+	// modes always take the AUTO_PLACEHOLDER pass path.
+	if docSvc != nil {
+		dispatchSvc := validate.NewSpawnAgentDispatcher(func(reportPath, reportContent, docType, title, featureID string) (string, error) {
+			repoRoot := docSvc.RepoRoot()
+			fullPath := filepath.Join(repoRoot, reportPath)
+			if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
+				return "", fmt.Errorf("creating report dir: %w", err)
+			}
+			if err := os.WriteFile(fullPath, []byte(reportContent), 0o644); err != nil {
+				return "", fmt.Errorf("writing report: %w", err)
+			}
+			docResult, err := docSvc.SubmitDocument(service.SubmitDocumentInput{
+				Path:      reportPath,
+				Type:      docType,
+				Title:     title,
+				Owner:     featureID,
+				CreatedBy: "system",
+			})
+			if err != nil {
+				return "", fmt.Errorf("registering report: %w", err)
+			}
+			return docResult.ID, nil
+		})
+		dispatcher.WithDispatch(dispatchSvc)
+	}
 
 	input := validate.ValidatorDispatchInput{
 		Feature:    feature,
 		FromStatus: fromStatus,
 		ToStatus:   toStatus,
 		Override:   override,
+		// FilesModified is not yet populated from worktree diffs.
+		// When populated, conditional gates (REQ-TIER-004) evaluate
+		// doc-only vs implementation changes accurately. For now,
+		// conditional gates treat empty file list conservatively.
 	}
 
 	result, err := dispatcher.ValidateTransition(input)

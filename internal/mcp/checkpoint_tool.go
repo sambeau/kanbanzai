@@ -3,22 +3,24 @@ package mcp
 import (
 	"context"
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
 	chk "github.com/sambeau/kanbanzai/internal/checkpoint"
+	"github.com/sambeau/kanbanzai/internal/service"
 )
 
 // CheckpointTool returns the 2.0 consolidated checkpoint tool.
 // It consolidates human_checkpoint, human_checkpoint_get, human_checkpoint_respond,
 // and human_checkpoint_list into a single tool (spec §22.1).
-func CheckpointTool(store *chk.Store) []server.ServerTool {
-	return []server.ServerTool{checkpointTool(store)}
+func CheckpointTool(store *chk.Store, entitySvc *service.EntityService) []server.ServerTool {
+	return []server.ServerTool{checkpointTool(store, entitySvc)}
 }
 
-func checkpointTool(store *chk.Store) server.ServerTool {
+func checkpointTool(store *chk.Store, entitySvc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("checkpoint",
 		mcp.WithReadOnlyHintAnnotation(false),
 		mcp.WithDestructiveHintAnnotation(false),
@@ -69,7 +71,7 @@ func checkpointTool(store *chk.Store) server.ServerTool {
 		return DispatchAction(ctx, req, map[string]ActionHandler{
 			"create":  checkpointCreateAction(store),
 			"get":     checkpointGetAction(store),
-			"respond": checkpointRespondAction(store),
+			"respond": checkpointRespondAction(store, entitySvc),
 			"list":    checkpointListAction(store),
 		})
 	})
@@ -143,7 +145,7 @@ func checkpointGetAction(store *chk.Store) ActionHandler {
 
 // ─── respond ──────────────────────────────────────────────────────────────────
 
-func checkpointRespondAction(store *chk.Store) ActionHandler {
+func checkpointRespondAction(store *chk.Store, entitySvc *service.EntityService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
 
@@ -174,6 +176,14 @@ func checkpointRespondAction(store *chk.Store) ActionHandler {
 		updated, err := store.Update(record)
 		if err != nil {
 			return nil, fmt.Errorf("Cannot respond to checkpoint %s: update failed: %w.\n\nTo resolve:\n  Verify the checkpoint status and retry", checkpointID, err)
+		}
+
+		// If the checkpoint is linked to a feature, clear the blocked_reason
+		// so the feature can resume auto-validation (REQ-PIPE-004).
+		if record.FeatureID != "" && entitySvc != nil {
+			if err := entitySvc.PersistFeatureBlockedReason(record.FeatureID, "", ""); err != nil {
+				log.Printf("[checkpoint] WARNING: failed to clear blocked_reason for %s after checkpoint %s responded: %v", record.FeatureID, record.ID, err)
+			}
 		}
 
 		resp := map[string]any{

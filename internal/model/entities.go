@@ -487,6 +487,10 @@ type Bug struct {
 	VerifiedBy    string   `yaml:"verified_by,omitempty"`
 	ReleaseTarget string   `yaml:"release_target,omitempty"`
 	Tags          []string `yaml:"tags,omitempty"`
+
+	// Tier is the fast-track risk tier for validation gating. Set explicitly
+	// or inferred at creation time. Never re-inferred after creation.
+	Tier string `yaml:"tier,omitempty"`
 }
 
 // GetKind returns the entity kind.
