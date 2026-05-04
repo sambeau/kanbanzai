@@ -60,7 +60,10 @@ func NewValidatorDispatcher(cache BindingLookup) *ValidatorDispatcher {
 // Rules:
 //   - If no transition_validator for the from-stage → pass (nil result).
 //   - If gate_mode is "human" → skip, pass.
-//   - If feature.Tier is "fast-track" and gate_mode is "auto" → skip, pass.
+//   - If gate_mode is "conditional" → skip, pass (conditional gates are handled
+//     by model routing in P44).
+//   - If feature.BlockedReason is set → skip, pass. The feature is in human
+//     escalation and must not attempt further automated validation (REQ-PIPE-004).
 //   - If override is true → skip, record override.
 //   - Otherwise, run validation placeholder (returns a pass for now —
 //     actual validation dispatch is implemented by callers via the
@@ -84,8 +87,20 @@ func (d *ValidatorDispatcher) ValidateTransition(input ValidatorDispatchInput) (
 		return nil, nil
 	}
 
+	// Conditional gate mode skips validation (P44 will handle conditional logic).
+	if gateMode == "conditional" {
+		return nil, nil
+	}
+
 	// Fast-track tier skips automatic validation.
 	if strings.EqualFold(input.Feature.Tier, "fast-track") {
+		return nil, nil
+	}
+
+	// Feature is blocked — human escalation in progress (REQ-PIPE-004).
+	// The system must not attempt further automated validation until the
+	// human responds and clears the blocked_reason.
+	if input.Feature.BlockedReason != "" {
 		return nil, nil
 	}
 

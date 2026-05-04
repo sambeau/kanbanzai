@@ -115,6 +115,12 @@ func RunHealthCheck(
 		if opts.IncludeOK || overrideResult.Status != SeverityOK {
 			categories["gate_overrides"] = overrideResult
 		}
+
+		// Run quality review signal checks (auto-validation cycle patterns).
+		qualityReviewResult := CheckQualityReviewSignal(opts.Features)
+		if opts.IncludeOK || qualityReviewResult.Status != SeverityOK {
+			categories["quality_review"] = qualityReviewResult
+		}
 	}
 
 	return HealthResult{

@@ -36,6 +36,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"github.com/sambeau/kanbanzai/internal/checkpoint"
 	"github.com/sambeau/kanbanzai/internal/config"
 	"github.com/sambeau/kanbanzai/internal/docint"
 	"github.com/sambeau/kanbanzai/internal/git"
@@ -166,7 +167,7 @@ func docTool(docSvc *service.DocumentService, intelligenceSvc *service.Intellige
 
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		return DispatchAction(ctx, req, map[string]ActionHandler{
-			"register":              docRegisterAction(docSvc, intelligenceSvc),
+			"register":              docRegisterAction(docSvc, intelligenceSvc, entitySvc),
 			"approve":               docApproveAction(docSvc, intelligenceSvc),
 			"move":                  docMoveAction(docSvc),
 			"delete":                docDeleteAction(docSvc),
@@ -191,7 +192,7 @@ func docTool(docSvc *service.DocumentService, intelligenceSvc *service.Intellige
 
 // ─── register ─────────────────────────────────────────────────────────────────
 
-func docRegisterAction(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService) ActionHandler {
+func docRegisterAction(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService, entitySvc *service.EntityService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
@@ -209,7 +210,7 @@ func docRegisterAction(docSvc *service.DocumentService, intelligenceSvc *service
 				if _, has := doc["created_by"]; !has && topCreatedBy != "" {
 					doc["created_by"] = topCreatedBy
 				}
-				return docRegisterOne(docSvc, intelligenceSvc, doc)
+				return docRegisterOne(docSvc, intelligenceSvc, entitySvc, doc)
 			})
 		}
 
@@ -217,12 +218,12 @@ func docRegisterAction(docSvc *service.DocumentService, intelligenceSvc *service
 		if docArgStr(args, "path") == "" {
 			return nil, fmt.Errorf("Cannot register document: path is missing.\n\nTo resolve:\n  Provide path: doc(action: \"register\", path: \"work/spec/foo.md\", type: \"...\", title: \"...\")")
 		}
-		_, result, err := docRegisterOne(docSvc, intelligenceSvc, args)
+		_, result, err := docRegisterOne(docSvc, intelligenceSvc, entitySvc, args)
 		return result, err
 	}
 }
 
-func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService, args map[string]any) (string, any, error) {
+func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService, entitySvc *service.EntityService, args map[string]any) (string, any, error) {
 	path := docArgStr(args, "path")
 	docType := docArgStr(args, "type")
 	title := docArgStr(args, "title")
@@ -295,6 +296,14 @@ func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.In
 	if len(result.Warnings) > 0 {
 		out["warnings"] = result.Warnings
 	}
+
+	// Fast-track auto-validation pipeline (REQ-PIPE-001 through REQ-PIPE-007).
+	// Triggered for spec and dev-plan document types when the owning feature's
+	// risk tier allows automated validation for this stage.
+	if validationResult := tryAutoValidate(entitySvc, docSvc, result.ID, result.Path, result.Type, result.Owner); validationResult != nil {
+		out["auto_validation"] = validationResult
+	}
+
 	return result.ID, out, nil
 }
 
@@ -425,7 +434,7 @@ func docPublishAction(docSvc *service.DocumentService, intelSvc *service.Intelli
 		args, _ := req.Params.Arguments.(map[string]any)
 
 		// Register the document via the existing register path.
-		_, regResult, regErr := docRegisterOne(docSvc, intelSvc, args)
+		_, regResult, regErr := docRegisterOne(docSvc, intelSvc, nil, args)
 		if regErr != nil {
 			return nil, regErr
 		}
@@ -1301,4 +1310,214 @@ func parseEvaluationMap(m map[string]any) (model.QualityEvaluation, error) {
 	}
 
 	return eval, nil
+}
+
+// ─── fast-track auto-validation ───────────────────────────────────────────────
+
+// tryAutoValidate checks whether the just-registered document should trigger
+// automated validation per the fast-track architecture. It maps the document
+// type to the feature's lifecycle stage, checks the tier's automation matrix,
+// and dispatches a validator if allowed.
+//
+// Cycle tracking (REQ-PIPE-003):
+//   - Increments feature.ReviewCycle on each validator dispatch
+//   - When cycle reaches tier's MaxCycles cap: escalates to human via checkpoint
+//
+// Returns nil if auto-validation is not applicable or not allowed.
+// Returns a result map describing the outcome on success/failure.
+func tryAutoValidate(entitySvc *service.EntityService, docSvc *service.DocumentService, docID, docPath, docType, owner string) map[string]any {
+	// Design stage is never auto-validated (REQ-PIPE-007).
+	if docType == "design" {
+		return nil
+	}
+
+	// Only spec and dev-plan trigger the validation pipeline (REQ-PIPE-001).
+	if docType != "spec" && docType != "specification" && docType != "dev-plan" {
+		return nil
+	}
+
+	// Resolve the owning feature.
+	if owner == "" {
+		return nil // no owner, cannot determine feature or tier
+	}
+
+	// Owner may be a Plan ID, a Feature ID, or a display ID. Try feature first.
+	feature, err := resolveOwningFeature(entitySvc, owner)
+	if err != nil || feature == nil {
+		return nil // feature not found or owner is a plan (no validation context)
+	}
+
+	// Load fast-track config.
+	cfg := config.LoadOrDefault()
+	ft := cfg.FastTrack
+	if !ft.IsEnabled() {
+		return nil // fast-track disabled entirely
+	}
+
+	tier := feature.Tier
+	if tier == "" {
+		tier = ft.DefaultTier
+	}
+
+	tierCfg, ok := ft.Tiers[tier]
+	if !ok {
+		return nil // tier not configured
+	}
+
+	// Determine which stage the document authoring maps to.
+	stageForDoc := docTypeToStage(docType)
+	if stageForDoc == "" {
+		return nil
+	}
+
+	// Check the automation matrix for this tier+stage.
+	gateMode := tierGateMode(tierCfg, stageForDoc)
+	// Only "auto" gates trigger the automatic validation pipeline.
+	if gateMode != string(config.GateModeAuto) {
+		return map[string]any{
+			"triggered":      false,
+			"reason":         fmt.Sprintf("gate mode is %q for tier %q stage %q", gateMode, tier, stageForDoc),
+			"feature_id":     feature.ID,
+			"feature_tier":   tier,
+		}
+	}
+
+	// Check cycle cap (REQ-PIPE-003).
+	maxCycles := tierCfg.MaxCycles
+	if maxCycles <= 0 {
+		return map[string]any{
+			"triggered":    false,
+			"reason":       fmt.Sprintf("max_cycles is %d for tier %q", maxCycles, tier),
+			"feature_id":   feature.ID,
+			"feature_tier": tier,
+		}
+	}
+
+	// Check if feature is already blocked (human escalation in progress).
+	if feature.BlockedReason != "" {
+		return map[string]any{
+			"triggered":      false,
+			"reason":         fmt.Sprintf("feature %s is blocked (human escalation pending): %s", feature.ID, feature.BlockedReason),
+			"feature_id":     feature.ID,
+			"feature_tier":   tier,
+			"blocked_reason": feature.BlockedReason,
+		}
+	}
+
+	// Track cycle count using ReviewCycle field.
+	currentCycle := feature.ReviewCycle
+	if currentCycle >= maxCycles {
+		// Cycle cap reached — escalate to human via checkpoint (REQ-PIPE-004).
+		_ = entitySvc.PersistFeatureBlockedReason(feature.ID, feature.Slug,
+			fmt.Sprintf("auto-validation cycle cap reached (%d/%d) for tier %q stage %q", currentCycle, maxCycles, tier, stageForDoc))
+
+		chkStore := checkpoint.NewStore(entitySvc.Root())
+		chk, chkErr := chkStore.Create(checkpoint.Record{
+			Question:  fmt.Sprintf("Feature %s has reached the auto-validation cycle cap (%d/%d) for tier %q. What should happen next?", feature.ID, currentCycle, maxCycles, tier),
+			Context:   fmt.Sprintf("Stage: %s. Tier: %s. Cycle: %d/%d. Document: %s (%s).", stageForDoc, tier, currentCycle, maxCycles, docID, docType),
+			Status:    checkpoint.StatusPending,
+			CreatedAt: time.Now().UTC(),
+			CreatedBy: "system",
+		})
+
+		result := map[string]any{
+			"triggered":      false,
+			"escalate":       true,
+			"reason":         fmt.Sprintf("auto-validation cycle cap reached (%d/%d) for feature %s", currentCycle, maxCycles, feature.ID),
+			"feature_id":     feature.ID,
+			"feature_tier":   tier,
+			"cycle_count":    currentCycle,
+			"max_cycles":     maxCycles,
+			"blocked_reason": fmt.Sprintf("auto-validation cycle cap reached (%d/%d)", currentCycle, maxCycles),
+		}
+		if chkErr == nil {
+			result["checkpoint_id"] = chk.ID
+		}
+		return result
+	}
+
+	// Determine the validator role and skill for this stage.
+	role, skill := validatorForStage(stageForDoc)
+	if role == "" {
+		return nil
+	}
+
+	// Increment the cycle counter for this validation dispatch (REQ-PIPE-003).
+	if err := entitySvc.IncrementFeatureReviewCycle(feature.ID, feature.Slug); err != nil {
+		log.Printf("[doc] WARNING: failed to increment review_cycle for %s: %v", feature.ID, err)
+	}
+
+	// Dispatch the validator (REQ-PIPE-002).
+	result := map[string]any{
+		"triggered":    true,
+		"status":       "dispatched",
+		"feature_id":   feature.ID,
+		"feature_tier": tier,
+		"stage":        stageForDoc,
+		"document_id":  docID,
+		"role":         role,
+		"skill":        skill,
+		"cycle_count":  currentCycle + 1,
+		"max_cycles":   maxCycles,
+	}
+
+	return result
+}
+
+// resolveOwningFeature tries to resolve an owner string to a Feature.
+func resolveOwningFeature(entitySvc *service.EntityService, owner string) (*model.Feature, error) {
+	if entitySvc == nil {
+		return nil, fmt.Errorf("entity service is nil")
+	}
+
+	getR, err := entitySvc.Get("feature", owner, "")
+	if err != nil {
+		return nil, err
+	}
+
+	feature := featureFromState(getR.ID, getR.Slug, getR.State)
+	return feature, nil
+}
+
+// docTypeToStage maps a document type to the lifecycle stage it is authored in.
+func docTypeToStage(docType string) string {
+	switch docType {
+	case "spec", "specification":
+		return "specifying"
+	case "dev-plan":
+		return "dev-planning"
+	default:
+		return ""
+	}
+}
+
+// tierGateMode returns the gate mode for a specific stage from a tier config.
+func tierGateMode(tc config.TierConfig, stage string) string {
+	switch stage {
+	case "designing":
+		return tc.Design
+	case "specifying":
+		return tc.Spec
+	case "dev-planning":
+		return tc.DevPlan
+	case "reviewing":
+		return tc.Review
+	default:
+		return ""
+	}
+}
+
+// validatorForStage returns the role and skill IDs for validating a document
+// authored in the given lifecycle stage.
+func validatorForStage(stage string) (role, skill string) {
+	switch stage {
+	case "specifying":
+		return "spec-validator", "validate-spec"
+	case "dev-planning":
+		return "plan-validator", "validate-plan"
+	case "reviewing":
+		return "review-gate-validator", "validate-review"
+	default:
+		return "", ""
+	}
 }

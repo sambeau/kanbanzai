@@ -259,6 +259,88 @@ type ProjectConfig struct {
 	Constraints  []string `yaml:"constraints,omitempty"`
 }
 
+// GateMode is the automation mode for a stage gate: auto (agent validates)
+// or human (checkpoint required).
+type GateMode string
+
+const (
+	GateModeAuto        GateMode = "auto"
+	GateModeHuman       GateMode = "human"
+	GateModeConditional GateMode = "conditional"
+)
+
+// Tier name constants for the built-in risk tiers.
+const (
+	TierRetroFix = "retro_fix"
+	TierBugFix   = "bug_fix"
+	TierFeature  = "feature"
+	TierCritical = "critical"
+)
+
+// TierConfig defines the automation matrix and cycle cap for a single risk tier.
+// Each stage (design, spec, dev-plan, review) maps to a gate mode.
+// MaxCycles caps the number of fix-validate iterations before human escalation.
+type TierConfig struct {
+	Design    string `yaml:"design"`     // gate mode for designing stage
+	Spec      string `yaml:"spec"`       // gate mode for specifying stage
+	DevPlan   string `yaml:"dev_plan"`   // gate mode for dev-planning stage
+	Review    string `yaml:"review"`     // gate mode for reviewing stage
+	MaxCycles int    `yaml:"max_cycles"` // max fix-validate iterations (0 = no auto-validation)
+}
+
+// FastTrackConfig defines the fast-track architecture settings.
+// Enabled controls whether the entire fast-track system is active.
+// DefaultTier is applied when a feature has no explicit tier.
+// Tiers maps tier names to their automation configuration.
+type FastTrackConfig struct {
+	Enabled     bool                  `yaml:"enabled"`
+	DefaultTier string                `yaml:"default_tier,omitempty"`
+	Tiers       map[string]TierConfig `yaml:"tiers,omitempty"`
+}
+
+// IsEnabled returns true if fast-track is enabled and has at least one tier.
+func (f FastTrackConfig) IsEnabled() bool {
+	return f.Enabled && len(f.Tiers) > 0
+}
+
+// DefaultFastTrackConfig returns the built-in tier configuration.
+func DefaultFastTrackConfig() FastTrackConfig {
+	return FastTrackConfig{
+		Enabled:     false,
+		DefaultTier: TierFeature,
+		Tiers: map[string]TierConfig{
+			TierRetroFix: {
+				Design:    string(GateModeHuman),
+				Spec:      string(GateModeAuto),
+				DevPlan:   string(GateModeAuto),
+				Review:    string(GateModeConditional),
+				MaxCycles: 3,
+			},
+			TierBugFix: {
+				Design:    string(GateModeHuman),
+				Spec:      string(GateModeHuman),
+				DevPlan:   string(GateModeAuto),
+				Review:    string(GateModeAuto),
+				MaxCycles: 2,
+			},
+			TierFeature: {
+				Design:    string(GateModeHuman),
+				Spec:      string(GateModeAuto),
+				DevPlan:   string(GateModeAuto),
+				Review:    string(GateModeAuto),
+				MaxCycles: 2,
+			},
+			TierCritical: {
+				Design:    string(GateModeHuman),
+				Spec:      string(GateModeHuman),
+				DevPlan:   string(GateModeHuman),
+				Review:    string(GateModeHuman),
+				MaxCycles: 0,
+			},
+		},
+	}
+}
+
 // Config is the project configuration structure stored in .kbz/config.yaml.
 type Config struct {
 	// Version is the configuration schema version.
@@ -302,6 +384,8 @@ type Config struct {
 	Coordination CoordinationConfig `yaml:"coordination,omitempty"`
 	// ToolHints maps role IDs to opaque tool guidance strings injected into agent prompts.
 	ToolHints map[string]string `yaml:"tool_hints,omitempty"`
+	// FastTrack holds settings for the fast-track architecture (P43).
+	FastTrack FastTrackConfig `yaml:"fast_track,omitempty"`
 }
 
 // DefaultConfig returns a new Config with sensible defaults.
@@ -330,6 +414,7 @@ func DefaultConfig() Config {
 		Decomposition:  DefaultDecompositionConfig(),
 		Freshness:      DefaultFreshnessConfig(),
 		Lifecycle:      DefaultLifecycleConfig(),
+		FastTrack:      DefaultFastTrackConfig(),
 	}
 }
 
@@ -1005,4 +1090,3 @@ func expandEnv(data []byte) []byte {
 	})
 	return []byte(s)
 }
-
