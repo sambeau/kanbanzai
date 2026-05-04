@@ -1,11 +1,13 @@
+approved_at: "2026-05-04T14:24:31Z"
+approved_by: sambeau
 canonical_content_hash: c2e6d494fc721509dddfdf1316f220af890216b9370e2ea589e1c6f7f8fb1b99
-content_hash: bb136d4e8d34c3593471cc2bbd39d0e4d3e9daa47d7d95f457ec0319b4ab5ef4
+content_hash: 53f11f8074b05366606fda94fa4f11ef6ba197e9e92df07e875465a07da8c682
 created: "2026-05-04T14:22:48Z"
 created_by: sambeau
 id: P45-wisdom-forwarding/dev-plan-p45-dev-plan-wisdom-forwarding
 owner: P45-wisdom-forwarding
 path: work/P45-wisdom-forwarding/P45-dev-plan-wisdom-forwarding.md
-status: draft
+status: approved
 title: "Implementation Plan: Wisdom Forwarding"
 type: dev-plan
-updated: "2026-05-04T14:22:48Z"
+updated: "2026-05-04T14:24:31Z"
