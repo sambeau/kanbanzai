@@ -3,9 +3,9 @@ content: "Tasks/features showing as \"done\" via entity(get) but still appearing
 created: "2026-05-01T12:20:32Z"
 created_by: sambeau
 id: KE-01KQHQQHDHRVG
-last_accessed_at: "2026-05-04T14:56:38Z"
+last_accessed_at: "2026-05-04T14:58:48Z"
 miss_count: 0
-recent_use_count: 39
+recent_use_count: 43
 scope: project
 status: contributed
 tags:
