@@ -1,3 +1,5 @@
+approved_at: "2026-05-04T14:32:38Z"
+approved_by: sambeau
 canonical_content_hash: 4040ddffb6bcbccbdcfc19474a25045566e3bd56d5df4ffd7bd93efa8f36ebe4
 content_hash: 007a73824449f359cd703b30b4840bcc7dad721ea192e53d0e0af9d5116958da
 created: "2026-05-04T14:32:31Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KQSP3BMFF98/dev-plan-p42-dev-plan-hash-anchored-edit-tool
 owner: FEAT-01KQSP3BMFF98
 path: work/P42-hash-anchored-edit-tool/P42-dev-plan-hash-anchored-edit-tool.md
-status: draft
+status: approved
 title: "Dev-Plan: Hash-Anchored Edit Tool"
 type: dev-plan
-updated: "2026-05-04T14:32:31Z"
+updated: "2026-05-04T14:32:38Z"
