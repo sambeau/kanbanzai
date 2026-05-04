@@ -2,7 +2,7 @@ id: FEAT-01KQSP3BMFF98
 slug: hash-anchored-edit-tool
 name: Hash-Anchored Edit Tool Implementation
 parent: P42-hash-anchored-edit-tool
-status: reviewing
+status: done
 summary: "Implement hash-anchored edit mechanism for Kanbanzai's MCP tool surface: hash_tag parameter on read_file and hash_validate parameter on edit_file preventing stale-line edit corruption."
 spec: FEAT-01KQSP3BMFF98/spec-p42-spec-hash-anchored-edit-tool
 dev_plan: FEAT-01KQSP3BMFF98/dev-plan-p42-dev-plan-hash-anchored-edit-tool
