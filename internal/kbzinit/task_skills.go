@@ -22,6 +22,7 @@ var taskSkillNames = []string{
 	"orchestrate-development",
 	"orchestrate-doc-pipeline",
 	"orchestrate-review",
+	"prompt-engineering",
 	"review-code",
 	"review-plan",
 	"style-docs",
