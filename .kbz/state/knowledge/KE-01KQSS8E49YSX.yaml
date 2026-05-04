@@ -1,0 +1,19 @@
+confidence: "0.5"
+content: "Validator rubrics for LLM-classification checks (S5, S7, D7, D10, D13, R2, R3) live in work/P43-fast-track-architecture/validator-rubrics/. Each rubric has pass/fail definitions with 2-3 examples from real Kanbanzai documents and borderline escalate patterns."
+created: "2026-05-04T15:21:10Z"
+created_by: unknown
+id: KE-01KQSS8E49YSX
+learned_from: TASK-01KQSP98PT9H9
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - p43
+  - validators
+  - rubrics
+  - fast-track
+tier: 3
+topic: validator-rubrics
+ttl_days: 30
+updated: "2026-05-04T15:21:10Z"
+use_count: 0
