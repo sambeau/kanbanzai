@@ -3,7 +3,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-04                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | AI spec-author                 |
 
 ## Problem Statement
