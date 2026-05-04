@@ -118,6 +118,6 @@ conventional_roles:
     - section_path: "1.4"
       role: requirement
       confidence: high
-access_count: 3
-last_accessed_at: 2026-05-04T14:34:32.739788Z
+access_count: 8
+last_accessed_at: 2026-05-04T14:56:38.272495Z
 classified: false
