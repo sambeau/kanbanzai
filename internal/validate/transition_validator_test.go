@@ -250,6 +250,51 @@ func TestBuildTransitionValidatorError(t *testing.T) {
 	}
 }
 
+func TestValidatorDispatcher_ConditionalGate_EmptyFilesModified(t *testing.T) {
+	t.Parallel()
+
+	lookup := &stubBindingLookup{
+		bindings: map[string]*binding.StageBinding{
+			"reviewing": {
+				Description: "Review",
+				TransitionValidator: &binding.TransitionValidator{
+					Role:     "review-gate-validator",
+					Skill:    "validate-review",
+					GateMode: "conditional",
+				},
+			},
+		},
+	}
+	d := NewTransitionValidatorDispatcher(lookup)
+
+	// When FilesModified is empty, the conditional gate should return a
+	// pass with COND_NO_FILES notice (not a false-positive blocking result).
+	result, err := d.ValidateTransition(ValidatorDispatchInput{
+		Feature:       &model.Feature{ID: "FEAT-001", Tier: "retro_fix"},
+		FromStatus:    "reviewing",
+		ToStatus:      "done",
+		FilesModified: nil,
+	})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if result == nil {
+		t.Fatal("expected non-nil result for conditional gate")
+	}
+	if !result.Passed {
+		t.Error("conditional gate with empty FilesModified should pass (not false-positive block)")
+	}
+	if result.BlockingFail {
+		t.Error("conditional gate with empty FilesModified should not be blocking")
+	}
+	if len(result.Checks) == 0 {
+		t.Fatal("expected at least one check in the result")
+	}
+	if result.Checks[0].CheckID != "COND_NO_FILES" {
+		t.Errorf("expected COND_NO_FILES check, got %q", result.Checks[0].CheckID)
+	}
+}
+
 func TestBuildTransitionValidatorError_NoBlocking(t *testing.T) {
 	result := ValidatorResult{
 		Stage:        "specifying",

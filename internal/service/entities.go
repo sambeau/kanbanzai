@@ -300,7 +300,7 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 		return CreateResult{}, nameErr
 	}
 
-	tier := inferTier(input.Tier, input.Tags, s.cfg)
+	tier := inferTier(input.Tier, input.Tags, "feature", s.cfg)
 
 	entity := model.Feature{
 		ID:        idValue,
@@ -424,7 +424,7 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 		return CreateResult{}, err
 	}
 
-	tier := inferTier(input.Tier, input.Tags, s.cfg)
+	tier := inferTier(input.Tier, input.Tags, "bug", s.cfg)
 
 	entity := model.Bug{
 		ID:         idValue,
@@ -1068,7 +1068,17 @@ func defaultString(value, fallback string) string {
 // Otherwise: tags containing "retro" → retro_fix;
 // tags containing "critical" or "security" → critical;
 // otherwise → config FastTrack.DefaultTier (defaults to "feature").
-func inferTier(explicitTier string, tags []string, cfg *config.Config) string {
+// inferTier applies the tier inference rules per REQ-INFER-001 through REQ-INFER-003.
+// entityType must be one of "feature" or "bug".
+// Rules (in priority order):
+//
+//	(a) explicitTier overrides everything
+//	(b) "critical" or "security" tag → critical
+//	(c) "retro" tag → retro_fix
+//	(d) entityType="bug" → bug_fix
+//	(e) config default_tier
+//	(f) fallback: feature
+func inferTier(explicitTier string, tags []string, entityType string, cfg *config.Config) string {
 	if explicitTier != "" {
 		return explicitTier
 	}
@@ -1081,6 +1091,11 @@ func inferTier(explicitTier string, tags []string, cfg *config.Config) string {
 		if t == "retro" {
 			return config.TierRetroFix
 		}
+	}
+
+	// REQ-INFER-002(b): bug entities default to bug_fix.
+	if entityType == "bug" {
+		return config.TierBugFix
 	}
 
 	if cfg != nil && cfg.FastTrack.DefaultTier != "" {
@@ -1410,6 +1425,9 @@ func bugFields(e model.Bug) map[string]any {
 	}
 	if e.ReleaseTarget != "" {
 		fields["release_target"] = e.ReleaseTarget
+	}
+	if e.Tier != "" {
+		fields["tier"] = e.Tier
 	}
 	return fields
 }

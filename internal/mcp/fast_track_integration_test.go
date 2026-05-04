@@ -176,7 +176,10 @@ func TestFastTrack_SpecValidator_BlocksTransitionOnMissingVerificationPlan(t *te
 		"title":  "FT Spec 001",
 		"owner":  featID,
 	})
-	t.Logf("doc register result has document: %v", docResult["document"] != nil)
+
+	if _, hasDoc := docResult["document"]; !hasDoc {
+		t.Fatal("document should be registered")
+	}
 
 	// Approve design so the prerequisite is met.
 	setupApprovedDoc(t, env.docSvc, repoRoot, "work/design/ft-design-001.md", "design", featID)
@@ -186,6 +189,8 @@ func TestFastTrack_SpecValidator_BlocksTransitionOnMissingVerificationPlan(t *te
 	transitionEntityStatus(t, entitySvc, "feature", featID, "specifying")
 
 	// Attempt specifying → dev-planning with gate router.
+	// The spec-validator should trigger on this transition and detect
+	// the missing Verification Plan section (S1 blocking).
 	gateRouter := buildTestGateRouter(t)
 	result := callEntityToolWithGateJSON(t, entitySvc, env.docSvc, gateRouter, map[string]any{
 		"action": "transition",
@@ -193,16 +198,19 @@ func TestFastTrack_SpecValidator_BlocksTransitionOnMissingVerificationPlan(t *te
 		"status": "dev-planning",
 	})
 
-	if errMsg, ok := result["error"]; ok {
-		t.Logf("transition blocked: %v", errMsg)
-	} else {
-		t.Log("transition did not block (may be expected if validator dispatch not fully wired)")
-	}
+	// Verify the transition was processed (error or success, not a panic).
+	// The transition_validator result confirms the validator hook evaluated.
 	tv, _ := result["transition_validator"].(map[string]any)
-	if tv != nil {
-		t.Logf("transition_validator present: %+v", tv)
-	} else {
-		t.Log("no transition_validator result (may be expected before dispatch wiring)")
+	if tv == nil {
+		t.Skip("transition_validator not wired; skipping assertion (deferred to validator dispatch wiring task)")
+	}
+	passed, _ := tv["passed"].(bool)
+	if passed {
+		t.Error("expected transition_validator.passed=false for spec missing Verification Plan")
+	}
+	blockingFail, _ := tv["blocking_fail"].(bool)
+	if !blockingFail {
+		t.Error("expected transition_validator.blocking_fail=true for S1 failure")
 	}
 }
 
@@ -244,8 +252,15 @@ func TestFastTrack_PlanValidator_BlocksTransitionOnCyclicDependency(t *testing.T
 		"status": "developing",
 	})
 
-	if errMsg, ok := result["error"]; ok {
-		t.Logf("transition blocked: %v", errMsg)
+	tv, _ := result["transition_validator"].(map[string]any)
+	if tv == nil {
+		t.Skip("transition_validator not wired; skipping assertion (deferred to validator dispatch wiring task)")
+	}
+	// The plan-validator should evaluate the dev-plan for missing sections and
+	// unspecified task breakdown (D1 blocking). Even without a cyclic graph,
+	// a minimally valid dev-plan should trigger some validation.
+	if _, hasErr := result["error"]; !hasErr && tv["passed"] == nil {
+		t.Error("expected transition_validator result with pass/fail outcome")
 	}
 }
 
@@ -279,13 +294,15 @@ func TestFastTrack_ReviewGateValidator_BlocksOnRubberStampReview(t *testing.T) {
 		"status": "done",
 	})
 
-	if errMsg, ok := result["error"]; ok {
-		t.Logf("reviewing→done blocked: %v", errMsg)
-		if tv, ok := result["transition_validator"].(map[string]any); ok {
-			t.Logf("transition_validator: %+v", tv)
-		}
-	} else {
-		t.Log("reviewing→done succeeded")
+	tv, _ := result["transition_validator"].(map[string]any)
+	if tv == nil {
+		t.Skip("transition_validator not wired; skipping assertion (deferred to validator dispatch wiring task)")
+	}
+	// The review-gate-validator should audit the review process.
+	// Without any review documents registered, the transition should be
+	// evaluated by the validator hook.
+	if _, hasErr := result["error"]; !hasErr && tv["passed"] == nil {
+		t.Error("expected transition_validator result with pass/fail outcome")
 	}
 }
 
@@ -307,6 +324,7 @@ func TestFastTrack_NonBlockingFindings_AttachToDocRecord(t *testing.T) {
 	transitionEntityStatus(t, entitySvc, "feature", featID, "designing")
 	transitionEntityStatus(t, entitySvc, "feature", featID, "specifying")
 
+	// Register a well-formed spec with Verification Plan → should pass validation.
 	writeDocFile(t, repoRoot, "work/spec/ft-spec-004.md",
 		"# Spec\n\n## Overview\n\nContent.\n\n## Scope\n\nScoped.\n\n"+
 			"## Functional Requirements\n\nREQ-001: Test.\n\n"+
@@ -320,18 +338,26 @@ func TestFastTrack_NonBlockingFindings_AttachToDocRecord(t *testing.T) {
 		"owner":  featID,
 	})
 
+	// Verify the document was registered.
 	if _, hasDoc := docResult["document"]; !hasDoc {
 		t.Fatal("document should be registered")
 	}
 
+	// For feature tier, auto-validation should be triggered on spec registration.
 	if av, ok := docResult["auto_validation"].(map[string]any); ok {
 		triggered, _ := av["triggered"].(bool)
 		if !triggered {
 			t.Error("expected auto_validation.triggered=true for feature-tier spec")
 		}
-		t.Logf("auto_validation: %+v", av)
+		// Verify auto-validation result structure includes expected fields.
+		if _, hasStatus := av["status"]; !hasStatus {
+			t.Error("expected auto_validation.status field in response")
+		}
+		if _, hasRole := av["role"]; !hasRole {
+			t.Error("expected auto_validation.role field in response")
+		}
 	} else {
-		t.Log("auto_validation key not present")
+		t.Error("auto_validation key not present in document registration response")
 	}
 }
 
@@ -362,20 +388,19 @@ func TestFastTrack_Override_BypassesValidatorAndRecords(t *testing.T) {
 		"override_reason": "validator false positive on S7",
 	})
 
+	// Override should allow the transition to proceed without error.
 	if errMsg, ok := result["error"]; ok {
-		t.Logf("transition with override: %v", errMsg)
+		t.Error("override should bypass validator block, but got error:", errMsg)
 	}
 
+	// Verify the feature advanced past the gate.
 	feat, getErr := entitySvc.Get("feature", featID, "")
 	if getErr != nil {
 		t.Fatalf("Get feature: %v", getErr)
 	}
 	status, _ := feat.State["status"].(string)
-	t.Logf("feature status after override: %s", status)
-
-	overrides, _ := feat.State["overrides"].([]any)
-	if overrides != nil {
-		t.Logf("override recorded: %v", overrides)
+	if status != "dev-planning" {
+		t.Errorf("expected status=dev-planning after override, got %q", status)
 	}
 }
 
@@ -461,18 +486,90 @@ func TestFastTrack_TierInference_SecurityTagInfersCritical(t *testing.T) {
 	stateRoot := t.TempDir()
 	entitySvc := service.NewEntityService(stateRoot)
 
-	planID := createEntityTestPlan(t, entitySvc, "ft-infer002")
-	featID := createEntityTestFeature(t, entitySvc, planID, "ft-sec-infer")
-	setFeatureTier(t, entitySvc, featID, config.TierCritical)
+	planID := createEntityTestPlan(t, entitySvc, "ft-infer-sec")
 
-	feat, err := entitySvc.Get("feature", featID, "")
+	// Create a feature with a "security" tag but no explicit tier.
+	// The tier should be inferred as critical via inferTier.
+	result, err := entitySvc.CreateFeature(service.CreateFeatureInput{
+		Slug:      "ft-sec-infer",
+		Parent:    planID,
+		Name:      "Security Inference Feature",
+		Summary:   "Test security tag inference",
+		CreatedBy: "tester",
+		Tags:      []string{"security"},
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature: %v", err)
+	}
+
+	feat, err := entitySvc.Get("feature", result.ID, "")
 	if err != nil {
 		t.Fatalf("Get feature: %v", err)
 	}
 	tier, _ := feat.State["tier"].(string)
-	t.Logf("security tagged feature tier: %q", tier)
 	if tier != config.TierCritical {
 		t.Errorf("security-tagged feature tier = %q, want %q", tier, config.TierCritical)
+	}
+}
+
+// ─── AC-INFER-001: Bug entity inferred as bug_fix ──────────────────────────
+
+func TestFastTrack_TierInference_BugEntityInfersBugFix(t *testing.T) {
+	t.Parallel()
+	stateRoot := t.TempDir()
+	entitySvc := service.NewEntityService(stateRoot)
+
+	// Create a bug with no explicit tier → should be inferred as bug_fix.
+	result, err := entitySvc.CreateBug(service.CreateBugInput{
+		Slug:       "ft-bug-infer",
+		Name:       "Bug Inference Test",
+		ReportedBy: "test",
+		Observed:   "observed",
+		Expected:   "expected",
+	})
+	if err != nil {
+		t.Fatalf("CreateBug: %v", err)
+	}
+
+	bug, err := entitySvc.Get("bug", result.ID, "")
+	if err != nil {
+		t.Fatalf("Get bug: %v", err)
+	}
+	tier, _ := bug.State["tier"].(string)
+	if tier != config.TierBugFix {
+		t.Errorf("bug entity tier = %q, want %q (REQ-INFER-002b: bug → bug_fix)", tier, config.TierBugFix)
+	}
+}
+
+// ─── AC-INFER-003: Explicit tier overrides inference ─────────────────────────
+
+func TestFastTrack_TierInference_ExplicitTierOverridesInference(t *testing.T) {
+	t.Parallel()
+	stateRoot := t.TempDir()
+	entitySvc := service.NewEntityService(stateRoot)
+
+	// Create a bug with a "security" tag BUT an explicit tier of bug_fix.
+	// The explicit tier should win per REQ-INFER-003.
+	result, err := entitySvc.CreateBug(service.CreateBugInput{
+		Slug:       "ft-explicit-tier",
+		Name:       "Explicit Tier Override",
+		ReportedBy: "test",
+		Observed:   "observed",
+		Expected:   "expected",
+		Tags:       []string{"security"},
+		Tier:       config.TierBugFix,
+	})
+	if err != nil {
+		t.Fatalf("CreateBug: %v", err)
+	}
+
+	bug, err := entitySvc.Get("bug", result.ID, "")
+	if err != nil {
+		t.Fatalf("Get bug: %v", err)
+	}
+	tier, _ := bug.State["tier"].(string)
+	if tier != config.TierBugFix {
+		t.Errorf("explicit tier should override inference: got %q, want %q", tier, config.TierBugFix)
 	}
 }
 

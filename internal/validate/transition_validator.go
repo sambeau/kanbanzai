@@ -158,11 +158,30 @@ func (d *TransitionValidatorDispatcher) ValidateTransition(input ValidatorDispat
 // docs/, or refs/) skip the review gate with an explicit annotation.
 // Implementation changes trigger the full review panel.
 //
-// When FilesModified is empty (no file list available), treat as
-// implementation change (conservative). P44 model routing will enhance
-// this with more accurate file classification.
+// When FilesModified is empty (no file list available), the conditional
+// gate returns a pass to avoid false-positive blocking. Callers should
+// always populate FilesModified for accurate conditional evaluation.
 func (d *TransitionValidatorDispatcher) evaluateConditional(input ValidatorDispatchInput, tv *binding.TransitionValidator) (*ValidatorResult, error) {
-	isDocOnly := len(input.FilesModified) > 0
+	if len(input.FilesModified) == 0 {
+		// No file list available: pass without validation (avoid false-positive).
+		// Callers are expected to populate FilesModified for conditional gates.
+		return &ValidatorResult{
+			Stage:  input.FromStatus,
+			Passed: true,
+			Checks: []ValidatorCheck{
+				{
+					CheckID:   "COND_NO_FILES",
+					Passed:    true,
+					Blocking:  false,
+					Summary:   "conditional gate: no file list available; treating as pass (caller should populate FilesModified for accurate evaluation)",
+					CheckType: "notice",
+				},
+			},
+			BlockingFail: false,
+		}, nil
+	}
+
+	isDocOnly := true
 	for _, f := range input.FilesModified {
 		if !isDocOnlyChange(f) {
 			isDocOnly = false

@@ -141,7 +141,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 		result, err = entitySvc.CreateFeature(service.CreateFeatureInput{
 			Slug: entityArgStr(args, "slug"), Parent: entityArgStr(args, "parent"),
 			Summary: entityArgStr(args, "summary"), Design: entityArgStr(args, "design"),
-			Tags: entityArgStringSlice(args, "tags"), CreatedBy: createdBy, Name: name,
+			Tags: entityArgStringSlice(args, "tags"), Tier: entityArgStr(args, "tier"), CreatedBy: createdBy, Name: name,
 		})
 	case "batch", "plan":
 		result, err = entitySvc.CreateBatch(service.CreateBatchInput{
@@ -166,6 +166,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 			ReportedBy: entityArgStr(args, "reported_by"), Observed: entityArgStr(args, "observed"),
 			Expected: entityArgStr(args, "expected"), Severity: entityArgStr(args, "severity"),
 			Priority: entityArgStr(args, "priority"), Type: entityArgStr(args, "bug_type"),
+			Tags: entityArgStringSlice(args, "tags"), Tier: entityArgStr(args, "tier"),
 		})
 	case "decision":
 		result, err = entitySvc.CreateDecision(service.CreateDecisionInput{
