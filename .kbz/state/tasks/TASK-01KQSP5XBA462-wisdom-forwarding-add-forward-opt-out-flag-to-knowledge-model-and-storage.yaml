@@ -1,0 +1,6 @@
+id: TASK-01KQSP5XBA462
+parent_feature: FEAT-01KQSP2DDATWT
+slug: wisdom-forwarding-add-forward-opt-out-flag-to-knowledge-model-and-storage
+name: "Add `forward` opt-out flag to knowledge model and storage"
+summary: "Add `forward` opt-out flag to knowledge model and storage"
+status: queued

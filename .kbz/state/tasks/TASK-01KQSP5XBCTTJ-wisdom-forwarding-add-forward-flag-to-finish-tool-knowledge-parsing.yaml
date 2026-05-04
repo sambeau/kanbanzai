@@ -1,0 +1,6 @@
+id: TASK-01KQSP5XBCTTJ
+parent_feature: FEAT-01KQSP2DDATWT
+slug: wisdom-forwarding-add-forward-flag-to-finish-tool-knowledge-parsing
+name: "Add `forward` flag to `finish` tool knowledge parsing"
+summary: "Add `forward` flag to `finish` tool knowledge parsing"
+status: queued
