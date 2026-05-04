@@ -3,5 +3,9 @@ parent_feature: FEAT-01KQSNSWZGSBP
 slug: verify-checklist
 name: Verify checklist against acceptance criteria
 summary: "Run through all 9 acceptance criteria (AC-001 through AC-009) against the modified skill file. Verify positioning, item count, question phrasing, STOP-on-ambiguity behaviour, revision-scope note, no-artifact constraint, design-gate statement, line count (≤60 added), and imperative language conventions. Deliverable: confirmation that all ACs pass or list of failing criteria."
-status: ready
+status: active
 estimate: "0.5"
+claimed_at: "2026-05-04T14:33:58Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-04T14:33:58Z"
+dispatched_by: sambeau
