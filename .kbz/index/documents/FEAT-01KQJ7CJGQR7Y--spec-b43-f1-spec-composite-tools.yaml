@@ -1,0 +1,139 @@
+document_id: FEAT-01KQJ7CJGQR7Y/spec-b43-f1-spec-composite-tools
+document_path: work/B43-composite-tools/B43-F1-spec-composite-tools.md
+content_hash: 9bd1ac8e07ae2d4b1611d07de15d30333e6f602f5187a45e786ee7f906e2f1c1
+indexed_at: 2026-05-04T11:01:15.860927Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Composite Tools for Workflow Chaining'
+      byte_offset: 0
+      byte_count: 15619
+      word_count: 2103
+      content_hash: 9bd1ac8e07ae2d4b1611d07de15d30333e6f602f5187a45e786ee7f906e2f1c1
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem Statement
+          byte_offset: 455
+          byte_count: 1804
+          word_count: 240
+          content_hash: 0275422d0526f688f93fa2976c01b5363af8c8a2726c869597be67c7c5e5773f
+        - path: "1.2"
+          level: 2
+          title: Requirements
+          byte_offset: 2259
+          byte_count: 5743
+          word_count: 772
+          content_hash: 265c59bad92c0ba47dbb8d22c9bc7dc77dfd876a6a3e914f35908603ba612a84
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 2276
+              byte_count: 4740
+              word_count: 631
+              content_hash: c7abd7137b78132e48e5931706e0d92577f7e1d6fa5c89fa404acbd6bebc0b13
+            - path: 1.2.2
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 7016
+              byte_count: 986
+              word_count: 139
+              content_hash: 4008fe81ea27c0773852f15e9c41f83eb45f0bf6346b705443e97aaea68ef1ee
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 8002
+          byte_count: 1107
+          word_count: 148
+          content_hash: 5a9bbf8b9204691adddb6f803261c87365431abfa4632d0c397af16933db5006
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 9109
+          byte_count: 4366
+          word_count: 567
+          content_hash: 3813b9e612720f5055bf63cc1a815bc7ad3cdd124d7abbc499d4219b311cec9f
+        - path: "1.5"
+          level: 2
+          title: Verification Plan
+          byte_offset: 13475
+          byte_count: 2144
+          word_count: 337
+          content_hash: 7a4ee7ca57073be3d9aad1d4a6c7f8cd64621f25649931d97862f0e519735e3c
+entity_refs:
+    - entity_id: FEAT-01KQJ7CJGQR7Y
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 396
+    - entity_id: B43-composite-tools
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 341
+    - entity_id: F1-design-composite-tools
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 365
+cross_doc_links:
+    - target_path: work/B43-composite-tools/B43-F1-design-composite-tools.md
+      link_text: work/B43-composite-tools/B43-F1-design-composite-tools.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+access_count: 2
+last_accessed_at: 2026-05-04T11:01:21.264336Z
+classified: true
+classified_at: 2026-05-04T11:01:40.023783Z
+classified_by: claude-sonnet-4
+classifier_version: "20250501"
+classifications:
+    - section_path: "1.1"
+      role: rationale
+      confidence: high
+      summary: 'Problem statement: chat agents must chain multiple atomic MCP tool calls for common workflows; the correct sequence exists in stage bindings and gate logic but is delivered as prose. This spec defines five composite actions that collapse multi-step sequences into single server-side operations'
+      concepts_intro:
+        - composite-tools
+        - workflow-chaining
+        - MCP-server
+      concepts_used:
+        - specification
+        - atomic-tools
+        - deterministic-orchestration
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+      summary: 'Requirements section: 22 functional requirements (REQ-001 through REQ-022) and 4 non-functional requirements (REQ-NF-001 through REQ-NF-004) covering all five composite actions, structural constraints, and performance thresholds'
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+      summary: 'Functional requirements REQ-001 through REQ-022: doc publish, entity bootstrap, entity close-out, develop dispatch, batch snapshot, plus structural requirements for side-effect preservation, synchronous execution, and atomic step semantics'
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+      summary: 'Non-functional requirements: tool call reduction ≥50%, response time ≤2× individual operations, structured next_action schema, backward compatibility for existing actions'
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+      summary: 'Constraints: backward compatibility, no new state machines, no AI/LLM calls, human gates are hard stops, must follow DispatchAction pattern, constrained by DP-9/DP-5/DP-10 from Skills System Redesign'
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+      summary: 'Acceptance criteria AC-001 through AC-015: one criterion per key behavioural assertion, each mapped to requirement IDs, using Given/When/Then format with testable observable outcomes'
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+      summary: 'Verification plan: maps each acceptance criterion to a verification method (automated test or code inspection), with brief description of the verification approach'

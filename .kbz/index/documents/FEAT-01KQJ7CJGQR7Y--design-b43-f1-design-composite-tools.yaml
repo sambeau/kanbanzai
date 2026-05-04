@@ -1,0 +1,469 @@
+document_id: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools
+document_path: work/B43-composite-tools/B43-F1-design-composite-tools.md
+content_hash: ac69e18a1924b779d684e6a01ef840cac9578c896201c030bea2821f3c8e35a6
+indexed_at: 2026-05-04T10:56:34.58904Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Composite Tools for Workflow Chaining'
+      byte_offset: 0
+      byte_count: 24924
+      word_count: 3280
+      content_hash: ac69e18a1924b779d684e6a01ef840cac9578c896201c030bea2821f3c8e35a6
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 248
+          byte_count: 724
+          word_count: 84
+          content_hash: 5c85a0bf70510bb20641c9a934e685d1f9e79353e72865cda97d4970ec97bc11
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 972
+          byte_count: 764
+          word_count: 104
+          content_hash: b9bdaaf71c3363899df9513fda51496d537e944125dd228fab81fc593c538d8d
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Goals
+              byte_offset: 996
+              byte_count: 459
+              word_count: 63
+              content_hash: 8fd0be823d897e03ff50b5267aba9d874baac6ea238e7843a6dbb6659a28ff1c
+            - path: 1.2.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 1455
+              byte_count: 281
+              word_count: 37
+              content_hash: ee73b0ecdf6c162726924728a3908a42e1f79e670bb7d28601fac61f7e7b81df
+        - path: "1.3"
+          level: 2
+          title: Problem and Motivation
+          byte_offset: 1736
+          byte_count: 3411
+          word_count: 475
+          content_hash: 18be4d9a9482d7845996cceab506a2aeea7e6485cd6236c239c51cebe2a0e9e0
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Context
+              byte_offset: 1763
+              byte_count: 670
+              word_count: 99
+              content_hash: d174ae4f87d14cb367f4c20e71c84d744ab00905577a493ed826218e94768ceb
+            - path: 1.3.2
+              level: 3
+              title: The friction
+              byte_offset: 2433
+              byte_count: 1503
+              word_count: 202
+              content_hash: 138cace45dad49136670721c3e622e0e9d19845ffc4c7191edc0db0e15825545
+            - path: 1.3.3
+              level: 3
+              title: What happens if nothing changes
+              byte_offset: 3936
+              byte_count: 598
+              word_count: 88
+              content_hash: 52db13be13f89e66e12ea8bef0185d8ed76994779576ea1130057b48b86c8617
+            - path: 1.3.4
+              level: 3
+              title: Prior art within the system
+              byte_offset: 4534
+              byte_count: 613
+              word_count: 82
+              content_hash: 1472b5937f0b7d63cbd0331c0652e18d6cbd7c81fa5db9270d2f7346e83f7424
+        - path: "1.4"
+          level: 2
+          title: Design
+          byte_offset: 5147
+          byte_count: 10770
+          word_count: 1412
+          content_hash: 23863b627d2599383e9c264dff13d116fdc0120c443445a1e11a5847a5b2417e
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Core concept: composite actions on existing tools'
+              byte_offset: 5158
+              byte_count: 649
+              word_count: 89
+              content_hash: 4768630c9bf2c8ab855f17accf7eafa4f93e31b788345c9a05eaf45fab15cb51
+            - path: 1.4.2
+              level: 3
+              title: Composite Action Catalog
+              byte_offset: 5807
+              byte_count: 6643
+              word_count: 855
+              content_hash: 2c45b91f1af13fce798959b075e58d04c3a674f5fa26837543821ba75aa340b6
+              children:
+                - path: 1.4.2.1
+                  level: 4
+                  title: '`doc(action: "publish")` — register + classify + approve'
+                  byte_offset: 5837
+                  byte_count: 1659
+                  word_count: 206
+                  content_hash: 7438157b09ba0fe46709613c87b62bfdc1ba7c114bfe3d12518f26e7789a889d
+                - path: 1.4.2.2
+                  level: 4
+                  title: '`feature(action: "bootstrap")` — lifecycle setup through developing'
+                  byte_offset: 7496
+                  byte_count: 1830
+                  word_count: 237
+                  content_hash: 39e6583a6f2cb52c8da28a03cd4d58a6960488331cafc8570580001a3d5cc59d
+                - path: 1.4.2.3
+                  level: 4
+                  title: '`entity(action: "close-out")` — reviewing → done with cascade'
+                  byte_offset: 9326
+                  byte_count: 704
+                  word_count: 95
+                  content_hash: e8ffe9b72682fdffb4f12c402042ac858b6cc16c7ca55ee93e2cfcbf2b1856c2
+                - path: 1.4.2.4
+                  level: 4
+                  title: '`develop(action: "dispatch")` — one-cycle orchestrator dispatch'
+                  byte_offset: 10030
+                  byte_count: 1375
+                  word_count: 191
+                  content_hash: d0fbd12a96f6d75c6cf7d7f8e040b57784d3db7abae72131cd885c85f3e241ea
+                - path: 1.4.2.5
+                  level: 4
+                  title: '`batch(action: "snapshot")` — prescriptive status rollup'
+                  byte_offset: 11405
+                  byte_count: 1045
+                  word_count: 122
+                  content_hash: d069557137de5ea6929060c949c78171ade628ec3854b31b628dcbfb5f3967cd
+            - path: 1.4.3
+              level: 3
+              title: Architectural principles
+              byte_offset: 12450
+              byte_count: 1804
+              word_count: 254
+              content_hash: 8f6e3010e87dee03601dc908bf3813147995e975cfed41b18e0cbc8507f7f675
+            - path: 1.4.4
+              level: 3
+              title: What composite tools are NOT
+              byte_offset: 14254
+              byte_count: 676
+              word_count: 96
+              content_hash: cd9af4342a61c16d7761968c1c40b72446a6aa4e29819ba57a087270c85f9aa6
+            - path: 1.4.5
+              level: 3
+              title: Implementation strategy
+              byte_offset: 14930
+              byte_count: 987
+              word_count: 116
+              content_hash: c4e80b90536bc5b162795150814ebbf8744607a54bd7e52a89e4100369352d94
+        - path: "1.5"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 15917
+          byte_count: 2633
+          word_count: 368
+          content_hash: 36bdea13d601350924b5017450aebf8a61e4a2aeaf2010b79dc1fd21b38f014d
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'Alternative 1: Do nothing — improve skill instructions instead'
+              byte_offset: 15945
+              byte_count: 783
+              word_count: 115
+              content_hash: 29afd2c268cb125e724ca0f0ef9f20f421d865c33083843722e5988a4d96b2d9
+            - path: 1.5.2
+              level: 3
+              title: 'Alternative 2: Full workflow engine — server-driven orchestration'
+              byte_offset: 16728
+              byte_count: 991
+              word_count: 136
+              content_hash: 46cc649b14e9937dd73879818641a5d3128d25a2bac7404a3d88e86eea29fe9d
+            - path: 1.5.3
+              level: 3
+              title: 'Alternative 3: Client-side workflow scripts'
+              byte_offset: 17719
+              byte_count: 831
+              word_count: 114
+              content_hash: 319ed651362a461e85d782f418ba4f7097129d40f9c7d8a622c25ed60072e646
+        - path: "1.6"
+          level: 2
+          title: Decisions
+          byte_offset: 18550
+          byte_count: 4210
+          word_count: 572
+          content_hash: 77d32243a9c68cf2e31e8aa5e977c634089889be0d18008305204274e6740364
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Decision 1: New actions on existing tools, not new top-level tools'
+              byte_offset: 18564
+              byte_count: 839
+              word_count: 112
+              content_hash: 342e96b2c8b0e6573ba0d731f00578594036b3bcaead72fd4a0b6ebe3b922937
+            - path: 1.6.2
+              level: 3
+              title: 'Decision 2: Structured next-action responses, not prose'
+              byte_offset: 19403
+              byte_count: 684
+              word_count: 96
+              content_hash: 7554fd8ee22328cc2d8c5601cc079ceb9c00b87c3a69b9b782c3f7259c2ef4bd
+            - path: 1.6.3
+              level: 3
+              title: 'Decision 3: Composites are synchronous, deterministic, and stateless'
+              byte_offset: 20087
+              byte_count: 906
+              word_count: 127
+              content_hash: d57bd24074b12541123f48f7abafff45549e58570aece158f057cdb4fa7032d9
+            - path: 1.6.4
+              level: 3
+              title: 'Decision 4: Classification must still be AI-driven; composite only passes it through'
+              byte_offset: 20993
+              byte_count: 948
+              word_count: 126
+              content_hash: c4d3ac1411efc108a28336b7a57a2b7817b52f000317b4f2a421c3948436cf95
+            - path: 1.6.5
+              level: 3
+              title: 'Decision 5: `develop(action: "dispatch")` dispatches but does not spawn'
+              byte_offset: 21941
+              byte_count: 819
+              word_count: 109
+              content_hash: 5faa70b6cfaff3e59a51ce05c1da0671244c2f90968bf899a2289efd689de4c3
+        - path: "1.7"
+          level: 2
+          title: Dependencies
+          byte_offset: 22760
+          byte_count: 2164
+          word_count: 237
+          content_hash: 22ad12ad052ab4f8d0a3f0d4d1c5bdaaddb8baca740ff1a96e10ddd36fee2bd8
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Internal dependencies (existing code)
+              byte_offset: 22777
+              byte_count: 916
+              word_count: 92
+              content_hash: 343dcc079fe7f3b3d8e6319e651e14d99421b289f4de93059296250bca2fa7ed
+            - path: 1.7.2
+              level: 3
+              title: External dependencies
+              byte_offset: 23693
+              byte_count: 254
+              word_count: 33
+              content_hash: a6fe8cd742604cfbc4cd698db30fa262f0afb2b08fc6c6fcf7447c90b6a31d58
+            - path: 1.7.3
+              level: 3
+              title: Upstream design dependencies
+              byte_offset: 23947
+              byte_count: 478
+              word_count: 55
+              content_hash: 2682700ec2171f14f12be620d94d9f9a8462fa8757c8e311cc7590e191dbff52
+            - path: 1.7.4
+              level: 3
+              title: Downstream consumers
+              byte_offset: 24425
+              byte_count: 499
+              word_count: 55
+              content_hash: fe0aa03b26ebcbbafd19497ca4f6787b3d5beab19a34f55b029b4d041e504388
+entity_refs:
+    - entity_id: FEAT-01KQJ
+      entity_type: feature
+      section_path: 1.4.2.5
+      byte_offset: 12062
+    - entity_id: DOC-01KQJ
+      entity_type: document
+      section_path: 1.4.2.2
+      byte_offset: 8693
+    - entity_id: DOC-01KQJ
+      entity_type: document
+      section_path: 1.4.2.5
+      byte_offset: 12347
+    - entity_id: B43-composite-tools
+      entity_type: plan
+      section_path: 1.4.2.5
+      byte_offset: 11973
+cross_doc_links:
+    - target_path: work/design/skills-system-redesign-v2.md
+      link_text: work/design/skills-system-redesign-v2.md
+      section_path: 1.7.3
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: alternative
+      confidence: high
+    - section_path: 1.5.1
+      role: alternative
+      confidence: high
+    - section_path: 1.5.2
+      role: alternative
+      confidence: high
+    - section_path: 1.5.3
+      role: alternative
+      confidence: high
+    - section_path: "1.6"
+      role: decision
+      confidence: high
+    - section_path: 1.6.1
+      role: decision
+      confidence: high
+    - section_path: 1.6.2
+      role: decision
+      confidence: high
+    - section_path: 1.6.3
+      role: decision
+      confidence: high
+    - section_path: 1.6.4
+      role: decision
+      confidence: high
+    - section_path: 1.6.5
+      role: decision
+      confidence: high
+access_count: 2
+last_accessed_at: 2026-05-04T10:56:40.055943Z
+classified: true
+classified_at: 2026-05-04T10:58:32.862459Z
+classified_by: claude-sonnet-4
+classifier_version: "20250501"
+classifications:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+      summary: Introduces the composite MCP tool actions proposal — five new actions on existing tools to collapse multi-step workflow sequences into single server-side operations
+      concepts_intro:
+        - composite-tools
+        - workflow-chaining
+        - MCP-server
+        - deterministic-orchestration
+      concepts_used:
+        - DispatchAction
+        - side-effect
+        - gate-evaluator
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+      summary: 'Goals: reduce sequential MCP tool calls, replace prose gate-failure recovery with structured next-action objects, reuse existing service logic, preserve human gates. Non-goals: AI orchestration, background execution, replacement of individual tools, cross-batch coordination'
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+      summary: Four goals for composite tools
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+      summary: Four explicit non-goals bounding the design scope
+    - section_path: "1.3"
+      role: rationale
+      confidence: high
+      summary: 'Problem analysis: chat agents chain atomic tools into multi-step workflows; the system knows the correct sequence but delivers it as prose the agent must parse'
+    - section_path: 1.3.1
+      role: narrative
+      confidence: high
+      summary: 'Context: Kanbanzai''s MCP server exposes atomic tools — correct architectural hygiene but creates chaining burden for chat agents'
+    - section_path: 1.3.2
+      role: rationale
+      confidence: high
+      summary: 'Three concrete friction patterns: document lifecycle chain, feature bootstrap chain, orchestrator dispatch loop — each creates measurable reliability problems'
+    - section_path: 1.3.3
+      role: rationale
+      confidence: high
+      summary: 'Consequences of inaction: wasted context budget, brittle gate-failure recovery, 30-40% orchestrator tool calls spent on plumbing, new agents re-derive sequences'
+    - section_path: 1.3.4
+      role: example
+      confidence: high
+      summary: 'Prior art: entity transition with advance:true and MaybeAutoAdvanceFeature/Plan already demonstrate multi-step server-side composition'
+    - section_path: "1.4"
+      role: decision
+      confidence: high
+      summary: 'Design section: core concept, catalog of five composite actions, architectural principles, anti-patterns, and implementation strategy'
+    - section_path: 1.4.1
+      role: decision
+      confidence: high
+      summary: 'Core concept: new actions on existing consolidated tools following the DispatchAction pattern; one new top-level tool (develop) where no existing tool owns the concept'
+    - section_path: 1.4.2
+      role: definition
+      confidence: high
+      summary: 'Catalog of five composite actions: doc publish, entity bootstrap, entity close-out, develop dispatch, batch snapshot'
+    - section_path: 1.4.2.1
+      role: definition
+      confidence: high
+      summary: 'doc(action: publish) — register + classify + approve in one call; accepts inline classifications, falls back to classification_nudge if classifications omitted'
+    - section_path: 1.4.2.2
+      role: definition
+      confidence: high
+      summary: 'entity(action: bootstrap) — walks feature forward path, stops at gate failures with structured next_action objects, stops at human gates'
+    - section_path: 1.4.2.3
+      role: definition
+      confidence: high
+      summary: 'entity(action: close-out) — verifies tasks terminal, checks review report, advances feature to done, cascades to parent batch'
+    - section_path: 1.4.2.4
+      role: definition
+      confidence: high
+      summary: 'develop(action: dispatch) — new top-level tool; identifies ready frontier, runs conflict analysis, transitions tasks to active, generates handoff prompts'
+    - section_path: 1.4.2.5
+      role: definition
+      confidence: high
+      summary: 'batch(action: snapshot) — prescriptive status rollup enumerating every feature''s blocking gate and structured next_action'
+    - section_path: 1.4.3
+      role: decision
+      confidence: high
+      summary: 'Architectural principles: DP-9 alignment (deterministic, low-freedom), no new state machines, side-effect reporting preserved, atomic steps with non-atomic composite, human gates are hard stops'
+    - section_path: 1.4.4
+      role: constraint
+      confidence: high
+      summary: 'What composite tools are NOT: no AI agents, no workflow automation, not replacements for individual tools, not magic'
+    - section_path: 1.4.5
+      role: decision
+      confidence: high
+      summary: 'Implementation strategy: follows DispatchAction pattern, ~800-1200 lines new Go code, specific files to create and modify'
+    - section_path: "1.5"
+      role: alternative
+      confidence: high
+      summary: 'Alternatives Considered section: three alternatives evaluated and rejected'
+    - section_path: 1.5.1
+      role: alternative
+      confidence: high
+      summary: 'Alternative 1: Do nothing — improve skill instructions instead. Rejected because prose instructions are the root cause, not the solution'
+    - section_path: 1.5.2
+      role: alternative
+      confidence: high
+      summary: 'Alternative 2: Full workflow engine — server-driven orchestration with stateful session management. Rejected as too complex for current maturity'
+    - section_path: 1.5.3
+      role: alternative
+      confidence: high
+      summary: 'Alternative 3: Client-side workflow scripts. Rejected because it fragments workflow knowledge across MCP clients'
+    - section_path: "1.6"
+      role: decision
+      confidence: high
+      summary: Five architectural decisions with context, rationale, and consequences
+    - section_path: 1.6.1
+      role: decision
+      confidence: high
+      summary: 'Decision 1: New actions on existing tools, not new top-level tools — preserves mental model, keeps tool list manageable'
+    - section_path: 1.6.2
+      role: decision
+      confidence: high
+      summary: 'Decision 2: Structured next-action responses (tool, action, params, description) instead of prose — eliminates parse-prose failure mode'
+    - section_path: 1.6.3
+      role: decision
+      confidence: high
+      summary: 'Decision 3: Composites are synchronous, deterministic, and stateless — simpler to implement, test, and reason about than stateful workflows'
+    - section_path: 1.6.4
+      role: decision
+      confidence: high
+      summary: 'Decision 4: Classification must still be AI-driven; composite only passes it through — avoids embedding LLM calls in the MCP server'
+    - section_path: 1.6.5
+      role: decision
+      confidence: high
+      summary: 'Decision 5: develop dispatch dispatches but does not spawn — keeps MCP server decoupled from chat-client agent-spawning mechanism'
+    - section_path: "1.7"
+      role: narrative
+      confidence: high
+      summary: 'Dependencies: internal (advance.go, gate package, sideeffect.go, doc_tool.go, handoff_tool.go), external (mcp-go only), upstream design (skills system redesign, stage bindings), downstream (chat agents, orchestrator skills, workflow skills)'

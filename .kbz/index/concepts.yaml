@@ -1,4 +1,4 @@
-updated_at: 2026-04-23T13:06:47.108758Z
+updated_at: 2026-05-04T11:08:40.266736Z
 concepts:
     - name: voluntary-step-architecture
       aliases:
@@ -2124,6 +2124,8 @@ concepts:
         - model-context-protocol-server
       introduced_in:
         - FEAT-01KP8T4HQMEA3/specification-user-guide#1.3.1
+        - FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.1
+        - FEAT-01KQJ7CJGQR7Y/spec-b43-f1-spec-composite-tools#1.1
     - name: inverted-pyramid
       aliases:
         - inverted-pyramid-structure
@@ -2176,6 +2178,8 @@ concepts:
         - prerequisite-framework
       introduced_in:
         - FEAT-01KN58J27H83N/specification-30-binding-registry-gate-integration#1.3.1
+      used_in:
+        - FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.1
     - name: checkpoint-override-flow
       aliases:
         - checkpoint-gated-override
@@ -3083,3 +3087,42 @@ concepts:
         - stage-bindings-effort
       introduced_in:
         - FEAT-01KN6ZA4NYJ25/specification-agent-instructions-consolidation#1.3.5.2
+    - name: composite-tools
+      introduced_in:
+        - FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.1
+        - FEAT-01KQJ7CJGQR7Y/spec-b43-f1-spec-composite-tools#1.1
+        - FEAT-01KQJ7CJGQR7Y/dev-plan-b43-f1-dev-plan-composite-tools#1.1
+    - name: workflow-chaining
+      introduced_in:
+        - FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.1
+        - FEAT-01KQJ7CJGQR7Y/spec-b43-f1-spec-composite-tools#1.1
+    - name: deterministic-orchestration
+      introduced_in:
+        - FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.1
+      used_in:
+        - FEAT-01KQJ7CJGQR7Y/spec-b43-f1-spec-composite-tools#1.1
+    - name: dispatchaction
+      used_in:
+        - FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.1
+    - name: side-effect
+      used_in:
+        - FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools#1.1
+    - name: specification
+      used_in:
+        - FEAT-01KQJ7CJGQR7Y/spec-b43-f1-spec-composite-tools#1.1
+        - FEAT-01KQJ7CJGQR7Y/dev-plan-b43-f1-dev-plan-composite-tools#1.1
+    - name: atomic-tools
+      used_in:
+        - FEAT-01KQJ7CJGQR7Y/spec-b43-f1-spec-composite-tools#1.1
+    - name: implementation-plan
+      introduced_in:
+        - FEAT-01KQJ7CJGQR7Y/dev-plan-b43-f1-dev-plan-composite-tools#1.1
+    - name: task-decomposition
+      introduced_in:
+        - FEAT-01KQJ7CJGQR7Y/dev-plan-b43-f1-dev-plan-composite-tools#1.1
+    - name: dev-plan
+      used_in:
+        - FEAT-01KQJ7CJGQR7Y/dev-plan-b43-f1-dev-plan-composite-tools#1.1
+    - name: feat-01kqj7cjgqr7y
+      used_in:
+        - FEAT-01KQJ7CJGQR7Y/dev-plan-b43-f1-dev-plan-composite-tools#1.1
