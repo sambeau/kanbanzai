@@ -3,9 +3,14 @@ parent_feature: FEAT-01KQ2MH2S2ZDH
 slug: instrumentation-expansion-entry-schema-serverversion-and-extra-fields
 name: Entry schema — ServerVersion and Extra fields
 summary: Entry schema — ServerVersion and Extra fields
-status: active
+status: done
 estimate: "2"
+files_planned:
+  - internal/actionlog/entry.go
+completed: "2026-05-04T11:05:54Z"
 claimed_at: "2026-05-04T10:57:21Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T10:57:21Z"
 dispatched_by: sambeau
+completion_summary: "Added ServerVersion string and Extra map[string]string fields to actionlog.Entry struct with omitempty JSON tags. Updated struct comment. Existing tests pass. Backward compatibility: json.Unmarshal handles missing fields gracefully (zero values)."
+verification: go build and go test ./internal/actionlog/... pass in worktree
