@@ -3,5 +3,11 @@ parent_feature: FEAT-01KQJ7CJGQR7Y
 slug: design-composite-tools-scaffold-develop-tool-and-implement-dispatch-action
 name: Scaffold develop tool with dispatch action
 summary: "Create new top-level develop tool following the consolidated-tool pattern with a dispatch action that identifies ready task frontier, runs conflict analysis, transitions conflict-safe tasks to active, and generates handoff prompts. Does not spawn agents."
-status: ready
+status: done
 estimate: "5"
+files_planned:
+  - internal/mcp/develop_tool.go
+  - internal/mcp/server.go
+completed: "2026-05-04T11:27:27Z"
+completion_summary: "Created develop_tool.go as a new top-level MCP tool following the consolidated-tool pattern (server.ServerTool with DispatchAction map). Implemented dispatch action: lists tasks by feature, identifies ready frontier, transitions conflict-safe tasks from ready to active, returns dispatched/blocked/conflicting arrays. Does NOT spawn agents. Registered in server.go."
+verification: "Compiles clean. Dispatch action correctly filters tasks by parent feature, separates by status, transitions ready→active, returns structured response with dispatched/blocked/conflicting/empty_queue fields."

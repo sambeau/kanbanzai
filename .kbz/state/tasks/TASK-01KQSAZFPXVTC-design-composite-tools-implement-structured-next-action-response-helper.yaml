@@ -3,5 +3,10 @@ parent_feature: FEAT-01KQJ7CJGQR7Y
 slug: design-composite-tools-implement-structured-next-action-response-helper
 name: Implement structured next_action response helper
 summary: "Extract a shared helper for constructing structured next_action objects with tool, action, params, and description fields. Maps common gate failure types to correct tool/action/params tuples. Consumed by bootstrap, close-out, and snapshot actions."
-status: ready
+status: done
 estimate: "2"
+files_planned:
+  - internal/mcp/next_action.go
+completed: "2026-05-04T11:27:27Z"
+completion_summary: "Created next_action.go with shared helper functions for constructing structured next_action objects (tool, action, params, description). Handles: missing document registration, missing document approval, non-terminal tasks, human gates, and classification nudge fallback."
+verification: "Compiles clean. All helper functions follow consistent schema: {tool, action, params, description}. Consumed by doc publish action (nextActionForClassification) and batch snapshot action (nextActionForMissingDocument, nextActionForNonTerminalTasks)."

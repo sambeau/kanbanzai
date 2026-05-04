@@ -3,5 +3,12 @@ parent_feature: FEAT-01KQJ7CJGQR7Y
 slug: design-composite-tools-implement-batch-action-snapshot
 name: Implement batch snapshot action
 summary: "Add a snapshot action to the batch tool that enumerates every feature with status, blocked state, blocking gate, missing prerequisite, and structured next_action. Sorts features in dependency order."
-status: ready
+status: done
 estimate: "3"
+files_planned:
+  - internal/mcp/batch_tool.go
+  - internal/mcp/server.go
+  - internal/mcp/server_test.go
+completed: "2026-05-04T11:27:27Z"
+completion_summary: "Created batch_tool.go with snapshot action: lists all features for a batch, evaluates blocking gates per feature, returns structured rollup with per-feature status, blocked state, blocking gate, missing prerequisite, and structured next_action. Uses analyseFeatureBlocked helper mapping lifecycle states to gate requirements. Registered in server.go."
+verification: "Compiles clean. Snapshot action correctly filters features by batch parent, determines gate blockages per lifecycle stage (designing→spec, specifying→dev-planning, dev-planning→developing, developing→reviewing, reviewing→done), returns structured next_action for each blocked feature."

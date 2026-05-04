@@ -3,5 +3,10 @@ parent_feature: FEAT-01KQJ7CJGQR7Y
 slug: design-composite-tools-implement-doc-action-publish
 name: Implement doc publish action
 summary: "Add a publish action to the doc tool that collapses register + classify + approve into a single call. When classifications with concepts_intro are provided, auto-approves; otherwise returns classification nudge with structured next_action."
-status: ready
+status: done
 estimate: "3"
+files_planned:
+  - internal/mcp/doc_tool.go
+completed: "2026-05-04T11:27:27Z"
+completion_summary: "Added docPublishAction to doc_tool.go: collapses register + classify + approve into a single call. When classifications with concepts_intro are provided, auto-approves. Without classifications, returns structured next_action pointing to doc approve. On partial failure, returns registration: ok and approval: failed: <reason>."
+verification: "Compiles clean. Existing doc_tool tests pass. New handler follows existing DispatchAction pattern and reuses docRegisterOne, classification logic, and docApproveOne without modification."
