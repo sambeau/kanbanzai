@@ -1,0 +1,6 @@
+id: TASK-01KQSYPQ495HX
+parent_feature: FEAT-01KQSP41PE6JP
+slug: conditional-gate-retrofix
+name: Implement conditional gate logic for retro_fix
+summary: "Fix F4: Implement file-change-type detection or formally defer to P44 with spec update."
+status: queued

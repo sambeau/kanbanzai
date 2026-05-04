@@ -1,0 +1,6 @@
+id: TASK-01KQSYPQ49XB5
+parent_feature: FEAT-01KQSP41PE6JP
+slug: retro-signal-inference
+name: Add retro signal detection to inferTier
+summary: "Fix F3: Add retro tag or retrospective-origin flag detection to inferTier for REQ-INFER-002(a)."
+status: queued
