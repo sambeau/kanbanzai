@@ -3,7 +3,14 @@ parent_feature: FEAT-01KQSP2DDATWT
 slug: wisdom-forwarding-pass-entity-svc-to-assembler
 name: Pass entity service to assembler in handoff tool
 summary: Pass entity service to assembler in handoff tool
-status: ready
+status: done
 estimate: "1"
 depends_on:
   - TASK-01KQSP6D6TC9S
+completed: "2026-05-04T14:41:12Z"
+claimed_at: "2026-05-04T14:40:48Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-04T14:40:48Z"
+dispatched_by: sambeau
+completion_summary: Verified entitySvc is already passed through asmInput in handoffTool (line 217). The entitySvc parameter was already available in the handler scope and was passed to assembleContext as part of T3 implementation. No additional changes needed.
+verification: "Inspected handoff_tool.go: entitySvc is passed in asmInput at line 217. No code changes needed."
