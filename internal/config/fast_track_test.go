@@ -7,6 +7,7 @@ import (
 )
 
 func TestDefaultFastTrackConfig(t *testing.T) {
+	t.Parallel()
 	cfg := DefaultFastTrackConfig()
 
 	if !cfg.IsEnabled() {
@@ -77,6 +78,7 @@ func TestDefaultFastTrackConfig(t *testing.T) {
 }
 
 func TestFastTrackConfig_Validate(t *testing.T) {
+	t.Parallel()
 	validCfg := DefaultFastTrackConfig()
 	if err := validCfg.Validate(); err != nil {
 		t.Fatalf("DefaultFastTrackConfig should be valid, got: %v", err)
@@ -189,8 +191,7 @@ func TestFastTrackConfig_Validate(t *testing.T) {
 	// Edge case: enabled=false is valid.
 	t.Run("disabled ok", func(t *testing.T) {
 		cfg := DefaultFastTrackConfig()
-		disabled := false
-		cfg.Enabled = &disabled
+		cfg.Enabled = false
 		if err := cfg.Validate(); err != nil {
 			t.Errorf("disabled config should be valid: %v", err)
 		}
@@ -198,6 +199,7 @@ func TestFastTrackConfig_Validate(t *testing.T) {
 }
 
 func TestFastTrackConfig_YAMLRoundTrip(t *testing.T) {
+	t.Parallel()
 	// Verify that a complete fast_track config survives YAML marshal → unmarshal.
 	yamlInput := `
 enabled: true
@@ -262,6 +264,7 @@ tiers:
 }
 
 func TestFastTrackConfig_MergePhase4bDefaults(t *testing.T) {
+	t.Parallel()
 	t.Run("empty config merges defaults", func(t *testing.T) {
 		var cfg Config
 		cfg.mergePhase4bDefaults()
@@ -278,10 +281,9 @@ func TestFastTrackConfig_MergePhase4bDefaults(t *testing.T) {
 	})
 
 	t.Run("partial config preserves explicit values", func(t *testing.T) {
-		disabled := false
 		cfg := Config{
 			FastTrack: FastTrackConfig{
-				Enabled:     &disabled,
+				Enabled:     false,
 				DefaultTier: TierCritical,
 				Tiers: map[string]TierConfig{
 					TierRetroFix: {
@@ -309,6 +311,7 @@ func TestFastTrackConfig_MergePhase4bDefaults(t *testing.T) {
 }
 
 func TestConfig_FastTrackInFullConfig(t *testing.T) {
+	t.Parallel()
 	yamlInput := minimalValidYAML + `
 fast_track:
   enabled: true
@@ -340,6 +343,7 @@ fast_track:
 }
 
 func TestFastTrackConfig_EmptyGateModesAreValid(t *testing.T) {
+	t.Parallel()
 	// Gate modes may be empty strings in YAML (omitted fields); these should be valid.
 	// They'll be filled in by mergePhase4bDefaults if the entire tier is missing,
 	// but if a tier exists with some empty modes, that is also valid (no enforcement).

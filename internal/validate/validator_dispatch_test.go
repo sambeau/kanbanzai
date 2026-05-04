@@ -184,47 +184,42 @@ func TestSpawnAgentDispatcher_Dispatch_GeneratesPrompt(t *testing.T) {
 	}
 
 	summary, err := d.Dispatch(context.Background(), "spec-validator", "validate-spec", vctx)
-	// Currently Dispatch returns an error with the prompt embedded.
-	// When fully wired to spawn_agent, it will return the summary directly.
-	if err == nil {
-		t.Fatal("expected error (with prompt) from Dispatch")
+	if err != nil {
+		t.Fatalf("Dispatch() unexpected error = %v", err)
 	}
 
-	errStr := err.Error()
+	prompt := summary.Prompt
 
 	// The prompt should contain key elements.
-	if !strings.Contains(errStr, "Validator Dispatch") {
+	if !strings.Contains(prompt, "Validator Dispatch") {
 		t.Error("prompt should contain 'Validator Dispatch' header")
 	}
-	if !strings.Contains(errStr, "spec-validator") {
+	if !strings.Contains(prompt, "spec-validator") {
 		t.Error("prompt should contain the role name")
 	}
-	if !strings.Contains(errStr, "validate-spec") {
+	if !strings.Contains(prompt, "validate-spec") {
 		t.Error("prompt should contain the skill name")
 	}
-	if !strings.Contains(errStr, "work/P43/spec.md") {
+	if !strings.Contains(prompt, "work/P43/spec.md") {
 		t.Error("prompt should contain the document path")
 	}
-	if !strings.Contains(errStr, "specification") {
+	if !strings.Contains(prompt, "specification") {
 		t.Error("prompt should contain the document type")
 	}
-	if !strings.Contains(errStr, "FEAT-001") {
+	if !strings.Contains(prompt, "FEAT-001") {
 		t.Error("prompt should contain the feature ID")
 	}
-	if !strings.Contains(errStr, "# Specification") {
+	if !strings.Contains(prompt, "# Specification") {
 		t.Error("prompt should contain the document content")
 	}
-	if !strings.Contains(errStr, "# Design") {
+	if !strings.Contains(prompt, "# Design") {
 		t.Error("prompt should contain the parent document content")
 	}
-	if !strings.Contains(errStr, "S1") {
+	if !strings.Contains(prompt, "S1") {
 		t.Error("prompt should contain the rubric content")
 	}
-	if !strings.Contains(errStr, "blocking") {
+	if !strings.Contains(prompt, "blocking") {
 		t.Error("prompt should mention blocking/non-blocking classification")
-	}
-	if !strings.Contains(errStr, "spawn_agent") {
-		t.Error("prompt should reference spawn_agent in the error message")
 	}
 
 	// The provisional summary should be a pass (placeholder).
@@ -256,13 +251,13 @@ func TestSpawnAgentDispatcher_Dispatch_WithoutParentDoc(t *testing.T) {
 		// ParentDocPath is empty
 	}
 
-	_, err := d.Dispatch(context.Background(), "spec-validator", "validate-spec", vctx)
-	if err == nil {
-		t.Fatal("expected error (with prompt)")
+	summary, err := d.Dispatch(context.Background(), "spec-validator", "validate-spec", vctx)
+	if err != nil {
+		t.Fatalf("Dispatch() unexpected error = %v", err)
 	}
 
-	errStr := err.Error()
-	if strings.Contains(errStr, "Parent Document") {
+	prompt := summary.Prompt
+	if strings.Contains(prompt, "Parent Document") {
 		t.Error("prompt should NOT contain 'Parent Document' when no parent doc is provided")
 	}
 }
@@ -286,13 +281,13 @@ func TestSpawnAgentDispatcher_Dispatch_WithoutRubric(t *testing.T) {
 		// RubricPath is empty
 	}
 
-	_, err := d.Dispatch(context.Background(), "spec-validator", "validate-spec", vctx)
-	if err == nil {
-		t.Fatal("expected error (with prompt)")
+	summary, err := d.Dispatch(context.Background(), "spec-validator", "validate-spec", vctx)
+	if err != nil {
+		t.Fatalf("Dispatch() unexpected error = %v", err)
 	}
 
-	errStr := err.Error()
-	if strings.Contains(errStr, "Validation Rubric") {
+	prompt := summary.Prompt
+	if strings.Contains(prompt, "Validation Rubric") {
 		t.Error("prompt should NOT contain 'Validation Rubric' when no rubric is provided")
 	}
 }

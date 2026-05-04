@@ -50,6 +50,8 @@ type CreateBugInput struct {
 	Severity   string
 	Priority   string
 	Type       string
+	Tags       []string
+	Tier       string // explicit tier (overrides inference); empty means infer
 }
 
 type CreateDecisionInput struct {
@@ -422,6 +424,8 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 		return CreateResult{}, err
 	}
 
+	tier := inferTier(input.Tier, input.Tags, s.cfg)
+
 	entity := model.Bug{
 		ID:         idValue,
 		Slug:       slug,
@@ -434,6 +438,8 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 		Reported:   s.now(),
 		Observed:   strings.TrimSpace(input.Observed),
 		Expected:   strings.TrimSpace(input.Expected),
+		Tags:       append([]string(nil), input.Tags...),
+		Tier:       tier,
 	}
 
 	if err := validate.ValidateInitialState(validate.EntityBug, string(entity.Status)); err != nil {
@@ -1059,7 +1065,8 @@ func defaultString(value, fallback string) string {
 
 // inferTier applies the tier inference rules per REQ-INFER-001 through REQ-INFER-003.
 // If explicitTier is non-empty, it is used as-is (override).
-// Otherwise: tags containing "critical" or "security" → critical;
+// Otherwise: tags containing "retro" → retro_fix;
+// tags containing "critical" or "security" → critical;
 // otherwise → config FastTrack.DefaultTier (defaults to "feature").
 func inferTier(explicitTier string, tags []string, cfg *config.Config) string {
 	if explicitTier != "" {
@@ -1070,6 +1077,9 @@ func inferTier(explicitTier string, tags []string, cfg *config.Config) string {
 		t := strings.ToLower(strings.TrimSpace(tag))
 		if t == "critical" || t == "security" {
 			return config.TierCritical
+		}
+		if t == "retro" {
+			return config.TierRetroFix
 		}
 	}
 

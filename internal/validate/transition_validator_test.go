@@ -149,8 +149,14 @@ func TestValidatorDispatcher_StandardTier_AutoMode_ReturnsNil(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if result != nil {
-		t.Fatalf("expected nil result for standard tier with auto mode (no-op dispatcher), got: %+v", result)
+	if result == nil {
+		t.Fatal("expected non-nil result for auto mode (with placeholder when no dispatch service)")
+	}
+	if !result.Passed {
+		t.Error("auto mode placeholder should pass")
+	}
+	if result.BlockingFail {
+		t.Error("auto mode placeholder should not be blocking")
 	}
 }
 

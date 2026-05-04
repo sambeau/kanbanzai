@@ -20,9 +20,9 @@ import (
 type Verdict string
 
 const (
-	VerdictPass         Verdict = "pass"
+	VerdictPass          Verdict = "pass"
 	VerdictPassWithNotes Verdict = "pass_with_notes"
-	VerdictFail         Verdict = "fail"
+	VerdictFail          Verdict = "fail"
 )
 
 // ValidatorContext carries everything a validator needs to know about the
@@ -58,6 +58,10 @@ type ValidatorSummary struct {
 	// ReportDocID is the document record ID of the full report written to the
 	// document store by the validator.
 	ReportDocID string
+	// Prompt is the assembled handoff prompt for the validator sub-agent.
+	// This is only populated by SpawnAgentDispatcher; P44 model routing
+	// implementations may leave it empty.
+	Prompt string
 }
 
 // ValidatorDispatcher dispatches a validator sub-agent for a document.
@@ -112,9 +116,11 @@ func NewSpawnAgentDispatcher(registerFn func(string, string, string, string, str
 //   - The rubric checklist
 //   - Instructions to produce a summary and write the full report
 //
-// It returns a ValidatorSummary with ReportDocID empty — the caller is
-// expected to use the returned prompt with spawn_agent, and the spawned
-// agent will register the report and return the summary.
+// It returns a ValidatorSummary containing the assembled prompt (in the
+// ReportDocID field as a temporary carrier until the sub-agent returns),
+// along with a provisional pass verdict. The caller passes the prompt to
+// spawn_agent; the spawned agent registers the report and returns the
+// real summary.
 func (d *SpawnAgentDispatcher) Dispatch(ctx context.Context, role, skill string, vctx ValidatorContext) (ValidatorSummary, error) {
 	if d.RegisterReportFunc == nil {
 		return ValidatorSummary{}, fmt.Errorf("SpawnAgentDispatcher: RegisterReportFunc is nil")
@@ -123,15 +129,16 @@ func (d *SpawnAgentDispatcher) Dispatch(ctx context.Context, role, skill string,
 	prompt := d.buildPrompt(role, skill, vctx)
 
 	// The prompt is the primary output. The orchestrator passes it to
-	// spawn_agent. We also produce a provisional summary that the
-	// orchestrator can use while waiting for the sub-agent to complete.
+	// spawn_agent. We return a provisional summary with the prompt available
+	// via the Prompt field; the real summary comes from the sub-agent result.
 	return ValidatorSummary{
 		Verdict:          VerdictPass, // provisional; sub-agent overrides
 		BlockingCount:    0,
 		NonBlockingCount: 0,
 		EvidenceScore:    0.0,
 		ReportDocID:      "",
-	}, fmt.Errorf("not yet implemented: spawn_agent dispatch requires the orchestrator to pass the generated prompt to spawn_agent. Prompt:\n%s", prompt)
+		Prompt:           prompt,
+	}, nil
 }
 
 // buildPrompt assembles the validator handoff prompt.

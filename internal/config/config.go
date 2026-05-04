@@ -840,7 +840,7 @@ func (c *Config) mergePhase4bDefaults() {
 
 	// FastTrack: merge defaults for unset fields.
 	fastTrackDefaults := DefaultFastTrackConfig()
-	if c.FastTrack.Enabled == nil {
+	if !c.FastTrack.Enabled && c.FastTrack.DefaultTier == "" && len(c.FastTrack.Tiers) == 0 {
 		c.FastTrack.Enabled = fastTrackDefaults.Enabled
 	}
 	if c.FastTrack.DefaultTier == "" {
@@ -1024,4 +1024,3 @@ func expandEnv(data []byte) []byte {
 	})
 	return []byte(s)
 }
-

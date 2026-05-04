@@ -24,13 +24,13 @@ const (
 var validTiers = []string{TierRetroFix, TierBugFix, TierFeature, TierCritical}
 
 // validGateModes is the set of recognised gate modes.
-var validGateModes = []string{GateModeAuto, GateModeHuman, GateModeConditional}
+var validGateModes = map[string]bool{GateModeAuto: true, GateModeHuman: true, GateModeConditional: true}
 
 // FastTrackConfig holds the fast_track configuration block per REQ-TIER-005.
 type FastTrackConfig struct {
 	// Enabled controls whether fast-track automation is active.
-	// nil means "not explicitly configured" (defaults to true).
-	Enabled *bool `yaml:"enabled,omitempty"`
+	// Defaults to true when not explicitly configured.
+	Enabled bool `yaml:"enabled"`
 	// DefaultTier is the tier assigned when no explicit tier is set (REQ-TIER-006).
 	DefaultTier string `yaml:"default_tier"`
 	// Tiers maps tier names to their automation configuration.
@@ -55,9 +55,8 @@ type TierConfig struct {
 // DefaultFastTrackConfig returns a FastTrackConfig with sensible defaults
 // matching the specification matrix (REQ-TIER-001 through REQ-TIER-003).
 func DefaultFastTrackConfig() FastTrackConfig {
-	enabled := true
 	return FastTrackConfig{
-		Enabled:     &enabled,
+		Enabled:     true,
 		DefaultTier: TierFeature,
 		Tiers: map[string]TierConfig{
 			TierRetroFix: {
@@ -93,9 +92,12 @@ func DefaultFastTrackConfig() FastTrackConfig {
 }
 
 // IsEnabled returns true if fast-track is enabled.
-// nil (not configured) defaults to true.
+// A zero-value Config (not configured) defaults to enabled.
 func (c *FastTrackConfig) IsEnabled() bool {
-	return c.Enabled == nil || *c.Enabled
+	if c.DefaultTier == "" && !c.Enabled && len(c.Tiers) == 0 {
+		return true // zero config → enabled by default
+	}
+	return c.Enabled
 }
 
 // Validate checks that the FastTrackConfig is valid:
@@ -134,7 +136,7 @@ func (c *FastTrackConfig) Validate() error {
 
 // validateGateMode checks that a gate mode is valid for a given tier and stage.
 func validateGateMode(mode, tierName, stage string) error {
-	if mode != "" && !slices.Contains(validGateModes, mode) {
+	if mode != "" && !validGateModes[mode] {
 		return fmt.Errorf("fast_track.tiers.%s.%s: %q is not a valid gate mode (valid: %v)", tierName, stage, mode, validGateModes)
 	}
 	return nil

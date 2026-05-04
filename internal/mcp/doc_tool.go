@@ -312,6 +312,10 @@ func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.In
 // type to the feature's lifecycle stage, checks the tier's automation matrix,
 // and dispatches a validator if allowed.
 //
+// NOTE: This function orchestrates config, service, and gate domains within
+// the MCP tool package. Consider extracting into internal/validate/pipeline.go
+// in a future refactor to keep MCP handlers thin and enable independent testing.
+//
 // Cycle tracking (REQ-PIPE-003):
 //   - Increments feature.ReviewCycle on each validator dispatch
 //   - Resets feature.ReviewCycle to 0 when validation passes
@@ -370,10 +374,10 @@ func tryAutoValidate(entitySvc *service.EntityService, docSvc *service.DocumentS
 	// "human" and "conditional" gates are skipped.
 	if gateMode != string(config.GateModeAuto) {
 		return map[string]any{
-			"triggered":      false,
-			"reason":         fmt.Sprintf("gate mode is %q for tier %q stage %q", gateMode, tier, stageForDoc),
-			"feature_id":     feature.ID,
-			"feature_tier":   tier,
+			"triggered":    false,
+			"reason":       fmt.Sprintf("gate mode is %q for tier %q stage %q", gateMode, tier, stageForDoc),
+			"feature_id":   feature.ID,
+			"feature_tier": tier,
 		}
 	}
 
@@ -393,10 +397,10 @@ func tryAutoValidate(entitySvc *service.EntityService, docSvc *service.DocumentS
 	// the human responds and clears the blocked_reason (REQ-PIPE-004).
 	if feature.BlockedReason != "" {
 		return map[string]any{
-			"triggered":     false,
-			"reason":        fmt.Sprintf("feature %s is blocked (human escalation pending): %s", feature.ID, feature.BlockedReason),
-			"feature_id":    feature.ID,
-			"feature_tier":  tier,
+			"triggered":      false,
+			"reason":         fmt.Sprintf("feature %s is blocked (human escalation pending): %s", feature.ID, feature.BlockedReason),
+			"feature_id":     feature.ID,
+			"feature_tier":   tier,
 			"blocked_reason": feature.BlockedReason,
 		}
 	}
@@ -405,8 +409,10 @@ func tryAutoValidate(entitySvc *service.EntityService, docSvc *service.DocumentS
 	currentCycle := feature.ReviewCycle
 	if currentCycle >= maxCycles {
 		// Cycle cap reached — escalate to human via checkpoint (REQ-PIPE-004).
-		_ = entitySvc.PersistFeatureBlockedReason(feature.ID, feature.Slug,
-			fmt.Sprintf("auto-validation cycle cap reached (%d/%d) for tier %q stage %q", currentCycle, maxCycles, tier, stageForDoc))
+		if err := entitySvc.PersistFeatureBlockedReason(feature.ID, feature.Slug,
+			fmt.Sprintf("auto-validation cycle cap reached (%d/%d) for tier %q stage %q", currentCycle, maxCycles, tier, stageForDoc)); err != nil {
+			log.Printf("[doc] WARNING: failed to persist blocked_reason for %s during cycle cap escalation: %v", feature.ID, err)
+		}
 
 		chkStore := checkpoint.NewStore(entitySvc.Root())
 		chk, chkErr := chkStore.Create(checkpoint.Record{
@@ -418,13 +424,13 @@ func tryAutoValidate(entitySvc *service.EntityService, docSvc *service.DocumentS
 		})
 
 		result := map[string]any{
-			"triggered":    false,
-			"escalate":     true,
-			"reason":       fmt.Sprintf("auto-validation cycle cap reached (%d/%d) for feature %s", currentCycle, maxCycles, feature.ID),
-			"feature_id":   feature.ID,
-			"feature_tier": tier,
-			"cycle_count":  currentCycle,
-			"max_cycles":   maxCycles,
+			"triggered":      false,
+			"escalate":       true,
+			"reason":         fmt.Sprintf("auto-validation cycle cap reached (%d/%d) for feature %s", currentCycle, maxCycles, feature.ID),
+			"feature_id":     feature.ID,
+			"feature_tier":   tier,
+			"cycle_count":    currentCycle,
+			"max_cycles":     maxCycles,
 			"blocked_reason": fmt.Sprintf("auto-validation cycle cap reached (%d/%d)", currentCycle, maxCycles),
 		}
 		if chkErr == nil {
@@ -520,6 +526,7 @@ func validatorForStage(stage string) (role, skill string) {
 		return "", ""
 	}
 }
+
 // ─── approve ──────────────────────────────────────────────────────────────────
 
 func docApproveAction(docSvc *service.DocumentService, intelSvc *service.IntelligenceService) ActionHandler {

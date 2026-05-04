@@ -37,6 +37,9 @@ const (
 )
 
 // Deprecated: use BatchStatus.
+// NOTE: PlanStatus is a deprecated alias for BatchStatus and will be removed
+// after P38-F3 migration. The separate PlanningStatus type (below) will
+// become PlanStatus once this deprecated alias is removed.
 type PlanStatus = BatchStatus
 
 // Deprecated constants.
@@ -490,6 +493,10 @@ type Bug struct {
 	VerifiedBy    string   `yaml:"verified_by,omitempty"`
 	ReleaseTarget string   `yaml:"release_target,omitempty"`
 	Tags          []string `yaml:"tags,omitempty"`
+
+	// Tier is the fast-track risk tier for validation gating. Set explicitly
+	// or inferred at creation time. Never re-inferred after creation.
+	Tier string `yaml:"tier,omitempty"`
 }
 
 // GetKind returns the entity kind.

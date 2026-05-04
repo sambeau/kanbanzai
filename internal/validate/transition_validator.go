@@ -1,6 +1,7 @@
 package validate
 
 import (
+	"context"
 	"fmt"
 	"strings"
 
@@ -20,6 +21,8 @@ type ValidatorCheck struct {
 }
 
 // ValidatorResult holds the outcome of all transition validator checks.
+// This is distinct from ValidatorSummary (validator_dispatch.go) which is
+// used for document validation dispatch results.
 type ValidatorResult struct {
 	Stage        string           `json:"stage"`
 	Passed       bool             `json:"passed"`
@@ -35,13 +38,17 @@ type ValidatorDispatchInput struct {
 	ToStatus       string
 	Override       bool
 	OverrideReason string
+	// FilesModified lists files changed in this feature (for conditional gate evaluation).
+	// When empty, conditional gates treat all changes as implementation changes.
+	FilesModified []string
 }
 
 // TransitionValidatorDispatcher evaluates transition_validator hooks from stage bindings.
 // It checks whether the from-stage has a transition_validator, evaluates the
 // gate mode against the feature's tier, and returns validation results.
 type TransitionValidatorDispatcher struct {
-	cache BindingLookup
+	cache       BindingLookup
+	dispatchSvc ValidatorDispatcher // optional; when set, used for auto-mode validation dispatch
 }
 
 // BindingLookup is the interface for looking up stage bindings.
@@ -52,6 +59,14 @@ type BindingLookup interface {
 // NewTransitionValidatorDispatcher creates a dispatcher backed by the given binding lookup.
 func NewTransitionValidatorDispatcher(cache BindingLookup) *TransitionValidatorDispatcher {
 	return &TransitionValidatorDispatcher{cache: cache}
+}
+
+// WithDispatch sets the validator dispatch service for auto-mode validation.
+// When set, auto gate modes will dispatch actual validator sub-agents rather
+// than returning placeholder pass results.
+func (d *TransitionValidatorDispatcher) WithDispatch(svc ValidatorDispatcher) *TransitionValidatorDispatcher {
+	d.dispatchSvc = svc
+	return d
 }
 
 // ValidateTransition checks if the from-stage has a transition_validator hook,
@@ -87,9 +102,16 @@ func (d *TransitionValidatorDispatcher) ValidateTransition(input ValidatorDispat
 		return nil, nil
 	}
 
-	// Conditional gate mode skips validation (P44 will handle conditional logic).
+	// Conditional gate mode — for retro_fix tier, check if changes are
+	// documentation-only (REQ-TIER-004). Implementation files (outside
+	// work/, docs/, refs/) trigger a full review panel; documentation-only
+	// changes skip the review gate.
+	//
+	// File change detection uses feature.FilesModified when available.
+	// When P44 model routing arrives, the conditional logic can be
+	// enhanced without changing the validator framework.
 	if gateMode == "conditional" {
-		return nil, nil
+		return d.evaluateConditional(input, tv)
 	}
 
 	// Fast-track tier skips automatic validation (human gate equivalent).
@@ -109,7 +131,129 @@ func (d *TransitionValidatorDispatcher) ValidateTransition(input ValidatorDispat
 		return nil, nil
 	}
 
-	return nil, nil
+	// Auto gate mode: if a dispatch service is configured, run the validator.
+	if gateMode == "auto" && d.dispatchSvc != nil {
+		return d.runAutoValidation(input, tv)
+	}
+
+	// Auto gate mode without dispatch service: pass as placeholder.
+	return &ValidatorResult{
+		Stage:  input.FromStatus,
+		Passed: true,
+		Checks: []ValidatorCheck{
+			{
+				CheckID:   "AUTO_PLACEHOLDER",
+				Passed:    true,
+				Blocking:  false,
+				Summary:   "auto gate mode: no dispatch service configured; treating as pass",
+				CheckType: "notice",
+			},
+		},
+		BlockingFail: false,
+	}, nil
+}
+
+// evaluateConditional implements the conditional gate logic for retro_fix
+// (REQ-TIER-004). Documentation-only changes (files only under work/,
+// docs/, or refs/) skip the review gate with an explicit annotation.
+// Implementation changes trigger the full review panel.
+//
+// When FilesModified is empty (no file list available), treat as
+// implementation change (conservative). P44 model routing will enhance
+// this with more accurate file classification.
+func (d *TransitionValidatorDispatcher) evaluateConditional(input ValidatorDispatchInput, tv *binding.TransitionValidator) (*ValidatorResult, error) {
+	isDocOnly := len(input.FilesModified) > 0
+	for _, f := range input.FilesModified {
+		if !isDocOnlyChange(f) {
+			isDocOnly = false
+			break
+		}
+	}
+
+	if isDocOnly {
+		// Documentation-only change: skip review gate (REQ-TIER-004).
+		return &ValidatorResult{
+			Stage:  input.FromStatus,
+			Passed: true,
+			Checks: []ValidatorCheck{
+				{
+					CheckID:   "COND_DOCS_ONLY",
+					Passed:    true,
+					Blocking:  false,
+					Summary:   "documentation-only change: review gate skipped per REQ-TIER-004",
+					CheckType: "notice",
+				},
+			},
+			BlockingFail: false,
+		}, nil
+	}
+
+	// Implementation change on retro_fix: requires specialist review panel.
+	// If dispatch service is configured, run the validator.
+	if d.dispatchSvc != nil {
+		return d.runAutoValidation(input, tv)
+	}
+
+	// No dispatch service: return a result indicating review is required.
+	return &ValidatorResult{
+		Stage:  input.FromStatus,
+		Passed: false,
+		Checks: []ValidatorCheck{
+			{
+				CheckID:   "COND_IMPL_CHANGE",
+				Passed:    false,
+				Blocking:  true,
+				Summary:   "implementation change on retro_fix tier: specialist review panel required (REQ-TIER-004)",
+				CheckType: "conditional",
+			},
+		},
+		BlockingFail: true,
+	}, nil
+}
+
+// isDocOnlyChange returns true if the file path is under a documentation-only
+// directory (work/, docs/, refs/). Implementation files are everything else.
+func isDocOnlyChange(path string) bool {
+	docPrefixes := []string{"work/", "docs/", "refs/", ".kbz/roles/", ".kbz/skills/", ".agents/"}
+	for _, prefix := range docPrefixes {
+		if strings.HasPrefix(path, prefix) {
+			return true
+		}
+	}
+	return false
+}
+
+// runAutoValidation dispatches the actual validator via the dispatch service
+// and converts the summary to a ValidatorResult.
+func (d *TransitionValidatorDispatcher) runAutoValidation(input ValidatorDispatchInput, tv *binding.TransitionValidator) (*ValidatorResult, error) {
+	vctx := ValidatorContext{
+		FeatureID: input.Feature.ID,
+	}
+	summary, err := d.dispatchSvc.Dispatch(context.Background(), tv.Role, tv.Skill, vctx)
+	if err != nil {
+		return nil, fmt.Errorf("validator dispatch failed: %w", err)
+	}
+
+	checks := make([]ValidatorCheck, 0, summary.BlockingCount+summary.NonBlockingCount)
+	// Without the full report we can't enumerate individual checks, but we
+	// can capture the aggregate outcome from the summary.
+	if summary.Verdict == VerdictFail || summary.Verdict == VerdictPassWithNotes {
+		checks = append(checks, ValidatorCheck{
+			CheckID:   "AGGREGATE",
+			Passed:    summary.Verdict != VerdictFail,
+			Blocking:  summary.BlockingCount > 0,
+			Summary:   fmt.Sprintf("validator returned %s: %d blocking, %d non-blocking", summary.Verdict, summary.BlockingCount, summary.NonBlockingCount),
+			CheckType: "aggregate",
+		})
+	}
+
+	return &ValidatorResult{
+		Stage:        input.FromStatus,
+		Passed:       summary.Verdict != VerdictFail,
+		Checks:       checks,
+		ReportDocID:  summary.ReportDocID,
+		BlockingFail: summary.BlockingCount > 0,
+	}, nil
 }
 
 // BuildTransitionValidatorError constructs a structured error for blocking

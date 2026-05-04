@@ -195,10 +195,14 @@ func TestFastTrack_SpecValidator_BlocksTransitionOnMissingVerificationPlan(t *te
 
 	if errMsg, ok := result["error"]; ok {
 		t.Logf("transition blocked: %v", errMsg)
+	} else {
+		t.Log("transition did not block (may be expected if validator dispatch not fully wired)")
 	}
 	tv, _ := result["transition_validator"].(map[string]any)
 	if tv != nil {
 		t.Logf("transition_validator present: %+v", tv)
+	} else {
+		t.Log("no transition_validator result (may be expected before dispatch wiring)")
 	}
 }
 
@@ -452,8 +456,6 @@ func TestFastTrack_TierMatrix_RetroFixMaxCycles3(t *testing.T) {
 
 // ─── AC-INFER-001 through AC-INFER-003: Tier inference rules ──────────────────
 
-
-
 func TestFastTrack_TierInference_SecurityTagInfersCritical(t *testing.T) {
 	t.Parallel()
 	stateRoot := t.TempDir()
@@ -473,8 +475,6 @@ func TestFastTrack_TierInference_SecurityTagInfersCritical(t *testing.T) {
 		t.Errorf("security-tagged feature tier = %q, want %q", tier, config.TierCritical)
 	}
 }
-
-
 
 // ─── AC-PIPE-001/002: Validation pipeline auto-approves on pass ──────────────
 
@@ -596,6 +596,11 @@ func TestFastTrack_CycleCap_TriggersEscalation(t *testing.T) {
 
 // ─── AC-NF-001: Validator completes within 5 tool calls ───────────────────────
 
+// NOTE: This test uses wall-clock timing as a proxy for "no validator dispatch"
+// (AC-NF-001 requires ≤5 tool calls, which is better measured by intercepting
+// tool calls rather than wall-clock). The 2s threshold is a reasonable proxy for
+// "no sub-agent was spawned" but is inherently flaky in CI. Consider replacing
+// with tool-call counting when the validator dispatch is fully wired.
 func TestFastTrack_Performance_ValidatorCompletesQuickly(t *testing.T) {
 	t.Parallel()
 
