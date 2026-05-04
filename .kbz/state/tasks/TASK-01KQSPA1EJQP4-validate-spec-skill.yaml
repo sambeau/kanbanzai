@@ -3,8 +3,13 @@ parent_feature: FEAT-01KQSP41PE6JP
 slug: validate-spec-skill
 name: Create spec-validator skill
 summary: "Create .kbz/skills/validate-spec/SKILL.md with the spec-validator procedure. Define all 10 validation checks (S1-S10) with blocking/non-blocking classification: S1,S2,S3,S4,S5,S10 blocking; S6,S7,S8,S9 non-blocking. Procedure: read spec doc, read parent design doc, execute each check, produce summary and full report. Output: verdict (pass/pass_with_notes/fail), blocking/non-blocking finding counts, evidence score, reference to full report written to document store. Must run in fresh session — receives only the document, parent document, and checklist with rubrics."
-status: active
+status: done
+files_planned:
+  - .kbz/skills/validate-spec/SKILL.md
+completed: "2026-05-04T15:36:30Z"
 claimed_at: "2026-05-04T15:28:38Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T15:28:38Z"
 dispatched_by: sambeau
+completion_summary: "Created .kbz/skills/validate-spec/SKILL.md with 10 checks (S1-S10), correct blocking/non-blocking classification per REQ-SPEC-003, rubric-guided S5/S7 evaluation, structured procedure, two outputs (orchestrator summary + full report to document store), 5-tool-call budget per REQ-NF-001, and fresh session discipline. 381 lines, under the 500-line budget."
+verification: "File created, committed, follows CONVENTIONS.md, all checks match role/spec, blocking classification matches REQ-SPEC-003"
