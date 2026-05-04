@@ -3,11 +3,14 @@ parent_feature: FEAT-01KQSP2DDATWT
 slug: wisdom-forwarding-implement-sibling-knowledge-query-in-context-assembly
 name: Implement sibling knowledge query in context assembly
 summary: Implement sibling knowledge query in context assembly
-status: active
+status: done
 estimate: "3"
 depends_on:
   - TASK-01KQSP6D6PGVM
+completed: "2026-05-04T14:38:57Z"
 claimed_at: "2026-05-04T14:35:49Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T14:35:49Z"
 dispatched_by: sambeau
+completion_summary: "Implemented asmLoadSiblingKnowledge in assembly.go: queries completed sibling tasks under same parent feature, loads their tier-2 knowledge entries, applies topic-based dedup and forward flag filtering. Added LearnedFrom filter to KnowledgeFilters/List. Added siblingKnowledge field to assembledContext."
+verification: go build ./... passes. All knowledge service tests pass. All assembly/handoff tests pass.
