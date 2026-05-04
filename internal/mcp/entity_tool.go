@@ -13,6 +13,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"github.com/sambeau/kanbanzai/internal/actionlog"
 	"github.com/sambeau/kanbanzai/internal/checkpoint"
 	"github.com/sambeau/kanbanzai/internal/config"
 	"github.com/sambeau/kanbanzai/internal/gate"
@@ -322,6 +323,7 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 			if err != nil {
 				return nil, fmt.Errorf("cannot list strategic plans: %w", err)
 			}
+			actionlog.AnnotateEntry(ctx, actionlog.AnnotationResultCount, fmt.Sprintf("%d", len(plans)))
 			return entityListResponse(entityType, entitySummaries(plans)), nil
 		}
 		if entityType == "batch" || entityType == "plan" {
@@ -329,6 +331,7 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 			if err != nil {
 				return nil, fmt.Errorf("cannot list batches: %w", err)
 			}
+			actionlog.AnnotateEntry(ctx, actionlog.AnnotationResultCount, fmt.Sprintf("%d", len(batches)))
 			return entityListResponse(entityType, entitySummaries(batches)), nil
 		}
 		results, err := entitySvc.ListEntitiesFiltered(service.ListFilteredInput{
@@ -338,6 +341,7 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 		if err != nil {
 			return nil, fmt.Errorf("cannot list %s entities: %w", entityType, err)
 		}
+		actionlog.AnnotateEntry(ctx, actionlog.AnnotationResultCount, fmt.Sprintf("%d", len(results)))
 		return entityListResponse(entityType, entitySummaries(results)), nil
 	}
 }

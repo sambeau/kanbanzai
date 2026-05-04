@@ -16,6 +16,13 @@ type entityFeatureLookup struct {
 	svc entityService
 }
 
+// DocType returns the document type for an entity. The CLI implementation
+// returns an empty string since document resolution requires the full server
+// document service which is not available in the CLI context.
+func (l *entityFeatureLookup) DocType(entityID string) (string, error) {
+	return "", nil
+}
+
 // ListFeaturesInRange returns feature metrics data filtered by time range and optional feature ID.
 func (l *entityFeatureLookup) ListFeaturesInRange(since, until time.Time, featureID string) ([]actionlog.FeatureMetricsData, error) {
 	results, err := l.svc.List("feature")

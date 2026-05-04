@@ -5,15 +5,18 @@
 package actionlog
 
 // Entry represents one MCP tool invocation log record.
-// All fields are always present in JSON output (nulls are not omitted).
+// Scalar fields are always present in JSON output (nulls are not omitted).
+// Map fields use omitempty to keep logs compact when empty.
 type Entry struct {
-	Timestamp string  `json:"timestamp"` // RFC 3339
-	Tool      string  `json:"tool"`
-	Action    *string `json:"action"`    // null if tool has no action param
-	EntityID  *string `json:"entity_id"` // null if no entity referenced
-	Stage     *string `json:"stage"`     // null if no entity/no parent feature
-	Success   bool    `json:"success"`
-	ErrorType *string `json:"error_type"` // null if success
+	Timestamp     string            `json:"timestamp"` // RFC 3339
+	Tool          string            `json:"tool"`
+	Action        *string           `json:"action"`    // null if tool has no action param
+	EntityID      *string           `json:"entity_id"` // null if no entity referenced
+	Stage         *string           `json:"stage"`     // null if no entity/no parent feature
+	ServerVersion string            `json:"server_version,omitempty"`
+	Success       bool              `json:"success"`
+	ErrorType     *string           `json:"error_type"` // null if success
+	Extra         map[string]string `json:"extra,omitempty"`
 }
 
 // Error type constants classify failures captured in Entry.ErrorType.

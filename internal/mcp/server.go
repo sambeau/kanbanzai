@@ -38,13 +38,13 @@ const (
 // .kbz/config.yaml. If no mcp section is present, all groups are enabled
 // (preset: full). The entityRoot is the path for entity storage (typically
 // ".kbz/state"); pass an empty string to use the default.
-func NewServer(entityRoot string) *server.MCPServer {
-	return newServerWithConfig(entityRoot, config.LoadOrDefault())
+func NewServer(entityRoot string, version string) *server.MCPServer {
+	return newServerWithConfig(entityRoot, version, config.LoadOrDefault())
 }
 
 // newServerWithConfig creates an MCP server using the provided configuration.
 // Separated from NewServer to allow config injection in tests.
-func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServer {
+func newServerWithConfig(entityRoot string, version string, cfg *config.Config) *server.MCPServer {
 	entitySvc := service.NewEntityService(entityRoot)
 
 	// Documents are stored relative to the repository root (current directory).
@@ -184,7 +184,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	// Action-pattern logging: create writer and hook.
 	// Writer appends JSONL to .kbz/logs/; hook wraps every tool handler.
 	logWriter := actionlog.NewWriter(actionlog.LogsDir())
-	logHook := actionlog.NewHook(logWriter, &entityStageLookup{svc: entitySvc})
+	logHook := actionlog.NewHook(logWriter, &entityStageLookup{svc: entitySvc, docSvc: docRecordSvc}, version)
 
 	// Checkpoint store and dispatch service.
 	checkpointStore := checkpoint.NewStore(stateRoot)
@@ -306,11 +306,11 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 }
 
 // Serve starts the MCP server on stdio transport.
-func Serve() error {
+func Serve(version string) error {
 	// Best-effort log cleanup — remove log files older than 30 days.
 	_ = actionlog.Cleanup(actionlog.LogsDir(), time.Now().UTC())
 
-	mcpServer := NewServer("")
+	mcpServer := NewServer("", version)
 	return server.ServeStdio(mcpServer)
 }
 
@@ -468,7 +468,8 @@ func capSaturationHealthChecker(tracker *knowledge.CapTracker) AdditionalHealthC
 
 // entityStageLookup adapts *service.EntityService to actionlog.StageLookup.
 type entityStageLookup struct {
-	svc *service.EntityService
+	svc    *service.EntityService
+	docSvc *service.DocumentService
 }
 
 // GetEntityKindAndParent returns the entity kind and parent feature ID for entityID.
@@ -494,6 +495,23 @@ func (l *entityStageLookup) GetFeatureStage(featureID string) (string, error) {
 	}
 	stage, _ := result.State["status"].(string)
 	return stage, nil
+}
+
+// DocType returns the document type (e.g. "specification", "design") for the
+// first registered document owned by entityID. Returns an empty string when
+// no documents are registered or the document service is unavailable.
+func (l *entityStageLookup) DocType(entityID string) (string, error) {
+	if l.docSvc == nil {
+		return "", nil
+	}
+	docs, err := l.docSvc.ListDocumentsByOwner(entityID)
+	if err != nil {
+		return "", err
+	}
+	if len(docs) == 0 {
+		return "", nil
+	}
+	return docs[0].Type, nil
 }
 
 // entityTypeFromPrefix determines an entity's service type from its ID prefix.

@@ -103,3 +103,44 @@ func TestErrorTypeConstants(t *testing.T) {
 		}
 	}
 }
+
+// AC-001: Old log without server_version parses with empty string.
+func TestEntry_BackwardCompat_NoServerVersion(t *testing.T) {
+	t.Parallel()
+
+	// JSON from an older log (pre-instrumentation-expansion) that lacks
+	// the server_version field entirely.
+	oldJSON := `{"timestamp":"2025-01-01T00:00:00Z","tool":"entity","action":null,"entity_id":null,"stage":null,"success":true,"error_type":null}`
+
+	var e Entry
+	if err := json.Unmarshal([]byte(oldJSON), &e); err != nil {
+		t.Fatalf("unmarshal old log without server_version: %v", err)
+	}
+
+	if e.ServerVersion != "" {
+		t.Errorf("ServerVersion: got %q, want empty (AC-001)", e.ServerVersion)
+	}
+	if e.Extra != nil {
+		t.Errorf("Extra: got %v, want nil (AC-003)", e.Extra)
+	}
+}
+
+// AC-003: Old log without extra parses with nil map.
+func TestEntry_BackwardCompat_NoExtra(t *testing.T) {
+	t.Parallel()
+
+	// JSON from an older log that has server_version but no extra field.
+	oldJSON := `{"timestamp":"2025-01-01T00:00:00Z","tool":"entity","action":null,"entity_id":null,"stage":null,"server_version":"1.0","success":true,"error_type":null}`
+
+	var e Entry
+	if err := json.Unmarshal([]byte(oldJSON), &e); err != nil {
+		t.Fatalf("unmarshal old log without extra: %v", err)
+	}
+
+	if e.ServerVersion != "1.0" {
+		t.Errorf("ServerVersion: got %q, want %q", e.ServerVersion, "1.0")
+	}
+	if e.Extra != nil {
+		t.Errorf("Extra: got %v, want nil (AC-003)", e.Extra)
+	}
+}

@@ -28,7 +28,7 @@ func TestToolDescriptions_TokenBudget(t *testing.T) {
 	cfg := config.DefaultConfig()
 	cfg.MCP.Preset = "full"
 
-	mcpSrv := newServerWithConfig(entityRoot, &cfg)
+	mcpSrv := newServerWithConfig(entityRoot, "test", &cfg)
 	tools := mcpSrv.ListTools()
 
 	// Sort tool names for deterministic output.

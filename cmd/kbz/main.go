@@ -117,7 +117,7 @@ func run(args []string, deps dependencies) error {
 		fmt.Fprintln(deps.stdout, "kanbanzai "+version)
 		return nil
 	case "serve":
-		return kbzmcp.Serve()
+		return kbzmcp.Serve(deps.version)
 	case "init":
 		return runInit(args[1:], deps)
 

@@ -10,6 +10,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"github.com/sambeau/kanbanzai/internal/actionlog"
 	"github.com/sambeau/kanbanzai/internal/docint"
 	"github.com/sambeau/kanbanzai/internal/service"
 )
@@ -540,6 +541,8 @@ func docIntelSearchAction(svc *service.IntelligenceService) ActionHandler {
 		if results == nil {
 			results = []docint.SearchResult{}
 		}
+
+		actionlog.AnnotateEntry(ctx, actionlog.AnnotationResultCount, fmt.Sprintf("%d", len(results)))
 
 		return map[string]any{
 			"query":         query,

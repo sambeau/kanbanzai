@@ -13,7 +13,7 @@ func TestAllToolsHaveAnnotations(t *testing.T) {
 	cfg := config.DefaultConfig()
 	cfg.MCP.Preset = "full"
 
-	mcpSrv := newServerWithConfig(entityRoot, &cfg)
+	mcpSrv := newServerWithConfig(entityRoot, "test", &cfg)
 	tools := mcpSrv.ListTools()
 
 	for name, st := range tools {
@@ -48,7 +48,7 @@ func TestToolAnnotationTiers(t *testing.T) {
 	cfg := config.DefaultConfig()
 	cfg.MCP.Preset = "full"
 
-	mcpSrv := newServerWithConfig(entityRoot, &cfg)
+	mcpSrv := newServerWithConfig(entityRoot, "test", &cfg)
 	tools := mcpSrv.ListTools()
 
 	for name, st := range tools {

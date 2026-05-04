@@ -36,6 +36,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/sambeau/kanbanzai/internal/actionlog"
 	"github.com/sambeau/kanbanzai/internal/id"
 
 	"github.com/mark3labs/mcp-go/mcp"
@@ -165,6 +166,20 @@ func (c *SideEffectCollector) Len() int {
 	return len(c.effects)
 }
 
+// CountByType returns the number of side effects with the given type.
+// This is a non-destructive inspection — events remain in the collector.
+func (c *SideEffectCollector) CountByType(typeName string) int {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	n := 0
+	for _, e := range c.effects {
+		if string(e.Type) == typeName {
+			n++
+		}
+	}
+	return n
+}
+
 // ─── Context key and helpers ─────────────────────────────────────────────────
 
 // collectorKey is the unexported context key for the SideEffectCollector.
@@ -233,6 +248,9 @@ func WithSideEffects(inner sideEffectHandler) func(ctx context.Context, req mcp.
 	return func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		collector := &SideEffectCollector{}
 		ctx = ContextWithCollector(ctx, collector)
+		// Also store under actionlog's key so Hook.Wrap can inspect without
+		// importing internal/mcp (FR-010, FR-011).
+		ctx = context.WithValue(ctx, actionlog.SideEffectKey, collector)
 
 		result, err := inner(ctx, req)
 

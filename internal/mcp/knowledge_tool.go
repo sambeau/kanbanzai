@@ -8,6 +8,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"github.com/sambeau/kanbanzai/internal/actionlog"
 	"github.com/sambeau/kanbanzai/internal/config"
 	"github.com/sambeau/kanbanzai/internal/git"
 	"github.com/sambeau/kanbanzai/internal/knowledge"
@@ -149,6 +150,8 @@ func knowledgeListAction(svc *service.KnowledgeService) ActionHandler {
 		if err != nil {
 			return nil, fmt.Errorf("Cannot list knowledge entries: query failed: %w.\n\nTo resolve:\n  Check filter parameters and retry with broader criteria", err)
 		}
+
+		actionlog.AnnotateEntry(ctx, actionlog.AnnotationResultCount, fmt.Sprintf("%d", len(records)))
 
 		entries := make([]map[string]any, 0, len(records))
 		for _, rec := range records {
