@@ -393,6 +393,10 @@ type Feature struct {
 	// Tags for cross-cutting organisational metadata
 	Tags []string `yaml:"tags,omitempty"`
 
+	// Tier is the fast-track risk tier: retro_fix, bug_fix, feature, or critical.
+	// Set explicitly or inferred at creation time. Never re-inferred after creation.
+	Tier string `yaml:"tier,omitempty"`
+
 	// Legacy fields (Phase 1 compatibility)
 	Plan string `yaml:"plan,omitempty"` // Deprecated: use DevPlan
 

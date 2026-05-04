@@ -1771,3 +1771,302 @@ func TestEntityService_CoordinationDisabled_UsesLocalAllocation(t *testing.T) {
 		t.Errorf("CreateFeature() display_id = %q, want P1-F1", feat.State["display_id"])
 	}
 }
+
+// ─── Tier inference tests ────────────────────────────────────────────────────
+
+// testEntityServiceWithConfig creates an EntityService with a custom config
+// for tests that need to control fast-track settings.
+func testEntityServiceWithConfig(t *testing.T, cfg config.Config) *EntityService {
+	t.Helper()
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+	svc.cfg = &cfg
+	return svc
+}
+
+func TestTierInference_ExplicitTierOverridesAll(t *testing.T) {
+	t.Parallel()
+
+	cfg := config.DefaultConfig()
+	cfg.FastTrack.DefaultTier = config.TierFeature
+	svc := testEntityServiceWithConfig(t, cfg)
+
+	planID := "P1-tier-test"
+	writeTestPlan(t, svc, planID)
+
+	// Explicit tier should win over tags and default.
+	result, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
+		Slug:      "explicit-tier",
+		Parent:    planID,
+		Summary:   "Test explicit tier override",
+		CreatedBy: "tester",
+		Tier:      config.TierRetroFix,
+		Tags:      []string{"critical"},
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+	if result.State["tier"] != config.TierRetroFix {
+		t.Errorf("tier = %q, want %q", result.State["tier"], config.TierRetroFix)
+	}
+}
+
+func TestTierInference_CriticalTagProducesCriticalTier(t *testing.T) {
+	t.Parallel()
+
+	cfg := config.DefaultConfig()
+	cfg.FastTrack.DefaultTier = config.TierFeature
+	svc := testEntityServiceWithConfig(t, cfg)
+
+	planID := "P1-tier-critical"
+	writeTestPlan(t, svc, planID)
+
+	result, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
+		Slug:      "critical-tag",
+		Parent:    planID,
+		Summary:   "Test critical tag inference",
+		CreatedBy: "tester",
+		Tags:      []string{"critical"},
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+	if result.State["tier"] != config.TierCritical {
+		t.Errorf("tier = %q, want %q", result.State["tier"], config.TierCritical)
+	}
+}
+
+func TestTierInference_SecurityTagProducesCriticalTier(t *testing.T) {
+	t.Parallel()
+
+	cfg := config.DefaultConfig()
+	cfg.FastTrack.DefaultTier = config.TierFeature
+	svc := testEntityServiceWithConfig(t, cfg)
+
+	planID := "P1-tier-security"
+	writeTestPlan(t, svc, planID)
+
+	result, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
+		Slug:      "security-tag",
+		Parent:    planID,
+		Summary:   "Test security tag inference",
+		CreatedBy: "tester",
+		Tags:      []string{"security"},
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+	if result.State["tier"] != config.TierCritical {
+		t.Errorf("tier = %q, want %q", result.State["tier"], config.TierCritical)
+	}
+}
+
+func TestTierInference_DefaultTierFromConfig(t *testing.T) {
+	t.Parallel()
+
+	cfg := config.DefaultConfig()
+	cfg.FastTrack.DefaultTier = config.TierBugFix
+	svc := testEntityServiceWithConfig(t, cfg)
+
+	planID := "P1-tier-default"
+	writeTestPlan(t, svc, planID)
+
+	result, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
+		Slug:      "default-tier",
+		Parent:    planID,
+		Summary:   "Test default tier from config",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+	if result.State["tier"] != config.TierBugFix {
+		t.Errorf("tier = %q, want %q", result.State["tier"], config.TierBugFix)
+	}
+}
+
+func TestTierInference_DefaultConfigTierIsFeature(t *testing.T) {
+	t.Parallel()
+
+	cfg := config.DefaultConfig() // DefaultTier is "feature"
+	svc := testEntityServiceWithConfig(t, cfg)
+
+	planID := "P1-tier-feature"
+	writeTestPlan(t, svc, planID)
+
+	result, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
+		Slug:      "feature-tier",
+		Parent:    planID,
+		Summary:   "Test default feature tier",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+	if result.State["tier"] != config.TierFeature {
+		t.Errorf("tier = %q, want %q", result.State["tier"], config.TierFeature)
+	}
+}
+
+func TestTierInference_NilConfigUsesFeatureDefault(t *testing.T) {
+	t.Parallel()
+
+	cfg := config.Config{} // empty config; no FastTrack set
+	svc := testEntityServiceWithConfig(t, cfg)
+
+	planID := "P1-tier-emptycfg"
+	writeTestPlan(t, svc, planID)
+
+	result, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
+		Slug:      "empty-cfg-tier",
+		Parent:    planID,
+		Summary:   "Test empty config fallback",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+	if result.State["tier"] != config.TierFeature {
+		t.Errorf("tier = %q, want %q", result.State["tier"], config.TierFeature)
+	}
+}
+
+func TestTierInference_TagCaseInsensitive(t *testing.T) {
+	t.Parallel()
+
+	cfg := config.DefaultConfig()
+	cfg.FastTrack.DefaultTier = config.TierFeature
+	svc := testEntityServiceWithConfig(t, cfg)
+
+	planID := "P1-tier-case"
+	writeTestPlan(t, svc, planID)
+
+	result, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
+		Slug:      "case-insensitive",
+		Parent:    planID,
+		Summary:   "Test case insensitive tag matching",
+		CreatedBy: "tester",
+		Tags:      []string{"CRITICAL"},
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+	if result.State["tier"] != config.TierCritical {
+		t.Errorf("tier = %q, want %q", result.State["tier"], config.TierCritical)
+	}
+}
+
+func TestTierInference_IrrelevantTagsUseDefault(t *testing.T) {
+	t.Parallel()
+
+	cfg := config.DefaultConfig()
+	cfg.FastTrack.DefaultTier = config.TierBugFix
+	svc := testEntityServiceWithConfig(t, cfg)
+
+	planID := "P1-tier-irrelevant"
+	writeTestPlan(t, svc, planID)
+
+	result, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
+		Slug:      "irrelevant-tags",
+		Parent:    planID,
+		Summary:   "Test irrelevant tags fall through to default",
+		CreatedBy: "tester",
+		Tags:      []string{"documentation", "refactor"},
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+	if result.State["tier"] != config.TierBugFix {
+		t.Errorf("tier = %q, want %q", result.State["tier"], config.TierBugFix)
+	}
+}
+
+func TestTierInference_SecurityTagWithWhitespace(t *testing.T) {
+	t.Parallel()
+
+	cfg := config.DefaultConfig()
+	svc := testEntityServiceWithConfig(t, cfg)
+
+	planID := "P1-tier-ws"
+	writeTestPlan(t, svc, planID)
+
+	result, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
+		Slug:      "ws-tag",
+		Parent:    planID,
+		Summary:   "Test tag with whitespace",
+		CreatedBy: "tester",
+		Tags:      []string{"  security  "},
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+	if result.State["tier"] != config.TierCritical {
+		t.Errorf("tier = %q, want %q", result.State["tier"], config.TierCritical)
+	}
+}
+
+func TestTierInference_EmptyDefaultTierFallsBackToFeature(t *testing.T) {
+	t.Parallel()
+
+	cfg := config.DefaultConfig()
+	cfg.FastTrack.DefaultTier = ""
+	svc := testEntityServiceWithConfig(t, cfg)
+
+	planID := "P1-tier-empty"
+	writeTestPlan(t, svc, planID)
+
+	result, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
+		Slug:      "empty-default",
+		Parent:    planID,
+		Summary:   "Test empty default tier",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+	if result.State["tier"] != config.TierFeature {
+		t.Errorf("tier = %q, want %q", result.State["tier"], config.TierFeature)
+	}
+}
+
+func TestTierInference_TierStoredAndRetrievable(t *testing.T) {
+	t.Parallel()
+
+	cfg := config.DefaultConfig()
+	cfg.FastTrack.DefaultTier = config.TierFeature
+	svc := testEntityServiceWithConfig(t, cfg)
+
+	planID := "P1-tier-stored"
+	writeTestPlan(t, svc, planID)
+
+	createResult, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
+		Slug:      "stored-tier",
+		Parent:    planID,
+		Summary:   "Test tier is stored and retrievable",
+		CreatedBy: "tester",
+		Tier:      config.TierRetroFix,
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() error = %v", err)
+	}
+
+	// Retrieve and verify tier is persisted.
+	getResult, getErr := svc.Get("feature", createResult.ID, "")
+	if getErr != nil {
+		t.Fatalf("Get(%s) error = %v", createResult.ID, getErr)
+	}
+	if getResult.State["tier"] != config.TierRetroFix {
+		t.Errorf("retrieved tier = %q, want %q", getResult.State["tier"], config.TierRetroFix)
+	}
+}

@@ -31,6 +31,7 @@ type CreateFeatureInput struct {
 	Summary   string
 	CreatedBy string
 	Name      string
+	Tier      string // explicit tier (overrides inference); empty means infer
 }
 
 type CreateTaskInput struct {
@@ -297,6 +298,8 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 		return CreateResult{}, nameErr
 	}
 
+	tier := inferTier(input.Tier, input.Tags, s.cfg)
+
 	entity := model.Feature{
 		ID:        idValue,
 		Slug:      normalizeSlug(input.Slug),
@@ -307,6 +310,7 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 		Summary:   strings.TrimSpace(input.Summary),
 		Design:    strings.TrimSpace(input.Design),
 		Tags:      append([]string(nil), input.Tags...),
+		Tier:      tier,
 		Created:   s.now(),
 		CreatedBy: strings.TrimSpace(input.CreatedBy),
 	}
@@ -1053,6 +1057,28 @@ func defaultString(value, fallback string) string {
 	return value
 }
 
+// inferTier applies the tier inference rules per REQ-INFER-001 through REQ-INFER-003.
+// If explicitTier is non-empty, it is used as-is (override).
+// Otherwise: tags containing "critical" or "security" → critical;
+// otherwise → config FastTrack.DefaultTier (defaults to "feature").
+func inferTier(explicitTier string, tags []string, cfg *config.Config) string {
+	if explicitTier != "" {
+		return explicitTier
+	}
+
+	for _, tag := range tags {
+		t := strings.ToLower(strings.TrimSpace(tag))
+		if t == "critical" || t == "security" {
+			return config.TierCritical
+		}
+	}
+
+	if cfg != nil && cfg.FastTrack.DefaultTier != "" {
+		return cfg.FastTrack.DefaultTier
+	}
+	return config.TierFeature
+}
+
 func validateKindForType(entityType string) (validate.EntityKind, error) {
 	switch entityType {
 	case string(model.EntityKindPlan):
@@ -1214,6 +1240,9 @@ func featureFields(e model.Feature) map[string]any {
 		fields["decisions"] = append([]string(nil), e.Decisions...)
 	}
 	fields["name"] = e.Name
+	if e.Tier != "" {
+		fields["tier"] = e.Tier
+	}
 	if len(e.Tags) > 0 {
 		fields["tags"] = append([]string(nil), e.Tags...)
 	}
