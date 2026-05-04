@@ -1,0 +1,6 @@
+id: TASK-01KQSPBPCV01S
+parent_feature: FEAT-01KQSP41PE6JP
+slug: cycle-tracking-escalation
+name: Implement cycle tracking and human escalation
+summary: "Implement max_auto_cycles enforcement. Track per-feature cycle count (number of fix-validate iterations). When count reaches the tier's max_auto_cycles cap (retro_fix=3, bug_fix=2, feature=2, critical=0), stop automated validation and escalate to human via checkpoint. The system must not attempt further automated validation until the human responds. Implement accumulation tracking for non-blocking findings across multiple features — when patterns emerge, trigger a quality review signal visible in the project health dashboard via health check integration."
+status: queued
