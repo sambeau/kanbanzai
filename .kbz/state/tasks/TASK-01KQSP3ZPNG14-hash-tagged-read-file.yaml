@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQSP3BMFF98
 slug: hash-tagged-read-file
 name: Add hash-tagged output to read_file
 summary: "Add optional hash_tag boolean parameter to read_file MCP tool. When true, prefix each line with {line_number}#{hash}| using HashLine() from the hashvalidate package. Line numbers 1-based, left-padded to ≥4 chars. Handle blank lines, start_line/end_line ranges with absolute numbering. Backward compatible when parameter absent. Deliverable: modified read_file handler + tests. Addresses REQ-HR-001 through REQ-HR-006, REQ-NF-001, REQ-NF-002."
-status: queued
+status: ready

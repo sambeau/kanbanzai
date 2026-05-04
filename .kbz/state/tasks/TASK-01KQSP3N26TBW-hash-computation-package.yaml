@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQSP3BMFF98
 slug: hash-computation-package
 name: Implement hash computation package
 summary: "Create internal/hashvalidate/ package with SHA-256 line-hashing. Expose HashLine(content string) string returning a 2-char uppercase hex hash tag. Include unit tests for determinism, newline exclusion, and uniform distribution. Deliverable: hash.go + hash_test.go. Effort: Small. Addresses REQ-HC-001, REQ-HC-002, REQ-HC-003, REQ-NF-003."
-status: queued
+status: ready

@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQSP3BMFF98
 slug: integration-tests-verification
 name: Integration tests and verification
 summary: "Write end-to-end integration tests: read with hashes → edit with matching hashes → success; read → modify externally → edit with stale hash → rejected with error details; read → truncate → edit out-of-range → error. Verify all 23 spec requirements are covered. Run full test suite for zero regressions. Deliverable: integration test files, verification traceability matrix. Addresses all REQ-IDs cross-cutting."
-status: queued
+status: ready
