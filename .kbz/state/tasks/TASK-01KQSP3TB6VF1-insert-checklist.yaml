@@ -3,9 +3,12 @@ parent_feature: FEAT-01KQSNSWZGSBP
 slug: insert-checklist
 name: Insert elicitation checklist into write-spec skill
 summary: "Add the 7-item elicitation checklist as a new section in .kbz/skills/write-spec/SKILL.md, positioned between the Cross-Reference Check and Step 1: Read the Design. Must include all 7 items matching the spec's question wording, STOP-on-ambiguity behaviour, design-gate statement, revision-scope note, and no-artifact instruction. Language must be imperative with IF/THEN conventions. Deliverable: modified SKILL.md."
-status: active
+status: done
 estimate: "0.5"
+completed: "2026-05-04T14:33:49Z"
 claimed_at: "2026-05-04T14:31:25Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T14:31:25Z"
 dispatched_by: sambeau
+completion_summary: "Inserted the 7-item elicitation checklist into .kbz/skills/write-spec/SKILL.md between Cross-Reference Check and Step 1: Read the Design. All 7 items match spec wording. Includes STOP-on-ambiguity behaviour, design-gate relationship statement, revision-scope note, and no-artifact instruction. Added 36 lines (under 60-line budget). Language uses existing imperative/IF-THEN conventions."
+verification: "Verified all 9 acceptance criteria: correct positioning (AC-001), 7 items with spec-matching questions (AC-002), STOP-and-flag behaviour (AC-003), revision-scope note (AC-004), no artifact instruction (AC-005), design-gate statement (AC-006), 36 added lines ≤ 60 (AC-007), imperative language with IF/THEN (AC-008), all items are questions (AC-009)."
