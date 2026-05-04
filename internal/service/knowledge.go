@@ -35,6 +35,7 @@ type KnowledgeFilters struct {
 	Scope          string
 	Status         string
 	Topic          string
+	LearnedFrom    string // filter by learned_from field (exact match)
 	Tags           []string
 	MinConfidence  float64
 	IncludeRetired bool
@@ -258,6 +259,12 @@ func (s *KnowledgeService) List(filters KnowledgeFilters) ([]storage.KnowledgeRe
 		if filters.Topic != "" {
 			topic, _ := rec.Fields["topic"].(string)
 			if topic != knowledge.NormalizeTopic(filters.Topic) {
+				continue
+			}
+		}
+		if filters.LearnedFrom != "" {
+			learnedFrom, _ := rec.Fields["learned_from"].(string)
+			if learnedFrom != filters.LearnedFrom {
 				continue
 			}
 		}

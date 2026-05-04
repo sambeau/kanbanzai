@@ -18,6 +18,7 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+	"time"
 
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
 	"github.com/sambeau/kanbanzai/internal/service"
@@ -115,6 +116,7 @@ type assembledContext struct {
 	specSections         []asmSpecSection
 	acceptanceCriteria   []string
 	knowledge            []asmKnowledgeEntry
+	siblingKnowledge     []asmKnowledgeEntry // from completed sibling tasks (P45 wisdom forwarding)
 	docPointers          []asmDocPointer
 	filesContext         []asmFileEntry
 	constraints          []string
@@ -253,6 +255,17 @@ func assembleContext(input asmInput) assembledContext {
 	// Knowledge entries (Tier 2 + Tier 3), scoped to role or project.
 	if input.knowledgeSvc != nil {
 		actx.knowledge = asmLoadKnowledge(input.knowledgeSvc, input.role)
+	}
+
+	// Wisdom forwarding (P45): surface knowledge from completed sibling tasks.
+	if input.knowledgeSvc != nil && input.entitySvc != nil && input.parentFeature != "" {
+		existingTopics := make(map[string]bool, len(actx.knowledge))
+		for _, ke := range actx.knowledge {
+			existingTopics[ke.topic] = true
+		}
+		actx.siblingKnowledge = asmLoadSiblingKnowledge(
+			input.knowledgeSvc, input.entitySvc, input.parentFeature, existingTopics,
+		)
 	}
 
 	// Document pointers (cross-system knowledge ↔ doc_intel query, FR-011–FR-015).
@@ -587,6 +600,106 @@ func asmLoadKnowledge(svc *service.KnowledgeService, role string) []asmKnowledge
 		return entries[i].confidence > entries[j].confidence
 	})
 	return entries
+}
+
+// asmLoadSiblingKnowledge loads tier-2 knowledge entries from completed sibling
+// tasks within the same parent feature. Returns entries ordered most-recent-first
+// (by task completion time, then by entry recency). Returns empty slice when
+// entitySvc is nil, parentFeature is empty, or there are no completed siblings.
+//
+// Deduplication: entries with the same topic as an existing general knowledge entry
+// are excluded. Entries with the same topic from different siblings keep only the
+// most recently contributed entry. Entries marked forward: false are excluded.
+// Tier-3 entries are never included (REQ-005).
+func asmLoadSiblingKnowledge(svc *service.KnowledgeService, entitySvc *service.EntityService, parentFeature string, existingTopics map[string]bool) []asmKnowledgeEntry {
+	if svc == nil || entitySvc == nil || parentFeature == "" {
+		return nil
+	}
+
+	// Find completed sibling tasks (status: done) under the same parent feature.
+	siblings, err := entitySvc.ListEntitiesFiltered(service.ListFilteredInput{
+		Type:   "task",
+		Parent: parentFeature,
+		Status: "done",
+	})
+	if err != nil || len(siblings) == 0 {
+		return nil
+	}
+
+	var entries []asmKnowledgeEntry
+	seenTopics := make(map[string]bool)
+	for topic := range existingTopics {
+		seenTopics[topic] = true
+	}
+
+	// Process siblings in completion order (most recent first, per NFR-002).
+	// Sort by completed timestamp descending.
+	sort.SliceStable(siblings, func(i, j int) bool {
+		ic := parseTimeField(siblings[i].State, "completed")
+		jc := parseTimeField(siblings[j].State, "completed")
+		return ic.After(jc)
+	})
+
+	for _, sib := range siblings {
+		// Query knowledge entries contributed by this sibling task.
+		recs, err := svc.List(service.KnowledgeFilters{
+			Tier:          2,
+			LearnedFrom:   sib.ID,
+			MinConfidence: 0.3,
+		})
+		if err != nil {
+			continue
+		}
+		for _, rec := range recs {
+			// Exclude entries explicitly marked not-forwardable.
+			if forward, ok := rec.Fields["forward"]; ok {
+				if forwardB, ok := forward.(bool); ok && !forwardB {
+					continue
+				}
+			}
+			// Exclude tier-3 (defense in depth; the tier=2 filter should catch this).
+			tier := asmFieldInt(rec.Fields, "tier")
+			if tier != 2 {
+				continue
+			}
+			topic, _ := rec.Fields["topic"].(string)
+			// Topic-based dedup: skip if we've already seen this topic.
+			if seenTopics[topic] {
+				continue
+			}
+			seenTopics[topic] = true
+
+			content, _ := rec.Fields["content"].(string)
+			entries = append(entries, asmKnowledgeEntry{
+				topic:       topic,
+				content:     content,
+				learnedFrom: sib.ID,
+				confidence:  asmFieldFloat(rec.Fields, "confidence"),
+				tier:        tier,
+			})
+		}
+	}
+
+	return entries
+}
+
+// parseTimeField extracts a time.Time from a map field, supporting both
+// time.Time and string (RFC 3339) representations.
+func parseTimeField(fields map[string]any, key string) time.Time {
+	v, ok := fields[key]
+	if !ok {
+		return time.Time{}
+	}
+	if t, ok := v.(time.Time); ok {
+		return t
+	}
+	if s, ok := v.(string); ok {
+		t, err := time.Parse(time.RFC3339, s)
+		if err == nil {
+			return t
+		}
+	}
+	return time.Time{}
 }
 
 // ─── Document pointer loading ─────────────────────────────────────────────────
