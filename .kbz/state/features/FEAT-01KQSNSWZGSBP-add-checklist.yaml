@@ -2,7 +2,8 @@ id: FEAT-01KQSNSWZGSBP
 slug: add-checklist
 name: Add elicitation checklist to write-spec skill
 parent: P46-elicitation-checklist
-status: developing
+status: reviewing
+review_cycle: 1
 summary: "Add a 7-item pre-spec elicitation checklist to the write-spec skill. The checklist runs once before specification content is written and ensures core objective, scope boundaries, ambiguities, technical approach, test strategy, constraints, and dependencies are explicitly addressed."
 design: P46-elicitation-checklist/design-p46-design-elicitation-checklist
 spec: FEAT-01KQSNSWZGSBP/spec-p46-spec-elicitation-checklist
