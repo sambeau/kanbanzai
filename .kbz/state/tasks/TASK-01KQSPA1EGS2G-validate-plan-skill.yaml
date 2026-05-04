@@ -3,8 +3,14 @@ parent_feature: FEAT-01KQSP41PE6JP
 slug: validate-plan-skill
 name: Create plan-validator skill
 summary: "Create .kbz/skills/validate-plan/SKILL.md with the plan-validator procedure. Define all 13 validation checks (D1-D13) with blocking/non-blocking classification: D1,D2,D3,D4,D5,D6,D9,D13 blocking; D7,D8,D10,D11,D12 non-blocking. Procedure: read dev-plan doc, read parent spec doc, execute each check with rubrics for LLM-classification checks, produce summary and full report. Verify dependency graph is acyclic, task descriptions are adequate (50+ words, states inputs/outputs/done), every spec requirement is covered."
-status: active
+status: done
+files_planned:
+  - .kbz/skills/validate-plan/SKILL.md
+  - .kbz/skills/validate-plan/references/examples.md
+completed: "2026-05-04T15:41:59Z"
 claimed_at: "2026-05-04T15:28:38Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T15:28:38Z"
 dispatched_by: sambeau
+completion_summary: "Created .kbz/skills/validate-plan/SKILL.md (442 lines) and references/examples.md. All 13 D-checks with correct blocking/non-blocking per REQ-PLAN-003. D6 uses topological sort for cycle detection. D13 requires word count ≥50 + inputs/outputs/done criteria. D3/D4 cross-reference spec REQ-IDs. Two outputs: JSON summary + full report as doc record. 5 tool call budget, fresh session discipline. 6 anti-patterns, 16 vocab terms, 14 evaluation criteria."
+verification: "442 lines (under 500 limit), follows CONVENTIONS.md section ordering, all 13 checks enumerated, D6 topological sort, D13 all 4 criteria, rubrics reference correct, references linked from SKILL.md"
