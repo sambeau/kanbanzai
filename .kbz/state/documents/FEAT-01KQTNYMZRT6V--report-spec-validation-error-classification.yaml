@@ -1,0 +1,11 @@
+canonical_content_hash: 5e415a8665f64bc1034c6f77225dd2b9f453729495c9f2625be2d3ef946ddcca
+content_hash: ecf04fd99e1d429b4dbadcbdde4708187d8fb420a47862828b49a62c270220c8
+created: "2026-05-04T23:55:04Z"
+created_by: sambeau
+id: FEAT-01KQTNYMZRT6V/report-spec-validation-error-classification
+owner: FEAT-01KQTNYMZRT6V
+path: work/_project/spec-validation-error-classification.md
+status: draft
+title: "Spec Validation: Error Classification for MCP Handlers"
+type: report
+updated: "2026-05-04T23:55:04Z"
