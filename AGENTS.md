@@ -173,7 +173,9 @@ Task-execution skills under `.kbz/skills/` are project-local; no dual-write appl
 
 ## Scope Guard
 
-Phases 1–15 and Kanbanzai 2.0/2.5 are complete. There is no current in-progress phase. For detailed delivery history, see `docs/project-timeline.md`.
+Phases 1–15 and Kanbanzai 2.0/2.5 are complete. For detailed delivery history, see `docs/project-timeline.md`.
+
+Active plans: P41 (OpenCode ecosystem features) and its children — including P42 (hash-anchored edit tool, delivered), P43 (fast-track architecture), P44 (model-routing agent launcher), P45 (wisdom forwarding), P46 (elicitation checklist), and P48 (coordination server).
 
 Do not build beyond the current phase without explicit direction:
 
