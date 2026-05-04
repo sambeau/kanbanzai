@@ -1,0 +1,263 @@
+- generic [ref=e2]:
+  - region "Skip to main content":
+    - link "Skip to main content" [ref=e3] [cursor=pointer]:
+      - /url: "#__docusaurus_skipToContent_fallback"
+  - navigation "Main" [ref=e4]:
+    - generic [ref=e5]:
+      - link "DeepSeek API Docs Logo DeepSeek API Docs" [ref=e7] [cursor=pointer]:
+        - /url: /
+        - img "DeepSeek API Docs Logo" [ref=e9]
+        - generic [ref=e10]: DeepSeek API Docs
+      - generic [ref=e11]:
+        - button "English" [ref=e13] [cursor=pointer]:
+          - img [ref=e14]
+          - text: English
+        - link "DeepSeek Platform" [ref=e16] [cursor=pointer]:
+          - /url: https://platform.deepseek.com/
+          - text: DeepSeek Platform
+          - img [ref=e17]
+        - button "Switch between dark and light mode (currently light mode)" [ref=e20] [cursor=pointer]:
+          - img [ref=e21]
+  - generic [ref=e25]:
+    - complementary [ref=e26]:
+      - navigation "Docs sidebar" [ref=e29]:
+        - list [ref=e30]:
+          - listitem [ref=e31]:
+            - link "Quick Start" [expanded] [ref=e33] [cursor=pointer]:
+              - /url: "#"
+            - list [ref=e34]:
+              - listitem [ref=e35]:
+                - link "Your First API Call" [ref=e36] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=e37]:
+                - link "Models & Pricing" [ref=e38] [cursor=pointer]:
+                  - /url: /quick_start/pricing
+              - listitem [ref=e39]:
+                - link "Token & Token Usage" [ref=e40] [cursor=pointer]:
+                  - /url: /quick_start/token_usage
+              - listitem [ref=e41]:
+                - link "Rate Limit" [ref=e42] [cursor=pointer]:
+                  - /url: /quick_start/rate_limit
+              - listitem [ref=e43]:
+                - link "Error Codes" [ref=e44] [cursor=pointer]:
+                  - /url: /quick_start/error_codes
+              - listitem [ref=e45]:
+                - link "Agent Integrations" [ref=e47] [cursor=pointer]:
+                  - /url: "#"
+          - listitem [ref=e48]:
+            - link "API Guides" [expanded] [ref=e50] [cursor=pointer]:
+              - /url: "#"
+            - list [ref=e51]:
+              - listitem [ref=e52]:
+                - link "Thinking Mode" [ref=e53] [cursor=pointer]:
+                  - /url: /guides/thinking_mode
+              - listitem [ref=e54]:
+                - link "Multi-round Conversation" [ref=e55] [cursor=pointer]:
+                  - /url: /guides/multi_round_chat
+              - listitem [ref=e56]:
+                - link "Chat Prefix Completion (Beta)" [ref=e57] [cursor=pointer]:
+                  - /url: /guides/chat_prefix_completion
+              - listitem [ref=e58]:
+                - link "FIM Completion (Beta)" [ref=e59] [cursor=pointer]:
+                  - /url: /guides/fim_completion
+              - listitem [ref=e60]:
+                - link "JSON Output" [ref=e61] [cursor=pointer]:
+                  - /url: /guides/json_mode
+              - listitem [ref=e62]:
+                - link "Tool Calls" [ref=e63] [cursor=pointer]:
+                  - /url: /guides/tool_calls
+              - listitem [ref=e64]:
+                - link "Context Caching" [ref=e65] [cursor=pointer]:
+                  - /url: /guides/kv_cache
+              - listitem [ref=e66]:
+                - link "Anthropic API" [ref=e67] [cursor=pointer]:
+                  - /url: /guides/anthropic_api
+          - listitem [ref=e68]:
+            - link "API Reference" [expanded] [active] [ref=e70] [cursor=pointer]:
+              - /url: "#"
+            - list [ref=e223]:
+              - listitem [ref=e224]:
+                - link "Introduction" [ref=e225] [cursor=pointer]:
+                  - /url: /api/deepseek-api
+              - listitem [ref=e226]:
+                - link "Chat" [ref=e228] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e229]:
+                - link "Completions" [ref=e231] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e232]:
+                - link "Models" [ref=e234] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e235]:
+                - link "Others" [ref=e237] [cursor=pointer]:
+                  - /url: "#"
+          - listitem [ref=e71]:
+            - link "News" [ref=e73] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e74]:
+            - link "Other Resources" [ref=e76] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e77]:
+            - link "FAQ" [ref=e78] [cursor=pointer]:
+              - /url: /faq
+          - listitem [ref=e79]:
+            - link "Change Log" [ref=e80] [cursor=pointer]:
+              - /url: /updates
+    - main [ref=e81]:
+      - generic [ref=e83]:
+        - generic [ref=e85]:
+          - article [ref=e86]:
+            - navigation "Breadcrumbs" [ref=e87]:
+              - list [ref=e88]:
+                - listitem [ref=e89]:
+                  - link "Home page" [ref=e90] [cursor=pointer]:
+                    - /url: /
+                    - img [ref=e91]
+                - listitem [ref=e93]:
+                  - generic [ref=e94]: Quick Start
+                - listitem [ref=e95]:
+                  - generic [ref=e96]: Your First API Call
+            - generic [ref=e99]:
+              - heading "Your First API Call" [level=1] [ref=e100]
+              - paragraph [ref=e101]: The DeepSeek API uses an API format compatible with OpenAI/Anthropic. By modifying the configuration, you can use the OpenAI/Anthropic SDK or softwares compatible with the OpenAI/Anthropic API to access the DeepSeek API.
+              - table [ref=e102]:
+                - rowgroup [ref=e103]:
+                  - row "PARAM VALUE" [ref=e104]:
+                    - columnheader "PARAM" [ref=e105]
+                    - columnheader "VALUE" [ref=e106]
+                - rowgroup [ref=e107]:
+                  - row "base_url (OpenAI) https://api.deepseek.com" [ref=e108]:
+                    - cell "base_url (OpenAI)" [ref=e109]
+                    - cell "https://api.deepseek.com" [ref=e110]:
+                      - code [ref=e111]: https://api.deepseek.com
+                  - row "base_url (Anthropic) https://api.deepseek.com/anthropic" [ref=e112]:
+                    - cell "base_url (Anthropic)" [ref=e113]
+                    - cell "https://api.deepseek.com/anthropic" [ref=e114]:
+                      - code [ref=e115]: https://api.deepseek.com/anthropic
+                  - row "api_key apply for an API key" [ref=e116]:
+                    - cell "api_key" [ref=e117]
+                    - cell "apply for an API key" [ref=e118]:
+                      - text: apply for an
+                      - link "API key" [ref=e119] [cursor=pointer]:
+                        - /url: https://platform.deepseek.com/api_keys
+                  - row "model* deepseek-v4-flash deepseek-v4-pro deepseek-chat (to be deprecated on 2026/07/24) deepseek-reasoner (to be deprecated on 2026/07/24)" [ref=e120]:
+                    - cell "model*" [ref=e121]:
+                      - text: model
+                      - superscript [ref=e122]: "*"
+                    - cell "deepseek-v4-flash deepseek-v4-pro deepseek-chat (to be deprecated on 2026/07/24) deepseek-reasoner (to be deprecated on 2026/07/24)" [ref=e123]:
+                      - code [ref=e124]: deepseek-v4-flash
+                      - code [ref=e125]: deepseek-v4-pro
+                      - code [ref=e126]: deepseek-chat
+                      - text: (to be deprecated on 2026/07/24)
+                      - code [ref=e127]: deepseek-reasoner
+                      - text: (to be deprecated on 2026/07/24)
+              - paragraph [ref=e129]:
+                - text: "* The model names"
+                - code [ref=e130]: deepseek-chat
+                - text: and
+                - code [ref=e131]: deepseek-reasoner
+                - text: will be deprecated on 2026/07/24. For compatibility, they correspond to the non-thinking mode and thinking mode of
+                - code [ref=e132]: deepseek-v4-flash
+                - text: ", respectively."
+              - heading "Integrate with Agent ToolsDirect link to Integrate with Agent Tools" [level=2] [ref=e133]:
+                - text: Integrate with Agent Tools
+                - link "Direct link to Integrate with Agent Tools" [ref=e134] [cursor=pointer]:
+                  - /url: "#integrate-with-agent-tools"
+                  - text: "#"
+              - paragraph [ref=e135]: The DeepSeek API is supported by many popular AI agent and coding assistant tools. If you use tools like Claude Code, GitHub Copilot, or OpenCode, you can use DeepSeek as the backend model directly — no code required.
+              - paragraph [ref=e136]:
+                - text: See the
+                - link "Agent Integrations Guide" [ref=e137] [cursor=pointer]:
+                  - /url: /quick_start/agent_integrations/claude_code
+                - text: for details.
+              - heading "Invoke The Chat APIDirect link to Invoke The Chat API" [level=2] [ref=e138]:
+                - text: Invoke The Chat API
+                - link "Direct link to Invoke The Chat API" [ref=e139] [cursor=pointer]:
+                  - /url: "#invoke-the-chat-api"
+                  - text: "#"
+              - paragraph [ref=e140]:
+                - text: Once you have obtained an API key, you can access the DeepSeek model using the following example scripts in the OpenAI API format. This is a non-stream example, you can set the
+                - code [ref=e141]: stream
+                - text: parameter to
+                - code [ref=e142]: "true"
+                - text: to get stream response.
+              - paragraph [ref=e143]:
+                - text: For examples using the Anthropic API format, please refer to
+                - link "Anthropic API" [ref=e144] [cursor=pointer]:
+                  - /url: /guides/anthropic_api
+                - text: .
+              - generic [ref=e145]:
+                - tablist [ref=e146]:
+                  - tab "curl" [selected] [ref=e147] [cursor=pointer]
+                  - tab "python" [ref=e148] [cursor=pointer]
+                  - tab "nodejs" [ref=e149] [cursor=pointer]
+                - tabpanel [ref=e151]:
+                  - generic [ref=e153]:
+                    - code [ref=e155]:
+                      - generic [ref=e156]: curl https://api.deepseek.com/chat/completions \
+                      - generic [ref=e157]: "-H \"Content-Type: application/json\" \\"
+                      - generic [ref=e158]: "-H \"Authorization: Bearer ${DEEPSEEK_API_KEY}\" \\"
+                      - generic [ref=e159]: "-d '{"
+                      - generic [ref=e160]: "\"model\": \"deepseek-v4-pro\","
+                      - generic [ref=e161]: "\"messages\": ["
+                      - generic [ref=e162]: "{\"role\": \"system\", \"content\": \"You are a helpful assistant.\"},"
+                      - generic [ref=e163]: "{\"role\": \"user\", \"content\": \"Hello!\"}"
+                      - generic [ref=e164]: "],"
+                      - generic [ref=e165]: "\"thinking\": {\"type\": \"enabled\"},"
+                      - generic [ref=e166]: "\"reasoning_effort\": \"high\","
+                      - generic [ref=e167]: "\"stream\": false"
+                      - generic [ref=e168]: "}'"
+                    - generic [ref=e169]:
+                      - button "Toggle word wrap" [ref=e220] [cursor=pointer]:
+                        - img [ref=e221]
+                      - button "Copy code to clipboard" [ref=e170] [cursor=pointer]:
+                        - generic [ref=e171]:
+                          - img [ref=e172]
+                          - img [ref=e174]
+          - navigation "Docs pages" [ref=e177]:
+            - link "Next Models & Pricing »" [ref=e178] [cursor=pointer]:
+              - /url: /quick_start/pricing
+              - generic [ref=e179]: Next
+              - generic [ref=e180]: Models & Pricing »
+        - list [ref=e183]:
+          - listitem [ref=e184]:
+            - link "Integrate with Agent Tools" [ref=e185] [cursor=pointer]:
+              - /url: "#integrate-with-agent-tools"
+          - listitem [ref=e186]:
+            - link "Invoke The Chat API" [ref=e187] [cursor=pointer]:
+              - /url: "#invoke-the-chat-api"
+  - contentinfo [ref=e188]:
+    - generic [ref=e189]:
+      - generic [ref=e190]:
+        - generic [ref=e191]:
+          - generic [ref=e192]: WeChat Official Account
+          - list [ref=e193]:
+            - listitem [ref=e194]:
+              - img "WeChat QRcode" [ref=e195]
+        - generic [ref=e196]:
+          - generic [ref=e197]: Community
+          - list [ref=e198]:
+            - listitem [ref=e199]:
+              - link "Email" [ref=e200] [cursor=pointer]:
+                - /url: mailto:api-service@deepseek.com
+                - text: Email
+                - img [ref=e201]
+            - listitem [ref=e203]:
+              - link "Discord" [ref=e204] [cursor=pointer]:
+                - /url: https://discord.gg/Tc7c45Zzu5
+                - text: Discord
+                - img [ref=e205]
+            - listitem [ref=e207]:
+              - link "Twitter" [ref=e208] [cursor=pointer]:
+                - /url: https://twitter.com/deepseek_ai
+                - text: Twitter
+                - img [ref=e209]
+        - generic [ref=e211]:
+          - generic [ref=e212]: More
+          - list [ref=e213]:
+            - listitem [ref=e214]:
+              - link "GitHub" [ref=e215] [cursor=pointer]:
+                - /url: https://github.com/deepseek-ai
+                - text: GitHub
+                - img [ref=e216]
+      - generic [ref=e219]: Copyright © 2026 DeepSeek, Inc.

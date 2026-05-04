@@ -3,26 +3,22 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-04                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | sambeau                        |
 
 > This specification implements the design described in
 > `work/B43-composite-tools/B43-F1-design-composite-tools.md` (FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools).
 
-## Problem Statement
+## Overview
 
-Chat agents using Kanbanzai's MCP server must chain multiple atomic tool calls to complete
-common workflow operations — registering and approving a document, bootstrapping a feature
-through lifecycle stages, dispatching tasks to sub-agents. The correct sequence for each
-workflow is already encoded in the system's stage bindings, gate prerequisites, and forward-path
-logic, but it is delivered to the agent as prose instructions the agent must read, interpret,
-and manually execute.
+This specification defines testable requirements for five **composite MCP tool actions** —
+new actions on existing consolidated MCP tools (plus one new top-level `develop` tool) that
+collapse multi-step workflow sequences into single server-side operations. It implements the
+design described in `work/B43-composite-tools/B43-F1-design-composite-tools.md`
+(FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools).
 
-This specification defines testable requirements for five **composite actions** — new
-actions on existing consolidated MCP tools (plus one new top-level `develop` tool) that
-collapse multi-step sequences into single server-side operations. Each composite is
-deterministic, synchronous, and stateless: it orchestrates existing service and gate logic
-without introducing AI calls, background execution, or new state machines.
+Each composite is deterministic, synchronous, and stateless: it orchestrates existing service
+and gate logic without introducing AI calls, background execution, or new state machines.
 
 The five composite actions are:
 - `doc(action: "publish")` — register + classify + approve
@@ -31,16 +27,22 @@ The five composite actions are:
 - `develop(action: "dispatch")` — one-cycle orchestrator dispatch
 - `batch(action: "snapshot")` — prescriptive status rollup
 
-**What this specification does NOT cover:**
+## Scope
+
+**In scope:**
+- Five new composite actions on the `doc`, `entity`, `develop`, and `batch` MCP tools
+- Structured `next_action` response objects for every gate failure and incomplete workflow
+- Deterministic orchestration of existing service, gate, and lifecycle functions
+- Full test coverage for each composite action including error paths
+
+**Out of scope:**
 - Changes to the underlying service, gate, or lifecycle packages — composites wrap existing logic
 - AI-driven classification inside the MCP server — classification remains a chat-agent responsibility
 - Client-side workflow scripts or stateful session management — composites are stateless request-response calls
 - Removal or deprecation of individual tool actions — existing actions remain available
 - Cross-batch or cross-project workflow coordination
 
-## Requirements
-
-### Functional Requirements
+## Functional Requirements
 
 - **REQ-001:** The `doc` tool SHALL support a `publish` action that accepts a document path,
   type, title, owner, and optional classifications array.
@@ -106,7 +108,7 @@ The five composite actions are:
   operation — if step N fails, steps 1 through N-1 remain persisted and the response
   SHALL report which steps succeeded and which failed.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 - **REQ-NF-001:** Each composite action, when it replaces N sequential tool calls, SHALL
   reduce the total tool calls needed for the workflow by at least 50% (e.g., the 3-step

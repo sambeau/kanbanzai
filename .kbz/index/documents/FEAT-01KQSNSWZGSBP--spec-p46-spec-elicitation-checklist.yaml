@@ -1,0 +1,98 @@
+document_id: FEAT-01KQSNSWZGSBP/spec-p46-spec-elicitation-checklist
+document_path: work/P46-elicitation-checklist/P46-spec-elicitation-checklist.md
+content_hash: 8b08349cda11e30231d622e40423408766cbfcc9e3834d0ee821690929059f6c
+indexed_at: 2026-05-04T14:21:59.595212Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Elicitation Checklist'
+      byte_offset: 0
+      byte_count: 9064
+      word_count: 1326
+      content_hash: 8b08349cda11e30231d622e40423408766cbfcc9e3834d0ee821690929059f6c
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem Statement
+          byte_offset: 239
+          byte_count: 1172
+          word_count: 134
+          content_hash: 5a90e0728c0ea2c3dc2a8aa1d87a5f01dc3525268101e4d5be9357b4a6d90a3c
+        - path: "1.2"
+          level: 2
+          title: Requirements
+          byte_offset: 1411
+          byte_count: 3020
+          word_count: 450
+          content_hash: 69aae4703a364edcb51be2fddd524902b3c4f2c0f33800df6f5332edd714caef
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 1428
+              byte_count: 2623
+              word_count: 398
+              content_hash: ab5fc56da664ee02522f1fbbe9818e55c8dac0ac6e89daa94685978ba3cdd5bc
+            - path: 1.2.2
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 4051
+              byte_count: 380
+              word_count: 50
+              content_hash: b508715461868853808e69c50d7fcb80d3c9a2fb9f18a8570a95484b7c745df0
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 4431
+          byte_count: 690
+          word_count: 101
+          content_hash: 9ce9e0eab3a3d5d19f19799f48b06cf7dac2051e3409e03a1f2980c39b75edcd
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 5121
+          byte_count: 2060
+          word_count: 302
+          content_hash: 30ccd10c054c7f7b7dd65554ff6efc8cdc89b932814a700d459cf506176b61c5
+        - path: "1.5"
+          level: 2
+          title: Verification Plan
+          byte_offset: 7181
+          byte_count: 1883
+          word_count: 313
+          content_hash: d9d04717966a878a12e85cd5b2893383675267aee3e926922fb6779e42cc71e0
+entity_refs:
+    - entity_id: P46-elicitation-checklist
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 348
+    - entity_id: P46-design-elicitation-checklist
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 374
+cross_doc_links:
+    - target_path: work/P46-elicitation-checklist/P46-design-elicitation-checklist.md
+      link_text: work/P46-elicitation-checklist/P46-design-elicitation-checklist.md
+      section_path: "1.1"
+    - target_path: SKILL.md
+      link_text: " SKILL.md and verify the checklist step appears after Cross-Reference Check and before Step 1 in the Procedure section |\n| REQ-002 | Inspection | Count the checklist items: exactly 7 numbered items must be present |\n| REQ-003 | Inspection | Verify each checklist item is phrased as a question the spec-author must answer before writing spec content |\n| REQ-004 | Inspection | Verify item 1 asks for the core objective in one sentence |\n| REQ-005 | Inspection | Verify item 2 asks for in-scope and out-of-scope lists |\n| REQ-006 | Inspection | Verify item 3 asks for ambiguities and resolutions |\n| REQ-007 | Inspection | Verify item 4 asks for approach, rejected alternatives, and instructs citing the design document |\n| REQ-008 | Inspection | Verify item 5 asks for test strategy (unit, integration, e2e) and edge cases |\n| REQ-009 | Inspection | Verify item 6 asks for design-imposed constraints |\n| REQ-010 | Inspection | Verify item 7 asks for dependencies and dependents |\n| REQ-011 | Inspection | Verify the STOP-and-flag instruction uses the same language pattern as existing STOP directives in the skill file |\n| REQ-012 | Inspection | Verify the procedure includes the note about the checklist not running for non-scope-change revisions |\n| REQ-013 | Inspection | Search the checklist section for \"register,\" \"write,\" \"output,\" \"artifact,\" \"document\" — none should appear as instructions to produce output |\n| REQ-014 | Inspection | Verify the design-gate statement appears in the checklist section |\n| REQ-NF-001 | Inspection | Run "
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-04T14:22:00.151859Z
+classified: false

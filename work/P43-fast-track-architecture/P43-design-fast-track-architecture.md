@@ -11,6 +11,8 @@ Replace mechanical human gates with automated evidence-backed validation. After 
 
 This is the most distinctive Kanbanzai innovation from the ecosystem research — no competitor has anything comparable. It uses Kanbanzai's existing strengths (entity hierarchy, document intelligence, spawn_agent) rather than requiring new capabilities.
 
+**Architectural validation:** This design implements the "validation bottleneck" pattern identified by Google Research (Kim & Liu, 2026). Google found that centralized orchestration contained error amplification to 4.4× (vs. 17.2× for independent agents) because "the orchestrator acts as a validation bottleneck" — catching errors at each stage before they propagate. P43's validators at spec, plan, and review gates are exactly this pattern: catch document quality issues at the stage where they're cheapest to fix, preventing the 4.4× cost multiplier of catching them during implementation. See `research-agent-orchestration-research.md` §2.2.
+
 ## Goals and Non-Goals
 
 **Goals:**
@@ -19,6 +21,7 @@ This is the most distinctive Kanbanzai innovation from the ecosystem research �
 - Support risk-tiered automation: retro fixes can skip all gates, critical features keep all gates human
 - Validators always run in fresh sessions to avoid context degradation
 - Escalate to human only when automation can't resolve an issue (uncertainty, cycle limit, scope drift)
+- **Enforce validator verdicts at the state machine level** — blocking failures prevent stage advancement (not just advisory)
 
 **Non-Goals:**
 - Not replacing the design gate — architectural judgment remains human
@@ -73,8 +76,20 @@ This is the most distinctive Kanbanzai innovation from the ecosystem research �
 | D10 | Risk assessment is non-empty | Non-blocking |
 | D11 | File paths in deliverables exist or noted as new | Non-blocking |
 | D12 | Non-functional requirements addressed by tasks | Non-blocking |
+| D13 | Every task has an actionable description (≥50 words, states what it produces, what inputs it requires, what "done" means beyond the AC) | Blocking |
 
 **Key anti-patterns:** Phantom Traceability, Architectural Second-Guessing, Unverified File References.
+
+**Rationale for D13:** Task description quality is the single strongest predictor of workflow success. Research (Masters et al., 2025) found that "performance gains correlate almost linearly with the quality of the induced task graph" and Anthropic's multi-agent team found that "without detailed task descriptions, agents duplicate work, leave gaps, or fail to find necessary information." A plan that passes D1–D12 can still fail in execution if tasks are too vague for agents to execute independently. D13 ensures every task has sufficient detail: an objective, the inputs it needs, and what "done" means beyond the acceptance criterion line item.
+
+**Validator rubrics:** Checks S5, S7, D7, D10, D13, R2, and R3 rely on LLM classification rather than structural pattern matching. These checks require concrete rubrics — not just pass/fail labels — to produce consistent verdicts across different validator runs. Each LLM-classification check must have:
+1. A clear definition of what "pass" means with 2–3 positive examples
+2. A clear definition of what "fail" means with 2–3 negative examples
+3. A "borderline → escalate" pattern for ambiguous cases
+
+Research (Anthropic, 2024/2025) found that "bad tool descriptions can send agents down completely wrong paths" and that iterating on tool descriptions produced a 40% decrease in task completion time. For validators, the "tool descriptions" are the check rubrics. Rubrics should be tested on 15–20 real Kanbanzai documents before the validation pipeline is built — following Anthropic's evaluation approach where "a set of about 20 queries representing real usage patterns" was sufficient to spot dramatic impacts.
+
+Rubrics are maintained in `work/P43-fast-track-architecture/validator-rubrics/`:
 
 #### Review Gate Validator
 
@@ -96,6 +111,21 @@ This is the most distinctive Kanbanzai innovation from the ecosystem research �
 
 **Key anti-patterns:** Re-Reviewing, Rubber-Stamp Acceptance.
 
+### Enforceable Stage Transitions
+
+Validator verdicts are **enforceable**, not advisory. When a validator fails a blocking check, the workflow state machine refuses to advance the feature to the next stage. This implements the research finding that "enforceable constraints beat advisory instructions" (MetaGPT SOPs with verification gates, Masters et al. hard constraints ℋ, Microsoft programmatic gates).
+
+**Transition validator hooks** are added to stage bindings. Before a feature transitions:
+- `specifying → dev-planning`: spec-validator must have passed all blocking checks (S1–S5, S10)
+- `dev-planning → developing`: plan-validator must have passed all blocking checks (D1–D6, D9, D13)
+- `reviewing → done`: review-gate-validator must have passed all blocking checks (R1–R2, R4–R5, R7)
+
+If a blocking check failed, `entity(action: "transition")` returns an error with the validator findings. The feature remains in its current stage until the document is fixed and re-validated.
+
+**Override:** Humans can always override via `entity(action: "transition", override: true, override_reason: "...")`. This is the escape hatch — validators enforce the common case, override handles the exceptions. Override usage is tracked as a metric: if a particular check is consistently overridden, its rubric needs refinement.
+
+**Non-blocking checks** do not prevent stage advancement. They attach findings to the document record and are visible in `status` dashboards. Accumulation of non-blocking findings across multiple features triggers a quality review signal.
+
 ### Risk Tiers
 
 ```yaml
@@ -111,10 +141,16 @@ fast_track:
 
 | Tier | Design | Spec | Dev-Plan | Review | Max cycles |
 |------|--------|------|----------|--------|------------|
-| `retro_fix` | Auto | Auto | Auto | Auto | 3 |
+| `retro_fix` | Auto | Auto | Auto | Conditional | 3 |
 | `bug_fix` | Auto | Human | Auto | Auto | 2 |
 | `feature` | Human | Auto | Auto | Auto | 2 |
 | `critical` | Human | Human | Human | Human | 0 |
+
+**`retro_fix` review gate: conditional on change type.** The `retro_fix` tier automates all gates, but the review gate is conditional:
+- **Implementation changes** (any file outside `work/`, `docs/`, `refs/`): A specialist review panel runs, and the review-gate-validator audits it. The validator must pass blocking checks R1–R2, R4–R5, R7 before merge.
+- **Documentation-only changes** (`work/`, `docs/`, `refs/` only): The review gate is skipped entirely with an explicit check that no implementation files were modified.
+
+This prevents the gap where a `retro_fix` with code changes would merge with no specialist scrutiny. The review panel provides the code audit; the review-gate-validator ensures the audit was thorough.
 
 ### Tier Inference
 
@@ -138,9 +174,12 @@ Spec author completes spec
 ### Session Management
 
 Validators MUST run in fresh sessions:
-1. **Clean context:** Validator receives only the document under validation, the parent document, and the validation checklist. Never the conversation that produced the document.
-2. **Spawn, don't continue:** Always via `spawn_agent` with fresh context.
-3. **Output reduction:** Validator output reduces to verdict + N findings + evidence score. Full output offloaded to document record.
+1. **Clean context:** Validator receives only the document under validation, the parent document, and the validation checklist (with rubrics). Never the conversation that produced the document.
+2. **Dispatch, don't continue:** Always via the `dispatch_validator(role, skill, context)` abstraction. This uses `spawn_agent` today and will route through model routing dispatch when P44 is built (see Forward Compatibility below).
+3. **Structured output pattern:** Validators produce two artifacts:
+   - **Summary → orchestrator:** Verdict (pass/pass_with_notes/fail) + number of blocking/non-blocking findings + evidence score + reference to full report. The orchestrator never holds the full validator output in context.
+   - **Full report → document store:** Detailed per-check analysis, evidence citations, uncertain findings. Written to `work/{feature}/reports/{validator}-{timestamp}.md` and registered via `doc(action: "register", type: "report")`.
+   This implements the "subagent output to filesystem" pattern validated by Anthropic's multi-agent team: lightweight references to the orchestrator, full detail available for human audit.
 4. **Cycle tracking:** `max_auto_cycles` cap. When reached, mandatory human escalation.
 
 ### Failure Mode Guards
@@ -152,6 +191,14 @@ Validators MUST run in fresh sessions:
 | Validator sycophancy (approves too easily) | "Hallucinated Completeness" anti-pattern; every pass requires evidence |
 | Drift accumulation (small allowances compound) | Validators cross-reference upstream, not just immediate parent |
 | Orchestrator context bloat | Post-completion summarization; full output in document record |
+
+### Forward Compatibility with Model Routing
+
+P43 is designed to work with `spawn_agent` today and transition to P44's model routing dispatch when available. The validator pipeline does not call `spawn_agent` directly — it calls `dispatch_validator(role, skill, context)`, a thin abstraction that:
+- **Today:** delegates to `spawn_agent` with fresh context
+- **When P44 is built:** routes through the model routing dispatch loop, which can apply the `audit` category (near-zero temperature, consistency-optimized model) automatically
+
+This abstraction lives in the stage binding configuration, not in validator code. Validators don't know or care how they're dispatched. The abstraction boundary ensures P43 doesn't hardcode the current dispatch mechanism and makes the transition to model routing a configuration change, not a code change.
 
 ## Alternatives Considered
 
@@ -173,14 +220,14 @@ Validators MUST run in fresh sessions:
 
 ## Dependencies
 
-- Uses existing Kanbanzai capabilities: `doc_intel` (traceability checks), `spawn_agent` (fresh sessions), `conflict` (file overlap analysis)
-- New: three roles, three skills, extended structural validators, fast-track config schema, auto-approval pipeline in stage bindings
-- No dependency on P42 (hash-anchored edits) or P43-C (model routing)
+- Uses existing Kanbanzai capabilities: `doc_intel` (traceability checks), `spawn_agent` (fresh sessions), `conflict` (file overlap analysis), `entity` (state machine transitions)
+- New: three roles, three skills, validator rubrics, extended structural validators, `transition_validator` hooks in stage bindings, fast-track config schema, auto-approval pipeline, `dispatch_validator` abstraction
+- No dependency on P42 (hash-anchored edits) or P44 (model routing) — but includes forward-compatible `dispatch_validator` abstraction for future P44 integration
 
 ## Open Questions
 
 1. What's the validator evidence threshold for auto-approval? Run validators alongside human gates for N features; compare findings. If validators catch everything humans catch, the threshold can be lower.
 2. Should fast-track tier be per-feature or per-batch? Per-feature gives finer control. The batch-reviewing stage may need independent tier logic.
-3. How does fast-track interact with `override`? Humans can always override any gate. Fast-track reduces the need for overrides — the escape hatch remains.
-4. Can a validator's pass/fail decision be appealed? Yes — human override. Validator findings become advisory, not binding.
-5. Should validators use a different model than authors/reviewers? Validators are compliance-audit cognitive profile. If model routing (P43-C) is adopted, validators would be a distinct category. Until then, same model with near-zero temperature and different role prompt.
+3. How does fast-track interact with `override`? Humans can always override any gate via `entity(action: "transition", override: true)`. Override usage is tracked as a metric — if a particular check is consistently overridden, its rubric needs refinement.
+4. Can a validator's pass/fail decision be appealed? Yes — human override. Validator findings become advisory, not binding. The override metric tracks when this happens.
+5. Should validators use a different model than authors/reviewers? Validators are compliance-audit cognitive profile. Research (Masters et al., 2025) shows that audit tasks value consistency over creative depth — GPT-5.4 at near-zero temperature matches this profile better than Claude Opus with extended thinking. Initial implementation uses same model with different temperature and role prompt. When P44 model routing is built, validators route through the `audit` category automatically via the `dispatch_validator` abstraction (see Forward Compatibility above). No code changes required in validators themselves.

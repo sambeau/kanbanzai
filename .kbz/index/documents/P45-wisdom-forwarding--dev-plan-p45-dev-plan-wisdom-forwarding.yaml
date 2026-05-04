@@ -1,0 +1,158 @@
+document_id: P45-wisdom-forwarding/dev-plan-p45-dev-plan-wisdom-forwarding
+document_path: work/P45-wisdom-forwarding/P45-dev-plan-wisdom-forwarding.md
+content_hash: bb136d4e8d34c3593471cc2bbd39d0e4d3e9daa47d7d95f457ec0319b4ab5ef4
+indexed_at: 2026-05-04T14:22:48.867612Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Wisdom Forwarding'
+      byte_offset: 0
+      byte_count: 11410
+      word_count: 1498
+      content_hash: bb136d4e8d34c3593471cc2bbd39d0e4d3e9daa47d7d95f457ec0319b4ab5ef4
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 263
+          byte_count: 719
+          word_count: 80
+          content_hash: bbf81391a11fa75844a942e0dc18b5763241dfeea40dc3851967ef1d0691ebec
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 982
+          byte_count: 6072
+          word_count: 791
+          content_hash: 107b58de19b80ed0011295e2555ae9a3545c2de0d77c70487a6287314833ceab
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Add `forward` opt-out flag to knowledge model and storage'
+              byte_offset: 1001
+              byte_count: 771
+              word_count: 99
+              content_hash: 83447145f8d6ab6db12930840b62e54047042f8517460c98ff927e5409d72315
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Add `forward` flag to `finish` tool knowledge parsing'
+              byte_offset: 1772
+              byte_count: 746
+              word_count: 101
+              content_hash: 6108b2a485abd36943c7e799997a50fa1a1b8ab0ddb4516fa5162d61ca4eb510
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Implement sibling knowledge query in context assembly'
+              byte_offset: 2518
+              byte_count: 921
+              word_count: 122
+              content_hash: c7ff91fb30bc069b4a6d6b63d99eb5290f89a3c83519af9fb2331b3fd9f518dd
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Wire sibling knowledge into `assembleContext` and `renderHandoffPrompt`'
+              byte_offset: 3439
+              byte_count: 1086
+              word_count: 128
+              content_hash: b404c171b290dc82946aa98dcc36ffae2c2878f9d7cc5a169ed5fb04ad66f7d4
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Update `handoffTool` to pass entity service to assembler'
+              byte_offset: 4525
+              byte_count: 806
+              word_count: 114
+              content_hash: ea31d2920694133f0ba3f17a7755fdd1ce8db0ea3a1beea61d3f68df85e303e5
+            - path: 1.2.6
+              level: 3
+              title: 'Task 6: Unit tests for all new functions'
+              byte_offset: 5331
+              byte_count: 924
+              word_count: 125
+              content_hash: be74cd1b054d1dada72a91d0c20c7ff3046217faa50961f1a2cec6b70e78e023
+            - path: 1.2.7
+              level: 3
+              title: 'Task 7: Integration test for end-to-end wisdom forwarding flow'
+              byte_offset: 6255
+              byte_count: 799
+              word_count: 99
+              content_hash: 621f2c55892dfa6c936c1d2edc9362565ac817b184852daefe4d7d604c44d8af
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 7054
+          byte_count: 1155
+          word_count: 100
+          content_hash: 69460108a0015eb3127f3672bf028af2498859496268e6dc7b550502103adb16
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 8209
+          byte_count: 2099
+          word_count: 297
+          content_hash: 1c2ad680ccec0ecffdb402a5fe00df79c282b4bf3d3b8be5663dc75af1ab95aa
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: Knowledge store List method lacks `learned_from` filter'
+              byte_offset: 8229
+              byte_count: 685
+              word_count: 101
+              content_hash: 62c44ab6137d5de2afd2e0eacb540f81959778c373e1c32264cb5ea64ab5ae5c
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: Entity service unavailable during context assembly'
+              byte_offset: 8914
+              byte_count: 691
+              word_count: 101
+              content_hash: 5487501fdd0cbfbf734528bfcc85119440414de2921885379973352b9d47aef3
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Topic-based deduplication misses near-duplicate entries'
+              byte_offset: 9605
+              byte_count: 703
+              word_count: 92
+              content_hash: cdd066e1ed6ae54c62ab2397d566e32da5c6d7a88abef2225e9a5274d5c048f7
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 10308
+          byte_count: 1102
+          word_count: 203
+          content_hash: 6004204039fbd8009d7841288679cb9c087f0f097024d77b77da9630f9b9182a
+entity_refs:
+    - entity_id: P45-wisdom-forwarding
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 345
+    - entity_id: P45-spec-wisdom-forwarding
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 367
+cross_doc_links:
+    - target_path: work/P45-wisdom-forwarding/P45-spec-wisdom-forwarding.md
+      link_text: work/P45-wisdom-forwarding/P45-spec-wisdom-forwarding.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.3
+      role: narrative
+      confidence: high
+    - section_path: 1.2.4
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: narrative
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-04T14:22:49.394425Z
+classified: false

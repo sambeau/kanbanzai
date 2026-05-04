@@ -79,3 +79,6 @@ These are intentionally NOT sub-plans. They're captured here so the intention is
 - [Competitive Analysis: OpenCode Plugin Ecosystem vs. Kanbanzai](../research/competitive-analysis-openagent-ecosystem.md) — the shaping artifact
 - [OpenCode Ecosystem Evaluation (Independent)](../_project/research-opencode-ecosystem-evaluation.md) — companion evaluation
 - [Prompt Engineering Guide](../../refs/prompt-engineering-guide.md) — referenced in compaction artifact design
+- [Research-Informed Architecture Review](../../_project/review-research-informed-architecture-review.md) — research-to-design alignment review of P43 and P44 (July 2025)
+- [Context Compaction: Summary & Implementation Guide](P41-research-context-compaction-summary.md) — state-based U-shaped compaction artefacts, graduated trigger strategy, knowledge graph anchoring, evaluation metrics
+- [DeepSeek V4 API Analysis Report](P41-report-deepseek-api-analysis.md) — provider capabilities, cost analysis, thinking-mode integration guide, provider adapter design for P44 Model Routing
