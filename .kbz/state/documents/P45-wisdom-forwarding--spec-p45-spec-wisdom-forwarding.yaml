@@ -1,11 +1,13 @@
+approved_at: "2026-05-04T14:20:00Z"
+approved_by: sambeau
 canonical_content_hash: 6dfbcca772c3655f53352546e19ab64cc77be24e4712afc51411c66155cafca1
-content_hash: 6dfbcca772c3655f53352546e19ab64cc77be24e4712afc51411c66155cafca1
+content_hash: 96e3eb2f972cf5a1bdc8a976bb081864032f90e35e9c5019b48a34dd53f3c0d4
 created: "2026-05-04T14:04:05Z"
 created_by: sambeau
 id: P45-wisdom-forwarding/spec-p45-spec-wisdom-forwarding
 owner: P45-wisdom-forwarding
 path: work/P45-wisdom-forwarding/P45-spec-wisdom-forwarding.md
-status: draft
+status: approved
 title: "Specification: Wisdom Forwarding"
 type: spec
-updated: "2026-05-04T14:04:05Z"
+updated: "2026-05-04T14:20:00Z"
