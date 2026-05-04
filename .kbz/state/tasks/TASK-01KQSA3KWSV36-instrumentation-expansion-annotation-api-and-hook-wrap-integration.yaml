@@ -3,11 +3,19 @@ parent_feature: FEAT-01KQ2MH2S2ZDH
 slug: instrumentation-expansion-annotation-api-and-hook-wrap-integration
 name: Annotation API and Hook.Wrap integration
 summary: Annotation API and Hook.Wrap integration
-status: active
+status: done
 estimate: "3"
 depends_on:
   - TASK-01KQSA3KWP8PQ
+files_planned:
+  - internal/actionlog/annotate.go
+  - internal/actionlog/annotate_test.go
+  - internal/actionlog/hook.go
+  - internal/actionlog/hook_test.go
+completed: "2026-05-04T11:11:13Z"
 claimed_at: "2026-05-04T11:06:27Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T11:06:27Z"
 dispatched_by: sambeau
+completion_summary: "Created annotate.go with AnnotateEntry(ctx, key, value), annotation key constants, context key type, and annotationCollector. Extended Hook.Wrap to place collector on context before inner handler, drain after, and merge into Entry.Extra. Log failures remain isolated. Added annotate_test.go (7 tests) and hook_test.go integration tests (3 new). All 40+ tests pass."
+verification: go build ./... and go test ./internal/actionlog/... -v -count=1 pass cleanly in the worktree
