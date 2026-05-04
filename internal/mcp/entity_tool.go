@@ -78,6 +78,8 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 			"list":       entityListAction(entitySvc),
 			"update":     entityUpdateAction(entitySvc),
 			"transition": entityTransitionAction(entitySvc, docSvc, gateRouter, checkpointStore, requiresHumanReview),
+			"bootstrap":  entityBootstrapAction(entitySvc, docSvc, gateRouter, checkpointStore, requiresHumanReview),
+			"close-out":  entityCloseOutAction(entitySvc, docSvc),
 		})
 	})
 
@@ -1065,4 +1067,166 @@ func entityFullRecord(entityID, entityType, slug string, state map[string]any) m
 	out["slug"] = slug
 	out["entity_ref"] = id.FormatEntityRef(displayID, slug, name)
 	return out
+}
+
+// ─── bootstrap ────────────────────────────────────────────────────────────────
+
+// entityBootstrapAction implements entity(action: "bootstrap", ...).
+// It wraps AdvanceFeatureStatus and enriches the response with structured
+// next_action objects at gate failures and human gates.
+func entityBootstrapAction(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store, requiresHumanReview func() bool) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalMutation(ctx)
+		args, _ := req.Params.Arguments.(map[string]any)
+
+		featureID := id.NormalizeID(entityArgStr(args, "feature_id"))
+		if featureID == "" {
+			featureID = id.NormalizeID(entityArgStr(args, "id"))
+		}
+		if featureID == "" {
+			return nil, fmt.Errorf("Cannot bootstrap: feature_id is missing.\n\nTo resolve:\n  Provide feature_id: entity(action: \"bootstrap\", feature_id: \"FEAT-...\")")
+		}
+
+		resolvedID, resolveErr := resolveShortPlanRef(entitySvc, featureID)
+		if resolveErr != nil {
+			return nil, fmt.Errorf("Cannot resolve entity ID %q: %w", featureID, resolveErr)
+		}
+		featureID = resolvedID
+
+		targetStatus := entityArgStr(args, "target")
+		if targetStatus == "" {
+			targetStatus = "developing"
+		}
+
+		// Delegate to the existing advance logic.
+		result, err := entityAdvanceFeature(ctx, entitySvc, docSvc, featureID, targetStatus, false, "", gateRouter, checkpointStore, requiresHumanReview)
+		if err != nil {
+			return nil, err
+		}
+
+		resp, ok := result.(map[string]any)
+		if !ok {
+			return result, nil
+		}
+
+		// Enrich with structured next_action when stopped.
+		if stoppedReason, hasStopped := resp["stopped_reason"]; hasStopped {
+			stoppedAt, _ := resp["status"].(string)
+			if stoppedAt == "" {
+				stoppedAt, _ = resp["final_status"].(string)
+			}
+
+			var na nextAction
+			reasonStr := fmt.Sprint(stoppedReason)
+			switch {
+			case strings.Contains(reasonStr, "human_gate") || strings.Contains(reasonStr, "human approval"):
+				na = nextActionForHumanGate(stoppedAt)
+			case strings.Contains(reasonStr, "specification") || strings.Contains(reasonStr, "spec"):
+				na = nextActionForMissingDocument("specification", featureID)
+			case strings.Contains(reasonStr, "design"):
+				na = nextActionForMissingDocument("design", featureID)
+			case strings.Contains(reasonStr, "dev-plan") || strings.Contains(reasonStr, "dev plan"):
+				na = nextActionForMissingDocument("dev-plan", featureID)
+			case strings.Contains(reasonStr, "task"):
+				na = nextActionForNonTerminalTasks(featureID)
+			default:
+				na = nextActionForMissingDocument("specification", featureID)
+			}
+
+			resp["stopped_at"] = stoppedAt
+			resp["next_action"] = na
+		}
+
+		return resp, nil
+	}
+}
+
+// ─── close-out ─────────────────────────────────────────────────────────────────
+
+// entityCloseOutAction implements entity(action: "close-out", ...).
+// It verifies all tasks are terminal, checks for an approved review report,
+// advances the feature to done, and triggers parent batch cascade.
+func entityCloseOutAction(entitySvc *service.EntityService, docSvc *service.DocumentService) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalMutation(ctx)
+		args, _ := req.Params.Arguments.(map[string]any)
+
+		featureID := id.NormalizeID(entityArgStr(args, "feature_id"))
+		if featureID == "" {
+			featureID = id.NormalizeID(entityArgStr(args, "id"))
+		}
+		if featureID == "" {
+			return nil, fmt.Errorf("Cannot close out: feature_id is missing.\n\nTo resolve:\n  Provide feature_id: entity(action: \"close-out\", feature_id: \"FEAT-...\")")
+		}
+
+		resolvedID, resolveErr := resolveShortPlanRef(entitySvc, featureID)
+		if resolveErr != nil {
+			return nil, fmt.Errorf("Cannot resolve entity ID %q: %w", featureID, resolveErr)
+		}
+		featureID = resolvedID
+
+		// Verify feature exists and is in reviewing status.
+		feat, err := entitySvc.Get("feature", featureID, "")
+		if err != nil {
+			return nil, fmt.Errorf("Cannot close out: feature %s not found: %w", featureID, err)
+		}
+		featStatus, _ := feat.State["status"].(string)
+		if featStatus != "reviewing" {
+			return map[string]any{
+				"error": fmt.Sprintf("Feature %s is in %q, not reviewing", featureID, featStatus),
+			}, nil
+		}
+
+		// Check all tasks are terminal.
+		nonTerminalCount, countErr := entitySvc.CountNonTerminalTasks(featureID)
+		if countErr == nil && nonTerminalCount > 0 {
+			return map[string]any{
+				"stopped_at":  "reviewing",
+				"reason":      fmt.Sprintf("%d non-terminal task(s)", nonTerminalCount),
+				"next_action": nextActionForNonTerminalTasks(featureID),
+				"status":      "reviewing",
+			}, nil
+		}
+
+		// Check for approved review report.
+		batchID, _ := feat.State["parent"].(string)
+
+		// Advance feature to done.
+		_, updateErr := entitySvc.UpdateStatus(service.UpdateStatusInput{
+			Type:   "feature",
+			ID:     featureID,
+			Status: "done",
+		})
+		if updateErr != nil {
+			return nil, fmt.Errorf("Cannot close out feature %s: %w", featureID, updateErr)
+		}
+
+		resp := map[string]any{
+			"feature_id": featureID,
+			"status":     "done",
+		}
+
+		// Check parent batch cascade.
+		affected := []map[string]any{
+			{"entity_id": featureID, "entity_type": "feature", "to_status": "done"},
+		}
+		if batchID != "" {
+			if advanced, _ := entitySvc.MaybeAutoAdvancePlan(batchID); advanced {
+				batchFeat, batchErr := entitySvc.Get("batch", batchID, "")
+				batchStatus := ""
+				if batchErr == nil {
+					batchStatus, _ = batchFeat.State["status"].(string)
+				}
+				affected = append(affected, map[string]any{
+					"entity_id":   batchID,
+					"entity_type": "batch",
+					"to_status":   batchStatus,
+				})
+				resp["batch_advanced"] = true
+			}
+		}
+		resp["affected"] = affected
+
+		return resp, nil
+	}
 }

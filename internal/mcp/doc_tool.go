@@ -27,6 +27,7 @@ package mcp
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"strconv"
@@ -181,6 +182,7 @@ func docTool(docSvc *service.DocumentService, intelligenceSvc *service.Intellige
 			"audit":                 docAuditAction(docSvc, intelligenceSvc),
 			"evaluate":              docEvaluateAction(docSvc),
 			"record_false_positive": docRecordFalsePositiveAction(docSvc),
+			"publish":               docPublishAction(docSvc, intelligenceSvc),
 		})
 	})
 
@@ -408,6 +410,117 @@ func docApproveOne(ctx context.Context, docSvc *service.DocumentService, intelSv
 	}
 
 	return result.ID, map[string]any{"document": docRecordToMap(result)}, nil
+}
+
+// ─── publish ──────────────────────────────────────────────────────────────────
+
+// docPublishAction collapses register + classify + approve into a single call.
+// When classifications with at least one populated concepts_intro are provided,
+// the document is registered, classified, and approved in one step. Without
+// classifications, the document is registered with a structured next_action
+// pointing to doc(action: "approve").
+func docPublishAction(docSvc *service.DocumentService, intelSvc *service.IntelligenceService) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalMutation(ctx)
+		args, _ := req.Params.Arguments.(map[string]any)
+
+		// Register the document via the existing register path.
+		_, regResult, regErr := docRegisterOne(docSvc, intelSvc, args)
+		if regErr != nil {
+			return nil, regErr
+		}
+
+		regMap, ok := regResult.(map[string]any)
+		if !ok {
+			return nil, fmt.Errorf("Cannot publish document: unexpected register result type")
+		}
+
+		// Extract the document ID from the register result.
+		doc, _ := regMap["document"].(map[string]any)
+		if doc == nil {
+			return nil, fmt.Errorf("Cannot publish document: register result missing document record")
+		}
+		docID, _ := doc["id"].(string)
+		if docID == "" {
+			return nil, fmt.Errorf("Cannot publish document: register result missing document ID")
+		}
+		contentHash, _ := doc["content_hash"].(string)
+
+		// Check for inline classifications.
+		classificationsJSON := docArgStr(args, "classifications")
+		modelName := docArgStr(args, "model_name")
+		modelVersion := docArgStr(args, "model_version")
+
+		if classificationsJSON == "" || intelSvc == nil {
+			// No classifications provided — return draft with structured next_action.
+			delete(regMap, "classification_nudge")
+			regMap["next_action"] = nextActionForClassification(docID)
+			return regMap, nil
+		}
+
+		// Parse classifications to check for concepts_intro.
+		var classifications []docint.Classification
+		if err := json.Unmarshal([]byte(classificationsJSON), &classifications); err != nil {
+			// Invalid JSON — return draft with structured next_action.
+			delete(regMap, "classification_nudge")
+			regMap["next_action"] = nextActionForClassification(docID)
+			regMap["classification_parse_error"] = err.Error()
+			return regMap, nil
+		}
+
+		hasConcepts := false
+		for _, c := range classifications {
+			if len(c.ConceptsIntro) > 0 {
+				hasConcepts = true
+				break
+			}
+		}
+
+		if !hasConcepts {
+			// Classifications present but no concepts_intro — return draft.
+			delete(regMap, "classification_nudge")
+			regMap["next_action"] = nextActionForClassification(docID)
+			return regMap, nil
+		}
+
+		// Apply classifications via the intelligence service.
+		submission := docint.ClassificationSubmission{
+			DocumentID:      docID,
+			ContentHash:     contentHash,
+			ModelName:       modelName,
+			ModelVersion:    modelVersion,
+			ClassifiedAt:    time.Now().UTC(),
+			Classifications: classifications,
+		}
+		if classErr := intelSvc.ClassifyDocument(submission); classErr != nil {
+			// Classification failed — return draft with registration ok.
+			delete(regMap, "classification_nudge")
+			regMap["registration"] = "ok"
+			regMap["approval"] = "failed: " + classErr.Error()
+			return regMap, nil
+		}
+
+		// Approve the document.
+		approvedByRaw := docArgStr(args, "created_by")
+		_, approveResult, approveErr := docApproveOne(ctx, docSvc, intelSvc, docID, approvedByRaw)
+		if approveErr != nil {
+			// Approval failed — return draft with registration ok.
+			delete(regMap, "classification_nudge")
+			regMap["registration"] = "ok"
+			regMap["approval"] = "failed: " + approveErr.Error()
+			return regMap, nil
+		}
+
+		// Success — return the approved document.
+		if am, ok := approveResult.(map[string]any); ok {
+			if ad, ok := am["document"]; ok {
+				regMap["document"] = ad
+			}
+		}
+		regMap["status"] = "approved"
+		regMap["classified"] = true
+		return regMap, nil
+	}
 }
 
 // ─── move ─────────────────────────────────────────────────────────────────────

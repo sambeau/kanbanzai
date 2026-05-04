@@ -229,6 +229,10 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		mcpServer.AddTools(EntityTool(entitySvc, docRecordSvc, gateRouter, checkpointStore, cfg.Merge.RequiresHumanReview)...)
 		// Track I: doc — consolidated document operations
 		mcpServer.AddTools(DocTool(docRecordSvc, intelligenceSvc, entitySvc)...)
+		// Track J: develop — development dispatch (B43 — Composite Tools)
+		mcpServer.AddTools(DevelopTool(entitySvc, conflictSvc, dispatchSvc, knowledgeSvc, intelligenceSvc, docRecordSvc)...)
+		// Track K: batch — batch-level operations (B43 — Composite Tools)
+		mcpServer.AddTools(BatchTool(entitySvc)...)
 
 	}
 
