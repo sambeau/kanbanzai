@@ -3,4 +3,7 @@ parent_feature: FEAT-01KQSP3BMFF98
 slug: hash-validated-edit-file
 name: Add hash-validated edits to edit_file
 summary: "Add optional hash_validate boolean parameter to edit_file MCP tool. When true, each edit must provide hash_ref field in {line_number}#{hash} format. Read current file, compute HashLine() on referenced line, compare. Match → apply edit with new_text. Mismatch → reject with error (line number, expected hash, actual hash). Line out of range → reject. hash_ref required when validate on. Backward compatible. Deliverable: modified edit_file handler + tests. Addresses REQ-HE-001 through REQ-HE-007."
-status: ready
+status: done
+completed: "2026-05-04T14:42:22Z"
+completion_summary: "Added hash_validate boolean parameter and hash_ref field to edit_file MCP tool. When true, edits reference hash tags instead of old_text. Validates line content has not changed since hash was computed. Match → apply edit. Mismatch → reject with line number, expected/actual hash. Backward compatible when absent. 7 new tests pass, zero regressions on 14 existing edit_file tests."
+verification: go test ./internal/mcp/ -run TestEditFile -v — all 21 tests PASS (14 pre-existing + 7 new)
