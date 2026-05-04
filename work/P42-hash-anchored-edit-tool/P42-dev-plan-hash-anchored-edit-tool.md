@@ -3,10 +3,10 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-04                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | AI architect                   |
 
-## Scope
+## Overview
 
 This plan implements the hash-anchored edit tool specified in
 `work/P42-hash-anchored-edit-tool/P42-spec-hash-anchored-edit-tool.md` (DOC-`P42-hash-anchored-edit-tool/spec-p42-spec-hash-anchored-edit-tool`). It covers all 23 requirements across 5 task groups: hash computation, hash-tagged read, hash-validated edit, backward compatibility and error modes, and integration testing.
@@ -99,6 +99,59 @@ Task 1 is the foundation — both Task 2 and Task 3 depend on it but not on each
 - **Impact:** Medium — if hashes change between read and edit within the same session, valid edits would be falsely rejected
 - **Mitigation:** Task 1 includes determinism unit test. Task 5 end-to-end test validates read-then-edit with no external modification.
 - **Affected tasks:** Task 1, Task 3, Task 5
+
+## Interface Contracts
+
+### HashLine function contract (Task 1 → Tasks 2, 3)
+
+- **Signature:** `func HashLine(content string) string`
+- **Input:** A line's content as a string, excluding the trailing newline character.
+- **Output:** A 2-character uppercase hexadecimal hash tag string (e.g., `"AB"`, `"3F"`).
+- **Contract:** The function must be deterministic within a single process — the same input must always produce the same output. The hash must be derived from SHA-256 truncated to 2 hex characters. Trailing newlines in the input must be stripped before hashing.
+- **Consumer tasks:** Task 2 (hash-tagged read) and Task 3 (hash-validated edit) both call `HashLine()`.
+
+### read_file hash_tag parameter contract (Task 2 → Tasks 4, 5)
+
+- **Parameter:** `hash_tag` (boolean, optional, default `false`).
+- **When `false` or absent:** Output is identical to current `read_file` behavior — plain text, no hash tags. No schema change visible to callers who omit the parameter.
+- **When `true`:** Each line is prefixed with `{line_number}#{hash}| ` where `{line_number}` is 1-based, left-padded to ≥4 chars, `{hash}` is the output of `HashLine()`, and `|` is a literal separator. Absolute line numbering applies regardless of `start_line`/`end_line` range.
+- **Consumer tasks:** Task 4 verifies backward compatibility. Task 5 tests the read-then-edit flow.
+
+### edit_file hash_validate parameter contract (Task 3 → Tasks 4, 5)
+
+- **Parameter:** `hash_validate` (boolean, optional, default `false`).
+- **When `false` or absent:** Current fuzzy-match behavior applies unchanged.
+- **When `true`:** Each edit object in the `edits` array must include a `hash_ref` field in format `{line_number}#{hash}`. The tool reads the current file, computes `HashLine()` on the referenced line, and compares. Match → apply `new_text`. Mismatch → error with line number, expected hash, and actual hash. Line out of range → error.
+- **hash_ref schema:** The `hash_ref` field is required when `hash_validate: true` and optional at the schema level (not required at the top-level schema).
+- **Consumer tasks:** Task 4 verifies backward compatibility and error modes. Task 5 tests end-to-end flows.
+
+## Traceability Matrix
+
+| Spec Requirement | Task(s) | Verification |
+|-----------------|---------|-------------|
+| REQ-HC-001 (SHA-256, 2-char hex) | Task 1 | Unit test: determinism |
+| REQ-HC-002 (newline exclusion) | Task 1 | Unit test: "abc" vs "abc\n" |
+| REQ-HC-003 (process determinism) | Task 1 | Unit test: double-hash |
+| REQ-HR-001 (hash_tag parameter) | Task 2 | Unit test: format check |
+| REQ-HR-002 (format: line#hash|content) | Task 2 | Unit test: format regex |
+| REQ-HR-003 (1-based line numbers) | Task 2 | Unit test: verify numbering |
+| REQ-HR-004 (backward compatible read) | Task 2 | Regression test |
+| REQ-HR-005 (blank lines get hash) | Task 2 | Unit test: blank line |
+| REQ-HR-006 (absolute numbering with range) | Task 2 | Unit test: start_line/end_line |
+| REQ-HE-001 (hash_validate parameter) | Task 3 | Integration test |
+| REQ-HE-002 (hash_ref format) | Task 3 | Unit test: format validation |
+| REQ-HE-003 (hash comparison logic) | Task 3 | Integration test: match/mismatch |
+| REQ-HE-004 (mismatch error format) | Task 3 | Integration test: error content |
+| REQ-HE-005 (line out of range) | Task 3 | Integration test: truncated file |
+| REQ-HE-006 (backward compatible edit) | Task 3 | Regression test |
+| REQ-HE-007 (hash_ref required when validate on) | Task 3 | Unit test: missing hash_ref |
+| REQ-BC-001 (zero regressions) | Task 4 | Full test suite |
+| REQ-BC-002 (hash_ref optional at schema) | Task 4 | Unit test: schema validation |
+| REQ-ERR-001 (collision accepted) | Task 4 | Unit test: collision scenario |
+| REQ-ERR-002 (file not found unchanged) | Task 4 | Unit test: nonexistent file |
+| REQ-NF-001 (≤10ms hash overhead) | Task 2 | Performance test: 10K lines |
+| REQ-NF-002 (fixed-width line numbers) | Task 2 | Inspection: output format |
+| REQ-NF-003 (separate hash package) | Task 1 | Inspection: package layout |
 
 ## Verification Approach
 
