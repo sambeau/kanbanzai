@@ -3,10 +3,14 @@ parent_feature: FEAT-01KQ2MH2S2ZDH
 slug: instrumentation-expansion-end-to-end-tests-and-verification
 name: End-to-end tests and verification
 summary: End-to-end tests and verification
-status: ready
+status: active
 estimate: "3"
 depends_on:
   - TASK-01KQSA3KWRKXM
   - TASK-01KQSA3KWVPHN
   - TASK-01KQSA3KWW7RT
   - TASK-01KQSA3KWXJDA
+claimed_at: "2026-05-04T11:31:47Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-04T11:31:47Z"
+dispatched_by: sambeau
