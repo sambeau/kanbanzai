@@ -3,8 +3,12 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-04                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | AI architect                   |
+
+## Overview
+
+This implementation plan breaks down the wisdom forwarding enhancement — automatically surfacing knowledge entries from completed sibling tasks during `handoff` context assembly — into seven tasks covering the knowledge model changes, `finish` tool updates, context assembly pipeline modifications, and comprehensive testing.
 
 ## Scope
 
@@ -118,6 +122,56 @@ Task 2 is in parallel with Task 3 (both depend on Task 1, neither depends on the
 - **Impact:** Low. The sub-agent sees both entries and can reconcile them. The spec explicitly defers content-based deduplication. At worst, the agent sees redundant information.
 - **Mitigation:** Monitor for duplicate reports in production. If topic-based deduplication proves insufficient, add content-based deduplication as a follow-up (already noted in the design document's Open Questions).
 - **Affected tasks:** Task 3.
+
+## Interface Contracts
+
+### Task 1 → Task 2, Task 3
+
+**Interface:** `ContributeInput.Forward` and `KnowledgeEntryInput.Forward` fields.
+- **Producer (Task 1):** Adds `Forward *bool` to both structs and persists the field in the knowledge storage record.
+- **Consumers (Task 2, Task 3):** Task 2 reads `Forward` from `finish` tool parameters. Task 3 reads `forward` from knowledge storage records to filter out non-forwardable entries.
+- **Contract:** `Forward` is a pointer to bool. `nil` (absent) means default-forwardable for tier-2. `false` means explicitly not-forwardable. Tier-3 entries ignore this flag entirely (always not-forwardable).
+
+### Task 3 → Task 4
+
+**Interface:** `asmLoadSiblingKnowledge` function signature and `assembledContext.siblingKnowledge` field.
+- **Producer (Task 3):** Provides `asmLoadSiblingKnowledge(svc, entitySvc, parentFeature, existingTopics) ([]asmKnowledgeEntry, error)`.
+- **Consumer (Task 4):** Calls `asmLoadSiblingKnowledge` from `assembleContext`, stores results in `actx.siblingKnowledge`, and renders them in `renderHandoffPrompt`.
+- **Contract:** Returned entries are deduplicated and sorted most-recent-first. Empty slice when no siblings or no forwardable entries. Error returns empty slice (best-effort pattern).
+
+### Task 4 → Task 5
+
+**Interface:** `asmInput.entitySvc` field.
+- **Producer (Task 4):** Adds `entitySvc *service.EntityService` to `asmInput`.
+- **Consumer (Task 5):** Passes existing `entitySvc` from handler scope into `asmInput`.
+- **Contract:** `entitySvc` must be non-nil for sibling knowledge to be loaded. If nil, `asmLoadSiblingKnowledge` returns empty slice (graceful degradation).
+
+### External interface stability
+
+- `handoff` MCP tool: No parameter changes. Forwarding is invisible to callers (REQ-010).
+- `finish` MCP tool: New optional `forward` boolean in each knowledge entry object. Absent = default forwardable (backward compatible).
+- Knowledge store: New optional `forward` field in storage records. Legacy entries without the field are treated as forwardable for tier-2.
+
+## Traceability Matrix
+
+| Spec Requirement | Task(s) | Verification |
+|-----------------|---------|-------------|
+| REQ-001 (sibling knowledge in context) | Task 3, Task 4 | Unit test (Task 6) |
+| REQ-002 (distinct section) | Task 4 | Unit test (Task 6) |
+| REQ-003 (source task ID annotation) | Task 4 | Unit test (Task 6) |
+| REQ-004 (feature boundary scoping) | Task 3 | Unit test (Task 6) |
+| REQ-005 (tier-2 only) | Task 3 | Unit test (Task 6) |
+| REQ-006 (topic dedup, most recent) | Task 3 | Unit test (Task 6) |
+| REQ-007 (dedup vs general knowledge) | Task 3 | Unit test (Task 6) |
+| REQ-008 (opt-out flag) | Task 1, Task 2 | Unit test (Task 6) |
+| REQ-009 (default forwardable) | Task 1, Task 2 | Unit test (Task 6) |
+| REQ-010 (invisible to orchestrator) | Task 5 | Unit test (Task 6) |
+| REQ-011 (read-only, store unchanged) | — | Integration test (Task 7) |
+| REQ-012 (lifecycle independence) | — | Integration test (Task 7) |
+| REQ-013 (no new tools/roles/entities) | — | Inspection (Task 7) |
+| REQ-NF-001 (query count ≤ N+1) | Task 3 | Unit test (Task 6) |
+| REQ-NF-002 (most-recent-first ordering) | Task 3 | Unit test (Task 6) |
+| REQ-NF-003 (distinct section label) | Task 4 | Unit test (Task 6) |
 
 ## Verification Approach
 

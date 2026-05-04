@@ -6,6 +6,7 @@ status: dev-planning
 summary: Automatically surface knowledge entries from completed sibling tasks when handoff assembles context for new task dispatch.
 design: FEAT-01KQSP2DDATWT/design-p45-design-wisdom-forwarding
 spec: FEAT-01KQSP2DDATWT/spec-p45-spec-wisdom-forwarding
+dev_plan: FEAT-01KQSP2DDATWT/dev-plan-p45-dev-plan-wisdom-forwarding
 created: "2026-05-04T14:25:27Z"
 created_by: sambeau
 display_id: B47-F1
