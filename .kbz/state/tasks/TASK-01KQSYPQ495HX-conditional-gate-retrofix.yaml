@@ -3,4 +3,11 @@ parent_feature: FEAT-01KQSP41PE6JP
 slug: conditional-gate-retrofix
 name: Implement conditional gate logic for retro_fix
 summary: "Fix F4: Implement file-change-type detection or formally defer to P44 with spec update."
-status: ready
+status: done
+completed: "2026-05-04T17:15:11Z"
+claimed_at: "2026-05-04T17:15:03Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-04T17:15:03Z"
+dispatched_by: sambeau
+completion_summary: "Implemented conditional gate logic: evaluateConditional checks FilesModified; doc-only changes skip review gate with COND_DOCS_ONLY annotation. Implementation changes trigger validator or return COND_IMPL_CHANGE blocking result. Added isDocOnlyChange helper."
+verification: go build ./... passes. go test ./internal/validate/... passes. go vet clean.
