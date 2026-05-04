@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQSP41PE6JP
 slug: plan-validator-role
 name: Create plan-validator role
 summary: "Create .kbz/roles/plan-validator.yaml inheriting from base. Identity text: \"Senior implementation plan auditor. Verify that dev-plans are complete, well-decomposed, and fully traceable to their parent specification. Do not evaluate whether task ordering is optimal — only whether it is valid and complete.\" Define anti-patterns: Phantom Traceability, Architectural Second-Guessing, Unverified File References. Define tool constraints."
-status: queued
+status: ready

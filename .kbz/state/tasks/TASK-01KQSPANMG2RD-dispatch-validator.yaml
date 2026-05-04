@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQSP41PE6JP
 slug: dispatch-validator
 name: Implement dispatch_validator abstraction
 summary: "Create the dispatch_validator(role, skill, context) abstraction in internal/mcp/ or a new internal/validate/ package. Today delegates to spawn_agent with fresh context. Must be designed as an interface/abstraction so future P44 model routing can replace spawn_agent by changing configuration, not validator code. The abstraction receives: role ID, skill ID, context (document under validation, parent document, checklist with rubrics). Returns: summary for orchestrator (verdict, counts, document reference) and writes full report to document store."
-status: queued
+status: ready

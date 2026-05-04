@@ -2,7 +2,7 @@ id: FEAT-01KQSP41PE6JP
 slug: fast-track-core
 name: Fast-Track Architecture Core Implementation
 parent: B48-fast-track-impl
-status: dev-planning
+status: developing
 summary: "Implement the complete fast-track architecture: validator roles and skills, rubrics, fast-track config, tier inference, transition hooks, validation pipeline, session management, cycle tracking, and dispatch_validator abstraction."
 design: FEAT-01KQSP41PE6JP/design-p43-design-fast-track-architecture
 spec: FEAT-01KQSP41PE6JP/spec-p43-spec-fast-track-architecture

@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQSP41PE6JP
 slug: fast-track-config
 name: Define fast-track config schema and loading
 summary: "Define the fast_track configuration block in .kbz/config.yaml and implement config loading in internal/config/. The config block includes: enabled (bool), default_tier (string, one of retro_fix/bug_fix/feature/critical), and tiers map with per-tier automation matrix (design/spec/dev-plan/review gate modes) and max_auto_cycles. Require the config struct, defaults, validation, and unit tests."
-status: queued
+status: ready
