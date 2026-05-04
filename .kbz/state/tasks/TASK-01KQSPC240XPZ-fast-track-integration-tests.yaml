@@ -3,8 +3,11 @@ parent_feature: FEAT-01KQSP41PE6JP
 slug: fast-track-integration-tests
 name: Integration tests for fast-track system
 summary: "Write comprehensive integration tests for the fast-track system: (1) spec-validator blocks transition on missing Verification Plan, (2) plan-validator blocks transition on cyclic dependency graph, (3) review-gate-validator blocks on rubber-stamp review, (4) non-blocking findings don't prevent transition but attach to doc record, (5) human override bypasses validator block and is recorded, (6) each risk tier automation matrix is respected, (7) tier inference rules produce correct tiers, (8) validation pipeline auto-approves on pass, escalates on fail, (9) cycle cap triggers human escalation, (10) design gate never auto-validates. Test performance: validator completes within 5 tool calls, transition check adds less than 2s latency when no validator is required."
-status: active
+status: done
+completed: "2026-05-04T16:32:21Z"
 claimed_at: "2026-05-04T16:03:00Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T16:03:00Z"
 dispatched_by: sambeau
+completion_summary: "Implemented 20 integration tests in internal/mcp/fast_track_integration_test.go covering: transition validators (spec, plan, review-gate), tier matrix (critical/feature/bug_fix/retro_fix), tier inference, auto-validation pipeline, cycle cap escalation, performance bounds (<2s), error message format (check IDs, severity, report ref), override bypass, design gate exclusion, and end-to-end doc registration→validation dispatch. All tests pass."
+verification: "go test -run TestFastTrack_ ./internal/mcp/ -count=1: all 20 tests PASS"
