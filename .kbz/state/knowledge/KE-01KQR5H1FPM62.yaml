@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "P48 (Coordination Server) was stuck in \"ready\" status despite all child features being done. There is no direct transition from \"ready\" to \"done\" for strategic plans — you must go ready → active → done. This two-step dance is non-obvious. The system should either allow direct ready→done when all children are complete, or auto-detect that a plan is ready to close and simplify the transition. The status dashboard flagged P48 as \"ready to close\" but provided no action path."
+created: "2026-05-04T00:17:06Z"
+created_by: sambeau
+id: KE-01KQR5H1FPM62
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retro
+  - plan-lifecycle
+  - lifecycle-gap
+  - ux
+tier: 2
+topic: plan-lifecycle
+ttl_days: 90
+updated: "2026-05-04T00:17:06Z"
+use_count: 0

@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "P40 (Retrospective Batch — April 2026) was already in \"done\" status but the status dashboard reported it as \"idea\" and flagged it with \"ready to close\" attention. Root cause: the plan had a status of \"done\" at the entity level, but the dashboard classification logic misclassified it — likely because the entity type resolution fell back to batch defaults when the plan had child batches. Symptom: health errors \"unknown batch status 'idea'\" appeared for P40 even though its actual entity status was \"done\"."
+created: "2026-05-04T00:17:06Z"
+created_by: sambeau
+id: KE-01KQR5H1FPFXQ
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retro
+  - plan-lifecycle
+  - status-dashboard
+  - bug
+tier: 2
+topic: plan-lifecycle
+ttl_days: 90
+updated: "2026-05-04T00:17:06Z"
+use_count: 0
