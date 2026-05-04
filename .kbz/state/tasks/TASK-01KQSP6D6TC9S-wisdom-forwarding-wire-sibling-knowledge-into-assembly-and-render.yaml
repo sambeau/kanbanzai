@@ -3,11 +3,14 @@ parent_feature: FEAT-01KQSP2DDATWT
 slug: wisdom-forwarding-wire-sibling-knowledge-into-assembly-and-render
 name: Wire sibling knowledge into assembly and render
 summary: Wire sibling knowledge into assembleContext and renderHandoffPrompt
-status: active
+status: done
 estimate: "2"
 depends_on:
   - TASK-01KQSP6D6SZA0
+completed: "2026-05-04T14:40:42Z"
 claimed_at: "2026-05-04T14:39:10Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T14:39:10Z"
 dispatched_by: sambeau
+completion_summary: "Wired sibling knowledge into renderHandoffPrompt: added \"Surfaced Knowledge (from sibling tasks)\" section between general knowledge and files. Each entry annotated with [from TASK-xxx] source task ID. Section omitted when empty."
+verification: go build ./... passes. Handoff prompt rendering tests pass (the one failure is a pre-existing temp-dir cleanup race).
