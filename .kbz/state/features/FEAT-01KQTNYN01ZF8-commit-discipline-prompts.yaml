@@ -2,7 +2,7 @@ id: FEAT-01KQTNYN01ZF8
 slug: commit-discipline-prompts
 name: Commit Discipline Prompts
 parent: B49-retro-fixes-may-2026
-status: specifying
+status: designing
 summary: "Add state_modified flags to MCP tool responses and strengthen session-start git status checks so management actions don't leave orphaned state on disk."
 spec: FEAT-01KQTNYN01ZF8/spec-p50-spec-commit-discipline-prompts
 created: "2026-05-04T23:42:38Z"

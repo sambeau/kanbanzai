@@ -2,7 +2,7 @@ id: FEAT-01KQTNYMZRT6V
 slug: error-classification
 name: Error Classification for MCP Handlers
 parent: B49-retro-fixes-may-2026
-status: specifying
+status: designing
 summary: "Add error type classification to MCP tool handlers so every failure has a diagnostic error_type, making instrumentation diagnostic rather than opaque."
 spec: FEAT-01KQTNYMZRT6V/spec-p50-spec-error-classification
 created: "2026-05-04T23:42:38Z"
