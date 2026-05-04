@@ -1,0 +1,11 @@
+canonical_content_hash: 96e3eb2f972cf5a1bdc8a976bb081864032f90e35e9c5019b48a34dd53f3c0d4
+content_hash: 96e3eb2f972cf5a1bdc8a976bb081864032f90e35e9c5019b48a34dd53f3c0d4
+created: "2026-05-04T14:26:05Z"
+created_by: sambeau
+id: FEAT-01KQSP2DDATWT/spec-p45-spec-wisdom-forwarding
+owner: FEAT-01KQSP2DDATWT
+path: work/P45-wisdom-forwarding/P45-spec-wisdom-forwarding.md
+status: draft
+title: "Specification: Wisdom Forwarding"
+type: spec
+updated: "2026-05-04T14:26:05Z"
