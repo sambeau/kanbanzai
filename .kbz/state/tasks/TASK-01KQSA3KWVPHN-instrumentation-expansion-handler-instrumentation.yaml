@@ -3,7 +3,18 @@ parent_feature: FEAT-01KQ2MH2S2ZDH
 slug: instrumentation-expansion-handler-instrumentation
 name: Handler instrumentation
 summary: Handler instrumentation
-status: ready
+status: done
 estimate: "2"
 depends_on:
   - TASK-01KQSA3KWSV36
+files_planned:
+  - internal/mcp/entity_tool.go
+  - internal/mcp/knowledge_tool.go
+  - internal/mcp/doc_intel_tool.go
+completed: "2026-05-04T11:22:58Z"
+claimed_at: "2026-05-04T11:18:53Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-04T11:18:53Z"
+dispatched_by: sambeau
+completion_summary: "Added AnnotateEntry calls to annotate result_count in entity list, knowledge list, and doc_intel search handlers. Added actionlog import to all three files. Build passes; pre-existing test failures are unrelated."
+verification: "go build ./... passes. go test ./internal/mcp/... has 3 pre-existing failures unrelated to these changes (TestStatusTool_ShortPlanRef_HappyPath, TestPlanGate_BlockedByNonTerminalFeature, TestToolDescriptions_TokenBudget)."
