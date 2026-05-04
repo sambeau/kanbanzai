@@ -1,0 +1,11 @@
+canonical_content_hash: 612108cfaf779ca897b2e4e50e9e4aa6dcb55477d86ce97e64867f98fb72f15a
+content_hash: 612108cfaf779ca897b2e4e50e9e4aa6dcb55477d86ce97e64867f98fb72f15a
+created: "2026-05-04T14:32:17Z"
+created_by: sambeau
+id: FEAT-01KQSP3BMFF98/spec-p42-spec-hash-anchored-edit-tool
+owner: FEAT-01KQSP3BMFF98
+path: work/P42-hash-anchored-edit-tool/P42-spec-hash-anchored-edit-tool.md
+status: draft
+title: "Specification: Hash-Anchored Edit Tool"
+type: spec
+updated: "2026-05-04T14:32:17Z"
