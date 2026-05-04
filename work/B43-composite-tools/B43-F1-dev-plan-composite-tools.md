@@ -3,8 +3,18 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-04                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | sambeau                        |
+
+## Overview
+
+This implementation plan decomposes the Composite Tools for Workflow Chaining
+specification into seven tasks across two implementation waves plus one
+integration verification wave. Five composite MCP tool actions are implemented
+on four tools: `doc(action: "publish")`, `entity(action: "bootstrap")`,
+`entity(action: "close-out")`, `develop(action: "dispatch")`, and
+`batch(action: "snapshot")`. A shared `next_action` response helper ensures
+format consistency across all gate-failure responses.
 
 ## Scope
 
@@ -211,6 +221,55 @@ Task 7 (integration verification)  — depends on Tasks 1, 2, 3, 4, 5, 6
 - **Mitigation:** Task 4 implementer should trace the handoff call path
   early to confirm it can be called programmatically from another handler.
 - **Affected tasks:** Task 4
+
+## Interface Contracts
+
+Composites do not introduce new abstractions — they wrap existing functions.
+The interface contracts are therefore the existing function signatures of the
+wrapped service and gate logic:
+
+| Composite | Wrapped functions | File |
+|-----------|-------------------|------|
+| `doc publish` | `docRegisterOne`, classification logic, `docApproveOne` | `internal/mcp/doc_tool.go` |
+| `entity bootstrap` | `AdvanceFeatureStatus`, `GateRouter.CheckGate` | `service/advance.go`, `gate/` |
+| `entity close-out` | `CountNonTerminalTasks`, `UpdateStatus`, `MaybeAutoAdvancePlan` | `service/entity_children.go` |
+| `develop dispatch` | `handoff` pipeline, conflict analysis logic | `internal/mcp/handoff_tool.go`, conflict infrastructure |
+| `batch snapshot` | `ListFeatures`, gate evaluation | batch infrastructure, `gate/` |
+
+All composites use `WithSideEffects` middleware and produce `SideEffect*`
+types matching individual tool calls. No function signature changes are
+required on any wrapped function.
+
+## Traceability Matrix
+
+| Requirement | Task | Acceptance Criterion |
+|------------|------|---------------------|
+| REQ-001 | T1 | AC-001 |
+| REQ-002 | T1 | AC-001 |
+| REQ-003 | T1 | AC-002 |
+| REQ-004 | T1 | AC-003 |
+| REQ-005 | T2 | AC-004 |
+| REQ-006 | T2, T6 | AC-005 |
+| REQ-007 | T2 | AC-006 |
+| REQ-008 | T2 | AC-004 |
+| REQ-009 | T3 | AC-007 |
+| REQ-010 | T3 | AC-008 |
+| REQ-011 | T3, T6 | AC-009 |
+| REQ-012 | T3 | AC-007 |
+| REQ-013 | T4 | AC-010, AC-011 |
+| REQ-014 | T4 | AC-010 |
+| REQ-015 | T4 | AC-011 |
+| REQ-016 | T4 | AC-012 |
+| REQ-017 | T5 | AC-013 |
+| REQ-018 | T5, T6 | AC-013 |
+| REQ-019 | T7 | AC-014 |
+| REQ-020 | T7 | AC-014 |
+| REQ-021 | T7 | — (architectural) |
+| REQ-022 | T7 | — (architectural) |
+| REQ-NF-001 | T7 | — (measurement) |
+| REQ-NF-002 | T7 | — (measurement) |
+| REQ-NF-003 | T6 | — (schema compliance) |
+| REQ-NF-004 | T7 | AC-015 |
 
 ## Verification Approach
 

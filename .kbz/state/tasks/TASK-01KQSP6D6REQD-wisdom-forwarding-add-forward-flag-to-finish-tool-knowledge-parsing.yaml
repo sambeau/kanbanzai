@@ -3,7 +3,11 @@ parent_feature: FEAT-01KQSP2DDATWT
 slug: wisdom-forwarding-add-forward-flag-to-finish-tool-knowledge-parsing
 name: Add forward flag to finish tool knowledge parsing
 summary: Add forward flag to finish tool knowledge parsing
-status: ready
+status: active
 estimate: "1"
 depends_on:
   - TASK-01KQSP6D6PGVM
+claimed_at: "2026-05-04T14:34:32Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-04T14:34:32Z"
+dispatched_by: sambeau
