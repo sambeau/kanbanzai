@@ -4,3 +4,4 @@ slug: insert-checklist
 name: Insert elicitation checklist into write-spec skill
 summary: "Add the 7-item elicitation checklist as a new section in .kbz/skills/write-spec/SKILL.md, positioned between the Cross-Reference Check and Step 1: Read the Design. Must include all 7 items matching the spec's question wording, STOP-on-ambiguity behaviour, design-gate statement, revision-scope note, and no-artifact instruction. Language must be imperative with IF/THEN conventions. Deliverable: modified SKILL.md."
 status: queued
+estimate: "0.5"
