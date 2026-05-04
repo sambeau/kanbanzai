@@ -3,8 +3,20 @@ parent_feature: FEAT-01KQSP41PE6JP
 slug: transition-validator-hooks
 name: Implement stage transition validator hooks
 summary: "Add transition_validator hooks to stage bindings (.kbz/stage-bindings.yaml) and implement enforcement in entity transition logic. Hooks: specifying→dev-planning triggers spec-validator; dev-planning→developing triggers plan-validator; reviewing→done triggers review-gate-validator. If blocking checks fail, transition is rejected with error containing: failing check IDs, blocking/non-blocking classification, and validator report document ID. Human override via entity(action: transition, override: true, override_reason: ...) always available; override usage tracked as metric. Non-blocking failures attach findings to document record and are visible in status. Implement in internal/validate/ and internal/service/."
-status: active
+status: done
+files_planned:
+  - internal/binding/model.go
+  - internal/gate/router.go
+  - internal/mcp/entity_tool.go
+  - internal/model/entities.go
+  - internal/service/entities.go
+  - internal/validate/transition_validator.go
+  - internal/validate/transition_validator_test.go
+  - .kbz/stage-bindings.yaml
+completed: "2026-05-04T15:27:59Z"
 claimed_at: "2026-05-04T15:12:46Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T15:12:46Z"
 dispatched_by: sambeau
+completion_summary: "Implemented stage transition validator hooks: added transition_validator blocks to stage-bindings.yaml for specifying, dev-planning, and reviewing stages. Added TransitionValidator struct to binding model, ValidatorDispatcher with gate mode evaluation (human/auto/fast-track), Tier field on Feature, TransitionValidatorError with blocking/non-blocking classification. Integrated enforcement into entityTransitionAction and entityAdvanceFeature. All tests pass."
+verification: "All tests pass: go test ./internal/validate/... ./internal/binding/... ./internal/gate/... ./internal/service/... ./internal/model/... -- Entity transition tests pass -- Validator unit tests pass -- Code compiles clean"
