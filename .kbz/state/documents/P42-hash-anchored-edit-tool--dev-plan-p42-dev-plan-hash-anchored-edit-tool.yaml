@@ -1,5 +1,5 @@
-canonical_content_hash: 9c3e65279c77771395d8c5668eb5e5a5daaf4108ebc0fe68e37d83f2f283a162
-content_hash: 6cf442765e5f34313cdf6903f75007e434c778090a56933ba67bc7dc71787210
+canonical_content_hash: 4ef63b87e6482cb68c3340a4bc00b994ca6860ac9b94152b4a687ab27583e85a
+content_hash: 28ee04898d1f122ba38d29ee8d618292adb5abe45e0c3f2757ff613c238aac0b
 created: "2026-05-04T14:22:35Z"
 created_by: sambeau
 id: P42-hash-anchored-edit-tool/dev-plan-p42-dev-plan-hash-anchored-edit-tool
@@ -8,4 +8,4 @@ path: work/P42-hash-anchored-edit-tool/P42-dev-plan-hash-anchored-edit-tool.md
 status: draft
 title: "Dev-Plan: Hash-Anchored Edit Tool"
 type: dev-plan
-updated: "2026-05-04T14:22:35Z"
+updated: "2026-05-04T14:24:51Z"
