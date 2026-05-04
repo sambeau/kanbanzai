@@ -75,7 +75,8 @@ func finishTool(entitySvc *service.EntityService, dispatchSvc *service.DispatchS
 		mcp.WithString("verification", mcp.Description("Testing or verification performed")),
 		mcp.WithArray("knowledge", mcp.Items(map[string]any{"type": "object"}), mcp.Description(
 			"Inline knowledge entries to contribute. Each entry: "+
-				"{topic, content, scope} required; {tags, tier} optional. "+
+				"{topic, content, scope} required; {tags, tier, forward} optional. "+
+				"forward defaults to true for tier-2, false for tier-3. "+
 				"Duplicates are rejected per-entry without blocking completion.",
 		)),
 		mcp.WithArray("retrospective", mcp.Items(map[string]any{"type": "object"}), mcp.Description(
@@ -533,6 +534,11 @@ func parseFinishKnowledge(args map[string]any) []service.KnowledgeEntryInput {
 		if tierVal, ok := m["tier"]; ok {
 			if tierF, ok := tierVal.(float64); ok {
 				ke.Tier = int(tierF)
+			}
+		}
+		if forwardVal, ok := m["forward"]; ok {
+			if forwardB, ok := forwardVal.(bool); ok {
+				ke.Forward = &forwardB
 			}
 		}
 		if tagsVal, ok := m["tags"]; ok {
