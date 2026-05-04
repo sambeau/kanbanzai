@@ -1,11 +1,13 @@
+approved_at: "2026-05-04T14:20:25Z"
+approved_by: sambeau
 canonical_content_hash: 75c4476741808329eea10e772f2185f1c0a23b37ec2aaaef561b51a326e8b3a9
-content_hash: 75c4476741808329eea10e772f2185f1c0a23b37ec2aaaef561b51a326e8b3a9
+content_hash: 8b08349cda11e30231d622e40423408766cbfcc9e3834d0ee821690929059f6c
 created: "2026-05-04T13:58:47Z"
 created_by: sambeau
 id: P46-elicitation-checklist/spec-p46-spec-elicitation-checklist
 owner: P46-elicitation-checklist
 path: work/P46-elicitation-checklist/P46-spec-elicitation-checklist.md
-status: draft
+status: approved
 title: "Specification: Elicitation Checklist"
 type: spec
-updated: "2026-05-04T13:58:47Z"
+updated: "2026-05-04T14:20:25Z"
