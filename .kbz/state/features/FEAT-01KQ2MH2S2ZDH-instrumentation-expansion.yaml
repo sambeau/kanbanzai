@@ -2,13 +2,19 @@ id: FEAT-01KQ2MH2S2ZDH
 slug: instrumentation-expansion
 name: Instrumentation Expansion
 parent: B35-expanded-mcp-instrumentation
-status: reviewing
+status: done
 review_cycle: 1
 summary: Extend actionlog Entry with server_version and a sparse extra annotation map; add context-carried annotation API for handlers; capture knowledge rejection events; add action-distribution and doc-funnel aggregations to ComputeMetrics.
 spec: FEAT-01KQ2MH2S2ZDH/spec-p35-spec-expanded-mcp-instrumentation
 dev_plan: FEAT-01KQ2MH2S2ZDH/dev-plan-p35-dev-plan-expanded-mcp-instrumentation
 created: "2026-04-25T15:35:59Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: "Review completed with findings; all blocking findings addressed (Failures field, DocFunnelMetric restructure, sort order, O(n*m) fix). Non-blocking findings documented for follow-up."
+    timestamp: "2026-05-04T12:50:21+01:00"
+    to_status: done
 display_id: B35-F1
 verification: "TASK-01KQSA3KWP8PQ: go build and go test ./internal/actionlog/... pass in worktree\nTASK-01KQSA3KWRKXM: go build ./internal/actionlog/... ./internal/mcp/... passes. go test -run TestHook ./internal/actionlog/... passes (7/7). Pre-existing mcp test failures unrelated.\nTASK-01KQSA3KWSV36: go build ./... and go test ./internal/actionlog/... -v -count=1 pass cleanly in the worktree\nTASK-01KQSA3KWVPHN: go build ./... passes. go test ./internal/mcp/... has 3 pre-existing failures unrelated to these changes (TestStatusTool_ShortPlanRef_HappyPath, TestPlanGate_BlockedByNonTerminalFeature, TestToolDescriptions_TokenBudget).\nTASK-01KQSA3KWW7RT: go build ./... and go vet pass. All 6 new tests + full actionlog suite pass.\nTASK-01KQSA3KWXJDA: go build ./... passes; go test ./internal/actionlog/... passes\nTASK-01KQSA3KWY5D6: go build ./... (pass), go test ./internal/actionlog/... -v -count=1 (54 tests pass)"
 verification_status: passed
