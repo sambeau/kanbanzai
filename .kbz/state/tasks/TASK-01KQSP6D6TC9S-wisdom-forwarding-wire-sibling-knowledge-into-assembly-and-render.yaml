@@ -4,5 +4,6 @@ slug: wisdom-forwarding-wire-sibling-knowledge-into-assembly-and-render
 name: Wire sibling knowledge into assembly and render
 summary: Wire sibling knowledge into assembleContext and renderHandoffPrompt
 status: queued
+estimate: "2"
 depends_on:
   - TASK-01KQSP6D6SZA0

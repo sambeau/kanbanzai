@@ -4,5 +4,6 @@ slug: wisdom-forwarding-add-forward-flag-to-finish-tool-knowledge-parsing
 name: Add forward flag to finish tool knowledge parsing
 summary: Add forward flag to finish tool knowledge parsing
 status: queued
+estimate: "1"
 depends_on:
   - TASK-01KQSP6D6PGVM

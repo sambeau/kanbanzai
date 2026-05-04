@@ -4,5 +4,6 @@ slug: wisdom-forwarding-implement-sibling-knowledge-query-in-context-assembly
 name: Implement sibling knowledge query in context assembly
 summary: Implement sibling knowledge query in context assembly
 status: queued
+estimate: "3"
 depends_on:
   - TASK-01KQSP6D6PGVM

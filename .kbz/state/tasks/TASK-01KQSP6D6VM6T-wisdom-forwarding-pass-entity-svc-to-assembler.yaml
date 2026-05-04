@@ -4,5 +4,6 @@ slug: wisdom-forwarding-pass-entity-svc-to-assembler
 name: Pass entity service to assembler in handoff tool
 summary: Pass entity service to assembler in handoff tool
 status: queued
+estimate: "1"
 depends_on:
   - TASK-01KQSP6D6TC9S
