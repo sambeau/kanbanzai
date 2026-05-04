@@ -3,8 +3,15 @@ parent_feature: FEAT-01KQSP41PE6JP
 slug: tier-inference
 name: Implement tier inference on entity creation
 summary: "Implement tier inference logic in the entity creation path. Rules: (1) if feature has retro signal → retro_fix, (2) if feature is bug entity type → bug_fix, (3) if feature has critical or security tag → critical, (4) otherwise → config default_tier. An explicitly set tier on the entity overrides inference. Add a tier field to the feature entity model. Wire into entity creation in internal/service/ and internal/storage/. Add unit tests for each inference rule and the override precedence."
-status: active
+status: done
+files_planned:
+  - internal/model/entities.go
+  - internal/service/entities.go
+  - internal/service/entities_test.go
+completed: "2026-05-04T15:11:13Z"
 claimed_at: "2026-05-04T14:58:47Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T14:58:47Z"
 dispatched_by: sambeau
+completion_summary: "Implemented tier inference on feature creation. Added Tier field to Feature model and CreateFeatureInput. Implemented inferTier() with rules: explicit tier overrides all, critical/security tag → critical, otherwise → config default_tier (\"feature\" fallback). Added Tier to featureFields. 11 unit tests covering override, both tags, case insensitivity, whitespace, config defaults, and round-trip retrieval. All tests pass, go vet clean, full build OK."
+verification: All 11 new tier inference tests pass. Existing entity creation tests pass. go vet clean on model/ and service/. Full project builds.
