@@ -3,11 +3,23 @@ parent_feature: FEAT-01KQ2MH2S2ZDH
 slug: instrumentation-expansion-version-threading-through-server-init
 name: Version threading through server init
 summary: Version threading through server init
-status: active
+status: done
 estimate: "2"
 depends_on:
   - TASK-01KQSA3KWP8PQ
+files_planned:
+  - cmd/kbz/main.go
+  - internal/mcp/server.go
+  - internal/actionlog/hook.go
+  - internal/actionlog/hook_test.go
+  - internal/mcp/annotations_test.go
+  - internal/mcp/server_groups_test.go
+  - internal/mcp/server_test.go
+  - internal/mcp/tool_description_budget_test.go
+completed: "2026-05-04T11:18:21Z"
 claimed_at: "2026-05-04T11:06:27Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T11:06:27Z"
 dispatched_by: sambeau
+completion_summary: "Threaded version string through server init: cmd/kbz passes deps.version to Serve(); NewServer, newServerWithConfig accept version and pass to NewHook; Hook stores version and stamps ServerVersion on every Entry in Wrap. Updated all test callers."
+verification: go build ./internal/actionlog/... ./internal/mcp/... passes. go test -run TestHook ./internal/actionlog/... passes (7/7). Pre-existing mcp test failures unrelated.
