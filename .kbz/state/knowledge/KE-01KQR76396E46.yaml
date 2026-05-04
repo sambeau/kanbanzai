@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "When closing a bug, the fix commit should be made before or alongside recording completion. During BUG-01KQR-5XA77Y49, the fix was committed but only after a reminder — committing the fix is an essential part of \"done\" for a bug and should not be overlooked."
+created: "2026-05-04T00:46:05Z"
+created_by: sambeau
+id: KE-01KQR76396E46
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retro
+  - bug-workflow
+  - process
+tier: 2
+topic: bug-workflow
+ttl_days: 90
+updated: "2026-05-04T00:46:05Z"
+use_count: 0
