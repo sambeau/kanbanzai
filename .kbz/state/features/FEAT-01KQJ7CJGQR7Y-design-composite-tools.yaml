@@ -2,7 +2,8 @@ id: FEAT-01KQJ7CJGQR7Y
 slug: design-composite-tools
 name: Composite Tools Architecture Design
 parent: B43-composite-tools
-status: developing
+status: reviewing
+review_cycle: 1
 summary: "Write the architectural design document for composite MCP tools that chain multi-step workflow operations, reducing chat agent cognitive load and improving workflow state transition reliability."
 design: FEAT-01KQJ7CJGQR7Y/design-b43-f1-design-composite-tools
 spec: FEAT-01KQJ7CJGQR7Y/spec-b43-f1-spec-composite-tools
@@ -10,3 +11,5 @@ dev_plan: FEAT-01KQJ7CJGQR7Y/dev-plan-b43-f1-dev-plan-composite-tools
 created: "2026-05-01T16:54:10Z"
 created_by: sambeau
 display_id: B43-F1
+verification: "TASK-01KQSAXQDZ0T4: (no verification recorded)\nTASK-01KQSAYJ7SG90: Compiles clean. Reuses existing entityAdvanceFeature which wraps AdvanceFeatureStatus. Structured next_action objects follow schema: tool, action, params, description.\nTASK-01KQSAYTEZ71Z: (no verification recorded)\nTASK-01KQSAZ1AP33X: Compiles clean. Dispatch action correctly filters tasks by parent feature, separates by status, transitions ready→active, returns structured response with dispatched/blocked/conflicting/empty_queue fields.\nTASK-01KQSAZ83S8DH: Compiles clean. Snapshot action correctly filters features by batch parent, determines gate blockages per lifecycle stage (designing→spec, specifying→dev-planning, dev-planning→developing, developing→reviewing, reviewing→done), returns structured next_action for each blocked feature.\nTASK-01KQSAZFPXVTC: Compiles clean. All helper functions follow consistent schema: {tool, action, params, description}. Consumed by doc publish action (nextActionForClassification) and batch snapshot action (nextActionForMissingDocument, nextActionForNonTerminalTasks).\nTASK-01KQSAZP6B7RS: Verified: build passes, existing tests pass (server list tool counts updated for batch+develop, pre-existing failures unchanged), all composite actions follow DispatchAction pattern, no spawn_agent calls in develop dispatch, structured next_action objects consistent across all responses."
+verification_status: partial
