@@ -3,5 +3,9 @@ parent_feature: FEAT-01KQSP2DDATWT
 slug: wisdom-forwarding-unit-tests-for-all-new-functions
 name: Unit tests for all new functions
 summary: Unit tests for all new functions
-status: ready
+status: active
 estimate: "3"
+claimed_at: "2026-05-04T14:41:25Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-04T14:41:25Z"
+dispatched_by: sambeau
