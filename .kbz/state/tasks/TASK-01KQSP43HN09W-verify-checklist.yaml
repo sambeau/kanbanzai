@@ -3,9 +3,12 @@ parent_feature: FEAT-01KQSNSWZGSBP
 slug: verify-checklist
 name: Verify checklist against acceptance criteria
 summary: "Run through all 9 acceptance criteria (AC-001 through AC-009) against the modified skill file. Verify positioning, item count, question phrasing, STOP-on-ambiguity behaviour, revision-scope note, no-artifact constraint, design-gate statement, line count (≤60 added), and imperative language conventions. Deliverable: confirmation that all ACs pass or list of failing criteria."
-status: active
+status: done
 estimate: "0.5"
+completed: "2026-05-04T14:34:30Z"
 claimed_at: "2026-05-04T14:33:58Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T14:33:58Z"
 dispatched_by: sambeau
+completion_summary: "Verified all 9 acceptance criteria against the modified write-spec SKILL.md. All pass: correct positioning (AC-001), 7 items with spec-matching questions (AC-002), STOP-and-flag on unresolved ambiguity (AC-003), revision-scope note (AC-004), no artifact instructions (AC-005), design-gate statement (AC-006), 36 lines added ≤ 60 (AC-007), imperative mood with IF/THEN (AC-008), all items are questions (AC-009)."
+verification: "AC-001: checklist between Cross-Reference Check and Step 1. AC-002: 7 numbered items. AC-003: item 3 STOP-and-flag. AC-004: revision-scope note present. AC-005: no register/write/output/artifact instruction. AC-006: design-gate statement present. AC-007: 36 lines added. AC-008: imperative mood throughout. AC-009: all items are questions."
