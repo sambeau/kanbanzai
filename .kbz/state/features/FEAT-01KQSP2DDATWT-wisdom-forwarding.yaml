@@ -2,7 +2,7 @@ id: FEAT-01KQSP2DDATWT
 slug: wisdom-forwarding
 name: Wisdom Forwarding
 parent: B47-wisdom-forwarding
-status: reviewing
+status: done
 review_cycle: 1
 summary: Automatically surface knowledge entries from completed sibling tasks when handoff assembles context for new task dispatch.
 design: FEAT-01KQSP2DDATWT/design-p45-design-wisdom-forwarding
