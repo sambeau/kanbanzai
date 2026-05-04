@@ -3,8 +3,13 @@ parent_feature: FEAT-01KQSP41PE6JP
 slug: review-gate-validator-role
 name: Create review-gate-validator role
 summary: "Create .kbz/roles/review-gate-validator.yaml inheriting from reviewer. Identity text: \"Senior review quality auditor. Verify that a completed review is thorough, evidence-backed, and suitable for auto-approval. Do not re-review the code — audit the review process itself.\" Define anti-patterns: Re-Reviewing, Rubber-Stamp Acceptance. Define tool constraints."
-status: active
+status: done
+files_planned:
+  - .kbz/roles/review-gate-validator.yaml
+completed: "2026-05-04T15:01:47Z"
 claimed_at: "2026-05-04T14:58:47Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T14:58:47Z"
 dispatched_by: sambeau
+completion_summary: "Created .kbz/roles/review-gate-validator.yaml inheriting from reviewer with identity text from REQ-RVW-004, all 8 checks (R1-R8) with correct blocking/non-blocking classifications per REQ-RVW-003, and two anti-patterns (Re-Reviewing, Rubber-Stamp Acceptance)"
+verification: "Verified the file exists at the correct worktree path, contains correct inherits: reviewer, identity text matches REQ-RVW-004 verbatim, all 8 checks present with blocking/non-blocking per REQ-RVW-003, both anti-patterns defined"
