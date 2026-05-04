@@ -1,0 +1,11 @@
+canonical_content_hash: 6a4e80bb9499cd5065b58fa19ad2d500b813503bcf588c0f9d1daccf2be5fb9f
+content_hash: d738f98c97e21520bccdc9022f8c980000fd191302acd119729b17713e71eaed
+created: "2026-05-04T11:07:53Z"
+created_by: sambeau
+id: FEAT-01KQJ7CJGQR7Y/dev-plan-b43-f1-dev-plan-composite-tools
+owner: FEAT-01KQJ7CJGQR7Y
+path: work/B43-composite-tools/B43-F1-dev-plan-composite-tools.md
+status: draft
+title: Composite Tools for Workflow Chaining
+type: dev-plan
+updated: "2026-05-04T11:07:53Z"
