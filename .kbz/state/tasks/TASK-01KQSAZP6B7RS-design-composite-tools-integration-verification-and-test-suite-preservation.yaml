@@ -3,4 +3,12 @@ parent_feature: FEAT-01KQJ7CJGQR7Y
 slug: design-composite-tools-integration-verification-and-test-suite-preservation
 name: Integration verification and test-suite preservation
 summary: Write integration-level tests for each composite action end-to-end. Verify SideEffect types match equivalent individual tool calls. Run existing doc and entity test suites to confirm zero regressions.
-status: queued
+status: ready
+estimate: "3"
+depends_on:
+  - TASK-01KQSAXQDZ0T4
+  - TASK-01KQSAYJ7SG90
+  - TASK-01KQSAYTEZ71Z
+  - TASK-01KQSAZ1AP33X
+  - TASK-01KQSAZ83S8DH
+  - TASK-01KQSAZFPXVTC

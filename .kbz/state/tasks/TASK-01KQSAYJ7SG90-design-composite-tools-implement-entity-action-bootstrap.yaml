@@ -4,3 +4,6 @@ slug: design-composite-tools-implement-entity-action-bootstrap
 name: Implement entity bootstrap action
 summary: "Add a bootstrap action to the entity tool that walks a feature through its forward path, stopping at gate failures with structured next_action objects and at human gates. Reuses AdvanceFeatureStatus internally."
 status: queued
+estimate: "5"
+depends_on:
+  - TASK-01KQSAZFPXVTC
