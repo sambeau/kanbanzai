@@ -1,3 +1,5 @@
+approved_at: "2026-05-04T14:25:58Z"
+approved_by: sambeau
 canonical_content_hash: 3f58aa153213919930f96d6cfb90f00775be761dde5dfc8e0b99950245375703
 content_hash: 5acbee9aa6c10b82333796d13046eb08f748b90f6c798ce126915e5a7b43d055
 created: "2026-05-04T14:25:52Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KQSP2DDATWT/design-p45-design-wisdom-forwarding
 owner: FEAT-01KQSP2DDATWT
 path: work/P45-wisdom-forwarding/P45-design-wisdom-forwarding.md
-status: draft
+status: approved
 title: "Design: Wisdom Forwarding"
 type: design
-updated: "2026-05-04T14:25:52Z"
+updated: "2026-05-04T14:25:58Z"
