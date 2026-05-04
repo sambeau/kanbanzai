@@ -1,3 +1,5 @@
+approved_at: "2026-05-04T14:54:16Z"
+approved_by: sambeau
 canonical_content_hash: 50942f6e94aad0005c1a05e84e0466cfc427ce09b53b470f7fdc96f898850ac2
 content_hash: ffed9a23e436c2b9344f46a0c0a3f808c6e8b7903b0d27dd7e82ee264f5f4ed5
 created: "2026-05-04T14:54:07Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KQSNSWZGSBP/report-review-add-checklist
 owner: FEAT-01KQSNSWZGSBP
 path: work/_project/review-add-checklist.md
-status: draft
+status: approved
 title: "Review: Elicitation Checklist"
 type: report
-updated: "2026-05-04T14:54:07Z"
+updated: "2026-05-04T14:54:16Z"
