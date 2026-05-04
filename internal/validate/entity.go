@@ -133,12 +133,13 @@ func ValidateSlug(slug string) error {
 }
 
 var requiredFields = map[EntityKind][]string{
-	EntityPlan:     {"id", "slug", "name", "status", "summary", "created", "created_by"},
-	EntityFeature:  {"id", "slug", "name", "parent", "status", "summary", "created", "created_by"},
-	EntityTask:     {"id", "parent_feature", "slug", "name", "summary", "status"},
-	EntityBug:      {"id", "slug", "name", "status", "severity", "priority", "type", "reported_by", "reported", "observed", "expected"},
-	EntityDecision: {"id", "slug", "name", "summary", "rationale", "decided_by", "date", "status"},
-	EntityIncident: {"id", "slug", "name", "status", "severity", "reported_by", "detected_at", "summary", "created", "created_by"},
+	EntityPlan:          {"id", "slug", "name", "status", "summary", "created", "created_by"},
+	EntityStrategicPlan: {"id", "slug", "name", "status", "summary", "created", "created_by"},
+	EntityFeature:       {"id", "slug", "name", "parent", "status", "summary", "created", "created_by"},
+	EntityTask:          {"id", "parent_feature", "slug", "name", "summary", "status"},
+	EntityBug:           {"id", "slug", "name", "status", "severity", "priority", "type", "reported_by", "reported", "observed", "expected"},
+	EntityDecision:      {"id", "slug", "name", "summary", "rationale", "decided_by", "date", "status"},
+	EntityIncident:      {"id", "slug", "name", "status", "severity", "reported_by", "detected_at", "summary", "created", "created_by"},
 }
 
 // ValidateRecord checks an entity record's fields for correctness.

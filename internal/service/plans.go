@@ -382,11 +382,19 @@ func (s *EntityService) loadBatch(id, slug string) (ListResult, error) {
 		if err != nil {
 			return ListResult{}, fmt.Errorf("load batch %s: %w", id, err)
 		}
-		// Plans loaded from the legacy plans/ directory may be StrategicPlan
-		// entities with planning-only statuses (idea, shaping, ready, active).
-		// Detect these and return the correct entity type so downstream
-		// validation uses the StrategicPlan lifecycle machine.
-		if isStrategicPlanStatus(stringFromState(record.Fields, "status")) {
+	}
+
+	// Strategic plans (P-prefix IDs) may be stored alongside batches.
+	// Detect by status: plan-exclusive lifecycle states (idea, shaping)
+	// indicate a StrategicPlan entity. Shared states (done, cancelled,
+	// superseded) and batch-exclusive states (proposed, designing, active,
+	// reviewing) are ambiguous, so we fall back to ID-prefix detection.
+	status := stringFromState(record.Fields, "status")
+	if isStrategicPlanStatus(status) {
+		entityType = string(model.EntityKindStrategicPlan)
+	} else if model.IsPlanID(id) {
+		prefix, _, _ := model.ParseBatchID(id)
+		if prefix != "" && prefix != "B" {
 			entityType = string(model.EntityKindStrategicPlan)
 		}
 	}
@@ -401,14 +409,14 @@ func (s *EntityService) loadBatch(id, slug string) (ListResult, error) {
 }
 
 // isStrategicPlanStatus returns true if status is exclusive to the StrategicPlan
-// lifecycle (not valid in the Batch lifecycle). Shared terminal statuses
-// (done, superseded, cancelled) are not strategic-plan–only.
+// lifecycle (not valid in the Batch lifecycle). Shared statuses (active, done,
+// superseded, cancelled) are not strategic-plan–only and must be disambiguated
+// by other means (e.g. ID prefix).
 func isStrategicPlanStatus(status string) bool {
 	switch status {
 	case string(model.PlanningStatusIdea),
 		string(model.PlanningStatusShaping),
-		string(model.PlanningStatusReady),
-		string(model.PlanningStatusActive):
+		string(model.PlanningStatusReady):
 		return true
 	}
 	return false
