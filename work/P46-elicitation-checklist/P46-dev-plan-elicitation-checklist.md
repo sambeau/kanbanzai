@@ -1,20 +1,26 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-04                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | AI architect                   |
 
-## Scope
+## Overview
 
 This plan implements the requirements defined in
 `work/P46-elicitation-checklist/P46-spec-elicitation-checklist.md`
-(DOC-`FEAT-01KQSNSWZGSBP/spec-p46-spec-elicitation-checklist`). It covers
-the single task of modifying `.kbz/skills/write-spec/SKILL.md` to insert the
-7-item elicitation checklist between the Cross-Reference Check and Step 1.
+(DOC-`FEAT-01KQSNSWZGSBP/spec-p46-spec-elicitation-checklist`). The work
+adds a 7-item elicitation checklist to the `write-spec` skill file
+(`.kbz/skills/write-spec/SKILL.md`), positioned between the Cross-Reference
+Check and Step 1: Read the Design. Zero new infrastructure — a single-file
+modification.
 
-This plan does not cover: interactive interview mode, codebase exploration
-agents, a separate `elicit-requirements` skill, P43 fast-track integration,
-or any changes outside the `write-spec` skill file.
+## Scope
+
+This plan covers the single task of modifying `.kbz/skills/write-spec/SKILL.md`
+to insert the 7-item elicitation checklist. It does not cover: interactive
+interview mode, codebase exploration agents, a separate `elicit-requirements`
+skill, P43 fast-track integration, or any changes outside the `write-spec`
+skill file.
 
 ## Task Breakdown
 
@@ -40,8 +46,7 @@ or any changes outside the `write-spec` skill file.
   AC-009) against the modified skill file. Verify positioning, item count,
   question phrasing, STOP-on-ambiguity behaviour, revision-scope note,
   no-artifact constraint, design-gate statement, line count (≤60 added),
-  and imperative language conventions. This is a manual inspection task —
-  the verification plan maps every AC to inspection.
+  and imperative language conventions. This is a manual inspection task.
 - **Deliverable:** Confirmation that all 9 acceptance criteria pass, or a
   list of failing criteria with remediation notes.
 - **Depends on:** Task 1
@@ -57,6 +62,13 @@ Task 2 → depends on Task 1
 Parallel groups: [Task 1]
 Critical path: Task 1 → Task 2
 ```
+
+## Interface Contracts
+
+No interface contracts between tasks. Task 1 produces a modified file; Task 2
+reads and inspects it. The contract is the file on disk — Task 2 depends on
+the file being present at `.kbz/skills/write-spec/SKILL.md` with the checklist
+inserted at the correct position.
 
 ## Risk Assessment
 
@@ -89,6 +101,27 @@ Critical path: Task 1 → Task 2
   in the write-spec skill (e.g., "IF the design document is not approved →
   STOP"). AC-008 verifies imperative mood.
 - **Affected tasks:** Task 1
+
+## Traceability Matrix
+
+| Spec Requirement | Task(s) |
+|-----------------|---------|
+| REQ-001 (checklist position after Cross-Reference Check, before Step 1) | Task 1 |
+| REQ-002 (exactly 7 items) | Task 1 |
+| REQ-003 (each item phrased as question) | Task 1 |
+| REQ-004 (item 1: core objective) | Task 1 |
+| REQ-005 (item 2: scope boundaries) | Task 1 |
+| REQ-006 (item 3: ambiguities) | Task 1 |
+| REQ-007 (item 4: technical approach) | Task 1 |
+| REQ-008 (item 5: test strategy) | Task 1 |
+| REQ-009 (item 6: constraints) | Task 1 |
+| REQ-010 (item 7: dependencies) | Task 1 |
+| REQ-011 (STOP on unresolved item) | Task 1 |
+| REQ-012 (run once, not for non-scope revisions) | Task 1 |
+| REQ-013 (no written artifact) | Task 1 |
+| REQ-014 (design-gate relationship) | Task 1 |
+| REQ-NF-001 (≤ 60 added lines) | Task 1, Task 2 |
+| REQ-NF-002 (imperative language with IF/THEN) | Task 1 |
 
 ## Verification Approach
 

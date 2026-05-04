@@ -1,0 +1,122 @@
+document_id: FEAT-01KQSNSWZGSBP/dev-plan-p46-dev-plan-elicitation-checklist
+document_path: work/P46-elicitation-checklist/P46-dev-plan-elicitation-checklist.md
+content_hash: 23eb93f2894cb99ce2e08a1594e47fd8acfde6ace489621badd0fd5af47ac73a
+indexed_at: 2026-05-04T14:24:33.96529Z
+sections:
+    - path: "1"
+      level: 2
+      title: Scope
+      byte_offset: 221
+      byte_count: 557
+      word_count: 58
+      content_hash: 1226873d95c862ab9755431a90fe9f00954b1820c8eb367d0b934e690f9a53dc
+    - path: "2"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 778
+      byte_count: 1643
+      word_count: 210
+      content_hash: 8e1fda8c1684705bffdc0c49d04c9954afcffb7f69bcd6ab3f94a4f1f572daff
+      children:
+        - path: "2.1"
+          level: 3
+          title: 'Task 1: Insert elicitation checklist into write-spec skill'
+          byte_offset: 797
+          byte_count: 882
+          word_count: 109
+          content_hash: fa18109413b8a572a1a94706f5e075d7481f4799745ed22067ed87b8de7c0d61
+        - path: "2.2"
+          level: 3
+          title: 'Task 2: Verify checklist against acceptance criteria'
+          byte_offset: 1679
+          byte_count: 742
+          word_count: 98
+          content_hash: 7613823c5c8480e69777615e075085e1ceaec92782c213aad8601bc4ac77dcbe
+    - path: "3"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 2421
+      byte_count: 144
+      word_count: 27
+      content_hash: 4c655f4915b0469ac36ac27eea196bb278153f161004e5c6284e0385be36c680
+    - path: "4"
+      level: 2
+      title: Risk Assessment
+      byte_offset: 2565
+      byte_count: 1282
+      word_count: 183
+      content_hash: caab5eaed7c074c4f17d77860beceaef00d2b0d638b0930717fc17b06a25e110
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Risk: Checklist insertion position is ambiguous'
+          byte_offset: 2585
+          byte_count: 448
+          word_count: 63
+          content_hash: 6d3f6566ff7ba607797e43c745a509b4cc02852b75ce4d2dc30361905702c59e
+        - path: "4.2"
+          level: 3
+          title: 'Risk: Line count exceeds 60-line budget'
+          byte_offset: 3033
+          byte_count: 410
+          word_count: 61
+          content_hash: afbedc55690c2ec577446760b22e87a5051810cab294d87d4c542beb6b3f8225
+        - path: "4.3"
+          level: 3
+          title: 'Risk: Checklist language drifts from imperative convention'
+          byte_offset: 3443
+          byte_count: 404
+          word_count: 56
+          content_hash: ffe9ba2e0df1438ba99fa95460e2bc2cac5302c5902705de9e5e4dfeca46b890
+    - path: "5"
+      level: 2
+      title: Verification Approach
+      byte_offset: 3847
+      byte_count: 944
+      word_count: 154
+      content_hash: 56a21609ba38307652ce038ac7ecfd3865dc9c878e47a91635c52de44813a9d9
+entity_refs:
+    - entity_id: FEAT-01KQSNSWZGSBP
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 353
+    - entity_id: P46-elicitation-checklist
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 286
+    - entity_id: P46-spec-elicitation-checklist
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 312
+cross_doc_links:
+    - target_path: work/P46-elicitation-checklist/P46-spec-elicitation-checklist.md
+      link_text: work/P46-elicitation-checklist/P46-spec-elicitation-checklist.md
+      section_path: "1"
+    - target_path: .kbz/skills/write-spec/SKILL.md
+      link_text: .kbz/skills/write-spec/SKILL.md
+      section_path: "1"
+    - target_path: .kbz/skills/write-spec/SKILL.md
+      link_text: .kbz/skills/write-spec/SKILL.md
+      section_path: "2.1"
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "2.2"
+      role: requirement
+      confidence: high
+    - section_path: "4"
+      role: risk
+      confidence: high
+    - section_path: "4.1"
+      role: risk
+      confidence: high
+    - section_path: "4.2"
+      role: risk
+      confidence: high
+    - section_path: "4.3"
+      role: risk
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-04T14:24:34.800224Z
+classified: false

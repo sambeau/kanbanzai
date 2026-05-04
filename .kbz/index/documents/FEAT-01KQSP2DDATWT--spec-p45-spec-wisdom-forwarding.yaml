@@ -1,0 +1,123 @@
+document_id: FEAT-01KQSP2DDATWT/spec-p45-spec-wisdom-forwarding
+document_path: work/P45-wisdom-forwarding/P45-spec-wisdom-forwarding.md
+content_hash: 96e3eb2f972cf5a1bdc8a976bb081864032f90e35e9c5019b48a34dd53f3c0d4
+indexed_at: 2026-05-04T14:26:05.729422Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Wisdom Forwarding'
+      byte_offset: 0
+      byte_count: 11611
+      word_count: 1690
+      content_hash: 96e3eb2f972cf5a1bdc8a976bb081864032f90e35e9c5019b48a34dd53f3c0d4
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem Statement
+          byte_offset: 235
+          byte_count: 1295
+          word_count: 154
+          content_hash: 66877b8734054fad0beaaef29fe5cf8b8290496af916ec2e7be2137ede166816
+        - path: "1.2"
+          level: 2
+          title: Requirements
+          byte_offset: 1530
+          byte_count: 3363
+          word_count: 491
+          content_hash: 73bfda8ab0e2dadbda4a484f70825922470769d00e81ce8d40e6bf26cfc14948
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 1547
+              byte_count: 2691
+              word_count: 392
+              content_hash: c4284bbb42a655a334c322c3c387d0990850bb6d9c7113d131939239d11dab1f
+            - path: 1.2.2
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 4238
+              byte_count: 655
+              word_count: 97
+              content_hash: 38e2544b945bad2cad08f96e1bff21fdbef26172bac73f2a7aeabc1111666d6a
+        - path: "1.3"
+          level: 2
+          title: Constraints
+          byte_offset: 4893
+          byte_count: 1032
+          word_count: 148
+          content_hash: da58a9fd17fdbe7944441362e3604ad7c167d8e5727aed04644bf02c12d34b07
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 5925
+          byte_count: 3560
+          word_count: 526
+          content_hash: 71b12c42b6c0cd2adf7b199c6c062a080467d96bfadf06290ae4cfaacf1236fc
+        - path: "1.5"
+          level: 2
+          title: Verification Plan
+          byte_offset: 9485
+          byte_count: 2126
+          word_count: 345
+          content_hash: c4c3982ca6c4ba984bf6b06549f5e500daea13fa542aa7f8a05c256606a3385c
+entity_refs:
+    - entity_id: FEAT-A
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 6250
+    - entity_id: FEAT-B
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 6329
+    - entity_id: TASK-001
+      entity_type: task
+      section_path: 1.2.1
+      byte_offset: 2228
+    - entity_id: TASK-001
+      entity_type: task
+      section_path: "1.4"
+      byte_offset: 6032
+    - entity_id: TASK-002
+      entity_type: task
+      section_path: "1.4"
+      byte_offset: 6059
+    - entity_id: TASK-003
+      entity_type: task
+      section_path: "1.4"
+      byte_offset: 6124
+    - entity_id: TASK-005
+      entity_type: task
+      section_path: "1.4"
+      byte_offset: 6352
+    - entity_id: P45-wisdom-forwarding
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 340
+    - entity_id: P45-design-wisdom-forwarding
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 362
+cross_doc_links:
+    - target_path: work/P45-wisdom-forwarding/P45-design-wisdom-forwarding.md
+      link_text: work/P45-wisdom-forwarding/P45-design-wisdom-forwarding.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.2
+      role: requirement
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-04T14:26:06.236522Z
+classified: false
