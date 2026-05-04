@@ -1,0 +1,6 @@
+id: TASK-01KQSAXQDZ0T4
+parent_feature: FEAT-01KQJ7CJGQR7Y
+slug: design-composite-tools-implement-doc-action-publish
+name: Implement doc publish action
+summary: "Add a publish action to the doc tool that collapses register + classify + approve into a single call. When classifications with concepts_intro are provided, auto-approves; otherwise returns classification nudge with structured next_action."
+status: queued
