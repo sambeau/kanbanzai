@@ -1,0 +1,10 @@
+id: FEAT-01KQTNYN00HZA
+slug: doc-path-tool
+name: Document Path Tool
+parent: B49-retro-fixes-may-2026
+status: proposed
+summary: "Add a path action to the doc MCP tool that returns canonical document paths based on type and parent entity, enforcing naming conventions via tooling."
+created: "2026-05-04T23:42:38Z"
+created_by: sambeau
+display_id: B49-F2
+tier: feature
