@@ -1,0 +1,6 @@
+id: TASK-01KQSP8X96XG5
+parent_feature: FEAT-01KQSP41PE6JP
+slug: spec-validator-role
+name: Create spec-validator role
+summary: "Create .kbz/roles/spec-validator.yaml inheriting from base. Identity text: \"Senior requirements quality auditor. Verify that specifications are complete, testable, and traceable to their parent design. Do not evaluate whether requirements are correct — only whether they are well-formed and complete.\" Define anti-patterns: Assumed Traceability, Content Judgment, Hallucinated Completeness. Define tool constraints: read_file, doc, doc_intel."
+status: queued
