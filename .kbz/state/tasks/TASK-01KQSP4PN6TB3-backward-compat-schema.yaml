@@ -3,4 +3,7 @@ parent_feature: FEAT-01KQSP3BMFF98
 slug: backward-compat-schema
 name: "Backward compatibility, error modes, and schema updates"
 summary: "Ensure backward compatibility: zero regressions in existing tests. Make hash_ref optional at schema level (only validated when hash_validate: true). Document hash collision acceptance (1/256 per line). Verify file-not-found behavior unchanged. Update MCP tool schemas. Deliverable: schema updates, regression pass, error-mode test cases. Addresses REQ-BC-001, REQ-BC-002, REQ-ERR-001, REQ-ERR-002."
-status: ready
+status: done
+completed: "2026-05-04T14:42:30Z"
+completion_summary: "Verified backward compatibility: all 14 pre-existing edit_file tests pass unchanged. hash_ref is optional at the schema level (only validated when hash_validate: true). hash_validate: false with no hash_ref works fine. Documented hash collision acceptance at 1/256 per line. File-not-found behavior unchanged. Updated edit_file tool schema with hash_validate parameter description. Zero regressions across all edit_file tests (21 total)."
+verification: "go test ./internal/mcp/ -run TestEditFile -v — all 21 tests PASS, zero regressions"

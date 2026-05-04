@@ -3,10 +3,10 @@ content: "When editing files in a git worktree (.worktrees/), use terminal comma
 created: "2026-04-04T07:46:06Z"
 created_by: unknown
 id: KE-01KNBQ9KYG6XS
-last_accessed_at: "2026-05-04T14:41:32Z"
+last_accessed_at: "2026-05-04T14:42:27Z"
 learned_from: TASK-01KNAKX798DCB
 miss_count: 0
-recent_use_count: 252
+recent_use_count: 253
 scope: project
 status: contributed
 tags:
