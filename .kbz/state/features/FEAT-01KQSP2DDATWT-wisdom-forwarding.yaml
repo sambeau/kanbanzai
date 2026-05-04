@@ -1,0 +1,9 @@
+id: FEAT-01KQSP2DDATWT
+slug: wisdom-forwarding
+name: Wisdom Forwarding
+parent: B47-wisdom-forwarding
+status: proposed
+summary: Automatically surface knowledge entries from completed sibling tasks when handoff assembles context for new task dispatch.
+created: "2026-05-04T14:25:27Z"
+created_by: sambeau
+display_id: B47-F1
