@@ -377,6 +377,7 @@ type Feature struct {
 	DisplayID     string        `yaml:"display_id,omitempty"`
 	Parent        string        `yaml:"parent,omitempty"` // Parent Batch/Plan ID
 	Status        FeatureStatus `yaml:"status"`
+	Tier          string        `yaml:"tier,omitempty"` // "standard" (default) or "fast-track"
 	ReviewCycle   int           `yaml:"review_cycle,omitempty"`
 	BlockedReason string        `yaml:"blocked_reason,omitempty"`
 	Estimate      *float64      `yaml:"estimate,omitempty"`

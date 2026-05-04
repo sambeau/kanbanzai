@@ -83,3 +83,12 @@ func (r *GateRouter) callFallback(from, to string, ctx PrereqEvalContext) GateRe
 	result.Source = "hardcoded"
 	return result
 }
+
+// GetRegistryCache returns the underlying RegistryCache so other components
+// (e.g. transition validators) can use the same binding data.
+func GetRegistryCache(r *GateRouter) *RegistryCache {
+	if r == nil {
+		return nil
+	}
+	return r.cache
+}

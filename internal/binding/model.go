@@ -9,18 +9,28 @@ import (
 
 // StageBinding represents a single stage's binding configuration.
 type StageBinding struct {
-	Description      string            `yaml:"description"`
-	Orchestration    string            `yaml:"orchestration"`
-	Roles            []string          `yaml:"roles"`
-	Skills           []string          `yaml:"skills"`
-	HumanGate        bool              `yaml:"human_gate"`
-	DocumentType     *string           `yaml:"document_type,omitempty"`
-	Prerequisites    *Prerequisites    `yaml:"prerequisites,omitempty"`
-	Notes            string            `yaml:"notes,omitempty"`
-	EffortBudget     string            `yaml:"effort_budget,omitempty"`
-	MaxReviewCycles  *int              `yaml:"max_review_cycles,omitempty"`
-	SubAgents        *SubAgents        `yaml:"sub_agents,omitempty"`
-	DocumentTemplate *DocumentTemplate `yaml:"document_template,omitempty"`
+	Description         string               `yaml:"description"`
+	Orchestration       string               `yaml:"orchestration"`
+	Roles               []string             `yaml:"roles"`
+	Skills              []string             `yaml:"skills"`
+	HumanGate           bool                 `yaml:"human_gate"`
+	DocumentType        *string              `yaml:"document_type,omitempty"`
+	Prerequisites       *Prerequisites       `yaml:"prerequisites,omitempty"`
+	TransitionValidator *TransitionValidator `yaml:"transition_validator,omitempty"`
+	Notes               string               `yaml:"notes,omitempty"`
+	EffortBudget        string               `yaml:"effort_budget,omitempty"`
+	MaxReviewCycles     *int                 `yaml:"max_review_cycles,omitempty"`
+	SubAgents           *SubAgents           `yaml:"sub_agents,omitempty"`
+	DocumentTemplate    *DocumentTemplate    `yaml:"document_template,omitempty"`
+}
+
+// TransitionValidator declares a validator hook that runs when a feature
+// transitions out of this stage. It is separate from prerequisites —
+// prerequisites gate entry into the stage, transition validators gate exit.
+type TransitionValidator struct {
+	Role     string `yaml:"role"`
+	Skill    string `yaml:"skill"`
+	GateMode string `yaml:"gate_mode"` // "auto" (default) or "human"
 }
 
 // Prerequisites declares what must be true before entering the stage.

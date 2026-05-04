@@ -619,6 +619,17 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			}
 			feature := featureFromState(getR.ID, getR.Slug, getR.State)
 			currentStatus := string(feature.Status)
+
+			// Transition validator check (exit-stage validation before gate check).
+			if tvErr := checkTransitionValidator(gateRouter, feature, currentStatus, newStatus, override); tvErr != nil {
+				if !override {
+					return map[string]any{
+						"error":                tvErr.Error(),
+						"transition_validator": map[string]any{"stage": currentStatus, "blocking": true},
+					}, nil
+				}
+			}
+
 			if isPhase2Transition(currentStatus, newStatus) {
 				var gateResult service.GateResult
 				overridePolicy := "agent"
@@ -763,6 +774,12 @@ func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService,
 	advCfg := &service.AdvanceConfig{RequiresHumanReview: requiresHumanReview}
 	if gateRouter != nil {
 		advCfg.CheckGate = func(from, to string, f *model.Feature, ds *service.DocumentService, es *service.EntityService) service.GateResult {
+			// Run transition validator for exit-stage before the gate check.
+			if tvErr := checkTransitionValidator(gateRouter, f, from, to, override); tvErr != nil {
+				if tvErr.HasBlocking() {
+					return service.GateResult{Stage: from, Satisfied: false, Reason: tvErr.Error()}
+				}
+			}
 			routerCtx := buildGateEvalContext(f, ds, es)
 			routerResult := gateRouter.CheckGate(from, to, routerCtx)
 			if routerResult.Source == "registry" {
@@ -819,7 +836,8 @@ func featureFromState(entityID, slug string, state map[string]any) *model.Featur
 	return &model.Feature{
 		ID: entityID, Slug: slug, Parent: entityStateStr(state, "parent"),
 		Status: model.FeatureStatus(entityStateStr(state, "status")), ReviewCycle: rc,
-		BlockedReason: br, Design: entityStateStr(state, "design"), Spec: entityStateStr(state, "spec"),
+		Tier: entityStateStr(state, "tier"), BlockedReason: br,
+		Design: entityStateStr(state, "design"), Spec: entityStateStr(state, "spec"),
 		DevPlan: entityStateStr(state, "dev_plan"), Overrides: overridesFromState(state),
 	}
 }
@@ -889,6 +907,56 @@ var phase2Statuses = map[string]bool{
 }
 
 func isPhase2Transition(from, to string) bool { return phase2Statuses[from] && phase2Statuses[to] }
+
+// checkTransitionValidator runs the transition validator for the from-stage if one is
+// configured. Returns nil if validation passes or no validator is configured.
+// Returns a *validate.TransitionValidatorError on blocking failure.
+func checkTransitionValidator(gateRouter *gate.GateRouter, feature *model.Feature, fromStatus, toStatus string, override bool) *validate.TransitionValidatorError {
+	if gateRouter == nil {
+		return nil
+	}
+
+	// Create a binding lookup from the gate router's cache.
+	// We access the cache indirectly via the gate package — the RegistryCache
+	// is the same instance used by GateRouter.
+	cache := gate.GetRegistryCache(gateRouter)
+	if cache == nil {
+		return nil
+	}
+
+	lookup := &validate.RegistryCacheBindingLookup{Cache: cache}
+	dispatcher := validate.NewValidatorDispatcher(lookup)
+
+	input := validate.ValidatorDispatchInput{
+		Feature:    feature,
+		FromStatus: fromStatus,
+		ToStatus:   toStatus,
+		Override:   override,
+	}
+
+	result, err := dispatcher.ValidateTransition(input)
+	if err != nil {
+		// Validation dispatch error — treat as blocking.
+		return &validate.TransitionValidatorError{
+			Stage:   fromStatus,
+			Message: fmt.Sprintf("transition validator error for stage %q: %v", fromStatus, err),
+		}
+	}
+
+	if result == nil {
+		return nil // no validator for this stage, or skipped
+	}
+
+	if !result.Passed && result.BlockingFail {
+		tvErr := validate.BuildTransitionValidatorError(*result)
+		if tErr, ok := tvErr.(*validate.TransitionValidatorError); ok {
+			return tErr
+		}
+		return &validate.TransitionValidatorError{Stage: fromStatus, Message: tvErr.Error()}
+	}
+
+	return nil
+}
 
 func nonTerminalTasksForFeature(featureID string, entitySvc *service.EntityService) []service.TaskStatusPair {
 	tasks, err := entitySvc.List("task")
