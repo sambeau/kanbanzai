@@ -3,7 +3,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-03                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | sambeau                        |
 
 ## Overview
@@ -355,6 +355,16 @@ example presence) programmatically.
 step. If the skill proves valuable, hardening structural checks into MCP
 tools follows the Hardening Principle (replace fuzzy LLM steps with
 deterministic tools).
+
+## Dependencies
+
+This design has no code dependencies. It is a documentation-only skill
+that creates no changes to the kanbanzai server.
+
+The skill references `refs/prompt-engineering-guide.md` at runtime
+(reference document already exists in the repository). The embedded
+init copy at `internal/kbzinit/skills/task-execution/prompt-engineering/`
+must be registered in `taskSkillNames` in `internal/kbzinit/task_skills.go`.
 
 ## Decisions
 
