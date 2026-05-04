@@ -1,0 +1,308 @@
+document_id: PROJECT/report-orchestration-and-knowledge
+document_path: docs/orchestration-and-knowledge.md
+content_hash: e2592b429a6e61c783658c3a91de6e820d43bad8a212a60662e09f41785b302c
+indexed_at: 2026-05-04T11:13:34.075765Z
+sections:
+    - path: "1"
+      level: 1
+      title: Orchestration and Knowledge
+      byte_offset: 0
+      byte_count: 25804
+      word_count: 3776
+      content_hash: e2592b429a6e61c783658c3a91de6e820d43bad8a212a60662e09f41785b302c
+      children:
+        - path: "1.1"
+          level: 2
+          title: The coordination problem
+          byte_offset: 624
+          byte_count: 1336
+          word_count: 182
+          content_hash: f4353d93ed1228dfc7f510a8bea43e217700212e679a77c5cb08c63a95132807
+        - path: "1.2"
+          level: 2
+          title: Roles and skills
+          byte_offset: 1960
+          byte_count: 3850
+          word_count: 554
+          content_hash: 4ff030393647c37fc9baeda1c4cb2dfb1408981463c1a3f72a5e7a37baf7e6c9
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Roles
+              byte_offset: 2292
+              byte_count: 1359
+              word_count: 194
+              content_hash: b26e5599aa86b4c1cc96c639cacf92ab974cb87f3ccf8c1855b2377c50961262
+            - path: 1.2.2
+              level: 3
+              title: Skills
+              byte_offset: 3651
+              byte_count: 1085
+              word_count: 153
+              content_hash: 3a0774f4e77eac1258b5a998b8fc81f9fd53a60ab36583cb0c01d8794c0b26a2
+            - path: 1.2.3
+              level: 3
+              title: Stage bindings
+              byte_offset: 4736
+              byte_count: 1074
+              word_count: 152
+              content_hash: 4472aa53b55a124119363e07c9dccb67d7b7dbc057f520ec1d3ac7250c441380
+        - path: "1.3"
+          level: 2
+          title: How agents receive context
+          byte_offset: 5810
+          byte_count: 3289
+          word_count: 487
+          content_hash: d72a90752011a3d9be6d74c94b05293e6daeecd22b0557e0964c316c868f516d
+          children:
+            - path: 1.3.1
+              level: 3
+              title: What a context packet contains
+              byte_offset: 6190
+              byte_count: 1189
+              word_count: 176
+              content_hash: 30519bf478e8cb09fa7ae20f00e8f847ca9f16e501254e69487bcad2105d8a12
+            - path: 1.3.2
+              level: 3
+              title: Budget trimming
+              byte_offset: 7379
+              byte_count: 409
+              word_count: 63
+              content_hash: ab172a2d1177b856f18f9110364ce288186ee9c603db6516c2aa0c77a2472a7d
+            - path: 1.3.3
+              level: 3
+              title: The handoff prompt
+              byte_offset: 7788
+              byte_count: 1009
+              word_count: 142
+              content_hash: 5b699b9348468db7650651f0f776338489889d05bffb75fe2157868c3470947c
+            - path: 1.3.4
+              level: 3
+              title: Re-review injection
+              byte_offset: 8797
+              byte_count: 302
+              word_count: 46
+              content_hash: 5cd7c856f058a22515821c674e46212d791b4157849601a0646ec3095198d81e
+        - path: "1.4"
+          level: 2
+          title: Task dispatch and orchestration
+          byte_offset: 9099
+          byte_count: 2938
+          word_count: 441
+          content_hash: 99a0d6ee6ed881855aca74c3fd14130d7c96b3722770192008118c2b36024a06
+          children:
+            - path: 1.4.1
+              level: 3
+              title: The work queue
+              byte_offset: 9403
+              byte_count: 1334
+              word_count: 206
+              content_hash: ae4802e62e8a10191b8770f53cff06985e18474c50182247443f51b58ba8b884
+            - path: 1.4.2
+              level: 3
+              title: Dependency management
+              byte_offset: 10737
+              byte_count: 756
+              word_count: 114
+              content_hash: 74ee1ac3b3b71c81952c7bf87f9cebef452240018398d8e23685b90328259303
+            - path: 1.4.3
+              level: 3
+              title: Dispatching sub-agents
+              byte_offset: 11493
+              byte_count: 544
+              word_count: 76
+              content_hash: 909da8381ef5997aa5321427ee33605bf3dc82de621a9769643a52cd894d5efb
+        - path: "1.5"
+          level: 2
+          title: Detecting conflicts before parallel dispatch
+          byte_offset: 12037
+          byte_count: 2059
+          word_count: 311
+          content_hash: f81a0d8619b2f9cf3a15cf4d15aa75cce4985c938162b5ab34196c567fe65924
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Three analysis dimensions
+              byte_offset: 12274
+              byte_count: 1299
+              word_count: 206
+              content_hash: 200f822425fb4ea6d6c1e19a923f8141b581c3f6d275fc5787dbac2b13684f58
+            - path: 1.5.2
+              level: 3
+              title: Risk recommendations
+              byte_offset: 13573
+              byte_count: 523
+              word_count: 69
+              content_hash: b60b82716ea20cddac910172c5ccdfbc9258a3953a1f38577938270138ab0554
+        - path: "1.6"
+          level: 2
+          title: The knowledge system
+          byte_offset: 14096
+          byte_count: 6322
+          word_count: 929
+          content_hash: c38d10fa7d6cb64b52fdd8f1097bdc4bfc5e5f8cc94ae19be1ef6a62e7c54983
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Entry structure
+              byte_offset: 14415
+              byte_count: 1053
+              word_count: 173
+              content_hash: c0aaa04d3a6810df47b37a56b6f87a76ed3515ddc5f823024c8e50d3521a8254
+            - path: 1.6.2
+              level: 3
+              title: Lifecycle
+              byte_offset: 15468
+              byte_count: 980
+              word_count: 136
+              content_hash: ededaeb12828f5fd15a2c19c398e218e2ce84859058d93963f535db52f60cea6
+            - path: 1.6.3
+              level: 3
+              title: How entries are contributed
+              byte_offset: 16448
+              byte_count: 722
+              word_count: 89
+              content_hash: 7737e1f7826e4ceec2b9a3b58c6e9162345349779396991ef487e55295997b3d
+            - path: 1.6.4
+              level: 3
+              title: How entries are surfaced
+              byte_offset: 17170
+              byte_count: 399
+              word_count: 57
+              content_hash: 2d12441c49aa96f43a6234849115d1b67ada9c5d8c7aae85f37812fa2252936d
+            - path: 1.6.5
+              level: 3
+              title: Promotion and pruning
+              byte_offset: 17569
+              byte_count: 792
+              word_count: 120
+              content_hash: 40e940effd17aee427f2f4ce362e6d5ba21826b8ff1ec2c05023a1c10179526a
+            - path: 1.6.6
+              level: 3
+              title: Conflict resolution
+              byte_offset: 18361
+              byte_count: 277
+              word_count: 42
+              content_hash: 237f271b627e19b23d62a51668a541c09419bb57779ce31bf03ecaccd687cc33
+            - path: 1.6.7
+              level: 3
+              title: Choosing the right record type
+              byte_offset: 18638
+              byte_count: 1780
+              word_count: 265
+              content_hash: c1fcc52dd5338dd699d226780f213b3ae922ef64191b0daa9605a2d409ccd58a
+        - path: "1.7"
+          level: 2
+          title: Verifying readiness before merge
+          byte_offset: 20418
+          byte_count: 2456
+          word_count: 371
+          content_hash: 659cf9af9a4fbf4e98dc50692c24e30505a119f1569e7e784c046043fc06a8fa
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Gate checks
+              byte_offset: 20728
+              byte_count: 717
+              word_count: 111
+              content_hash: 4899c2a6db7f3b4a67764b848fab8a3d7dcfda4793c72a548965dad388402105
+            - path: 1.7.2
+              level: 3
+              title: Overall status
+              byte_offset: 21445
+              byte_count: 249
+              word_count: 38
+              content_hash: 5291a2a4603e73aee9fbfeb48ea1ec27b2ef3c2c757644adf35323c203eae020
+            - path: 1.7.3
+              level: 3
+              title: Merge strategies
+              byte_offset: 21694
+              byte_count: 310
+              word_count: 51
+              content_hash: 326355684b2a52e3cd1ae461d64fd948716084e8266383d653afd3f4c2358e1b
+            - path: 1.7.4
+              level: 3
+              title: Overrides
+              byte_offset: 22004
+              byte_count: 394
+              word_count: 55
+              content_hash: 2d54083137e31d9282a177712860a6003088d7bdefa2aaa946fdc2592c29ff82
+            - path: 1.7.5
+              level: 3
+              title: Post-merge cleanup
+              byte_offset: 22398
+              byte_count: 476
+              word_count: 70
+              content_hash: e1a5b4fd60241513a1116cab24b36ee58b164a8dbfe1fc768564e0cf5e899cf5
+        - path: "1.8"
+          level: 2
+          title: Working in parallel with worktrees
+          byte_offset: 22874
+          byte_count: 2215
+          word_count: 330
+          content_hash: 3f828bee07f44f560a8a6584f48983d4843f242ad0f29f2ab5acae820844cdaf
+          children:
+            - path: 1.8.1
+              level: 3
+              title: Worktrees
+              byte_offset: 23225
+              byte_count: 999
+              word_count: 158
+              content_hash: 918910ce015b76455f704ace09308792741488556c4f7e41453d8c1c2981c4b9
+            - path: 1.8.2
+              level: 3
+              title: Branch hygiene
+              byte_offset: 24224
+              byte_count: 482
+              word_count: 77
+              content_hash: 3f9b3a268610e994b7c76f2f76995a948ac13e2f6be3b218898d84433ad42578
+            - path: 1.8.3
+              level: 3
+              title: 'Known limitation: file editing in worktrees'
+              byte_offset: 24706
+              byte_count: 383
+              word_count: 56
+              content_hash: b8ce9d63a5585b910b95f088153d8165a41879043b5fa8450e10132baa51246e
+        - path: "1.9"
+          level: 2
+          title: What to read next
+          byte_offset: 25089
+          byte_count: 715
+          word_count: 95
+          content_hash: ebf14ba1babda47275e8238641775998e499bb53e1c00801736ee30e86ce774e
+cross_doc_links:
+    - target_path: user-guide.md
+      link_text: User Guide
+      section_path: "1"
+    - target_path: workflow-overview.md
+      link_text: Workflow Overview
+      section_path: "1"
+    - target_path: getting-started.md
+      link_text: Getting Started guide
+      section_path: "1.9"
+    - target_path: retrospectives.md
+      link_text: Retrospectives
+      section_path: "1.9"
+    - target_path: mcp-tool-reference.md
+      link_text: MCP Tool Reference
+      section_path: "1.9"
+    - target_path: schema-reference.md
+      link_text: Schema Reference
+      section_path: "1.9"
+    - target_path: user-guide.md
+      link_text: User Guide
+      section_path: "1.9"
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.2.2
+conventional_roles:
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.1
+      role: narrative
+      confidence: high
+    - section_path: 1.5.2
+      role: risk
+      confidence: high
+classified: false

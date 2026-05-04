@@ -1,0 +1,284 @@
+document_id: PROJECT/report-trigger-reference
+document_path: docs/trigger-reference.md
+content_hash: c09772e7549abdfca5dc2521d1f8e4652e62cee8bf3ba4f828fe11000cbcffde
+indexed_at: 2026-05-04T11:13:34.467621Z
+sections:
+    - path: "1"
+      level: 1
+      title: Trigger Reference
+      byte_offset: 0
+      byte_count: 20862
+      word_count: 3221
+      content_hash: c09772e7549abdfca5dc2521d1f8e4652e62cee8bf3ba4f828fe11000cbcffde
+      children:
+        - path: "1.1"
+          level: 2
+          title: System — Getting Your Bearings
+          byte_offset: 568
+          byte_count: 1171
+          word_count: 183
+          content_hash: 829343753c439edf0718c8d9168f7b49f485a29894decd2eed2b2fe96785226a
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Check project status
+              byte_offset: 605
+              byte_count: 670
+              word_count: 106
+              content_hash: f7dff7c3ae1441b1cdfd49350e2ea9c3bff656036da807cecc2f2bcbac55fe86
+            - path: 1.1.2
+              level: 3
+              title: Check a specific feature or task
+              byte_offset: 1275
+              byte_count: 464
+              word_count: 71
+              content_hash: 50bfeeebfc3869460c493c3de66307337d0c8c84834ebbef6593627e8b648608
+        - path: "1.2"
+          level: 2
+          title: Planning — Deciding What to Build
+          byte_offset: 1739
+          byte_count: 1830
+          word_count: 297
+          content_hash: 92c966c94eafcbefd4b1c37dd1c3298e62c4c11ebfdef8082fab09d5ebc216bc
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Start a planning conversation
+              byte_offset: 1975
+              byte_count: 701
+              word_count: 117
+              content_hash: eaccf22fe5e44257abd91145de0dc108ddade2fb45d88bcfd0011d669f408c37
+            - path: 1.2.2
+              level: 3
+              title: Create a Plan entity
+              byte_offset: 2676
+              byte_count: 443
+              word_count: 66
+              content_hash: af2606b6e80a65e52abeb3e50747401515affcbb95ce528f7c6e0ef0883f32f1
+            - path: 1.2.3
+              level: 3
+              title: Create a Feature entity
+              byte_offset: 3119
+              byte_count: 450
+              word_count: 76
+              content_hash: ec5ce3466299c36e7241a62a8487855e65761b361d2b99855a4aadf912e4dd46
+        - path: "1.3"
+          level: 2
+          title: Designing — How It Should Work
+          byte_offset: 3569
+          byte_count: 1901
+          word_count: 297
+          content_hash: c340589619049a87d4b87366de435022f1fcf8530b636b702cdc97df7997f406
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Write a design document
+              byte_offset: 3606
+              byte_count: 1432
+              word_count: 224
+              content_hash: 0f5cb133da7f1869f68cadfba3fa4620a4935fd22de16915ede661d2b2e7be89
+            - path: 1.3.2
+              level: 3
+              title: Approve the design
+              byte_offset: 5038
+              byte_count: 432
+              word_count: 66
+              content_hash: db604b96c4dc28f4130068accab17e6ce8d45f1d347eadd6966ade4312c8ffb1
+        - path: "1.4"
+          level: 2
+          title: Specifying — What Exactly to Build
+          byte_offset: 5470
+          byte_count: 1621
+          word_count: 249
+          content_hash: 0292aaaae02bc527e09892f324fad0629cbe0f3b31acd3e6888bcfd9d6d7d3a2
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Write a specification
+              byte_offset: 5511
+              byte_count: 1580
+              word_count: 242
+              content_hash: 53a1a9cad10f65e295298623af6f6ef2a43af62ad8b950354fda4eddbad39148
+        - path: "1.5"
+          level: 2
+          title: Dev-Planning — How to Implement It
+          byte_offset: 7091
+          byte_count: 3502
+          word_count: 504
+          content_hash: e53318eefe041aff5c774db421af8014caf60b255b55301e06a52b113ce820e1
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Write an implementation plan (dev-plan document)
+              byte_offset: 7452
+              byte_count: 1421
+              word_count: 203
+              content_hash: 0b6f7d465c9620b721a5833e6862e685fd040821f9926ed4be5556206b3f0afc
+            - path: 1.5.2
+              level: 3
+              title: Decompose a feature into tasks
+              byte_offset: 8873
+              byte_count: 1036
+              word_count: 146
+              content_hash: 14bce55c4d916b6edd2e4ab149d30c8c99464b7fe64469165ed41da145e91be1
+            - path: 1.5.3
+              level: 3
+              title: Do both at once (recommended)
+              byte_offset: 9909
+              byte_count: 281
+              word_count: 43
+              content_hash: fe5bc52388cbf2f919f18fbb3c20e823b6a46a807fa6c336a3d1a439c5f1518e
+            - path: 1.5.4
+              level: 3
+              title: Advance feature to developing
+              byte_offset: 10190
+              byte_count: 403
+              word_count: 59
+              content_hash: 82229cfdef754fb3a83bc1882166467c7e810f95ac56a9341fe478d6d55fbe5b
+        - path: "1.6"
+          level: 2
+          title: Developing — Building It
+          byte_offset: 10593
+          byte_count: 1959
+          word_count: 297
+          content_hash: aa6033a0fe41ebbc27cd92af84dd44b40e5ff8cc37525ee3462cb3b31f263019
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Orchestrate full feature development
+              byte_offset: 10624
+              byte_count: 1592
+              word_count: 242
+              content_hash: 952c95bcfdd940b51a986bab40edae0a1e2ec6cf53971ad52892220e0fba45ac
+            - path: 1.6.2
+              level: 3
+              title: Implement a specific task
+              byte_offset: 12216
+              byte_count: 336
+              word_count: 50
+              content_hash: 4b88fff83b507a24fdba55e39e26de72a0188eb72f4fa56f9bb2024c46f2aba8
+        - path: "1.7"
+          level: 2
+          title: Reviewing — Checking It
+          byte_offset: 12552
+          byte_count: 2525
+          word_count: 379
+          content_hash: a57fbc4c70f771fb5a26c489e3d148756354a849d1a64299a7809aee078e0fa4
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Orchestrate code review (full specialist panel)
+              byte_offset: 12582
+              byte_count: 1651
+              word_count: 244
+              content_hash: df50d600b364cfa26429c844bced805f27f2bbe13393b0696a2b76d104ec9182
+            - path: 1.7.2
+              level: 3
+              title: Review a single dimension
+              byte_offset: 14233
+              byte_count: 345
+              word_count: 49
+              content_hash: 01f5e66b37e45e0d5beb460b8972a917c9e711a03f262ccce76886961a1ee65b
+            - path: 1.7.3
+              level: 3
+              title: Review plan completion
+              byte_offset: 14578
+              byte_count: 499
+              word_count: 81
+              content_hash: 0daa4c3b57e81d4f76e18ff033da2defc75841c64ba7afef15a693fff69f3d9f
+        - path: "1.8"
+          level: 2
+          title: Documentation
+          byte_offset: 15077
+          byte_count: 1676
+          word_count: 248
+          content_hash: f2bdf325745220a4fed78125f6871da7b5aa7610aacf6853c3a26a2a9f215708
+          children:
+            - path: 1.8.1
+              level: 3
+              title: Update existing documentation
+              byte_offset: 15095
+              byte_count: 298
+              word_count: 42
+              content_hash: 4103cd2632426f5ec6cbbc5db019eef8e41136652fe0b557a19ce8a7b87dec76
+            - path: 1.8.2
+              level: 3
+              title: Write new documentation
+              byte_offset: 15393
+              byte_count: 339
+              word_count: 51
+              content_hash: 6c1936634f56affa17dbf2b028bfd0627def85a4c1073a57e2081423bd3916f7
+            - path: 1.8.3
+              level: 3
+              title: Run the editorial pipeline
+              byte_offset: 15732
+              byte_count: 1021
+              word_count: 153
+              content_hash: 16fbd19e545e524f582f7cb1fd00828399132758e0f15f68bd9b5aa1d82b0468
+        - path: "1.9"
+          level: 2
+          title: Research
+          byte_offset: 16753
+          byte_count: 440
+          word_count: 67
+          content_hash: 91cd71987b421066666c60b5178344d45b5b945e837dc6572e09012c27b4f72f
+          children:
+            - path: 1.9.1
+              level: 3
+              title: Write a research report
+              byte_offset: 16766
+              byte_count: 427
+              word_count: 65
+              content_hash: 836311fdd8973123bcc1bdb76c4a1d74365098a37b852054d3a49cbad90819d4
+        - path: "1.10"
+          level: 2
+          title: Codebase Audit
+          byte_offset: 17193
+          byte_count: 396
+          word_count: 65
+          content_hash: 59e50e81b1ba1abf3245f1c00c2125e1f4c955ba140a14f51fcb391640b68fce
+          children:
+            - path: 1.10.1
+              level: 3
+              title: Audit the codebase
+              byte_offset: 17212
+              byte_count: 377
+              word_count: 62
+              content_hash: befce2da5dd9d5c4a375876ccee54e8f193a6e8500b3062abd32d9469240d87d
+        - path: "1.11"
+          level: 2
+          title: Approval Signals
+          byte_offset: 17589
+          byte_count: 1338
+          word_count: 226
+          content_hash: a6f0d0dbeeeed04b51248ccecba6cb00f10711aa5c0d7ce48f1de368cf0a89d7
+        - path: "1.12"
+          level: 2
+          title: ⚠️ Dangerous Phrases
+          byte_offset: 18927
+          byte_count: 1935
+          word_count: 323
+          content_hash: f8fd64ff69bcebcf8f33c23b894a96be2f5f4947585862c2ab99cc6f90d55b96
+entity_refs:
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.1.2
+      byte_offset: 1381
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.6.2
+      byte_offset: 12282
+cross_doc_links:
+    - target_path: conversational-guide.md
+      link_text: Conversational Guide
+      section_path: "1"
+    - target_path: workflow-overview.md
+      link_text: Workflow Overview
+      section_path: "1"
+    - target_path: .kbz/skills/*/SKILL.md
+      link_text: .kbz/skills/*/SKILL.md
+      section_path: "1.12"
+    - target_path: .kbz/skills/kanbanzai-workflow/SKILL.md
+      link_text: .kbz/skills/kanbanzai-workflow/SKILL.md
+      section_path: "1.12"
+classified: false

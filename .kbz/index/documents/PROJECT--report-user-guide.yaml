@@ -1,0 +1,177 @@
+document_id: PROJECT/report-user-guide
+document_path: docs/user-guide.md
+content_hash: 7ec35483c5c5d6f9cc6180a4bf883da9e7b938ce29a6001e82ce4f253137d24f
+indexed_at: 2026-05-04T11:13:34.805728Z
+sections:
+    - path: "1"
+      level: 1
+      title: User Guide
+      byte_offset: 0
+      byte_count: 18783
+      word_count: 2737
+      content_hash: 7ec35483c5c5d6f9cc6180a4bf883da9e7b938ce29a6001e82ce4f253137d24f
+      children:
+        - path: "1.1"
+          level: 2
+          title: What is Kanbanzai?
+          byte_offset: 520
+          byte_count: 1241
+          word_count: 187
+          content_hash: 9548a2e1113cb3992751362863a635213bf8f5bcb938ab4656d74d96f59cddb9
+        - path: "1.2"
+          level: 2
+          title: Collaboration model
+          byte_offset: 1761
+          byte_count: 1005
+          word_count: 145
+          content_hash: 01cd237acb7d9e01030062f783df7df436fc8a51cd2804f0f22d12ce03db60ae
+        - path: "1.3"
+          level: 2
+          title: Stage-gate workflow
+          byte_offset: 2766
+          byte_count: 1469
+          word_count: 242
+          content_hash: 545272ac8f24776ef3d960151ba34d7cc0b80db27e63eaef3a8dd8f4f059e265
+        - path: "1.4"
+          level: 2
+          title: Documents drive everything
+          byte_offset: 4235
+          byte_count: 1328
+          word_count: 181
+          content_hash: a93549a7b13ede6bf98cffb46718d4da7060b1cc194c4f0c6945eac525745705
+        - path: "1.5"
+          level: 2
+          title: Approval and control
+          byte_offset: 5563
+          byte_count: 1141
+          word_count: 173
+          content_hash: c5de68861233129e6731c3951a72890d243126981f5c8a160a7d4dd27d5da245
+        - path: "1.6"
+          level: 2
+          title: Bugs and incidents
+          byte_offset: 6704
+          byte_count: 1341
+          word_count: 199
+          content_hash: c2b2b4e21c450e93f591a35681c10732665dda205e70e1394795053db42351b7
+        - path: "1.7"
+          level: 2
+          title: Task dispatch and context assembly
+          byte_offset: 8045
+          byte_count: 1518
+          word_count: 209
+          content_hash: d89e876bd3d2d85ed0f429c87bd539ba2a94454e8784617f5b3b884ddee758d1
+        - path: "1.8"
+          level: 2
+          title: Knowledge system
+          byte_offset: 9563
+          byte_count: 1201
+          word_count: 184
+          content_hash: 2ce3900209caa6e1a67df957dc9ef8418f8cde10c2ab099ac4ac816c9ca1cf84
+        - path: "1.9"
+          level: 2
+          title: Retrospectives
+          byte_offset: 10764
+          byte_count: 1114
+          word_count: 148
+          content_hash: 8ab0016d889fa778a099d18968bb6bc79bc62b65923a489cce3c7578d8b1f634
+        - path: "1.10"
+          level: 2
+          title: Concurrency and parallel development
+          byte_offset: 11878
+          byte_count: 1284
+          word_count: 182
+          content_hash: c192d9edd72a72a1013003baad58f5b61df5f30941961c23b52a8112152ec4fc
+        - path: "1.11"
+          level: 2
+          title: MCP server
+          byte_offset: 13162
+          byte_count: 1767
+          word_count: 255
+          content_hash: edcb2668136fc28ac68dd1727971048bbc1a6116768ebf94115cb254b1249c93
+        - path: "1.12"
+          level: 2
+          title: State and storage
+          byte_offset: 14929
+          byte_count: 1494
+          word_count: 207
+          content_hash: 4ee2bf246aa832dec4b26605baa5f87e4e8313b77247cc9f84cf7a2fedf899d6
+        - path: "1.13"
+          level: 2
+          title: Common workflows at a glance
+          byte_offset: 16423
+          byte_count: 1144
+          word_count: 176
+          content_hash: 3ae72d406bf5871951cab4790765c08bd9d861b1e22cb261c88cf3dc8bcb10c6
+        - path: "1.14"
+          level: 2
+          title: Where to go next
+          byte_offset: 17567
+          byte_count: 1216
+          word_count: 165
+          content_hash: 1e043ccecfdd931edac5da5ed7fa1728b677cb3f238379acb16f2e7af3ceaf23
+cross_doc_links:
+    - target_path: workflow-overview.md
+      link_text: Workflow Overview
+      section_path: "1.2"
+    - target_path: workflow-overview.md
+      link_text: Workflow Overview
+      section_path: "1.3"
+    - target_path: workflow-overview.md
+      link_text: Workflow Overview
+      section_path: "1.4"
+    - target_path: schema-reference.md
+      link_text: Schema Reference
+      section_path: "1.6"
+    - target_path: orchestration-and-knowledge.md
+      link_text: Orchestration and Knowledge
+      section_path: "1.7"
+    - target_path: orchestration-and-knowledge.md
+      link_text: Orchestration and Knowledge
+      section_path: "1.8"
+    - target_path: retrospectives.md
+      link_text: Retrospectives
+      section_path: "1.9"
+    - target_path: orchestration-and-knowledge.md
+      link_text: Orchestration and Knowledge
+      section_path: "1.10"
+    - target_path: mcp-tool-reference.md
+      link_text: MCP Tool Reference
+      section_path: "1.11"
+    - target_path: schema-reference.md
+      link_text: Schema Reference
+      section_path: "1.12"
+    - target_path: configuration-reference.md
+      link_text: Configuration Reference
+      section_path: "1.12"
+    - target_path: workflow-overview.md
+      link_text: Workflow Overview
+      section_path: "1.13"
+    - target_path: schema-reference.md
+      link_text: Schema Reference
+      section_path: "1.13"
+    - target_path: getting-started.md
+      link_text: Getting Started
+      section_path: "1.14"
+    - target_path: workflow-overview.md
+      link_text: Workflow Overview
+      section_path: "1.14"
+    - target_path: orchestration-and-knowledge.md
+      link_text: Orchestration and Knowledge
+      section_path: "1.14"
+    - target_path: retrospectives.md
+      link_text: Retrospectives
+      section_path: "1.14"
+    - target_path: mcp-tool-reference.md
+      link_text: MCP Tool Reference
+      section_path: "1.14"
+    - target_path: schema-reference.md
+      link_text: Schema Reference
+      section_path: "1.14"
+    - target_path: configuration-reference.md
+      link_text: Configuration Reference
+      section_path: "1.14"
+conventional_roles:
+    - section_path: "1.7"
+      role: narrative
+      confidence: high
+classified: false

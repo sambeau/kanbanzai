@@ -94,8 +94,12 @@ conventional_roles:
     - section_path: "1.4"
       role: requirement
       confidence: high
-access_count: 2
-last_accessed_at: 2026-05-04T11:01:21.264336Z
+access_count: 4
+last_accessed_at: 2026-05-04T11:30:59.671973Z
+section_access:
+    "1":
+        access_count: 2
+        last_accessed_at: 2026-05-04T11:30:59.671973Z
 classified: true
 classified_at: 2026-05-04T11:01:40.023783Z
 classified_by: claude-sonnet-4
