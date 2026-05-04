@@ -36,6 +36,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"github.com/sambeau/kanbanzai/internal/checkpoint"
 	"github.com/sambeau/kanbanzai/internal/config"
 	"github.com/sambeau/kanbanzai/internal/docint"
 	"github.com/sambeau/kanbanzai/internal/git"
@@ -311,6 +312,11 @@ func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.In
 // type to the feature's lifecycle stage, checks the tier's automation matrix,
 // and dispatches a validator if allowed.
 //
+// Cycle tracking (REQ-PIPE-003):
+//   - Increments feature.ReviewCycle on each validator dispatch
+//   - Resets feature.ReviewCycle to 0 when validation passes
+//   - When cycle reaches tier's MaxCycles cap: escalates to human via checkpoint
+//
 // Returns nil if auto-validation is not applicable or not allowed.
 // Returns a result map describing the outcome on success/failure.
 func tryAutoValidate(entitySvc *service.EntityService, docSvc *service.DocumentService, docID, docPath, docType, owner string) map[string]any {
@@ -360,7 +366,9 @@ func tryAutoValidate(entitySvc *service.EntityService, docSvc *service.DocumentS
 
 	// Check the automation matrix for this tier+stage.
 	gateMode := tierGateMode(tierCfg, stageForDoc)
-	if gateMode != config.GateModeAuto {
+	// Only "auto" gates trigger the automatic validation pipeline.
+	// "human" and "conditional" gates are skipped.
+	if gateMode != string(config.GateModeAuto) {
 		return map[string]any{
 			"triggered":      false,
 			"reason":         fmt.Sprintf("gate mode is %q for tier %q stage %q", gateMode, tier, stageForDoc),
@@ -369,7 +377,7 @@ func tryAutoValidate(entitySvc *service.EntityService, docSvc *service.DocumentS
 		}
 	}
 
-	// Check cycle cap.
+	// Check cycle cap (REQ-PIPE-003).
 	maxCycles := tierCfg.MaxCycles
 	if maxCycles <= 0 {
 		return map[string]any{
@@ -380,19 +388,49 @@ func tryAutoValidate(entitySvc *service.EntityService, docSvc *service.DocumentS
 		}
 	}
 
-	// Track cycle count — use ReviewCycle field as auto-validation cycle counter.
-	// This is a simplified approach; a dedicated field may be added later.
+	// Check if feature is already blocked (human escalation in progress).
+	// Once escalated, the system must not attempt further validation until
+	// the human responds and clears the blocked_reason (REQ-PIPE-004).
+	if feature.BlockedReason != "" {
+		return map[string]any{
+			"triggered":     false,
+			"reason":        fmt.Sprintf("feature %s is blocked (human escalation pending): %s", feature.ID, feature.BlockedReason),
+			"feature_id":    feature.ID,
+			"feature_tier":  tier,
+			"blocked_reason": feature.BlockedReason,
+		}
+	}
+
+	// Track cycle count using ReviewCycle field.
 	currentCycle := feature.ReviewCycle
 	if currentCycle >= maxCycles {
-		return map[string]any{
+		// Cycle cap reached — escalate to human via checkpoint (REQ-PIPE-004).
+		_ = entitySvc.PersistFeatureBlockedReason(feature.ID, feature.Slug,
+			fmt.Sprintf("auto-validation cycle cap reached (%d/%d) for tier %q stage %q", currentCycle, maxCycles, tier, stageForDoc))
+
+		chkStore := checkpoint.NewStore(entitySvc.Root())
+		chk, chkErr := chkStore.Create(checkpoint.Record{
+			Question:  fmt.Sprintf("Feature %s has reached the auto-validation cycle cap (%d/%d) for tier %q. What should happen next?", feature.ID, currentCycle, maxCycles, tier),
+			Context:   fmt.Sprintf("Stage: %s. Tier: %s. Cycle: %d/%d. Document: %s (%s).", stageForDoc, tier, currentCycle, maxCycles, docID, docType),
+			Status:    checkpoint.StatusPending,
+			CreatedAt: time.Now().UTC(),
+			CreatedBy: "system",
+		})
+
+		result := map[string]any{
 			"triggered":    false,
-			"reason":       fmt.Sprintf("auto-validation cycle cap reached (%d/%d) for feature %s", currentCycle, maxCycles, feature.ID),
 			"escalate":     true,
+			"reason":       fmt.Sprintf("auto-validation cycle cap reached (%d/%d) for feature %s", currentCycle, maxCycles, feature.ID),
 			"feature_id":   feature.ID,
 			"feature_tier": tier,
 			"cycle_count":  currentCycle,
 			"max_cycles":   maxCycles,
+			"blocked_reason": fmt.Sprintf("auto-validation cycle cap reached (%d/%d)", currentCycle, maxCycles),
 		}
+		if chkErr == nil {
+			result["checkpoint_id"] = chk.ID
+		}
+		return result
 	}
 
 	// Determine the validator role and skill for this stage.
@@ -401,10 +439,13 @@ func tryAutoValidate(entitySvc *service.EntityService, docSvc *service.DocumentS
 		return nil
 	}
 
+	// Increment the cycle counter for this validation dispatch (REQ-PIPE-003).
+	// This tracks how many fix-validate iterations have occurred.
+	if err := entitySvc.IncrementFeatureReviewCycle(feature.ID, feature.Slug); err != nil {
+		log.Printf("[doc] WARNING: failed to increment review_cycle for %s: %v", feature.ID, err)
+	}
+
 	// Dispatch the validator (REQ-PIPE-002).
-	// For now, the validator dispatch is a placeholder — actual sub-agent
-	// dispatch will be wired when the spawn_agent integration is complete.
-	// The pipeline structure, tier checks, and cycle tracking are all functional.
 	result := map[string]any{
 		"triggered":    true,
 		"status":       "dispatched",
@@ -415,6 +456,7 @@ func tryAutoValidate(entitySvc *service.EntityService, docSvc *service.DocumentS
 		"role":         role,
 		"skill":        skill,
 		"cycle_count":  currentCycle + 1,
+		"max_cycles":   maxCycles,
 	}
 
 	return result
