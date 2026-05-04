@@ -3,11 +3,19 @@ parent_feature: FEAT-01KQ2MH2S2ZDH
 slug: instrumentation-expansion-computemetrics-aggregations
 name: ComputeMetrics aggregations
 summary: ComputeMetrics aggregations
-status: active
+status: done
 estimate: "3"
 depends_on:
   - TASK-01KQSA3KWP8PQ
+files_planned:
+  - internal/actionlog/metrics.go
+  - internal/actionlog/metrics_test.go
+  - internal/mcp/server.go
+  - cmd/kbz/metrics_cmd.go
+completed: "2026-05-04T11:18:11Z"
 claimed_at: "2026-05-04T11:06:27Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T11:06:27Z"
 dispatched_by: sambeau
+completion_summary: "Implemented ActionDistribution, DocTypeFunnel, TaskCompletionGap aggregations. Added types (ToolActionCount, DocFunnelMetric, TaskGapMetric), three new fields to MetricsResult, DocType to StageFeatureLookup interface, and three compute functions. Implemented DocType on entityStageLookup (server) via DocumentService and entityFeatureLookup (CLI) as no-op. Added tests for all aggregations. Build and tests pass."
+verification: go build ./... passes; go test ./internal/actionlog/... passes
