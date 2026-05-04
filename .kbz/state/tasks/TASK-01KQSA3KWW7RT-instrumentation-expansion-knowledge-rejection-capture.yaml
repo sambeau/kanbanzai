@@ -1,0 +1,8 @@
+id: TASK-01KQSA3KWW7RT
+parent_feature: FEAT-01KQ2MH2S2ZDH
+slug: instrumentation-expansion-knowledge-rejection-capture
+name: Knowledge rejection capture
+summary: Knowledge rejection capture
+status: queued
+depends_on:
+  - TASK-01KQSA3KWSV36
