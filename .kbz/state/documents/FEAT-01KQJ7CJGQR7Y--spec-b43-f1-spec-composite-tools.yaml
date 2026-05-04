@@ -1,0 +1,11 @@
+canonical_content_hash: 735a2a4bbd33e0cbcb157c0011ed068b036f91addb8f5acdddf07f7977b4366c
+content_hash: 9bd1ac8e07ae2d4b1611d07de15d30333e6f602f5187a45e786ee7f906e2f1c1
+created: "2026-05-04T11:01:15Z"
+created_by: sambeau
+id: FEAT-01KQJ7CJGQR7Y/spec-b43-f1-spec-composite-tools
+owner: FEAT-01KQJ7CJGQR7Y
+path: work/B43-composite-tools/B43-F1-spec-composite-tools.md
+status: draft
+title: Composite Tools for Workflow Chaining
+type: spec
+updated: "2026-05-04T11:01:15Z"
