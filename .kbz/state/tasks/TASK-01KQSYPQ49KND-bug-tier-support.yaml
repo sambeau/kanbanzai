@@ -3,4 +3,11 @@ parent_feature: FEAT-01KQSP41PE6JP
 slug: bug-tier-support
 name: Add tier support to Bug entity
 summary: "Fix F2: Add Tier field to Bug model. Call inferTier in CreateBug. Or update spec if intentional."
-status: ready
+status: done
+completed: "2026-05-04T17:14:47Z"
+claimed_at: "2026-05-04T17:14:40Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-04T17:14:40Z"
+dispatched_by: sambeau
+completion_summary: "Added Tier to Bug model, Tags+Tier to CreateBugInput, inferTier call in CreateBug. All service tests pass."
+verification: go build ./... passes. go test ./internal/service/... passes.
