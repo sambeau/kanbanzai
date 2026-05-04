@@ -4,3 +4,9 @@ slug: instrumentation-expansion-end-to-end-tests-and-verification
 name: End-to-end tests and verification
 summary: End-to-end tests and verification
 status: queued
+estimate: "3"
+depends_on:
+  - TASK-01KQSA3KWRKXM
+  - TASK-01KQSA3KWVPHN
+  - TASK-01KQSA3KWW7RT
+  - TASK-01KQSA3KWXJDA
