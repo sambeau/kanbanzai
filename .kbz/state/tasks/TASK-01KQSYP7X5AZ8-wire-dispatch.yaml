@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQSP41PE6JP
 slug: wire-dispatch
 name: Wire validator dispatch to spawn_agent
 summary: "Fix F1: Wire SpawnAgentDispatcher.Dispatch to invoke spawn_agent and parse results. Handle pass/pass_with_notes/fail in tryAutoValidate and ValidateTransition."
-status: queued
+status: ready
