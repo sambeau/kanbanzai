@@ -1,0 +1,161 @@
+document_id: FEAT-01KQSP2DDATWT/report-p45-review-wisdom-forwarding
+document_path: work/P45-wisdom-forwarding/P45-review-wisdom-forwarding.md
+content_hash: 79008f80b81419d4782d4939491ecd2806731233d24d4313eba03d5a276e482e
+indexed_at: 2026-05-04T15:12:39.158478Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: Wisdom Forwarding'
+      byte_offset: 0
+      byte_count: 11654
+      word_count: 1525
+      content_hash: 79008f80b81419d4782d4939491ecd2806731233d24d4313eba03d5a276e482e
+      children:
+        - path: "1.1"
+          level: 2
+          title: 'Aggregate Verdict: needs_remediation'
+          byte_offset: 268
+          byte_count: 437
+          word_count: 55
+          content_hash: 5e97b070e61f4b1634b0c483479a586e7dd320760d2ac698d41d4f67923bc09d
+        - path: "1.2"
+          level: 2
+          title: Per-Dimension Verdicts
+          byte_offset: 705
+          byte_count: 272
+          word_count: 40
+          content_hash: e5c7914e3ea08c18213001a2686af7efca112c86e14e7ac78e66797ee5107db3
+        - path: "1.3"
+          level: 2
+          title: Review Unit Breakdown
+          byte_offset: 977
+          byte_count: 539
+          word_count: 85
+          content_hash: 05e28b60607a43c1d12b459f0bbc254a28a24e83e9adf0ff2626c81c3f009087
+        - path: "1.4"
+          level: 2
+          title: Blocking Findings
+          byte_offset: 1516
+          byte_count: 2141
+          word_count: 286
+          content_hash: b65beefeb642620d554bbea3c2d9d5c6398b2704dbd17b36d9d7144092db2882
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'B-01 — AC-010: No test verifies knowledge store is unchanged after forwarding'
+              byte_offset: 1538
+              byte_count: 1031
+              word_count: 140
+              content_hash: 4966d0f37c310ccee1732eafa8055ef9397a3abcb51c9cd7a88bf0f42bdb5a6e
+            - path: 1.4.2
+              level: 3
+              title: 'B-02 — AC-011: No test verifies lifecycle independence'
+              byte_offset: 2569
+              byte_count: 1088
+              word_count: 143
+              content_hash: 1e29ac35d622faa1351b1ae687c7dc9a9e38af1bc34e6f60e409c4f5a57f8523
+        - path: "1.5"
+          level: 2
+          title: Non-Blocking Findings
+          byte_offset: 3657
+          byte_count: 5052
+          word_count: 632
+          content_hash: c805daf268ddc9c3d40acde87d7ebce932b49f2e89cd2c35f3fa7b6c78999070
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'N-01 — AC-004: No test for same-topic dedup between sibling tasks'
+              byte_offset: 3683
+              byte_count: 606
+              word_count: 71
+              content_hash: 5e80146c6ffeaff870a20b038becc64e552259cc3da2c503184b2bcf2e7d6976
+            - path: 1.5.2
+              level: 3
+              title: 'N-02 — AC-014: Ordering assertion is set-membership, not positional'
+              byte_offset: 4289
+              byte_count: 685
+              word_count: 73
+              content_hash: 12826345969902bbf779507a85b98ced1996156d1e0eacb915eae613f1fe8c90
+            - path: 1.5.3
+              level: 3
+              title: 'N-03 — AC-013: No test for query count bound (N+1)'
+              byte_offset: 4974
+              byte_count: 679
+              word_count: 89
+              content_hash: 1a726b753dd7fc91c83ac969b6f0e6f2b9cd6049bd0621b7a467e7443a7d9402
+            - path: 1.5.4
+              level: 3
+              title: N-04 — Forward defaults comment is slightly misleading
+              byte_offset: 5653
+              byte_count: 757
+              word_count: 105
+              content_hash: 0576d743b95746d090e7b44afb7f563406b4b0bcd3a4aafd87d625b85daa0b93
+            - path: 1.5.5
+              level: 3
+              title: N-05 — parseFinishKnowledge silently drops non-bool forward values
+              byte_offset: 6410
+              byte_count: 608
+              word_count: 79
+              content_hash: 2265efaaf44526239b6c372a70abfa49d2860c9f608e058a18a50e57297d9e5c
+            - path: 1.5.6
+              level: 3
+              title: N-06 — No test for intra-sibling multi-entry ordering
+              byte_offset: 7018
+              byte_count: 632
+              word_count: 77
+              content_hash: 6fc2a65cec050c601cdcda75489ddb2b996a97eb9b6fab214c1ec576b6bb489c
+            - path: 1.5.7
+              level: 3
+              title: N-07 — Byte budget interaction not tested for sibling knowledge
+              byte_offset: 7650
+              byte_count: 533
+              word_count: 68
+              content_hash: f670b97a7853a2e0e42ddef1fa6334ff01bf04fd52ff2d21cd5d3837c9c9368c
+            - path: 1.5.8
+              level: 3
+              title: 'N-08 — Intra-sibling dedup: no dedicated test for tier-3 + forward:true interaction'
+              byte_offset: 8183
+              byte_count: 526
+              word_count: 67
+              content_hash: c49acdff95018963adcc46fd89affc2745cd14ba07d194608a119275a5adff5a
+        - path: "1.6"
+          level: 2
+          title: Spec Conformance Matrix
+          byte_offset: 8709
+          byte_count: 2161
+          word_count: 278
+          content_hash: eeae51c5d875819342a8167c326f5beecfe1d6fd814508bfc764c5a1ea1d5c85
+        - path: "1.7"
+          level: 2
+          title: Finding Summary
+          byte_offset: 10870
+          byte_count: 141
+          word_count: 25
+          content_hash: 607f9becae0ee1aaf14aa81bf64c17b26c69c6d096e96f449a7ca7cd1d07b4e9
+        - path: "1.8"
+          level: 2
+          title: Resolution Guidance
+          byte_offset: 11011
+          byte_count: 643
+          word_count: 100
+          content_hash: 6404c2356934b83ff4a073a65aba3186186f693011cb286ec1372173fbdc10f6
+entity_refs:
+    - entity_id: FEAT-01KQSP2DDATWT
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 42
+    - entity_id: TASK-01KQSP6D6XJ1Z
+      entity_type: task
+      section_path: 1.4.1
+      byte_offset: 1876
+    - entity_id: P45-wisdom-forwarding
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 109
+conventional_roles:
+    - section_path: "1.7"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-04T15:12:39.788161Z
+classified: false

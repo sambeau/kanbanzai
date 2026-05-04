@@ -3,4 +3,8 @@ parent_feature: FEAT-01KQSP41PE6JP
 slug: transition-validator-hooks
 name: Implement stage transition validator hooks
 summary: "Add transition_validator hooks to stage bindings (.kbz/stage-bindings.yaml) and implement enforcement in entity transition logic. Hooks: specifying→dev-planning triggers spec-validator; dev-planning→developing triggers plan-validator; reviewing→done triggers review-gate-validator. If blocking checks fail, transition is rejected with error containing: failing check IDs, blocking/non-blocking classification, and validator report document ID. Human override via entity(action: transition, override: true, override_reason: ...) always available; override usage tracked as metric. Non-blocking failures attach findings to document record and are visible in status. Implement in internal/validate/ and internal/service/."
-status: ready
+status: active
+claimed_at: "2026-05-04T15:12:46Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-04T15:12:46Z"
+dispatched_by: sambeau
