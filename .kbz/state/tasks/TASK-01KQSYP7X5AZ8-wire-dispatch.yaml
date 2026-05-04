@@ -3,4 +3,11 @@ parent_feature: FEAT-01KQSP41PE6JP
 slug: wire-dispatch
 name: Wire validator dispatch to spawn_agent
 summary: "Fix F1: Wire SpawnAgentDispatcher.Dispatch to invoke spawn_agent and parse results. Handle pass/pass_with_notes/fail in tryAutoValidate and ValidateTransition."
-status: ready
+status: done
+completed: "2026-05-04T17:14:35Z"
+claimed_at: "2026-05-04T17:14:28Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-04T17:14:28Z"
+dispatched_by: sambeau
+completion_summary: "Fixed F1: Wired SpawnAgentDispatcher.Dispatch to return (summary, nil) with Prompt field. Wired ValidateTransition to return results via runAutoValidation and evaluateConditional. Added WithDispatch setter, FilesModified field. All validate tests pass."
+verification: go build ./... passes. go test ./internal/validate/... passes. go vet clean.
