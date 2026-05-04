@@ -1,0 +1,6 @@
+id: TASK-01KQSPBDH66PJ
+parent_feature: FEAT-01KQSP41PE6JP
+slug: validation-pipeline
+name: Implement validation pipeline with auto-approval
+summary: "Implement the validation pipeline triggered on document registration. When a spec or dev-plan is registered via doc(action: register), check the feature's risk tier to determine if automated validation is allowed for this stage. If allowed: dispatch appropriate validator via dispatch_validator. On pass: auto-approve document via doc(action: approve). On pass_with_notes: approve + attach non-blocking findings to document record. On fail: do NOT approve, surface findings to human, feature stays in current stage. Track auto-validation cycle count per feature; when max_auto_cycles cap reached, escalate to human. Design stage is never auto-validated regardless of tier. Implement in internal/mcp/ doc registration handler."
+status: queued
