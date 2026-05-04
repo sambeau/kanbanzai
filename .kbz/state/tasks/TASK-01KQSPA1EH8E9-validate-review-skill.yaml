@@ -3,4 +3,13 @@ parent_feature: FEAT-01KQSP41PE6JP
 slug: validate-review-skill
 name: Create review-gate-validator skill
 summary: "Create .kbz/skills/validate-review/SKILL.md with the review-gate-validator procedure. Define all 8 validation checks (R1-R8) with blocking/non-blocking classification: R1,R2,R4,R5,R7 blocking; R3,R6,R8 non-blocking. Procedure: read review documents, execute each check (detect rubber-stamp reviews, verify blocking findings cite spec requirements, check aggregate verdict consistency), produce summary and full report. Audit the review process, not the code."
-status: ready
+status: done
+files_planned:
+  - .kbz/skills/validate-review/SKILL.md
+completed: "2026-05-04T15:36:23Z"
+claimed_at: "2026-05-04T15:28:51Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-04T15:28:51Z"
+dispatched_by: sambeau
+completion_summary: "Created .kbz/skills/validate-review/SKILL.md with all 8 checks (R1-R8), blocking/non-blocking per REQ-RVW-003, 7-step procedure, dual output format, 4 examples, 8 evaluation criteria. 292 lines, follows CONVENTIONS.md structure."
+verification: "Under 500 lines (292), all required sections present, blocking/non-blocking classification verified against REQ-RVW-003."
