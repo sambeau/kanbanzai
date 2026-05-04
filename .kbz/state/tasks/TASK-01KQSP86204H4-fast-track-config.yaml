@@ -3,8 +3,15 @@ parent_feature: FEAT-01KQSP41PE6JP
 slug: fast-track-config
 name: Define fast-track config schema and loading
 summary: "Define the fast_track configuration block in .kbz/config.yaml and implement config loading in internal/config/. The config block includes: enabled (bool), default_tier (string, one of retro_fix/bug_fix/feature/critical), and tiers map with per-tier automation matrix (design/spec/dev-plan/review gate modes) and max_auto_cycles. Require the config struct, defaults, validation, and unit tests."
-status: active
+status: done
+files_planned:
+  - internal/config/fast_track.go
+  - internal/config/fast_track_test.go
+  - internal/config/config.go
+completed: "2026-05-04T14:58:13Z"
 claimed_at: "2026-05-04T14:42:27Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-04T14:42:27Z"
 dispatched_by: sambeau
+completion_summary: "Defined FastTrackConfig and TierConfig in internal/config/fast_track.go implementing the automation matrix per REQ-TIER-001 through REQ-TIER-006. Enabled (*bool), DefaultTier (\"feature\"), and Tiers map with per-tier gate modes and max_cycles. Wired into Config struct, DefaultConfig(), mergePhase4bDefaults(), and Validate(). 9 new tests covering defaults matrix, validation, YAML round-trip, and defaults merging."
+verification: "All 62 config tests pass (incl. 9 new); go vet clean; full project builds. Verified REQ-TIER-001 through REQ-TIER-006 against spec matrix: four tiers, gate mode automation matrix, max_cycles values, YAML deserialization, and full config loading."

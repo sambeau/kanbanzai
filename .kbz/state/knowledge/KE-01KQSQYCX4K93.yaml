@@ -1,0 +1,14 @@
+confidence: "0.5"
+content: "FastTrackConfig.Enabled uses *bool (pointer to bool) to distinguish 'not configured' (nil → defaults to true) from 'explicitly disabled' (&false). This follows the same pattern as MergeConfig.RequireGitHubPR. IsEnabled() helper returns true when Enabled is nil. mergePhase4bDefaults only fills Enabled when nil, preserving explicit false values."
+created: "2026-05-04T14:58:13Z"
+created_by: unknown
+id: KE-01KQSQYCX4K93
+learned_from: TASK-01KQSP86204H4
+miss_count: 0
+scope: project
+status: contributed
+tier: 3
+topic: fast-track-config-implementation
+ttl_days: 30
+updated: "2026-05-04T14:58:13Z"
+use_count: 0
