@@ -3,7 +3,10 @@ parent_feature: FEAT-01KQJ7CJGQR7Y
 slug: design-composite-tools-implement-entity-action-close-out
 name: Implement entity close-out action
 summary: "Add a close-out action to the entity tool that verifies all tasks terminal, checks for approved review report, advances feature to done, and triggers parent batch cascade. Returns structured next_action on any blocker."
-status: ready
+status: done
 estimate: "3"
 depends_on:
   - TASK-01KQSAZFPXVTC
+completed: "2026-05-04T11:30:53Z"
+completion_summary: "Implemented entityCloseOutAction in entity_tool.go: verifies feature is in reviewing, checks all tasks terminal via CountNonTerminalTasks, advances feature to done, triggers parent batch cascade via MaybeAutoAdvancePlan. Returns structured next_action when blocked by non-terminal tasks. Enumerates all affected entities."
+verification: "Compiles clean. Reuses existing CountNonTerminalTasks and MaybeAutoAdvancePlan. Response includes feature_id, status, affected array with cascaded entity info."

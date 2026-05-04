@@ -3,7 +3,14 @@ parent_feature: FEAT-01KQJ7CJGQR7Y
 slug: design-composite-tools-implement-entity-action-bootstrap
 name: Implement entity bootstrap action
 summary: "Add a bootstrap action to the entity tool that walks a feature through its forward path, stopping at gate failures with structured next_action objects and at human gates. Reuses AdvanceFeatureStatus internally."
-status: ready
+status: done
 estimate: "5"
 depends_on:
   - TASK-01KQSAZFPXVTC
+completed: "2026-05-04T11:30:53Z"
+claimed_at: "2026-05-04T11:27:43Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-04T11:27:43Z"
+dispatched_by: sambeau
+completion_summary: "Implemented entityBootstrapAction in entity_tool.go: wraps AdvanceFeatureStatus to walk feature forward path, enriches response with structured next_action objects at gate failures. Maps stopped_reason patterns (design, spec, dev-plan, task, human_gate) to appropriate next_action helpers. Defaults target to 'developing'."
+verification: "Compiles clean. Reuses existing entityAdvanceFeature which wraps AdvanceFeatureStatus. Structured next_action objects follow schema: tool, action, params, description."
