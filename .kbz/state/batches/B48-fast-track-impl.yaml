@@ -1,0 +1,10 @@
+id: B48-fast-track-impl
+slug: fast-track-impl
+name: Fast-Track Architecture Implementation
+status: proposed
+summary: "Implement the fast-track architecture: three validator roles (spec, plan, review-gate), risk-tiered automation, enforceable stage transitions, validation pipeline with auto-approval, fresh-session management, and dispatch_validator abstraction."
+created: "2026-05-04T14:26:13Z"
+created_by: sambeau
+updated: "2026-05-04T14:26:13Z"
+next_feature_seq: 1
+parent: P43-fast-track-architecture
