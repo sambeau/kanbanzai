@@ -3,9 +3,9 @@ content: "Files accumulate on main through three mechanisms: (1) MCP server comm
 created: "2026-05-03T14:53:36Z"
 created_by: sambeau
 id: KE-01KQQ5981YMN0
-last_accessed_at: "2026-05-04T15:29:38Z"
+last_accessed_at: "2026-05-04T16:03:27Z"
 miss_count: 0
-recent_use_count: 47
+recent_use_count: 51
 scope: project
 status: contributed
 tags:

@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "tryAutoValidate in doc_tool.go implements per-feature auto-validation cycle tracking. Validation gates on: document type (only spec/dev-plan), tier automation matrix (only auto gates), cycle cap (MaxCycles per tier). Each dispatch increments feature.ReviewCycle. When cycle reaches MaxCycles, the feature is blocked (blocked_reason set) and a checkpoint is created for human escalation. Blocked features are skipped in subsequent validation attempts until the human responds."
+created: "2026-05-04T16:26:19Z"
+created_by: unknown
+id: KE-01KQSWZQ9JMFT
+learned_from: TASK-01KQSPBPCV01S
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - fast-track
+  - auto-validation
+  - cycle-tracking
+tier: 2
+topic: fast-track-cycle-tracking
+ttl_days: 90
+updated: "2026-05-04T16:26:19Z"
+use_count: 0
