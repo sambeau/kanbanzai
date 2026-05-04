@@ -453,6 +453,19 @@ func renderHandoffPrompt(taskState map[string]any, actx assembledContext, instru
 		sb.WriteString("\n")
 	}
 
+	// 6b. Surfaced knowledge from completed sibling tasks (P45 wisdom forwarding).
+	if len(actx.siblingKnowledge) > 0 {
+		sb.WriteString("### Surfaced Knowledge (from sibling tasks)\n\n")
+		for _, ke := range actx.siblingKnowledge {
+			if ke.learnedFrom != "" {
+				fmt.Fprintf(&sb, "- [from %s] %s\n", ke.learnedFrom, ke.content)
+			} else {
+				fmt.Fprintf(&sb, "- %s\n", ke.content)
+			}
+		}
+		sb.WriteString("\n")
+	}
+
 	// 7. File paths — excluded for designing/specifying stages per FR-005.
 	if len(actx.filesContext) > 0 {
 		includeFiles := true
