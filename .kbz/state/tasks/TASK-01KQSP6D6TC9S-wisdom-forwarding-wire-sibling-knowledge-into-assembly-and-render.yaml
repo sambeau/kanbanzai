@@ -3,7 +3,11 @@ parent_feature: FEAT-01KQSP2DDATWT
 slug: wisdom-forwarding-wire-sibling-knowledge-into-assembly-and-render
 name: Wire sibling knowledge into assembly and render
 summary: Wire sibling knowledge into assembleContext and renderHandoffPrompt
-status: ready
+status: active
 estimate: "2"
 depends_on:
   - TASK-01KQSP6D6SZA0
+claimed_at: "2026-05-04T14:39:10Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-04T14:39:10Z"
+dispatched_by: sambeau
