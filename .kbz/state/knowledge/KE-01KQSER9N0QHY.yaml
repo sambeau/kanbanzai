@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "Research and design documents should be stored with their parent plan, not in separate top-level folders. The pattern is work/{plan-slug}/{plan-id}-{type}-{topic}.md (e.g., work/P41-opencode-ecosystem-features/P41-research-context-compaction.md). The work/research/ folder has been emptied and should not be used for new documents. Each plan folder is self-contained — all research, design, specs, and dev-plans for a plan live together."
+created: "2026-05-04T12:17:35Z"
+created_by: sambeau
+id: KE-01KQSER9N0QHY
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - document-organization
+  - convention
+  - file-naming
+tier: 2
+topic: document-organization
+ttl_days: 90
+updated: "2026-05-04T12:17:35Z"
+use_count: 0
