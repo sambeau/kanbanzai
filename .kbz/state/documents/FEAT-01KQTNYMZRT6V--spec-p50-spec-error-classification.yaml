@@ -1,11 +1,13 @@
+approved_at: "2026-05-04T23:55:18Z"
+approved_by: sambeau
 canonical_content_hash: 0e30838a08e6d0f8d54f14e0d44a2c2362ece2c99f5b857bb7fbb5a40422444f
-content_hash: 8734642820111ad3b1dd50c05e0028fa14c9970f082c904e903bb4bb8a7299b6
+content_hash: d2af79e1a6a6f76995915243e8b6dffd638a8442d8d130d7f30b455f907a87c3
 created: "2026-05-04T23:47:55Z"
 created_by: sambeau
 id: FEAT-01KQTNYMZRT6V/spec-p50-spec-error-classification
 owner: FEAT-01KQTNYMZRT6V
 path: work/P50-retro-may-2026/P50-spec-error-classification.md
-status: draft
+status: approved
 title: "Specification: Error Classification for MCP Handlers"
 type: spec
-updated: "2026-05-04T23:47:55Z"
+updated: "2026-05-04T23:55:18Z"

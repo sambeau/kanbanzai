@@ -2,7 +2,7 @@ id: FEAT-01KQTNYN00HZA
 slug: doc-path-tool
 name: Document Path Tool
 parent: B49-retro-fixes-may-2026
-status: specifying
+status: dev-planning
 summary: "Add a path action to the doc MCP tool that returns canonical document paths based on type and parent entity, enforcing naming conventions via tooling."
 design: FEAT-01KQTNYN00HZA/design-p50-design-retro-may-2026
 spec: FEAT-01KQTNYN00HZA/spec-p50-spec-doc-path-tool

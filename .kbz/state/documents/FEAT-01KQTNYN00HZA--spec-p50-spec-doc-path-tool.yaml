@@ -1,11 +1,13 @@
+approved_at: "2026-05-04T23:55:18Z"
+approved_by: sambeau
 canonical_content_hash: 21d1513933d819b889bd5d19ee6673ad643fe4d1aa785bd163c3a192a7fe5561
-content_hash: 31bdb4a680d5b31ac89a549a61a49448ee396c26b955dea53457453dd7244c2e
+content_hash: fae01a5235d9503442ef437b5c620107fb6c12e7e65233b76dcb0780b03362da
 created: "2026-05-04T23:47:55Z"
 created_by: sambeau
 id: FEAT-01KQTNYN00HZA/spec-p50-spec-doc-path-tool
 owner: FEAT-01KQTNYN00HZA
 path: work/P50-retro-may-2026/P50-spec-doc-path-tool.md
-status: draft
+status: approved
 title: "Specification: Document Path Tool"
 type: spec
-updated: "2026-05-04T23:47:55Z"
+updated: "2026-05-04T23:55:18Z"
