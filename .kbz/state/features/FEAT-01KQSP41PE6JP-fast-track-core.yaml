@@ -2,8 +2,14 @@ id: FEAT-01KQSP41PE6JP
 slug: fast-track-core
 name: Fast-Track Architecture Core Implementation
 parent: B48-fast-track-impl
-status: designing
+status: specifying
 summary: "Implement the complete fast-track architecture: validator roles and skills, rubrics, fast-track config, tier inference, transition hooks, validation pipeline, session management, cycle tracking, and dispatch_validator abstraction."
 created: "2026-05-04T14:26:21Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: designing
+    reason: "Design and specification documents exist at the plan level (P43) and are both approved. This feature implements the plan's specification."
+    timestamp: "2026-05-04T15:26:56+01:00"
+    to_status: specifying
 display_id: B48-F1
