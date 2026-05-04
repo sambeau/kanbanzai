@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQSP3BMFF98
 slug: hash-tagged-read-file-tool
 name: Add hash-tagged read_file MCP tool
 summary: "Create a Kanbanzai read_file MCP tool with worktree support and optional hash-tagged output. Supports entity_id for worktree-scoped reads, hash_tag boolean for hash-tagged lines, and start_line/end_line for ranges. Hash-tagged format: {line_number}#{hash}| {content} with 4-char left-padded line numbers. Strip trailing empty line from files ending in newline. Deliverable: internal/mcp/read_file_tool.go + tests. Regist in server GroupGit. Addresses REQ-HR-001 through REQ-HR-006, REQ-NF-001, REQ-NF-002."
-status: queued
+status: ready

@@ -10,3 +10,5 @@ dev_plan: FEAT-01KQSP2DDATWT/dev-plan-p45-dev-plan-wisdom-forwarding
 created: "2026-05-04T14:25:27Z"
 created_by: sambeau
 display_id: B47-F1
+verification: "TASK-01KQSP6D6PGVM: go build ./... passes, all knowledge service tests pass (go test -run Knowledge), storage test failures are pre-existing.\nTASK-01KQSP6D6REQD: go build ./... passes, all finish-related tests pass (go test ./internal/mcp/ -run Finish)\nTASK-01KQSP6D6SZA0: go build ./... passes. All knowledge service tests pass. All assembly/handoff tests pass.\nTASK-01KQSP6D6TC9S: go build ./... passes. Handoff prompt rendering tests pass (the one failure is a pre-existing temp-dir cleanup race).\nTASK-01KQSP6D6VM6T: Inspected handoff_tool.go: entitySvc is passed in asmInput at line 217. No code changes needed.\nTASK-01KQSP6D6WZ06: go test ./internal/mcp/ -run \"TestSiblingKnowledge|TestRenderHandoffPrompt_Sibling|TestFinishKnowledge_Forward|TestKnowledgeFilters_LearnedFrom|TestParseTimeField\" -count=1 -p 1 passes all tests.\nTASK-01KQSP6D6XJ1Z: All 16 unit tests pass. Existing integration tests pass. Build succeeds. Feature ready for review."
+verification_status: passed
