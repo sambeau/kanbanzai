@@ -230,7 +230,7 @@ func newServerWithConfig(entityRoot string, version string, cfg *config.Config) 
 		// Track I: doc — consolidated document operations
 		mcpServer.AddTools(DocTool(docRecordSvc, intelligenceSvc, entitySvc)...)
 		// Track J: develop — development dispatch (B43 — Composite Tools)
-		mcpServer.AddTools(DevelopTool(entitySvc, conflictSvc, dispatchSvc, knowledgeSvc, intelligenceSvc, docRecordSvc)...)
+		mcpServer.AddTools(DevelopTool(entitySvc, conflictSvc)...)
 		// Track K: batch — batch-level operations (B43 — Composite Tools)
 		mcpServer.AddTools(BatchTool(entitySvc)...)
 

@@ -1183,7 +1183,10 @@ func entityCloseOutAction(entitySvc *service.EntityService, docSvc *service.Docu
 
 		// Check all tasks are terminal.
 		nonTerminalCount, countErr := entitySvc.CountNonTerminalTasks(featureID)
-		if countErr == nil && nonTerminalCount > 0 {
+		if countErr != nil {
+			return nil, fmt.Errorf("Cannot close out feature %s: %w", featureID, countErr)
+		}
+		if nonTerminalCount > 0 {
 			return map[string]any{
 				"stopped_at":  "reviewing",
 				"reason":      fmt.Sprintf("%d non-terminal task(s)", nonTerminalCount),
@@ -1192,7 +1195,23 @@ func entityCloseOutAction(entitySvc *service.EntityService, docSvc *service.Docu
 			}, nil
 		}
 
-		// Check for approved review report.
+		// Check for an approved review report document.
+		if docSvc != nil {
+			reviewDocs, docErr := docSvc.ListDocuments(service.DocumentFilters{
+				Owner:  featureID,
+				Type:   "report",
+				Status: "approved",
+			})
+			if docErr == nil && len(reviewDocs) == 0 {
+				return map[string]any{
+					"stopped_at":  "reviewing",
+					"reason":      "No approved review report found",
+					"next_action": nextActionForMissingDocument("report", featureID),
+					"status":      "reviewing",
+				}, nil
+			}
+		}
+
 		batchID, _ := feat.State["parent"].(string)
 
 		// Advance feature to done.

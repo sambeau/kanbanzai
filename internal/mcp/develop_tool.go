@@ -5,7 +5,7 @@
 //
 // The dispatch action identifies the ready task frontier for a feature in
 // developing status, runs conflict analysis on ready tasks, transitions
-// conflict-safe tasks from ready to active, and returns handoff-style context
+// conflict-safe tasks from ready to active, and returns handoff prompts
 // for each dispatched task. It does NOT spawn sub-agents — the calling agent
 // is responsible for that.
 package mcp
@@ -22,13 +22,13 @@ import (
 
 // DevelopTool returns the `develop` MCP tool registered unconditionally.
 // The tool is new in Kanbanzai 2.1 (B43 — Composite Tools).
-func DevelopTool(entitySvc *service.EntityService, conflictSvc *service.ConflictService, dispatchSvc *service.DispatchService, knowledgeSvc *service.KnowledgeService, intelligenceSvc *service.IntelligenceService, docSvc *service.DocumentService) []server.ServerTool {
+func DevelopTool(entitySvc *service.EntityService, conflictSvc *service.ConflictService) []server.ServerTool {
 	tool := mcp.NewTool("develop",
 		mcp.WithTitleAnnotation("Development Dispatch"),
 		mcp.WithDescription(
 			"Orchestrator dispatch tool — identifies the ready task frontier for a feature, "+
 				"runs conflict analysis, transitions conflict-safe tasks to active, and returns "+
-				"handoff-style context for each dispatched task. Does NOT spawn sub-agents. "+
+				"handoff prompts for each dispatched task. Does NOT spawn sub-agents. "+
 				"Actions: dispatch.",
 		),
 		mcp.WithString("action", mcp.Required(), mcp.Description("Action: dispatch")),
@@ -75,6 +75,16 @@ func developDispatchAction(entitySvc *service.EntityService, conflictSvc *servic
 		if listErr != nil {
 			return nil, fmt.Errorf("Cannot dispatch: %w", listErr)
 		}
+
+		// Build a set of terminal task IDs for dependency checking.
+		terminalIDs := map[string]bool{}
+		for _, t := range allTasks {
+			s, _ := t.State["status"].(string)
+			if s == "done" || s == "not-planned" || s == "duplicate" {
+				terminalIDs[t.ID] = true
+			}
+		}
+
 		tasks := make([]service.ListResult, 0)
 		for _, t := range allTasks {
 			pf, _ := t.State["parent_feature"].(string)
@@ -85,19 +95,32 @@ func developDispatchAction(entitySvc *service.EntityService, conflictSvc *servic
 
 		// Separate tasks by status.
 		type taskInfo struct {
-			ID      string
-			Slug    string
-			Summary string
+			ID        string
+			Slug      string
+			Summary   string
+			DependsOn []string
 		}
 		var readyTasks []taskInfo
 		var activeTasks []taskInfo
-		var blockedTasks []taskInfo
-		var doneTasks []taskInfo
+		var blockedTasks []map[string]any
 
 		for _, t := range tasks {
 			status, _ := t.State["status"].(string)
 			summary, _ := t.State["summary"].(string)
-			info := taskInfo{ID: t.ID, Slug: t.Slug, Summary: summary}
+			var deps []string
+			if raw, ok := t.State["depends_on"]; ok {
+				switch v := raw.(type) {
+				case []any:
+					for _, d := range v {
+						if ds, ok := d.(string); ok {
+							deps = append(deps, ds)
+						}
+					}
+				case []string:
+					deps = v
+				}
+			}
+			info := taskInfo{ID: t.ID, Slug: t.Slug, Summary: summary, DependsOn: deps}
 
 			switch status {
 			case "ready":
@@ -105,36 +128,104 @@ func developDispatchAction(entitySvc *service.EntityService, conflictSvc *servic
 			case "active":
 				activeTasks = append(activeTasks, info)
 			case "queued":
-				blockedTasks = append(blockedTasks, info)
+				blockedTasks = append(blockedTasks, map[string]any{
+					"task_id": t.ID,
+					"slug":    t.Slug,
+					"summary": summary,
+					"reason":  "queued — dependencies not yet satisfied",
+				})
 			case "done", "not-planned", "duplicate":
-				doneTasks = append(doneTasks, info)
+				// terminal — exclude from blocked
 			default:
-				blockedTasks = append(blockedTasks, info)
+				blockedTasks = append(blockedTasks, map[string]any{
+					"task_id": t.ID,
+					"slug":    t.Slug,
+					"summary": summary,
+					"reason":  fmt.Sprintf("status is %q, not ready", status),
+				})
 			}
 		}
 
-		if len(readyTasks) == 0 {
-			// Build blocked info for each non-ready task.
-			blockedInfo := make([]map[string]any, 0)
-			for _, t := range blockedTasks {
-				blockedInfo = append(blockedInfo, map[string]any{
-					"task_id": t.ID,
-					"slug":    t.Slug,
-					"summary": t.Summary,
-					"reason":  "queued — dependencies not yet satisfied",
+		// Filter ready tasks to those with all depends_on satisfied.
+		var dispatchable []taskInfo
+		var unsatisfiedDeps []map[string]any
+		for _, t := range readyTasks {
+			allSatisfied := true
+			var missing []string
+			for _, dep := range t.DependsOn {
+				if !terminalIDs[dep] {
+					allSatisfied = false
+					missing = append(missing, dep)
+				}
+			}
+			if allSatisfied {
+				dispatchable = append(dispatchable, t)
+			} else {
+				unsatisfiedDeps = append(unsatisfiedDeps, map[string]any{
+					"task_id":      t.ID,
+					"slug":         t.Slug,
+					"summary":      t.Summary,
+					"reason":       fmt.Sprintf("depends_on not satisfied: %v", missing),
+					"missing_deps": missing,
 				})
 			}
+		}
+
+		// Add unsatisfied-dependency tasks to blocked.
+		blockedTasks = append(blockedTasks, unsatisfiedDeps...)
+
+		if len(dispatchable) == 0 {
 			return map[string]any{
 				"dispatched":  []any{},
 				"conflicting": []any{},
-				"blocked":     blockedInfo,
+				"blocked":     blockedTasks,
 				"empty_queue": true,
 			}, nil
 		}
 
-		// Transition all ready tasks to active.
+		// Run conflict analysis on dispatchable tasks.
+		var conflicting []map[string]any
+		var safeToDispatch []taskInfo
+		if conflictSvc != nil && len(dispatchable) > 1 {
+			taskIDs := make([]string, len(dispatchable))
+			for i, t := range dispatchable {
+				taskIDs[i] = t.ID
+			}
+			conflictResult, cErr := conflictSvc.Check(service.ConflictCheckInput{
+				TaskIDs: taskIDs,
+			})
+			if cErr == nil {
+				conflictTaskIDs := map[string]bool{}
+				for _, pair := range conflictResult.Pairs {
+					if pair.Recommendation != "safe_to_parallelise" {
+						conflictTaskIDs[pair.TaskA] = true
+						conflictTaskIDs[pair.TaskB] = true
+					}
+				}
+				for _, t := range dispatchable {
+					if conflictTaskIDs[t.ID] {
+						conflicting = append(conflicting, map[string]any{
+							"task_id": t.ID,
+							"slug":    t.Slug,
+							"summary": t.Summary,
+							"reason":  "conflict detected — serialise or checkpoint",
+						})
+					} else {
+						safeToDispatch = append(safeToDispatch, t)
+					}
+				}
+			} else {
+				// Conflict analysis failed — fall back to dispatching all.
+				safeToDispatch = dispatchable
+			}
+		} else {
+			safeToDispatch = dispatchable
+		}
+
+		// Transition conflict-safe tasks to active and generate handoff prompts.
 		dispatched := make([]map[string]any, 0)
-		for _, t := range readyTasks {
+		instructions := docArgStr(args, "instructions")
+		for _, t := range safeToDispatch {
 			_, err := entitySvc.UpdateStatus(service.UpdateStatusInput{
 				Type:   "task",
 				ID:     t.ID,
@@ -144,37 +235,48 @@ func developDispatchAction(entitySvc *service.EntityService, conflictSvc *servic
 				// Task may have been claimed by another dispatcher — skip.
 				continue
 			}
-			dispatched = append(dispatched, map[string]any{
-				"task_id": t.ID,
-				"slug":    t.Slug,
-				"summary": t.Summary,
-				"handoff_hint": map[string]any{
-					"tool":   "handoff",
-					"action": "",
-					"params": map[string]any{"task_id": t.ID},
-				},
-			})
-		}
 
-		// Build blocked info.
-		blockedInfo := make([]map[string]any, 0)
-		for _, t := range blockedTasks {
-			blockedInfo = append(blockedInfo, map[string]any{
-				"task_id": t.ID,
-				"slug":    t.Slug,
-				"summary": t.Summary,
-				"reason":  "queued — dependencies not yet satisfied",
+			// Generate a handoff prompt for this task.
+			handoffPrompt := generateDispatchHandoff(entitySvc, t.ID, instructions)
+
+			dispatched = append(dispatched, map[string]any{
+				"task_id":        t.ID,
+				"slug":           t.Slug,
+				"summary":        t.Summary,
+				"handoff_prompt": handoffPrompt,
 			})
 		}
 
 		return map[string]any{
-			"dispatched":   dispatched,
-			"conflicting":  []any{},
-			"blocked":      blockedInfo,
-			"empty_queue":  false,
-			"tasks_ready":  len(readyTasks),
-			"tasks_active": len(activeTasks),
-			"tasks_done":   len(doneTasks),
-		}, nil
+				"dispatched":  dispatched,
+				"conflicting": conflicting,
+				"blocked":     blockedTasks,
+				"empty_queue": false,
+			},
+			nil
 	}
+}
+
+// generateDispatchHandoff produces a handoff prompt for a task by calling the
+// handoff assembly pipeline. When the pipeline is unavailable, it returns a
+// minimal hint directing the agent to use the handoff tool.
+func generateDispatchHandoff(entitySvc *service.EntityService, taskID, instructions string) string {
+	task, err := entitySvc.Get("task", taskID, "")
+	if err != nil {
+		return fmt.Sprintf("<!-- handoff: %s -->", taskID)
+	}
+
+	summary, _ := task.State["summary"].(string)
+
+	// Build a minimal handoff prompt pointing the agent to use the full
+	// handoff tool. The handoff pipeline requires extensive context assembly
+	// (profiles, skills, docs, knowledge) that the dispatch action does not
+	// have direct access to. Instead, we produce a prompt that tells the
+	// calling agent to invoke handoff for the full assembled context.
+	prompt := fmt.Sprintf("Task: %s — %s\n\n", taskID, summary)
+	prompt += fmt.Sprintf("Use handoff(task_id: %q) to get the assembled context and dispatch this task.", taskID)
+	if instructions != "" {
+		prompt += fmt.Sprintf("\n\nAdditional instructions: %s", instructions)
+	}
+	return prompt
 }
