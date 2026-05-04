@@ -1,0 +1,6 @@
+id: TASK-01KQSP98PT9H9
+parent_feature: FEAT-01KQSP41PE6JP
+slug: validator-rubrics
+name: Create validator rubrics
+summary: "Create rubric files in work/P43-fast-track-architecture/validator-rubrics/: spec-validator-rubrics.md, plan-validator-rubrics.md, review-gate-validator-rubrics.md. Each file defines pass/fail/borderline-escalate patterns for LLM-classification checks (S5, S7, D7, D10, D13, R2, R3). Each check needs: pass definition with 2-3 positive examples, fail definition with 2-3 negative examples, and borderline-escalate pattern. Test rubrics against 15-20 real Kanbanzai documents."
+status: queued
