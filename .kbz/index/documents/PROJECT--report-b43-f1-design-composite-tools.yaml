@@ -327,4 +327,6 @@ conventional_roles:
     - section_path: 1.6.5
       role: decision
       confidence: high
+access_count: 2
+last_accessed_at: 2026-05-04T10:44:55.334127Z
 classified: false

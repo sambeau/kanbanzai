@@ -1,0 +1,231 @@
+document_id: B44-prompt-engineering-skill/design-b44-design-prompt-engineering-skill
+document_path: work/B44-prompt-engineering-skill/B44-design-prompt-engineering-skill.md
+content_hash: 2ff154c1bcba36644aab01eb8271aa0d6ee1afc5b8f3ec92ccdf530ecba1ba95
+indexed_at: 2026-05-04T10:08:37.527303Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Prompt Engineering Skill'
+      byte_offset: 0
+      byte_count: 19356
+      word_count: 2682
+      content_hash: 2ff154c1bcba36644aab01eb8271aa0d6ee1afc5b8f3ec92ccdf530ecba1ba95
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 257
+          byte_count: 693
+          word_count: 87
+          content_hash: a158c5f13c9bfb6b8ab6b22da9c1e7d1e79cdb76e6a7b7d52317d03ca6f653df
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 950
+          byte_count: 1262
+          word_count: 182
+          content_hash: a8b57c50a4fec41f0d3cbbef4803ad46bab48ffb8ba773ef09d6f215f08a1424
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Goals
+              byte_offset: 974
+              byte_count: 825
+              word_count: 113
+              content_hash: 0bf02ac7000ae35110f1f6bbf844459cf466f28d1c22895b94819be699a69053
+            - path: 1.2.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 1799
+              byte_count: 413
+              word_count: 65
+              content_hash: b7ab1ecd1556c559a044e139a39edfd62c81f03d9647c718bd050aafd0e26b7e
+        - path: "1.3"
+          level: 2
+          title: Problem and Motivation
+          byte_offset: 2212
+          byte_count: 2348
+          word_count: 337
+          content_hash: 6f9d5e92d26ee5d15be23604eb6b4fbc0d5a0c4139ec54d96cc0ce33501f8fe6
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Context
+              byte_offset: 2239
+              byte_count: 952
+              word_count: 131
+              content_hash: f493ee4aaaa42f6397da5acf4f9850b319652d7342e6703a4810b9205f13420f
+            - path: 1.3.2
+              level: 3
+              title: The gap
+              byte_offset: 3191
+              byte_count: 773
+              word_count: 113
+              content_hash: 8ebb6e1a89948dcee6dcaa0e304dfdc436a295f5f083dfbfd315c1f464eb6eff
+            - path: 1.3.3
+              level: 3
+              title: Why a skill is the right vehicle
+              byte_offset: 3964
+              byte_count: 596
+              word_count: 89
+              content_hash: 692f347d9c15bfd23bea3cf9e3ad3fb416301fe6433010d005d457563c9d4003
+        - path: "1.4"
+          level: 2
+          title: Design
+          byte_offset: 4560
+          byte_count: 10065
+          word_count: 1391
+          content_hash: 5ce25e07442566a50dc892260d459de7345c0429da4bf4da2b002f4ffdf91716
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Skill location and structure
+              byte_offset: 4571
+              byte_count: 1173
+              word_count: 134
+              content_hash: 7d787ec9731823ce70a4e1f08c127abdbb220af47bd280c1549f088e25eecb7f
+            - path: 1.4.2
+              level: 3
+              title: Section ordering (U-shaped attention curve)
+              byte_offset: 5744
+              byte_count: 833
+              word_count: 137
+              content_hash: c2b8b1263919a715424d2010304fdb12b94f7c8614d5545c8c83c1e3267400cb
+            - path: 1.4.3
+              level: 3
+              title: YAML frontmatter design
+              byte_offset: 6577
+              byte_count: 1052
+              word_count: 136
+              content_hash: 5ed7042339e68f1342a5bb6466b62911cce5d763fbb744a2d999296dabc8ebc5
+            - path: 1.4.4
+              level: 3
+              title: Vocabulary payload (15–30 terms)
+              byte_offset: 7629
+              byte_count: 2266
+              word_count: 353
+              content_hash: bbf9bfe7381e7503d1169807f793039cad44d482bb9d84b54295637b57565fb6
+            - path: 1.4.5
+              level: 3
+              title: Anti-patterns (named with BECAUSE clauses)
+              byte_offset: 9895
+              byte_count: 2367
+              word_count: 309
+              content_hash: ce4f9b506fc04d2aa6cf04e2765cc0740dca5e5c312a361f6768da54269ed256
+            - path: 1.4.6
+              level: 3
+              title: Procedure (5–7 steps)
+              byte_offset: 12262
+              byte_count: 1300
+              word_count: 179
+              content_hash: ef5ccfa9c6679f2d6c150b90be87767977618513a34afa9d160ad10ae4e022fa
+            - path: 1.4.7
+              level: 3
+              title: Output format (what the skill produces)
+              byte_offset: 13562
+              byte_count: 585
+              word_count: 73
+              content_hash: 4b3cee3d0128c21b5dbe4d30be9ad4def70efc3ad7efc6adfd828984496a0fda
+            - path: 1.4.8
+              level: 3
+              title: Constraint level
+              byte_offset: 14147
+              byte_count: 175
+              word_count: 26
+              content_hash: 2faeee79c5238916ac1b774293651d0a2744b7d3c4d4ed8ab18f24b46f4a017e
+            - path: 1.4.9
+              level: 3
+              title: Effort budget
+              byte_offset: 14322
+              byte_count: 303
+              word_count: 42
+              content_hash: 6ec4ce338e7c963db58840783239ff8559f92edb97d0de45fd19c96f4d330a0c
+        - path: "1.5"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 14625
+          byte_count: 2186
+          word_count: 303
+          content_hash: d3be84eb39347f71ba3944d52d9b878dc60ad7c2b21c592d198d2bb128e79981
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'Alternative A: Keep the guide as a reference document only'
+              byte_offset: 14653
+              byte_count: 622
+              word_count: 86
+              content_hash: 2f7da798734ff2cb154dbbbf54fdaf68267c687ee441f13fad3abe28fc8f8851
+            - path: 1.5.2
+              level: 3
+              title: 'Alternative B: Create a combined role + skill'
+              byte_offset: 15275
+              byte_count: 831
+              word_count: 119
+              content_hash: a1275b83ba2dcf81da92d97ed5777137045e888c7b2cff6f17993b02867230ee
+            - path: 1.5.3
+              level: 3
+              title: 'Alternative C: Build prompt engineering into the MCP server'
+              byte_offset: 16106
+              byte_count: 705
+              word_count: 95
+              content_hash: a2f98c6d0caa906a0eaaf15576642228f7c3f31da68cf5a5b7ab0d1411fa6c38
+        - path: "1.6"
+          level: 2
+          title: Decisions
+          byte_offset: 16811
+          byte_count: 2545
+          word_count: 356
+          content_hash: 7d332c9d7ea53315cec24b1f81e7022a2d688ea6245a135165d341ad3571fada
+cross_doc_links:
+    - target_path: refs/prompt-engineering-guide.md
+      link_text: refs/prompt-engineering-guide.md
+      section_path: "1.1"
+    - target_path: work/research/skill-authoring-best-practices.md
+      link_text: work/research/skill-authoring-best-practices.md
+      section_path: 1.3.1
+    - target_path: refs/prompt-engineering-guide.md
+      link_text: refs/prompt-engineering-guide.md
+      section_path: 1.3.2
+    - target_path: refs/prompt-engineering-guide.md
+      link_text: refs/prompt-engineering-guide.md
+      section_path: 1.4.7
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.5.1
+    - target_path: refs/prompt-engineering-guide.md
+      link_text: refs/prompt-engineering-guide.md
+      section_path: 1.5.1
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: narrative
+      confidence: high
+    - section_path: 1.4.8
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: alternative
+      confidence: high
+    - section_path: 1.5.1
+      role: alternative
+      confidence: high
+    - section_path: 1.5.2
+      role: alternative
+      confidence: high
+    - section_path: 1.5.3
+      role: alternative
+      confidence: high
+    - section_path: "1.6"
+      role: decision
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-04T10:08:38.21261Z
+classified: false

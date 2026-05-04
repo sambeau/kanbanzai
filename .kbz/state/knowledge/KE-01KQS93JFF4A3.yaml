@@ -1,0 +1,20 @@
+confidence: "0.5"
+content: "When a bug transitions to verified status and the fix has been committed and reviewed, close it immediately. Verified bugs that sit open become stale attention items in the status dashboard (like BUG-01KQQ-XFNGEGWQ which sat in verified for a day after fix commit 0dc6fef5). The verified→closed transition has no gate prerequisites — it's a purely administrative step that should follow promptly after verification."
+created: "2026-05-04T10:38:53Z"
+created_by: sambeau
+id: KE-01KQS93JFF4A3
+last_accessed_at: "2026-05-04T10:44:55Z"
+miss_count: 0
+recent_use_count: 1
+scope: project
+status: contributed
+tags:
+  - workflow
+  - bugs
+  - lifecycle
+  - hygiene
+tier: 3
+topic: bug-lifecycle
+ttl_days: 30
+updated: "2026-05-04T10:38:53Z"
+use_count: 0

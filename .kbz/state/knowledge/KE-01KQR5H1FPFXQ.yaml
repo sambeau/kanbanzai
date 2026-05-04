@@ -1,9 +1,11 @@
 confidence: "0.5"
-content: "P40 (Retrospective Batch — April 2026) was already in \"done\" status but the status dashboard reported it as \"idea\" and flagged it with \"ready to close\" attention. Root cause: the plan had a status of \"done\" at the entity level, but the dashboard classification logic misclassified it — likely because the entity type resolution fell back to batch defaults when the plan had child batches. Symptom: health errors \"unknown batch status 'idea'\" appeared for P40 even though its actual entity status was \"done\"."
+content: "Strategic plans have \"done\" as their terminal state — there is no \"closed\" transition. The status dashboard persistently flags done plans (P40, P48) as \"ready to close\" attention items, but this is noise: no further action is possible. P40 was doubly misclassified earlier — the dashboard reported it as \"idea\" despite entity status being \"done\", producing phantom health errors. Root cause: the plan status resolution logic falls back to batch defaults when a plan has child batches. Two symptoms from the same root cause: (1) done plans show as \"ready to close\" attention items perpetually, (2) some done plans were misclassified as \"idea\" producing bogus health errors. Fix: the dashboard should suppress attention items for plans in terminal state, and the classification logic should correctly resolve plan statuses."
 created: "2026-05-04T00:17:06Z"
 created_by: sambeau
 id: KE-01KQR5H1FPFXQ
+last_accessed_at: "2026-05-04T10:44:55Z"
 miss_count: 0
+recent_use_count: 1
 scope: project
 status: contributed
 tags:
@@ -14,5 +16,5 @@ tags:
 tier: 2
 topic: plan-lifecycle
 ttl_days: 90
-updated: "2026-05-04T00:17:06Z"
+updated: "2026-05-04T10:52:49Z"
 use_count: 0
