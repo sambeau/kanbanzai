@@ -1,11 +1,13 @@
+approved_at: "2026-05-04T14:20:12Z"
+approved_by: sambeau
 canonical_content_hash: da428c29de3543e2f252f8167621c8a27602234085dd8956f4d7b6d960d4cfc2
-content_hash: da428c29de3543e2f252f8167621c8a27602234085dd8956f4d7b6d960d4cfc2
+content_hash: 612108cfaf779ca897b2e4e50e9e4aa6dcb55477d86ce97e64867f98fb72f15a
 created: "2026-05-04T14:18:45Z"
 created_by: sambeau
 id: P42-hash-anchored-edit-tool/spec-p42-spec-hash-anchored-edit-tool
 owner: P42-hash-anchored-edit-tool
 path: work/P42-hash-anchored-edit-tool/P42-spec-hash-anchored-edit-tool.md
-status: draft
+status: approved
 title: "Specification: Hash-Anchored Edit Tool"
 type: spec
-updated: "2026-05-04T14:18:45Z"
+updated: "2026-05-04T14:20:12Z"
