@@ -28,6 +28,7 @@ type KnowledgeEntryInput struct {
 	Scope   string
 	Tier    int
 	Tags    []string
+	Forward *bool // nil = default (true for tier-2, false for tier-3); false = explicitly not-forwardable
 }
 
 // RetroContributionResult is the result of retrospective signal contributions.
@@ -314,6 +315,7 @@ func (s *DispatchService) CompleteTask(input CompleteInput) (CompleteResult, err
 			Tier:        tier,
 			LearnedFrom: task.ID,
 			Tags:        entry.Tags,
+			Forward:     entry.Forward,
 		})
 
 		if err != nil {

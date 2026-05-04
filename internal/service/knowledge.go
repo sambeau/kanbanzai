@@ -26,6 +26,7 @@ type ContributeInput struct {
 	LearnedFrom string
 	CreatedBy   string
 	Tags        []string
+	Forward     *bool // nil = default (true for tier-2, false for tier-3); false = explicitly not-forwardable
 }
 
 // KnowledgeFilters holds optional filter criteria for listing knowledge entries.
@@ -155,6 +156,9 @@ func (s *KnowledgeService) Contribute(input ContributeInput) (storage.KnowledgeR
 
 	if input.LearnedFrom != "" {
 		fields["learned_from"] = input.LearnedFrom
+	}
+	if input.Forward != nil {
+		fields["forward"] = *input.Forward
 	}
 	if len(input.Tags) > 0 {
 		fields["tags"] = input.Tags
