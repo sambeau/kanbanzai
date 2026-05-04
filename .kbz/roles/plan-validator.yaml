@@ -30,35 +30,6 @@ anti_patterns:
     because: "Tasks that reference files that neither exist nor are declared as new outputs produce orphaned work that cannot be reviewed or merged — the plan appears thorough but is not executable"
     resolve: "For every file path in task deliverables: (1) check if it exists in the repository, (2) check if it is marked as new, (3) if neither, flag D11 as non-blocking with the unresolved path. Do not assume files exist or will be magically created"
 
-checks:
-  blocking:
-    - id: D1
-      description: "All required sections present in the dev-plan document"
-    - id: D2
-      description: "Scope section references the parent specification document"
-    - id: D3
-      description: "Every task references at least one requirement from the parent specification"
-    - id: D4
-      description: "Every requirement in the parent specification is covered by at least one task"
-    - id: D5
-      description: "No scope drift — no task implements behaviour not traceable to a spec requirement"
-    - id: D6
-      description: "Task dependency graph contains no cycles (must be acyclic)"
-    - id: D9
-      description: "Verification section maps every acceptance criterion to the task that produces it"
-    - id: D13
-      description: "Every task has an actionable description ≥50 words, states what it produces, what inputs it requires, and what 'done' means beyond the AC"
-  non_blocking:
-    - id: D7
-      description: "No monolithic tasks that touch more than 3 files or address more than 1 acceptance criterion"
-    - id: D8
-      description: "Independent tasks (no shared dependencies) are marked as parallelisable"
-    - id: D10
-      description: "Risk assessment section is non-empty and identifies at least one risk"
-    - id: D11
-      description: "Every file path in task deliverables either exists in the repository or is noted as a new file to be created"
-    - id: D12
-      description: "Non-functional requirements from the parent specification are addressed by at least one task each"
 
 tools:
   - entity
