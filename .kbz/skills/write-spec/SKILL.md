@@ -90,6 +90,42 @@ constraint_level: high
 3. **Identify consistency constraints.** Review the requirements found in Step 2. Identify any requirements in adjacent specifications that the current specification must be consistent with — shared data shapes, error contracts, lifecycle rules, or behavioural invariants that span features.
 4. **Note deliberate divergences.** If this specification takes an approach that differs from an adjacent specification, document the reason explicitly in the current specification. A divergence without a documented reason is indistinguishable from an oversight.
 
+### Elicitation Checklist
+
+Before writing any specification content, complete this checklist. Each item
+must have an explicit answer. IF any answer is implicit or assumed, STOP and
+ask the human before proceeding.
+
+1. **Core objective:** What is the single most important thing this feature
+   must accomplish? State it in one sentence.
+
+2. **Scope boundaries:** What is explicitly IN scope? What is explicitly
+   OUT of scope? IF either list is empty, the scope is not defined.
+
+3. **Ambiguities:** What aspects of the design are open to interpretation?
+   List every ambiguity and the chosen resolution. IF an ambiguity has no
+   resolution, STOP and flag it — do not assume.
+
+4. **Technical approach:** What is the chosen approach? What alternatives
+   were rejected and why? Cite the design document — this is a
+   cross-reference check, not a design decision.
+
+5. **Test strategy:** How will correctness be verified? What kinds of tests
+   (unit, integration, e2e) are expected? What edge cases must be covered?
+
+6. **Constraints:** What constraints does the design impose? (Performance
+   budgets, backward compatibility, API contracts, data migration
+   requirements.)
+
+7. **Dependencies:** What other features, packages, or external systems
+   does this feature depend on? What depends on this feature?
+
+This checklist runs once, before any specification content is written. It
+does not run for specification revisions unless the scope has changed.
+Ambiguities discovered by the checklist must be resolved in the design
+document, not in the specification. The checklist is a forcing function for
+design clarity, not a workaround for design gaps.
+
 ### Step 1: Read the Design
 
 1. Obtain the approved design document for this feature.
