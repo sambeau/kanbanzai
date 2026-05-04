@@ -3,9 +3,9 @@ content: "Feature specs that modify .agents/skills/ files should explicitly list
 created: "2026-04-22T16:28:19Z"
 created_by: sambeau
 id: KE-01KPV0AR78BV0
-last_accessed_at: "2026-05-04T14:59:52Z"
+last_accessed_at: "2026-05-04T15:03:34Z"
 miss_count: 0
-recent_use_count: 295
+recent_use_count: 296
 scope: project
 status: contributed
 tags:
