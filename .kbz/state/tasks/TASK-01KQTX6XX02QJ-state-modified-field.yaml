@@ -1,0 +1,6 @@
+id: TASK-01KQTX6XX02QJ
+parent_feature: FEAT-01KQTNYN01ZF8
+slug: state-modified-field
+name: Add state_modified field to MCP response schema
+summary: "Add optional state_modified bool to MCP response struct. True when .kbz/state/, .kbz/index/, or .kbz/context/ was modified."
+status: queued

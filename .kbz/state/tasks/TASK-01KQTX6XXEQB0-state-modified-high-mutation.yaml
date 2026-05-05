@@ -1,0 +1,6 @@
+id: TASK-01KQTX6XXEQB0
+parent_feature: FEAT-01KQTNYN01ZF8
+slug: state-modified-high-mutation
+name: Set state_modified in high-mutation tools
+summary: "Update entity, doc, knowledge, and finish handlers to set state_modified: true on mutation responses. Read-only tools leave it absent."
+status: queued

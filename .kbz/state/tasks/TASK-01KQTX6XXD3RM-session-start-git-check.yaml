@@ -1,0 +1,6 @@
+id: TASK-01KQTX6XXD3RM
+parent_feature: FEAT-01KQTNYN01ZF8
+slug: session-start-git-check
+name: Strengthen session-start git status check
+summary: "Strengthen kanbanzai-getting-started pre-task checklist: require committing orphaned .kbz/ files, forbid stashing/discarding. Mirror to internal/kbzinit/."
+status: queued
