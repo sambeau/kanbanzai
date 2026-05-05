@@ -1,0 +1,24 @@
+confidence: "0.5"
+content: "Fast-track orchestration has model-level behavioral problems: orchestrators stop at implicit gates despite explicit no-gate instructions, treat summary output as pause points, and discover ghost work mid-implementation. P52 defines a lightweight fast-track behavioral profile with session-start audit, no-implicit-gates rules, and continuous-dispatch flow. P51 fixes the pipeline's sub-agent role routing. P44 will automate the fast-track dispatch mode."
+created: "2026-05-05T11:17:07Z"
+created_by: sambeau
+id: KE-01KQVXP8VBS80
+last_accessed_at: "2026-05-05T11:18:05Z"
+miss_count: 0
+recent_use_count: 1
+scope: project
+status: contributed
+tags:
+  - fast-track
+  - orchestration
+  - P52
+  - P51
+  - P44
+  - P50
+  - retro
+  - may-2026
+tier: 2
+topic: fast-track-behavioral-profile
+ttl_days: 90
+updated: "2026-05-05T11:17:07Z"
+use_count: 0

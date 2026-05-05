@@ -1,0 +1,9 @@
+id: P1-infrastructure-hygiene
+slug: infrastructure-hygiene
+name: Infrastructure Hygiene
+status: idea
+summary: "Fix stale binary detection, store consistency issues, health checker false positives, test compilation errors, and plan numbering reuse identified in the May 2026 retrospective."
+order: 0
+created: "2026-05-05T11:19:45Z"
+created_by: sambeau
+updated: "2026-05-05T11:19:45Z"
