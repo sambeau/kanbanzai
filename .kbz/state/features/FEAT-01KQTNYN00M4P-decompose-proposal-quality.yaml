@@ -2,7 +2,7 @@ id: FEAT-01KQTNYN00M4P
 slug: decompose-proposal-quality
 name: Decompose Proposal Quality
 parent: B49-retro-fixes-may-2026
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Fix decompose propose granularity with refuse-to-propose mode, paired impl+test tasks, and dependency graph corrections."
 design: FEAT-01KQTNYN00M4P/design-p50-design-retro-may-2026
@@ -18,3 +18,5 @@ overrides:
     to_status: reviewing
 display_id: B49-F2
 tier: feature
+verification: "F2 decompose paired-task opt-out: code implemented on worktree branch feature/FEAT-01KQTNYN00M4P-decompose-proposal-quality. All 5 tasks done. Merging into main via merge workflow."
+verification_status: passed
