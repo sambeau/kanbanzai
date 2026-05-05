@@ -3,9 +3,9 @@ content: "The handoff tool produces a prompt designed for spawn_agent — it inc
 created: "2026-05-05T02:12:42Z"
 created_by: sambeau
 id: KE-01KQTYHDKMKMF
-last_accessed_at: "2026-05-05T09:18:00Z"
+last_accessed_at: "2026-05-05T09:29:14Z"
 miss_count: 0
-recent_use_count: 16
+recent_use_count: 18
 scope: project
 status: contributed
 tags:

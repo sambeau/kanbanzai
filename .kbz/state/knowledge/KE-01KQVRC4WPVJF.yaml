@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[moderate] tool-friction: Pre-existing test compilation errors in internal/mcp prevented running the new test. Four files had redeclared functions and wrong function signatures. Suggestion: Fix broken test files in internal/mcp so new tests can be verified."
+created: "2026-05-05T09:44:12Z"
+created_by: unknown
+id: KE-01KQVRC4WPVJF
+learned_from: TASK-01KQTX80GF8Y7
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - tool-friction
+tier: 3
+topic: retro-task-01kqtx80gf8y7
+ttl_days: 30
+updated: "2026-05-05T09:44:12Z"
+use_count: 0
