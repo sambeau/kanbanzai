@@ -1,3 +1,5 @@
+approved_at: "2026-05-05T12:30:24Z"
+approved_by: sambeau
 canonical_content_hash: 2098e0c6ff75525eb1b44b3a8097b76ae001f8257e8258606aca09a0798682e2
 content_hash: 2098e0c6ff75525eb1b44b3a8097b76ae001f8257e8258606aca09a0798682e2
 created: "2026-05-05T12:30:19Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KQTWFY52EG1/report-p50-report-review-merge-discipline
 owner: FEAT-01KQTWFY52EG1
 path: work/P50-retro-may-2026/P50-report-review-merge-discipline.md
-status: draft
+status: approved
 title: "Review Report: Merge Discipline (F4) — Cycle 2"
 type: report
-updated: "2026-05-05T12:30:19Z"
+updated: "2026-05-05T12:30:24Z"
