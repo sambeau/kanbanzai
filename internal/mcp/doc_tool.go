@@ -27,7 +27,6 @@ package mcp
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"log"
 	"strconv"
@@ -36,7 +35,6 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"github.com/sambeau/kanbanzai/internal/checkpoint"
 	"github.com/sambeau/kanbanzai/internal/config"
 	"github.com/sambeau/kanbanzai/internal/docint"
 	"github.com/sambeau/kanbanzai/internal/git"
@@ -167,7 +165,7 @@ func docTool(docSvc *service.DocumentService, intelligenceSvc *service.Intellige
 
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		return DispatchAction(ctx, req, map[string]ActionHandler{
-			"register":              docRegisterAction(docSvc, intelligenceSvc, entitySvc),
+			"register":              docRegisterAction(docSvc, intelligenceSvc),
 			"approve":               docApproveAction(docSvc, intelligenceSvc),
 			"move":                  docMoveAction(docSvc),
 			"delete":                docDeleteAction(docSvc),
@@ -183,7 +181,6 @@ func docTool(docSvc *service.DocumentService, intelligenceSvc *service.Intellige
 			"audit":                 docAuditAction(docSvc, intelligenceSvc),
 			"evaluate":              docEvaluateAction(docSvc),
 			"record_false_positive": docRecordFalsePositiveAction(docSvc),
-			"publish":               docPublishAction(docSvc, intelligenceSvc),
 		})
 	})
 
@@ -192,7 +189,7 @@ func docTool(docSvc *service.DocumentService, intelligenceSvc *service.Intellige
 
 // ─── register ─────────────────────────────────────────────────────────────────
 
-func docRegisterAction(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService, entitySvc *service.EntityService) ActionHandler {
+func docRegisterAction(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
@@ -210,7 +207,7 @@ func docRegisterAction(docSvc *service.DocumentService, intelligenceSvc *service
 				if _, has := doc["created_by"]; !has && topCreatedBy != "" {
 					doc["created_by"] = topCreatedBy
 				}
-				return docRegisterOne(docSvc, intelligenceSvc, entitySvc, doc)
+				return docRegisterOne(docSvc, intelligenceSvc, doc)
 			})
 		}
 
@@ -218,12 +215,12 @@ func docRegisterAction(docSvc *service.DocumentService, intelligenceSvc *service
 		if docArgStr(args, "path") == "" {
 			return nil, fmt.Errorf("Cannot register document: path is missing.\n\nTo resolve:\n  Provide path: doc(action: \"register\", path: \"work/spec/foo.md\", type: \"...\", title: \"...\")")
 		}
-		_, result, err := docRegisterOne(docSvc, intelligenceSvc, entitySvc, args)
+		_, result, err := docRegisterOne(docSvc, intelligenceSvc, args)
 		return result, err
 	}
 }
 
-func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService, entitySvc *service.EntityService, args map[string]any) (string, any, error) {
+func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService, args map[string]any) (string, any, error) {
 	path := docArgStr(args, "path")
 	docType := docArgStr(args, "type")
 	title := docArgStr(args, "title")
@@ -296,235 +293,7 @@ func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.In
 	if len(result.Warnings) > 0 {
 		out["warnings"] = result.Warnings
 	}
-
-	// Fast-track auto-validation pipeline (REQ-PIPE-001 through REQ-PIPE-007).
-	// Triggered for spec and dev-plan document types when the owning feature's
-	// risk tier allows automated validation for this stage.
-	if validationResult := tryAutoValidate(entitySvc, docSvc, result.ID, result.Path, result.Type, result.Owner); validationResult != nil {
-		out["auto_validation"] = validationResult
-	}
-
 	return result.ID, out, nil
-}
-
-// tryAutoValidate checks whether the just-registered document should trigger
-// automated validation per the fast-track architecture. It maps the document
-// type to the feature's lifecycle stage, checks the tier's automation matrix,
-// and dispatches a validator if allowed.
-//
-// NOTE: This function orchestrates config, service, and gate domains within
-// the MCP tool package. Consider extracting into internal/validate/pipeline.go
-// in a future refactor to keep MCP handlers thin and enable independent testing.
-//
-// Cycle tracking (REQ-PIPE-003):
-//   - Increments feature.ReviewCycle on each validator dispatch
-//   - Resets feature.ReviewCycle to 0 when validation passes
-//   - When cycle reaches tier's MaxCycles cap: escalates to human via checkpoint
-//
-// Returns nil if auto-validation is not applicable or not allowed.
-// Returns a result map describing the outcome on success/failure.
-func tryAutoValidate(entitySvc *service.EntityService, docSvc *service.DocumentService, docID, docPath, docType, owner string) map[string]any {
-	// Design stage is never auto-validated (REQ-PIPE-007).
-	if docType == "design" {
-		return nil
-	}
-
-	// Only spec and dev-plan trigger the validation pipeline (REQ-PIPE-001).
-	if docType != "spec" && docType != "specification" && docType != "dev-plan" {
-		return nil
-	}
-
-	// Resolve the owning feature.
-	if owner == "" {
-		return nil // no owner, cannot determine feature or tier
-	}
-
-	// Owner may be a Plan ID, a Feature ID, or a display ID. Try feature first.
-	feature, err := resolveOwningFeature(entitySvc, owner)
-	if err != nil || feature == nil {
-		return nil // feature not found or owner is a plan (no validation context)
-	}
-
-	// Load fast-track config.
-	cfg := config.LoadOrDefault()
-	ft := cfg.FastTrack
-	if !ft.IsEnabled() {
-		return nil // fast-track disabled entirely
-	}
-
-	tier := feature.Tier
-	if tier == "" {
-		tier = ft.DefaultTier
-	}
-
-	tierCfg, ok := ft.Tiers[tier]
-	if !ok {
-		return nil // tier not configured
-	}
-
-	// Determine which stage the document authoring maps to.
-	stageForDoc := docTypeToStage(docType)
-	if stageForDoc == "" {
-		return nil
-	}
-
-	// Check the automation matrix for this tier+stage.
-	gateMode := tierGateMode(tierCfg, stageForDoc)
-	// Only "auto" gates trigger the automatic validation pipeline.
-	// "human" and "conditional" gates are skipped.
-	if gateMode != string(config.GateModeAuto) {
-		return map[string]any{
-			"triggered":    false,
-			"reason":       fmt.Sprintf("gate mode is %q for tier %q stage %q", gateMode, tier, stageForDoc),
-			"feature_id":   feature.ID,
-			"feature_tier": tier,
-		}
-	}
-
-	// Check cycle cap (REQ-PIPE-003).
-	maxCycles := tierCfg.MaxCycles
-	if maxCycles <= 0 {
-		return map[string]any{
-			"triggered":    false,
-			"reason":       fmt.Sprintf("max_auto_cycles is %d for tier %q", maxCycles, tier),
-			"feature_id":   feature.ID,
-			"feature_tier": tier,
-		}
-	}
-
-	// Check if feature is already blocked (human escalation in progress).
-	// Once escalated, the system must not attempt further validation until
-	// the human responds and clears the blocked_reason (REQ-PIPE-004).
-	if feature.BlockedReason != "" {
-		return map[string]any{
-			"triggered":      false,
-			"reason":         fmt.Sprintf("feature %s is blocked (human escalation pending): %s", feature.ID, feature.BlockedReason),
-			"feature_id":     feature.ID,
-			"feature_tier":   tier,
-			"blocked_reason": feature.BlockedReason,
-		}
-	}
-
-	// Track cycle count using ReviewCycle field.
-	currentCycle := feature.ReviewCycle
-	if currentCycle >= maxCycles {
-		// Cycle cap reached — escalate to human via checkpoint (REQ-PIPE-004).
-		if err := entitySvc.PersistFeatureBlockedReason(feature.ID, feature.Slug,
-			fmt.Sprintf("auto-validation cycle cap reached (%d/%d) for tier %q stage %q", currentCycle, maxCycles, tier, stageForDoc)); err != nil {
-			log.Printf("[doc] WARNING: failed to persist blocked_reason for %s during cycle cap escalation: %v", feature.ID, err)
-		}
-
-		chkStore := checkpoint.NewStore(entitySvc.Root())
-		chk, chkErr := chkStore.Create(checkpoint.Record{
-			Question:  fmt.Sprintf("Feature %s has reached the auto-validation cycle cap (%d/%d) for tier %q. What should happen next?", feature.ID, currentCycle, maxCycles, tier),
-			Context:   fmt.Sprintf("Stage: %s. Tier: %s. Cycle: %d/%d. Document: %s (%s).", stageForDoc, tier, currentCycle, maxCycles, docID, docType),
-			Status:    checkpoint.StatusPending,
-			CreatedAt: time.Now().UTC(),
-			CreatedBy: "system",
-		})
-
-		result := map[string]any{
-			"triggered":      false,
-			"escalate":       true,
-			"reason":         fmt.Sprintf("auto-validation cycle cap reached (%d/%d) for feature %s", currentCycle, maxCycles, feature.ID),
-			"feature_id":     feature.ID,
-			"feature_tier":   tier,
-			"cycle_count":    currentCycle,
-			"max_cycles":     maxCycles,
-			"blocked_reason": fmt.Sprintf("auto-validation cycle cap reached (%d/%d)", currentCycle, maxCycles),
-		}
-		if chkErr == nil {
-			result["checkpoint_id"] = chk.ID
-		}
-		return result
-	}
-
-	// Determine the validator role and skill for this stage.
-	role, skill := validatorForStage(stageForDoc)
-	if role == "" {
-		return nil
-	}
-
-	// Increment the cycle counter for this validation dispatch (REQ-PIPE-003).
-	// This tracks how many fix-validate iterations have occurred.
-	if err := entitySvc.IncrementFeatureReviewCycle(feature.ID, feature.Slug); err != nil {
-		log.Printf("[doc] WARNING: failed to increment review_cycle for %s: %v", feature.ID, err)
-	}
-
-	// Dispatch the validator (REQ-PIPE-002).
-	result := map[string]any{
-		"triggered":    true,
-		"status":       "dispatched",
-		"feature_id":   feature.ID,
-		"feature_tier": tier,
-		"stage":        stageForDoc,
-		"document_id":  docID,
-		"role":         role,
-		"skill":        skill,
-		"cycle_count":  currentCycle + 1,
-		"max_cycles":   maxCycles,
-	}
-
-	return result
-}
-
-// resolveOwningFeature tries to resolve an owner string to a Feature.
-// The owner may be a Feature ID (FEAT-...) or a display ID (P{n}-F{m}).
-func resolveOwningFeature(entitySvc *service.EntityService, owner string) (*model.Feature, error) {
-	if entitySvc == nil {
-		return nil, fmt.Errorf("entity service is nil")
-	}
-
-	getR, err := entitySvc.Get("feature", owner, "")
-	if err != nil {
-		return nil, err
-	}
-
-	feature := featureFromState(getR.ID, getR.Slug, getR.State)
-	return feature, nil
-}
-
-// docTypeToStage maps a document type to the lifecycle stage it is authored in.
-func docTypeToStage(docType string) string {
-	switch docType {
-	case "spec", "specification":
-		return "specifying"
-	case "dev-plan":
-		return "dev-planning"
-	default:
-		return ""
-	}
-}
-
-// tierGateMode returns the gate mode for a specific stage from a tier config.
-func tierGateMode(tc config.TierConfig, stage string) string {
-	switch stage {
-	case "designing":
-		return tc.Design
-	case "specifying":
-		return tc.Spec
-	case "dev-planning":
-		return tc.DevPlan
-	case "reviewing":
-		return tc.Review
-	default:
-		return ""
-	}
-}
-
-// validatorForStage returns the role and skill IDs for validating a document
-// authored in the given lifecycle stage.
-func validatorForStage(stage string) (role, skill string) {
-	switch stage {
-	case "specifying":
-		return "spec-validator", "validate-spec"
-	case "dev-planning":
-		return "plan-validator", "validate-plan"
-	case "reviewing":
-		return "review-gate-validator", "validate-review"
-	default:
-		return "", ""
-	}
 }
 
 // ─── approve ──────────────────────────────────────────────────────────────────
@@ -555,12 +324,9 @@ func docApproveAction(docSvc *service.DocumentService, intelSvc *service.Intelli
 }
 
 // gatedDocTypes is the set of document types subject to the concept-tagging
-// approval gate (REQ-001). Both the normalised form ("spec") and the legacy
-// alias ("specification") are included so the gate fires for raw user input
-// as well as stored document types.
+// approval gate (REQ-001).
 var gatedDocTypes = map[string]bool{
-	"spec":          true,
-	"specification": true, // alias — normalised to "spec" at storage time
+	"specification": true,
 	"design":        true,
 	"dev-plan":      true,
 }
@@ -639,117 +405,6 @@ func docApproveOne(ctx context.Context, docSvc *service.DocumentService, intelSv
 	}
 
 	return result.ID, map[string]any{"document": docRecordToMap(result)}, nil
-}
-
-// ─── publish ──────────────────────────────────────────────────────────────────
-
-// docPublishAction collapses register + classify + approve into a single call.
-// When classifications with at least one populated concepts_intro are provided,
-// the document is registered, classified, and approved in one step. Without
-// classifications, the document is registered with a structured next_action
-// pointing to doc(action: "approve").
-func docPublishAction(docSvc *service.DocumentService, intelSvc *service.IntelligenceService) ActionHandler {
-	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
-		SignalMutation(ctx)
-		args, _ := req.Params.Arguments.(map[string]any)
-
-		// Register the document via the existing register path.
-		_, regResult, regErr := docRegisterOne(docSvc, intelSvc, nil, args)
-		if regErr != nil {
-			return nil, regErr
-		}
-
-		regMap, ok := regResult.(map[string]any)
-		if !ok {
-			return nil, fmt.Errorf("Cannot publish document: unexpected register result type")
-		}
-
-		// Extract the document ID from the register result.
-		doc, _ := regMap["document"].(map[string]any)
-		if doc == nil {
-			return nil, fmt.Errorf("Cannot publish document: register result missing document record")
-		}
-		docID, _ := doc["id"].(string)
-		if docID == "" {
-			return nil, fmt.Errorf("Cannot publish document: register result missing document ID")
-		}
-		contentHash, _ := doc["content_hash"].(string)
-
-		// Check for inline classifications.
-		classificationsJSON := docArgStr(args, "classifications")
-		modelName := docArgStr(args, "model_name")
-		modelVersion := docArgStr(args, "model_version")
-
-		if classificationsJSON == "" || intelSvc == nil {
-			// No classifications provided — return draft with structured next_action.
-			delete(regMap, "classification_nudge")
-			regMap["next_action"] = nextActionForClassification(docID)
-			return regMap, nil
-		}
-
-		// Parse classifications to check for concepts_intro.
-		var classifications []docint.Classification
-		if err := json.Unmarshal([]byte(classificationsJSON), &classifications); err != nil {
-			// Invalid JSON — return draft with structured next_action.
-			delete(regMap, "classification_nudge")
-			regMap["next_action"] = nextActionForClassification(docID)
-			regMap["classification_parse_error"] = err.Error()
-			return regMap, nil
-		}
-
-		hasConcepts := false
-		for _, c := range classifications {
-			if len(c.ConceptsIntro) > 0 {
-				hasConcepts = true
-				break
-			}
-		}
-
-		if !hasConcepts {
-			// Classifications present but no concepts_intro — return draft.
-			delete(regMap, "classification_nudge")
-			regMap["next_action"] = nextActionForClassification(docID)
-			return regMap, nil
-		}
-
-		// Apply classifications via the intelligence service.
-		submission := docint.ClassificationSubmission{
-			DocumentID:      docID,
-			ContentHash:     contentHash,
-			ModelName:       modelName,
-			ModelVersion:    modelVersion,
-			ClassifiedAt:    time.Now().UTC(),
-			Classifications: classifications,
-		}
-		if classErr := intelSvc.ClassifyDocument(submission); classErr != nil {
-			// Classification failed — return draft with registration ok.
-			delete(regMap, "classification_nudge")
-			regMap["registration"] = "ok"
-			regMap["approval"] = "failed: " + classErr.Error()
-			return regMap, nil
-		}
-
-		// Approve the document.
-		approvedByRaw := docArgStr(args, "created_by")
-		_, approveResult, approveErr := docApproveOne(ctx, docSvc, intelSvc, docID, approvedByRaw)
-		if approveErr != nil {
-			// Approval failed — return draft with registration ok.
-			delete(regMap, "classification_nudge")
-			regMap["registration"] = "ok"
-			regMap["approval"] = "failed: " + approveErr.Error()
-			return regMap, nil
-		}
-
-		// Success — return the approved document.
-		if am, ok := approveResult.(map[string]any); ok {
-			if ad, ok := am["document"]; ok {
-				regMap["document"] = ad
-			}
-		}
-		regMap["status"] = "approved"
-		regMap["classified"] = true
-		return regMap, nil
-	}
 }
 
 // ─── move ─────────────────────────────────────────────────────────────────────
@@ -999,7 +654,7 @@ func docGapsAction(docSvc *service.DocumentService, entitySvc *service.EntitySer
 			}
 		}
 
-		expected := []string{"design", "spec", "dev-plan"}
+		expected := []string{"design", "specification", "dev-plan"}
 		gaps := make([]map[string]any, 0)
 		present := make([]map[string]any, 0)
 
@@ -1184,7 +839,6 @@ func docRefreshAction(docSvc *service.DocumentService) ActionHandler {
 			"new_hash":          result.NewHash,
 			"status":            result.Status,
 			"status_transition": result.StatusTransition,
-			"message":           result.Message,
 		}, nil
 	}
 }
@@ -1531,17 +1185,3 @@ func parseEvaluationMap(m map[string]any) (model.QualityEvaluation, error) {
 
 	return eval, nil
 }
-
-// ─── fast-track auto-validation ───────────────────────────────────────────────
-
-// tryAutoValidate checks whether the just-registered document should trigger
-// automated validation per the fast-track architecture. It maps the document
-// type to the feature's lifecycle stage, checks the tier's automation matrix,
-// and dispatches a validator if allowed.
-//
-// Cycle tracking (REQ-PIPE-003):
-//   - Increments feature.ReviewCycle on each validator dispatch
-//   - When cycle reaches tier's MaxCycles cap: escalates to human via checkpoint
-//
-// Returns nil if auto-validation is not applicable or not allowed.
-// Returns a result map describing the outcome on success/failure.
