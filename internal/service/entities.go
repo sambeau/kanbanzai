@@ -1,7 +1,6 @@
 package service
 
 import (
-	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -14,8 +13,6 @@ import (
 	"time"
 
 	"github.com/sambeau/kanbanzai/internal/cache"
-	"github.com/sambeau/kanbanzai/internal/config"
-	"github.com/sambeau/kanbanzai/internal/coordination"
 	"github.com/sambeau/kanbanzai/internal/core"
 	"github.com/sambeau/kanbanzai/internal/id"
 	"github.com/sambeau/kanbanzai/internal/model"
@@ -31,7 +28,6 @@ type CreateFeatureInput struct {
 	Summary   string
 	CreatedBy string
 	Name      string
-	Tier      string // explicit tier (overrides inference); empty means infer
 }
 
 type CreateTaskInput struct {
@@ -50,8 +46,6 @@ type CreateBugInput struct {
 	Severity   string
 	Priority   string
 	Type       string
-	Tags       []string
-	Tier       string // explicit tier (overrides inference); empty means infer
 }
 
 type CreateDecisionInput struct {
@@ -102,14 +96,12 @@ type ListResult struct {
 }
 
 type EntityService struct {
-	root           string
-	store          *storage.EntityStore
-	allocator      *id.Allocator
-	now            func() time.Time
-	cache          *cache.Cache
-	statusHook     StatusTransitionHook // optional, for automatic worktree creation
-	coordinationDB *coordination.DB
-	cfg            *config.Config
+	root       string
+	store      *storage.EntityStore
+	allocator  *id.Allocator
+	now        func() time.Time
+	cache      *cache.Cache
+	statusHook StatusTransitionHook // optional, for automatic worktree creation
 }
 
 func NewEntityService(root string) *EntityService {
@@ -117,51 +109,14 @@ func NewEntityService(root string) *EntityService {
 		root = core.StatePath()
 	}
 
-	cfg := config.LoadOrDefault()
-	svc := &EntityService{
+	return &EntityService{
 		root:      root,
 		store:     storage.NewEntityStore(root),
 		allocator: id.NewAllocator(),
-		cfg:       cfg,
 		now: func() time.Time {
 			return time.Now().UTC()
 		},
 	}
-
-	// Note: coordination DB is connected lazily on first allocation attempt
-	// (see ensureCoordinationDB), not at service construction. This implements
-	// per-attempt fallback: if the database is unreachable at startup but
-	// becomes reachable later, subsequent allocations will use it.
-
-	return svc
-}
-
-// ensureCoordinationDB returns the coordination database handle, connecting
-// lazily on first call if not already connected. If coordination is not
-// configured, it returns nil. If the database is unreachable, it warns and
-// returns nil — the caller falls back to local allocation. Subsequent calls
-// retry the connection if a previous attempt failed (per-attempt fallback).
-func (s *EntityService) ensureCoordinationDB() *coordination.DB {
-	if !s.cfg.CoordinationEnabled() {
-		return nil
-	}
-	if s.coordinationDB != nil {
-		return s.coordinationDB
-	}
-
-	db, err := coordination.New(context.Background(), s.cfg.Coordination.DatabaseURL)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "warning: coordination database unavailable: %v\n", err)
-		return nil
-	}
-	if err := db.Migrate(context.Background()); err != nil {
-		fmt.Fprintf(os.Stderr, "warning: coordination migration failed: %v\n", err)
-		db.Close()
-		return nil
-	}
-
-	s.coordinationDB = db
-	return db
 }
 
 // SetStatusTransitionHook attaches an optional hook that fires after
@@ -187,20 +142,6 @@ func (s *EntityService) Store() *storage.EntityStore {
 // to filesystem if the cache is nil.
 func (s *EntityService) SetCache(c *cache.Cache) {
 	s.cache = c
-}
-
-// CacheRefresh upserts an entity into the cache from a storage.EntityRecord.
-// This is used by callers (e.g. DispatchService) that write to the entity
-// store directly and need to keep the cache synchronised. The caller must
-// have already written the record to the YAML store.
-func (s *EntityService) CacheRefresh(record storage.EntityRecord) {
-	s.cacheUpsertFromResult(CreateResult{
-		Type:  record.Type,
-		ID:    record.ID,
-		Slug:  record.Slug,
-		Path:  filepath.Join(s.root, entityDirectory(record.Type), entityFileName(record.ID, record.Slug)),
-		State: record.Fields,
-	})
 }
 
 // RebuildCache scans all canonical entity files and repopulates the cache.
@@ -249,45 +190,32 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 
 	parentID := strings.TrimSpace(input.Parent)
 	if parentID == "" {
-		return CreateResult{}, fmt.Errorf("parent plan or batch is required: feature must belong to a plan or batch")
+		return CreateResult{}, fmt.Errorf("parent plan is required: feature must belong to a plan")
 	}
 
-	// Load parent — provides existence check, next_feature_seq, and number.
+	// Load parent plan — provides existence check, next_feature_seq, and plan number.
 	planResult, err := s.GetPlan(parentID)
 	if err != nil {
-		return CreateResult{}, fmt.Errorf("parent %s: %w", parentID, ErrReferenceNotFound)
+		return CreateResult{}, fmt.Errorf("parent plan %s: %w", parentID, ErrReferenceNotFound)
 	}
 
-	// Read next_feature_seq — use coordination DB if available, else local counter.
-	var seq int
-	if cdb := s.ensureCoordinationDB(); cdb != nil {
-		allocSeq, allocErr := cdb.AllocateFeatureSeq(context.Background(), s.cfg.Coordination.ProjectID, parentID)
-		if allocErr != nil {
-			fmt.Fprintf(os.Stderr, "warning: coordination database error, falling back to local feature seq: %v\n", allocErr)
-			seq = intFromState(planResult.State, "next_feature_seq", 1)
-		} else {
-			seq = allocSeq
-		}
-	} else {
-		seq = intFromState(planResult.State, "next_feature_seq", 1)
-	}
+	// Read next_feature_seq (default 1 if absent).
+	seq := intFromState(planResult.State, "next_feature_seq", 1)
 
-	// Compute display_id: {Prefix}{number}-F{seq} (e.g. "B24-F1" for batch, "P37-F5" for legacy plan).
-	parentPrefix, planNum, _ := model.ParsePlanID(parentID)
-	displayID := fmt.Sprintf("%s%s-F%d", parentPrefix, planNum, seq)
+	// Compute display_id: P{number}-F{seq}.
+	_, planNum, _ := model.ParsePlanID(parentID)
+	displayID := fmt.Sprintf("P%s-F%d", planNum, seq)
 
-	// Write parent with incremented counter BEFORE writing feature (REQ-006).
-	// When using coordination DB, the DB already atomically incremented, so this
-	// local write keeps the on-disk counter consistent for fallback scenarios.
+	// Write plan with incremented counter BEFORE writing feature (REQ-006).
 	planResult.State["next_feature_seq"] = seq + 1
 	planRecord := storage.EntityRecord{
-		Type:   string(model.EntityKindBatch),
+		Type:   string(model.EntityKindPlan),
 		ID:     planResult.ID,
 		Slug:   planResult.Slug,
 		Fields: planResult.State,
 	}
 	if _, err := s.store.Write(planRecord); err != nil {
-		return CreateResult{}, fmt.Errorf("increment sequence for %s: %w", parentID, err)
+		return CreateResult{}, fmt.Errorf("increment plan sequence for %s: %w", parentID, err)
 	}
 
 	idValue, err := s.allocateID(model.EntityKindFeature)
@@ -300,8 +228,6 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 		return CreateResult{}, nameErr
 	}
 
-	tier := inferTier(input.Tier, input.Tags, "feature", s.cfg)
-
 	entity := model.Feature{
 		ID:        idValue,
 		Slug:      normalizeSlug(input.Slug),
@@ -312,7 +238,6 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 		Summary:   strings.TrimSpace(input.Summary),
 		Design:    strings.TrimSpace(input.Design),
 		Tags:      append([]string(nil), input.Tags...),
-		Tier:      tier,
 		Created:   s.now(),
 		CreatedBy: strings.TrimSpace(input.CreatedBy),
 	}
@@ -385,23 +310,9 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 		return CreateResult{}, err
 	}
 
-	var idValue string
-	slug := normalizeSlug(input.Slug)
-	if cdb := s.ensureCoordinationDB(); cdb != nil {
-		allocatedID, allocErr := cdb.AllocateID(context.Background(), s.cfg.Coordination.ProjectID, "bug", "BUG-", slug)
-		if allocErr != nil {
-			fmt.Fprintf(os.Stderr, "warning: coordination database error, falling back to local allocation: %v\n", allocErr)
-			// fall through to local allocation
-		} else {
-			idValue = allocatedID
-		}
-	}
-	if idValue == "" {
-		var err error
-		idValue, err = s.allocateID(model.EntityKindBug)
-		if err != nil {
-			return CreateResult{}, err
-		}
+	idValue, err := s.allocateID(model.EntityKindBug)
+	if err != nil {
+		return CreateResult{}, err
 	}
 
 	bugName, nameErr := validate.ValidateName(input.Name)
@@ -424,11 +335,9 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 		return CreateResult{}, err
 	}
 
-	tier := inferTier(input.Tier, input.Tags, "bug", s.cfg)
-
 	entity := model.Bug{
 		ID:         idValue,
-		Slug:       slug,
+		Slug:       normalizeSlug(input.Slug),
 		Name:       bugName,
 		Status:     model.BugStatus("reported"),
 		Severity:   model.BugSeverity(severity),
@@ -438,8 +347,6 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 		Reported:   s.now(),
 		Observed:   strings.TrimSpace(input.Observed),
 		Expected:   strings.TrimSpace(input.Expected),
-		Tags:       append([]string(nil), input.Tags...),
-		Tier:       tier,
 	}
 
 	if err := validate.ValidateInitialState(validate.EntityBug, string(entity.Status)); err != nil {
@@ -543,7 +450,20 @@ func (s *EntityService) HealthCheck() (*validate.HealthReport, error) {
 	}
 
 	entityExists := func(entityType, id string) bool {
-		return s.entityExists(entityType, id)
+		// Plans use different storage, check via file directly.
+		if entityType == string(model.EntityKindPlan) {
+			return s.entityExists(entityType, id)
+		}
+		results, err := s.List(entityType)
+		if err != nil {
+			return false
+		}
+		for _, r := range results {
+			if r.ID == id {
+				return true
+			}
+		}
+		return false
 	}
 
 	return validate.CheckHealth(loadAll, entityExists)
@@ -808,57 +728,6 @@ func (s *EntityService) UpdateStatus(input UpdateStatusInput) (GetResult, error)
 	return result, nil
 }
 
-// PromoteQueuedTasks transitions any queued tasks for featureID to ready when
-// their dependencies (if any) are all in a terminal state. Tasks already in
-// any other status are untouched. Per-task failures are logged and do not
-// abort the loop.
-func (s *EntityService) PromoteQueuedTasks(featureID string) error {
-	allTasks, err := s.List("task")
-	if err != nil {
-		return fmt.Errorf("PromoteQueuedTasks %s: list tasks: %w", featureID, err)
-	}
-
-	// Build a status index for dependency checks.
-	taskStatuses := make(map[string]string, len(allTasks))
-	for _, t := range allTasks {
-		taskStatuses[t.ID] = stringFromState(t.State, "status")
-	}
-
-	for _, t := range allTasks {
-		if stringFromState(t.State, "parent_feature") != featureID {
-			continue
-		}
-		if stringFromState(t.State, "status") != "queued" {
-			continue
-		}
-
-		dependsOn := stringSliceFromState(t.State, "depends_on")
-		depStatuses := make(map[string]string, len(dependsOn))
-		for _, depID := range dependsOn {
-			if st, ok := taskStatuses[depID]; ok {
-				depStatuses[depID] = st
-			} else {
-				depStatuses[depID] = "" // unknown dep — treated as non-terminal
-			}
-		}
-
-		if err := validate.ValidateTaskQueuedToReady(dependsOn, depStatuses); err != nil {
-			continue
-		}
-
-		if _, err := s.UpdateStatus(UpdateStatusInput{
-			Type:   "task",
-			ID:     t.ID,
-			Slug:   t.Slug,
-			Status: "ready",
-		}); err != nil {
-			log.Printf("PromoteQueuedTasks: failed to promote task %s (%s): %v", t.ID, t.Slug, err)
-		}
-	}
-
-	return nil
-}
-
 // UpdateEntity updates fields of an existing entity for error correction.
 // It cannot change the id (immutable) or status (use UpdateStatus instead).
 func (s *EntityService) UpdateEntity(input UpdateEntityInput) (GetResult, error) {
@@ -902,13 +771,6 @@ func (s *EntityService) UpdateEntity(input UpdateEntityInput) (GetResult, error)
 	record, err := s.store.Load(entityType, entityID, slug)
 	if err != nil {
 		return GetResult{}, err
-	}
-
-	// Tier downgrade protection: prevent changing tier after creation.
-	// Tiers gate human vs automated validation; mutable tiers would allow
-	// privilege escalation by downgrading a critical feature to bypass gates.
-	if newTier, ok := input.Fields["tier"]; ok && newTier != "" && newTier != record.Fields["tier"] {
-		return GetResult{}, fmt.Errorf("cannot update tier: tier is immutable after creation (use override path for explicit tier changes)")
 	}
 
 	oldSlug := record.Slug
@@ -1021,14 +883,7 @@ func (s *EntityService) loadRecordFromPath(entityType, path string) (storage.Ent
 }
 
 func entityDirectory(entityType string) string {
-	lower := strings.ToLower(strings.TrimSpace(entityType))
-	if lower == string(model.EntityKindStrategicPlan) || lower == "plan" {
-		return "plans"
-	}
-	if lower == string(model.EntityKindBatch) {
-		return "batches"
-	}
-	return lower + "s"
+	return strings.ToLower(strings.TrimSpace(entityType)) + "s"
 }
 
 func entityFileName(idValue, slug string) string {
@@ -1068,53 +923,6 @@ func defaultString(value, fallback string) string {
 		return fallback
 	}
 	return value
-}
-
-// inferTier applies the tier inference rules per REQ-INFER-001 through REQ-INFER-003.
-// If explicitTier is non-empty, it is used as-is (override).
-// Otherwise: tags containing "retro" → retro_fix;
-// tags containing "critical" or "security" → critical;
-// otherwise → config FastTrack.DefaultTier (defaults to "feature").
-// inferTier applies the tier inference rules per REQ-INFER-001 through REQ-INFER-003.
-// entityType must be one of "feature" or "bug".
-// Rules (in priority order):
-//
-//	(a) explicitTier overrides everything
-//	(b) "critical" or "security" tag → critical
-//	(c) "retro" tag → retro_fix
-//	(d) entityType="bug" → bug_fix
-//	(e) config default_tier
-//	(f) fallback: feature
-func inferTier(explicitTier string, tags []string, entityType string, cfg *config.Config) string {
-	if explicitTier != "" {
-		return explicitTier
-	}
-
-	// Scan for critical/security first: these dominate all other tags.
-	for _, tag := range tags {
-		t := strings.ToLower(strings.TrimSpace(tag))
-		if t == "critical" || t == "security" {
-			return config.TierCritical
-		}
-	}
-
-	// Then scan for retro.
-	for _, tag := range tags {
-		t := strings.ToLower(strings.TrimSpace(tag))
-		if t == "retro" {
-			return config.TierRetroFix
-		}
-	}
-
-	// REQ-INFER-002(b): bug entities default to bug_fix.
-	if entityType == "bug" {
-		return config.TierBugFix
-	}
-
-	if cfg != nil && cfg.FastTrack.DefaultTier != "" {
-		return cfg.FastTrack.DefaultTier
-	}
-	return config.TierFeature
 }
 
 func validateKindForType(entityType string) (validate.EntityKind, error) {
@@ -1278,9 +1086,6 @@ func featureFields(e model.Feature) map[string]any {
 		fields["decisions"] = append([]string(nil), e.Decisions...)
 	}
 	fields["name"] = e.Name
-	if e.Tier != "" {
-		fields["tier"] = e.Tier
-	}
 	if len(e.Tags) > 0 {
 		fields["tags"] = append([]string(nil), e.Tags...)
 	}
@@ -1439,9 +1244,6 @@ func bugFields(e model.Bug) map[string]any {
 	if e.ReleaseTarget != "" {
 		fields["release_target"] = e.ReleaseTarget
 	}
-	if e.Tier != "" {
-		fields["tier"] = e.Tier
-	}
 	return fields
 }
 
@@ -1483,14 +1285,16 @@ func stringFromState(state map[string]any, key string) string {
 	return s
 }
 
-var featureDisplayIDPattern = regexp.MustCompile(`(?i)^([BP])(\d+)-F(\d+)$`)
 
-// IsFeatureDisplayID reports whether id matches the B{n}-F{m} or P{n}-F{m} display ID pattern.
+
+var featureDisplayIDPattern = regexp.MustCompile(`(?i)^P(\d+)-F(\d+)$`)
+
+// IsFeatureDisplayID reports whether id matches the P{n}-F{m} display ID pattern.
 func IsFeatureDisplayID(id string) bool {
 	return featureDisplayIDPattern.MatchString(id)
 }
 
-// ResolveFeatureDisplayID resolves a B{n}-F{m} or P{n}-F{m} display ID to (canonicalID, slug).
+// ResolveFeatureDisplayID resolves a P{n}-F{m} display ID to (canonicalID, slug).
 // Uses the SQLite cache when warm (O(1)); falls back to a filesystem scan.
 func (s *EntityService) ResolveFeatureDisplayID(displayID string) (string, string, error) {
 	if s.cache != nil && s.cache.IsWarm("feature") {
