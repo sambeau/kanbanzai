@@ -51,6 +51,9 @@ commit conventions, knowledge contribution, and entity naming rules.
 - [ ] Task is `ready` → claim with `next(id)`
 - [ ] Implement the task
 - [ ] Commit changes before running `finish`
+- [ ] If `state_modified: true` was in the last tool response:
+      `git add .kbz/ && git commit -m "chore(state): commit workflow state changes"`
+      before proceeding to the next task
 - [ ] Call `finish(task_id, summary, knowledge?, retrospective?, files_modified?)`
 
 **Do not call `finish` on a task you have not claimed.**
@@ -165,6 +168,9 @@ workflow(state): commit orphaned knowledge entries
 - **Commit before finish.** All changes must be committed before calling
   `finish`. If `git status` shows uncommitted changes when you receive a
   finish confirmation, commit them immediately.
+- **Commit `.kbz/` changes after state mutations.** When a tool response
+  contains `state_modified: true` and you are not about to make another
+  state-mutating call, commit the `.kbz/` changes before proceeding.
 - **Worktree commits are local.** Changes committed in a Git worktree are
   on the feature branch, not `main`. They are isolated by design.
 
