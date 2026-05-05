@@ -347,6 +347,17 @@ func (w *worktreeBranchLookup) GetFilesOnBranch(repoRoot, branch string) ([]stri
 	return git.GetFilesChangedOnBranch(repoRoot, branch)
 }
 
+func (w *worktreeBranchLookup) GetBranchCreatedAt(entityID string) (time.Time, error) {
+	rec, err := w.store.GetByEntityID(entityID)
+	if err != nil {
+		return time.Time{}, err
+	}
+	if rec == nil {
+		return time.Time{}, worktree.ErrNotFound
+	}
+	return rec.Created, nil
+}
+
 // profileHealthChecker returns an AdditionalHealthChecker that validates
 // all roles for schema correctness and inheritance resolution.
 // Uses RoleStore so that roles in .kbz/roles/ are visible to health validation.
