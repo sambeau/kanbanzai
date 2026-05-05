@@ -3,7 +3,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-04                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | spec-author                    |
 
 ## Overview
@@ -113,3 +113,5 @@ internal server error without reading log messages.
 | AC-005 | Test | Unit test: induce nil dereference in handler, assert `ErrorType` is `internal_error` |
 | AC-006 | Test | Table-driven test: for each of the five tools, exercise one error path per category and assert correct `ErrorType` |
 | AC-007 | Test | Existing success-path tests must continue to pass with empty `ErrorType` |
+| REQ-NF-001 | Test | Run existing error-path tests after classification: assert error strings returned to client are byte-identical to pre-classification output |
+| REQ-NF-002 | Test | Benchmark error-path handlers before and after classification, assert no statistically significant latency increase |

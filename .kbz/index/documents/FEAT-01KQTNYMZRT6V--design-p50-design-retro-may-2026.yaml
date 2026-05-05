@@ -1,0 +1,158 @@
+document_id: FEAT-01KQTNYMZRT6V/design-p50-design-retro-may-2026
+document_path: work/P50-retro-may-2026/P50-design-retro-may-2026.md
+content_hash: c5465ee51db57a5892821b0f91901903e813f29b0bafd584b06b0a1f4ad455b7
+indexed_at: 2026-05-04T23:48:37.304122Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Retrospective Fixes — May 2026'
+      byte_offset: 0
+      byte_count: 9669
+      word_count: 1333
+      content_hash: c5465ee51db57a5892821b0f91901903e813f29b0bafd584b06b0a1f4ad455b7
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 185
+          byte_count: 630
+          word_count: 87
+          content_hash: 0c590810646b3d185b2b341123db0b0ce3fa059e10096c4aab1f36c04b0a441d
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 815
+          byte_count: 791
+          word_count: 117
+          content_hash: c1ca0aaf6ac79a1bb4e1b1ee8cfdf639197bb537f94cac4f840ecbbd445acd80
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 1606
+          byte_count: 5175
+          word_count: 688
+          content_hash: 56cf52af7e8f72df647566f108368c07e1a5c4a3010ce94cbaf2ee30c1ad8457
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Feature 1: Error classification in MCP handlers'
+              byte_offset: 1617
+              byte_count: 1432
+              word_count: 192
+              content_hash: ee7e32417593a5f98404fa07e3218c584b5beb49cb87328feceeed8f0cef7414
+            - path: 1.3.2
+              level: 3
+              title: 'Feature 2: Decompose proposal quality'
+              byte_offset: 3049
+              byte_count: 1491
+              word_count: 207
+              content_hash: fd3378ac2d04a4b55fb43eadb612dc28add689ce08c6bb59dac7fdc9a4c53d08
+            - path: 1.3.3
+              level: 3
+              title: 'Feature 3: Document path tool'
+              byte_offset: 4540
+              byte_count: 973
+              word_count: 120
+              content_hash: 96b3b36c0321cc621766237c2d1b9042e9901feb38e0fc079d21eff8340e4ce4
+            - path: 1.3.4
+              level: 3
+              title: 'Feature 4: Commit discipline prompts'
+              byte_offset: 5513
+              byte_count: 1268
+              word_count: 167
+              content_hash: c8252c578b2dd072fbb8152888be9a1ab99188cc57ba79961e46ec42470945b3
+        - path: "1.4"
+          level: 2
+          title: What's Not Included
+          byte_offset: 6781
+          byte_count: 754
+          word_count: 110
+          content_hash: 28eb64793dd742ccd6eebb19cb9a05e5e9e836d81791171524b8dfe8a17a541f
+        - path: "1.5"
+          level: 2
+          title: Dependencies
+          byte_offset: 7535
+          byte_count: 319
+          word_count: 45
+          content_hash: c8b31af793bea52d6e8e46f42ae3cf1fcdca16e09ddb23a4909091835bbd2928
+        - path: "1.6"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 7854
+          byte_count: 1230
+          word_count: 174
+          content_hash: 603ff0c104cf47cb423f9fa73cd1af4c309d196c14443f85f90622f4d1358a67
+          children:
+            - path: 1.6.1
+              level: 3
+              title: One big "fix everything" feature vs. four focused features
+              byte_offset: 7882
+              byte_count: 371
+              word_count: 51
+              content_hash: 3b733bfc7ba3f156ce0533e10fe1207eca005d91b05a98c0e4a1faad6bb3d221
+            - path: 1.6.2
+              level: 3
+              title: Adding a `prompt` document type
+              byte_offset: 8253
+              byte_count: 412
+              word_count: 63
+              content_hash: 8557db637c6a2bba4bb713c3432266ece62d972f66ee19c41740090db46d9a0c
+            - path: 1.6.3
+              level: 3
+              title: Auto-commit vs. prompt-to-commit
+              byte_offset: 8665
+              byte_count: 419
+              word_count: 57
+              content_hash: 32b1b6b45d76bc0e871e1ba815370428018ddfb22288efe56a705a4c4a703ce9
+        - path: "1.7"
+          level: 2
+          title: Open Questions
+          byte_offset: 9084
+          byte_count: 585
+          word_count: 94
+          content_hash: f067a7f9bdd076a695f9be4397a6fe898a73ec8260761fa568d65d8d42ae1e33
+entity_refs:
+    - entity_id: P50-retro-may-2026
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 57
+    - entity_id: P50-retro-may-2026
+      entity_type: plan
+      section_path: 1.3.3
+      byte_offset: 4668
+    - entity_id: P50-design-retro-may-2026
+      entity_type: plan
+      section_path: 1.3.3
+      byte_offset: 4717
+cross_doc_links:
+    - target_path: ../_project/report-2026-05-04.md
+      link_text: 'Retrospective: Project — May 2026'
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.3
+    - target_path: work/{plan-slug}/{plan-id}-{type}-{topic}.md
+      link_text: work/{plan-slug}/{plan-id}-{type}-{topic}.md
+      section_path: 1.3.3
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.3.4
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.3.4
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: alternative
+      confidence: high
+    - section_path: "1.7"
+      role: question
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-04T23:48:37.803311Z
+classified: false

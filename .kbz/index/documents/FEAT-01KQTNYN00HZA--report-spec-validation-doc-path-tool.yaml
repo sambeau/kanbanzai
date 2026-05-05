@@ -1,0 +1,146 @@
+document_id: FEAT-01KQTNYN00HZA/report-spec-validation-doc-path-tool
+document_path: work/_project/spec-validation-doc-path-tool.md
+content_hash: 8f73f08b2985aa5a1417ae68cbdc9501e7ad31fad3da18c182313bbc92077a43
+indexed_at: 2026-05-04T23:55:04.173733Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Spec Validation Report: Document Path Tool'
+      byte_offset: 0
+      byte_count: 3479
+      word_count: 470
+      content_hash: 8f73f08b2985aa5a1417ae68cbdc9501e7ad31fad3da18c182313bbc92077a43
+      children:
+        - path: "1.1"
+          level: 2
+          title: 'Verdict: pass_with_notes'
+          byte_offset: 229
+          byte_count: 98
+          word_count: 12
+          content_hash: bb4ac7a29145567f3db18f43fa8630f07bb45b38f9b4361663bac09d77f158cd
+        - path: "1.2"
+          level: 2
+          title: Summary
+          byte_offset: 327
+          byte_count: 318
+          word_count: 51
+          content_hash: ea50010ab6f5d854bbbe4793f11f2d11d0ae163cb087702b55da08f030cbf09c
+        - path: "1.3"
+          level: 2
+          title: Blocking Checks — All Passed (6/6)
+          byte_offset: 645
+          byte_count: 1696
+          word_count: 240
+          content_hash: e062e309795ce6f2463bfa9faf646aa3d86b82015a29722778e713aa01a3a7a7
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'S1 — Required Sections Present: PASS'
+              byte_offset: 686
+              byte_count: 139
+              word_count: 17
+              content_hash: 6c519c121af13de3920be8103cc878cc06e75f48ecacd41e4a7797618dc60fa8
+            - path: 1.3.2
+              level: 3
+              title: 'S2 — Design Document Reference: PASS'
+              byte_offset: 825
+              byte_count: 105
+              word_count: 17
+              content_hash: 6aa73e89ea64495bddcf816d014891a47fba1e289a607e60f856dd1ba9c83f36
+            - path: 1.3.3
+              level: 3
+              title: 'S3 — Unique REQ-IDs: PASS'
+              byte_offset: 930
+              byte_count: 145
+              word_count: 20
+              content_hash: 7c51c4ee6025491f1b4856378ddfb89b8f90c762595cfe82f912dad05a206ebf
+            - path: 1.3.4
+              level: 3
+              title: 'S4 — Verification Plan Coverage: PASS'
+              byte_offset: 1075
+              byte_count: 205
+              word_count: 28
+              content_hash: 4cf2ab62bc06e7df26bb8dc1447ec14abfb8e054d46a56bcbcf984279506ba9f
+            - path: 1.3.5
+              level: 3
+              title: 'S5 — Testable Acceptance Criteria: PASS'
+              byte_offset: 1280
+              byte_count: 745
+              word_count: 102
+              content_hash: 2e2e7ab5f01de2941e8e557c74c6076d360ed904bc458ed5a079e35244fa1177
+            - path: 1.3.6
+              level: 3
+              title: 'S10 — Non-Functional Measurable Thresholds: PASS'
+              byte_offset: 2025
+              byte_count: 316
+              word_count: 49
+              content_hash: 1d844dae731f33eec90876a0f603cbb56bcac0aea0a4a690328337002e264b65
+        - path: "1.4"
+          level: 2
+          title: Non-Blocking Findings (1/4)
+          byte_offset: 2341
+          byte_count: 1138
+          word_count: 152
+          content_hash: 08129aba254d636706011e9d6322c19120030a8b94e31178d3de6354a867d34a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'S6 — Checkbox Format: FINDING (non-blocking)'
+              byte_offset: 2373
+              byte_count: 211
+              word_count: 27
+              content_hash: 961f795d5457a026dde7bf01ebfdfe5c763531738be9c3e4d65348ad40c1643b
+            - path: 1.4.2
+              level: 3
+              title: 'S7 — No Implementation Instructions: PASS'
+              byte_offset: 2584
+              byte_count: 426
+              word_count: 55
+              content_hash: 1375648f00d540d193aeb59f55fc9930a0e3a6a9cb556e3aff09ecd37c16bb2f
+            - path: 1.4.3
+              level: 3
+              title: 'S8 — Scope States Both Directions: PASS'
+              byte_offset: 3010
+              byte_count: 172
+              word_count: 24
+              content_hash: 42af96feb97ba2d2def4348c1253f0e42b376ceb96f9ab99e78a121f41cf26b2
+            - path: 1.4.4
+              level: 3
+              title: 'S9 — No Orphaned Requirements: PASS'
+              byte_offset: 3182
+              byte_count: 297
+              word_count: 42
+              content_hash: 246e588316111d4a1621e6259675a786f4991269a2b4730701b5eb538b1ce6fc
+entity_refs:
+    - entity_id: FEAT-01KQTNYN00HZA
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 89
+    - entity_id: P50-retro-may-2026
+      entity_type: plan
+      section_path: "1.2"
+      byte_offset: 390
+    - entity_id: P50-spec-doc-path-tool
+      entity_type: plan
+      section_path: "1.2"
+      byte_offset: 409
+cross_doc_links:
+    - target_path: work/P50-retro-may-2026/P50-spec-doc-path-tool.md
+      link_text: work/P50-retro-may-2026/P50-spec-doc-path-tool.md
+      section_path: "1.2"
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.5
+      role: requirement
+      confidence: high
+    - section_path: 1.4.3
+      role: constraint
+      confidence: high
+    - section_path: 1.4.4
+      role: requirement
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-04T23:55:04.980703Z
+classified: false

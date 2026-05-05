@@ -1,0 +1,146 @@
+document_id: FEAT-01KQTNYN01ZF8/report-spec-validation-commit-discipline-prompts
+document_path: work/_project/spec-validation-commit-discipline-prompts.md
+content_hash: 385ba58d6dbba5cd345e832ee0ab486c53b9b72b509cd0f489831a6879ac5b3f
+indexed_at: 2026-05-04T23:55:04.1734Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Spec Validation Report: Commit Discipline Prompts'
+      byte_offset: 0
+      byte_count: 3836
+      word_count: 508
+      content_hash: 385ba58d6dbba5cd345e832ee0ab486c53b9b72b509cd0f489831a6879ac5b3f
+      children:
+        - path: "1.1"
+          level: 2
+          title: 'Verdict: pass_with_notes'
+          byte_offset: 248
+          byte_count: 98
+          word_count: 12
+          content_hash: bb4ac7a29145567f3db18f43fa8630f07bb45b38f9b4361663bac09d77f158cd
+        - path: "1.2"
+          level: 2
+          title: Summary
+          byte_offset: 346
+          byte_count: 330
+          word_count: 51
+          content_hash: ad8f56c51bb053ea6ba5ab7056baa2c10ef1c7cbbc0c771973e30201e3623c38
+        - path: "1.3"
+          level: 2
+          title: Blocking Checks — All Passed (6/6)
+          byte_offset: 676
+          byte_count: 1838
+          word_count: 252
+          content_hash: d0f943a60da4c31a5742b875487183f6ad39aa58b6575959a8cdf34f3cf115b7
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'S1 — Required Sections Present: PASS'
+              byte_offset: 717
+              byte_count: 139
+              word_count: 17
+              content_hash: 7592a699ef315d12cee972001893e53def99256fe4d7a0862cd4d2fea8fa6733
+            - path: 1.3.2
+              level: 3
+              title: 'S2 — Design Document Reference: PASS'
+              byte_offset: 856
+              byte_count: 105
+              word_count: 17
+              content_hash: 6aa73e89ea64495bddcf816d014891a47fba1e289a607e60f856dd1ba9c83f36
+            - path: 1.3.3
+              level: 3
+              title: 'S3 — Unique REQ-IDs: PASS'
+              byte_offset: 961
+              byte_count: 145
+              word_count: 20
+              content_hash: c0b1cf361e389510e4580108d91b4c9694f7e6e676a210551f0e0c1a53c5fdc9
+            - path: 1.3.4
+              level: 3
+              title: 'S4 — Verification Plan Coverage: PASS'
+              byte_offset: 1106
+              byte_count: 205
+              word_count: 28
+              content_hash: 7ed5acbc784f2df687b44e3dbb30ce85f1b46c78e17b3fa7ad9189b568e08484
+            - path: 1.3.5
+              level: 3
+              title: 'S5 — Testable Acceptance Criteria: PASS'
+              byte_offset: 1311
+              byte_count: 914
+              word_count: 123
+              content_hash: 49f04c0be1b9d0d5f187c716c0d62b76d6601b06cbe4b02a1c1aa97aba825be4
+            - path: 1.3.6
+              level: 3
+              title: 'S10 — Non-Functional Measurable Thresholds: PASS'
+              byte_offset: 2225
+              byte_count: 289
+              word_count: 40
+              content_hash: 6ce86a6916de3de6ce3cada61ff24ed258d71ff9a60151021369854eb15e4870
+        - path: "1.4"
+          level: 2
+          title: Non-Blocking Findings (1/4)
+          byte_offset: 2514
+          byte_count: 1322
+          word_count: 178
+          content_hash: 2e150449445f739c150e818f8dedae8bd76a32ddf8f98c2807a8d02e44e86a6f
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'S6 — Checkbox Format: FINDING (non-blocking)'
+              byte_offset: 2546
+              byte_count: 170
+              word_count: 27
+              content_hash: f6f3427af9440920630785ba041bd27458fef6698b83727d26abe178fc86c992
+            - path: 1.4.2
+              level: 3
+              title: 'S7 — No Implementation Instructions: PASS'
+              byte_offset: 2716
+              byte_count: 552
+              word_count: 68
+              content_hash: 397371f15ad85e1934d9a6c742b3005cef50d7b2c5cbfcb4a372b1a979265bc6
+            - path: 1.4.3
+              level: 3
+              title: 'S8 — Scope States Both Directions: PASS'
+              byte_offset: 3268
+              byte_count: 172
+              word_count: 24
+              content_hash: c92b0a3960d467d094491ce05131fb5ab4ffeced64d53fa85fa4541856ce173f
+            - path: 1.4.4
+              level: 3
+              title: 'S9 — No Orphaned Requirements: PASS'
+              byte_offset: 3440
+              byte_count: 396
+              word_count: 55
+              content_hash: bd2302605582a1102e981fe39f4967c1eb84affd35a09acab11cee141a3f778f
+entity_refs:
+    - entity_id: FEAT-01KQTNYN01ZF8
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 96
+    - entity_id: P50-retro-may-2026
+      entity_type: plan
+      section_path: "1.2"
+      byte_offset: 409
+    - entity_id: P50-spec-commit-discipline-prompts
+      entity_type: plan
+      section_path: "1.2"
+      byte_offset: 428
+cross_doc_links:
+    - target_path: work/P50-retro-may-2026/P50-spec-commit-discipline-prompts.md
+      link_text: work/P50-retro-may-2026/P50-spec-commit-discipline-prompts.md
+      section_path: "1.2"
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.5
+      role: requirement
+      confidence: high
+    - section_path: 1.4.3
+      role: constraint
+      confidence: high
+    - section_path: 1.4.4
+      role: requirement
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-04T23:55:04.913792Z
+classified: false
