@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "FIXED: The doc-intel access tracking no longer dirties the working tree. touchDocumentAccess was writing access_count/last_accessed_at to .kbz/index/documents/*.yaml on every read operation (GetOutline, GetSection, GetDocumentIndex, FindByEntity, FindByConcept, FindByRole, Search). This caused every read-only session to leave dirty YAML files in git status. The function is now a no-op. The access tracking feature (FR-012 through FR-015) is documented but the cost of dirty-tree noise exceeded its diagnostic value. If access tracking is needed in the future, use volatile counters or a separate SQLite table that does not pollute versioned YAML."
+created: "2026-05-05T12:38:01Z"
+created_by: sambeau
+id: KE-01KQW2AD1ST0X
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - doc-intel
+  - noise
+  - git-cleanliness
+  - fixed
+tier: 3
+topic: doc-intel-access-tracking-fixed
+ttl_days: 30
+updated: "2026-05-05T12:38:01Z"
+use_count: 0

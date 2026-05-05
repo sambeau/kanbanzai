@@ -1,5 +1,5 @@
-canonical_content_hash: 08d17abedf7b6f4d24ba90be8882a570d1a9ba820d13e021ff1e60f94c773526
-content_hash: 3b76324c86d8f7716bc0803bf8e67acc16df120463a5b5d99f965358b1306ec5
+canonical_content_hash: 9c3858b7cc10d1788ef2c3e09026e6bb8d2425d53784e891b330556eb6eaf078
+content_hash: ba7e9b8bb5ac6fa60cf4ce6375cecbcecef86fa626d4a1030afc7cc80f9597d4
 created: "2026-05-05T12:32:24Z"
 created_by: sambeau
 id: PROJECT/design-p54-design-review-remediation-workflow
@@ -8,4 +8,4 @@ path: work/P54-review-remediation-workflow/P54-design-review-remediation-workflo
 status: draft
 title: "Design: Review Remediation Workflow"
 type: design
-updated: "2026-05-05T12:32:24Z"
+updated: "2026-05-05T12:32:44Z"

@@ -4,6 +4,10 @@
 **Status:** Shaping  
 **Parent:** P50 (Retrospective Fixes — May 2026)
 
+## Overview
+
+P54 defines the missing workflow bridge between a failed formal review and executable remediation work. It standardizes how blocking findings become a remediation dev-plan, tasks, verification evidence, and a re-review report without weakening the review gate.
+
 ## Related Work
 
 - `work/P50-retro-may-2026/P50-report-batch-conformance-review.md` — demonstrated the current manual path from failed review to remediation planning, including BF-1 through BF-10.
@@ -26,6 +30,22 @@ Kanbanzai has a strong formal review process, but a failed review currently leav
 This is a recurring workflow, not a P50-only problem. P40 also produced a plan-level review with blocking delivery gaps and a required action list. Without a first-class remediation workflow, each failed review risks becoming an unstructured conversation instead of a traceable implementation path.
 
 The goal is to make failed reviews actionable without weakening the review gate: every blocking finding should map to a remediation task, every remediation task should trace back to a finding, and approval should require a re-review report showing the finding is resolved.
+
+## Goals and Non-Goals
+
+Goals:
+
+1. Convert failed review reports into structured remediation dev-plans.
+2. Preserve traceability from each blocking finding to remediation task(s), verification, and re-review evidence.
+3. Clarify where remediation work belongs: original feature, batch/plan-level remediation, or a new cross-cutting plan.
+4. Keep original review reports immutable and record resolution in re-review artifacts.
+
+Non-goals:
+
+- Not replacing the existing review-code or review-plan skills.
+- Not auto-fixing review findings.
+- Not duplicating P53's status, dirty-work attribution, or scope inspection infrastructure.
+- Not changing the implementation task lifecycle beyond defining how remediation work should be planned and re-reviewed.
 
 ## Design
 

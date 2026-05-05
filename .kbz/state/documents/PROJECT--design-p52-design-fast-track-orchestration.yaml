@@ -1,5 +1,5 @@
-canonical_content_hash: 999a4fded3e1ab1b0adbb36ac840d69747e4eb35fc9475e7d8fbfc06bd7b4f5c
-content_hash: 2c759a7ed2616328b7122f206335cfb9b6be7da4d1ca24c2b7005feaebb29c8b
+canonical_content_hash: 45b1fd550ab9ed5fe56d01a6e094658fd7ed7e159f0c4ba038f4b12fe0662fef
+content_hash: 87a8eac94510ebaf5c7977bf3bc269a57419f468c5475e78e60cd4cfb8b8a6d4
 created: "2026-05-05T11:12:44Z"
 created_by: sambeau
 id: PROJECT/design-p52-design-fast-track-orchestration
@@ -7,4 +7,4 @@ path: work/P52-fast-track-orchestration/P52-design-fast-track-orchestration.md
 status: draft
 title: "Design: Fast-Track Orchestration Profile"
 type: design
-updated: "2026-05-05T11:12:44Z"
+updated: "2026-05-05T12:32:50Z"
