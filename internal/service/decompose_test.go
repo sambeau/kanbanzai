@@ -3477,7 +3477,7 @@ func TestPairedTestTasks_DependsOnCorrectness(t *testing.T) {
 			{text: "errors are handled", section: "Errors", parentL2: "Errors"},
 		},
 	}
-	proposal, _ := generateProposal(spec, "feat", "", 0)
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
 
 	// Build a set of all impl task slugs (non -tests).
 	implSlugs := make(map[string]bool)
@@ -3530,7 +3530,7 @@ func TestPairedTestTasks_GroupedDependsOnCorrectness(t *testing.T) {
 			{text: "password reset works", section: "Auth", parentL2: "Auth"},
 		},
 	}
-	proposal, _ := generateProposal(spec, "feat", "", 0)
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
 
 	if len(proposal.Tasks) != 2 {
 		t.Fatalf("task count = %d, want 2 (1 grouped impl + 1 paired test)", len(proposal.Tasks))
@@ -3657,7 +3657,7 @@ func TestPairedTestTasks_TestOnlyAC_SingleTask(t *testing.T) {
 					{text: tc.text, section: "S", parentL2: "S"},
 				},
 			}
-			proposal, _ := generateProposal(spec, "feat", "", 0)
+			proposal, _ := generateProposal(spec, "feat", "", 0, true)
 
 			// Should have exactly 1 task (impl only, no paired test).
 			if len(proposal.Tasks) != 1 {
@@ -3691,7 +3691,7 @@ func TestDependencyGraph_CompleteNodesOnly(t *testing.T) {
 			{text: "user can log out", section: "Logout", parentL2: "Logout"},
 		},
 	}
-	proposal, _ := generateProposal(spec, "feat", "", 0)
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
 
 	// Build a set of all task slugs in the proposal.
 	allSlugs := make(map[string]bool)
@@ -3735,7 +3735,7 @@ func TestPairedTestTasks_OptOutFlagNotYetImplemented(t *testing.T) {
 			{text: "user can log in", section: "Login", parentL2: "Login"},
 		},
 	}
-	proposal, _ := generateProposal(spec, "feat", "", 0)
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
 
 	// Default behavior: 2 ACs → 4 tasks (2 impl + 2 test).
 	if len(proposal.Tasks) != 4 {

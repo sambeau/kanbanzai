@@ -699,30 +699,20 @@ func (s *IntelligenceService) GetClassifications(docID string) ([]docint.Classif
 	return entries, nil
 }
 
-// touchDocumentAccess increments AccessCount and updates LastAccessedAt for
-// the given document. If sectionPath is non-empty, also increments the
-// SectionAccess entry for that path. Errors are silently absorbed (NFR-002).
-// Must be called in a goroutine for non-blocking behaviour (NFR-001).
+// touchDocumentAccess is intentionally a no-op.
+//
+// Previously this function incremented AccessCount and wrote the index YAML
+// file on every read operation (GetOutline, GetSection, GetDocumentIndex,
+// FindByEntity, FindByConcept, FindByRole, Search). This caused every
+// read-only session to leave dirty .kbz/index/documents/*.yaml files in
+// the working tree — a constant source of noise in git status.
+//
+// The access-tracking feature is documented (FR-012 through FR-015) but
+// the cost of dirty-tree noise exceeds the diagnostic value. If access
+// tracking is needed in the future, it should use a volatile counter or
+// a separate SQLite tracking table that does not pollute versioned YAML.
 func (s *IntelligenceService) touchDocumentAccess(docID string, sectionPath string) {
-	index, err := s.indexStore.LoadDocumentIndex(docID)
-	if err != nil {
-		return
-	}
-	now := time.Now().UTC()
-	index.AccessCount++
-	index.LastAccessedAt = &now
-
-	if sectionPath != "" {
-		if index.SectionAccess == nil {
-			index.SectionAccess = make(map[string]docint.SectionAccessInfo)
-		}
-		info := index.SectionAccess[sectionPath]
-		info.AccessCount++
-		info.LastAccessedAt = &now
-		index.SectionAccess[sectionPath] = info
-	}
-
-	s.indexStore.SaveDocumentIndex(index) //nolint:errcheck // best-effort
+	// no-op
 }
 
 // touchDistinctDocuments increments access counters for every distinct
