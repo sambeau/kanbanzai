@@ -5,8 +5,6 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"os"
-	"path/filepath"
 
 	"sort"
 	"strings"
@@ -15,7 +13,6 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"github.com/sambeau/kanbanzai/internal/actionlog"
 	"github.com/sambeau/kanbanzai/internal/checkpoint"
 	"github.com/sambeau/kanbanzai/internal/config"
 	"github.com/sambeau/kanbanzai/internal/gate"
@@ -47,7 +44,7 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		mcp.WithString("type", mcp.Description("Entity type: batch, feature, task, bug, decision, strategic-plan")),
 		mcp.WithString("id", mcp.Description("Entity ID")),
 		mcp.WithString("status", mcp.Description("Target status (transition) or status filter (list)")),
-		mcp.WithString("parent", mcp.Description("Parent plan ID for batches or features (list filter)")),
+		mcp.WithString("parent", mcp.Description("Parent batch/plan ID for features (list filter)")),
 		mcp.WithArray("tags", mcp.WithStringItems(), mcp.Description("Tag filter (list) or tags to set (create/update)")),
 		mcp.WithArray("entities", mcp.Items(map[string]any{"type": "object"}), mcp.Description("Batch create: array of entity objects")),
 		mcp.WithString("slug", mcp.Description("URL-friendly identifier")),
@@ -70,8 +67,6 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 		mcp.WithBoolean("advance", mcp.Description("When true, advance a feature through multiple lifecycle states")),
 		mcp.WithBoolean("override", mcp.Description("Bypass a failing stage gate prerequisite")),
 		mcp.WithString("override_reason", mcp.Description("Required when override is true")),
-		mcp.WithString("verification", mcp.Description("Verification criteria or description")),
-		mcp.WithString("verification_status", mcp.Description("Verification status: passed or failed")),
 	)
 
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
@@ -81,8 +76,6 @@ func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 			"list":       entityListAction(entitySvc),
 			"update":     entityUpdateAction(entitySvc),
 			"transition": entityTransitionAction(entitySvc, docSvc, gateRouter, checkpointStore, requiresHumanReview),
-			"bootstrap":  entityBootstrapAction(entitySvc, docSvc, gateRouter, checkpointStore, requiresHumanReview),
-			"close-out":  entityCloseOutAction(entitySvc, docSvc),
 		})
 	})
 
@@ -143,7 +136,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 		result, err = entitySvc.CreateFeature(service.CreateFeatureInput{
 			Slug: entityArgStr(args, "slug"), Parent: entityArgStr(args, "parent"),
 			Summary: entityArgStr(args, "summary"), Design: entityArgStr(args, "design"),
-			Tags: entityArgStringSlice(args, "tags"), Tier: entityArgStr(args, "tier"), CreatedBy: createdBy, Name: name,
+			Tags: entityArgStringSlice(args, "tags"), CreatedBy: createdBy, Name: name,
 		})
 	case "batch", "plan":
 		result, err = entitySvc.CreateBatch(service.CreateBatchInput{
@@ -168,7 +161,6 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 			ReportedBy: entityArgStr(args, "reported_by"), Observed: entityArgStr(args, "observed"),
 			Expected: entityArgStr(args, "expected"), Severity: entityArgStr(args, "severity"),
 			Priority: entityArgStr(args, "priority"), Type: entityArgStr(args, "bug_type"),
-			Tags: entityArgStringSlice(args, "tags"), Tier: entityArgStr(args, "tier"),
 		})
 	case "decision":
 		result, err = entitySvc.CreateDecision(service.CreateDecisionInput{
@@ -326,15 +318,13 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 			if err != nil {
 				return nil, fmt.Errorf("cannot list strategic plans: %w", err)
 			}
-			actionlog.AnnotateEntry(ctx, actionlog.AnnotationResultCount, fmt.Sprintf("%d", len(plans)))
 			return entityListResponse(entityType, entitySummaries(plans)), nil
 		}
 		if entityType == "batch" || entityType == "plan" {
-			batches, err := entitySvc.ListBatches(service.BatchFilters{Status: statusFilter, Parent: parentFilter, Tags: tagsFilter})
+			batches, err := entitySvc.ListBatches(service.BatchFilters{Status: statusFilter, Tags: tagsFilter})
 			if err != nil {
 				return nil, fmt.Errorf("cannot list batches: %w", err)
 			}
-			actionlog.AnnotateEntry(ctx, actionlog.AnnotationResultCount, fmt.Sprintf("%d", len(batches)))
 			return entityListResponse(entityType, entitySummaries(batches)), nil
 		}
 		results, err := entitySvc.ListEntitiesFiltered(service.ListFilteredInput{
@@ -344,7 +334,6 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 		if err != nil {
 			return nil, fmt.Errorf("cannot list %s entities: %w", entityType, err)
 		}
-		actionlog.AnnotateEntry(ctx, actionlog.AnnotationResultCount, fmt.Sprintf("%d", len(results)))
 		return entityListResponse(entityType, entitySummaries(results)), nil
 	}
 }
@@ -416,12 +405,6 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 			entityType = "strategic-plan"
 		}
 		if entityType == "strategic-plan" {
-			if _, has := args["verification"]; has {
-				return nil, fmt.Errorf("verification is not supported for strategic plans")
-			}
-			if _, has := args["verification_status"]; has {
-				return nil, fmt.Errorf("verification_status is not supported for strategic plans")
-			}
 			_, _, slug := model.ParseBatchID(entityID)
 			input := service.UpdateStrategicPlanInput{ID: entityID, Slug: slug}
 			if _, has := args["name"]; has {
@@ -458,12 +441,6 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 			return map[string]any{"entity": entityFullRecord(r.ID, r.Type, r.Slug, r.State)}, nil
 		}
 		if entityType == "batch" {
-			if _, has := args["verification"]; has {
-				return nil, fmt.Errorf("verification is not supported for batches")
-			}
-			if _, has := args["verification_status"]; has {
-				return nil, fmt.Errorf("verification_status is not supported for batches")
-			}
 			_, _, slug := model.ParseBatchID(entityID)
 			input := service.UpdateBatchInput{ID: entityID, Slug: slug}
 			if _, has := args["name"]; has {
@@ -488,7 +465,7 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 			return map[string]any{"entity": entityFullRecord(r.ID, r.Type, r.Slug, r.State)}, nil
 		}
 		fields := make(map[string]string)
-		for _, key := range []string{"slug", "summary", "name", "design", "rationale", "observed", "expected", "severity", "priority", "verification", "verification_status"} {
+		for _, key := range []string{"slug", "summary", "name", "design", "rationale", "observed", "expected", "severity", "priority"} {
 			if v, exists := args[key]; exists {
 				if s, ok := v.(string); ok && strings.TrimSpace(s) != "" {
 					fields[key] = strings.TrimSpace(s)
@@ -498,11 +475,6 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 		if nameVal, hasName := fields["name"]; hasName {
 			if _, err := validate.ValidateName(nameVal); err != nil {
 				return nil, fmt.Errorf("invalid name: %w", err)
-			}
-		}
-		if vs, hasVS := fields["verification_status"]; hasVS {
-			if vs != "passed" && vs != "failed" {
-				return nil, fmt.Errorf("verification_status must be 'passed' or 'failed', got %q", vs)
 			}
 		}
 		var listFields map[string][]string
@@ -622,24 +594,6 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			}
 			feature := featureFromState(getR.ID, getR.Slug, getR.State)
 			currentStatus := string(feature.Status)
-
-			// Transition validator check (exit-stage validation before gate check).
-			tvResult := map[string]any{"stage": currentStatus}
-			if tvErr := checkTransitionValidator(gateRouter, feature, currentStatus, newStatus, override, docSvc, entitySvc); tvErr != nil {
-				if !override {
-					return map[string]any{
-						"error":                tvErr.Error(),
-						"transition_validator": map[string]any{"stage": currentStatus, "passed": false, "blocking": true},
-					}, nil
-				}
-				tvResult["passed"] = false
-				tvResult["blocking"] = true
-				tvResult["overridden"] = true
-			} else {
-				tvResult["passed"] = true
-				tvResult["blocking"] = false
-			}
-
 			if isPhase2Transition(currentStatus, newStatus) {
 				var gateResult service.GateResult
 				overridePolicy := "agent"
@@ -695,17 +649,13 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 						feature.Overrides = append(feature.Overrides, model.OverrideRecord{
 							FromStatus: currentStatus, ToStatus: newStatus, Reason: overrideReason, Timestamp: time.Now(), CheckpointID: chkR.CheckpointID,
 						})
-						if err := entitySvc.PersistFeatureOverrides(feature.ID, feature.Slug, feature.Overrides); err != nil {
-							log.Printf("[entity] WARNING: failed to persist feature overrides for %s: %v", feature.ID, err)
-						}
+						entitySvc.PersistFeatureOverrides(feature.ID, feature.Slug, feature.Overrides)
 						return map[string]any{"checkpoint_created": true, "checkpoint_id": chkR.CheckpointID, "message": chkR.Message, "feature_id": entityID}, nil
 					}
 					feature.Overrides = append(feature.Overrides, model.OverrideRecord{
 						FromStatus: currentStatus, ToStatus: newStatus, Reason: overrideReason, Timestamp: time.Now(),
 					})
-					if err := entitySvc.PersistFeatureOverrides(feature.ID, feature.Slug, feature.Overrides); err != nil {
-						log.Printf("[entity] WARNING: failed to persist feature overrides for %s: %v", feature.ID, err)
-					}
+					entitySvc.PersistFeatureOverrides(feature.ID, feature.Slug, feature.Overrides)
 				}
 			}
 		}
@@ -844,7 +794,7 @@ func featureFromState(entityID, slug string, state map[string]any) *model.Featur
 	return &model.Feature{
 		ID: entityID, Slug: slug, Parent: entityStateStr(state, "parent"),
 		Status: model.FeatureStatus(entityStateStr(state, "status")), ReviewCycle: rc,
-		Tier: entityStateStr(state, "tier"), BlockedReason: br, Design: entityStateStr(state, "design"), Spec: entityStateStr(state, "spec"),
+		BlockedReason: br, Design: entityStateStr(state, "design"), Spec: entityStateStr(state, "spec"),
 		DevPlan: entityStateStr(state, "dev_plan"), Overrides: overridesFromState(state),
 	}
 }
@@ -914,87 +864,6 @@ var phase2Statuses = map[string]bool{
 }
 
 func isPhase2Transition(from, to string) bool { return phase2Statuses[from] && phase2Statuses[to] }
-
-// checkTransitionValidator runs the transition validator for the from-stage if one is
-// configured. Returns nil if validation passes or no validator is configured.
-// Returns a *validate.TransitionValidatorError on blocking failure.
-func checkTransitionValidator(gateRouter *gate.GateRouter, feature *model.Feature, fromStatus, toStatus string, override bool, docSvc *service.DocumentService, entitySvc *service.EntityService) *validate.TransitionValidatorError {
-	if gateRouter == nil {
-		return nil
-	}
-
-	// Create a binding lookup from the gate router's cache.
-	cache := gate.GetRegistryCache(gateRouter)
-	if cache == nil {
-		return nil
-	}
-
-	lookup := &validate.RegistryCacheBindingLookup{Cache: cache}
-	dispatcher := validate.NewTransitionValidatorDispatcher(lookup)
-
-	// Wire the dispatch service for auto-mode validation (BLOCK-1 fix).
-	// SpawnAgentDispatcher generates validator handoff prompts for the
-	// orchestrator to pass to spawn_agent. Without this wiring, auto gate
-	// modes always take the AUTO_PLACEHOLDER pass path.
-	if docSvc != nil {
-		dispatchSvc := validate.NewSpawnAgentDispatcher(func(reportPath, reportContent, docType, title, featureID string) (string, error) {
-			repoRoot := docSvc.RepoRoot()
-			fullPath := filepath.Join(repoRoot, reportPath)
-			if err := os.MkdirAll(filepath.Dir(fullPath), 0o755); err != nil {
-				return "", fmt.Errorf("creating report dir: %w", err)
-			}
-			if err := os.WriteFile(fullPath, []byte(reportContent), 0o644); err != nil {
-				return "", fmt.Errorf("writing report: %w", err)
-			}
-			docResult, err := docSvc.SubmitDocument(service.SubmitDocumentInput{
-				Path:      reportPath,
-				Type:      docType,
-				Title:     title,
-				Owner:     featureID,
-				CreatedBy: "system",
-			})
-			if err != nil {
-				return "", fmt.Errorf("registering report: %w", err)
-			}
-			return docResult.ID, nil
-		})
-		dispatcher.WithDispatch(dispatchSvc)
-	}
-
-	input := validate.ValidatorDispatchInput{
-		Feature:    feature,
-		FromStatus: fromStatus,
-		ToStatus:   toStatus,
-		Override:   override,
-		// FilesModified is not yet populated from worktree diffs.
-		// When populated, conditional gates (REQ-TIER-004) evaluate
-		// doc-only vs implementation changes accurately. For now,
-		// conditional gates treat empty file list conservatively.
-	}
-
-	result, err := dispatcher.ValidateTransition(input)
-	if err != nil {
-		// Validation dispatch error — treat as blocking.
-		return &validate.TransitionValidatorError{
-			Stage:   fromStatus,
-			Message: fmt.Sprintf("transition validator error for stage %q: %v", fromStatus, err),
-		}
-	}
-
-	if result == nil {
-		return nil // no validator for this stage, or skipped
-	}
-
-	if !result.Passed && result.BlockingFail {
-		tvErr := validate.BuildTransitionValidatorError(*result)
-		if tErr, ok := tvErr.(*validate.TransitionValidatorError); ok {
-			return tErr
-		}
-		return &validate.TransitionValidatorError{Stage: fromStatus, Message: tvErr.Error()}
-	}
-
-	return nil
-}
 
 func nonTerminalTasksForFeature(featureID string, entitySvc *service.EntityService) []service.TaskStatusPair {
 	tasks, err := entitySvc.List("task")
@@ -1177,185 +1046,4 @@ func entityFullRecord(entityID, entityType, slug string, state map[string]any) m
 	out["slug"] = slug
 	out["entity_ref"] = id.FormatEntityRef(displayID, slug, name)
 	return out
-}
-
-// ─── bootstrap ────────────────────────────────────────────────────────────────
-
-// entityBootstrapAction implements entity(action: "bootstrap", ...).
-// It wraps AdvanceFeatureStatus and enriches the response with structured
-// next_action objects at gate failures and human gates.
-func entityBootstrapAction(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store, requiresHumanReview func() bool) ActionHandler {
-	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
-		SignalMutation(ctx)
-		args, _ := req.Params.Arguments.(map[string]any)
-
-		featureID := id.NormalizeID(entityArgStr(args, "feature_id"))
-		if featureID == "" {
-			featureID = id.NormalizeID(entityArgStr(args, "id"))
-		}
-		if featureID == "" {
-			return nil, fmt.Errorf("Cannot bootstrap: feature_id is missing.\n\nTo resolve:\n  Provide feature_id: entity(action: \"bootstrap\", feature_id: \"FEAT-...\")")
-		}
-
-		resolvedID, resolveErr := resolveShortPlanRef(entitySvc, featureID)
-		if resolveErr != nil {
-			return nil, fmt.Errorf("Cannot resolve entity ID %q: %w", featureID, resolveErr)
-		}
-		featureID = resolvedID
-
-		targetStatus := entityArgStr(args, "target")
-		if targetStatus == "" {
-			targetStatus = "developing"
-		}
-
-		// Delegate to the existing advance logic.
-		result, err := entityAdvanceFeature(ctx, entitySvc, docSvc, featureID, targetStatus, false, "", gateRouter, checkpointStore, requiresHumanReview)
-		if err != nil {
-			return nil, err
-		}
-
-		resp, ok := result.(map[string]any)
-		if !ok {
-			return result, nil
-		}
-
-		// Enrich with structured next_action when stopped.
-		if stoppedReason, hasStopped := resp["stopped_reason"]; hasStopped {
-			stoppedAt, _ := resp["status"].(string)
-			if stoppedAt == "" {
-				stoppedAt, _ = resp["final_status"].(string)
-			}
-
-			var na nextAction
-			reasonStr := fmt.Sprint(stoppedReason)
-			switch {
-			case strings.Contains(reasonStr, "human_gate") || strings.Contains(reasonStr, "human approval"):
-				na = nextActionForHumanGate(stoppedAt)
-			case strings.Contains(reasonStr, "specification") || strings.Contains(reasonStr, "spec"):
-				na = nextActionForMissingDocument("specification", featureID)
-			case strings.Contains(reasonStr, "design"):
-				na = nextActionForMissingDocument("design", featureID)
-			case strings.Contains(reasonStr, "dev-plan") || strings.Contains(reasonStr, "dev plan"):
-				na = nextActionForMissingDocument("dev-plan", featureID)
-			case strings.Contains(reasonStr, "task"):
-				na = nextActionForNonTerminalTasks(featureID)
-			default:
-				na = nextActionForMissingDocument("specification", featureID)
-			}
-
-			resp["stopped_at"] = stoppedAt
-			resp["next_action"] = na
-		}
-
-		return resp, nil
-	}
-}
-
-// ─── close-out ─────────────────────────────────────────────────────────────────
-
-// entityCloseOutAction implements entity(action: "close-out", ...).
-// It verifies all tasks are terminal, checks for an approved review report,
-// advances the feature to done, and triggers parent batch cascade.
-func entityCloseOutAction(entitySvc *service.EntityService, docSvc *service.DocumentService) ActionHandler {
-	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
-		SignalMutation(ctx)
-		args, _ := req.Params.Arguments.(map[string]any)
-
-		featureID := id.NormalizeID(entityArgStr(args, "feature_id"))
-		if featureID == "" {
-			featureID = id.NormalizeID(entityArgStr(args, "id"))
-		}
-		if featureID == "" {
-			return nil, fmt.Errorf("Cannot close out: feature_id is missing.\n\nTo resolve:\n  Provide feature_id: entity(action: \"close-out\", feature_id: \"FEAT-...\")")
-		}
-
-		resolvedID, resolveErr := resolveShortPlanRef(entitySvc, featureID)
-		if resolveErr != nil {
-			return nil, fmt.Errorf("Cannot resolve entity ID %q: %w", featureID, resolveErr)
-		}
-		featureID = resolvedID
-
-		// Verify feature exists and is in reviewing status.
-		feat, err := entitySvc.Get("feature", featureID, "")
-		if err != nil {
-			return nil, fmt.Errorf("Cannot close out: feature %s not found: %w", featureID, err)
-		}
-		featStatus, _ := feat.State["status"].(string)
-		if featStatus != "reviewing" {
-			return map[string]any{
-				"error": fmt.Sprintf("Feature %s is in %q, not reviewing", featureID, featStatus),
-			}, nil
-		}
-
-		// Check all tasks are terminal.
-		nonTerminalCount, countErr := entitySvc.CountNonTerminalTasks(featureID)
-		if countErr != nil {
-			return nil, fmt.Errorf("Cannot close out feature %s: %w", featureID, countErr)
-		}
-		if nonTerminalCount > 0 {
-			return map[string]any{
-				"stopped_at":  "reviewing",
-				"reason":      fmt.Sprintf("%d non-terminal task(s)", nonTerminalCount),
-				"next_action": nextActionForNonTerminalTasks(featureID),
-				"status":      "reviewing",
-			}, nil
-		}
-
-		// Check for an approved review report document.
-		if docSvc != nil {
-			reviewDocs, docErr := docSvc.ListDocuments(service.DocumentFilters{
-				Owner:  featureID,
-				Type:   "report",
-				Status: "approved",
-			})
-			if docErr == nil && len(reviewDocs) == 0 {
-				return map[string]any{
-					"stopped_at":  "reviewing",
-					"reason":      "No approved review report found",
-					"next_action": nextActionForMissingDocument("report", featureID),
-					"status":      "reviewing",
-				}, nil
-			}
-		}
-
-		batchID, _ := feat.State["parent"].(string)
-
-		// Advance feature to done.
-		_, updateErr := entitySvc.UpdateStatus(service.UpdateStatusInput{
-			Type:   "feature",
-			ID:     featureID,
-			Status: "done",
-		})
-		if updateErr != nil {
-			return nil, fmt.Errorf("Cannot close out feature %s: %w", featureID, updateErr)
-		}
-
-		resp := map[string]any{
-			"feature_id": featureID,
-			"status":     "done",
-		}
-
-		// Check parent batch cascade.
-		affected := []map[string]any{
-			{"entity_id": featureID, "entity_type": "feature", "to_status": "done"},
-		}
-		if batchID != "" {
-			if advanced, _ := entitySvc.MaybeAutoAdvancePlan(batchID); advanced {
-				batchFeat, batchErr := entitySvc.Get("batch", batchID, "")
-				batchStatus := ""
-				if batchErr == nil {
-					batchStatus, _ = batchFeat.State["status"].(string)
-				}
-				affected = append(affected, map[string]any{
-					"entity_id":   batchID,
-					"entity_type": "batch",
-					"to_status":   batchStatus,
-				})
-				resp["batch_advanced"] = true
-			}
-		}
-		resp["affected"] = affected
-
-		return resp, nil
-	}
 }
