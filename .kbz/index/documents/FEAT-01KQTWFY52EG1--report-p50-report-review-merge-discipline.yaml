@@ -1,0 +1,93 @@
+document_id: FEAT-01KQTWFY52EG1/report-p50-report-review-merge-discipline
+document_path: work/P50-retro-may-2026/P50-report-review-merge-discipline.md
+content_hash: 2098e0c6ff75525eb1b44b3a8097b76ae001f8257e8258606aca09a0798682e2
+indexed_at: 2026-05-05T12:30:19.844382Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Merge Discipline (F4)'
+      byte_offset: 0
+      byte_count: 2404
+      word_count: 310
+      content_hash: 2098e0c6ff75525eb1b44b3a8097b76ae001f8257e8258606aca09a0798682e2
+      children:
+        - path: "1.1"
+          level: 2
+          title: Background
+          byte_offset: 195
+          byte_count: 240
+          word_count: 39
+          content_hash: 207c4576109850aa581daa09e090f5a149b728081da86dcd66abd32e51f12122
+        - path: "1.2"
+          level: 2
+          title: Findings Status
+          byte_offset: 435
+          byte_count: 1851
+          word_count: 220
+          content_hash: 602ffa982cc37c227edabe85acdb210a6c96cf12c6f6b0b4534fbcb7244b41f9
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'BF-5: F4 transition state machine unenforced → RESOLVED'
+              byte_offset: 455
+              byte_count: 326
+              word_count: 35
+              content_hash: e569e4efb3294dce86161ec587da68d2af18aff7f70b12f9df11d8cd46734205
+            - path: 1.2.2
+              level: 3
+              title: 'BF-6: F4 `executeMerge` bypasses stages → RESOLVED'
+              byte_offset: 781
+              byte_count: 359
+              word_count: 50
+              content_hash: c1c6d73e2f001880d8897dd760e3a0f517c57df3fdbc654a8cbdfe8a4c69b873
+            - path: 1.2.3
+              level: 3
+              title: 'BF-7: F4 worktree ancestry verification missing → RESOLVED'
+              byte_offset: 1140
+              byte_count: 277
+              word_count: 36
+              content_hash: 631a12a24165035d728fa4ccecda9621b8c80d4788ad4bce1cb2312b008d8f72
+            - path: 1.2.4
+              level: 3
+              title: 'BF-8: F4 agents skill missing merge prompt → RESOLVED'
+              byte_offset: 1417
+              byte_count: 286
+              word_count: 36
+              content_hash: deefeef9ad278f038cd905795cdd84c88806e13c87271bd1aa819dd74e1e26f4
+            - path: 1.2.5
+              level: 3
+              title: 'BF-9: F4 missing `needs-rework → developing` → RESOLVED'
+              byte_offset: 1703
+              byte_count: 160
+              word_count: 13
+              content_hash: 67dd680f7897899265e4d0c3cefca1b060be807f67b8a7a390e7e04e00d6714f
+            - path: 1.2.6
+              level: 3
+              title: 'BF-10: F4 `executeMerge` auto-advance untested → RESOLVED'
+              byte_offset: 1863
+              byte_count: 423
+              word_count: 47
+              content_hash: 2200f37c3e83f13426ce7d75ee0f68c19ebc8ef8f290c5eacae2b1b73837873a
+        - path: "1.3"
+          level: 2
+          title: Verdict
+          byte_offset: 2286
+          byte_count: 118
+          word_count: 17
+          content_hash: 5e3121d5f83a86dfc787dc09936d630b0d1feaa1b36941330bb25afe44c14e4c
+entity_refs:
+    - entity_id: FEAT-01KQTWFY52EG1
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 88
+cross_doc_links:
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: 1.2.4
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-05T12:30:20.507997Z
+classified: false
