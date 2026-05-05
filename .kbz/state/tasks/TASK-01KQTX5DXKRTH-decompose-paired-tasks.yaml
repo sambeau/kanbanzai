@@ -3,8 +3,10 @@ parent_feature: FEAT-01KQTNYN00M4P
 slug: decompose-paired-tasks
 name: Implement paired impl+test task output
 summary: Update decompose proposal assembly to produce two tasks per AC (impl+test). Test task depends_on points to impl task. Default-on with opt-out flag.
-status: active
+status: done
+completed: "2026-05-05T09:16:23Z"
 claimed_at: "2026-05-05T02:19:27Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-05T02:19:27Z"
 dispatched_by: sambeau
+completion_summary: "Implemented paired impl+test task output for decompose propose. Added PairedTestTasks bool field (default true via MCP layer). Each AC produces an impl task + test task with depends_on. Opt-out via paired_test_tasks:false restores single-task behavior. Tests cover paired output, opt-out, and REQ-006 test-only AC exception."

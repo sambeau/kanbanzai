@@ -3,8 +3,10 @@ parent_feature: FEAT-01KQTNYN00HZA
 slug: doc-path-generator
 name: Implement path-generation function
 summary: "Create canonicalDocPath(docType, parentEntityID) function using plan slug resolution. Handles plan/batch/feature parent resolution."
-status: active
+status: done
+completed: "2026-05-05T09:16:23Z"
 claimed_at: "2026-05-05T02:19:28Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-05T02:19:28Z"
 dispatched_by: sambeau
+completion_summary: "Created canonicalDocPath(docType, parentEntityID) function. Resolves plan/batch/feature parents upward to find owning plan. 16 tests covering all type abbreviations, feature→batch→plan resolution, prompt paths, errors for missing/non-existent parents."
