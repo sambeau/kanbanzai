@@ -3,8 +3,13 @@ parent_feature: FEAT-01KQTWFY52EG1
 slug: merge-prompt-orchestrate-review
 name: Add merge prompt to orchestrate-review skill
 summary: Update orchestrate-review SKILL.md with 5-step post-review merge prompt. Mirror to internal/kbzinit/.
-status: active
+status: done
+files_planned:
+  - .kbz/skills/orchestrate-review/SKILL.md
+  - internal/kbzinit/skills/orchestrate-review/SKILL.md
+completed: "2026-05-05T09:28:24Z"
 claimed_at: "2026-05-05T09:16:57Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-05T09:16:57Z"
 dispatched_by: sambeau
+completion_summary: "Added Post-Review Merge section to orchestrate-review SKILL.md with 5 steps: verify all tasks terminal, transition to merging, merge check+execute, verify merge ancestry (git merge-base --is-ancestor), transition through verifying with build/test to done or needs-rework. Updated verdict routing, remediation phase, checklist, examples, and evaluation criteria. Mirrored to internal/kbzinit/skills/orchestrate-review/SKILL.md (new file created)."
