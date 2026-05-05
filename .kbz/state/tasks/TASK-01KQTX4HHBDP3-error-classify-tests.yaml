@@ -1,0 +1,6 @@
+id: TASK-01KQTX4HHBDP3
+parent_feature: FEAT-01KQTNYMZRT6V
+slug: error-classify-tests
+name: Add error classification tests
+summary: "Table-driven tests for each tool x error category, asserting correct ErrorType. Verify existing error-path tests unchanged."
+status: queued

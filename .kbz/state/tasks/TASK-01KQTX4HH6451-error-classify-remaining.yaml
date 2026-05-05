@@ -1,0 +1,6 @@
+id: TASK-01KQTX4HH6451
+parent_feature: FEAT-01KQTNYMZRT6V
+slug: error-classify-remaining
+name: Classify errors in remaining MCP tools
+summary: Update all remaining MCP tool handlers with error classification
+status: queued

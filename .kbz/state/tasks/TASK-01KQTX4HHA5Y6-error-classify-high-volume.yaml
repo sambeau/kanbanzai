@@ -1,0 +1,6 @@
+id: TASK-01KQTX4HHA5Y6
+parent_feature: FEAT-01KQTNYMZRT6V
+slug: error-classify-high-volume
+name: Classify errors in high-volume tools
+summary: "Update entity, finish, next, doc, and decompose handlers to call classifyError on error paths"
+status: queued
