@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "The doc_intel knowledge graph engine writes to .kbz/index/documents/*.yaml on every read operation (updating access_count, last_accessed_at, section_access). This means any session that uses doc_intel tools (search, outline, section, classify) will inevitably dirty those index files, creating constant \"modified\" state in git status even when no meaningful work was done. The access tracking has diagnostic value but creates workflow noise — consider whether it could be tracked in the SQLite cache instead of YAML files to avoid dirtying the working tree on read-only operations."
+created: "2026-05-05T12:11:16Z"
+created_by: sambeau
+id: KE-01KQW0SEB540A
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - doc-intel
+  - noise
+  - index
+  - git-cleanliness
+tier: 3
+topic: doc-intel-access-tracking-noise
+ttl_days: 30
+updated: "2026-05-05T12:11:16Z"
+use_count: 0
