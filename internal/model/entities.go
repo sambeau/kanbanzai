@@ -393,6 +393,10 @@ type Feature struct {
 	// Tags for cross-cutting organisational metadata
 	Tags []string `yaml:"tags,omitempty"`
 
+	// Tier is the fast-track risk tier: retro_fix, bug_fix, feature, or critical.
+	// Set explicitly or inferred at creation time. Never re-inferred after creation.
+	Tier string `yaml:"tier,omitempty"`
+
 	// Legacy fields (Phase 1 compatibility)
 	Plan string `yaml:"plan,omitempty"` // Deprecated: use DevPlan
 
@@ -548,21 +552,22 @@ type QualityEvaluation struct {
 // The document content stays at its canonical path; this record
 // contains metadata only and is stored in .kbz/state/documents/.
 type DocumentRecord struct {
-	ID                string             `yaml:"id"`              // Format: {owner-id}/{slug}
-	Path              string             `yaml:"path"`            // Relative path to the document file
-	Type              DocumentType       `yaml:"type"`            // One of: design, specification, dev-plan, research, report, policy
-	Title             string             `yaml:"title"`           // Human-readable title
-	Status            DocumentStatus     `yaml:"status"`          // One of: draft, approved, superseded
-	Owner             string             `yaml:"owner,omitempty"` // Parent Plan or Feature ID
-	ApprovedBy        string             `yaml:"approved_by,omitempty"`
-	ApprovedAt        *time.Time         `yaml:"approved_at,omitempty"`
-	ContentHash       string             `yaml:"content_hash"` // SHA-256 hash of file content
-	Supersedes        string             `yaml:"supersedes,omitempty"`
-	SupersededBy      string             `yaml:"superseded_by,omitempty"`
-	Created           time.Time          `yaml:"created"`
-	CreatedBy         string             `yaml:"created_by"`
-	Updated           time.Time          `yaml:"updated"`
-	QualityEvaluation *QualityEvaluation `yaml:"quality_evaluation,omitempty"`
+	ID                   string             `yaml:"id"`              // Format: {owner-id}/{slug}
+	Path                 string             `yaml:"path"`            // Relative path to the document file
+	Type                 DocumentType       `yaml:"type"`            // One of: design, specification, dev-plan, research, report, policy
+	Title                string             `yaml:"title"`           // Human-readable title
+	Status               DocumentStatus     `yaml:"status"`          // One of: draft, approved, superseded
+	Owner                string             `yaml:"owner,omitempty"` // Parent Plan or Feature ID
+	ApprovedBy           string             `yaml:"approved_by,omitempty"`
+	ApprovedAt           *time.Time         `yaml:"approved_at,omitempty"`
+	ContentHash          string             `yaml:"content_hash"`                     // SHA-256 hash of file content
+	CanonicalContentHash string             `yaml:"canonical_content_hash,omitempty"` // SHA-256 hash after whitespace normalisation
+	Supersedes           string             `yaml:"supersedes,omitempty"`
+	SupersededBy         string             `yaml:"superseded_by,omitempty"`
+	Created              time.Time          `yaml:"created"`
+	CreatedBy            string             `yaml:"created_by"`
+	Updated              time.Time          `yaml:"updated"`
+	QualityEvaluation    *QualityEvaluation `yaml:"quality_evaluation,omitempty"`
 }
 
 // GetKind returns the entity kind.
