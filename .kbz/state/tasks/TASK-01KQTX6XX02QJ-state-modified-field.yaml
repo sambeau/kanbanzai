@@ -3,8 +3,16 @@ parent_feature: FEAT-01KQTNYN01ZF8
 slug: state-modified-field
 name: Add state_modified field to MCP response schema
 summary: "Add optional state_modified bool to MCP response struct. True when .kbz/state/, .kbz/index/, or .kbz/context/ was modified."
-status: active
+status: done
+files_planned:
+  - internal/mcp/sideeffect.go
+  - internal/mcp/sideeffect_test.go
+  - internal/mcp/batch.go
+  - internal/mcp/server_info_tool.go
+completed: "2026-05-05T02:35:22Z"
 claimed_at: "2026-05-05T02:19:27Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-05T02:19:27Z"
 dispatched_by: sambeau
+completion_summary: "Added state_modified bool field to MCP response infrastructure. Added stateModified to SideEffectCollector with getter/setter, SignalStateModified helper, StateModified to ErrorResponse and BatchResult (both omitempty), and injection logic in buildResult/buildErrorResult. Updated server_info_tool.go for new signature. Added 10 unit tests verifying JSON serialization: present when true, absent when false, for all response types."
+verification: go build ./... passes; 18 state_modified unit tests pass
