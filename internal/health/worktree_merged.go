@@ -40,7 +40,7 @@ func CheckWorktreeBranchMerged(repoPath string, worktrees []worktree.Record) Cat
 			continue
 		}
 
-		merged, err := isBranchAncestorOf(repoPath, wt.Branch, defaultBranch)
+		merged, err := IsBranchAncestorOf(repoPath, wt.Branch, defaultBranch)
 		if err != nil {
 			continue // best-effort: skip on any error
 		}
@@ -60,13 +60,13 @@ func CheckWorktreeBranchMerged(repoPath string, worktrees []worktree.Record) Cat
 	return result
 }
 
-// isBranchAncestorOf checks whether branch is an ancestor of base using
+// IsBranchAncestorOf checks whether branch is an ancestor of base using
 // git merge-base --is-ancestor. Returns true when branch's HEAD is reachable
 // from base's HEAD (i.e., the branch has been fully merged into base).
 //
 // Exit code 0 → ancestor (merged). Exit code 1 → not an ancestor.
 // Any other error is returned to the caller.
-func isBranchAncestorOf(repoPath, branch, base string) (bool, error) {
+func IsBranchAncestorOf(repoPath, branch, base string) (bool, error) {
 	cmd := exec.Command("git", "merge-base", "--is-ancestor", branch, base)
 	cmd.Dir = repoPath
 

@@ -130,6 +130,7 @@ func decomposeReview(svc *service.DecomposeService) ActionHandler {
 func decomposeApply(entitySvc *service.EntityService, decomposeSvc *service.DecomposeService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 
 		featureID, err := req.RequireString("feature_id")
 		if err != nil {

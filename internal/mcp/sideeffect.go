@@ -121,9 +121,10 @@ type SideEffect struct {
 // SideEffectCollector accumulates side effects produced during a single MCP
 // request. It is goroutine-safe.
 type SideEffectCollector struct {
-	mu         sync.Mutex
-	effects    []SideEffect
-	isMutation bool // set via SignalMutation; controls side_effects:[] in responses
+	mu            sync.Mutex
+	effects       []SideEffect
+	isMutation    bool // set via SignalMutation; controls side_effects:[] in responses
+	stateModified bool // set via SignalStateModified; controls state_modified:true in responses
 }
 
 // Push appends a side effect to the collector.
@@ -157,6 +158,21 @@ func (c *SideEffectCollector) IsMutation() bool {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	return c.isMutation
+}
+
+// SetStateModified marks the response as having modified .kbz/ state files,
+// so that callers can commit them after the operation completes.
+func (c *SideEffectCollector) SetStateModified() {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.stateModified = true
+}
+
+// IsStateModified reports whether this request modified .kbz/ state.
+func (c *SideEffectCollector) IsStateModified() bool {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	return c.stateModified
 }
 
 // Len returns the number of side effects currently in the collector.
@@ -221,6 +237,18 @@ func SignalMutation(ctx context.Context) {
 	}
 }
 
+// SignalStateModified marks the current request as having modified .kbz/ state
+// files so the response includes state_modified: true. High-mutation tool
+// actions (entity create/update/transition, doc register/approve/supersede,
+// knowledge contribute/confirm/retire, finish) call this at the start of their
+// handler. Read-only actions should not call it.
+// It is a no-op if the context carries no collector.
+func SignalStateModified(ctx context.Context) {
+	if c := CollectorFromContext(ctx); c != nil {
+		c.SetStateModified()
+	}
+}
+
 // ─── Middleware ──────────────────────────────────────────────────────────────
 
 // sideEffectHandler is the type of the inner handler function that returns
@@ -256,18 +284,19 @@ func WithSideEffects(inner sideEffectHandler) func(ctx context.Context, req mcp.
 
 		effects := collector.Drain()
 		isMutation := collector.IsMutation()
+		stateModified := collector.IsStateModified()
 
 		if err != nil {
 			// Use the specific error code for batch limit violations (spec §9.5).
 			// All other errors fall back to the generic internal_error code.
 			var limitErr *BatchLimitError
 			if errors.As(err, &limitErr) {
-				return buildErrorResult("batch_limit_exceeded", err.Error(), nil, effects), nil
+				return buildErrorResult("batch_limit_exceeded", err.Error(), nil, effects, stateModified), nil
 			}
-			return buildErrorResult("internal_error", err.Error(), nil, effects), nil
+			return buildErrorResult("internal_error", err.Error(), nil, effects, stateModified), nil
 		}
 
-		return buildResult(result, effects, isMutation), nil
+		return buildResult(result, effects, isMutation, stateModified), nil
 	}
 }
 
@@ -284,7 +313,15 @@ func WithSideEffects(inner sideEffectHandler) func(ctx context.Context, req mcp.
 // field. Injecting a second side_effects key would produce duplicate JSON keys,
 // causing parsers to discard the real effects. Batch results are returned
 // directly after ensuring side_effects is non-nil for mutations (spec §8.4).
-func buildResult(result any, effects []SideEffect, isMutation bool) *mcp.CallToolResult {
+func buildResult(result any, effects []SideEffect, isMutation bool, stateModified bool) *mcp.CallToolResult {
+	// Helper to inject state_modified before the closing brace of a JSON object.
+	injectStateModified := func(text string) string {
+		if stateModified {
+			return strings.TrimSuffix(text, "}") + `,"state_modified":true}`
+		}
+		return text
+	}
+
 	// Batch results manage their own side_effects field via their struct tag.
 	// We must not inject a second side_effects key — that produces duplicate keys
 	// in JSON, causing parsers to discard the real effects (F2).
@@ -303,10 +340,10 @@ func buildResult(result any, effects []SideEffect, isMutation bool) *mcp.CallToo
 		if isMutation && br.SideEffects == nil {
 			text = strings.TrimSuffix(text, "}") + `,"side_effects":[]}`
 		}
-		return mcp.NewToolResultText(text)
+		return mcp.NewToolResultText(injectStateModified(text))
 	}
 
-	if result == nil && len(effects) == 0 && !isMutation {
+	if result == nil && len(effects) == 0 && !isMutation && !stateModified {
 		return mcp.NewToolResultText("{}")
 	}
 
@@ -317,7 +354,7 @@ func buildResult(result any, effects []SideEffect, isMutation bool) *mcp.CallToo
 		if err != nil {
 			return mcp.NewToolResultText(fmt.Sprintf(`{"error":{"code":"serialisation_error","message":%q}}`, err.Error()))
 		}
-		return mcp.NewToolResultText(string(b))
+		return mcp.NewToolResultText(injectStateModified(string(b)))
 	}
 
 	// Mutation with no cascades: use a non-nil empty slice so json.Marshal
@@ -345,15 +382,15 @@ func buildResult(result any, effects []SideEffect, isMutation bool) *mcp.CallToo
 		if inner == "{" {
 			// Empty object — just add side_effects.
 			merged := fmt.Sprintf(`{"side_effects":%s}`, string(effectsBytes))
-			return mcp.NewToolResultText(merged)
+			return mcp.NewToolResultText(injectStateModified(merged))
 		}
 		merged := fmt.Sprintf(`%s,"side_effects":%s}`, inner, string(effectsBytes))
-		return mcp.NewToolResultText(merged)
+		return mcp.NewToolResultText(injectStateModified(merged))
 	}
 
 	// Non-object result: wrap in envelope.
 	merged := fmt.Sprintf(`{"data":%s,"side_effects":%s}`, trimmed, string(effectsBytes))
-	return mcp.NewToolResultText(merged)
+	return mcp.NewToolResultText(injectStateModified(merged))
 }
 
 // ─── Action dispatcher ───────────────────────────────────────────────────────
@@ -412,7 +449,8 @@ func (e *UnknownActionError) Error() string {
 type ErrorResponse struct {
 	Error ErrorDetail `json:"error"`
 	// SideEffects lists any cascades that occurred before the failure, if any.
-	SideEffects []SideEffect `json:"side_effects,omitempty"`
+	SideEffects   []SideEffect `json:"side_effects,omitempty"`
+	StateModified bool         `json:"state_modified,omitempty"`
 }
 
 // ErrorDetail holds the machine-readable code and human-readable message.
@@ -430,17 +468,18 @@ type ErrorDetail struct {
 // returned as a successful MCP call with an error payload, which gives the
 // agent structured information to act on.
 func ActionError(code, message string, details map[string]any) *mcp.CallToolResult {
-	return buildErrorResult(code, message, details, nil)
+	return buildErrorResult(code, message, details, nil, false)
 }
 
 // buildErrorResult constructs the full error result including any side effects.
-func buildErrorResult(code, message string, details map[string]any, effects []SideEffect) *mcp.CallToolResult {
+func buildErrorResult(code, message string, details map[string]any, effects []SideEffect, stateModified bool) *mcp.CallToolResult {
 	resp := ErrorResponse{
 		Error: ErrorDetail{
 			Code:    code,
 			Message: message,
 			Details: details,
 		},
+		StateModified: stateModified,
 	}
 	if len(effects) > 0 {
 		resp.SideEffects = effects

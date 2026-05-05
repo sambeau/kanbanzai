@@ -100,6 +100,7 @@ func finishTool(entitySvc *service.EntityService, dispatchSvc *service.DispatchS
 		// Signal mutation so side_effects: [] is always present in the response
 		// even when no cascades occur (spec §8.4: "The field is never omitted").
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 
 		// Batch mode: tasks array provided.
 		if IsBatchInput(args, "tasks") {

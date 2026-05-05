@@ -561,7 +561,7 @@ func buildZeroCriteriaDiagnostic(specDocID string, content string, spec specStru
 	}
 
 	var sb strings.Builder
-	sb.WriteString(fmt.Sprintf("no acceptance criteria found in spec %q", specDocID))
+	sb.WriteString(fmt.Sprintf("Cannot decompose: no acceptance criteria found in spec %s. Ensure the spec uses **AC-NN.** format and the index is current.", specDocID))
 	sb.WriteString(fmt.Sprintf("\n  sections (%d):", len(spec.sections)))
 	for _, sec := range spec.sections {
 		sb.WriteString(fmt.Sprintf("\n    - %s (level %d)", sec.title, sec.level))

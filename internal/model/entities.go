@@ -75,6 +75,8 @@ const (
 	FeatureStatusDevPlanning FeatureStatus = "dev-planning"
 	FeatureStatusDeveloping  FeatureStatus = "developing"
 	FeatureStatusReviewing   FeatureStatus = "reviewing"
+	FeatureStatusMerging     FeatureStatus = "merging"
+	FeatureStatusVerifying   FeatureStatus = "verifying"
 	FeatureStatusNeedsRework FeatureStatus = "needs-rework"
 	FeatureStatusDone        FeatureStatus = "done"
 	FeatureStatusSuperseded  FeatureStatus = "superseded"
@@ -726,4 +728,70 @@ func ParseShortPlanRef(s string) (prefix, number string, ok bool) {
 		}
 	}
 	return s[:size], rest, true
+}
+
+// FeatureValidTransitions defines the valid lifecycle state machine for Features.
+// Each key is a source status and each value is the set of valid target statuses.
+// The reviewing→done transition is preserved for backward compatibility (requires override).
+var FeatureValidTransitions = map[FeatureStatus]map[FeatureStatus]bool{
+	FeatureStatusProposed: {
+		FeatureStatusDesigning:  true,
+		FeatureStatusSuperseded: true,
+		FeatureStatusCancelled:  true,
+	},
+	FeatureStatusDesigning: {
+		FeatureStatusSpecifying: true,
+		FeatureStatusSuperseded: true,
+		FeatureStatusCancelled:  true,
+	},
+	FeatureStatusSpecifying: {
+		FeatureStatusDevPlanning: true,
+		FeatureStatusSuperseded:  true,
+		FeatureStatusCancelled:   true,
+	},
+	FeatureStatusDevPlanning: {
+		FeatureStatusDeveloping: true,
+		FeatureStatusSuperseded: true,
+		FeatureStatusCancelled:  true,
+	},
+	FeatureStatusDeveloping: {
+		FeatureStatusReviewing:   true,
+		FeatureStatusNeedsRework: true,
+		FeatureStatusSuperseded:  true,
+		FeatureStatusCancelled:   true,
+	},
+	FeatureStatusReviewing: {
+		FeatureStatusMerging:     true,
+		FeatureStatusNeedsRework: true,
+		FeatureStatusSuperseded:  true,
+		FeatureStatusCancelled:   true,
+		FeatureStatusDone:        true, // backward compatibility (requires override)
+	},
+	FeatureStatusMerging: {
+		FeatureStatusVerifying:  true,
+		FeatureStatusSuperseded: true,
+		FeatureStatusCancelled:  true,
+	},
+	FeatureStatusVerifying: {
+		FeatureStatusDone:        true,
+		FeatureStatusNeedsRework: true,
+		FeatureStatusSuperseded:  true,
+		FeatureStatusCancelled:   true,
+	},
+	FeatureStatusNeedsRework: {
+		FeatureStatusReviewing:  true,
+		FeatureStatusSuperseded: true,
+		FeatureStatusCancelled:  true,
+	},
+	// done, superseded, and cancelled are terminal — no outgoing transitions.
+}
+
+// IsValidFeatureTransition returns true if the transition from is a valid
+// lifecycle transition.
+func IsValidFeatureTransition(from, to FeatureStatus) bool {
+	targets, ok := FeatureValidTransitions[from]
+	if !ok {
+		return false
+	}
+	return targets[to]
 }

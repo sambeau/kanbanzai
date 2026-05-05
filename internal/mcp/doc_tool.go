@@ -192,6 +192,7 @@ func docTool(docSvc *service.DocumentService, intelligenceSvc *service.Intellige
 func docRegisterAction(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
 
 		// Batch path: documents array of {path, type, title, owner?} objects.
@@ -301,6 +302,7 @@ func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.In
 func docApproveAction(docSvc *service.DocumentService, intelSvc *service.IntelligenceService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
 		approvedByRaw := docArgStr(args, "created_by")
 
@@ -415,6 +417,7 @@ func docApproveOne(ctx context.Context, docSvc *service.DocumentService, intelSv
 func docMoveAction(docSvc *service.DocumentService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
 
 		docID := docArgStr(args, "id")
@@ -457,6 +460,7 @@ func docMoveAction(docSvc *service.DocumentService) ActionHandler {
 func docDeleteAction(docSvc *service.DocumentService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
 
 		docID := docArgStr(args, "id")
@@ -733,6 +737,7 @@ func docValidateAction(docSvc *service.DocumentService) ActionHandler {
 func docRecordFalsePositiveAction(docSvc *service.DocumentService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
 		docID := docArgStr(args, "id")
 		description := docArgStr(args, "description")
@@ -788,6 +793,7 @@ func docRecordFalsePositiveAction(docSvc *service.DocumentService) ActionHandler
 func docSupersedeAction(docSvc *service.DocumentService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
 		docID := docArgStr(args, "id")
 		supersededBy := docArgStr(args, "superseded_by")
@@ -827,6 +833,7 @@ func docSupersedeAction(docSvc *service.DocumentService) ActionHandler {
 func docRefreshAction(docSvc *service.DocumentService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
 		id := docArgStr(args, "id")
 		path := docArgStr(args, "path")
@@ -907,6 +914,7 @@ func docImportAction(docSvc *service.DocumentService) ActionHandler {
 
 		// Live import path (unchanged).
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 
 		createdByRaw := docArgStr(args, "created_by")
 		createdBy, err := config.ResolveIdentity(createdByRaw)
@@ -1098,6 +1106,7 @@ func docArgStr(args map[string]any, key string) string {
 func docEvaluateAction(docSvc *service.DocumentService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
 
 		docID := docArgStr(args, "id")

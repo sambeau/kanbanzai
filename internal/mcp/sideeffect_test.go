@@ -494,7 +494,7 @@ func TestBuildResult_SideEffectsInjectedIntoObject(t *testing.T) {
 		{Type: SideEffectTaskUnblocked, EntityID: "TASK-002", EntityType: "task", ToStatus: "ready"},
 	}
 
-	result := buildResult(map[string]string{"task": "TASK-001", "status": "done"}, effects, false)
+	result := buildResult(map[string]string{"task": "TASK-001", "status": "done"}, effects, false, false)
 	text := extractText(t, result)
 
 	var parsed map[string]any
@@ -517,7 +517,7 @@ func TestBuildResult_SideEffectsInjectedIntoObject(t *testing.T) {
 func TestBuildResult_NilResultNilEffects(t *testing.T) {
 	t.Parallel()
 
-	result := buildResult(nil, nil, false)
+	result := buildResult(nil, nil, false, false)
 	text := extractText(t, result)
 	if text != "{}" {
 		t.Errorf("buildResult(nil, nil) = %q, want {}", text)
@@ -529,7 +529,7 @@ func TestBuildResult_NonObjectWrappedInEnvelope(t *testing.T) {
 
 	// An array result should be wrapped in an envelope when side effects are present.
 	effects := []SideEffect{{Type: SideEffectTaskUnblocked, EntityID: "TASK-001"}}
-	result := buildResult([]string{"item1", "item2"}, effects, false)
+	result := buildResult([]string{"item1", "item2"}, effects, false, false)
 	text := extractText(t, result)
 
 	var parsed map[string]any
@@ -551,7 +551,7 @@ func TestBuildResult_MutationNoSideEffects(t *testing.T) {
 	// Verifies §8.4: mutations always include side_effects: [] even with no cascades.
 	t.Parallel()
 
-	result := buildResult(map[string]string{"entity": "TASK-001"}, nil, true)
+	result := buildResult(map[string]string{"entity": "TASK-001"}, nil, true, false)
 	text := extractText(t, result)
 
 	var parsed map[string]any
@@ -707,7 +707,7 @@ func TestBuildResult_BatchResult_SideEffectsNotDoubled(t *testing.T) {
 		},
 	}
 
-	result := buildResult(br, nil, true) // isMutation=true, outer effects empty
+	result := buildResult(br, nil, true, false) // isMutation=true, outer effects empty
 	text := extractText(t, result)
 
 	// Count occurrences of the "side_effects" key at any depth.
@@ -744,7 +744,7 @@ func TestBuildResult_BatchResult_MutationNoEffects_SideEffectsPresent(t *testing
 		// SideEffects is nil — no effects produced.
 	}
 
-	result := buildResult(br, nil, true) // isMutation=true
+	result := buildResult(br, nil, true, false) // isMutation=true
 	text := extractText(t, result)
 
 	var parsed map[string]any
@@ -771,7 +771,7 @@ func TestBuildResult_BatchResult_ReadOnly_SideEffectsOmitted(t *testing.T) {
 		Summary: BatchSummary{Total: 1, Succeeded: 1},
 	}
 
-	result := buildResult(br, nil, false) // not a mutation
+	result := buildResult(br, nil, false, false) // not a mutation
 	text := extractText(t, result)
 
 	var parsed map[string]any
@@ -799,4 +799,490 @@ func extractText(t *testing.T, result *mcp.CallToolResult) string {
 		t.Fatalf("expected TextContent, got %T", result.Content[0])
 	}
 	return tc.Text
+}
+
+// ─── StateModified tests (F4/T5: commit discipline) ─────────────────────────
+
+func TestStateModified_CollectorDefaultsFalse(t *testing.T) {
+	t.Parallel()
+
+	c := &SideEffectCollector{}
+	if c.IsStateModified() {
+		t.Error("IsStateModified() on fresh collector: got true, want false")
+	}
+}
+
+func TestStateModified_SetAndGet(t *testing.T) {
+	t.Parallel()
+
+	c := &SideEffectCollector{}
+	c.SetStateModified()
+	if !c.IsStateModified() {
+		t.Error("IsStateModified() after SetStateModified(): got false, want true")
+	}
+}
+
+func TestSignalStateModified_WithCollector(t *testing.T) {
+	t.Parallel()
+
+	c := &SideEffectCollector{}
+	ctx := ContextWithCollector(context.Background(), c)
+
+	SignalStateModified(ctx)
+
+	if !c.IsStateModified() {
+		t.Error("IsStateModified() after SignalStateModified(): got false, want true")
+	}
+}
+
+func TestSignalStateModified_NoCollector_IsNoop(t *testing.T) {
+	t.Parallel()
+
+	// Should not panic when there is no collector in the context.
+	ctx := context.Background()
+	SignalStateModified(ctx)
+	// Reaching here without panic is success.
+}
+
+// TestStateModified_MutationHandlerIncludesFlag verifies that when a handler
+// calls SignalStateModified, the JSON response includes state_modified: true.
+func TestStateModified_MutationHandlerIncludesFlag(t *testing.T) {
+	t.Parallel()
+
+	inner := func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalMutation(ctx)
+		SignalStateModified(ctx)
+		return map[string]string{"entity": "TASK-001", "status": "done"}, nil
+	}
+	handler := WithSideEffects(inner)
+
+	result, err := handler(context.Background(), mcp.CallToolRequest{})
+	if err != nil {
+		t.Fatalf("handler returned error: %v", err)
+	}
+
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	sm, ok := parsed["state_modified"]
+	if !ok {
+		t.Fatal("state_modified absent from mutation handler response, want true")
+	}
+	if sm != true {
+		t.Errorf("state_modified = %v, want true", sm)
+	}
+}
+
+// TestStateModified_ReadOnlyHandlerOmitsFlag verifies that a read-only handler
+// that does NOT call SignalStateModified omits state_modified from the response.
+func TestStateModified_ReadOnlyHandlerOmitsFlag(t *testing.T) {
+	t.Parallel()
+
+	inner := func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		// Does NOT call SignalMutation or SignalStateModified.
+		return map[string]string{"status": "ok"}, nil
+	}
+	handler := WithSideEffects(inner)
+
+	result, err := handler(context.Background(), mcp.CallToolRequest{})
+	if err != nil {
+		t.Fatalf("handler returned error: %v", err)
+	}
+
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	if _, ok := parsed["state_modified"]; ok {
+		t.Error("state_modified present in read-only handler response, want absent")
+	}
+}
+
+// TestStateModified_NilResultWithStateModified verifies that when the result
+// is nil but state_modified is true, the response includes the flag.
+func TestStateModified_NilResultWithStateModified(t *testing.T) {
+	t.Parallel()
+
+	inner := func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalStateModified(ctx)
+		return nil, nil
+	}
+	handler := WithSideEffects(inner)
+
+	result, err := handler(context.Background(), mcp.CallToolRequest{})
+	if err != nil {
+		t.Fatalf("handler returned error: %v", err)
+	}
+
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	sm, ok := parsed["state_modified"]
+	if !ok {
+		t.Fatal("state_modified absent from nil-result mutation response, want true")
+	}
+	if sm != true {
+		t.Errorf("state_modified = %v, want true", sm)
+	}
+}
+
+// TestStateModified_ErrorResponseIncludesFlag verifies that error responses
+// from mutation handlers include state_modified: true.
+func TestStateModified_ErrorResponseIncludesFlag(t *testing.T) {
+	t.Parallel()
+
+	inner := func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		SignalMutation(ctx)
+		SignalStateModified(ctx)
+		return nil, fmt.Errorf("something went wrong")
+	}
+	handler := WithSideEffects(inner)
+
+	result, err := handler(context.Background(), mcp.CallToolRequest{})
+	if err != nil {
+		t.Fatalf("handler returned error: %v", err)
+	}
+
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	// Error response has "error" key at top level.
+	if _, ok := parsed["error"]; !ok {
+		t.Fatal("error key missing from error response")
+	}
+
+	sm, ok := parsed["state_modified"]
+	if !ok {
+		t.Fatal("state_modified absent from error response, want true")
+	}
+	if sm != true {
+		t.Errorf("state_modified = %v, want true", sm)
+	}
+}
+
+// TestStateModified_ReadOnlyErrorOmitsFlag verifies that error responses
+// from read-only handlers omit state_modified.
+func TestStateModified_ReadOnlyErrorOmitsFlag(t *testing.T) {
+	t.Parallel()
+
+	inner := func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		// Does NOT call SignalStateModified.
+		return nil, fmt.Errorf("not found")
+	}
+	handler := WithSideEffects(inner)
+
+	result, err := handler(context.Background(), mcp.CallToolRequest{})
+	if err != nil {
+		t.Fatalf("handler returned error: %v", err)
+	}
+
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	if _, ok := parsed["state_modified"]; ok {
+		t.Error("state_modified present in read-only error response, want absent")
+	}
+}
+
+// TestStateModified_TableDrivenMutationActions verifies that state_modified
+// is correctly set across a representative set of mutation patterns — simulating
+// the behavior of entity create/update/transition, doc register/approve/supersede,
+// knowledge contribute/confirm/retire, and finish actions.
+func TestStateModified_TableDrivenMutationActions(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name            string
+		callMutation    bool // whether to call SignalMutation
+		callStateMod    bool // whether to call SignalStateModified
+		wantStateMod    bool // whether state_modified should appear
+		wantSideEffects bool // whether side_effects should appear
+	}{
+		{
+			name:            "entity create",
+			callMutation:    true,
+			callStateMod:    true,
+			wantStateMod:    true,
+			wantSideEffects: true, // mutation always includes side_effects:[]
+		},
+		{
+			name:            "entity update",
+			callMutation:    true,
+			callStateMod:    true,
+			wantStateMod:    true,
+			wantSideEffects: true,
+		},
+		{
+			name:            "entity transition",
+			callMutation:    true,
+			callStateMod:    true,
+			wantStateMod:    true,
+			wantSideEffects: true,
+		},
+		{
+			name:            "doc register",
+			callMutation:    true,
+			callStateMod:    true,
+			wantStateMod:    true,
+			wantSideEffects: true,
+		},
+		{
+			name:            "doc approve",
+			callMutation:    true,
+			callStateMod:    true,
+			wantStateMod:    true,
+			wantSideEffects: true,
+		},
+		{
+			name:            "doc supersede",
+			callMutation:    true,
+			callStateMod:    true,
+			wantStateMod:    true,
+			wantSideEffects: true,
+		},
+		{
+			name:            "knowledge contribute",
+			callMutation:    true,
+			callStateMod:    true,
+			wantStateMod:    true,
+			wantSideEffects: true,
+		},
+		{
+			name:            "knowledge confirm",
+			callMutation:    true,
+			callStateMod:    true,
+			wantStateMod:    true,
+			wantSideEffects: true,
+		},
+		{
+			name:            "knowledge retire",
+			callMutation:    true,
+			callStateMod:    true,
+			wantStateMod:    true,
+			wantSideEffects: true,
+		},
+		{
+			name:            "finish task",
+			callMutation:    true,
+			callStateMod:    true,
+			wantStateMod:    true,
+			wantSideEffects: true,
+		},
+		{
+			name:            "entity get (read-only)",
+			callMutation:    false,
+			callStateMod:    false,
+			wantStateMod:    false,
+			wantSideEffects: false,
+		},
+		{
+			name:            "doc list (read-only)",
+			callMutation:    false,
+			callStateMod:    false,
+			wantStateMod:    false,
+			wantSideEffects: false,
+		},
+		{
+			name:            "knowledge list (read-only)",
+			callMutation:    false,
+			callStateMod:    false,
+			wantStateMod:    false,
+			wantSideEffects: false,
+		},
+		{
+			name:            "status query (read-only)",
+			callMutation:    false,
+			callStateMod:    false,
+			wantStateMod:    false,
+			wantSideEffects: false,
+		},
+		{
+			name:            "next query (read-only)",
+			callMutation:    false,
+			callStateMod:    false,
+			wantStateMod:    false,
+			wantSideEffects: false,
+		},
+	}
+
+	for _, tc := range tests {
+		tc := tc
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+
+			inner := func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+				if tc.callMutation {
+					SignalMutation(ctx)
+				}
+				if tc.callStateMod {
+					SignalStateModified(ctx)
+				}
+				return map[string]string{"status": "ok"}, nil
+			}
+			handler := WithSideEffects(inner)
+
+			result, err := handler(context.Background(), mcp.CallToolRequest{})
+			if err != nil {
+				t.Fatalf("handler returned error: %v", err)
+			}
+
+			text := extractText(t, result)
+			var parsed map[string]any
+			if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+				t.Fatalf("parse result: %v\nraw: %s", err, text)
+			}
+
+			_, hasStateMod := parsed["state_modified"]
+			if hasStateMod != tc.wantStateMod {
+				t.Errorf("state_modified presence = %v, want %v", hasStateMod, tc.wantStateMod)
+			}
+
+			_, hasSideEffects := parsed["side_effects"]
+			if hasSideEffects != tc.wantSideEffects {
+				t.Errorf("side_effects presence = %v, want %v", hasSideEffects, tc.wantSideEffects)
+			}
+		})
+	}
+}
+
+// TestStateModified_VanillaMCPClientCompat verifies that the state_modified
+// field in a response does not cause rejection by a vanilla MCP client.
+// A standard JSON unmarshal into a map should succeed regardless of the
+// presence or absence of the state_modified field.
+func TestStateModified_VanillaMCPClientCompat(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name string
+		json string
+	}{
+		{
+			name: "with state_modified true",
+			json: `{"status":"ok","state_modified":true}`,
+		},
+		{
+			name: "with state_modified false",
+			json: `{"status":"ok","state_modified":false}`,
+		},
+		{
+			name: "without state_modified",
+			json: `{"status":"ok"}`,
+		},
+		{
+			name: "with state_modified and side_effects",
+			json: `{"status":"ok","side_effects":[],"state_modified":true}`,
+		},
+		{
+			name: "error with state_modified",
+			json: `{"error":{"code":"not_found","message":"not found"},"state_modified":true}`,
+		},
+	}
+
+	for _, tc := range tests {
+		tc := tc
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+
+			var parsed map[string]any
+			if err := json.Unmarshal([]byte(tc.json), &parsed); err != nil {
+				t.Fatalf("vanilla client rejected JSON: %v\njson: %s", err, tc.json)
+			}
+
+			// All valid JSON objects should parse without error.
+			// The status field should always be accessible.
+			if _, ok := parsed["status"]; ok {
+				// Success case — status present.
+			} else if _, ok := parsed["error"]; ok {
+				// Error case — error present.
+			} else {
+				t.Error("parsed JSON missing both status and error keys")
+			}
+		})
+	}
+}
+
+// TestStateModified_BatchResultIncludesFlag verifies that a BatchResult
+// includes state_modified when the parent collector was signalled.
+func TestStateModified_BatchResultIncludesFlag(t *testing.T) {
+	t.Parallel()
+
+	collector := &SideEffectCollector{}
+	collector.SetStateModified()
+	ctx := ContextWithCollector(context.Background(), collector)
+
+	items := []any{"item1", "item2"}
+	result, err := ExecuteBatch(ctx, items, func(ctx context.Context, item any) (string, any, error) {
+		return item.(string), map[string]string{"item": item.(string)}, nil
+	})
+	if err != nil {
+		t.Fatalf("ExecuteBatch returned error: %v", err)
+	}
+
+	br, ok := result.(*BatchResult)
+	if !ok {
+		t.Fatalf("result is not *BatchResult, got %T", result)
+	}
+
+	if !br.StateModified {
+		t.Error("BatchResult.StateModified = false, want true")
+	}
+
+	// Verify JSON serialization includes state_modified.
+	b, err := json.Marshal(br)
+	if err != nil {
+		t.Fatalf("json.Marshal(BatchResult): %v", err)
+	}
+	if !strings.Contains(string(b), `"state_modified":true`) {
+		t.Errorf("BatchResult JSON missing state_modified:true: %s", string(b))
+	}
+}
+
+// TestStateModified_BatchResultOmitsFlagWhenNotSet verifies that a BatchResult
+// omits state_modified when the parent collector was not signalled.
+func TestStateModified_BatchResultOmitsFlagWhenNotSet(t *testing.T) {
+	t.Parallel()
+
+	collector := &SideEffectCollector{}
+	// Do NOT call SetStateModified.
+	ctx := ContextWithCollector(context.Background(), collector)
+
+	items := []any{"item1"}
+	result, err := ExecuteBatch(ctx, items, func(ctx context.Context, item any) (string, any, error) {
+		return item.(string), map[string]string{"item": item.(string)}, nil
+	})
+	if err != nil {
+		t.Fatalf("ExecuteBatch returned error: %v", err)
+	}
+
+	br, ok := result.(*BatchResult)
+	if !ok {
+		t.Fatalf("result is not *BatchResult, got %T", result)
+	}
+
+	if br.StateModified {
+		t.Error("BatchResult.StateModified = true, want false")
+	}
+
+	// Verify JSON serialization omits state_modified.
+	b, err := json.Marshal(br)
+	if err != nil {
+		t.Fatalf("json.Marshal(BatchResult): %v", err)
+	}
+	if strings.Contains(string(b), `"state_modified"`) {
+		t.Errorf("BatchResult JSON should not contain state_modified: %s", string(b))
+	}
 }

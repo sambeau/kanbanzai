@@ -86,7 +86,7 @@ func handleServerInfo(root string) (*mcp.CallToolResult, error) {
 
 	result["in_sync"] = deriveInSync(gitSHA, rec)
 
-	return buildResult(result, nil, false), nil
+	return buildResult(result, nil, false, false), nil
 }
 
 // deriveGitSHAShort returns the first 7 characters of the git SHA,

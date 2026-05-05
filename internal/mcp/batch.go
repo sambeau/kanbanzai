@@ -84,6 +84,9 @@ type BatchResult struct {
 	// SideEffects is the union of all per-item side effects, aggregated for
 	// callers that want a flat view of all cascades.
 	SideEffects []SideEffect `json:"side_effects,omitempty"`
+
+	// StateModified is true when the batch operation modified .kbz/ state files.
+	StateModified bool `json:"state_modified,omitempty"`
 }
 
 // BatchItemHandler is the per-item function called by ExecuteBatch.
@@ -114,6 +117,10 @@ func ExecuteBatch(ctx context.Context, items []any, handler BatchItemHandler) (a
 	var allEffects []SideEffect
 	succeeded := 0
 	failed := 0
+	batchStateModified := false
+	if pc := CollectorFromContext(ctx); pc != nil {
+		batchStateModified = pc.IsStateModified()
+	}
 
 	for _, item := range items {
 		// Create a sub-collector for this item so we can attribute side effects
@@ -164,7 +171,8 @@ func ExecuteBatch(ctx context.Context, items []any, handler BatchItemHandler) (a
 			Succeeded: succeeded,
 			Failed:    failed,
 		},
-		SideEffects: nonEmptyEffects(allEffects),
+		SideEffects:   nonEmptyEffects(allEffects),
+		StateModified: batchStateModified,
 	}, nil
 }
 

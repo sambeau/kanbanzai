@@ -205,6 +205,7 @@ func knowledgeGetAction(svc *service.KnowledgeService, repoPath string) ActionHa
 func knowledgeContributeAction(svc *service.KnowledgeService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 
 		topic, err := req.RequireString("topic")
 		if err != nil {
@@ -264,6 +265,7 @@ func knowledgeContributeAction(svc *service.KnowledgeService) ActionHandler {
 func knowledgeConfirmAction(svc *service.KnowledgeService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 
 		id, err := req.RequireString("id")
 		if err != nil {
@@ -287,6 +289,7 @@ func knowledgeConfirmAction(svc *service.KnowledgeService) ActionHandler {
 func knowledgeFlagAction(svc *service.KnowledgeService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 
 		id, err := req.RequireString("id")
 		if err != nil {
@@ -314,6 +317,7 @@ func knowledgeFlagAction(svc *service.KnowledgeService) ActionHandler {
 func knowledgeRetireAction(svc *service.KnowledgeService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 
 		id, err := req.RequireString("id")
 		if err != nil {
@@ -341,6 +345,7 @@ func knowledgeRetireAction(svc *service.KnowledgeService) ActionHandler {
 func knowledgeUpdateAction(svc *service.KnowledgeService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 
 		id, err := req.RequireString("id")
 		if err != nil {
@@ -368,6 +373,7 @@ func knowledgeUpdateAction(svc *service.KnowledgeService) ActionHandler {
 func knowledgePromoteAction(svc *service.KnowledgeService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 
 		id, err := req.RequireString("id")
 		if err != nil {
@@ -535,6 +541,7 @@ func knowledgePruneAction(svc *service.KnowledgeService) ActionHandler {
 func knowledgeResolveAction(svc *service.KnowledgeService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 
 		keepID, err := req.RequireString("keep")
 		if err != nil {

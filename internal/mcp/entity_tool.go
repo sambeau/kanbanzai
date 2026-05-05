@@ -97,6 +97,7 @@ func entityCreateAction(entitySvc *service.EntityService) ActionHandler {
 			return nil, fmt.Errorf("type is required for create")
 		}
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 		if IsBatchInput(args, "entities") {
 			items, _ := args["entities"].([]any)
 			result, err := ExecuteBatch(ctx, items, func(ctx context.Context, item any) (string, any, error) {
@@ -398,6 +399,7 @@ func entityHasAnyTag(state map[string]any, filterTags []string) bool {
 func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
 		entityID := id.NormalizeID(entityArgStr(args, "id"))
 		if entityID == "" {
@@ -523,6 +525,7 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store, requiresHumanReview func() bool) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
 		entityID := id.NormalizeID(entityArgStr(args, "id"))
 		if entityID == "" {
@@ -1196,6 +1199,7 @@ func entityFullRecord(entityID, entityType, slug string, state map[string]any) m
 func entityBootstrapAction(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store, requiresHumanReview func() bool) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
 
 		featureID := id.NormalizeID(entityArgStr(args, "feature_id"))
@@ -1268,6 +1272,7 @@ func entityBootstrapAction(entitySvc *service.EntityService, docSvc *service.Doc
 func entityCloseOutAction(entitySvc *service.EntityService, docSvc *service.DocumentService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
+		SignalStateModified(ctx)
 		args, _ := req.Params.Arguments.(map[string]any)
 
 		featureID := id.NormalizeID(entityArgStr(args, "feature_id"))

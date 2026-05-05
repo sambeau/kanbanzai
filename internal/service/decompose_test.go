@@ -2999,3 +2999,392 @@ func TestParseDevPlanTasks_DependsOnNoneParens_IsNil(t *testing.T) {
 		t.Errorf("DependsOn = %v, want nil for \"None (independent)\"", tasks[0].DependsOn)
 	}
 }
+
+// ---------------------------------------------------------------------------
+// Refuse-to-propose diagnostic content tests
+// ---------------------------------------------------------------------------
+
+// TestRefuseToPropose_DiagnosticContent verifies that the zero-criteria error
+// message from buildZeroCriteriaDiagnostic includes actionable diagnostic
+// information: section count, section titles, and remediation guidance.
+func TestRefuseToPropose_DiagnosticContent(t *testing.T) {
+	t.Parallel()
+
+	specDocID := "DOC-TEST-001"
+	content := `# Feature Spec
+
+	## Overview
+	This is an overview.
+
+	## Architecture
+	No ACs here.
+
+	## Background
+	Just background info.
+	`
+	spec := parseSpecStructure(content)
+
+	msg := buildZeroCriteriaDiagnostic(specDocID, content, spec)
+
+	// Must contain the core error message.
+	if !strings.Contains(msg, "no acceptance criteria found in spec DOC-TEST-001") {
+		t.Errorf("diagnostic missing spec doc ID; got: %s", msg)
+	}
+
+	// Must report section count and titles.
+	if !strings.Contains(msg, "sections (3):") {
+		t.Errorf("diagnostic missing section count; got: %s", msg)
+	}
+	for _, title := range []string{"Overview", "Architecture", "Background"} {
+		if !strings.Contains(msg, title) {
+			t.Errorf("diagnostic missing section title %q; got: %s", title, msg)
+		}
+	}
+
+	// Must include remediation guidance (no bold-identifiers variant).
+	if !strings.Contains(msg, "no bold-identifier lines found anywhere") {
+		t.Errorf("diagnostic missing 'no bold-identifier lines' guidance; got: %s", msg)
+	}
+	if !strings.Contains(msg, "remediation:") {
+		t.Errorf("diagnostic missing remediation; got: %s", msg)
+	}
+}
+
+// TestRefuseToPropose_DiagnosticWithBoldOutsideAC verifies the diagnostic
+// when bold-identifier lines exist outside an Acceptance Criteria section.
+func TestRefuseToPropose_DiagnosticWithBoldOutsideAC(t *testing.T) {
+	t.Parallel()
+
+	specDocID := "DOC-TEST-002"
+	content := `# Feature Spec
+
+	## Requirements
+
+	**AC-01.** Users can log in.
+	**AC-02.** Users can log out.
+
+	## Architecture
+
+	No AC section here.
+	`
+	spec := parseSpecStructure(content)
+
+	msg := buildZeroCriteriaDiagnostic(specDocID, content, spec)
+
+	if !strings.Contains(msg, "found 2 bold-identifier line(s) outside an Acceptance Criteria section") {
+		t.Errorf("diagnostic missing bold-outside count; got: %s", msg)
+	}
+	if !strings.Contains(msg, "move bold-identifier lines into a section with 'Acceptance Criteria'") {
+		t.Errorf("diagnostic missing bold-outside remediation; got: %s", msg)
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Paired output: depends_on correctness tests
+// ---------------------------------------------------------------------------
+
+// TestPairedTestTasks_DependsOnCorrectness verifies that every paired test
+// task's DependsOn points to the slug of its corresponding impl task, and
+// that the impl task actually exists in the proposal.
+func TestPairedTestTasks_DependsOnCorrectness(t *testing.T) {
+	t.Parallel()
+
+	// 5 ACs, each in its own section → 5 individual impl tasks.
+	// None contain "test" → each gets a paired test → 10 tasks total.
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "user can register", section: "Auth", parentL2: "Auth"},
+			{text: "user can log in", section: "Login", parentL2: "Login"},
+			{text: "user can log out", section: "Logout", parentL2: "Logout"},
+			{text: "data is validated", section: "Validation", parentL2: "Validation"},
+			{text: "errors are handled", section: "Errors", parentL2: "Errors"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0)
+
+	// Build a set of all impl task slugs (non -tests).
+	implSlugs := make(map[string]bool)
+	for _, task := range proposal.Tasks {
+		if !strings.HasSuffix(task.Slug, "-tests") {
+			implSlugs[task.Slug] = true
+		}
+	}
+
+	testCount := 0
+	for _, task := range proposal.Tasks {
+		if !strings.HasSuffix(task.Slug, "-tests") {
+			continue
+		}
+		testCount++
+
+		if len(task.DependsOn) != 1 {
+			t.Errorf("test task %q: DependsOn length = %d, want 1", task.Slug, len(task.DependsOn))
+			continue
+		}
+
+		depTarget := task.DependsOn[0]
+		if !implSlugs[depTarget] {
+			t.Errorf("test task %q: DependsOn target %q is not an impl task slug", task.Slug, depTarget)
+		}
+
+		// The impl task slug should be the test task slug minus "-tests" suffix.
+		expectedImpl := strings.TrimSuffix(task.Slug, "-tests")
+		if depTarget != expectedImpl {
+			t.Errorf("test task %q: DependsOn = [%q], want [%q]", task.Slug, depTarget, expectedImpl)
+		}
+	}
+
+	if testCount == 0 {
+		t.Error("expected at least one paired test task, got none")
+	}
+}
+
+// TestPairedTestTasks_GroupedDependsOnCorrectness verifies that a grouped
+// impl task's paired test task has the correct DependsOn pointing to the
+// grouped impl slug.
+func TestPairedTestTasks_GroupedDependsOnCorrectness(t *testing.T) {
+	t.Parallel()
+
+	// 3 ACs in the same section → grouped into 1 impl + 1 test task.
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "user can register", section: "Auth", parentL2: "Auth"},
+			{text: "user can log in", section: "Auth", parentL2: "Auth"},
+			{text: "password reset works", section: "Auth", parentL2: "Auth"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0)
+
+	if len(proposal.Tasks) != 2 {
+		t.Fatalf("task count = %d, want 2 (1 grouped impl + 1 paired test)", len(proposal.Tasks))
+	}
+
+	var implTask, testTask *ProposedTask
+	for i := range proposal.Tasks {
+		if strings.HasSuffix(proposal.Tasks[i].Slug, "-tests") {
+			testTask = &proposal.Tasks[i]
+		} else {
+			implTask = &proposal.Tasks[i]
+		}
+	}
+	if implTask == nil {
+		t.Fatal("impl task not found")
+	}
+	if testTask == nil {
+		t.Fatal("paired test task not found")
+	}
+
+	if len(testTask.DependsOn) != 1 || testTask.DependsOn[0] != implTask.Slug {
+		t.Errorf("test task DependsOn = %v, want [%q]", testTask.DependsOn, implTask.Slug)
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Test-only AC detection: full keyword set for allCoversContainTest
+// ---------------------------------------------------------------------------
+
+// TestAllCoversContainTest_KeywordVariants verifies the full set of keywords
+// and phrases that cause allCoversContainTest to return true. Since the
+// implementation uses a simple strings.Contains check for "test", the
+// coverage is narrower than the full testing-concern keyword list used
+// in decompose_validate.go.
+func TestAllCoversContainTest_KeywordVariants(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name string
+		text string
+		want bool
+	}{
+		// "test" substring — matches.
+		{name: "test keyword", text: "write tests for auth", want: true},
+		{name: "test that phrase", text: "test that login works", want: true},
+		{name: "testing keyword", text: "testing the database layer", want: true},
+
+		// "test" as part of another word — matches (substring match).
+		{name: "test subword - greatest", text: "greatest hits collection", want: true},
+
+		// Keywords that do NOT contain "test" — do NOT match.
+		{name: "verify keyword", text: "verify that output is correct", want: false},
+		{name: "confirm keyword", text: "confirm the behavior", want: false},
+		{name: "check that phrase", text: "check that the token is refreshed", want: false},
+		{name: "assert keyword", text: "assert response status is 200", want: false},
+		{name: "ensure keyword", text: "ensure data integrity", want: false},
+		{name: "validate keyword", text: "validate input parameters", want: false},
+
+		// Edge cases.
+		{name: "empty slice", text: "", want: false},
+		{name: "no keyword", text: "implement user registration", want: false},
+	}
+
+	for _, tc := range tests {
+		tc := tc
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+			var covers []string
+			if tc.text != "" {
+				covers = []string{tc.text}
+			}
+			got := allCoversContainTest(covers)
+			if got != tc.want {
+				t.Errorf("allCoversContainTest(%q) = %v, want %v", tc.text, got, tc.want)
+			}
+		})
+	}
+}
+
+// TestAllCoversContainTest_MultipleCoversMixed verifies that if ANY cover
+// in a slice does NOT contain "test", allCoversContainTest returns false.
+func TestAllCoversContainTest_MultipleCoversMixed(t *testing.T) {
+	t.Parallel()
+
+	// Mixed: one contains "test", one does not → false.
+	got := allCoversContainTest([]string{"implement auth", "test auth flow"})
+	if got {
+		t.Error("allCoversContainTest with mixed covers: got true, want false")
+	}
+
+	// All contain "test" → true.
+	got = allCoversContainTest([]string{"test auth", "test login", "test logout"})
+	if !got {
+		t.Error("allCoversContainTest with all-test covers: got false, want true")
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Test-only AC detection: single test task produced for "test" keyword ACs
+// ---------------------------------------------------------------------------
+
+// TestPairedTestTasks_TestOnlyAC_SingleTask verifies that an AC whose text
+// contains "test" produces only a single impl task (no paired test task),
+// since the AC itself is a testing concern.
+func TestPairedTestTasks_TestOnlyAC_SingleTask(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name string
+		text string
+	}{
+		{name: "write tests", text: "write tests for user login"},
+		{name: "test that", text: "test that the auth token is refreshed"},
+		{name: "testing keyword", text: "testing the error handling path"},
+	}
+
+	for _, tc := range tests {
+		tc := tc
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+
+			spec := specStructure{
+				acceptanceCriteria: []acceptanceCriterion{
+					{text: tc.text, section: "S", parentL2: "S"},
+				},
+			}
+			proposal, _ := generateProposal(spec, "feat", "", 0)
+
+			// Should have exactly 1 task (impl only, no paired test).
+			if len(proposal.Tasks) != 1 {
+				t.Errorf("task count = %d, want 1 (single task for AC containing 'test')", len(proposal.Tasks))
+			}
+
+			// The single task must NOT have a -tests suffix.
+			if strings.HasSuffix(proposal.Tasks[0].Slug, "-tests") {
+				t.Errorf("single task slug should not end with -tests: %q", proposal.Tasks[0].Slug)
+			}
+		})
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Dependency graph: complete task nodes only
+// ---------------------------------------------------------------------------
+
+// TestDependencyGraph_CompleteNodesOnly verifies that every DependsOn target
+// in a proposal references a task that actually exists in the proposal.
+// No task may depend on a non-existent slug (partial/non-complete task).
+func TestDependencyGraph_CompleteNodesOnly(t *testing.T) {
+	t.Parallel()
+
+	// 3 ACs across 3 sections: 3 impl + 3 test tasks = 6 tasks.
+	// Each test task's DependsOn should point to an existing impl task.
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "user can register", section: "Auth", parentL2: "Auth"},
+			{text: "user can log in", section: "Login", parentL2: "Login"},
+			{text: "user can log out", section: "Logout", parentL2: "Logout"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0)
+
+	// Build a set of all task slugs in the proposal.
+	allSlugs := make(map[string]bool)
+	for _, task := range proposal.Tasks {
+		allSlugs[task.Slug] = true
+	}
+
+	// Every DependsOn target must be a complete task in the proposal.
+	for _, task := range proposal.Tasks {
+		for _, dep := range task.DependsOn {
+			if !allSlugs[dep] {
+				t.Errorf("task %q DependsOn %q which is not a task in the proposal (all tasks: %v)",
+					task.Slug, dep, allSlugs)
+			}
+		}
+	}
+
+	// Also verify that impl tasks do NOT have DependsOn (they're independent).
+	for _, task := range proposal.Tasks {
+		if !strings.HasSuffix(task.Slug, "-tests") && len(task.DependsOn) > 0 {
+			t.Errorf("impl task %q has unexpected DependsOn: %v", task.Slug, task.DependsOn)
+		}
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Paired test tasks: opt-out flag (not yet implemented)
+// ---------------------------------------------------------------------------
+
+// TestPairedTestTasks_OptOutFlagNotYetImplemented verifies the default
+// behavior (paired output) and documents the expected behavior for the
+// paired_test_tasks=false flag via skipped subtests. The flag does not
+// exist yet in DecomposeInput or generateProposal, so the opt-out path
+// cannot be tested.
+func TestPairedTestTasks_OptOutFlagNotYetImplemented(t *testing.T) {
+	t.Parallel()
+
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "user can register", section: "Auth", parentL2: "Auth"},
+			{text: "user can log in", section: "Login", parentL2: "Login"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0)
+
+	// Default behavior: 2 ACs → 4 tasks (2 impl + 2 test).
+	if len(proposal.Tasks) != 4 {
+		t.Errorf("default paired mode: task count = %d, want 4 (2 impl + 2 test)", len(proposal.Tasks))
+	}
+
+	implCount := 0
+	testCount := 0
+	for _, task := range proposal.Tasks {
+		if strings.HasSuffix(task.Slug, "-tests") {
+			testCount++
+		} else {
+			implCount++
+		}
+	}
+	if implCount != 2 {
+		t.Errorf("default paired mode: impl count = %d, want 2", implCount)
+	}
+	if testCount != 2 {
+		t.Errorf("default paired mode: test count = %d, want 2", testCount)
+	}
+
+	// TODO: When paired_test_tasks=false flag is implemented on DecomposeInput
+	// and wired through to generateProposal, add a subtest that verifies:
+	//   - 2 ACs → 2 tasks (impl only, no paired test tasks)
+	//   - No task slug ends with "-tests"
+	//   - Guidance includes "paired-test-tasks-disabled" or similar
+	t.Log("TODO: opt-out flag (paired_test_tasks=false) not yet implemented")
+}
