@@ -383,6 +383,128 @@ Model routing is the largest architectural change in P41. The research repeatedl
 - No dependency on P42 or P43 — can be designed in parallel, but should not be built until they are stable
 - When built, P43's `dispatch_validator` abstraction routes validators through the `audit` category automatically (see P43 Forward Compatibility)
 
+## Enforcement: Closing the Manual-Prompt Gap (May 2026)
+
+### The problem
+
+The current dispatch flow has a three-step gap:
+
+```
+orchestrator calls next(id) → orchestrator calls handoff(id) → orchestrator calls spawn_agent(message=prompt)
+```
+
+`spawn_agent` is provided by the host agent runtime — Kanbanzai has no control over it. The orchestrator can (and sometimes does) skip `handoff` entirely and compose a prompt manually, bypassing the entire context assembly pipeline. When this happens, the sub-agent receives:
+
+- No role identity or vocabulary
+- No skill procedure or anti-patterns
+- No knowledge entries or wisdom forwarding
+- No codebase-memory-mcp graph project context
+- No stage-aware orchestration guidance
+
+Manual composition also drops the `write_file`/`kanbanzai_edit_file` worktree-scoping instructions that the `implement-task` skill requires.
+
+**Concrete incident (P50, May 2026):** During fast-track implementation of 16 tasks across 4 features, the orchestrator called `handoff(task_id)` for each task. Every response came back with `assembly_path: "pipeline-3.0"` and `total_tokens: ~8900` — the pipeline was working. But the assembled prompt was the full `orchestrate-development` skill (~9K tokens of orchestrator role/vocabulary/anti-patterns/procedure) rather than the `implement-task` skill that a sub-agent needs. The orchestrator recognized this content mismatch, discarded all handoff output, and manually composed 12 custom implementer prompts from scratch. Each custom prompt was ~400-600 tokens of task-specific instructions — missing spec sections, knowledge entries, code graph context, and role-grounded vocabulary that the pipeline would have included if it had resolved the correct role.
+
+**What the sub-agents did NOT receive:**
+- No `implementer-go` role identity or Go-specific vocabulary
+- No `implement-task` skill procedure, test expectations, or anti-patterns
+- No spec sections or acceptance criteria from the parent feature
+- No knowledge entries or wisdom forwarding from sibling tasks
+- No codebase-memory graph project context for code navigation
+- No `write_file`/`kanbanzai_edit_file` worktree-scoping instructions
+
+Despite this, all 12 tasks completed successfully because the manual prompts included worktree paths, file scopes, and commit formats — the bare minimum for implementation. But the orchestrator violated the `orchestrate-development` skill's own rule: "Always use `handoff(task_id: "TASK-xxx")` to generate sub-agent prompts. Never compose implementation prompts manually." The rule was followed technically (handoff was called) but the output was unusable for its intended consumer, so the rule was violated in spirit.
+
+### Why this happens
+
+Three contributing factors:
+
+1. **Dual-path architecture:** The `handoff` tool has both a 3.0 pipeline path and a legacy 2.0 fallback. The legacy path produces context without roles, skills, vocabulary, or anti-patterns. When both paths exist, neither is obviously "the" path — and the orchestrator sees `assembly_path: "legacy-2.0"` in metadata without understanding what it means.
+
+2. **Manual composition is always possible:** Because `spawn_agent` accepts arbitrary text, the orchestrator can always write its own prompt. The `orchestrate-development` skill says "Always use `handoff(task_id: ...)`" and has an anti-pattern "Manual Prompt Composition" — but these are behavioral guardrails, not technical enforcement.
+
+3. **Three-tool-call sequence:** `next` → `handoff` → `spawn_agent` is three distinct tool calls. Each is a decision point where the orchestrator can diverge. A single `dispatch_task` call would eliminate the middle decision points.
+
+4. **Pipeline defaults to orchestrator role, not sub-agent role:** When `handoff` is called without an explicit `role` parameter, the 3.0 pipeline's `stepResolveRole` falls back to `state.Binding.Roles[0]` — which for the `developing` stage is `"orchestrator"`. Similarly, `stepLoadSkill` falls back to `state.Binding.Skills[0]` = `"orchestrate-development"`. The pipeline has sub-agent role/skill resolution logic (`sub_agents.roles` / `sub_agents.skills`), but it only activates when the caller passes an explicit `role` parameter that prefix-matches a sub-agent role. The orchestrator had no reason to know it needed to pass `role: "implementer-go"` — the `orchestrate-development` skill says "Always use `handoff(task_id: "TASK-xxx")`" without mentioning the role parameter. The correct invocation (`handoff(task_id: "TASK-xxx", role: "implementer-go")`) is discoverable only by reading the pipeline source code.
+
+### How P44 solves this
+
+The `dispatch_task` MCP tool (Phase 1 of P44) collapses the three-step sequence into a single call:
+
+```
+orchestrator calls dispatch_task(task_id: "TASK-xxx", category: "implementation")
+```
+
+Internally, `dispatch_task`:
+1. Claims the task (what `next` does today)
+2. Runs the 3.0 pipeline to assemble context (what `handoff` does today)
+3. Routes to the appropriate provider+model based on category
+4. Calls the provider API directly
+5. Returns the sub-agent's result to the orchestrator
+
+The orchestrator never sees a raw prompt — it only sees task IDs and results. The pipeline is *the* path, not one of two options. Manual composition is impossible because there's no prompt to compose.
+
+### Interaction with P51 (immediate fix)
+
+P51 removes the legacy 2.0 fallback path from `handoff` and makes the 3.0 pipeline unconditional. This is a prerequisite cleanup — it ensures that by the time P44 implements `dispatch_task`, there is only one context assembly path to internalize. P51 also fixes the `handoff` tool's sub-agent role routing. Currently, `handoff(task_id: "TASK-xxx")` without a `role` parameter resolves to the binding's primary role (`orchestrator`) and primary skill (`orchestrate-development`) — producing a prompt full of orchestration patterns, cohort management, and context compaction procedures. The fix has two parts:
+
+1. **Pipeline default change:** When the binding has `sub_agents` defined and no explicit `role` is passed, default to the first sub-agent role/skill (`implementer-go` / `implement-task`) rather than the primary orchestrator role/skill. This makes the default behavior correct for the common case (sub-agent dispatch).
+
+2. **Skill documentation:** The `orchestrate-development` skill should explicitly instruct orchestrators to pass `role: "implementer-go"` (or the appropriate sub-agent role) when calling `handoff` for `spawn_agent` dispatch. The current instruction "Always use `handoff(task_id: "TASK-xxx")`" is silently incomplete.
+
+These changes ensure that `handoff` produces an implementer-focused prompt by default, closing the gap between "pipeline was called" and "pipeline produced useful output."
+
+### The byte_budget and context-window confusion
+
+A separate but related discovery from P50: the orchestrator's context packets showed `byte_budget: 30720` and `byte_usage: 30301` (98.6% full), creating an impression of extreme context pressure. Investigation revealed that `byte_budget` has nothing to do with the model's context window — it's a hardcoded assembly cap (`assemblyDefaultBudget = 30720`) in `internal/mcp/assembly.go` that limits how much JSON the MCP server packs into a single `next` or `handoff` response. This cap causes knowledge entries and spec sections to be trimmed from the response before they ever reach the orchestrator.
+
+The 3.0 pipeline has its own separate budget system that operates in tokens and is keyed to the context window:
+- `DefaultContextWindowTokens = 200_000` (not 1,000,000 — needs recalibration for current models)
+- `BudgetWarnRatio = 0.40` (warn at 40% → 80K tokens at 200K window)
+- `BudgetRefuseRatio = 0.60` (refuse at 60% → 120K tokens at 200K window)
+
+**Three separate sizing concerns that are easily conflated:**
+
+| Concern | Constant | Current value | What it limits |
+|---------|----------|---------------|----------------|
+| MCP response size | `assemblyDefaultBudget` | 30,720 bytes | JSON payload per `next`/`handoff` call |
+| Pipeline token budget | `DefaultContextWindowTokens` × ratios | 80K/120K tokens | When the 3.0 pipeline warns or refuses assembly |
+| Actual model context | N/A (outside Kanbanzai) | ~1M tokens | What the LLM can hold in working memory |
+
+The 30KB response cap is the most impactful in practice — it silently drops knowledge entries and spec sections from `next` context before they reach the orchestrator, and the orchestrator has no visibility into what was trimmed (only entry counts and sizes in metadata). The 200K default window size is stale — current models have 1M token windows, making the 40%/60% thresholds 5× more conservative than intended.
+
+**Design implication:** When P44 builds `dispatch_task`, the internal pipeline should not be subject to the 30KB response cap — it's assembling a provider API request, not an MCP JSON response. The pipeline's token budget should be calibrated to the actual model context window (1M tokens) rather than the hardcoded 200K default.
+
+### Fast-track pipeline mismatch (P50 finding)
+
+The P50 fast-track implementation exposed a gap between the `orchestrate-development` skill's design and the reality of small-feature dispatch. The skill is designed for multi-feature, multi-cohort batch orchestration: merge schedules, cohort checkpoints, context offloading at 60%, fresh orchestrator spawning. For fast-track features — small, independent, with no review cycles — most of this machinery is irrelevant but still consumes context.
+
+Specific mismatches:
+- **"Stop and hand off at 60%"** vs. **"Zero human gates"**: The fast-track tier says no human gates; the skill says stop and hand off at 60% context utilization. These are contradictory when the orchestrator is the only session.
+- **Cohort management for single-feature batches**: Phase 0 (Cohort Setup) is designed for batches with 3+ features. For fast-track, every batch has exactly one feature.
+- **Context offloading without P44**: The skill assumes a routing agent can spawn fresh orchestrators from compaction artefacts. Without P44's dispatch loop, this is dead instruction.
+
+**Design implication:** P44 should support a `fast_track` dispatch mode that uses a lightweight orchestration profile: skip cohort setup, skip merge scheduling, skip context offloading instructions, and default to `implementation` category. The mode should produce a minimal orchestration context — task graph, file ownership, dependency status — without the full `orchestrate-development` procedure. This doesn't require a new skill; it requires the pipeline to recognize when the feature's tier indicates a lightweight profile and suppress irrelevant sections. P52 defines the fast-track behavioral profile (session-start audit, no-implicit-gates rules, ghost-work detection) that this dispatch mode should automate.
+
+### Repeated context across task claims
+
+Each `next` call during P50 returned ~30KB of context, most identical across the 12 tasks (same ~50 knowledge entries, same implementation guidance, same tool subset). The orchestrator received essentially the same knowledge base 12 times. Context assembly is per-task-claim, not per-session.
+
+**Design implication:** `dispatch_task` should maintain session-scoped context. On first dispatch call within a session, assemble the full context (knowledge, guidance, vocabulary). On subsequent calls, only assemble task-specific sections (spec section, file scope, acceptance criteria). The session context is held in the dispatch loop's memory, not serialized to the orchestrator. This eliminates the per-claim redundancy that P50 exposed.
+
+### Design implication for `dispatch_task`
+
+The `dispatch_task` tool should:
+- Accept `task_id` and optionally `category` (defaulting to the binding's sub-agent category)
+- Run the pipeline internally — no separate `handoff` call
+- Map the task's resolved role to a model category via `.kbz/routing.yaml`
+- Never expose the raw prompt to the orchestrator (it goes directly to the provider API)
+- Return a structured result (task status, summary, files modified, verification)
+- Maintain session-scoped context to avoid re-assembling identical knowledge entries per task claim
+- Support a `fast_track` mode that suppresses cohort management, merge scheduling, and context offloading for small independent features
+
+This design makes the pipeline *non-bypassable* — the only way to dispatch a sub-agent is through `dispatch_task`, and `dispatch_task` always runs the pipeline.
+
 ## Open Questions
 
 1. **Embedded vs. separate server:** Resolved by research validation — Option C (build together, extract later) is the correct initial choice. The `internal/routing/` package boundary keeps extraction viable if model routing proves useful beyond Kanbanzai. DeepSeek's dual-format API (both OpenAI and Anthropic protocols from a single provider) further validates Option C: a single `Provider` interface serves all three providers, demonstrating the boundary is clean enough to extract if needed.
@@ -393,3 +515,7 @@ Model routing is the largest architectural change in P41. The research repeatedl
 6. **Should validators always use a specific model?** Yes — validators have a different cognitive profile (compliance audit) than authors (creative synthesis). Research (Masters et al., 2025) shows audit tasks value consistency over creative depth. When model routing is built, validators route through the `audit` category (near-zero temperature, consistency-optimized). Until then, P43 uses same model with different temperature and role prompt via `spawn_agent`.
 7. **Thinking vs. temperature irreconcilability:** Resolved — `review` and `audit` categories MUST disable thinking mode because they require low temperature for deterministic output. When thinking is enabled, `temperature` is silently ignored by all major providers. This is a hard design constraint enforced at configuration validation time (see analysis report §4.5).
 8. **DeepSeek protocol choice:** Resolved — use OpenAI Chat Completions format for DeepSeek. Rationale: maximum code sharing with Phase 2 OpenAI integration, access to DeepSeek-specific features (strict mode tool calling, JSON mode). Trade-off: Phase 1 implements two protocols (Anthropic Messages + OpenAI Chat Completions). See analysis report §6.1.
+9. **Pipeline enforcement:** Resolved by this update — `dispatch_task` makes the pipeline non-bypassable by internalizing it. The orchestrator never sees a raw prompt; it only calls `dispatch_task(task_id, category)`. Manual composition is eliminated as a failure mode. P51 removes the legacy 2.0 fallback as a prerequisite. P52 defines the fast-track behavioral profile (no-implicit-gates, session-start audit, ghost-work detection) that the fast_track dispatch mode should automate.
+10. **Stale binary after code changes:** The running `kbz serve` binary showed `git_sha: unknown` (via `server_info`) while the install record showed a valid SHA. The Makefile outputs `kbz` but the editor MCP config references `kanbanzai`. When P44 adds provider API keys and a dispatch loop, stale-binary issues become more dangerous — a running server with old routing config or missing provider credentials could silently fail dispatches. `dispatch_task` should verify at startup that its binary SHA matches the install record, and refuse dispatches if mismatched.
+11. **Handoff-to-spawn_agent loop remains unclosed:** The orchestrator must manually call `spawn_agent` after `handoff`. In fast-track auto-validation, validators stop at "prompt generated" and wait. This is the same gap P44's `dispatch_task` closes — but it also means that until P44 ships, the orchestrator is the human-in-the-loop for every sub-agent dispatch. `dispatch_task` should be the highest-priority Phase 1 deliverable to close this loop.
+12. **Context threshold calibration:** The orchestrator role's 45% and 60% context utilisation thresholds were calibrated for ~128K-200K token windows. With 1M token windows now standard, 45% = 450K tokens — more working room than a full 128K window at 90%. The pipeline's `DefaultContextWindowTokens = 200_000` is similarly stale. P44 should recalibrate these to absolute token counts rather than percentages, or to percentages of a configurable window size that defaults to 1M.

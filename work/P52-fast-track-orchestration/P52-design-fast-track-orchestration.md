@@ -169,3 +169,23 @@ The `finish` tool has a 500-character summary limit that isn't documented in the
 1. **How should the orchestrator detect fast-track mode?** By the feature's `tier` field (`retro_fix`), by a batch-level flag, or by an explicit instruction in the prompt? (Recommend: feature tier — it's already in the entity state and doesn't require additional configuration.)
 2. **Should the session-start audit be automated?** A tool that cross-references task state against code existence would eliminate the manual ghost-work check. (Recommend: defer — valuable but not blocking; manual audit is sufficient for now.)
 3. **Should the `finish` summary limit be documented in the error message?** The current message says "summary exceeds 500-character limit" but doesn't state the limit in the handler. (Recommend: yes — add the limit to the `finish` tool description so orchestrators know before they hit it.)
+
+## Findings from System Instrumentation (May 2026 Retrospective)
+
+### Stale binary caused false verification failures
+
+During the `state_modified` implementation, 3 of 9 acceptance criteria appeared to fail when the code was correct. The running `kbz serve` binary was 3 days stale — new MCP tool parameters existed in source but not in the running server. The `server_info` tool detected the mismatch (`git_sha: unknown` vs. install record SHA) but the orchestrator didn't call it at session start. For fast-track, where features move from spec to done without review, a stale binary could mean an entire pipeline runs against old tool definitions.
+
+**For P52:** The session-start audit should include a `server_info` call to verify the binary is current. If `git_sha` is unknown or doesn't match the install record, the orchestrator should warn the human before proceeding.
+
+### Health checker false positives
+
+The health dashboard reports 7 features as "orphaned reviewing" when they're actually done via override transitions. The checker flags missing review documents without checking whether the feature's current status is `done`. Additionally, done plans (P40, P48) show as "ready to close" attention items perpetually — there's no action to take but the dashboard can't suppress them. For fast-track, where override transitions are the norm (no review cycles), these false positives create noise that undermines trust in the health dashboard.
+
+### Store consistency issues
+
+At session start, `.kbz/` state files are frequently found modified or untracked — 10 modified index files and 12 untracked files on 2026-05-03 alone. The MCP server auto-commits workflow state changes, but if a tool call times out or is interrupted, the commit may not happen. Additionally, the SQLite cache can disagree with YAML state: tasks showing `done` via `entity(get)` but `ready` via `entity(list)`. For fast-track, where the orchestrator must trust entity state to determine the ready frontier, cache staleness can cause tasks to be dispatched twice or skipped entirely.
+
+### Plan numbering reuse
+
+Creating plans via `entity(action: "create")` reuses stale P1 numbers instead of assigning the next available (P51, P52). The root cause is that `listAllPlanIDs` scans batch plans, not strategic plans. For fast-track, where plans may be created frequently for small retro batches, incorrect plan numbering creates confusion and potential ID collisions.
