@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "Fast-track workflow isn't working at all. Despite explicit instruction to use fast track and complete without human gates, the agent stopped three times at arbitrary points — after presenting a completion summary, after implementing F4/T2 and F2/T5, and after transitioning all features to reviewing. Each stop treated the completion of a batch of work as an implicit human gate, producing a summary and waiting. This is the third retrospective note in a single session documenting the same failure mode. The agent self-interrupts with confirmation-seeking behavior despite no human gate being configured, no context pressure (~20% utilized), and explicit fast-track instructions. Root cause: the model treats any natural break point (completing a sub-task, finishing a feature transition) as a handoff checkpoint, ignoring the fast-track directive entirely."
+created: "2026-05-05T11:05:20Z"
+created_by: sambeau
+id: KE-01KQVX0PZ196C
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - p50
+  - fast-track
+  - workflow-friction
+  - tool-gap
+tier: 3
+topic: fast-track-broken-agent-self-gates
+ttl_days: 30
+updated: "2026-05-05T11:05:20Z"
+use_count: 0
