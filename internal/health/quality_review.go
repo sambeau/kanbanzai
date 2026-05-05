@@ -8,12 +8,13 @@ const QualityReviewThreshold = 3
 
 // CheckQualityReviewSignal scans features for quality review signals:
 //   - Features that have reached the auto-validation cycle cap (blocked)
-//   - Features near the cycle cap (1 cycle remaining)
+//   - Features near the cycle cap (maxCycles - 1 remaining)
 //
+// Tiers is a map of tier name → maxCycles for near-cap calculation.
 // When the same escalation pattern (same tier + same blocked stage) appears
 // on QualityReviewThreshold or more features, a quality review warning is
 // raised in the health dashboard.
-func CheckQualityReviewSignal(features []map[string]any) CategoryResult {
+func CheckQualityReviewSignal(features []map[string]any, tiers map[string]int) CategoryResult {
 	result := NewCategoryResult()
 
 	// Count features blocked at cycle cap per tier.
@@ -43,9 +44,14 @@ func CheckQualityReviewSignal(features []map[string]any) CategoryResult {
 			blockedIDsByTier[tier] = append(blockedIDsByTier[tier], featureID)
 		}
 
-		// Near cap: review_cycle is at max-1 (one more cycle before escalation).
-		// We use 1 as a heuristic near-cap threshold since max varies by tier.
-		if reviewCycle >= 1 && blockedReason == "" {
+		// Near cap: review_cycle is at maxCycles-1 (one more cycle before escalation).
+		// Compute per-tier using the actual tier configuration to avoid false
+		// positives for tiers with max_cycles < 2 (e.g. critical max_cycles=0).
+		maxCycles, hasCfg := tiers[tier]
+		if !hasCfg {
+			maxCycles = 2 // default for unconfigured tiers
+		}
+		if blockedReason == "" && maxCycles > 0 && reviewCycle >= maxCycles-1 {
 			nearCapByTier[tier]++
 			nearCapIDsByTier[tier] = append(nearCapIDsByTier[tier], featureID)
 		}

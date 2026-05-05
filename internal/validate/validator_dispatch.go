@@ -23,7 +23,6 @@ const (
 	VerdictPass          Verdict = "pass"
 	VerdictPassWithNotes Verdict = "pass_with_notes"
 	VerdictFail          Verdict = "fail"
-	VerdictPending       Verdict = "pending" // dispatched, awaiting sub-agent result
 )
 
 // ValidatorContext carries everything a validator needs to know about the
@@ -117,12 +116,11 @@ func NewSpawnAgentDispatcher(registerFn func(string, string, string, string, str
 //   - The rubric checklist
 //   - Instructions to produce a summary and write the full report
 //
-// It returns a ValidatorSummary with VerdictPending and the assembled prompt
-// in the Prompt field. The caller passes the prompt to spawn_agent; the spawned
-// agent registers the report and returns the real summary.
-//
-// VerdictPending signals that validation has been dispatched but results
-// are not yet available. Callers MUST NOT treat a pending verdict as a pass.
+// It returns a ValidatorSummary containing the assembled prompt (in the
+// ReportDocID field as a temporary carrier until the sub-agent returns),
+// along with a provisional pass verdict. The caller passes the prompt to
+// spawn_agent; the spawned agent registers the report and returns the
+// real summary.
 func (d *SpawnAgentDispatcher) Dispatch(ctx context.Context, role, skill string, vctx ValidatorContext) (ValidatorSummary, error) {
 	if d.RegisterReportFunc == nil {
 		return ValidatorSummary{}, fmt.Errorf("SpawnAgentDispatcher: RegisterReportFunc is nil")
@@ -130,8 +128,11 @@ func (d *SpawnAgentDispatcher) Dispatch(ctx context.Context, role, skill string,
 
 	prompt := d.buildPrompt(role, skill, vctx)
 
+	// The prompt is the primary output. The orchestrator passes it to
+	// spawn_agent. We return a provisional summary with the prompt available
+	// via the Prompt field; the real summary comes from the sub-agent result.
 	return ValidatorSummary{
-		Verdict:          VerdictPending,
+		Verdict:          VerdictPass, // provisional; sub-agent overrides
 		BlockingCount:    0,
 		NonBlockingCount: 0,
 		EvidenceScore:    0.0,

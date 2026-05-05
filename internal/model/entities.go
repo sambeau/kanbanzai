@@ -37,6 +37,9 @@ const (
 )
 
 // Deprecated: use BatchStatus.
+// NOTE: PlanStatus is a deprecated alias for BatchStatus and will be removed
+// after P38-F3 migration. The separate PlanningStatus type (below) will
+// become PlanStatus once this deprecated alias is removed.
 type PlanStatus = BatchStatus
 
 // Deprecated constants.
@@ -377,7 +380,6 @@ type Feature struct {
 	DisplayID     string        `yaml:"display_id,omitempty"`
 	Parent        string        `yaml:"parent,omitempty"` // Parent Batch/Plan ID
 	Status        FeatureStatus `yaml:"status"`
-	Tier          string        `yaml:"tier,omitempty"` // "standard" (default) or "fast-track"
 	ReviewCycle   int           `yaml:"review_cycle,omitempty"`
 	BlockedReason string        `yaml:"blocked_reason,omitempty"`
 	Estimate      *float64      `yaml:"estimate,omitempty"`
@@ -393,6 +395,10 @@ type Feature struct {
 
 	// Tags for cross-cutting organisational metadata
 	Tags []string `yaml:"tags,omitempty"`
+
+	// Tier is the fast-track risk tier: retro_fix, bug_fix, feature, or critical.
+	// Set explicitly or inferred at creation time. Never re-inferred after creation.
+	Tier string `yaml:"tier,omitempty"`
 
 	// Legacy fields (Phase 1 compatibility)
 	Plan string `yaml:"plan,omitempty"` // Deprecated: use DevPlan

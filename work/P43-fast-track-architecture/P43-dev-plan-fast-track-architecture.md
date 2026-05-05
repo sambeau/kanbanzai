@@ -3,7 +3,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-04                     |
-| Status | approved |
+| Status | Draft                          |
 | Author | AI architect                   |
 
 ## Overview

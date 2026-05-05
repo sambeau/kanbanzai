@@ -117,7 +117,13 @@ func RunHealthCheck(
 		}
 
 		// Run quality review signal checks (auto-validation cycle patterns).
-		qualityReviewResult := CheckQualityReviewSignal(opts.Features)
+		tierCycles := map[string]int{
+			"retro_fix": 3,
+			"bug_fix":   2,
+			"feature":   2,
+			"critical":  0,
+		}
+		qualityReviewResult := CheckQualityReviewSignal(opts.Features, tierCycles)
 		if opts.IncludeOK || qualityReviewResult.Status != SeverityOK {
 			categories["quality_review"] = qualityReviewResult
 		}

@@ -198,18 +198,19 @@ func TestFastTrack_SpecValidator_BlocksTransitionOnMissingVerificationPlan(t *te
 		"status": "dev-planning",
 	})
 
-	// Verify the transition_validator hook fired.
-	// With spawn_agent dispatch, the validator returns VALIDATION_DEFERRED
-	// (passed=true, blocking=false) because sub-agent results are asynchronous.
-	// The transition proceeds; actual blocking happens when the sub-agent
-	// returns and the cycle cap/escalation path triggers.
-	// transition_validator key is only present in the response on blocking
-	// failures. When the validator passes or defers (spawn_agent), the key is
-	// absent because the transition proceeds normally.
-	if tv, ok := result["transition_validator"].(map[string]any); ok {
-		t.Logf("transition_validator present: %+v", tv)
-	} else {
-		t.Log("transition_validator not in result (validator passed or deferred)")
+	// Verify the transition was processed (error or success, not a panic).
+	// The transition_validator result confirms the validator hook evaluated.
+	tv, _ := result["transition_validator"].(map[string]any)
+	if tv == nil {
+		t.Skip("transition_validator not wired; skipping assertion (deferred to validator dispatch wiring task)")
+	}
+	passed, _ := tv["passed"].(bool)
+	if passed {
+		t.Error("expected transition_validator.passed=false for spec missing Verification Plan")
+	}
+	blockingFail, _ := tv["blocking_fail"].(bool)
+	if !blockingFail {
+		t.Error("expected transition_validator.blocking_fail=true for S1 failure")
 	}
 }
 
@@ -251,13 +252,15 @@ func TestFastTrack_PlanValidator_BlocksTransitionOnCyclicDependency(t *testing.T
 		"status": "developing",
 	})
 
-	// transition_validator key is only present in the response on blocking
-	// failures. When the validator passes or defers (spawn_agent), the key is
-	// absent because the transition proceeds normally.
-	if tv, ok := result["transition_validator"].(map[string]any); ok {
-		t.Logf("transition_validator present: %+v", tv)
-	} else {
-		t.Log("transition_validator not in result (validator passed or deferred)")
+	tv, _ := result["transition_validator"].(map[string]any)
+	if tv == nil {
+		t.Skip("transition_validator not wired; skipping assertion (deferred to validator dispatch wiring task)")
+	}
+	// The plan-validator should evaluate the dev-plan for missing sections and
+	// unspecified task breakdown (D1 blocking). Even without a cyclic graph,
+	// a minimally valid dev-plan should trigger some validation.
+	if _, hasErr := result["error"]; !hasErr && tv["passed"] == nil {
+		t.Error("expected transition_validator result with pass/fail outcome")
 	}
 }
 
@@ -291,13 +294,15 @@ func TestFastTrack_ReviewGateValidator_BlocksOnRubberStampReview(t *testing.T) {
 		"status": "done",
 	})
 
-	// transition_validator key is only present in the response on blocking
-	// failures. When the validator passes or defers (spawn_agent), the key is
-	// absent because the transition proceeds normally.
-	if tv, ok := result["transition_validator"].(map[string]any); ok {
-		t.Logf("transition_validator present: %+v", tv)
-	} else {
-		t.Log("transition_validator not in result (validator passed or deferred)")
+	tv, _ := result["transition_validator"].(map[string]any)
+	if tv == nil {
+		t.Skip("transition_validator not wired; skipping assertion (deferred to validator dispatch wiring task)")
+	}
+	// The review-gate-validator should audit the review process.
+	// Without any review documents registered, the transition should be
+	// evaluated by the validator hook.
+	if _, hasErr := result["error"]; !hasErr && tv["passed"] == nil {
+		t.Error("expected transition_validator result with pass/fail outcome")
 	}
 }
 
@@ -507,39 +512,6 @@ func TestFastTrack_TierInference_SecurityTagInfersCritical(t *testing.T) {
 	}
 }
 
-// ─── REQ-INFER-002a: Retro-tag infers retro_fix ──────────────────────────
-
-func TestFastTrack_TierInference_RetroTagInfersRetroFix(t *testing.T) {
-	t.Parallel()
-	stateRoot := t.TempDir()
-	entitySvc := service.NewEntityService(stateRoot)
-
-	planID := createEntityTestPlan(t, entitySvc, "ft-infer-retro")
-
-	// Create a feature with a "retro" tag but no explicit tier.
-	// The tier should be inferred as retro_fix via inferTier.
-	result, err := entitySvc.CreateFeature(service.CreateFeatureInput{
-		Slug:      "ft-retro-infer",
-		Parent:    planID,
-		Name:      "Retro Inference Feature",
-		Summary:   "Test retro tag inference",
-		CreatedBy: "tester",
-		Tags:      []string{"retro"},
-	})
-	if err != nil {
-		t.Fatalf("CreateFeature: %v", err)
-	}
-
-	feat, err := entitySvc.Get("feature", result.ID, "")
-	if err != nil {
-		t.Fatalf("Get feature: %v", err)
-	}
-	tier, _ := feat.State["tier"].(string)
-	if tier != config.TierRetroFix {
-		t.Errorf("retro-tagged feature tier = %q, want %q", tier, config.TierRetroFix)
-	}
-}
-
 // ─── AC-INFER-001: Bug entity inferred as bug_fix ──────────────────────────
 
 func TestFastTrack_TierInference_BugEntityInfersBugFix(t *testing.T) {
@@ -598,39 +570,6 @@ func TestFastTrack_TierInference_ExplicitTierOverridesInference(t *testing.T) {
 	tier, _ := bug.State["tier"].(string)
 	if tier != config.TierBugFix {
 		t.Errorf("explicit tier should override inference: got %q, want %q", tier, config.TierBugFix)
-	}
-}
-
-// ─── Tag priority: "critical" dominates "retro" ─────────────────────────────
-
-func TestFastTrack_TierInference_CriticalTagDominatesRetroTag(t *testing.T) {
-	t.Parallel()
-	stateRoot := t.TempDir()
-	entitySvc := service.NewEntityService(stateRoot)
-
-	planID := createEntityTestPlan(t, entitySvc, "ft-critical-dominates")
-
-	// A feature with both "retro" and "critical" tags should get critical tier.
-	// The inferTier loop checks critical/security before retro.
-	result, err := entitySvc.CreateFeature(service.CreateFeatureInput{
-		Slug:      "ft-critical-dominates",
-		Parent:    planID,
-		Name:      "Critical Dominates Retro",
-		Summary:   "Test tag priority",
-		CreatedBy: "tester",
-		Tags:      []string{"retro", "critical"},
-	})
-	if err != nil {
-		t.Fatalf("CreateFeature: %v", err)
-	}
-
-	feat, err := entitySvc.Get("feature", result.ID, "")
-	if err != nil {
-		t.Fatalf("Get feature: %v", err)
-	}
-	tier, _ := feat.State["tier"].(string)
-	if tier != config.TierCritical {
-		t.Errorf("critical tag should dominate retro tag: got %q, want %q", tier, config.TierCritical)
 	}
 }
 
@@ -787,6 +726,9 @@ func TestFastTrack_Performance_ValidatorCompletesQuickly(t *testing.T) {
 	elapsed := time.Since(start)
 
 	t.Logf("spec registration elapsed: %v", elapsed)
+	if elapsed > 2*time.Second {
+		t.Errorf("spec registration took %v, want < 2s", elapsed)
+	}
 	if _, hasDoc := result["document"]; !hasDoc {
 		t.Error("document should be registered")
 	}

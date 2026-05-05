@@ -75,15 +75,14 @@ func (d *TransitionValidatorDispatcher) WithDispatch(svc ValidatorDispatcher) *T
 // Rules:
 //   - If no transition_validator for the from-stage → pass (nil result).
 //   - If gate_mode is "human" → skip, pass.
-//   - If gate_mode is "conditional" → evaluate conditional gate (doc-only vs
-//     implementation change; REQ-TIER-004).
+//   - If gate_mode is "conditional" → skip, pass (conditional gates are handled
+//     by model routing in P44).
 //   - If feature.BlockedReason is set → skip, pass. The feature is in human
 //     escalation and must not attempt further automated validation (REQ-PIPE-004).
 //   - If override is true → skip, record override.
-//   - If gate_mode is "auto" and dispatchSvc is wired → dispatch validator;
-//     if dispatch returns pending (sub-agent not yet run), transition proceeds
-//     with a deferred-validation notice.
-//   - If gate_mode is "auto" and dispatchSvc is nil → placeholder pass.
+//   - Otherwise, run validation placeholder (returns a pass for now —
+//     actual validation dispatch is implemented by callers via the
+//     ValidatorDispatchFunc mechanism).
 func (d *TransitionValidatorDispatcher) ValidateTransition(input ValidatorDispatchInput) (*ValidatorResult, error) {
 	stageBinding, ok := d.cache.LookupStage(input.FromStatus)
 	if !ok || stageBinding == nil || stageBinding.TransitionValidator == nil {
@@ -232,19 +231,9 @@ func (d *TransitionValidatorDispatcher) evaluateConditional(input ValidatorDispa
 }
 
 // isDocOnlyChange returns true if the file path is under a documentation-only
-// directory (work/, docs/, refs/, .kbz/roles/, .kbz/skills/, .agents/).
-// Implementation files are everything else.
-//
-// Uses path component matching (prefix + '/' or exact match) to avoid false
-// positives like "workflow/" matching "work/".
+// directory (work/, docs/, refs/). Implementation files are everything else.
 func isDocOnlyChange(path string) bool {
-	docDirs := []string{"work", "docs", "refs"}
-	docPrefixes := []string{".kbz/roles/", ".kbz/skills/", ".agents/"}
-	for _, d := range docDirs {
-		if path == d || strings.HasPrefix(path, d+"/") {
-			return true
-		}
-	}
+	docPrefixes := []string{"work/", "docs/", "refs/", ".kbz/roles/", ".kbz/skills/", ".agents/"}
 	for _, prefix := range docPrefixes {
 		if strings.HasPrefix(path, prefix) {
 			return true
@@ -264,27 +253,9 @@ func (d *TransitionValidatorDispatcher) runAutoValidation(input ValidatorDispatc
 		return nil, fmt.Errorf("validator dispatch failed: %w", err)
 	}
 
-	// VerdictPending means the dispatch service generated a prompt but the
-	// sub-agent hasn't returned results yet. Treat as deferred validation —
-	// the transition proceeds but validation is logged as pending.
-	if summary.Verdict == VerdictPending {
-		return &ValidatorResult{
-			Stage:  input.FromStatus,
-			Passed: true,
-			Checks: []ValidatorCheck{
-				{
-					CheckID:   "VALIDATION_DEFERRED",
-					Passed:    true,
-					Blocking:  false,
-					Summary:   fmt.Sprintf("validator %s/%s dispatched; results pending from sub-agent (prompt available for spawn_agent)", tv.Role, tv.Skill),
-					CheckType: "notice",
-				},
-			},
-			BlockingFail: false,
-		}, nil
-	}
-
 	checks := make([]ValidatorCheck, 0, summary.BlockingCount+summary.NonBlockingCount)
+	// Without the full report we can't enumerate individual checks, but we
+	// can capture the aggregate outcome from the summary.
 	if summary.Verdict == VerdictFail || summary.Verdict == VerdictPassWithNotes {
 		checks = append(checks, ValidatorCheck{
 			CheckID:   "AGGREGATE",

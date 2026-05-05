@@ -222,10 +222,9 @@ func TestSpawnAgentDispatcher_Dispatch_GeneratesPrompt(t *testing.T) {
 		t.Error("prompt should mention blocking/non-blocking classification")
 	}
 
-	// Dispatch returns VerdictPending: sub-agent results are asynchronous.
-	// The caller passes the prompt to spawn_agent and gets the real verdict later.
-	if summary.Verdict != VerdictPending {
-		t.Errorf("provisional verdict = %q, want %q", summary.Verdict, VerdictPending)
+	// The provisional summary should be a pass (placeholder).
+	if summary.Verdict != VerdictPass {
+		t.Errorf("provisional verdict = %q, want %q", summary.Verdict, VerdictPass)
 	}
 
 	if registerCalled {

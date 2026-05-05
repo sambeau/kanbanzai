@@ -24,16 +24,6 @@ type StageBinding struct {
 	DocumentTemplate    *DocumentTemplate    `yaml:"document_template,omitempty"`
 }
 
-// TransitionValidator declares a validator hook that runs when a feature
-// transitions out of this stage. It is separate from prerequisites —
-// prerequisites gate entry into the stage, transition validators gate exit.
-type TransitionValidator struct {
-	Role     string `yaml:"role"`
-	Skill    string `yaml:"skill"`
-	GateMode string `yaml:"gate_mode"` // "auto" (default) or "human"
-}
-
-// Prerequisites declares what must be true before entering the stage.
 type Prerequisites struct {
 	Documents      []DocumentPrereq `yaml:"documents,omitempty"`
 	Tasks          *TaskPrereq      `yaml:"tasks,omitempty"`
@@ -43,6 +33,15 @@ type Prerequisites struct {
 	// binding loader. Each key is passed to the registered evaluator dispatcher,
 	// which returns "unknown prerequisite type" if no evaluator is registered.
 	Extensions map[string]yaml.Node `yaml:"-"`
+}
+
+// TransitionValidator declares a validator hook that runs when a feature
+// transitions out of this stage. It is separate from prerequisites —
+// prerequisites gate entry into the stage, transition validators gate exit.
+type TransitionValidator struct {
+	Role     string `yaml:"role"`
+	Skill    string `yaml:"skill"`
+	GateMode string `yaml:"gate_mode"` // "auto" (default) or "human"
 }
 
 // UnmarshalYAML implements yaml.Unmarshaler so that unknown keys in a

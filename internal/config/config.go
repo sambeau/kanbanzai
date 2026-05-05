@@ -304,6 +304,23 @@ func (f FastTrackConfig) IsEnabled() bool {
 	return f.Enabled
 }
 
+// Validate checks the fast-track configuration for correctness.
+func (f FastTrackConfig) Validate() error {
+	if !f.Enabled {
+		return nil
+	}
+	validTiers := map[string]bool{"retro_fix": true, "bug_fix": true, "feature": true, "critical": true}
+	if !validTiers[f.DefaultTier] {
+		return fmt.Errorf("default_tier %q is not a valid tier", f.DefaultTier)
+	}
+	for name := range f.Tiers {
+		if !validTiers[name] {
+			return fmt.Errorf("tiers[%q] is not a valid tier name", name)
+		}
+	}
+	return nil
+}
+
 // DefaultFastTrackConfig returns the built-in tier configuration.
 func DefaultFastTrackConfig() FastTrackConfig {
 	return FastTrackConfig{
@@ -385,7 +402,7 @@ type Config struct {
 	Coordination CoordinationConfig `yaml:"coordination,omitempty"`
 	// ToolHints maps role IDs to opaque tool guidance strings injected into agent prompts.
 	ToolHints map[string]string `yaml:"tool_hints,omitempty"`
-	// FastTrack holds settings for the fast-track architecture (P43).
+	// FastTrack holds the fast-track automation configuration per REQ-TIER-005.
 	FastTrack FastTrackConfig `yaml:"fast_track,omitempty"`
 }
 
@@ -727,6 +744,10 @@ func (c *Config) Validate() error {
 		return errors.New("decomposition.max_tasks_per_feature must be non-negative")
 	}
 
+	if err := c.FastTrack.Validate(); err != nil {
+		return fmt.Errorf("fast_track: %w", err)
+	}
+
 	return nil
 }
 
@@ -915,6 +936,18 @@ func (c *Config) mergePhase4bDefaults() {
 	decompDefaults := DefaultDecompositionConfig()
 	if c.Decomposition.MaxTasksPerFeature == 0 {
 		c.Decomposition.MaxTasksPerFeature = decompDefaults.MaxTasksPerFeature
+	}
+
+	// FastTrack: merge defaults for unset fields.
+	fastTrackDefaults := DefaultFastTrackConfig()
+	if !c.FastTrack.Enabled && c.FastTrack.DefaultTier == "" && len(c.FastTrack.Tiers) == 0 {
+		c.FastTrack.Enabled = fastTrackDefaults.Enabled
+	}
+	if c.FastTrack.DefaultTier == "" {
+		c.FastTrack.DefaultTier = fastTrackDefaults.DefaultTier
+	}
+	if len(c.FastTrack.Tiers) == 0 {
+		c.FastTrack.Tiers = fastTrackDefaults.Tiers
 	}
 }
 

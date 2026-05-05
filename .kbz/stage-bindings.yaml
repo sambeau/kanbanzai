@@ -114,6 +114,10 @@ stage_bindings:
       topology: parallel
       max_agents: 4
     notes: "DeepMind saturation point for specialist panels is 4. Escalate to human after 3 fail-rework cycles."
+    transition_validator:
+      role: review-gate-validator
+      skill: validate-review
+      gate_mode: auto
 
   batch-reviewing:
     description: "Reviewing a completed batch for aggregate delivery"
