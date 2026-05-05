@@ -1,0 +1,6 @@
+id: TASK-01KQTX5DXB1VD
+parent_feature: FEAT-01KQTNYN00M4P
+slug: decompose-dep-graph-fix
+name: Fix dependency graph for complete tasks only
+summary: Update dependency graph generation to only express dependencies between complete task nodes. No partial-completion edges.
+status: queued

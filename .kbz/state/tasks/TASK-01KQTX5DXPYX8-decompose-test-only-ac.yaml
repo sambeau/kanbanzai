@@ -1,0 +1,6 @@
+id: TASK-01KQTX5DXPYX8
+parent_feature: FEAT-01KQTNYN00M4P
+slug: decompose-test-only-ac
+name: Implement testing-concern AC detection
+summary: Detect when an AC is purely a testing concern and produce single test task instead of impl+test pair
+status: queued
