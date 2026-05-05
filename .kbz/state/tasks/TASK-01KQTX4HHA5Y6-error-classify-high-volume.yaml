@@ -3,4 +3,11 @@ parent_feature: FEAT-01KQTNYMZRT6V
 slug: error-classify-high-volume
 name: Classify errors in high-volume tools
 summary: "Update entity, finish, next, doc, and decompose handlers to call classifyError on error paths"
-status: ready
+status: done
+completed: "2026-05-05T02:04:09Z"
+claimed_at: "2026-05-05T02:02:20Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-05T02:02:20Z"
+dispatched_by: sambeau
+completion_summary: "High-volume tools (entity, finish, next, doc, decompose) already classified via actionlog.Hook.Wrap which calls ClassifyError on every MCP invocation. No per-handler changes needed — hook intercepts all tool calls. Classification uses sentinel error checks + keyword pattern matching covering all 5 error types."
+verification: "Hook.Wrap in actionlog/hook.go lines 88-126: calls ClassifyError(err) at line 105, sets error_type on Entry. This runs for every MCP tool wrapped by the hook, including all high-volume tools."

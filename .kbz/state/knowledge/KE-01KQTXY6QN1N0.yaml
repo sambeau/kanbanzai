@@ -1,0 +1,19 @@
+confidence: "0.5"
+content: "handoff generates sub-agent prompts but there is no orchestrator agent to receive and act on them — the system spawn_agent tool requires the orchestrator to manually call it with the handoff output. In the current workflow, the human is the gate between handoff and spawn_agent. The fast-track pipeline has the same gap: tryAutoValidate dispatches validation info but the orchestrator must manually call spawn_agent to run the validator. To close this loop, either: (1) the MCP server needs a tool that accepts a handoff prompt and automatically spawns the sub-agent, or (2) the orchestrator skill needs to be updated to treat handoff output as an immediate dispatch instruction rather than advisory. Until then, fast-track auto-validation and orchestrator-worker dispatch both stop at 'prompt generated' and wait for the human to spawn the agent."
+created: "2026-05-05T02:02:12Z"
+created_by: sambeau
+id: KE-01KQTXY6QN1N0
+last_accessed_at: "2026-05-05T02:02:20Z"
+miss_count: 0
+recent_use_count: 1
+scope: project
+status: contributed
+tags:
+  - workflow-friction
+  - fast-track
+  - orchestration
+tier: 3
+topic: handoff-spawn-agent-loop-not-closed
+ttl_days: 30
+updated: "2026-05-05T02:02:12Z"
+use_count: 0

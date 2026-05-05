@@ -1,0 +1,19 @@
+confidence: "0.5"
+content: "The 45% and 60% context utilisation thresholds in the orchestrator role and skill were calibrated for ~128K-200K token context windows common in early 2025. With 1M token context windows now available, these percentages translate to vastly different absolute capacities: 45% = 450K tokens (vs. 57K-90K originally), 60% = 600K tokens. The thresholds should either be recalibrated for larger windows or expressed as absolute token counts rather than percentages. A 1M window at 45% still has more working room than a 128K window at 90%."
+created: "2026-05-05T02:01:58Z"
+created_by: sambeau
+id: KE-01KQTXXRSCB9A
+last_accessed_at: "2026-05-05T02:02:20Z"
+miss_count: 0
+recent_use_count: 1
+scope: project
+status: contributed
+tags:
+  - context-budget
+  - orchestration
+  - threshold-calibration
+tier: 3
+topic: context-utilisation-thresholds-large-windows
+ttl_days: 30
+updated: "2026-05-05T02:01:58Z"
+use_count: 0
