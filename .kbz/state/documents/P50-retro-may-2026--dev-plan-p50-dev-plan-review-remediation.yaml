@@ -1,11 +1,13 @@
+approved_at: "2026-05-05T12:22:52Z"
+approved_by: sambeau
 canonical_content_hash: 762f4d3a3d2c8a17e0f798d78b7e8713316b8c57256e608a6e3533ea102048f2
-content_hash: 7129c71156f88a75f191e3713bae37c9ccba9f84ad569e8fdd7c57dc7cab201f
+content_hash: 9c4eaf7d1ef9f4da2d84d71931ba1f872973fe85785e04d9fac1439178970a6f
 created: "2026-05-05T12:06:16Z"
 created_by: sambeau
 id: P50-retro-may-2026/dev-plan-p50-dev-plan-review-remediation
 owner: P50-retro-may-2026
 path: work/P50-retro-may-2026/P50-dev-plan-review-remediation.md
-status: draft
+status: approved
 title: "Dev-Plan: P50 Review Remediation"
 type: dev-plan
-updated: "2026-05-05T12:06:16Z"
+updated: "2026-05-05T12:22:52Z"
