@@ -39,7 +39,9 @@ This is a **behavioral profile**, not a code change. It lives in the `orchestrat
    - Which tasks are ready to dispatch
    - Which tasks are stuck (queued with unmet dependencies, active but stale)
 2. Cross-reference against the dev-plan. If any task marked done doesn't exist in the code, flag it.
-3. Identify ghost work: for each ready task, check whether the described change already exists. If yes, mark `not-planned` — do not claim or implement.
+3. Check review-readiness drift before dispatch: if a feature is in `reviewing` via override but still has non-terminal tasks, surface that as a blocker rather than trusting the lifecycle status alone.
+4. Check dirty working-tree state before implementation: if `git status` shows unrelated work, classify it as prior work, workflow/index metadata, or current-scope changes before editing.
+5. Identify ghost work: for each ready task, check whether the described change already exists. If yes, mark `not-planned` — do not claim or implement.
 
 **Phase 1: Dispatch (replaces Read Dev-Plan + Identify Parallel-Dispatchable + Dispatch Sub-Agents)**
 
@@ -133,6 +135,14 @@ F4/T4 was `queued` but the work it described was already done in existing docume
 ### Entity state ambiguity
 
 The user's summary table ("F2: 4/5, F3: 3/3 ✅") didn't match the actual task state files. Some tasks showed `done` in YAML but weren't recognized as terminal by the gate system (F2/T5). Some showed `queued` but the user considered them complete (F5/T2-T4-T7). The batch entity (B49) wasn't registered in the entity system, so `status()` couldn't provide a batch-scoped dashboard. The orchestrator spent significant time reconciling user claims against YAML state.
+
+### P50 review follow-up: lifecycle status is not enough
+
+During P50 review and remediation planning, the same ambiguity appeared in a more damaging form: F2 was in `reviewing` via override while one task was still queued, and F5 was still `developing` while the user summary described all five features as ready for review. A fast-track session-start audit must treat lifecycle status as one signal, not the whole truth. It should check task terminality, registered review reports, worktree state, and explicit deferral decisions before deciding that a plan or feature can close.
+
+### P50 review follow-up: dirty work needs attribution
+
+The required `git status` check surfaced unrelated dirty work mixed with current P50 document/index changes. Fast-track should not proceed from a generic dirty/clean boolean. It needs a lightweight classification step: current-scope changes, prior unfinished implementation, workflow/index metadata, and unrelated plan/design edits. P53 should provide the underlying dirty-work attribution capability; P52 should consume it in the session-start audit.
 
 ### finish summary limit
 

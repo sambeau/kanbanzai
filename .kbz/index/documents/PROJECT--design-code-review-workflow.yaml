@@ -608,8 +608,8 @@ conventional_roles:
     - section_path: "1.17"
       role: narrative
       confidence: high
-access_count: 3
-last_accessed_at: 2026-04-24T15:55:10.208767Z
+access_count: 4
+last_accessed_at: 2026-05-05T12:29:57.272471Z
 classified: true
 classified_at: 2026-04-22T18:22:15.628196Z
 classified_by: claude-sonnet-4-6
