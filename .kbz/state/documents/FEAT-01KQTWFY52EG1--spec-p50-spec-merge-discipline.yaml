@@ -1,11 +1,13 @@
+approved_at: "2026-05-05T01:38:53Z"
+approved_by: sambeau
 canonical_content_hash: 992555d77dceec5b812245712332d525e18fa53d9519e52686b5be8a0bdf9a44
-content_hash: ee437e5367378b7386ec6975c605c51bffc86d1f8812ba1fb3b27e496d3cdba9
+content_hash: ea9c1ecf01f014d41d8d63e1eae59975df116c0c023150e7951f694413d3100a
 created: "2026-05-05T01:38:37Z"
 created_by: sambeau
 id: FEAT-01KQTWFY52EG1/spec-p50-spec-merge-discipline
 owner: FEAT-01KQTWFY52EG1
 path: work/P50-retro-may-2026/P50-spec-merge-discipline.md
-status: draft
+status: approved
 title: "Specification: Merge Discipline and Definition of Done"
 type: spec
-updated: "2026-05-05T01:38:37Z"
+updated: "2026-05-05T01:38:53Z"
