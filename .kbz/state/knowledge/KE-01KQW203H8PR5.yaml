@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "P50 retro batch reviewed and remediated. All blocking findings BF-1 through BF-10 resolved. The remediation involved: merging 3 feature branches to main (F2 decompose quality, F4 merge discipline, F5 doc path tool), implementing the verifying-stage build/test gate in executeMerge (R9), creating review reports for F4 cycle 2, handling F3 via direct commit (state_modified code was already on main). Key architectural changes: FeatureStatusMerging/Verifying lifecycle stages, FeatureValidTransitions state machine, SignalStateModified on mutation handlers, merge ancestry verification, dual-write skill mirrors staying in sync."
+created: "2026-05-05T12:32:23Z"
+created_by: sambeau
+id: KE-01KQW203H8PR5
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - p50
+  - remediation
+  - review
+  - merge
+tier: 3
+topic: p50-remediation-completed
+ttl_days: 30
+updated: "2026-05-05T12:32:23Z"
+use_count: 0
