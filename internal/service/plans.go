@@ -81,12 +81,12 @@ func (s *EntityService) CreatePlan(input CreatePlanInput) (CreateResult, error) 
 
 	now := s.now()
 	entity := model.Plan{
-		ID:        idValue,
-		Slug:      slug,
-		Name:      planName,
-		Status:    model.PlanStatusProposed,
-		Summary:   strings.TrimSpace(input.Summary),
-		Tags:      normalizeTags(input.Tags),
+		ID:             idValue,
+		Slug:           slug,
+		Name:           planName,
+		Status:         model.PlanStatusProposed,
+		Summary:        strings.TrimSpace(input.Summary),
+		Tags:           normalizeTags(input.Tags),
 		Created:        now,
 		CreatedBy:      strings.TrimSpace(input.CreatedBy),
 		Updated:        now,
@@ -103,6 +103,34 @@ func (s *EntityService) CreatePlan(input CreatePlanInput) (CreateResult, error) 
 	}
 	s.cacheUpsertFromResult(result)
 	return result, nil
+}
+
+// AllocateFeatureDisplayIDInPlan allocates the next feature display ID in a plan
+// by incrementing its next_feature_seq counter. Returns the new display ID (e.g. "P37-F5").
+// This is used by kbz move Mode 2 when re-parenting a feature to a different plan.
+func (s *EntityService) AllocateFeatureDisplayIDInPlan(planID string) (string, error) {
+	planResult, err := s.GetPlan(planID)
+	if err != nil {
+		return "", fmt.Errorf("load plan %s: %w", planID, err)
+	}
+
+	seq := intFromState(planResult.State, "next_feature_seq", 1)
+
+	_, planNum, _ := model.ParsePlanID(planID)
+	displayID := fmt.Sprintf("P%s-F%d", planNum, seq)
+
+	planResult.State["next_feature_seq"] = seq + 1
+	planRecord := storage.EntityRecord{
+		Type:   string(model.EntityKindPlan),
+		ID:     planResult.ID,
+		Slug:   planResult.Slug,
+		Fields: planResult.State,
+	}
+	if _, err := s.store.Write(planRecord); err != nil {
+		return "", fmt.Errorf("increment plan sequence for %s: %w", planID, err)
+	}
+
+	return displayID, nil
 }
 
 // GetPlan retrieves a Plan by ID.
@@ -441,13 +469,13 @@ func overrideRecordsToAny(records []model.OverrideRecord) []any {
 // planFields converts a Plan entity to a map of fields for storage.
 func planFields(p model.Plan) map[string]any {
 	fields := map[string]any{
-		"id":         p.ID,
-		"slug":       p.Slug,
-		"name":       p.Name,
-		"status":     string(p.Status),
-		"summary":    p.Summary,
-		"created":    p.Created.Format(time.RFC3339),
-		"created_by": p.CreatedBy,
+		"id":               p.ID,
+		"slug":             p.Slug,
+		"name":             p.Name,
+		"status":           string(p.Status),
+		"summary":          p.Summary,
+		"created":          p.Created.Format(time.RFC3339),
+		"created_by":       p.CreatedBy,
 		"updated":          p.Updated.Format(time.RFC3339),
 		"next_feature_seq": p.NextFeatureSeq,
 	}

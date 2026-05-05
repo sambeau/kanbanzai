@@ -413,17 +413,10 @@ func TestReParentEntityUpdate(t *testing.T) {
 	}
 
 	// Plan next_feature_seq must have been incremented (was 1, now 2).
-	// After the batch rename, AllocateFeatureDisplayIDInBatch writes to batches/ directory.
-	// Check batches/ first, then fall back to plans/ for backward compat.
-	planFile := filepath.Join(dir, ".kbz", "state", "batches", "P2-target-plan.yaml")
+	planFile := filepath.Join(dir, ".kbz", "state", "plans", "P2-target-plan.yaml")
 	planData, err := os.ReadFile(planFile)
 	if err != nil {
-		// Fall back to legacy plans/ directory.
-		planFile = filepath.Join(dir, ".kbz", "state", "plans", "P2-target-plan.yaml")
-		planData, err = os.ReadFile(planFile)
-		if err != nil {
-			t.Fatalf("read plan YAML after re-parent: %v", err)
-		}
+		t.Fatalf("read plan YAML after re-parent: %v", err)
 	}
 	if !strings.Contains(string(planData), "next_feature_seq: 2") {
 		t.Errorf("plan YAML does not contain incremented 'next_feature_seq: 2':\n%s", string(planData))
