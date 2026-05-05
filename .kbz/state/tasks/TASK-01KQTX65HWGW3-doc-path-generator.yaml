@@ -1,0 +1,6 @@
+id: TASK-01KQTX65HWGW3
+parent_feature: FEAT-01KQTNYN00HZA
+slug: doc-path-generator
+name: Implement path-generation function
+summary: "Create canonicalDocPath(docType, parentEntityID) function using plan slug resolution. Handles plan/batch/feature parent resolution."
+status: queued

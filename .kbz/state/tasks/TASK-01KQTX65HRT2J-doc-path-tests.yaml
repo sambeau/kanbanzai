@@ -1,0 +1,6 @@
+id: TASK-01KQTX65HRT2J
+parent_feature: FEAT-01KQTNYN00HZA
+slug: doc-path-tests
+name: Add document path tool tests
+summary: "Tests for path generation, type abbreviations, feature parent resolution, missing/non-existent parent errors, register warning, and prompt path"
+status: queued
