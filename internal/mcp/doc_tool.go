@@ -116,7 +116,8 @@ func docTool(docSvc *service.DocumentService, intelligenceSvc *service.Intellige
 				"designs, and plans. Use INSTEAD OF reading .kbz/state/documents/ files directly — "+
 				"get and list return structured metadata with approval status. "+
 				"Do NOT use for content analysis — use doc_intel instead. "+
-				"Actions: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit, evaluate, record_false_positive, move, delete. "+
+				"Actions: path, register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit, evaluate, record_false_positive, move, delete. "+
+				"For path: type and parent required. "+
 				"For register: path, type, title required. For approve/get/content/validate/supersede/refresh/chain: "+
 				"id required (or ids for batch approve). "+
 				"Call register after writing a document, approve before advancing past a stage gate. "+
@@ -125,7 +126,7 @@ func docTool(docSvc *service.DocumentService, intelligenceSvc *service.Intellige
 		),
 		mcp.WithString("action",
 			mcp.Required(),
-			mcp.Description("Action: register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit, evaluate, record_false_positive, move, delete"),
+			mcp.Description("Action: path, register, approve, get, content, list, gaps, validate, supersede, refresh, chain, import, audit, evaluate, record_false_positive, move, delete"),
 		),
 		// Common identifier fields.
 		mcp.WithString("id", mcp.Description("Document record ID (approve, get, content, validate, supersede, refresh, chain)")),
@@ -181,10 +182,36 @@ func docTool(docSvc *service.DocumentService, intelligenceSvc *service.Intellige
 			"audit":                 docAuditAction(docSvc, intelligenceSvc),
 			"evaluate":              docEvaluateAction(docSvc),
 			"record_false_positive": docRecordFalsePositiveAction(docSvc),
+			"path":                  docPathAction(entitySvc),
 		})
 	})
 
 	return server.ServerTool{Tool: tool, Handler: handler}
+}
+
+// ─── path ─────────────────────────────────────────────────────────────────────
+
+func docPathAction(entitySvc *service.EntityService) ActionHandler {
+	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
+		args, _ := req.Params.Arguments.(map[string]any)
+		docType := docArgStr(args, "type")
+		parent := docArgStr(args, "parent")
+
+		if docType == "" {
+			return nil, fmt.Errorf("Cannot determine path: type is required.\n\nTo resolve:\n  Provide type and parent: doc(action: \"path\", type: \"design\", parent: \"FEAT-...\")")
+		}
+
+		if parent == "" {
+			return nil, fmt.Errorf("Cannot determine path: no parent entity provided. Specify a parent plan, batch, or feature ID.")
+		}
+
+		path, err := entitySvc.CanonicalDocPath(docType, parent)
+		if err != nil {
+			return nil, err
+		}
+
+		return map[string]any{"path": path}, nil
+	}
 }
 
 // ─── register ─────────────────────────────────────────────────────────────────

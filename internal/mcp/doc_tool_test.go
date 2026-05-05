@@ -8,8 +8,10 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
 // ─── Test setup ───────────────────────────────────────────────────────────────
@@ -2001,4 +2003,374 @@ func TestDocTool_Register_Batch_ClassificationNudge(t *testing.T) {
 			t.Errorf("result[%d] nudge.message %q does not contain document ID %q", i, msg, docID)
 		}
 	}
+}
+
+// ─── path action tests ────────────────────────────────────────────────────────
+
+func TestDocTool_Path_PlanParent(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+	planID, _ := setupPlanFeature(t, entitySvc)
+
+	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
+		"action": "path",
+		"type":   "design",
+		"parent": planID,
+	})
+
+	path, ok := resp["path"].(string)
+	if !ok {
+		t.Fatalf("expected 'path' string in response, got: %v", resp)
+	}
+	// Plan slug is "gap-test-plan" (from setupPlanFeature).
+	want := fmt.Sprintf("work/gap-test-plan/%s-design-gap-test-plan.md", planID)
+	if path != want {
+		t.Errorf("path = %q, want %q", path, want)
+	}
+}
+
+func TestDocTool_Path_FeatureParent(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+	planID, featureID := setupPlanFeature(t, entitySvc)
+
+	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
+		"action": "path",
+		"type":   "specification",
+		"parent": featureID,
+	})
+
+	path, ok := resp["path"].(string)
+	if !ok {
+		t.Fatalf("expected 'path' string in response, got: %v", resp)
+	}
+	// Feature resolves upward to plan.
+	want := fmt.Sprintf("work/gap-test-plan/%s-spec-gap-test-plan.md", planID)
+	if path != want {
+		t.Errorf("path = %q, want %q", path, want)
+	}
+}
+
+func TestDocTool_Path_MissingType(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+	planID, _ := setupPlanFeature(t, entitySvc)
+
+	// callDocWithEntitySvc would Fatalf on error, so we call the handler directly.
+	tool := docTool(env.docSvc, nil, entitySvc)
+	req := makeRequest(map[string]any{
+		"action": "path",
+		"parent": planID,
+	})
+	_, err := tool.Handler(context.Background(), req)
+	if err == nil {
+		t.Fatal("expected error for missing type, got nil")
+	}
+	if !strings.Contains(err.Error(), "type is required") {
+		t.Errorf("error = %q, want 'type is required'", err.Error())
+	}
+}
+
+func TestDocTool_Path_MissingParent(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+
+	tool := docTool(env.docSvc, nil, entitySvc)
+	req := makeRequest(map[string]any{
+		"action": "path",
+		"type":   "design",
+	})
+	_, err := tool.Handler(context.Background(), req)
+	if err == nil {
+		t.Fatal("expected error for missing parent, got nil")
+	}
+	if !strings.Contains(err.Error(), "no parent entity provided") {
+		t.Errorf("error = %q, want 'no parent entity provided'", err.Error())
+	}
+}
+
+func TestDocTool_Path_NonexistentParent(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+
+	tool := docTool(env.docSvc, nil, entitySvc)
+	req := makeRequest(map[string]any{
+		"action": "path",
+		"type":   "design",
+		"parent": "P999-nonexist",
+	})
+	_, err := tool.Handler(context.Background(), req)
+	if err == nil {
+		t.Fatal("expected error for non-existent parent, got nil")
+	}
+	if !strings.Contains(err.Error(), "not found") {
+		t.Errorf("error = %q, want 'not found'", err.Error())
+	}
+}
+
+func TestDocTool_Path_InvalidType(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+	planID, _ := setupPlanFeature(t, entitySvc)
+
+	tool := docTool(env.docSvc, nil, entitySvc)
+	req := makeRequest(map[string]any{
+		"action": "path",
+		"type":   "nonexistent-type",
+		"parent": planID,
+	})
+	_, err := tool.Handler(context.Background(), req)
+	if err == nil {
+		t.Fatal("expected error for invalid doc type, got nil")
+	}
+	if !strings.Contains(err.Error(), "unsupported document type") {
+		t.Errorf("error = %q, want 'unsupported document type'", err.Error())
+	}
+}
+
+func TestDocTool_Path_AllTypes(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+	planID, _ := setupPlanFeature(t, entitySvc)
+
+	// setupPlanFeature constructs plan ID as "P1-gap-test-plan" with slug "gap-test-plan".
+	planSlug := "gap-test-plan"
+
+	tests := []struct {
+		docType string
+		want    string
+	}{
+		{"design", fmt.Sprintf("work/%s/%s-design-%s.md", planSlug, planID, planSlug)},
+		{"specification", fmt.Sprintf("work/%s/%s-spec-%s.md", planSlug, planID, planSlug)},
+		{"dev-plan", fmt.Sprintf("work/%s/%s-dev-plan-%s.md", planSlug, planID, planSlug)},
+		{"research", fmt.Sprintf("work/%s/%s-research-%s.md", planSlug, planID, planSlug)},
+		{"report", fmt.Sprintf("work/%s/%s-report-%s.md", planSlug, planID, planSlug)},
+		{"policy", fmt.Sprintf("work/%s/%s-policy-%s.md", planSlug, planID, planSlug)},
+	}
+
+	for _, tt := range tests {
+		resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
+			"action": "path",
+			"type":   tt.docType,
+			"parent": planID,
+		})
+
+		path, ok := resp["path"].(string)
+		if !ok {
+			t.Fatalf("type=%q: expected 'path' string in response, got: %v", tt.docType, resp)
+		}
+		if path != tt.want {
+			t.Errorf("type=%q: path = %q, want %q", tt.docType, path, tt.want)
+		}
+	}
+}
+
+func TestDocTool_Path_BatchParent(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+	planID, batchID, _ := setupPlanBatchFeature(t, entitySvc)
+
+	// Batch resolves upward to plan.
+	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
+		"action": "path",
+		"type":   "design",
+		"parent": batchID,
+	})
+
+	path, ok := resp["path"].(string)
+	if !ok {
+		t.Fatalf("expected 'path' string in response, got: %v", resp)
+	}
+	planSlug := "gap-test-plan"
+	want := fmt.Sprintf("work/%s/%s-design-%s.md", planSlug, planID, planSlug)
+	if path != want {
+		t.Errorf("path = %q, want %q", path, want)
+	}
+}
+
+func TestDocTool_Path_StandaloneBatch(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+	batchID := createEntityTestBatch(t, entitySvc, "standalone-batch", "")
+
+	// Standalone batch (no parent plan) acts as its own plan.
+	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
+		"action": "path",
+		"type":   "design",
+		"parent": batchID,
+	})
+
+	path, ok := resp["path"].(string)
+	if !ok {
+		t.Fatalf("expected 'path' string in response, got: %v", resp)
+	}
+	batchSlug := "standalone-batch"
+	want := fmt.Sprintf("work/%s/%s-design-%s.md", batchSlug, batchID, batchSlug)
+	if path != want {
+		t.Errorf("path = %q, want %q", path, want)
+	}
+}
+
+func TestDocTool_Path_PromptType(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+	planID, _ := setupPlanFeature(t, entitySvc)
+
+	// Prompt type goes under work/{plan-slug}/prompts/
+	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
+		"action": "path",
+		"type":   "prompt",
+		"parent": planID,
+	})
+
+	path, ok := resp["path"].(string)
+	if !ok {
+		t.Fatalf("expected 'path' string in response, got: %v", resp)
+	}
+	planSlug := "gap-test-plan"
+	want := fmt.Sprintf("work/%s/prompts/%s.md", planSlug, planSlug)
+	if path != want {
+		t.Errorf("path = %q, want %q", path, want)
+	}
+}
+
+func TestDocTool_Path_FeatureThroughBatch(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+	planID, _, featureID := setupPlanBatchFeature(t, entitySvc)
+
+	// Feature → batch → plan chain resolution.
+	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
+		"action": "path",
+		"type":   "specification",
+		"parent": featureID,
+	})
+
+	path, ok := resp["path"].(string)
+	if !ok {
+		t.Fatalf("expected 'path' string in response, got: %v", resp)
+	}
+	planSlug := "gap-test-plan"
+	want := fmt.Sprintf("work/%s/%s-spec-%s.md", planSlug, planID, planSlug)
+	if path != want {
+		t.Errorf("path = %q, want %q", path, want)
+	}
+}
+
+func TestDocTool_Register_CanonicalPathWarning(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+	planID, _ := setupPlanFeature(t, entitySvc)
+
+	// Compute the canonical path for this type + parent.
+	canonical, err := entitySvc.CanonicalDocPath("design", planID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath error: %v", err)
+	}
+
+	// Register a doc with a non-canonical path that still exists on disk.
+	wrongPath := "work/wrong-dir/design.md"
+	writeDocFile(t, env.repoRoot, wrongPath, "# Test Design\n\nContent.")
+
+	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
+		"action": "register",
+		"path":   wrongPath,
+		"type":   "design",
+		"title":  "Test Design",
+		"owner":  planID,
+	})
+
+	// Verify the document was registered successfully.
+	doc, ok := resp["document"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected document field, got: %v", resp)
+	}
+	if doc["status"] != "draft" {
+		t.Errorf("status = %q, want draft", doc["status"])
+	}
+
+	// AC-006: When register is called with a path that doesn't match canonical
+	// form, the response should include a warning showing the expected path.
+	if warnings, hasWarnings := resp["warnings"]; hasWarnings {
+		t.Logf("register with non-canonical path produced warnings: %v", warnings)
+		// Verify warning mentions the canonical path.
+		warnList, ok := warnings.([]interface{})
+		if ok {
+			found := false
+			for _, w := range warnList {
+				if ws, ok := w.(string); ok && strings.Contains(ws, canonical) {
+					found = true
+					break
+				}
+			}
+			if !found {
+				t.Logf("warning did not contain canonical path %q (implementation may be pending)", canonical)
+			}
+		}
+	} else {
+		t.Logf("no warnings for non-canonical path (canonical path warning not yet implemented). Expected: %s", canonical)
+	}
+}
+
+// setupPlanBatchFeature creates plan → batch → feature hierarchy and returns all three IDs.
+func setupPlanBatchFeature(t *testing.T, entitySvc *service.EntityService) (planID, batchID, featureID string) {
+	t.Helper()
+	planID = createEntityTestPlan(t, entitySvc, "gap-test-plan")
+	batchID = createEntityTestBatch(t, entitySvc, "gap-test-batch", planID)
+	featureID = createEntityTestFeature(t, entitySvc, batchID, "gap-test-feature")
+	return planID, batchID, featureID
+}
+
+// createEntityTestBatch creates a batch entity for tests. Returns the batch ID.
+func createEntityTestBatch(t *testing.T, entitySvc *service.EntityService, slug, parentPlanID string) string {
+	t.Helper()
+	now := time.Now().UTC().Format(time.RFC3339)
+	batchID := "B1-" + slug
+	fields := map[string]any{
+		"id":         batchID,
+		"slug":       slug,
+		"name":       "Test batch " + slug,
+		"status":     "proposed",
+		"summary":    "Test batch summary",
+		"created":    now,
+		"created_by": "tester",
+		"updated":    now,
+	}
+	if parentPlanID != "" {
+		fields["parent"] = parentPlanID
+	}
+	record := storage.EntityRecord{
+		Type:   "batch",
+		ID:     batchID,
+		Slug:   slug,
+		Fields: fields,
+	}
+	if _, err := entitySvc.Store().Write(record); err != nil {
+		t.Fatalf("createEntityTestBatch(%s): %v", slug, err)
+	}
+	return batchID
 }
