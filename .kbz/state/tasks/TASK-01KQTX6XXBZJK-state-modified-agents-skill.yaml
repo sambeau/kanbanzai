@@ -3,4 +3,13 @@ parent_feature: FEAT-01KQTNYN01ZF8
 slug: state-modified-agents-skill
 name: Add state_modified rule to kanbanzai-agents skill
 summary: "Add rule to kanbanzai-agents SKILL.md: when state_modified: true, commit .kbz/ changes before proceeding. Mirror to internal/kbzinit/."
-status: ready
+status: done
+files_planned:
+  - .agents/skills/kanbanzai-agents/SKILL.md
+  - internal/kbzinit/skills/agents/SKILL.md
+completed: "2026-05-05T09:19:35Z"
+claimed_at: "2026-05-05T09:16:57Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-05T09:16:57Z"
+dispatched_by: sambeau
+completion_summary: "Added state_modified:true commit rule to kanbanzai-agents SKILL.md: new bullet in \"Commit discipline\" telling agents to commit .kbz/ changes when state_modified:true appears and no further state mutation is pending; new checklist item with the exact git command. Both changes mirrored identically to internal/kbzinit/skills/agents/SKILL.md."
