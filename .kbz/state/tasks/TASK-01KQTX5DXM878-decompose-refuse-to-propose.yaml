@@ -3,8 +3,15 @@ parent_feature: FEAT-01KQTNYN00M4P
 slug: decompose-refuse-to-propose
 name: Implement refuse-to-propose mode
 summary: Check for parseable acceptance criteria before generating proposal. Return diagnostic error when none found using P24 AC parser.
-status: active
+status: done
+files_planned:
+  - internal/service/decompose.go
+  - internal/service/decompose_test.go
+  - internal/service/decompose_validate.go
+completed: "2026-05-05T09:05:00Z"
 claimed_at: "2026-05-05T02:19:27Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-05T02:19:27Z"
 dispatched_by: sambeau
+completion_summary: "Implemented refuse-to-propose mode for decompose propose (REQ-001). Updated error message in buildZeroCriteriaDiagnostic to: \"Cannot decompose: no acceptance criteria found in spec {id}. Ensure the spec uses **AC-NN.** format and the index is current.\" Also fixed pre-existing build errors from sibling tasks: variable name inconsistency in checkCycles, missing collapsePairedTasks function, and broken merge syntax in generateProposal."
+verification: go build ./... passes. All Decompose tests pass (go test -run TestDecompose). Existing tests TestDecomposeFeature_NoACs_ReturnsError and TestDecomposeFeature_NoDevPlan_NoACs_ZeroCriteriaError verify the error is returned.
