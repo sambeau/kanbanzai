@@ -945,8 +945,6 @@ func TestConfig_MCPConfigRoundTrip(t *testing.T) {
 	}
 }
 
-
-
 // ─── MergeConfig.RequireGitHubPR ─────────────────────────────────────────────
 
 // minimalValidYAML is the smallest valid config YAML (one prefix required).
@@ -1209,5 +1207,130 @@ func TestDefaultConfig_P38Defaults(t *testing.T) {
 	}
 	if len(cfg.BatchPrefixes) != 1 || cfg.BatchPrefixes[0].Prefix != "B" {
 		t.Error("DefaultConfig BatchPrefixes should default to [{B, Batch}]")
+	}
+}
+
+func TestCoordinationEnabled(t *testing.T) {
+	t.Parallel()
+
+	t.Run("disabled when DatabaseURL is empty", func(t *testing.T) {
+		cfg := Config{}
+		if cfg.CoordinationEnabled() {
+			t.Error("CoordinationEnabled() should be false when DatabaseURL is empty")
+		}
+	})
+
+	t.Run("enabled when DatabaseURL is set", func(t *testing.T) {
+		cfg := Config{
+			Coordination: CoordinationConfig{
+				DatabaseURL: "postgres://localhost/test",
+			},
+		}
+		if !cfg.CoordinationEnabled() {
+			t.Error("CoordinationEnabled() should be true when DatabaseURL is set")
+		}
+	})
+
+	t.Run("default config has no coordination", func(t *testing.T) {
+		cfg := DefaultConfig()
+		if cfg.CoordinationEnabled() {
+			t.Error("DefaultConfig should not have coordination enabled")
+		}
+	})
+}
+
+func TestExpandEnv(t *testing.T) {
+	t.Parallel()
+
+	t.Run("no env vars", func(t *testing.T) {
+		input := []byte("database_url: postgres://localhost/test")
+		got := expandEnv(input)
+		if string(got) != string(input) {
+			t.Errorf("expandEnv changed content without env vars: got %q", string(got))
+		}
+	})
+
+	t.Run("expands set env var", func(t *testing.T) {
+		os.Setenv("TEST_EXPAND_ENV_VAR", "postgres://localhost/test")
+		t.Cleanup(func() { os.Unsetenv("TEST_EXPAND_ENV_VAR") })
+		input := []byte("database_url: ${TEST_EXPAND_ENV_VAR}")
+		got := expandEnv(input)
+		want := "database_url: postgres://localhost/test"
+		if string(got) != want {
+			t.Errorf("expandEnv: got %q, want %q", string(got), want)
+		}
+	})
+
+	t.Run("unset env var warns and expands to empty", func(t *testing.T) {
+		os.Unsetenv("NONEXISTENT_VAR_FOR_TEST")
+		input := []byte("database_url: ${NONEXISTENT_VAR_FOR_TEST}")
+		got := expandEnv(input)
+		want := "database_url: "
+		if string(got) != want {
+			t.Errorf("expandEnv: got %q, want %q", string(got), want)
+		}
+	})
+
+	t.Run("multiple env vars", func(t *testing.T) {
+		os.Setenv("TEST_HOST", "localhost")
+		os.Setenv("TEST_PORT", "5432")
+		t.Cleanup(func() { os.Unsetenv("TEST_HOST"); os.Unsetenv("TEST_PORT") })
+		input := []byte("url: postgres://${TEST_HOST}:${TEST_PORT}/db")
+		got := expandEnv(input)
+		want := "url: postgres://localhost:5432/db"
+		if string(got) != want {
+			t.Errorf("expandEnv: got %q, want %q", string(got), want)
+		}
+	})
+}
+
+func TestCoordinationConfig_YAMLRoundTrip(t *testing.T) {
+	t.Parallel()
+
+	yamlInput := `
+version: "2"
+prefixes:
+  - prefix: P
+    name: Plan
+coordination:
+  database_url: postgres://user:pass@host:5432/kanbanzai
+  project_id: my-project
+`
+	cfg, err := LoadFrom(writeTempConfig(t, []byte(yamlInput)))
+	if err != nil {
+		t.Fatalf("LoadFrom: %v", err)
+	}
+
+	if cfg.Coordination.DatabaseURL != "postgres://user:pass@host:5432/kanbanzai" {
+		t.Errorf("DatabaseURL = %q", cfg.Coordination.DatabaseURL)
+	}
+	if cfg.Coordination.ProjectID != "my-project" {
+		t.Errorf("ProjectID = %q", cfg.Coordination.ProjectID)
+	}
+	if !cfg.CoordinationEnabled() {
+		t.Error("CoordinationEnabled should be true")
+	}
+}
+
+func TestCoordinationConfig_EnvVarExpansion(t *testing.T) {
+	os.Setenv("KANBANZAI_DATABASE_URL", "postgres://real-host/db")
+	t.Cleanup(func() { os.Unsetenv("KANBANZAI_DATABASE_URL") })
+
+	yamlInput := `
+version: "2"
+prefixes:
+  - prefix: P
+    name: Plan
+coordination:
+  database_url: ${KANBANZAI_DATABASE_URL}
+  project_id: my-project
+`
+	cfg, err := LoadFrom(writeTempConfig(t, []byte(yamlInput)))
+	if err != nil {
+		t.Fatalf("LoadFrom: %v", err)
+	}
+
+	if cfg.Coordination.DatabaseURL != "postgres://real-host/db" {
+		t.Errorf("DatabaseURL = %q, want postgres://real-host/db", cfg.Coordination.DatabaseURL)
 	}
 }

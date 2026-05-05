@@ -490,6 +490,7 @@ type Bug struct {
 	VerifiedBy    string   `yaml:"verified_by,omitempty"`
 	ReleaseTarget string   `yaml:"release_target,omitempty"`
 	Tags          []string `yaml:"tags,omitempty"`
+	Tier          string   `yaml:"tier,omitempty"` // fast-track risk tier
 }
 
 // GetKind returns the entity kind.
