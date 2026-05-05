@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQTNYMZRT6V
 slug: error-classify-helper
 name: Add error classification helper
 summary: Create classifyError(err) function in internal/mcp/ that maps known error patterns to the five ErrorType constants
-status: queued
+status: ready

@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQTNYN00M4P
 slug: decompose-refuse-to-propose
 name: Implement refuse-to-propose mode
 summary: Check for parseable acceptance criteria before generating proposal. Return diagnostic error when none found using P24 AC parser.
-status: queued
+status: ready

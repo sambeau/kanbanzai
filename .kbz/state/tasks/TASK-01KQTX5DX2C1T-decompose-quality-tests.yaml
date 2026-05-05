@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQTNYN00M4P
 slug: decompose-quality-tests
 name: Add decompose proposal quality tests
 summary: "Tests for refuse-to-propose, paired output, depends_on correctness, flag=false, dependency graph completeness, and test-only AC detection"
-status: queued
+status: ready

@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQTNYN00M4P
 slug: decompose-paired-tasks
 name: Implement paired impl+test task output
 summary: Update decompose proposal assembly to produce two tasks per AC (impl+test). Test task depends_on points to impl task. Default-on with opt-out flag.
-status: queued
+status: ready

@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQTNYN00HZA
 slug: doc-path-action
 name: Add path action to doc MCP tool
 summary: "Wire doc(action: path) handler to path-generation function. Takes type and optional parent params. Returns path or clear error."
-status: queued
+status: ready
