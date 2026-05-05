@@ -13,6 +13,7 @@ import (
 	"github.com/sambeau/kanbanzai/internal/config"
 	"github.com/sambeau/kanbanzai/internal/git"
 	"github.com/sambeau/kanbanzai/internal/github"
+	"github.com/sambeau/kanbanzai/internal/health"
 	"github.com/sambeau/kanbanzai/internal/merge"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
@@ -459,11 +460,38 @@ func executeMerge(
 	}
 
 	var warnings []string
-	wt.MarkMerged(mergedAt, gracePeriodDays)
-	if _, updateErr := worktreeStore.Update(*wt); updateErr != nil {
-		// Don't fail — the merge already succeeded. Surface as a warning so the
-		// caller knows the worktree record is stale (it won't appear in cleanup lists).
-		warnings = append(warnings, fmt.Sprintf("failed to update worktree record after merge: %v", updateErr))
+
+	// Verify the branch is an ancestor of the default branch before marking
+	// the worktree as merged (REQ-006 / AC-006). The merge itself succeeded
+	// (git merge exited 0), but the worktree record should only transition
+	// to merged when we can confirm the commits are reachable from the
+	// default branch.
+	isAncestor, ancestorErr := health.IsBranchAncestorOf(repoPath, wt.Branch, defaultBranch)
+	if ancestorErr != nil {
+		// merge-base check itself failed (e.g., branch was deleted during
+		// merge, repo corruption). This is unusual — warn and leave the
+		// worktree active so it doesn't get cleaned up prematurely.
+		warnings = append(warnings, fmt.Sprintf(
+			"merge completed but couldn't verify branch %s is ancestor of %s: %v. "+
+				"Worktree left active — verify manually and mark merged when confirmed.",
+			wt.Branch, defaultBranch, ancestorErr))
+	} else if !isAncestor {
+		// The git merge succeeded but merge-base says the branch is not an
+		// ancestor. This can happen with squash merges where the branch's
+		// commits are not parented to the merge commit. The worktree stays
+		// active so it's not prematurely cleaned up.
+		warnings = append(warnings, fmt.Sprintf(
+			"merge completed but branch %s is not an ancestor of %s (merge-base check failed). "+
+				"Worktree left active — verify manually and mark merged when confirmed.",
+			wt.Branch, defaultBranch))
+	} else {
+		// Branch is confirmed ancestor of default branch — safe to mark merged.
+		wt.MarkMerged(mergedAt, gracePeriodDays)
+		if _, updateErr := worktreeStore.Update(*wt); updateErr != nil {
+			// Don't fail — the merge already succeeded. Surface as a warning so the
+			// caller knows the worktree record is stale (it won't appear in cleanup lists).
+			warnings = append(warnings, fmt.Sprintf("failed to update worktree record after merge: %v", updateErr))
+		}
 	}
 
 	// Delete branch if requested.
