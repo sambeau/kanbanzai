@@ -1,0 +1,123 @@
+document_id: P50-retro-may-2026/design-p50-design-merge-discipline
+document_path: work/P50-retro-may-2026/P50-design-merge-discipline.md
+content_hash: 1465c757f78b1c0617f4a83a5f966c5b23c10d617c4763be85e121e557f6ddd0
+indexed_at: 2026-05-05T01:36:45.637269Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Merge Discipline and Definition of Done'
+      byte_offset: 0
+      byte_count: 6368
+      word_count: 951
+      content_hash: 1465c757f78b1c0617f4a83a5f966c5b23c10d617c4763be85e121e557f6ddd0
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 211
+          byte_count: 979
+          word_count: 153
+          content_hash: b812ed6dc0ee9f41655668c65c69d9a0d23b32b17bb9b6e9a39cfc22ae743dc1
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 1190
+          byte_count: 765
+          word_count: 128
+          content_hash: 8f4d57fe96d5ba23ea2ebfc800f2df4b7fe91d324ada522ce4c5deb8cd67fc91
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 1955
+          byte_count: 2803
+          word_count: 398
+          content_hash: 220bd112083bdc58d919797a2ea5f70cdc1e43c9022e674db28801e8bf1cc9ee
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Feature 5a: Merge and Verify lifecycle stages'
+              byte_offset: 1966
+              byte_count: 1096
+              word_count: 166
+              content_hash: 213caa904975fb8c79075523d63d0d8c1dcaa2f4a403764268f4bde6d6bdce36
+            - path: 1.3.2
+              level: 3
+              title: 'Feature 5b: Post-review merge prompt'
+              byte_offset: 3062
+              byte_count: 688
+              word_count: 104
+              content_hash: f01b70e516d47bebde05a968228870a0a4f9d61a0b37259e96d67ff5d9a970e4
+            - path: 1.3.3
+              level: 3
+              title: Merging stage gate enforcement
+              byte_offset: 3750
+              byte_count: 576
+              word_count: 55
+              content_hash: 0cc1d623c321ab2e3fb8ac74f9e65b2fbe59f76936b076030387e2aac0871f9d
+            - path: 1.3.4
+              level: 3
+              title: What's Not Included
+              byte_offset: 4326
+              byte_count: 432
+              word_count: 71
+              content_hash: efdc2fb330820969a9a187c364d2602a8320f8a2a9f73755f22dc80133e4b548
+        - path: "1.4"
+          level: 2
+          title: Dependencies
+          byte_offset: 4758
+          byte_count: 343
+          word_count: 48
+          content_hash: bd03ffe6ef93ad4ec2e07aea631ff381dcaaf9cdeb8c6446930be3eb518930b0
+        - path: "1.5"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 5101
+          byte_count: 643
+          word_count: 101
+          content_hash: 4035a6c68f37443b6040b65b257ff95ab5f3da87a5fd6d0411300e8cd2b03344
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Merge prompt in the `finish` tool vs. in the skill
+              byte_offset: 5129
+              byte_count: 340
+              word_count: 59
+              content_hash: 30dc18801f482f31bdf3bb7abda68fb44b132c8567549d5f1475cca8cae25467
+            - path: 1.5.2
+              level: 3
+              title: Post-merge verification as a separate feature
+              byte_offset: 5469
+              byte_count: 275
+              word_count: 39
+              content_hash: dcffc2883730d6654e02634eaf9900aef6ca3caec7fe4653f5f3e839868e987c
+        - path: "1.6"
+          level: 2
+          title: Open Questions
+          byte_offset: 5744
+          byte_count: 624
+          word_count: 97
+          content_hash: 9cb20358a97754a8c51381b8b6870b1e0467e4f1e948cc254739e389a6fedb7b
+entity_refs:
+    - entity_id: P50-retro-may-2026
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 64
+conventional_roles:
+    - section_path: "1"
+      role: definition
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: alternative
+      confidence: high
+    - section_path: "1.6"
+      role: question
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-05T01:36:46.299438Z
+classified: false
