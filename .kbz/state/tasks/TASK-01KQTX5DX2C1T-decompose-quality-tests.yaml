@@ -3,4 +3,7 @@ parent_feature: FEAT-01KQTNYN00M4P
 slug: decompose-quality-tests
 name: Add decompose proposal quality tests
 summary: "Tests for refuse-to-propose, paired output, depends_on correctness, flag=false, dependency graph completeness, and test-only AC detection"
-status: ready
+status: done
+completed: "2026-05-05T11:00:37Z"
+completion_summary: "Added 9 test functions: refuse-to-propose diagnostic content (section count/titles, bold-outside-AC remediation), DependsOn correctness across all paired test tasks, grouped DependsOn correctness, allCoversContainTest keyword variants (12 cases), mixed covers edge case, test-only AC single task detection, dependency graph complete-node-only verification, and opt-out flag TODO test documenting expected paired_test_tasks=false behavior."
+verification: go vet ./internal/service/ passes; 9 new tests compilable

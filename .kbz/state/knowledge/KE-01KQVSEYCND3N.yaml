@@ -1,0 +1,20 @@
+confidence: "0.5"
+content: "The handoff MCP tool had dual context-assembly paths (3.0 pipeline and legacy 2.0 fallback). The fallback silently degraded sub-agent prompts — no role, skill, vocabulary, or code graph context. Additionally, orchestrators could bypass handoff entirely and compose prompts manually. P51 removes the legacy fallback. P44 (model routing) will make pipeline enforcement non-bypassable via dispatch_task."
+created: "2026-05-05T10:03:12Z"
+created_by: sambeau
+id: KE-01KQVSEYCND3N
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - handoff
+  - pipeline
+  - context-assembly
+  - P51
+  - retro
+  - may-2026
+tier: 2
+topic: handoff-pipeline-dual-path
+ttl_days: 90
+updated: "2026-05-05T10:03:12Z"
+use_count: 0

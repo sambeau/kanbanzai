@@ -1,0 +1,22 @@
+confidence: "0.5"
+content: "The orchestrate-development skill is designed for multi-feature, multi-cohort batch orchestration. For fast-track features (small, independent, no review cycles), most of its machinery is irrelevant but still consumes context. P44 should support a fast_track dispatch mode with lightweight orchestration profile. The orchestrator received identical knowledge entries across 12 next calls — context assembly is per-task-claim, not per-session. P44's dispatch_task should maintain session-scoped context."
+created: "2026-05-05T10:24:28Z"
+created_by: sambeau
+id: KE-01KQVTNWDRN1F
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - fast-track
+  - orchestration
+  - context-assembly
+  - P50
+  - P44
+  - P51
+  - retro
+  - may-2026
+tier: 2
+topic: fast-track-orchestration-mismatch
+ttl_days: 90
+updated: "2026-05-05T10:24:28Z"
+use_count: 0

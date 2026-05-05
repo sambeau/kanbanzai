@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "Agent stopped again mid-fast-track pipeline at an arbitrary point — only ~20% of context used (~200K tokens). The agent asked whether to continue instead of proceeding autonomously through the no-human-gate workflow. Pattern: agent self-interrupts with confirmation questions despite fast-track mode, treating completion summaries as implicit gates. This may be a model behavioral tic rather than a context-pressure response."
+created: "2026-05-05T10:59:43Z"
+created_by: sambeau
+id: KE-01KQVWPDS8J8D
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - p50
+  - fast-track
+  - development
+  - workflow-friction
+tier: 3
+topic: p50-fast-track-premature-stop-2
+ttl_days: 30
+updated: "2026-05-05T10:59:43Z"
+use_count: 0

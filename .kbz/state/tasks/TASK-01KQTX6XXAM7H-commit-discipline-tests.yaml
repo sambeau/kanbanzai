@@ -3,4 +3,7 @@ parent_feature: FEAT-01KQTNYN01ZF8
 slug: commit-discipline-tests
 name: Add commit discipline tests
 summary: "Tests for state_modified on mutation vs read, table-driven mutation coverage across tools, and vanilla MCP client compatibility"
-status: ready
+status: done
+completed: "2026-05-05T11:00:37Z"
+completion_summary: "Added 12 test functions for state_modified: collector defaults false, set/get round-trip, SignalStateModified with/without collector, mutation handler includes flag, read-only handler omits flag, nil result with state_modified, error response includes flag, read-only error omits flag, table-driven mutation coverage (15 cases: 10 mutation + 5 read-only), vanilla MCP client compatibility (5 JSON variants), BatchResult includes/omits flag."
+verification: go vet ./internal/mcp/ passes; all new tests compilable
