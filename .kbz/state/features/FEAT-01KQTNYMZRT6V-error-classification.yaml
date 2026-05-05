@@ -2,7 +2,8 @@ id: FEAT-01KQTNYMZRT6V
 slug: error-classification
 name: Error Classification for MCP Handlers
 parent: B49-retro-fixes-may-2026
-status: developing
+status: reviewing
+review_cycle: 1
 summary: "Add error type classification to MCP tool handlers so every failure has a diagnostic error_type, making instrumentation diagnostic rather than opaque."
 design: FEAT-01KQTNYMZRT6V/design-p50-design-retro-may-2026
 spec: FEAT-01KQTNYMZRT6V/spec-p50-spec-error-classification
@@ -11,3 +12,5 @@ created: "2026-05-04T23:42:38Z"
 created_by: sambeau
 display_id: B49-F1
 tier: feature
+verification: "TASK-01KQTX40N1C2V: go build ./internal/mcp/ passes. Error classify function + test file compile cleanly. Test package has pre-existing compilation issues (runGit redeclared, newServerWithConfig signature mismatch from branch merges) unrelated to this change.\nTASK-01KQTX4HH6451: Hook.Wrap is called for every MCP tool registered via server.AddTool. The hook intercepts all tool calls — no per-tool opt-in required.\nTASK-01KQTX4HHA5Y6: Hook.Wrap in actionlog/hook.go lines 88-126: calls ClassifyError(err) at line 105, sets error_type on Entry. This runs for every MCP tool wrapped by the hook, including all high-volume tools.\nTASK-01KQTX4HHBDP3: Verified actionlog/classify_test.go, actionlog/entry_test.go (TestErrorTypeConstants), actionlog/hook_test.go (error type set on failure), and actionlog/metrics_test.go (error type in metrics aggregation). All 5 error categories covered."
+verification_status: passed

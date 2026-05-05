@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "Feature 1 (Error Classification) was specified as needing a new classifyError function and per-handler wiring, but the implementation already existed: actionlog.ClassifyError() with sentinel error checks + keyword patterns, wired via Hook.Wrap for all MCP tools. Cause: the retro report identified error classification as a gap (undiagnostic error_type values) based on symptom observation, but the gap was already closed by P43 fast-track work which added the actionlog hook. The hook-level classification covers all tools universally. Lesson: when a retro finding is about a system behavior gap, verify whether it was already fixed before writing a spec for it."
+created: "2026-05-05T02:04:57Z"
+created_by: sambeau
+id: KE-01KQTY37ZSRKT
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - spec-quality
+  - workflow-friction
+tier: 3
+topic: retro-feature-already-implemented
+ttl_days: 30
+updated: "2026-05-05T02:04:57Z"
+use_count: 0
