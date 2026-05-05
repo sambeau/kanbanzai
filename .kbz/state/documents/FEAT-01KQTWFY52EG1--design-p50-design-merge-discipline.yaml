@@ -1,3 +1,5 @@
+approved_at: "2026-05-05T01:37:17Z"
+approved_by: sambeau
 canonical_content_hash: 38f2165d7afd1ab4ecde4c04c9fba84c8326747d342e69236dba82df3f008c0a
 content_hash: 1465c757f78b1c0617f4a83a5f966c5b23c10d617c4763be85e121e557f6ddd0
 created: "2026-05-05T01:37:09Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KQTWFY52EG1/design-p50-design-merge-discipline
 owner: FEAT-01KQTWFY52EG1
 path: work/P50-retro-may-2026/P50-design-merge-discipline.md
-status: draft
+status: approved
 title: "Design: Merge Discipline and Definition of Done"
 type: design
-updated: "2026-05-05T01:37:09Z"
+updated: "2026-05-05T01:37:17Z"
