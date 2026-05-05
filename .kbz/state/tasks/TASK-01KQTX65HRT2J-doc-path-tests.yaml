@@ -3,8 +3,10 @@ parent_feature: FEAT-01KQTNYN00HZA
 slug: doc-path-tests
 name: Add document path tool tests
 summary: "Tests for path generation, type abbreviations, feature parent resolution, missing/non-existent parent errors, register warning, and prompt path"
-status: active
+status: done
+completed: "2026-05-05T09:46:44Z"
 claimed_at: "2026-05-05T09:29:14Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-05T09:29:14Z"
 dispatched_by: sambeau
+completion_summary: "Added comprehensive document path tool tests: batch parent resolution, standalone batch, prompt type path, feature→batch→plan chain, enhanced non-existent parent error validation, register canonical path warning test. 9 new tests + 2 helpers. All ACs covered."
