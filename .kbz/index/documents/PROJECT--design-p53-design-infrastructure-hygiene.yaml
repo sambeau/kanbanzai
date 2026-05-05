@@ -1,0 +1,127 @@
+document_id: PROJECT/design-p53-design-infrastructure-hygiene
+document_path: work/P53-infrastructure-hygiene/P53-design-infrastructure-hygiene.md
+content_hash: 4d084eea037998c4d8bfcda8277bd06a1da6b75bb6ae95415ddea805b54de76d
+indexed_at: 2026-05-05T11:21:03.683046Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Infrastructure Hygiene'
+      byte_offset: 0
+      byte_count: 6635
+      word_count: 909
+      content_hash: 4d084eea037998c4d8bfcda8277bd06a1da6b75bb6ae95415ddea805b54de76d
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 146
+          byte_count: 293
+          word_count: 43
+          content_hash: 6bf2a9263ce6b046e62ff49c2d7982c073cc5ea9a6179bcd2ee2041da4f617f9
+        - path: "1.2"
+          level: 2
+          title: Goals
+          byte_offset: 439
+          byte_count: 1458
+          word_count: 196
+          content_hash: 41969bf0cde1f23753e84f09e5a4af3c3c22a882181d5f2e69f8d731d25979d6
+        - path: "1.3"
+          level: 2
+          title: Non-Goals
+          byte_offset: 1897
+          byte_count: 248
+          word_count: 40
+          content_hash: 6412ae30651c1cd2811967e66ad439b32aac8865dc0f832199429a9a8449b05f
+        - path: "1.4"
+          level: 2
+          title: Design
+          byte_offset: 2145
+          byte_count: 3114
+          word_count: 429
+          content_hash: 1cdfc5045da293469c15a7d29ed8470a7919abd25296b819e80b1c9b65ca6eb4
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 1. Stale binary
+              byte_offset: 2156
+              byte_count: 452
+              word_count: 70
+              content_hash: b547abd050734a0a51535626aa816f87a3a67583eaec29c5715e0bf5d3867b9e
+            - path: 1.4.2
+              level: 3
+              title: 2. Store consistency
+              byte_offset: 2608
+              byte_count: 627
+              word_count: 91
+              content_hash: 2f0c6dd7578d2a98ad7f3cc1024c2b7317d3e75e62da454b6eef30188ae4be3f
+            - path: 1.4.3
+              level: 3
+              title: 3. Health checker false positives
+              byte_offset: 3235
+              byte_count: 345
+              word_count: 52
+              content_hash: d415d3854eae54a2510fdc44dfefd72b1f39a957b72d42020a166439f4c7733a
+            - path: 1.4.4
+              level: 3
+              title: 4. Test compilation errors
+              byte_offset: 3580
+              byte_count: 398
+              word_count: 38
+              content_hash: 50bc3753997b9fd6121cb10b39c4d33e5e54f9371665b0ff13713bebce27ed83
+            - path: 1.4.5
+              level: 3
+              title: 5. Plan numbering
+              byte_offset: 3978
+              byte_count: 634
+              word_count: 85
+              content_hash: 87eccf1dbc0ba6448f62b6ab18348891f2d09ca7c63a5c5a2fa20c84a0e815a5
+            - path: 1.4.6
+              level: 3
+              title: 6. edit_file reliability
+              byte_offset: 4612
+              byte_count: 647
+              word_count: 91
+              content_hash: a14eb0c326fceda0487692be285799570876c84f142687962a0fc637f16c3df1
+        - path: "1.5"
+          level: 2
+          title: Files affected
+          byte_offset: 5259
+          byte_count: 722
+          word_count: 85
+          content_hash: e53a71432db4fa93409154cfd5b16d389ae34ce815e61bea06b46a5f335512af
+        - path: "1.6"
+          level: 2
+          title: Dependencies
+          byte_offset: 5981
+          byte_count: 122
+          word_count: 20
+          content_hash: e29f4bc36c92d991876e375c12d45c6405019cf7d67f9100379e11b523e11868
+        - path: "1.7"
+          level: 2
+          title: Open Questions
+          byte_offset: 6103
+          byte_count: 532
+          word_count: 80
+          content_hash: 48b97995edf4de5a541b7b045eab5f9119b3cd8e44d8034e2d1489a44784ca5d
+entity_refs:
+    - entity_id: P53-infrastructure-hygiene
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 47
+    - entity_id: P50-retro-may-2026
+      entity_type: plan
+      section_path: 1.4.5
+      byte_offset: 4439
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.7"
+      role: question
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-05T11:21:04.72598Z
+classified: false
