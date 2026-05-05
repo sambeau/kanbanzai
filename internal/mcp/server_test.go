@@ -13,7 +13,7 @@ import (
 func testServerToolNames(t *testing.T, cfg *config.Config) map[string]bool {
 	t.Helper()
 	entityRoot := t.TempDir()
-	srv := newServerWithConfig(entityRoot, "test", cfg)
+	srv := newServerWithConfig(entityRoot, cfg)
 	tools := srv.ListTools()
 	names := make(map[string]bool, len(tools))
 	for name := range tools {
@@ -33,7 +33,6 @@ func TestServer_ListTools_MinimalPreset(t *testing.T) {
 
 	wantTools := []string{
 		"status", "next", "finish", "handoff", "entity", "doc", "health", "server_info",
-		"develop", "batch",
 	}
 
 	if len(tools) != len(wantTools) {
@@ -59,8 +58,8 @@ func TestServer_ListTools_OrchestrationPreset(t *testing.T) {
 	tools := testServerToolNames(t, &cfg)
 
 	wantTools := []string{
-		// core (10)
-		"status", "next", "finish", "handoff", "entity", "doc", "health", "server_info", "develop", "batch",
+		// core (8)
+		"status", "next", "finish", "handoff", "entity", "doc", "health", "server_info",
 		// planning (4)
 		"decompose", "estimate", "conflict", "retro",
 		// git (7)
@@ -90,8 +89,8 @@ func TestServer_ListTools_FullPreset(t *testing.T) {
 	tools := testServerToolNames(t, &cfg)
 
 	wantTools := []string{
-		// core (10)
-		"status", "next", "finish", "handoff", "entity", "doc", "health", "server_info", "develop", "batch",
+		// core (8)
+		"status", "next", "finish", "handoff", "entity", "doc", "health", "server_info",
 		// planning (4)
 		"decompose", "estimate", "conflict", "retro",
 		// knowledge (2)
@@ -106,9 +105,9 @@ func TestServer_ListTools_FullPreset(t *testing.T) {
 		"checkpoint",
 	}
 
-	if len(tools) != 26 {
+	if len(tools) != 24 {
 		got := testSortedKeys(tools)
-		t.Fatalf("full preset: got %d tools %v, want 26", len(tools), got)
+		t.Fatalf("full preset: got %d tools %v, want 24", len(tools), got)
 	}
 
 	for _, name := range wantTools {
@@ -126,9 +125,9 @@ func TestServer_ListTools_DefaultConfigIsFull(t *testing.T) {
 	cfg := config.DefaultConfig()
 	tools := testServerToolNames(t, &cfg)
 
-	if len(tools) != 26 {
+	if len(tools) != 24 {
 		got := testSortedKeys(tools)
-		t.Fatalf("default config: got %d tools %v, want 26", len(tools), got)
+		t.Fatalf("default config: got %d tools %v, want 24", len(tools), got)
 	}
 }
 
@@ -174,10 +173,10 @@ func TestServer_ListTools_ExplicitGroupOverride(t *testing.T) {
 	}
 	tools := testServerToolNames(t, &cfg)
 
-	// Should have core (10) + checkpoints (1) = 11.
-	if len(tools) != 11 {
+	// Should have core (8) + checkpoints (1) = 9.
+	if len(tools) != 9 {
 		got := testSortedKeys(tools)
-		t.Fatalf("minimal+checkpoints: got %d tools %v, want 11", len(tools), got)
+		t.Fatalf("minimal+checkpoints: got %d tools %v, want 9", len(tools), got)
 	}
 
 	if !tools["checkpoint"] {
