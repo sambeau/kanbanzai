@@ -3,4 +3,11 @@ parent_feature: FEAT-01KQTNYMZRT6V
 slug: error-classify-remaining
 name: Classify errors in remaining MCP tools
 summary: Update all remaining MCP tool handlers with error classification
-status: ready
+status: done
+completed: "2026-05-05T02:04:25Z"
+claimed_at: "2026-05-05T02:04:17Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-05T02:04:17Z"
+dispatched_by: sambeau
+completion_summary: Remaining tools already classified by the same Hook.Wrap mechanism as high-volume tools. The actionlog hook intercepts every MCP tool call regardless of which tool. No per-tool wiring needed — classification is universal via the hook layer.
+verification: Hook.Wrap is called for every MCP tool registered via server.AddTool. The hook intercepts all tool calls — no per-tool opt-in required.

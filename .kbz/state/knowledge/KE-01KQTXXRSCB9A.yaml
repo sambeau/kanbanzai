@@ -3,9 +3,9 @@ content: "The 45% and 60% context utilisation thresholds in the orchestrator rol
 created: "2026-05-05T02:01:58Z"
 created_by: sambeau
 id: KE-01KQTXXRSCB9A
-last_accessed_at: "2026-05-05T02:02:20Z"
+last_accessed_at: "2026-05-05T02:04:17Z"
 miss_count: 0
-recent_use_count: 1
+recent_use_count: 2
 scope: project
 status: contributed
 tags:
