@@ -402,7 +402,7 @@ func TestIsBranchAncestorOf_Merged(t *testing.T) {
 	git("checkout", "main")
 	git("merge", "--no-ff", "feature/x", "-m", "Merge X")
 
-	merged, err := isBranchAncestorOf(repo, "feature/x", "main")
+	merged, err := IsBranchAncestorOf(repo, "feature/x", "main")
 	if err != nil {
 		t.Fatalf("isBranchAncestorOf() error = %v", err)
 	}
@@ -435,7 +435,7 @@ func TestIsBranchAncestorOf_NotMerged(t *testing.T) {
 	git("commit", "-m", "Y")
 	git("checkout", "main")
 
-	merged, err := isBranchAncestorOf(repo, "feature/y", "main")
+	merged, err := IsBranchAncestorOf(repo, "feature/y", "main")
 	if err != nil {
 		t.Fatalf("isBranchAncestorOf() error = %v", err)
 	}
@@ -449,7 +449,7 @@ func TestIsBranchAncestorOf_BranchNotFound(t *testing.T) {
 
 	repo := setupGitRepo(t)
 
-	_, err := isBranchAncestorOf(repo, "feature/ghost", "main")
+	_, err := IsBranchAncestorOf(repo, "feature/ghost", "main")
 	if err == nil {
 		t.Error("isBranchAncestorOf() expected error for missing branch, got nil")
 	}
@@ -460,7 +460,7 @@ func TestIsBranchAncestorOf_NotARepo(t *testing.T) {
 
 	dir := t.TempDir()
 
-	_, err := isBranchAncestorOf(dir, "feature/x", "main")
+	_, err := IsBranchAncestorOf(dir, "feature/x", "main")
 	if err == nil {
 		t.Error("isBranchAncestorOf() expected error for non-repo, got nil")
 	}
