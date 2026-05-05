@@ -1,7 +1,7 @@
 document_id: B44-prompt-engineering-skill/design-b44-design-prompt-engineering-skill
-document_path: work/B44-prompt-engineering-skill/B44-design-prompt-engineering-skill.md
+document_path: work/design/B44-design-prompt-engineering-skill.md
 content_hash: 2ff154c1bcba36644aab01eb8271aa0d6ee1afc5b8f3ec92ccdf530ecba1ba95
-indexed_at: 2026-05-04T10:08:37.527303Z
+indexed_at: 2026-05-03T12:59:40.561148Z
 sections:
     - path: "1"
       level: 1
@@ -226,6 +226,79 @@ conventional_roles:
     - section_path: "1.6"
       role: decision
       confidence: high
-access_count: 1
-last_accessed_at: 2026-05-04T10:08:38.21261Z
-classified: false
+access_count: 2
+last_accessed_at: 2026-05-03T13:00:16.50739Z
+classified: true
+classified_at: 2026-05-03T13:00:36.725027Z
+classified_by: deepseek-v4-pro
+classifier_version: "1.0"
+classifications:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: requirement
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: rationale
+      confidence: high
+    - section_path: 1.3.1
+      role: narrative
+      confidence: high
+    - section_path: 1.3.2
+      role: rationale
+      confidence: high
+    - section_path: 1.3.3
+      role: rationale
+      confidence: high
+    - section_path: "1.4"
+      role: decision
+      confidence: high
+    - section_path: 1.4.1
+      role: decision
+      confidence: high
+    - section_path: 1.4.2
+      role: decision
+      confidence: high
+    - section_path: 1.4.3
+      role: decision
+      confidence: high
+    - section_path: 1.4.4
+      role: decision
+      confidence: high
+    - section_path: 1.4.5
+      role: decision
+      confidence: high
+    - section_path: 1.4.6
+      role: decision
+      confidence: high
+    - section_path: 1.4.7
+      role: decision
+      confidence: high
+    - section_path: 1.4.8
+      role: constraint
+      confidence: high
+    - section_path: 1.4.9
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: alternative
+      confidence: high
+    - section_path: 1.5.1
+      role: alternative
+      confidence: high
+    - section_path: 1.5.2
+      role: alternative
+      confidence: high
+    - section_path: 1.5.3
+      role: alternative
+      confidence: high
+    - section_path: "1.6"
+      role: decision
+      confidence: high
