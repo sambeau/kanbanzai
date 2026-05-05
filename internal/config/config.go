@@ -165,10 +165,6 @@ func (m MergeConfig) RequiresHumanReview() bool {
 	return m.RequireHumanReview != nil && *m.RequireHumanReview
 }
 
-// CoordinationEnabled returns true when a coordination database is configured.
-func (c Config) CoordinationEnabled() bool {
-	return c.Coordination.DatabaseURL != ""
-}
 
 // PlanPrefixesOrDefault returns the effective plan prefixes, defaulting to [{P, Plan}] (REQ-005).
 func (c Config) PlanPrefixesOrDefault() []PrefixEntry {
@@ -241,122 +237,12 @@ type QualityEvaluationConfig struct {
 	Threshold float64 `yaml:"quality_evaluation_threshold"`
 }
 
-// CoordinationConfig holds settings for the coordination database (team mode).
-// When DatabaseURL is empty, Kanbanzai operates in single-user mode.
-type CoordinationConfig struct {
-	// DatabaseURL is the PostgreSQL connection string for the coordination database.
-	// Supports ${ENV_VAR} substitution. When empty, single-user mode is active.
-	DatabaseURL string `yaml:"database_url,omitempty"`
-	// ProjectID scopes coordination state to this project within a shared database.
-	ProjectID string `yaml:"project_id,omitempty"`
-}
-
 // ProjectConfig holds the optional project singleton section (P38 D5).
 type ProjectConfig struct {
-	Name         string   `yaml:"name,omitempty"`
-	Vision       string   `yaml:"vision,omitempty"`
-	Architecture string   `yaml:"architecture,omitempty"`
-	Constraints  []string `yaml:"constraints,omitempty"`
-}
-
-// Valid gate mode constants per REQ-TIER-002.
-const (
-	GateModeAuto        = "auto"
-	GateModeHuman       = "human"
-	GateModeConditional = "conditional"
-)
-
-// Tier name constants for the built-in risk tiers.
-const (
-	TierRetroFix = "retro_fix"
-	TierBugFix   = "bug_fix"
-	TierFeature  = "feature"
-	TierCritical = "critical"
-)
-
-// TierConfig defines the automation matrix and cycle cap for a single risk tier.
-// Each stage (design, spec, dev-plan, review) maps to a gate mode.
-// MaxCycles caps the number of fix-validate iterations before human escalation.
-type TierConfig struct {
-	Design    string `yaml:"design"`     // gate mode for designing stage
-	Spec      string `yaml:"spec"`       // gate mode for specifying stage
-	DevPlan   string `yaml:"dev_plan"`   // gate mode for dev-planning stage
-	Review    string `yaml:"review"`     // gate mode for reviewing stage
-	MaxCycles int    `yaml:"max_cycles"` // max fix-validate iterations (0 = no auto-validation)
-}
-
-// FastTrackConfig defines the fast-track architecture settings.
-// Enabled controls whether the entire fast-track system is active.
-// DefaultTier is applied when a feature has no explicit tier.
-// Tiers maps tier names to their automation configuration.
-type FastTrackConfig struct {
-	Enabled     bool                  `yaml:"enabled"`
-	DefaultTier string                `yaml:"default_tier,omitempty"`
-	Tiers       map[string]TierConfig `yaml:"tiers,omitempty"`
-}
-
-// IsEnabled returns true if fast-track is enabled.
-// A zero-value Config (not configured) defaults to enabled.
-func (f FastTrackConfig) IsEnabled() bool {
-	if f.DefaultTier == "" && !f.Enabled && len(f.Tiers) == 0 {
-		return true // zero config → enabled by default
-	}
-	return f.Enabled
-}
-
-// Validate checks the fast-track configuration for correctness.
-func (f FastTrackConfig) Validate() error {
-	if !f.Enabled {
-		return nil
-	}
-	validTiers := map[string]bool{"retro_fix": true, "bug_fix": true, "feature": true, "critical": true}
-	if !validTiers[f.DefaultTier] {
-		return fmt.Errorf("default_tier %q is not a valid tier", f.DefaultTier)
-	}
-	for name := range f.Tiers {
-		if !validTiers[name] {
-			return fmt.Errorf("tiers[%q] is not a valid tier name", name)
-		}
-	}
-	return nil
-}
-
-// DefaultFastTrackConfig returns the built-in tier configuration.
-func DefaultFastTrackConfig() FastTrackConfig {
-	return FastTrackConfig{
-		Enabled:     true,
-		DefaultTier: TierFeature,
-		Tiers: map[string]TierConfig{
-			TierRetroFix: {
-				Design:    string(GateModeHuman),
-				Spec:      string(GateModeAuto),
-				DevPlan:   string(GateModeAuto),
-				Review:    string(GateModeConditional),
-				MaxCycles: 3,
-			},
-			TierBugFix: {
-				Design:    string(GateModeHuman),
-				Spec:      string(GateModeHuman),
-				DevPlan:   string(GateModeAuto),
-				Review:    string(GateModeAuto),
-				MaxCycles: 2,
-			},
-			TierFeature: {
-				Design:    string(GateModeHuman),
-				Spec:      string(GateModeAuto),
-				DevPlan:   string(GateModeAuto),
-				Review:    string(GateModeAuto),
-				MaxCycles: 2,
-			},
-			TierCritical: {
-				Design:    string(GateModeHuman),
-				Spec:      string(GateModeHuman),
-				DevPlan:   string(GateModeHuman),
-				Review:    string(GateModeHuman),
-				MaxCycles: 0,
-			},
-		},
-	}
+	Name string `yaml:"name,omitempty"`
+	Vision string `yaml:"vision,omitempty"`
+	Architecture string `yaml:"architecture,omitempty"`
+	Constraints []string `yaml:"constraints,omitempty"`
 }
 
 // Config is the project configuration structure stored in .kbz/config.yaml.
@@ -370,10 +256,10 @@ type Config struct {
 	// format changes. See the public schema interface specification §6.
 	SchemaVersion string `yaml:"schema_version,omitempty"`
 	// Prefixes is the registry of Plan ID prefixes.
-	Prefixes      []PrefixEntry `yaml:"prefixes"`
-	PlanPrefixes  []PrefixEntry `yaml:"plan_prefixes,omitempty"`
+	Prefixes []PrefixEntry `yaml:"prefixes"`
+	PlanPrefixes []PrefixEntry `yaml:"plan_prefixes,omitempty"`
 	BatchPrefixes []PrefixEntry `yaml:"batch_prefixes,omitempty"`
-	Project       ProjectConfig `yaml:"project,omitempty"`
+	Project ProjectConfig `yaml:"project,omitempty"`
 	// Import holds configuration for batch document import.
 	Import ImportConfig `yaml:"import,omitempty"`
 	// BranchTracking holds settings for branch staleness and drift detection.
@@ -398,12 +284,8 @@ type Config struct {
 	QualityEvaluation QualityEvaluationConfig `yaml:"quality_evaluation,omitempty"`
 	// Lifecycle holds settings for feature lifecycle behaviour.
 	Lifecycle LifecycleConfig `yaml:"lifecycle,omitempty"`
-	// Coordination holds settings for the coordination database (team mode).
-	Coordination CoordinationConfig `yaml:"coordination,omitempty"`
 	// ToolHints maps role IDs to opaque tool guidance strings injected into agent prompts.
 	ToolHints map[string]string `yaml:"tool_hints,omitempty"`
-	// FastTrack holds the fast-track automation configuration per REQ-TIER-005.
-	FastTrack FastTrackConfig `yaml:"fast_track,omitempty"`
 }
 
 // DefaultConfig returns a new Config with sensible defaults.
@@ -432,7 +314,6 @@ func DefaultConfig() Config {
 		Decomposition:  DefaultDecompositionConfig(),
 		Freshness:      DefaultFreshnessConfig(),
 		Lifecycle:      DefaultLifecycleConfig(),
-		FastTrack:      DefaultFastTrackConfig(),
 	}
 }
 
@@ -530,10 +411,6 @@ func LoadFrom(path string) (*Config, error) {
 		}
 		return nil, fmt.Errorf("read config: %w", err)
 	}
-
-	// Expand ENV_VAR references before YAML unmarshalling.
-	// Unset variables cause an error rather than silently expanding to empty.
-	data = expandEnv(data)
 
 	var cfg Config
 	if err := yaml.Unmarshal(data, &cfg); err != nil {
@@ -744,10 +621,6 @@ func (c *Config) Validate() error {
 		return errors.New("decomposition.max_tasks_per_feature must be non-negative")
 	}
 
-	if err := c.FastTrack.Validate(); err != nil {
-		return fmt.Errorf("fast_track: %w", err)
-	}
-
 	return nil
 }
 
@@ -937,18 +810,6 @@ func (c *Config) mergePhase4bDefaults() {
 	if c.Decomposition.MaxTasksPerFeature == 0 {
 		c.Decomposition.MaxTasksPerFeature = decompDefaults.MaxTasksPerFeature
 	}
-
-	// FastTrack: merge defaults for unset fields.
-	fastTrackDefaults := DefaultFastTrackConfig()
-	if !c.FastTrack.Enabled && c.FastTrack.DefaultTier == "" && len(c.FastTrack.Tiers) == 0 {
-		c.FastTrack.Enabled = fastTrackDefaults.Enabled
-	}
-	if c.FastTrack.DefaultTier == "" {
-		c.FastTrack.DefaultTier = fastTrackDefaults.DefaultTier
-	}
-	if len(c.FastTrack.Tiers) == 0 {
-		c.FastTrack.Tiers = fastTrackDefaults.Tiers
-	}
 }
 
 // mergePhase3Defaults fills in zero-value Phase 3 config fields with sensible defaults.
@@ -1110,17 +971,4 @@ func parsePlanIDParts(id string) (prefix, number, slug string) {
 	slug = string(runes[digitEnd+1:])
 
 	return prefix, number, slug
-}
-
-// expandEnv replaces ENV_VAR references in data with their environment values.
-// Unset variables produce a warning on stderr and expand to empty string.
-func expandEnv(data []byte) []byte {
-	s := os.Expand(string(data), func(key string) string {
-		val, ok := os.LookupEnv(key)
-		if !ok {
-			fmt.Fprintf(os.Stderr, "config: environment variable $%s is not set\n", key)
-		}
-		return val
-	})
-	return []byte(s)
 }
