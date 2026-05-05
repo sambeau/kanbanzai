@@ -489,12 +489,12 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 	var batchSummaries []batchSummary
 	if batchErr == nil {
 		for _, b := range allBatches {
-			bStatus, _ := b.State["status"].(string)
-			bName, _ := b.State["name"].(string)
-			bParent, _ := b.State["parent"].(string)
+			bStatus := string(b.Status)
+			bName := b.Name
+			bParent := b.Parent
 
 			bFeatures := featuresByPlan[b.ID]
-			var bTasks struct{Ready, Active, Done, Total int}
+			var bTasks struct{ Ready, Active, Done, Total int }
 			for _, f := range bFeatures {
 				tc := tasksByFeature[f.ID]
 				bTasks.Ready += tc.ready
@@ -958,8 +958,8 @@ func synthesiseBatch(batchID string, entitySvc *service.EntityService, docSvc *s
 		}
 	}
 
-	batchName, _ := plan.State["name"].(string)
-	batchStatus, _ := plan.State["status"].(string)
+	batchName := plan.Name
+	batchStatus := string(plan.Status)
 	batchDisplayID := id.FormatFullDisplay(plan.ID)
 
 	attention := generatePlanAttention(featureSummaries, docGaps, batchDisplayID, batchStatus, allFeaturesFinished, len(features))

@@ -602,7 +602,7 @@ func runStatusPath(target, format string, r *render.Renderer, deps dependencies)
 		switch format {
 		case "json":
 			jr := &status.JSONRenderer{}
-			b, err := jr.RenderDocument(&doc)
+			b, err := jr.RenderDocument(doc)
 			if err != nil {
 				return err
 			}
@@ -610,7 +610,7 @@ func runStatusPath(target, format string, r *render.Renderer, deps dependencies)
 			return err
 		case "plain":
 			pr := &status.PlainRenderer{}
-			return pr.RenderDocument(deps.stdout, &doc)
+			return pr.RenderDocument(deps.stdout, doc)
 		default:
 			_, err = fmt.Fprintf(deps.stdout,
 				"%s\n\n  Not registered with Kanbanzai.\n\nRegister it with:\n  kbz doc register %s --type <type> --title <title>\n",
@@ -623,7 +623,7 @@ func runStatusPath(target, format string, r *render.Renderer, deps dependencies)
 	switch format {
 	case "json":
 		jr := &status.JSONRenderer{}
-		b, err := jr.RenderDocument(&doc)
+		b, err := jr.RenderDocument(doc)
 		if err != nil {
 			return err
 		}
@@ -631,7 +631,7 @@ func runStatusPath(target, format string, r *render.Renderer, deps dependencies)
 		return err
 	case "plain":
 		pr := &status.PlainRenderer{}
-		return pr.RenderDocument(deps.stdout, &doc)
+		return pr.RenderDocument(deps.stdout, doc)
 	default:
 		_, err = fmt.Fprintf(deps.stdout, "Document: %s\nID: %s\nType: %s\nTitle: %s\nStatus: %s\nPath: %s\n",
 			doc.ID, doc.ID, doc.Type, doc.Title, doc.Status, doc.Path)

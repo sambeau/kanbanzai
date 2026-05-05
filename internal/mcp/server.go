@@ -184,7 +184,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	// Action-pattern logging: create writer and hook.
 	// Writer appends JSONL to .kbz/logs/; hook wraps every tool handler.
 	logWriter := actionlog.NewWriter(actionlog.LogsDir())
-	logHook := actionlog.NewHook(logWriter, &entityStageLookup{svc: entitySvc})
+	logHook := actionlog.NewHook(logWriter, &entityStageLookup{svc: entitySvc}, "dev")
 
 	// Checkpoint store and dispatch service.
 	checkpointStore := checkpoint.NewStore(stateRoot)
@@ -270,7 +270,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 
 	// GroupCheckpoints: checkpoint.
 	if groups[config.GroupCheckpoints] {
-		mcpServer.AddTools(CheckpointTool(checkpointStore)...)
+		mcpServer.AddTools(CheckpointTool(checkpointStore, entitySvc)...)
 	}
 
 	// Register health tool last so DocCurrencyHealthChecker can see all tool names.

@@ -285,7 +285,7 @@ func entityGetAction(entitySvc *service.EntityService) ActionHandler {
 			if err != nil {
 				return nil, fmt.Errorf("cannot get batch %s: %w", entityID, err)
 			}
-			return map[string]any{"entity": entityFullRecord(r.ID, r.Type, r.Slug, r.State)}, nil
+			return map[string]any{"entity": entityBatchRecord(r)}, nil
 		}
 		r, err := entitySvc.Get(entityType, entityID, "")
 		if err != nil {
@@ -330,7 +330,10 @@ func entityListAction(entitySvc *service.EntityService) ActionHandler {
 			return entityListResponse(entityType, entitySummaries(plans)), nil
 		}
 		if entityType == "batch" || entityType == "plan" {
-			batches, err := entitySvc.ListBatches(service.BatchFilters{Status: statusFilter, Parent: parentFilter, Tags: tagsFilter})
+			batches, err := entitySvc.ListEntitiesFiltered(service.ListFilteredInput{
+				Type: "batch", Status: statusFilter, Parent: parentFilter,
+				Tags: tagsFilter,
+			})
 			if err != nil {
 				return nil, fmt.Errorf("cannot list batches: %w", err)
 			}
@@ -464,28 +467,25 @@ func entityUpdateAction(entitySvc *service.EntityService) ActionHandler {
 			if _, has := args["verification_status"]; has {
 				return nil, fmt.Errorf("verification_status is not supported for batches")
 			}
-			_, _, slug := model.ParseBatchID(entityID)
-			input := service.UpdateBatchInput{ID: entityID, Slug: slug}
+			input := service.UpdateBatchInput{ID: entityID}
 			if _, has := args["name"]; has {
-				v := entityArgStr(args, "name")
-				input.Name = &v
+				input.Name = entityArgStr(args, "name")
 			}
 			if _, has := args["summary"]; has {
-				v := entityArgStr(args, "summary")
-				input.Summary = &v
+				input.Summary = entityArgStr(args, "summary")
 			}
 			if _, has := args["design"]; has {
-				v := entityArgStr(args, "design")
-				input.Design = &v
+				input.Design = entityArgStr(args, "design")
 			}
 			if _, has := args["tags"]; has {
 				input.Tags = entityArgStringSlice(args, "tags")
 			}
-			r, err := entitySvc.UpdateBatch(input)
+			err := entitySvc.UpdateBatch(input)
 			if err != nil {
 				return nil, fmt.Errorf("cannot update batch %s: %w", entityID, err)
 			}
-			return map[string]any{"entity": entityFullRecord(r.ID, r.Type, r.Slug, r.State)}, nil
+			r, _ := entitySvc.GetBatch(entityID)
+			return map[string]any{"entity": entityBatchRecord(r)}, nil
 		}
 		fields := make(map[string]string)
 		for _, key := range []string{"slug", "summary", "name", "design", "rationale", "observed", "expected", "severity", "priority", "verification", "verification_status"} {
@@ -575,10 +575,9 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			return map[string]any{"entity": entityFullRecord(r.ID, r.Type, r.Slug, r.State)}, nil
 		}
 		if entityType == "batch" {
-			_, _, slug := model.ParseBatchID(entityID)
 			var batchFromStatus string
 			if pre, preErr := entitySvc.GetBatch(entityID); preErr == nil {
-				batchFromStatus, _ = pre.State["status"].(string)
+				batchFromStatus = string(pre.Status)
 			}
 			isTerminal := newStatus == string(model.BatchStatusDone) || newStatus == "cancelled" || newStatus == "superseded"
 			if isTerminal && !override {
@@ -589,14 +588,15 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 					}, nil
 				}
 			}
-			r, err := entitySvc.UpdateBatchStatus(entityID, slug, newStatus)
+			err := entitySvc.UpdateBatchStatus(entityID, model.BatchStatus(newStatus))
 			if err != nil {
 				return entityTransitionError(entitySvc, "batch", entityID, newStatus, err), nil
 			}
 			if _, err := entityCommitFunc(".", fmt.Sprintf("workflow(%s): transition %s → %s", entityID, batchFromStatus, newStatus)); err != nil {
 				log.Printf("WARNING: commit after batch transition failed: %v", err)
 			}
-			return map[string]any{"entity": entityFullRecord(r.ID, r.Type, r.Slug, r.State)}, nil
+			r, _ := entitySvc.GetBatch(entityID)
+			return map[string]any{"entity": entityBatchRecord(r)}, nil
 		}
 		var structuralChecks interface{}
 		if entityType == "feature" && !override {
@@ -1033,8 +1033,7 @@ func entityCurrentStatus(entitySvc *service.EntityService, entityType, entityID 
 	switch entityType {
 	case "batch", "plan":
 		if r, err := entitySvc.GetBatch(entityID); err == nil {
-			status, _ := r.State["status"].(string)
-			return status, nil
+			return string(r.Status), nil
 		}
 		r, err := entitySvc.Get(entityType, entityID, "")
 		if err != nil {
@@ -1159,6 +1158,16 @@ func entityStateStr(state map[string]any, key string) string {
 	}
 	s, _ := state[key].(string)
 	return s
+}
+
+func entityBatchRecord(b *model.Batch) map[string]any {
+	out := map[string]any{
+		"id": b.ID, "slug": b.Slug, "name": b.Name,
+		"status": string(b.Status), "summary": b.Summary, "parent": b.Parent,
+		"type": "batch", "display_id": id.FormatFullDisplay(b.ID),
+	}
+	out["entity_ref"] = id.FormatEntityRef(out["display_id"].(string), b.Slug, b.Name)
+	return out
 }
 
 func entityFullRecord(entityID, entityType, slug string, state map[string]any) map[string]any {

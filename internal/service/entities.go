@@ -272,6 +272,52 @@ func (s *EntityService) listAllPlanIDs() ([]string, error) {
 	return ids, nil
 }
 
+// CreateBatchInput carries the fields for creating a new batch entity.
+type CreateBatchInput struct {
+	Slug, Name, Summary, Parent, Prefix string
+	Tags                                []string
+	CreatedBy                           string
+}
+
+func (s *EntityService) CreateBatch(input CreateBatchInput) (CreateResult, error) {
+	b := model.Batch{Slug: input.Slug, Name: input.Name, Summary: input.Summary, Parent: input.Parent, Status: model.BatchStatusProposed}
+	return s.write(b)
+}
+
+// UpdateBatchInput carries the fields for updating a batch entity.
+type UpdateBatchInput struct {
+	ID, Name, Summary, Status, Design, Parent string
+	Tags                                      []string
+}
+
+func (s *EntityService) UpdateBatch(input UpdateBatchInput) error {
+	_, err := s.UpdateEntity(UpdateEntityInput{
+		Type: "batch", ID: input.ID,
+		Fields: map[string]string{
+			"name": input.Name, "summary": input.Summary, "status": input.Status,
+			"design": input.Design, "parent": input.Parent,
+		},
+	})
+	return err
+}
+
+func (s *EntityService) GetBatch(id string) (*model.Batch, error) {
+	getR, err := s.Get("batch", id, "")
+	if err != nil {
+		return nil, err
+	}
+	nm, _ := getR.State["name"].(string)
+	pr, _ := getR.State["parent"].(string)
+	st, _ := getR.State["status"].(string)
+	sm, _ := getR.State["summary"].(string)
+	return &model.Batch{ID: getR.ID, Slug: getR.Slug, Name: nm, Parent: pr, Status: model.BatchStatus(st), Summary: sm}, nil
+}
+
+func (s *EntityService) UpdateBatchStatus(id string, status model.BatchStatus) error {
+	_, err := s.UpdateStatus(UpdateStatusInput{Type: "batch", ID: id, Status: string(status)})
+	return err
+}
+
 func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, error) {
 	if err := validateRequired(
 		field("slug", input.Slug),

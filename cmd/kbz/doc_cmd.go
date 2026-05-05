@@ -145,11 +145,6 @@ func runDocApprove(args []string, deps dependencies) error {
 		}
 	}
 
-	resolvedBy, err := config.ResolveIdentity(approvedBy)
-	if err != nil {
-		return err
-	}
-
 	stateRoot := core.StatePath()
 	repoRoot := "."
 	docSvc := service.NewDocumentService(stateRoot, repoRoot)
