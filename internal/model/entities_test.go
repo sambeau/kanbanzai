@@ -486,6 +486,12 @@ func TestEnumStringValues(t *testing.T) {
 	if model.FeatureStatusReviewing != "reviewing" {
 		t.Errorf("FeatureStatusReviewing = %q, want %q", model.FeatureStatusReviewing, "reviewing")
 	}
+	if model.FeatureStatusMerging != "merging" {
+		t.Errorf("FeatureStatusMerging = %q, want %q", model.FeatureStatusMerging, "merging")
+	}
+	if model.FeatureStatusVerifying != "verifying" {
+		t.Errorf("FeatureStatusVerifying = %q, want %q", model.FeatureStatusVerifying, "verifying")
+	}
 	if model.FeatureStatusNeedsRework != "needs-rework" {
 		t.Errorf("FeatureStatusNeedsRework = %q, want %q", model.FeatureStatusNeedsRework, "needs-rework")
 	}
@@ -811,5 +817,58 @@ func TestParseShortPlanRef(t *testing.T) {
 				t.Errorf("ParseShortPlanRef(%q) number = %q, want %q", tc.input, gotNumber, tc.wantNumber)
 			}
 		})
+	}
+}
+
+func TestFeatureValidTransitions(t *testing.T) {
+	t.Parallel()
+
+	// reviewing→merging is valid
+	if !model.IsValidFeatureTransition(model.FeatureStatusReviewing, model.FeatureStatusMerging) {
+		t.Error("reviewing→merging should be a valid transition")
+	}
+
+	// merging→verifying is valid
+	if !model.IsValidFeatureTransition(model.FeatureStatusMerging, model.FeatureStatusVerifying) {
+		t.Error("merging→verifying should be a valid transition")
+	}
+
+	// verifying→done is valid
+	if !model.IsValidFeatureTransition(model.FeatureStatusVerifying, model.FeatureStatusDone) {
+		t.Error("verifying→done should be a valid transition")
+	}
+
+	// verifying→needs-rework is valid
+	if !model.IsValidFeatureTransition(model.FeatureStatusVerifying, model.FeatureStatusNeedsRework) {
+		t.Error("verifying→needs-rework should be a valid transition")
+	}
+
+	// reviewing→done is valid (backward compatibility, requires override)
+	if !model.IsValidFeatureTransition(model.FeatureStatusReviewing, model.FeatureStatusDone) {
+		t.Error("reviewing→done should be a valid transition (backward compatibility)")
+	}
+
+	// Invalid transitions
+	invalidTransitions := []struct {
+		from, to model.FeatureStatus
+	}{
+		// Cannot skip merging
+		{model.FeatureStatusReviewing, model.FeatureStatusVerifying},
+		// Cannot go backward from verifying to merging
+		{model.FeatureStatusVerifying, model.FeatureStatusMerging},
+		// Cannot go from merging back to reviewing
+		{model.FeatureStatusMerging, model.FeatureStatusReviewing},
+		// Cannot go from merging directly to done
+		{model.FeatureStatusMerging, model.FeatureStatusDone},
+		// Terminal states have no outgoing transitions
+		{model.FeatureStatusDone, model.FeatureStatusReviewing},
+		{model.FeatureStatusSuperseded, model.FeatureStatusReviewing},
+		{model.FeatureStatusCancelled, model.FeatureStatusReviewing},
+	}
+
+	for _, tc := range invalidTransitions {
+		if model.IsValidFeatureTransition(tc.from, tc.to) {
+			t.Errorf("%s→%s should NOT be a valid transition", tc.from, tc.to)
+		}
 	}
 }
