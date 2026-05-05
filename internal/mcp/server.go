@@ -38,13 +38,13 @@ const (
 // .kbz/config.yaml. If no mcp section is present, all groups are enabled
 // (preset: full). The entityRoot is the path for entity storage (typically
 // ".kbz/state"); pass an empty string to use the default.
-func NewServer(entityRoot string, version string) *server.MCPServer {
-	return newServerWithConfig(entityRoot, version, config.LoadOrDefault())
+func NewServer(entityRoot string) *server.MCPServer {
+	return newServerWithConfig(entityRoot, config.LoadOrDefault())
 }
 
 // newServerWithConfig creates an MCP server using the provided configuration.
 // Separated from NewServer to allow config injection in tests.
-func newServerWithConfig(entityRoot string, version string, cfg *config.Config) *server.MCPServer {
+func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServer {
 	entitySvc := service.NewEntityService(entityRoot)
 
 	// Documents are stored relative to the repository root (current directory).
@@ -97,11 +97,6 @@ func newServerWithConfig(entityRoot string, version string, cfg *config.Config) 
 		} else {
 			log.Printf("[server] cache warm-up: loaded %d entities in %s", n, time.Since(start))
 		}
-	}
-
-	// Backfill display_ids for any existing features that predate this feature (idempotent).
-	if err := service.MigrateDisplayIDs(entitySvc); err != nil {
-		log.Printf("[server] display_id migration warning (non-fatal): %v", err)
 	}
 
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
@@ -177,14 +172,13 @@ func newServerWithConfig(entityRoot string, version string, cfg *config.Config) 
 		service.NewCompositeTransitionHook(
 			service.NewWorktreeTransitionHook(worktreeStore, gitOps, entitySvc),
 			service.NewDependencyUnblockingHook(entitySvc),
-			service.NewFeaturePromotionHook(entitySvc),
 		),
 	)
 
 	// Action-pattern logging: create writer and hook.
 	// Writer appends JSONL to .kbz/logs/; hook wraps every tool handler.
 	logWriter := actionlog.NewWriter(actionlog.LogsDir())
-	logHook := actionlog.NewHook(logWriter, &entityStageLookup{svc: entitySvc, docSvc: docRecordSvc}, version)
+	logHook := actionlog.NewHook(logWriter, &entityStageLookup{svc: entitySvc})
 
 	// Checkpoint store and dispatch service.
 	checkpointStore := checkpoint.NewStore(stateRoot)
@@ -229,10 +223,6 @@ func newServerWithConfig(entityRoot string, version string, cfg *config.Config) 
 		mcpServer.AddTools(EntityTool(entitySvc, docRecordSvc, gateRouter, checkpointStore, cfg.Merge.RequiresHumanReview)...)
 		// Track I: doc — consolidated document operations
 		mcpServer.AddTools(DocTool(docRecordSvc, intelligenceSvc, entitySvc)...)
-		// Track J: develop — development dispatch (B43 — Composite Tools)
-		mcpServer.AddTools(DevelopTool(entitySvc, conflictSvc)...)
-		// Track K: batch — batch-level operations (B43 — Composite Tools)
-		mcpServer.AddTools(BatchTool(entitySvc)...)
 
 	}
 
@@ -255,9 +245,7 @@ func newServerWithConfig(entityRoot string, version string, cfg *config.Config) 
 	if groups[config.GroupGit] {
 		mcpServer.AddTools(WorktreeTool(worktreeStore, entitySvc, gitOps, repoRoot)...)
 		mcpServer.AddTools(WriteFileTool(repoRoot, worktreeStore)...)
-		mcpServer.AddTools(EditFileTool(repoRoot, worktreeStore)...)
-		mcpServer.AddTools(ReadFileTool(repoRoot, worktreeStore)...)
-		mcpServer.AddTools(MergeTool(worktreeStore, entitySvc, docRecordSvc, repoRoot, branchThresholds, localConfig)...)
+		mcpServer.AddTools(MergeTool(worktreeStore, entitySvc, repoRoot, branchThresholds, localConfig)...)
 		mcpServer.AddTools(PRTool(worktreeStore, entitySvc, repoRoot, branchThresholds, localConfig)...)
 		mcpServer.AddTools(BranchTool(worktreeStore, repoRoot, branchThresholds)...)
 		mcpServer.AddTools(CleanupTool(worktreeStore, gitOps, &cfg.Cleanup)...)
@@ -275,7 +263,7 @@ func newServerWithConfig(entityRoot string, version string, cfg *config.Config) 
 
 	// GroupCheckpoints: checkpoint.
 	if groups[config.GroupCheckpoints] {
-		mcpServer.AddTools(CheckpointTool(checkpointStore, entitySvc)...)
+		mcpServer.AddTools(CheckpointTool(checkpointStore)...)
 	}
 
 	// Register health tool last so DocCurrencyHealthChecker can see all tool names.
@@ -307,11 +295,11 @@ func newServerWithConfig(entityRoot string, version string, cfg *config.Config) 
 }
 
 // Serve starts the MCP server on stdio transport.
-func Serve(version string) error {
+func Serve() error {
 	// Best-effort log cleanup — remove log files older than 30 days.
 	_ = actionlog.Cleanup(actionlog.LogsDir(), time.Now().UTC())
 
-	mcpServer := NewServer("", version)
+	mcpServer := NewServer("")
 	return server.ServeStdio(mcpServer)
 }
 
@@ -357,17 +345,6 @@ func (w *worktreeBranchLookup) GetBranchForEntity(entityID string) (string, erro
 
 func (w *worktreeBranchLookup) GetFilesOnBranch(repoRoot, branch string) ([]string, error) {
 	return git.GetFilesChangedOnBranch(repoRoot, branch)
-}
-
-func (w *worktreeBranchLookup) GetBranchCreatedAt(entityID string) (time.Time, error) {
-	rec, err := w.store.GetByEntityID(entityID)
-	if err != nil {
-		return time.Time{}, err
-	}
-	if rec == nil {
-		return time.Time{}, worktree.ErrNotFound
-	}
-	return rec.Created, nil
 }
 
 // profileHealthChecker returns an AdditionalHealthChecker that validates
@@ -469,8 +446,7 @@ func capSaturationHealthChecker(tracker *knowledge.CapTracker) AdditionalHealthC
 
 // entityStageLookup adapts *service.EntityService to actionlog.StageLookup.
 type entityStageLookup struct {
-	svc    *service.EntityService
-	docSvc *service.DocumentService
+	svc *service.EntityService
 }
 
 // GetEntityKindAndParent returns the entity kind and parent feature ID for entityID.
@@ -496,23 +472,6 @@ func (l *entityStageLookup) GetFeatureStage(featureID string) (string, error) {
 	}
 	stage, _ := result.State["status"].(string)
 	return stage, nil
-}
-
-// DocType returns the document type (e.g. "specification", "design") for the
-// first registered document owned by entityID. Returns an empty string when
-// no documents are registered or the document service is unavailable.
-func (l *entityStageLookup) DocType(entityID string) (string, error) {
-	if l.docSvc == nil {
-		return "", nil
-	}
-	docs, err := l.docSvc.ListDocumentsByOwner(entityID)
-	if err != nil {
-		return "", err
-	}
-	if len(docs) == 0 {
-		return "", nil
-	}
-	return docs[0].Type, nil
 }
 
 // entityTypeFromPrefix determines an entity's service type from its ID prefix.
