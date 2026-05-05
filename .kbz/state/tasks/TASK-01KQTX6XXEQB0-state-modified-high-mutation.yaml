@@ -3,4 +3,7 @@ parent_feature: FEAT-01KQTNYN01ZF8
 slug: state-modified-high-mutation
 name: Set state_modified in high-mutation tools
 summary: "Update entity, doc, knowledge, and finish handlers to set state_modified: true on mutation responses. Read-only tools leave it absent."
-status: ready
+status: done
+completed: "2026-05-05T11:00:52Z"
+completion_summary: "Added state_modified to SideEffectCollector with SetStateModified/IsStateModified, SignalStateModified helper, threaded through WithSideEffects to buildResult/buildErrorResult with JSON injection. Wired into entity (create/update/transition/bootstrap/close-out), doc (register/approve/supersede/move/delete/record_false_positive/refresh/import/evaluate), knowledge (contribute/confirm/flag/retire/update/promote/resolve), finish, decompose apply."
+verification: go vet passes; existing test signatures updated
