@@ -1,10 +1,12 @@
 package mcp
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"fmt"
 	"log"
+	"os/exec"
 	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
@@ -506,14 +508,18 @@ func executeMerge(
 	}
 
 	// Auto-advance the feature lifecycle after successful merge.
-	// Merging IS the final step — the feature should be done afterward.
-	// First try the standard auto-advance (developing→reviewing when all tasks
-	// terminal), then try the final transition to done. Warnings only on failure
-	// — we never fail the merge itself for lifecycle issues.
+	// Phase 3 (P50/F4): the merge is not the final step — the feature must
+	// pass the verifying stage (build + test) before reaching done.
+	// The lifecycle is: reviewing → merging → verifying → done (or needs-rework).
+	//
+	// Step 1: Transition the feature to merging status.
+	// Step 2: Run go build ./... and go test ./...
+	// Step 3: On success → transition to done.
+	//         On failure → transition to needs-rework with captured output.
 	if entityType == string(model.EntityKindFeature) {
 		currentStatus, _ := entity.State["status"].(string)
 		if currentStatus != string(model.FeatureStatusDone) {
-			// Step 1: auto-advance from developing to reviewing if applicable.
+			// Auto-advance from developing to reviewing if applicable.
 			if currentStatus == string(model.FeatureStatusDeveloping) {
 				if advanced, advErr := entitySvc.MaybeAutoAdvanceFeature(entityID); advErr != nil {
 					warnings = append(warnings, fmt.Sprintf("auto-advance feature %s from developing after merge: %v", entityID, advErr))
@@ -521,15 +527,43 @@ func executeMerge(
 					warnings = append(warnings, fmt.Sprintf("auto-advance feature %s from developing after merge: conditions not met (tasks may not all be terminal)", entityID))
 				}
 			}
-			// Step 2: transition to done. May fail if reviewing→done gates
-			// (review report, verification) are not satisfied; that's expected
-			// for features merged directly.
-			if _, doneErr := entitySvc.UpdateStatus(service.UpdateStatusInput{
+
+			// Transition to merging (P50/F4: merge does not skip to done).
+			// Best-effort: warn on failure but don't fail the merge.
+			if _, mergeErr := entitySvc.UpdateStatus(service.UpdateStatusInput{
 				Type:   entityType,
 				ID:     entityID,
-				Status: string(model.FeatureStatusDone),
-			}); doneErr != nil {
-				warnings = append(warnings, fmt.Sprintf("auto-advance feature %s to done after merge: %v", entityID, doneErr))
+				Status: string(model.FeatureStatusMerging),
+			}); mergeErr != nil {
+				warnings = append(warnings, fmt.Sprintf("transition feature %s to merging after merge: %v", entityID, mergeErr))
+			} else {
+				// Transition to verifying (best-effort).
+				if _, verifyErr := entitySvc.UpdateStatus(service.UpdateStatusInput{
+					Type:   entityType,
+					ID:     entityID,
+					Status: string(model.FeatureStatusVerifying),
+				}); verifyErr != nil {
+					warnings = append(warnings, fmt.Sprintf("transition feature %s to verifying after merge: %v", entityID, verifyErr))
+				} else {
+					// Run verifying-stage build and test.
+					verifyResult := runVerifyingStage(repoPath)
+					if verifyResult.Success {
+						if _, doneErr := entitySvc.UpdateStatus(service.UpdateStatusInput{
+							Type:   entityType,
+							ID:     entityID,
+							Status: string(model.FeatureStatusDone),
+						}); doneErr != nil {
+							warnings = append(warnings, fmt.Sprintf("transition feature %s to done after verifying: %v", entityID, doneErr))
+						}
+					} else {
+						warnings = append(warnings, fmt.Sprintf("verification failed for %s after merge: build/tests did not pass. Feature left in verifying — revert or fix and retry.", entityID))
+						warnings = append(warnings, fmt.Sprintf("verification output:\n%s", verifyResult.Output))
+						// Do NOT auto-transition to needs-rework — leave in verifying so
+						// the orchestrator can inspect and decide. The orchestrator should
+						// investigate, fix, and re-run entity(action: transition, to: done)
+						// or entity(action: transition, to: needs-rework) as appropriate.
+					}
+				}
 			}
 		}
 	}
@@ -583,6 +617,47 @@ func executeMerge(
 	}
 
 	return resp, nil
+}
+
+// VerifyResult holds the outcome of the verifying-stage build and test execution.
+type VerifyResult struct {
+	Success bool
+	Output  string
+}
+
+// runVerifyingStage executes go build ./... and go test ./... in repoPath.
+// It returns true only when both commands succeed. Output is captured from both
+// stdout and stderr, reported together for diagnostic value.
+//
+// This is the P50/F4 verifying-stage gate (BF-6, BF-10). Pre-existing unrelated
+// test failures are not handled specially here — the output is returned for the
+// orchestrator to inspect and decide.
+func runVerifyingStage(repoPath string) VerifyResult {
+	var combined bytes.Buffer
+
+	// Step 1: go build ./...
+	buildCmd := exec.Command("go", "build", "./...")
+	buildCmd.Dir = repoPath
+	buildCmd.Stdout = &combined
+	buildCmd.Stderr = &combined
+	if err := buildCmd.Run(); err != nil {
+		combined.WriteString(fmt.Sprintf("\n--- go build FAILED: %v ---\n", err))
+		return VerifyResult{Success: false, Output: combined.String()}
+	}
+	combined.WriteString("--- go build: OK ---\n")
+
+	// Step 2: go test ./...
+	testCmd := exec.Command("go", "test", "./...")
+	testCmd.Dir = repoPath
+	testCmd.Stdout = &combined
+	testCmd.Stderr = &combined
+	if err := testCmd.Run(); err != nil {
+		combined.WriteString(fmt.Sprintf("\n--- go test FAILED: %v ---\n", err))
+		return VerifyResult{Success: false, Output: combined.String()}
+	}
+	combined.WriteString("--- go test: OK ---\n")
+
+	return VerifyResult{Success: true, Output: combined.String()}
 }
 
 // getPRStatus fetches PR status from GitHub for the given branch.
