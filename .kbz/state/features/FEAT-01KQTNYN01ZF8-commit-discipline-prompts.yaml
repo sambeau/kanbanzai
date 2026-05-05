@@ -6,6 +6,7 @@ status: dev-planning
 summary: "Add state_modified flags to MCP tool responses and strengthen session-start git status checks so management actions don't leave orphaned state on disk."
 design: FEAT-01KQTNYN01ZF8/design-p50-design-retro-may-2026
 spec: FEAT-01KQTNYN01ZF8/spec-p50-spec-commit-discipline-prompts
+dev_plan: FEAT-01KQTNYN01ZF8/dev-plan-p50-dev-plan-commit-discipline-prompts
 created: "2026-05-04T23:42:38Z"
 created_by: sambeau
 display_id: B49-F3

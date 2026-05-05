@@ -6,6 +6,7 @@ status: dev-planning
 summary: "Fix decompose propose granularity with refuse-to-propose mode, paired impl+test tasks, and dependency graph corrections."
 design: FEAT-01KQTNYN00M4P/design-p50-design-retro-may-2026
 spec: FEAT-01KQTNYN00M4P/spec-p50-spec-decompose-proposal-quality
+dev_plan: FEAT-01KQTNYN00M4P/dev-plan-p50-dev-plan-decompose-proposal-quality
 created: "2026-05-04T23:42:38Z"
 created_by: sambeau
 display_id: B49-F2

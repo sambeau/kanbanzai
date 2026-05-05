@@ -6,6 +6,7 @@ status: dev-planning
 summary: "Add error type classification to MCP tool handlers so every failure has a diagnostic error_type, making instrumentation diagnostic rather than opaque."
 design: FEAT-01KQTNYMZRT6V/design-p50-design-retro-may-2026
 spec: FEAT-01KQTNYMZRT6V/spec-p50-spec-error-classification
+dev_plan: FEAT-01KQTNYMZRT6V/dev-plan-p50-dev-plan-error-classification
 created: "2026-05-04T23:42:38Z"
 created_by: sambeau
 display_id: B49-F1

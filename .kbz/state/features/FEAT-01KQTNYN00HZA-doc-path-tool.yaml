@@ -6,6 +6,7 @@ status: dev-planning
 summary: "Add a path action to the doc MCP tool that returns canonical document paths based on type and parent entity, enforcing naming conventions via tooling."
 design: FEAT-01KQTNYN00HZA/design-p50-design-retro-may-2026
 spec: FEAT-01KQTNYN00HZA/spec-p50-spec-doc-path-tool
+dev_plan: FEAT-01KQTNYN00HZA/dev-plan-p50-dev-plan-doc-path-tool
 created: "2026-05-04T23:42:38Z"
 created_by: sambeau
 display_id: B49-F2

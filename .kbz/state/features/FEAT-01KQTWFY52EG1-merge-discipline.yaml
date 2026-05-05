@@ -6,6 +6,7 @@ status: dev-planning
 summary: Add merging and verifying lifecycle stages so a feature is not done until merged and verified. Add post-review merge prompt to orchestrator skills. Fix worktree merged status to verify actual merge.
 design: FEAT-01KQTWFY52EG1/design-p50-design-merge-discipline
 spec: FEAT-01KQTWFY52EG1/spec-p50-spec-merge-discipline
+dev_plan: FEAT-01KQTWFY52EG1/dev-plan-p50-dev-plan-merge-discipline
 tags:
   - retro
 created: "2026-05-05T01:36:56Z"
