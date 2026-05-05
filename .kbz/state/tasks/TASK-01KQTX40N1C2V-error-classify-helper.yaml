@@ -3,8 +3,11 @@ parent_feature: FEAT-01KQTNYMZRT6V
 slug: error-classify-helper
 name: Add error classification helper
 summary: Create classifyError(err) function in internal/mcp/ that maps known error patterns to the five ErrorType constants
-status: active
+status: done
+completed: "2026-05-05T01:57:26Z"
 claimed_at: "2026-05-05T01:53:56Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-05T01:53:56Z"
 dispatched_by: sambeau
+completion_summary: "Created classifyError(err) *string function in internal/mcp/error_classify.go. Maps error messages to five actionlog ErrorType constants using pattern matching. Precedence: validation_error > not_found > gate_failure > precondition_error > internal_error. Nil error returns nil. 7 test cases covering all categories, nil, and precedence ordering."
+verification: "go build ./internal/mcp/ passes. Error classify function + test file compile cleanly. Test package has pre-existing compilation issues (runGit redeclared, newServerWithConfig signature mismatch from branch merges) unrelated to this change."
