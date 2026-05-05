@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"io"
 	"os"
@@ -12,7 +11,6 @@ import (
 
 	_ "github.com/sambeau/kanbanzai/internal/buildinfo"
 	"github.com/sambeau/kanbanzai/internal/cache"
-	"github.com/sambeau/kanbanzai/internal/cli/render"
 	"github.com/sambeau/kanbanzai/internal/config"
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
 	"github.com/sambeau/kanbanzai/internal/core"
@@ -42,20 +40,13 @@ type entityService interface {
 	HealthCheck() (*validate.HealthReport, error)
 	RebuildCache() (int, error)
 	SetCache(c *cache.Cache)
-	WorkQueue(service.WorkQueueInput) (service.WorkQueueResult, error)
-}
-
-type docService interface {
-	LookupByPath(ctx context.Context, path string) (service.DocumentResult, error)
 }
 
 type dependencies struct {
-	stdout             io.Writer
-	stdin              io.Reader
-	version            string
-	newEntityService   func(root string) entityService
-	newDocumentService func(stateRoot, repoRoot string) docService
-	newRenderer        func(tty render.TTYDetector) *render.Renderer
+	stdout           io.Writer
+	stdin            io.Reader
+	version          string
+	newEntityService func(root string) entityService
 }
 
 func defaultDependencies() dependencies {
@@ -64,22 +55,7 @@ func defaultDependencies() dependencies {
 		stdin:   os.Stdin,
 		version: version,
 		newEntityService: func(root string) entityService {
-			svc := service.NewEntityService(root)
-			cacheDir := filepath.Join(core.InstanceRootDir, cache.CacheDir)
-			if c, err := cache.Open(cacheDir); err == nil {
-				svc.SetCache(c)
-				if _, err := svc.RebuildCache(); err != nil {
-					// Cache warm-up failed; continue without cache.
-					// Reads will fall back to filesystem scans.
-				}
-			}
-			return svc
-		},
-		newDocumentService: func(stateRoot, repoRoot string) docService {
-			return service.NewDocumentService(stateRoot, repoRoot)
-		},
-		newRenderer: func(tty render.TTYDetector) *render.Renderer {
-			return render.NewRenderer(tty)
+			return service.NewEntityService(root)
 		},
 	}
 }
@@ -117,7 +93,7 @@ func run(args []string, deps dependencies) error {
 		fmt.Fprintln(deps.stdout, "kanbanzai "+version)
 		return nil
 	case "serve":
-		return kbzmcp.Serve(deps.version)
+		return kbzmcp.Serve()
 	case "init":
 		return runInit(args[1:], deps)
 
@@ -136,8 +112,6 @@ func run(args []string, deps dependencies) error {
 		return runDoc(args[1:], deps)
 	case "delete":
 		return runDelete(args[1:], deps)
-	case "move":
-		return runMove(args[1:], deps)
 	case "health":
 		return runHealth(deps)
 
@@ -347,7 +321,6 @@ Core commands:
   handoff <task-id>          Print a sub-agent prompt
   entity <action> [opts]     Create, get, list, or transition entities
   doc <action> [opts]        Register, approve, or list documents
-  move <src> <plan-id>       Move a document file to a plan's canonical location
   health                     Run a health check
 
 Feature group commands:
