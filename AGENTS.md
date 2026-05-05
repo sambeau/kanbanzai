@@ -31,6 +31,8 @@ Examples:
 
 | Term | Meaning |
 |------|---------|
+| **plan** | A strategic, recursive planning entity representing scope decomposition and long-term direction. Lifecycle: `idea → shaping → ready → active → done`. ID prefix: `P{n}`. Plans are optional — most work uses batches only. |
+| **batch** | An execution work container that groups features for coordinated implementation. Replaces what was previously called "plan". Lifecycle: `proposed → designing → active → reviewing → done`. ID prefix: `B{n}`. Features belong to batches; batches optionally belong to plans. |
 | **stage binding** | An entry in `.kbz/stage-bindings.yaml` that maps a workflow stage to its role, skill, and prerequisites |
 | **role** | A YAML file in `.kbz/roles/` defining agent identity, vocabulary, anti-patterns, and tool constraints |
 | **skill** | A `SKILL.md` file defining the procedure, checklist, and evaluation criteria for a specific task type |
@@ -40,9 +42,28 @@ Examples:
 | **Batch** | An operational work container for a group of related features, with `B{n}-slug` IDs (e.g., `B1-data-model`). Owns features and their documents. |
 | **entity hierarchy** | Plan → Batch → Feature → Task. Plans contain batches; batches contain features; features break down into tasks. |
 
+## Entity Hierarchy
+
+The Kanbanzai entity model has four levels:
+
+```
+Plan (strategic) → Batch (execution) → Feature (deliverable) → Task (work unit)
+```
+
+- **Plan** — A strategic, recursive planning entity for scope decomposition and long-term roadmap. Plans are optional. Use a plan when multiple batches serve a shared strategic goal. Plans are human-managed; their lifecycle is `idea → shaping → ready → active → done`.
+- **Batch** — An execution work container that groups features for coordinated implementation. Batches are the primary grouping entity for agentic work. All features belong to batches. A batch can exist with no parent plan. Batch lifecycle: `proposed → designing → active → reviewing → done`.
+- **Feature** — A single coherent piece of user-facing behaviour that can be designed, specified, and implemented independently. Features belong to batches.
+- **Task** — An atomic unit of implementation work within a feature. Tasks belong to features.
+
+**When to use a plan vs a batch:**
+- A **batch alone is sufficient** for most work. Create a batch when you need to group features for delivery.
+- A **plan is warranted** when multiple batches serve a shared strategic goal that requires decomposition before execution can start.
+- Plans are **optional** — batches can exist with no parent plan.
+- **Err towards fewer plans.** Most work is just a batch of features.
+
 ## Task-Execution Skills and Stage Bindings
 
-When working on a task, `.kbz/stage-bindings.yaml` maps each workflow stage (designing, specifying, dev-planning, developing, reviewing) to the role and skill that apply. Read the binding for your current stage to know what role to adopt and which skill procedure to follow. Task-execution skills live in `.kbz/skills/`; system skills (how to use the Kanbanzai workflow itself) live in `.agents/skills/`.
+When working on a task, `.kbz/stage-bindings.yaml` maps each workflow stage (designing, specifying, dev-planning, developing, reviewing, batch-reviewing) to the role and skill that apply. Read the binding for your current stage to know what role to adopt and which skill procedure to follow. Task-execution skills live in `.kbz/skills/`; system skills (how to use the Kanbanzai workflow itself) live in `.agents/skills/`.
 
 ## Self-Managed Development
 
@@ -72,7 +93,7 @@ kanbanzai/
 │   ├── mcp/               ← MCP server and workflow-oriented tools
 │   ├── merge/             ← merge gate definitions, checker, override
 │   ├── model/             ← entity type definitions and ID utilities
-│   ├── service/           ← entity, plan, and document record service logic
+│   ├── service/           ← entity, batch, plan, and document record service logic
 │   ├── storage/           ← canonical YAML entity and document record storage
 │   ├── testutil/          ← shared test helpers
 │   ├── validate/          ← lifecycle state machines, health checks
@@ -91,6 +112,9 @@ kanbanzai/
     ├── state/             ← canonical entity records (plans, features, tasks, etc.)
     │   ├── plans/         ← StrategicPlan entity files
     │   ├── batches/       ← Batch entity files
+    ├── state/             ← canonical entity records (batches, plans, features, tasks, etc.)
+    │   ├── plans/         ← Plan entity files (strategic planning entities)
+    │   ├── batches/       ← Batch entity files (execution work containers)
     │   ├── documents/     ← document metadata records
     │   ├── knowledge/     ← KnowledgeEntry records
     │   ├── worktrees/     ← worktree tracking records

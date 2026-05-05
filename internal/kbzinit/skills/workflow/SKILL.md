@@ -1,6 +1,4 @@
 ---
-# kanbanzai-managed: true
-# kanbanzai-version: dev
 name: kanbanzai-workflow
 description: >
   Use when deciding what workflow stage work belongs to, whether to proceed
@@ -9,6 +7,9 @@ description: >
   approval requirements, or uncertainty about proceeding. Use even when the
   agent is confident — workflow gates exist precisely for the cases where
   confidence is misplaced.
+metadata:
+  kanbanzai-managed: "true"
+  version: "0.3.0"
 ---
 
 # SKILL: Kanbanzai Workflow

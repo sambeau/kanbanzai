@@ -1,6 +1,4 @@
 ---
-# kanbanzai-managed: true
-# kanbanzai-version: dev
 name: kanbanzai-planning
 description: >
   Use when starting a new body of work, scoping a feature or plan, deciding
@@ -12,6 +10,9 @@ description: >
   discussion about what to build next is a planning conversation. Use even
   for seemingly small changes — unplanned work accumulates into incoherent
   systems.
+metadata:
+  kanbanzai-managed: "true"
+  version: "0.3.0"
 ---
 
 # SKILL: Kanbanzai Planning
