@@ -66,27 +66,40 @@ func checkTestingCoverage(p Proposal) []Finding {
 }
 
 func checkDependenciesDeclared(p Proposal) []Finding {
+	// Collapse paired tasks into complete task nodes.
+	repr := collapsePairedTasks(p.Tasks)
+
+	// Build depPairs using collapsed representative nodes.
 	depPairs := make(map[string]bool)
 	for _, t := range p.Tasks {
+		node := repr[t.Slug]
 		for _, dep := range t.DependsOn {
-			depPairs[t.Slug+":"+dep] = true
+			depNode := repr[dep]
+			if depNode != node {
+				depPairs[node+":"+depNode] = true
+			}
 		}
 	}
 	var findings []Finding
 	seen := make(map[string]bool)
 	for _, taskA := range p.Tasks {
+		nodeA := repr[taskA.Slug]
 		text := strings.ToLower(taskA.Summary + " " + taskA.Rationale)
 		for _, taskB := range p.Tasks {
 			if taskA.Slug == taskB.Slug {
 				continue
 			}
+			nodeB := repr[taskB.Slug]
+			if nodeA == nodeB {
+				continue // same complete task node
+			}
 			if !slugMatchesAtWordBoundary(text, taskB.Slug) {
 				continue
 			}
-			if depPairs[taskA.Slug+":"+taskB.Slug] || depPairs[taskB.Slug+":"+taskA.Slug] {
+			if depPairs[nodeA+":"+nodeB] || depPairs[nodeB+":"+nodeA] {
 				continue
 			}
-			pairKey := taskA.Slug + ":" + taskB.Slug
+			pairKey := nodeA + ":" + nodeB
 			if !seen[pairKey] {
 				seen[pairKey] = true
 				findings = append(findings, Finding{
@@ -103,14 +116,21 @@ func checkDependenciesDeclared(p Proposal) []Finding {
 }
 
 func checkOrphanTasks(p Proposal) []Finding {
-	slugSet := make(map[string]bool, len(p.Tasks))
+	// Collapse paired tasks into complete task nodes.
+	repr := collapsePairedTasks(p.Tasks)
+
+	// Build node set from collapsed representatives.
+	nodeSet := make(map[string]bool)
 	for _, t := range p.Tasks {
-		slugSet[t.Slug] = true
+		nodeSet[repr[t.Slug]] = true
 	}
+
 	edgeCount := 0
 	for _, t := range p.Tasks {
+		node := repr[t.Slug]
 		for _, dep := range t.DependsOn {
-			if slugSet[dep] {
+			depNode := repr[dep]
+			if nodeSet[depNode] && depNode != node {
 				edgeCount++
 			}
 		}
@@ -118,21 +138,23 @@ func checkOrphanTasks(p Proposal) []Finding {
 	if edgeCount == 0 {
 		return nil
 	}
-	degree := make(map[string]int, len(p.Tasks))
-	for _, t := range p.Tasks {
-		degree[t.Slug] = 0
+	degree := make(map[string]int, len(nodeSet))
+	for node := range nodeSet {
+		degree[node] = 0
 	}
 	for _, t := range p.Tasks {
+		node := repr[t.Slug]
 		for _, dep := range t.DependsOn {
-			if slugSet[dep] {
-				degree[t.Slug]++
-				degree[dep]++
+			depNode := repr[dep]
+			if nodeSet[depNode] && depNode != node {
+				degree[node]++
+				degree[depNode]++
 			}
 		}
 	}
 	var findings []Finding
 	for _, task := range p.Tasks {
-		if degree[task.Slug] == 0 {
+		if degree[repr[task.Slug]] == 0 {
 			findings = append(findings, Finding{
 				Type:     "orphan-task",
 				Severity: "warning",

@@ -371,7 +371,7 @@ func TestDecomposeFeature_TestTaskAdded(t *testing.T) {
 `
 	svc, featureID, _ := setupDecomposeTest(t, specContent)
 
-	result, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID})
+	result, err := svc.DecomposeFeature(DecomposeInput{FeatureID: featureID, PairedTestTasks: true})
 	if err != nil {
 		t.Fatalf("DecomposeFeature() error = %v", err)
 	}
@@ -1649,7 +1649,7 @@ func TestGrouping_Thresholds(t *testing.T) {
 		t.Run(fmt.Sprintf("n=%d", tc.n), func(t *testing.T) {
 			t.Parallel()
 			spec := makeSpec(tc.n)
-			proposal, guidance := generateProposal(spec, featureSlug, "", 0)
+			proposal, guidance := generateProposal(spec, featureSlug, "", 0, true)
 
 			// Count AC tasks (exclude the auto-added test-companion task).
 			var acTasks []ProposedTask
@@ -1727,7 +1727,7 @@ func TestGrouping_MixedSections(t *testing.T) {
 	}
 	spec := specStructure{acceptanceCriteria: acs}
 
-	proposal, guidance := generateProposal(spec, featureSlug, "", 0)
+	proposal, guidance := generateProposal(spec, featureSlug, "", 0, true)
 
 	// Expect: 1 grouped (Section A) + 7 individual (Section B) = 8 AC tasks + test task.
 	acTaskCount := 0
@@ -1801,7 +1801,7 @@ func TestGrouping_TestCompanionHasNoCovers(t *testing.T) {
 			{text: "feature works correctly", section: "S", parentL2: "S"},
 		},
 	}
-	proposal, _ := generateProposal(spec, "feat", "", 0)
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
 
 	// No global "feat-tests" task should exist.
 	for _, task := range proposal.Tasks {
@@ -1852,7 +1852,7 @@ func TestPairedTestTasks_AC001_ThreeImplACs(t *testing.T) {
 			{text: "user can log out", section: "Logout", parentL2: "Logout"},
 		},
 	}
-	proposal, _ := generateProposal(spec, "feat", "", 0)
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
 
 	if len(proposal.Tasks) != 6 {
 		t.Errorf("task count = %d, want 6 (3 impl + 3 test)", len(proposal.Tasks))
@@ -1885,7 +1885,7 @@ func TestPairedTestTasks_AC002_TestTaskFields(t *testing.T) {
 			{text: "user can log in", section: "S", parentL2: "S"},
 		},
 	}
-	proposal, _ := generateProposal(spec, "feat", "", 0)
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
 
 	var implTask, testTask *ProposedTask
 	for i := range proposal.Tasks {
@@ -1928,7 +1928,7 @@ func TestPairedTestTasks_AC003_TestCoversMatchImpl(t *testing.T) {
 			{text: "user can log in", section: "S", parentL2: "S"},
 		},
 	}
-	proposal, _ := generateProposal(spec, "feat", "", 0)
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
 
 	var implTask, testTask *ProposedTask
 	for i := range proposal.Tasks {
@@ -1964,7 +1964,7 @@ func TestPairedTestTasks_AC004_ImplACWithTestKeyword(t *testing.T) {
 			{text: "write tests for user login", section: "S", parentL2: "S"},
 		},
 	}
-	proposal, _ := generateProposal(spec, "feat", "", 0)
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
 
 	for _, task := range proposal.Tasks {
 		if strings.HasSuffix(task.Slug, "-tests") {
@@ -1989,7 +1989,7 @@ func TestPairedTestTasks_AC005_GroupedACsOneContainsTest(t *testing.T) {
 			{text: "test auth flow", section: "Auth", parentL2: "Auth"},
 		},
 	}
-	proposal, _ := generateProposal(spec, "feat", "", 0)
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
 
 	var testTaskFound bool
 	for _, task := range proposal.Tasks {
@@ -2014,7 +2014,7 @@ func TestPairedTestTasks_AC006_NoGenericWriteTestsTask(t *testing.T) {
 			{text: "user can log in", section: "Login", parentL2: "Login"},
 		},
 	}
-	proposal, _ := generateProposal(spec, "feat", "", 0)
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
 
 	for _, task := range proposal.Tasks {
 		if task.Name == "Write tests" {
@@ -2033,7 +2033,7 @@ func TestPairedTestTasks_AC007_ACWithoutTestGetsPairedTest(t *testing.T) {
 			{text: "user registration works", section: "S", parentL2: "S"},
 		},
 	}
-	proposal, _ := generateProposal(spec, "feat", "", 0)
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
 
 	var testTaskFound bool
 	for _, task := range proposal.Tasks {
@@ -2062,7 +2062,7 @@ func TestPairedTestTasks_AC008_FourImplACsOneIsTestException(t *testing.T) {
 			{text: "handle errors gracefully", section: "Sec4", parentL2: "Sec4"},
 		},
 	}
-	proposal, _ := generateProposal(spec, "feat", "", 0)
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
 
 	implCount := 0
 	testCount := 0
@@ -2081,6 +2081,153 @@ func TestPairedTestTasks_AC008_FourImplACsOneIsTestException(t *testing.T) {
 	}
 	if len(proposal.Tasks) != 7 {
 		t.Errorf("total task count = %d, want 7 (4 impl + 3 test)", len(proposal.Tasks))
+	}
+}
+
+// TestPairedTestTasks_OptOut_OneTaskPerAC verifies that when pairedTestTasks
+// is false, the proposal produces one task per AC (the pre-pairing behavior).
+func TestPairedTestTasks_OptOut_OneTaskPerAC(t *testing.T) {
+	t.Parallel()
+
+	// 3 ACs in separate sections → would produce 6 tasks with pairing on,
+	// but should produce 3 tasks with pairing off.
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "user can register", section: "Auth", parentL2: "Auth"},
+			{text: "user can log in", section: "Login", parentL2: "Login"},
+			{text: "user can log out", section: "Logout", parentL2: "Logout"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0, false)
+
+	if len(proposal.Tasks) != 3 {
+		t.Errorf("task count = %d, want 3 (one per AC, no paired tests)", len(proposal.Tasks))
+	}
+
+	for _, task := range proposal.Tasks {
+		if strings.HasSuffix(task.Slug, "-tests") {
+			t.Errorf("unexpected test task %q when pairedTestTasks is false", task.Slug)
+		}
+	}
+}
+
+// TestPairedTestTasks_DependencyGraphCompleteNodes verifies AC-005:
+// the dependency graph for a 3-AC spec produces exactly 3 complete task nodes
+// (one per AC pair), not 6 individual task nodes.
+func TestPairedTestTasks_DependencyGraphCompleteNodes(t *testing.T) {
+	t.Parallel()
+
+	// 3 ACs in separate sections → individual tasks.
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "user can register", section: "Auth", parentL2: "Auth"},
+			{text: "user can log in", section: "Login", parentL2: "Login"},
+			{text: "user can log out", section: "Logout", parentL2: "Logout"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
+
+	// Collapse paired tasks into complete nodes.
+	repr := collapsePairedTasks(proposal.Tasks)
+
+	// Count unique representative nodes.
+	nodeSet := make(map[string]bool)
+	for _, task := range proposal.Tasks {
+		nodeSet[repr[task.Slug]] = true
+	}
+
+	if len(nodeSet) != 3 {
+		t.Errorf("dependency graph has %d complete task nodes, want 3 (one per AC pair)", len(nodeSet))
+	}
+
+	// Verify no edge exists between partial-completion nodes.
+	// Build collapsed adjacency.
+	adj := make(map[string][]string)
+	for _, task := range proposal.Tasks {
+		node := repr[task.Slug]
+		for _, dep := range task.DependsOn {
+			depNode := repr[dep]
+			if depNode != node {
+				adj[node] = append(adj[node], depNode)
+			}
+		}
+	}
+
+	// Count edges: should be zero for this 3-independent-AC spec.
+	edgeCount := 0
+	for _, deps := range adj {
+		edgeCount += len(deps)
+	}
+	if edgeCount != 0 {
+		t.Errorf("dependency graph has %d inter-pair edges, want 0 (all ACs are independent)", edgeCount)
+	}
+
+	// Verify total tasks: 6 individual tasks (3 impl + 3 test).
+	if len(proposal.Tasks) != 6 {
+		t.Errorf("total tasks = %d, want 6", len(proposal.Tasks))
+	}
+}
+
+// TestPairedTestTasks_DependencyGraphNoPartialCompletionEdges verifies AC-005
+// edge case: when cross-AC dependencies are present, every edge connects two
+// complete task nodes, never a partial-completion node.
+func TestPairedTestTasks_DependencyGraphNoPartialCompletionEdges(t *testing.T) {
+	t.Parallel()
+
+	// Simulate a proposal with cross-AC dependencies.
+	// AC1 depends on AC2: task-a → task-b (cross-pair).
+	// Each AC also has its test→impl intra-pair edge.
+	tasks := []ProposedTask{
+		{Slug: "feat-task-a", Summary: "Implement A", DependsOn: []string{"feat-task-b"}},
+		{Slug: "feat-task-a-tests", Summary: "Test A", DependsOn: []string{"feat-task-a"}},
+		{Slug: "feat-task-b", Summary: "Implement B"},
+		{Slug: "feat-task-b-tests", Summary: "Test B", DependsOn: []string{"feat-task-b"}},
+	}
+
+	repr := collapsePairedTasks(tasks)
+
+	// Build collapsed adjacency.
+	nodeSet := make(map[string]bool)
+	adj := make(map[string][]string)
+	for _, task := range tasks {
+		node := repr[task.Slug]
+		nodeSet[node] = true
+		seen := make(map[string]bool)
+		for _, dep := range task.DependsOn {
+			depNode := repr[dep]
+			if depNode != node && !seen[depNode] {
+				seen[depNode] = true
+				adj[node] = append(adj[node], depNode)
+			}
+		}
+	}
+
+	// Should have exactly 2 complete task nodes.
+	if len(nodeSet) != 2 {
+		t.Errorf("dependency graph has %d complete task nodes, want 2", len(nodeSet))
+	}
+
+	// Should have exactly 1 inter-pair edge: task-a → task-b.
+	edgeCount := 0
+	for _, deps := range adj {
+		edgeCount += len(deps)
+	}
+	if edgeCount != 1 {
+		t.Errorf("dependency graph has %d inter-pair edges, want 1 (task-a → task-b)", edgeCount)
+	}
+
+	// Verify no edge connects partial-completion nodes.
+	// The only edge should be feat-task-a → feat-task-b (both complete nodes).
+	for node, deps := range adj {
+		for _, dep := range deps {
+			// Neither node nor dep should be a test task.
+			if strings.HasSuffix(node, "-tests") {
+				t.Errorf("edge source is a partial-completion node (test task): %s", node)
+			}
+			if strings.HasSuffix(dep, "-tests") {
+				t.Errorf("edge target is a partial-completion node (test task): %s", dep)
+			}
+		}
 	}
 }
 
@@ -2976,6 +3123,236 @@ func TestParseDevPlanTasks_DependsOnNone_IsNil(t *testing.T) {
 	}
 	if tasks[0].DependsOn != nil {
 		t.Errorf("DependsOn = %v, want nil for \"None\"", tasks[0].DependsOn)
+	}
+}
+
+// TestTestingConcern_VerifyKeyword produces a single test task (no impl)
+// when the AC text contains "verify".
+func TestTestingConcern_VerifyKeyword(t *testing.T) {
+	t.Parallel()
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "verify that the error message appears", section: "S", parentL2: "S"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
+	if len(proposal.Tasks) != 1 {
+		t.Fatalf("task count = %d, want 1 (test-only)", len(proposal.Tasks))
+	}
+	task := proposal.Tasks[0]
+	if !strings.HasSuffix(task.Slug, "-tests") {
+		t.Errorf("task slug = %q, want suffix -tests", task.Slug)
+	}
+	if len(task.DependsOn) != 0 {
+		t.Errorf("test-only task should have no DependsOn, got %v", task.DependsOn)
+	}
+}
+
+func TestTestingConcern_ConfirmKeyword(t *testing.T) {
+	t.Parallel()
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "confirm the log entry is written", section: "S", parentL2: "S"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
+	if len(proposal.Tasks) != 1 {
+		t.Fatalf("task count = %d, want 1", len(proposal.Tasks))
+	}
+	if !strings.HasSuffix(proposal.Tasks[0].Slug, "-tests") {
+		t.Error("expected test-only task for confirm")
+	}
+}
+
+func TestTestingConcern_CheckThatKeyword(t *testing.T) {
+	t.Parallel()
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "check that the response code is 200", section: "S", parentL2: "S"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
+	if len(proposal.Tasks) != 1 {
+		t.Fatalf("task count = %d, want 1", len(proposal.Tasks))
+	}
+	if !strings.HasSuffix(proposal.Tasks[0].Slug, "-tests") {
+		t.Error("expected test-only task for check that")
+	}
+}
+
+func TestTestingConcern_EnsureKeyword(t *testing.T) {
+	t.Parallel()
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "ensure the output matches spec", section: "S", parentL2: "S"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
+	if len(proposal.Tasks) != 1 {
+		t.Fatalf("task count = %d, want 1", len(proposal.Tasks))
+	}
+	if !strings.HasSuffix(proposal.Tasks[0].Slug, "-tests") {
+		t.Error("expected test-only task for ensure")
+	}
+}
+
+func TestTestingConcern_AssertKeyword(t *testing.T) {
+	t.Parallel()
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "assert all fields are present", section: "S", parentL2: "S"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
+	if len(proposal.Tasks) != 1 {
+		t.Fatalf("task count = %d, want 1", len(proposal.Tasks))
+	}
+	if !strings.HasSuffix(proposal.Tasks[0].Slug, "-tests") {
+		t.Error("expected test-only task for assert")
+	}
+}
+
+func TestTestingConcern_ValidateKeyword(t *testing.T) {
+	t.Parallel()
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "validate the input parameters", section: "S", parentL2: "S"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
+	if len(proposal.Tasks) != 1 {
+		t.Fatalf("task count = %d, want 1", len(proposal.Tasks))
+	}
+	if !strings.HasSuffix(proposal.Tasks[0].Slug, "-tests") {
+		t.Error("expected test-only task for validate")
+	}
+}
+
+func TestTestingConcern_TestThatKeyword(t *testing.T) {
+	t.Parallel()
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "test that the error format is correct", section: "S", parentL2: "S"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
+	if len(proposal.Tasks) != 1 {
+		t.Fatalf("task count = %d, want 1", len(proposal.Tasks))
+	}
+	if !strings.HasSuffix(proposal.Tasks[0].Slug, "-tests") {
+		t.Error("expected test-only task for test that")
+	}
+}
+
+func TestTestingConcern_NonTestingACStillGetsImplPlusTest(t *testing.T) {
+	t.Parallel()
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "user can register an account", section: "S", parentL2: "S"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
+	if len(proposal.Tasks) != 2 {
+		t.Fatalf("task count = %d, want 2 (impl+test)", len(proposal.Tasks))
+	}
+	implCount, testCount := 0, 0
+	for _, task := range proposal.Tasks {
+		if strings.HasSuffix(task.Slug, "-tests") {
+			testCount++
+		} else {
+			implCount++
+		}
+	}
+	if implCount != 1 || testCount != 1 {
+		t.Errorf("impl=%d test=%d, want impl=1 test=1", implCount, testCount)
+	}
+}
+
+func TestTestingConcern_MixedACs(t *testing.T) {
+	t.Parallel()
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "user can log in", section: "Auth1", parentL2: "Auth1"},
+			{text: "verify the session token is set", section: "Auth2", parentL2: "Auth2"},
+			{text: "user can log out", section: "Auth3", parentL2: "Auth3"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
+	if len(proposal.Tasks) != 5 {
+		t.Fatalf("task count = %d, want 5", len(proposal.Tasks))
+	}
+	implCount, testCount := 0, 0
+	for _, task := range proposal.Tasks {
+		if strings.HasSuffix(task.Slug, "-tests") {
+			testCount++
+		} else {
+			implCount++
+		}
+	}
+	if implCount != 2 || testCount != 3 {
+		t.Errorf("impl=%d test=%d, want impl=2 test=3", implCount, testCount)
+	}
+}
+
+func TestTestingConcern_GroupedAllTesting(t *testing.T) {
+	t.Parallel()
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "verify the header is set", section: "Checks", parentL2: "Checks"},
+			{text: "confirm the body matches", section: "Checks", parentL2: "Checks"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
+	if len(proposal.Tasks) != 1 {
+		t.Fatalf("task count = %d, want 1 (grouped test-only)", len(proposal.Tasks))
+	}
+	task := proposal.Tasks[0]
+	if !strings.HasSuffix(task.Slug, "-tests") {
+		t.Errorf("expected test-only grouped task, got %q", task.Slug)
+	}
+	if len(task.Covers) != 2 {
+		t.Errorf("Covers count = %d, want 2", len(task.Covers))
+	}
+}
+
+func TestTestingConcern_GroupedMixed(t *testing.T) {
+	t.Parallel()
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "implement the handler", section: "API", parentL2: "API"},
+			{text: "verify the response status", section: "API", parentL2: "API"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
+	if len(proposal.Tasks) != 2 {
+		t.Fatalf("task count = %d, want 2", len(proposal.Tasks))
+	}
+	implCount, testCount := 0, 0
+	for _, task := range proposal.Tasks {
+		if strings.HasSuffix(task.Slug, "-tests") {
+			testCount++
+		} else {
+			implCount++
+		}
+	}
+	if implCount != 1 || testCount != 1 {
+		t.Errorf("impl=%d test=%d, want impl=1 test=1", implCount, testCount)
+	}
+}
+
+func TestTestingConcern_CaseInsensitive(t *testing.T) {
+	t.Parallel()
+	spec := specStructure{
+		acceptanceCriteria: []acceptanceCriterion{
+			{text: "VERIFY the output is correct", section: "S", parentL2: "S"},
+		},
+	}
+	proposal, _ := generateProposal(spec, "feat", "", 0, true)
+	if len(proposal.Tasks) != 1 {
+		t.Fatalf("task count = %d, want 1", len(proposal.Tasks))
+	}
+	if !strings.HasSuffix(proposal.Tasks[0].Slug, "-tests") {
+		t.Error("expected test-only task for uppercase VERIFY")
 	}
 }
 

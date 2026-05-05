@@ -12,8 +12,9 @@ import (
 
 // DecomposeInput is the input for DecomposeService.DecomposeFeature.
 type DecomposeInput struct {
-	FeatureID string
-	Context   string // optional additional guidance
+	FeatureID       string
+	Context         string // optional additional guidance
+	PairedTestTasks bool   // when true (default), produce impl+test task pairs per AC
 }
 
 // ProposedTask is a single task in a decomposition proposal.
@@ -255,7 +256,7 @@ func (s *DecomposeService) DecomposeFeature(input DecomposeInput) (DecomposeResu
 
 	// 7. Generate proposal by applying embedded guidance.
 	cfg := config.LoadOrDefault()
-	proposal, guidance := generateProposal(spec, featureSlug, input.Context, cfg.Decomposition.MaxTasksPerFeature)
+	proposal, guidance := generateProposal(spec, featureSlug, input.Context, cfg.Decomposition.MaxTasksPerFeature, input.PairedTestTasks)
 	proposal.Warnings = append(devPlanWarnings, proposal.Warnings...)
 
 	// Slice enrichment runs on all paths.
@@ -582,7 +583,7 @@ func buildZeroCriteriaDiagnostic(specDocID string, content string, spec specStru
 
 // generateProposal builds a task proposal from the parsed spec structure,
 // applying the embedded decomposition guidance rules.
-func generateProposal(spec specStructure, featureSlug, context string, maxTasksPerFeature int) (Proposal, []string) {
+func generateProposal(spec specStructure, featureSlug, context string, maxTasksPerFeature int, pairedTestTasks bool) (Proposal, []string) {
 	var tasks []ProposedTask
 	var warnings []string
 	var appliedGuidance []string
@@ -632,13 +633,13 @@ func generateProposal(spec specStructure, featureSlug, context string, maxTasksP
 			if n >= 2 && n <= 4 {
 				// Grouped task: 2-4 ACs in one section → one task covering all.
 				var slug string
-				var summary string
+				var summaryPrefix string
 				if sectionTitle == "" {
 					slug = featureSlug + "-group-" + strconv.Itoa(groupIndex)
-					summary = "Implement grouped criteria (" + strconv.Itoa(n) + " criteria)"
+					summaryPrefix = "grouped criteria (" + strconv.Itoa(n) + " criteria)"
 				} else {
 					slug = featureSlug + "-" + slugify(sectionTitle)
-					summary = "Implement " + sectionTitle + " (" + strconv.Itoa(n) + " criteria)"
+					summaryPrefix = sectionTitle + " (" + strconv.Itoa(n) + " criteria)"
 				}
 				var covers []string
 				var rationaleLines []string
@@ -646,40 +647,26 @@ func generateProposal(spec specStructure, featureSlug, context string, maxTasksP
 					covers = append(covers, ac.text)
 					rationaleLines = append(rationaleLines, "- "+ac.text)
 				}
-				implTask := ProposedTask{
-					Slug:      slug,
-					Name:      deriveTaskName("Implement "+sectionTitle, "Implement grouped tasks"),
-					Summary:   summary,
-					Rationale: "Covers " + strconv.Itoa(n) + " acceptance criteria:\n" + strings.Join(rationaleLines, "\n"),
-					Covers:    covers,
-				}
-				tasks = append(tasks, implTask)
-				if !allCoversContainTest(implTask.Covers) {
+
+				if allCoversAreTestingConcern(covers) {
+					// REQ-006: all ACs in group are testing concerns → single test task.
 					tasks = append(tasks, ProposedTask{
-						Slug:      implTask.Slug + "-tests",
-						Name:      deriveTaskName("Test "+implTask.Name, "Test "+implTask.Slug),
-						Summary:   "Write tests covering: " + implTask.Summary,
-						Rationale: "Paired test task for " + implTask.Slug + ".",
-						DependsOn: []string{implTask.Slug},
-						Covers:    implTask.Covers,
+						Slug:      slug + "-tests",
+						Name:      deriveTaskName("Test "+sectionTitle, "Test grouped tasks"),
+						Summary:   "Test " + summaryPrefix,
+						Rationale: "Testing concern group covering " + strconv.Itoa(n) + " acceptance criteria:\n" + strings.Join(rationaleLines, "\n"),
+						Covers:    covers,
 					})
-				}
-			} else {
-				// Individual tasks: 1 AC or 5+ ACs per section.
-				for i, ac := range g.acs {
-					slug := buildTaskSlug(featureSlug, ac.text, taskIndex+i)
+				} else {
 					implTask := ProposedTask{
-						Slug:    slug,
-						Name:    deriveTaskName(ac.text, fmt.Sprintf("Implement AC-%03d", taskIndex+i+1)),
-						Summary: ac.text,
-						Rationale: fmt.Sprintf(
-							"Covers acceptance criterion: %q (section: %s)",
-							ac.text, sectionOrDefault(ac.section),
-						),
-						Covers: []string{ac.text},
+						Slug:      slug,
+						Name:      deriveTaskName("Implement "+sectionTitle, "Implement grouped tasks"),
+						Summary:   "Implement " + summaryPrefix,
+						Rationale: "Covers " + strconv.Itoa(n) + " acceptance criteria:\n" + strings.Join(rationaleLines, "\n"),
+						Covers:    covers,
 					}
 					tasks = append(tasks, implTask)
-					if !allCoversContainTest(implTask.Covers) {
+					if pairedTestTasks && !allCoversContainTest(implTask.Covers) {
 						tasks = append(tasks, ProposedTask{
 							Slug:      implTask.Slug + "-tests",
 							Name:      deriveTaskName("Test "+implTask.Name, "Test "+implTask.Slug),
@@ -688,6 +675,47 @@ func generateProposal(spec specStructure, featureSlug, context string, maxTasksP
 							DependsOn: []string{implTask.Slug},
 							Covers:    implTask.Covers,
 						})
+					}
+				}
+			} else {
+				// Individual tasks: 1 AC or 5+ ACs per section.
+				for i, ac := range g.acs {
+					if isTestingConcern(ac.text) {
+						// REQ-006: testing-concern AC produces single test task.
+						slug := buildTaskSlug(featureSlug, ac.text, taskIndex+i)
+						tasks = append(tasks, ProposedTask{
+							Slug:    slug + "-tests",
+							Name:    deriveTaskName(ac.text, fmt.Sprintf("Test AC-%03d", taskIndex+i+1)),
+							Summary: ac.text,
+							Rationale: fmt.Sprintf(
+								"Testing concern: %q (section: %s)",
+								ac.text, sectionOrDefault(ac.section),
+							),
+							Covers: []string{ac.text},
+						})
+					} else {
+						slug := buildTaskSlug(featureSlug, ac.text, taskIndex+i)
+						implTask := ProposedTask{
+							Slug:    slug,
+							Name:    deriveTaskName(ac.text, fmt.Sprintf("Implement AC-%03d", taskIndex+i+1)),
+							Summary: ac.text,
+							Rationale: fmt.Sprintf(
+								"Covers acceptance criterion: %q (section: %s)",
+								ac.text, sectionOrDefault(ac.section),
+							),
+							Covers: []string{ac.text},
+						}
+						tasks = append(tasks, implTask)
+						if pairedTestTasks && !allCoversContainTest(implTask.Covers) {
+							tasks = append(tasks, ProposedTask{
+								Slug:      implTask.Slug + "-tests",
+								Name:      deriveTaskName("Test "+implTask.Name, "Test "+implTask.Slug),
+								Summary:   "Write tests covering: " + implTask.Summary,
+								Rationale: "Paired test task for " + implTask.Slug + ".",
+								DependsOn: []string{implTask.Slug},
+								Covers:    implTask.Covers,
+							})
+						}
 					}
 				}
 			}
@@ -705,6 +733,11 @@ func generateProposal(spec specStructure, featureSlug, context string, maxTasksP
 
 	// Role assignment is always reported as considered (rule 5).
 	appliedGuidance = append(appliedGuidance, "role-assignment")
+
+	// Paired test tasks guidance (rule 6).
+	if pairedTestTasks {
+		appliedGuidance = append(appliedGuidance, "paired-test-tasks")
+	}
 
 	// Add context-driven guidance note.
 	if context != "" {
@@ -742,15 +775,60 @@ func generateProposal(spec specStructure, featureSlug, context string, maxTasksP
 	}, deduplicateStrings(appliedGuidance)
 }
 
+// testingConcernKeywords are words that signal an AC is a testing concern
+// rather than an implementation concern. When any of these keywords appears
+// in an AC text, the AC describes verification/validation rather than building.
+var testingConcernKeywords = []string{
+	"verify",
+	"confirm",
+	"check that",
+	"assert",
+	"test that",
+	"ensure",
+	"validate",
+}
+
+// isTestingConcern reports whether text describes a testing/verification
+// concern rather than an implementation concern. It checks for the presence
+// of testing keywords (case-insensitive).
+func isTestingConcern(text string) bool {
+	lower := strings.ToLower(text)
+	for _, kw := range testingConcernKeywords {
+		if strings.Contains(lower, kw) {
+			return true
+		}
+	}
+	return false
+}
+
+// allCoversAreTestingConcern reports whether every entry in covers is a
+// testing concern. Returns false for an empty slice.
+func allCoversAreTestingConcern(covers []string) bool {
+	if len(covers) == 0 {
+		return false
+	}
+	for _, c := range covers {
+		if !isTestingConcern(c) {
+			return false
+		}
+	}
+	return true
+}
+
 // allCoversContainTest reports whether every entry in covers contains the
 // word "test" (case-insensitive). Returns false for an empty slice.
+// Deprecated: prefer isTestingConcern + allCoversAreTestingConcern for
+// detecting testing-concern ACs. Kept for backward compatibility.
 func allCoversContainTest(covers []string) bool {
+	if len(covers) == 0 {
+		return false
+	}
 	for _, c := range covers {
 		if !strings.Contains(strings.ToLower(c), "test") {
 			return false
 		}
 	}
-	return len(covers) > 0
+	return true
 }
 
 // identifySlices extracts vertical slice names from level-2 section headers,
@@ -1224,6 +1302,33 @@ func significantWords(text string) []string {
 	return result
 }
 
+// collapsePairedTasks computes the representative node for each task slug
+// in the dependency graph. When paired test tasks are present, each impl+test
+// pair collapses into a single complete-task node represented by the impl
+// task's slug. Test tasks map to their impl task; standalone tasks map to
+// themselves. The returned map has an entry for every task slug.
+func collapsePairedTasks(tasks []ProposedTask) map[string]string {
+	repr := make(map[string]string, len(tasks))
+	// First pass: record all slugs and identify test→impl pairs.
+	testToImpl := make(map[string]string)
+	implSlugs := make(map[string]bool)
+	for _, t := range tasks {
+		repr[t.Slug] = t.Slug // default: self
+		if strings.HasSuffix(t.Slug, "-tests") && len(t.DependsOn) == 1 {
+			testToImpl[t.Slug] = t.DependsOn[0]
+		}
+		implSlugs[t.Slug] = true
+	}
+	// Second pass: remap test tasks to their impl task.
+	// Only collapse when the impl task actually exists in the proposal.
+	for _, t := range tasks {
+		if impl, ok := testToImpl[t.Slug]; ok && implSlugs[impl] {
+			repr[t.Slug] = impl
+		}
+	}
+	return repr
+}
+
 // checkOversized detects tasks with estimates above the soft limit.
 func checkOversized(proposal Proposal) []Finding {
 	var findings []Finding
@@ -1241,14 +1346,32 @@ func checkOversized(proposal Proposal) []Finding {
 }
 
 // checkCycles detects dependency cycles within the proposal using DFS.
+// It collapses impl+test pairs into complete task nodes so that intra-pair
+// dependencies (test → impl) are not treated as graph edges.
 func checkCycles(proposal Proposal) []Finding {
-	// Build adjacency from slug → depends_on slugs.
+	// Collapse paired tasks into complete task nodes.
+	repr := collapsePairedTasks(proposal.Tasks)
+
+	// Build adjacency from representative slug → representative deps.
 	adj := make(map[string][]string)
-	slugSet := make(map[string]bool)
+	nodeSet := make(map[string]bool)
 	for _, task := range proposal.Tasks {
-		slugSet[task.Slug] = true
-		if len(task.DependsOn) > 0 {
-			adj[task.Slug] = task.DependsOn
+		node := repr[task.Slug]
+		nodeSet[node] = true
+		if len(task.DependsOn) == 0 {
+			continue
+		}
+		seen := make(map[string]bool)
+		for _, dep := range task.DependsOn {
+			depNode := repr[dep]
+			// Skip self-loops (intra-pair test→impl collapses to self).
+			if depNode == node {
+				continue
+			}
+			if !seen[depNode] {
+				seen[depNode] = true
+				adj[node] = append(adj[node], depNode)
+			}
 		}
 	}
 
@@ -1264,8 +1387,8 @@ func checkCycles(proposal Proposal) []Finding {
 	dfs = func(node string) bool {
 		color[node] = gray
 		for _, dep := range adj[node] {
-			if !slugSet[dep] {
-				continue // skip references to unknown slugs
+			if !nodeSet[dep] {
+				continue // skip references to unknown nodes
 			}
 			switch color[dep] {
 			case gray:
@@ -1282,10 +1405,10 @@ func checkCycles(proposal Proposal) []Finding {
 	}
 
 	var findings []Finding
-	for _, task := range proposal.Tasks {
-		if color[task.Slug] == white {
+	for node := range nodeSet {
+		if color[node] == white {
 			cycleNodes = nil
-			if dfs(task.Slug) {
+			if dfs(node) {
 				findings = append(findings, Finding{
 					Type:     "cycle",
 					Severity: "error",

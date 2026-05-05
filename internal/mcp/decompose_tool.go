@@ -80,8 +80,9 @@ func decomposePropose(svc *service.DecomposeService) ActionHandler {
 		}
 
 		input := service.DecomposeInput{
-			FeatureID: featureID,
-			Context:   req.GetString("context", ""),
+			FeatureID:       featureID,
+			Context:         req.GetString("context", ""),
+			PairedTestTasks: req.GetBool("paired_test_tasks", true),
 		}
 
 		result, err := svc.DecomposeFeature(input)
