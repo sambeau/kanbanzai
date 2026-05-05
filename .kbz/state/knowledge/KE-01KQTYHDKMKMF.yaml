@@ -1,0 +1,19 @@
+confidence: "0.5"
+content: "The handoff tool produces a prompt designed for spawn_agent — it includes the full role identity, skill procedure, anti-patterns, vocabulary, and knowledge entries. But when used as a session-to-session handoff between orchestrator sessions, this is the wrong artifact. What's needed is a compaction prompt: a concise summary of what's been done, what remains, the current ready frontier, and any decisions made. The handoff output is ~9K tokens of instructional content (role, skill, anti-patterns) that the next session already has access to via its own context assembly. A proper session handoff would be ~500 tokens: feature ID, tasks done, tasks remaining, current ready frontier, blockers. The current offload pattern writes a progress document manually — this works but is not standardised. A compaction/continuation tool that produces a standardised session-handoff artifact would close the loop between orchestrator sessions. Until then, handoff output should not be used as a session-to-session artifact; write a manual progress summary instead."
+created: "2026-05-05T02:12:42Z"
+created_by: sambeau
+id: KE-01KQTYHDKMKMF
+last_accessed_at: "2026-05-05T02:20:38Z"
+miss_count: 0
+recent_use_count: 5
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - orchestration
+  - tool-gap
+tier: 3
+topic: handoff-vs-compaction-prompt-mismatch
+ttl_days: 30
+updated: "2026-05-05T02:12:42Z"
+use_count: 0

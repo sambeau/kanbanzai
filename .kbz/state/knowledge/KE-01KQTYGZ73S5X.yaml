@@ -1,0 +1,20 @@
+confidence: "0.5"
+content: "The orchestrate-development skill mandates stopping at 60% context utilisation and offloading to a progress document, but in a single-orchestrator pipeline there is no other orchestrator to hand off to — the human is the only consumer of the offload document. This means fast-track workflows can never complete autonomously: the orchestrator must stop mid-feature, write a progress doc, and wait for the human to read it and start a new session. This defeats the purpose of fast-track (zero human gates for retro_fix). Three fixes needed: (1) raise the offload threshold significantly for large context windows (1M tokens = 600K at 60%, far more than needed for most features), (2) replace the stop-and-handoff pattern with a compaction-and-continue pattern where the orchestrator summarises its own state and continues in the same session, (3) the P44 Model Routing Agent Launcher would make handoff viable because it could spawn a fresh orchestrator automatically, but without P44 the offload document is a dead letter. Until P44 exists, the 60% offload rule should be treated as advisory for single-orchestrator pipelines, not mandatory."
+created: "2026-05-05T02:12:27Z"
+created_by: sambeau
+id: KE-01KQTYGZ73S5X
+last_accessed_at: "2026-05-05T02:20:38Z"
+miss_count: 0
+recent_use_count: 5
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - fast-track
+  - orchestration
+  - context-budget
+tier: 3
+topic: fast-track-offload-defeats-automation
+ttl_days: 30
+updated: "2026-05-05T02:12:27Z"
+use_count: 0
