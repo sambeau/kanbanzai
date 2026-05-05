@@ -1,0 +1,24 @@
+confidence: "0.5"
+content: "Infrastructure issues from May 2026 retrospective: stale binary (kbz vs kanbanzai naming mismatch), store consistency (cache staleness after finish), health checker false positives (done features flagged as orphaned reviewing), test compilation errors in internal/mcp/, plan numbering reuse (P1 instead of P51/P52), and edit_file reliability failures on design documents. P53 created to address all six."
+created: "2026-05-05T11:21:13Z"
+created_by: sambeau
+id: KE-01KQVXXSKFJ1Z
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - infrastructure
+  - hygiene
+  - stale-binary
+  - cache
+  - health-checker
+  - plan-numbering
+  - edit_file
+  - P53
+  - retro
+  - may-2026
+tier: 2
+topic: infrastructure-hygiene-may-2026
+ttl_days: 90
+updated: "2026-05-05T11:21:13Z"
+use_count: 0
