@@ -1,0 +1,12 @@
+id: FEAT-01KQTWFY52EG1
+slug: merge-discipline
+name: Merge Discipline and Definition of Done
+parent: B49-retro-fixes-may-2026
+status: proposed
+summary: Add merging and verifying lifecycle stages so a feature is not done until merged and verified. Add post-review merge prompt to orchestrator skills. Fix worktree merged status to verify actual merge.
+tags:
+  - retro
+created: "2026-05-05T01:36:56Z"
+created_by: sambeau
+display_id: B49-F4
+tier: retro_fix
