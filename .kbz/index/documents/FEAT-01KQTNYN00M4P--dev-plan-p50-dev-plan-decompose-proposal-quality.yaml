@@ -1,0 +1,108 @@
+document_id: FEAT-01KQTNYN00M4P/dev-plan-p50-dev-plan-decompose-proposal-quality
+document_path: work/P50-retro-may-2026/P50-dev-plan-decompose-proposal-quality.md
+content_hash: e7d1384b39a06466d649cbbb444713d10212ffd9894e215b50db0698656bde4b
+indexed_at: 2026-05-05T01:47:19.142388Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Decompose Proposal Quality'
+      byte_offset: 0
+      byte_count: 3555
+      word_count: 487
+      content_hash: e7d1384b39a06466d649cbbb444713d10212ffd9894e215b50db0698656bde4b
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 261
+          byte_count: 422
+          word_count: 38
+          content_hash: 60906d581e59482e06679ceec7bd47ef15f70a125c2b1400d3ffcec5d4100669
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 683
+          byte_count: 1799
+          word_count: 268
+          content_hash: 7fb56de787a6c10e021f4f5b15731d88af45e46ab36a60cb515128009096cf79
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'T1: Implement refuse-to-propose mode'
+              byte_offset: 702
+              byte_count: 392
+              word_count: 58
+              content_hash: d44480604fbf51a01049b6d4642c6783c6731646983ded80028cc3a490f77c90
+            - path: 1.2.2
+              level: 3
+              title: 'T2: Implement paired implementation + test task output'
+              byte_offset: 1094
+              byte_count: 401
+              word_count: 62
+              content_hash: f1fd1098a1da28fc3965b73f92230eee06a6b1a35da9a4b6acebce55956c96f3
+            - path: 1.2.3
+              level: 3
+              title: 'T3: Implement testing-concern AC detection'
+              byte_offset: 1495
+              byte_count: 300
+              word_count: 49
+              content_hash: b5755dfbfeb5441a4337c0574a02dcea05fb83691166a4c8f53d0695e30e58ac
+            - path: 1.2.4
+              level: 3
+              title: 'T4: Fix dependency graph to use complete tasks only'
+              byte_offset: 1795
+              byte_count: 339
+              word_count: 47
+              content_hash: 70081b47db770ee1f5522e15a2540e253272121d9e738f603e507b7731bb3b89
+            - path: 1.2.5
+              level: 3
+              title: 'T5: Add decompose proposal quality tests'
+              byte_offset: 2134
+              byte_count: 348
+              word_count: 49
+              content_hash: 39d455e9da306d3f7044a5dfac10831432cbbe7d81e43a3e75efd104425dbc4c
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 2482
+          byte_count: 360
+          word_count: 40
+          content_hash: 723958416814237ae92e1441d003f5a08f17c37790f4ebfbee029b4f7e730b92
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 2842
+          byte_count: 345
+          word_count: 50
+          content_hash: 194a99e4489ce01d09a6766651cd828595218c4cbfd40384c5ee09319e94d955
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 3187
+          byte_count: 368
+          word_count: 65
+          content_hash: cbefaffe8c03df2b9d86514aa066b9b546fb5ebf35e6d50d0ba8f3a4914a66c5
+entity_refs:
+    - entity_id: FEAT-01KQTNYN00M4P
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 407
+    - entity_id: P50-retro-may-2026
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 342
+    - entity_id: P50-spec-decompose-proposal-quality
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 361
+cross_doc_links:
+    - target_path: work/P50-retro-may-2026/P50-spec-decompose-proposal-quality.md
+      link_text: work/P50-retro-may-2026/P50-spec-decompose-proposal-quality.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-05T01:47:20.06884Z
+classified: false

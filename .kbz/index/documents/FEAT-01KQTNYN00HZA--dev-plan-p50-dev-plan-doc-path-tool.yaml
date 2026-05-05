@@ -1,0 +1,111 @@
+document_id: FEAT-01KQTNYN00HZA/dev-plan-p50-dev-plan-doc-path-tool
+document_path: work/P50-retro-may-2026/P50-dev-plan-doc-path-tool.md
+content_hash: c9f9fc71efcfca9ae79aba9ce03b564664096f1fcaa5b3e2d1674c210c1e7994
+indexed_at: 2026-05-05T01:47:19.142071Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Document Path Tool'
+      byte_offset: 0
+      byte_count: 3591
+      word_count: 496
+      content_hash: c9f9fc71efcfca9ae79aba9ce03b564664096f1fcaa5b3e2d1674c210c1e7994
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 253
+          byte_count: 406
+          word_count: 50
+          content_hash: b09f1e420812846456afbdd52b475ee63a9340a2ff6cb537c69c99468b1cdc07
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 659
+          byte_count: 1919
+          word_count: 258
+          content_hash: 624481ea85eed83f07161bf92c38e1f45adc5f370fbb323b4ca509e061d97ad3
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'T1: Implement path-generation function'
+              byte_offset: 678
+              byte_count: 462
+              word_count: 48
+              content_hash: b4a4126a4a78bd78e98ae3f910c26498280262c5434270f244a7cbfcda3fd7a1
+            - path: 1.2.2
+              level: 3
+              title: 'T2: Add path action to doc MCP tool'
+              byte_offset: 1140
+              byte_count: 370
+              word_count: 52
+              content_hash: 2bf9583ceb8faab9f5ad9986b75384caab8143fc36fbae0a5195b3b030fc9768
+            - path: 1.2.3
+              level: 3
+              title: 'T3: Add prompt path support'
+              byte_offset: 1510
+              byte_count: 331
+              word_count: 43
+              content_hash: bfcfb75aa98529381828c5cead3300b38113b785f83bd1aadf726a560730a209
+            - path: 1.2.4
+              level: 3
+              title: 'T4: Add register-time path warning'
+              byte_offset: 1841
+              byte_count: 346
+              word_count: 50
+              content_hash: 7bfc5a642c7d4dd54bf7991e7f8dd4983046411b113349a7ebc79fb5b93094da
+            - path: 1.2.5
+              level: 3
+              title: 'T5: Add document path tool tests'
+              byte_offset: 2187
+              byte_count: 391
+              word_count: 62
+              content_hash: c81a3c5ada49d16e35bd919ccc502ab0d3708e55924ceea179c51e963638f59b
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 2578
+          byte_count: 270
+          word_count: 39
+          content_hash: 8f7680c09fd52912c3e8ce6c649b7eec663f180807a01705e568c9e53b99a7c0
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 2848
+          byte_count: 327
+          word_count: 45
+          content_hash: a25437be7f247e1739aec98584139c2923c539a1d8d3084ca9802af7f2347e6a
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 3175
+          byte_count: 416
+          word_count: 78
+          content_hash: 63afd12d018a92c59f96844e347a2de2b6e0c34644a1dee992cb58ccbd95ee95
+entity_refs:
+    - entity_id: FEAT-01KQTNYN00HZA
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 378
+    - entity_id: P50-retro-may-2026
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 326
+    - entity_id: P50-spec-doc-path-tool
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 345
+cross_doc_links:
+    - target_path: work/P50-retro-may-2026/P50-spec-doc-path-tool.md
+      link_text: work/P50-retro-may-2026/P50-spec-doc-path-tool.md
+      section_path: "1.1"
+    - target_path: work/{plan-slug}/{plan-id}-{type-abbrev}-{topic}.md
+      link_text: work/{plan-slug}/{plan-id}-{type-abbrev}-{topic}.md
+      section_path: 1.2.1
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-05T01:47:19.926962Z
+classified: false

@@ -3,7 +3,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-05                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | architect                      |
 
 ## Overview
