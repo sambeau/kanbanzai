@@ -3,8 +3,10 @@ parent_feature: FEAT-01KQTNYN00HZA
 slug: doc-path-action
 name: Add path action to doc MCP tool
 summary: "Wire doc(action: path) handler to path-generation function. Takes type and optional parent params. Returns path or clear error."
-status: active
+status: done
+completed: "2026-05-05T09:28:50Z"
 claimed_at: "2026-05-05T09:16:57Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-05T09:16:57Z"
 dispatched_by: sambeau
+completion_summary: "Wired doc(action: path) handler to CanonicalDocPath function. Added path action to dispatch map with type (required) and parent (required) params. Returns path or clear errors. Exported canonicalDocPath→CanonicalDocPath. 7 new tests for plan parent, feature parent, missing params, non-existent parent, invalid type, and all 6 supported types."
