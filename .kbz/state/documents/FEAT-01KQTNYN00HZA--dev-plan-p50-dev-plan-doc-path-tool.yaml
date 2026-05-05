@@ -1,11 +1,13 @@
+approved_at: "2026-05-05T01:50:20Z"
+approved_by: sambeau
 canonical_content_hash: a278739472554c4090f558db0c4b8648e2978ac70054cfe2eacfab617c4dd954
-content_hash: c9f9fc71efcfca9ae79aba9ce03b564664096f1fcaa5b3e2d1674c210c1e7994
+content_hash: 98317cac9bcec2c1e2b641e6579f356144ecfd82142a4c7155505a09cf18bea5
 created: "2026-05-05T01:47:19Z"
 created_by: sambeau
 id: FEAT-01KQTNYN00HZA/dev-plan-p50-dev-plan-doc-path-tool
 owner: FEAT-01KQTNYN00HZA
 path: work/P50-retro-may-2026/P50-dev-plan-doc-path-tool.md
-status: draft
+status: approved
 title: "Dev-Plan: Document Path Tool"
 type: dev-plan
-updated: "2026-05-05T01:47:19Z"
+updated: "2026-05-05T01:50:20Z"

@@ -1,11 +1,13 @@
+approved_at: "2026-05-05T01:50:20Z"
+approved_by: sambeau
 canonical_content_hash: 6da39b91df206f30f60917430c26953314e909df1ed90a7ba99ff6707097fa70
-content_hash: 3512f3087de8817a2628ccc90a45d78b1bf429714e1ba30f2839d95752985064
+content_hash: 156e89a2a2e9b08a8954a53ffb85928299aab3f1f0526a4fd44b958278bfe38a
 created: "2026-05-05T01:47:19Z"
 created_by: sambeau
 id: FEAT-01KQTNYMZRT6V/dev-plan-p50-dev-plan-error-classification
 owner: FEAT-01KQTNYMZRT6V
 path: work/P50-retro-may-2026/P50-dev-plan-error-classification.md
-status: draft
+status: approved
 title: "Dev-Plan: Error Classification for MCP Handlers"
 type: dev-plan
-updated: "2026-05-05T01:47:19Z"
+updated: "2026-05-05T01:50:20Z"

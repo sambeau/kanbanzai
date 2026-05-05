@@ -1,11 +1,13 @@
+approved_at: "2026-05-05T01:50:20Z"
+approved_by: sambeau
 canonical_content_hash: db7590e47f5e459c5ca0dd0c8807962b7cf7256f63a4100249fa2c964c6c8336
-content_hash: a1db2cc9723b541f0e74b3772cced034c3fa7cd7acf63af242ffa4135f0613c6
+content_hash: 80bddd20912dd1b1ff2926f7714ff24568ad91e5ce7aa8a386ea362a4a3770e1
 created: "2026-05-05T01:47:19Z"
 created_by: sambeau
 id: FEAT-01KQTNYN01ZF8/dev-plan-p50-dev-plan-commit-discipline-prompts
 owner: FEAT-01KQTNYN01ZF8
 path: work/P50-retro-may-2026/P50-dev-plan-commit-discipline-prompts.md
-status: draft
+status: approved
 title: "Dev-Plan: Commit Discipline Prompts"
 type: dev-plan
-updated: "2026-05-05T01:47:19Z"
+updated: "2026-05-05T01:50:20Z"
