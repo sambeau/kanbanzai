@@ -3,8 +3,15 @@ parent_feature: FEAT-01KQTNYN00M4P
 slug: decompose-dep-graph-fix
 name: Fix dependency graph for complete tasks only
 summary: Update dependency graph generation to only express dependencies between complete task nodes. No partial-completion edges.
-status: active
+status: done
+files_planned:
+  - internal/service/decompose.go
+  - internal/service/decompose_validate.go
+  - internal/service/decompose_test.go
+completed: "2026-05-05T09:05:46Z"
 claimed_at: "2026-05-05T08:47:49Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-05T08:47:49Z"
 dispatched_by: sambeau
+completion_summary: "Fixed dependency graph to use complete task nodes only (REQ-005). Added collapsePairedTasks helper that maps test-task slugs to impl-task slugs, collapsing pairs into single nodes. Updated checkCycles, checkOrphanTasks, and checkDependenciesDeclared to use collapsed representatives, skipping intra-pair edges. Added tests: 3-AC spec → 3 complete nodes (not 6), and no partial-completion edges in cross-pair deps."
+verification: go build ./... passes; all decompose tests pass including new AC-005 tests
