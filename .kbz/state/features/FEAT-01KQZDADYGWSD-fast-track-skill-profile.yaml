@@ -2,7 +2,7 @@ id: FEAT-01KQZDADYGWSD
 slug: fast-track-skill-profile
 name: Add Fast-Track Profile to orchestrate-development Skill
 parent: B1-fast-track-profile-implementation
-status: dev-planning
+status: developing
 summary: "Add the Fast-Track Profile section to the orchestrate-development SKILL.md, including the no-stop contract, 3-phase lightweight flow (Session Start Audit, Dispatch, Close-Out), anti-patterns, and integration notes with P51/P44."
 design: work/P52-fast-track-orchestration/P52-design-fast-track-orchestration.md
 created: "2026-05-06T19:47:59Z"
@@ -11,13 +11,18 @@ overrides:
   -
     from_status: designing
     reason: "Plan-level design document (P52-fast-track-orchestration/design-p52-design-fast-track-orchestration) is approved and covers this feature. The design is registered under the plan, not the feature, but its content fully scopes this feature's work."
-    timestamp: "2026-05-06T21:24:48+01:00"
+    timestamp: "2026-05-06T21:24:55+01:00"
     to_status: specifying
   -
     from_status: specifying
     reason: Specification (P52-fast-track-orchestration/spec-p52-spec-fast-track-profile) is approved at plan level and covers this feature completely. Dev-plan (P52-fast-track-orchestration/dev-plan-p52-dev-plan-fast-track-profile) is also approved at plan level.
-    timestamp: "2026-05-06T21:24:48+01:00"
+    timestamp: "2026-05-06T21:24:55+01:00"
     to_status: dev-planning
+  -
+    from_status: dev-planning
+    reason: Dev-plan (P52-fast-track-orchestration/dev-plan-p52-dev-plan-fast-track-profile) is approved at plan level. Both implementation tasks already done — work committed to main.
+    timestamp: "2026-05-06T21:24:55+01:00"
+    to_status: developing
 display_id: B1-F1
 tier: feature
 verification: "TASK-01KQZFB92RDFQ: All 9 ACs verified: section placement, no-stop contract, 5 Phase 0 steps, 4 Phase 1 steps, 4 Phase 2 steps, 5 rules, 4 anti-patterns with Detect/BECAUSE/Resolve, integration notes, additive-only.\nTASK-01KQZFBH6VFGW: Content comparison confirmed identical Fast-Track Profile sections in both .kbz/skills/orchestrate-development/SKILL.md and internal/kbzinit/skills/task-execution/orchestrate-development/SKILL.md."
