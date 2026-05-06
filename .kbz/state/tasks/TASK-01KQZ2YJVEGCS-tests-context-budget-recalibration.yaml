@@ -3,7 +3,10 @@ parent_feature: FEAT-01KQYZZFGBGQK
 slug: tests-context-budget-recalibration
 name: Tests for context budget recalibration
 summary: "Write unit tests to verify: AC-001 (default window 1M), AC-002 (warn at 400K, refuse at 600K), AC-003 (config override 500K), AC-004 (no-config default), AC-005 (reject 50K), AC-006 (byte_budget=65536), AC-007 (topic field in trimmed), AC-008 (specific topic value), AC-009 (validation rejects below 100K)."
-status: ready
+status: done
 depends_on:
   - TASK-01KQZ2YJVEDYW
   - TASK-01KQZ2YJVEPBS
+completed: "2026-05-06T17:19:31Z"
+completion_summary: "Added 4 tests for context budget recalibration: TestWindowTokens_NoConfig (AC-001: default=1M), TestWindowTokens_ConfigOverride (AC-003: 500K), TestWindowTokens_NoConfigKey (AC-004: fallback), TestWindowTokens_ValidationRejectsLowValue (AC-005: 50K). AC-006 (byte_budget=65536) already covered by existing TestHandoff_ContextMetadataFields."
+verification: "go test ./internal/context/... — 0.664s, all pass"

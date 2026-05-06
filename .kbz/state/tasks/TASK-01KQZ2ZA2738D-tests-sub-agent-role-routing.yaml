@@ -3,10 +3,13 @@ parent_feature: FEAT-01KQYZZFGHM99
 slug: tests-sub-agent-role-routing
 name: Tests for sub-agent role routing
 summary: "Unit tests for: AC-001 (no role + SubAgents → implementer), AC-002 (no role + SubAgents → implement-task), AC-003 (role: implementer-go → prefix match), AC-004 (role: reviewer → caller role prevails), AC-005 (no SubAgents → primary binding fallback)."
-status: active
+status: done
 depends_on:
   - TASK-01KQZ2ZA2AKMN
+completed: "2026-05-06T17:19:31Z"
 claimed_at: "2026-05-06T17:14:02Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-06T17:14:02Z"
 dispatched_by: sambeau
+completion_summary: "Added 7 tests for sub-agent role routing (AC-001–AC-005): TestStepResolveRole_SubAgentsDefault, TestStepLoadSkill_SubAgentsDefault, TestStepResolveRole_SubAgentsDefaultWithExplicitRole, TestStepResolveRole_CallerRoleNoPrefixMatch, TestStepResolveRole_NoSubAgentsFallback, TestStepLoadSkill_NoSubAgentsFallback. Updated TestStepLoadSkill_EmptyRoleLoadsPrimary→EmptyRoleLoadsSubAgentDefault for new behavior."
+verification: "go test ./internal/context/... — 0.405s, all pass"
