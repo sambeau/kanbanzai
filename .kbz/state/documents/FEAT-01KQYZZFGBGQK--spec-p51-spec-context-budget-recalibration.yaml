@@ -1,11 +1,13 @@
+approved_at: "2026-05-06T16:45:20Z"
+approved_by: sambeau
 canonical_content_hash: 8e11b8bafd922e04cda2071c3abac9087fc973a2fdae4772a097a0cd88e7fbda
-content_hash: 8e11b8bafd922e04cda2071c3abac9087fc973a2fdae4772a097a0cd88e7fbda
+content_hash: ceb8f8b286deb7ed9c51f7ba05b0efbef4c12102695214923769b11bda5df641
 created: "2026-05-06T16:27:32Z"
 created_by: sambeau
 id: FEAT-01KQYZZFGBGQK/spec-p51-spec-context-budget-recalibration
 owner: FEAT-01KQYZZFGBGQK
 path: work/P51-handoff-pipeline-unification/P51-spec-context-budget-recalibration.md
-status: draft
+status: approved
 title: "Specification: Context Budget Recalibration"
 type: spec
-updated: "2026-05-06T16:27:32Z"
+updated: "2026-05-06T16:45:20Z"

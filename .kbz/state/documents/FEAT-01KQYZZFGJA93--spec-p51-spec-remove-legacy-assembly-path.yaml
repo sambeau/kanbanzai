@@ -1,11 +1,13 @@
+approved_at: "2026-05-06T16:45:20Z"
+approved_by: sambeau
 canonical_content_hash: 436873a95b73d8062168b64575af9da4a1ff5a80ae72613e99d039844c646dc8
-content_hash: 436873a95b73d8062168b64575af9da4a1ff5a80ae72613e99d039844c646dc8
+content_hash: d96077cd776a179700c37754af39145a0d5136b9271f919d22c2b3c0e265f931
 created: "2026-05-06T16:27:32Z"
 created_by: sambeau
 id: FEAT-01KQYZZFGJA93/spec-p51-spec-remove-legacy-assembly-path
 owner: FEAT-01KQYZZFGJA93
 path: work/P51-handoff-pipeline-unification/P51-spec-remove-legacy-assembly-path.md
-status: draft
+status: approved
 title: "Specification: Remove Legacy Assembly Path"
 type: spec
-updated: "2026-05-06T16:27:32Z"
+updated: "2026-05-06T16:45:20Z"

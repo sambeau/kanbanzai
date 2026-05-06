@@ -2,7 +2,7 @@ id: FEAT-01KQYZZFGHM99
 slug: fix-sub-agent-role-routing
 name: Fix Sub-Agent Role Routing
 parent: B1-p51-exec
-status: specifying
+status: dev-planning
 summary: "Fix handoff so that when no role parameter is passed and sub_agents are configured, the pipeline defaults to the sub-agent role/skill instead of the orchestrator's. Update stepResolveRole and stepLoadSkill in pipeline.go. Update orchestrate-development skill documentation to instruct orchestrators to pass role: implementer-go."
 design: FEAT-01KQYZZFGHM99/design-p51-design-handoff-pipeline-unification
 spec: FEAT-01KQYZZFGHM99/spec-p51-spec-fix-sub-agent-role-routing
