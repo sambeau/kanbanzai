@@ -1,0 +1,6 @@
+id: TASK-01KQZ2YJVEDYW
+parent_feature: FEAT-01KQYZZFGBGQK
+slug: update-budget-constants-config-override
+name: Update budget constants and add config override
+summary: "Update DefaultContextWindowTokens from 200,000 to 1,000,000. Raise assemblyDefaultBudget from 30,720 to 65,536 (64KB). Make DefaultContextWindowTokens configurable via .kbz/local.yaml with validation (reject below 100,000). Expose active window size on Pipeline struct."
+status: queued

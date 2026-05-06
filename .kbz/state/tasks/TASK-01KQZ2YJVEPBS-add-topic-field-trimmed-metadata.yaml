@@ -1,0 +1,6 @@
+id: TASK-01KQZ2YJVEPBS
+parent_feature: FEAT-01KQYZZFGBGQK
+slug: add-topic-field-trimmed-metadata
+name: Add topic field to trimmed knowledge metadata
+summary: "When knowledge entries are trimmed from next/handoff responses, include a topic field in the trimmed metadata array containing the knowledge entry's topic string. Truncate topics with … (U+2026) if adding them exceeds the budget cap."
+status: queued
