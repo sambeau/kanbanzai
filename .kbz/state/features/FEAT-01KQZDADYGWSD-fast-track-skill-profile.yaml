@@ -1,0 +1,11 @@
+id: FEAT-01KQZDADYGWSD
+slug: fast-track-skill-profile
+name: Add Fast-Track Profile to orchestrate-development Skill
+parent: B1-fast-track-profile-implementation
+status: proposed
+summary: "Add the Fast-Track Profile section to the orchestrate-development SKILL.md, including the no-stop contract, 3-phase lightweight flow (Session Start Audit, Dispatch, Close-Out), anti-patterns, and integration notes with P51/P44."
+design: work/P52-fast-track-orchestration/P52-design-fast-track-orchestration.md
+created: "2026-05-06T19:47:59Z"
+created_by: sambeau
+display_id: B1-F1
+tier: feature
