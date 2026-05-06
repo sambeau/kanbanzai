@@ -3,4 +3,6 @@ parent_feature: FEAT-01KQYZZFGBGQK
 slug: add-topic-field-trimmed-metadata
 name: Add topic field to trimmed knowledge metadata
 summary: "When knowledge entries are trimmed from next/handoff responses, include a topic field in the trimmed metadata array containing the knowledge entry's topic string. Truncate topics with … (U+2026) if adding them exceeds the budget cap."
-status: ready
+status: done
+completed: "2026-05-06T17:27:12Z"
+completion_summary: "Added topic field to trimmed metadata. Updated asmTrimmedEntry struct to include scope, tier, tokenEstimate alongside topic. Added truncateTopic helper with … (U+2026) for budget overflow."
