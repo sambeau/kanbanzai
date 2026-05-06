@@ -235,7 +235,7 @@ The research (see `P41-research-context-pollution-and-rot.md` for full academic 
 
 2. **Implement P51** — Remove the legacy 2.0 pipeline fallback from `handoff`. Fix sub-agent role routing: when sub-agents are defined, default to sub-agent role/skill instead of orchestrator role/skill. Update `orchestrate-development` to document `role: "implementer-go"` parameter.
 
-3. **Recalibrate context budgets** — Update `DefaultContextWindowTokens` to 1,000,000. Raise `assemblyDefaultBudget` to stop silently trimming knowledge entries and spec sections.
+3. **Recalibrate context budgets** — Update `DefaultContextWindowTokens` to 1,000,000. Raise `assemblyDefaultBudget` to stop silently trimming knowledge entries and spec sections. **Ownership: P51** (added as P51 Goal 6). See [P51 Design](../P51-handoff-pipeline-unification/P51-design-handoff-pipeline-unification.md).
 
 4. **Test** — Run the P50 feature set again with P51 + P52 in place. Verify: no implicit gates, no ghost work discovered mid-implementation, sub-agents receiving implementer (not orchestrator) prompts.
 
@@ -245,11 +245,15 @@ The research (see `P41-research-context-pollution-and-rot.md` for full academic 
 
 6. **Deploy procedural compaction** — Implement the U-shaped compaction artefact template. Add "context pressure check" to the orchestration procedure. Wire KE-ID resolution at session start.
 
+7. **Implement P54 (Review Remediation Workflow) — document-driven phase** — Define the workflow bridge from failed formal review → remediation dev-plan → tasks → verification → re-review report. Start document-driven (orchestrator follows a documented workflow). The automated phase (finding extraction via `dispatch_task`) gates on P44 Phase 1. See [P54 Design](../P54-review-remediation-workflow/P54-design-review-remediation-workflow.md).
+
 ### Ongoing
 
 7. **Expand P43 validators** — Add design validator. Tune check thresholds. Track validator effectiveness metrics.
 
-8. **Instrument context rot monitoring** — Log goal drift signals. Track context utilisation per task. Track decision latency.
+8. **Instrument context rot monitoring** — Log goal drift signals. Track context utilisation per task. Track decision latency. **Ownership: P44 Phase 2** (see [P44 Design](../P44-model-routing-agent-launcher/P44-design-model-routing-agent-launcher.md) Phase 2 scope). Instrumentation hooks go in during P44 Phase 2; monitoring dashboard can follow.
+
+9. **Implement P54 automated phase** (after P44 Phase 1) — Add `dispatch_task(category: "deep-reasoning", action: "remediate")` for automated finding extraction and remediation dev-plan generation. See [Architectural Assessment](P41-assessment-orchestration-architecture-cross-reference.md) §B.
 
 ---
 
@@ -259,7 +263,7 @@ The research (see `P41-research-context-pollution-and-rot.md` for full academic 
 |------|----------|------------|
 | P52 behavioral profile doesn't prevent all implicit gates | Medium | The profile removes the structural breakpoints that caused P50's stops. But the "summary output → wait" pattern is deep in training data. Monitor the first 5 fast-track runs for any remaining stop behavior. |
 | P51 sub-agent role default breaks a use case where orchestrator role is intended | Low | The orchestrator role as default for `handoff` was never correct in practice — P50 proved it. If a rare case needs the orchestrator's context, the `role` parameter is still available. |
-| P44 `dispatch_task` has no fallback if the pipeline produces wrong context | Medium | Currently, the orchestrator can bypass broken handoff output. `dispatch_task` removes that escape hatch. Mitigation: pipeline must be thoroughly tested before `dispatch_task` replaces `handoff` for production dispatch. |
+| P44 `dispatch_task` has no fallback if the pipeline produces wrong context | **High** | P50 proved pipeline misconfiguration happens in practice, and the orchestrator's ability to detect and compensate was the safety net. Mitigations (all required before P44 production): (1) P51 pipeline must be thoroughly tested — 20 consecutive verified `handoff` calls across feature types. (2) P44 Phase 1 must include pipeline health assertions (refuse dispatch if role/skill/knowledge assembly fails). (3) Pipeline debug mode for human validation of first 20 `dispatch_task` runs. (4) Production acceptance gate: 20 consecutive human-verified calls before production. See [Architectural Assessment](P41-assessment-orchestration-architecture-cross-reference.md) §D Risk 1 for full analysis. |
 | Cross-model compaction quality unknown | Low | Initial compaction uses same-model handoff (Claude → Claude). Cross-model testing deferred to Phase 3. |
 | Large features still need compaction even with dispatch-loop | Low | The compaction system is already designed and can be implemented procedurally today. Automated triggers come with P44 Phase 2. |
 
@@ -284,6 +288,7 @@ No architecture reboot. No greenfield rewrite. Just: fix the immediate problems,
 ---
 
 **Related documents:**
+- `P41-assessment-orchestration-architecture-cross-reference.md` — Integrated architectural assessment cross-referencing this strategy against P54, P52, P51, P44, P43 designs (May 2026)
 - `P41-research-context-pollution-and-rot.md` — Full academic research report with source gradings, methodology, and trade-off matrix
 - `P41-research-context-compaction.md` — Compaction artefact research (20+ sources, 7 findings, 5 recommendations)
 - `P41-research-context-compaction-summary.md` — Implementation guide with artefact template and trigger strategy

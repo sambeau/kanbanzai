@@ -10,7 +10,9 @@ The `handoff` MCP tool currently has two context assembly paths: a 3.0 pipeline 
 
 Additionally, the orchestrator can bypass `handoff` entirely and manually compose prompts for `spawn_agent`. While P44 will solve this definitively by making dispatch a single tool call, this plan removes the dual-path confusion now so that when P44 arrives, there is only one assembly path to internalize.
 
-## Goals
+## Goals and Non-Goals
+
+**Goals:**
 
 1. Remove the legacy 2.0 fallback path from `handoff` — hard errors instead of silent degradation
 2. Fix sub-agent role routing so `handoff(task_id: "TASK-xxx", role: "implementer-go")` correctly resolves the `implementer-go` role and `implement-task` skill (not the orchestrator's role/skill)
@@ -20,7 +22,7 @@ Additionally, the orchestrator can bypass `handoff` entirely and manually compos
 6. Recalibrate context budgets: update `DefaultContextWindowTokens` to 1,000,000 (from 200,000) and raise `assemblyDefaultBudget` (from 30,720) to stop silently trimming knowledge entries and spec sections from `next`/`handoff` responses
 7. Document the `finish` tool 500-character summary limit in the tool description (add "(max 500 characters)" to the summary parameter)
 
-## Non-Goals
+**Non-Goals:**
 
 - Not changing the `next` tool — it uses the same `assembleContext`, but `next` returns structured JSON, not a rendered prompt. `next` can be unified in a follow-up.
 - Not building a `dispatch_task` tool (that's P44)

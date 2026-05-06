@@ -1,9 +1,12 @@
 # Research Report: Context Pollution and Rot in Long-Running Agent Orchestration
 
-**Status:** Draft  
-**Date:** 2026-05-05  
-**Author:** P41 research task (solo investigation)  
-**Parent Plan:** P41-opencode-ecosystem-features  
+| Field  | Value                         |
+|--------|-------------------------------|
+| Date   | 2026-05-06                    |
+| Status | Draft                         |
+| Author | P41 research task (solo investigation) |
+| Parent | P41-opencode-ecosystem-features |
+
 **Related:** P41-research-context-compaction.md (compaction artefact design), P44-design-model-routing-agent-launcher.md (model routing dispatch architecture), P43-design-fast-track-architecture.md (automated validators), research-orchestration-landscape-2025.md (orchestration framework survey)
 
 ---

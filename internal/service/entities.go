@@ -280,8 +280,15 @@ type CreateBatchInput struct {
 }
 
 func (s *EntityService) CreateBatch(input CreateBatchInput) (CreateResult, error) {
-	b := model.Batch{Slug: input.Slug, Name: input.Name, Summary: input.Summary, Parent: input.Parent, Status: model.BatchStatusProposed}
-	return s.write(b)
+	return s.CreatePlan(CreatePlanInput{
+		Prefix:    input.Prefix,
+		Slug:      input.Slug,
+		Name:      input.Name,
+		Summary:   input.Summary,
+		Parent:    input.Parent,
+		CreatedBy: input.CreatedBy,
+		Tags:      input.Tags,
+	})
 }
 
 // UpdateBatchInput carries the fields for updating a batch entity.
@@ -1317,6 +1324,20 @@ func recordFromEntity(entity model.Entity) (storage.EntityRecord, error) {
 			ID:     e.ID,
 			Slug:   e.Slug,
 			Fields: incidentFields(e),
+		}, nil
+	case model.Batch:
+		return storage.EntityRecord{
+			Type:   string(model.EntityKindBatch),
+			ID:     e.ID,
+			Slug:   e.Slug,
+			Fields: planFields(e),
+		}, nil
+	case model.StrategicPlan:
+		return storage.EntityRecord{
+			Type:   string(model.EntityKindStrategicPlan),
+			ID:     e.ID,
+			Slug:   e.Slug,
+			Fields: strategicPlanFields(e),
 		}, nil
 	default:
 		return storage.EntityRecord{}, fmt.Errorf("internal error: entity type is not supported for serialisation — this is likely a bug; please report it")

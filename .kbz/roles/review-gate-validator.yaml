@@ -13,32 +13,6 @@ vocabulary:
   - "severity distribution analysis"
   - "spec traceability"
 
-checks:
-  R1:
-    description: "Every reviewer produced structured output with evidence"
-    classification: blocking
-  R2:
-    description: "No rubber-stamp reviews — zero findings, no evidence"
-    classification: blocking
-  R3:
-    description: "No severity inflation >40% blocking"
-    classification: non-blocking
-  R4:
-    description: "Every blocking finding cites a spec requirement"
-    classification: blocking
-  R5:
-    description: "Aggregate verdict consistent with per-dimension outcomes"
-    classification: blocking
-  R6:
-    description: "Deduplication pass was run"
-    classification: non-blocking
-  R7:
-    description: "Every acceptance criterion covered by ≥1 reviewer"
-    classification: blocking
-  R8:
-    description: "Reviewer selection was adaptive to change scope"
-    classification: non-blocking
-
 anti_patterns:
   - name: "Re-Reviewing"
     detect: "Evaluating the correctness of the code or findings rather than the sufficiency and process integrity of the review"

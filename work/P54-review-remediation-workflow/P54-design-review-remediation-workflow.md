@@ -8,6 +8,8 @@
 
 P54 defines the missing workflow bridge between a failed formal review and executable remediation work. It standardizes how blocking findings become a remediation dev-plan, tasks, verification evidence, and a re-review report without weakening the review gate.
 
+**Horizon placement:** Horizon 1 (this quarter). P54 is sequenced between P52 (fast-track behavioural profile) and P44 (model routing dispatch). The document-driven first version ships after P51 (handoff pipeline unification); the automated phase gates on P44 Phase 1. See [Architectural Assessment](../P41-opencode-ecosystem-features/P41-assessment-orchestration-architecture-cross-reference.md) §B.
+
 ## Related Work
 
 - `work/P50-retro-may-2026/P50-report-batch-conformance-review.md` — demonstrated the current manual path from failed review to remediation planning, including BF-1 through BF-10.
@@ -78,6 +80,26 @@ The first version can be document-driven rather than fully automated. The orches
 - Traceability Matrix: original finding ID → remediation task(s)
 
 A later tool can parse structured review reports and propose the same mapping automatically.
+
+### Automated phase (post-P44)
+
+When P44 Phase 1 delivers `dispatch_task`, the finding extraction and remediation dev-plan generation can be automated:
+
+1. **Finding extraction:** `dispatch_task(category: "deep-reasoning", action: "remediate")` parses the review report, identifies blocking findings, groups them by feature/entity scope, and proposes a draft remediation dev-plan with:
+   - Finding-to-task-group mapping
+   - Dependency ordering between remediation tasks
+   - Suggested ownership (single-feature, batch-level, or new cross-cutting plan)
+   - Traceability matrix (finding ID → proposed task)
+
+2. **Orchestrator review:** The orchestrator reviews the draft, adjusts ownership and grouping, and approves the dev-plan via `doc(action: "approve")`.
+
+3. **Task creation:** Use the existing `decompose` workflow (`decompose(action: "propose")` → `decompose(action: "apply")`) to create remediation tasks from the approved dev-plan.
+
+4. **Remediation implementation:** Tasks are dispatched via `dispatch_task(category: "implementation")` — same as any other implementation task.
+
+5. **Re-review:** When all remediation tasks are terminal, the orchestrator generates a re-review report citing original finding IDs and requests a new review via the standard review workflow.
+
+This automated phase does not replace the document-driven workflow — it augments it. The document-driven version remains available for complex cases where the orchestrator needs full control over finding interpretation and grouping.
 
 ### Remediation ownership model
 
@@ -151,12 +173,25 @@ The original review report remains immutable evidence. The re-review report reco
 
 ## Dependencies
 
-- P51 improves handoff reliability for remediation task implementation.
-- P52 should recognize remediation plans in session-start audit, but P54 is not dependent on fast-track behavior.
-- P53 should provide plan/batch scope inspection and dirty-work attribution so remediation starts from a trustworthy state.
+- **P51 (Horizon 0):** Required for reliable sub-agent handoff in remediation task implementation. P51's role routing fix ensures remediation implementation tasks receive `implementer-go` context.
+- **P52 (Horizon 0):** Beneficial but not blocking. P52's session-start audit detects whether a feature is already in remediation state. P52's no-implicit-gates profile prevents the orchestrator from stopping mid-remediation.
+- **P53 (Horizon 1):** Required for plan/batch scope inspection and dirty-work attribution so remediation starts from a trustworthy state view.
+- **P44 (Horizon 1):** Required for the automated phase (finding extraction, automated dev-plan generation). Not required for the document-driven first version.
+- **Sequencing:** P54 (document-driven) → P44 Phase 1 → P54 (automated phase). The document-driven version can ship in parallel with P52. The automated phase gates on P44 Phase 1 `dispatch_task`.
+
+## Architectural Assessment Cross-Reference
+
+This plan was reviewed in the [Integrated Architectural Assessment: Orchestration & Fast-Track Pipeline Strategy](../P41-opencode-ecosystem-features/P41-assessment-orchestration-architecture-cross-reference.md) (May 2026). Key findings:
+
+- **Horizon 1 placement confirmed.** P54 is not Horizon 0 — it addresses a workflow gap exposed by P50, not a P50 failure itself. It depends on P51, benefits from P52, and its full value requires P44.
+- **Sequencing: P51 → P54 (document-driven) → P44 Phase 1 → P54 (automated phase).** The document-driven first version ships as soon as P51 is done. The automated phase (finding extraction via `dispatch_task`) gates on P44 Phase 1.
+- **Automated phase designed above** (§ Automated phase, post-P44). This is a new section added per assessment recommendation — the original design only considered the document-driven approach.
+- **P44 does not make P54 redundant.** `dispatch_task` enables the automated phase but doesn't replace the remediation workflow itself. Finding-to-task traceability, re-review closure, and the ownership model are workflow-level concerns that survive the dispatch mechanism change.
 
 ## Open Questions
 
 1. Should the first implementation be documentation-only, or should it add a tool action such as `review(action: "remediate")`?
 2. Should remediation tasks be created automatically after dev-plan approval, or should the existing `decompose` workflow handle task creation?
 3. What is the canonical lifecycle transition for a batch-level failure: affected features to `needs-rework`, batch to `active`, or both?
+4. **Automated phase trigger:** Should the automated phase (finding extraction via `dispatch_task`) be triggered automatically when a review report's aggregate verdict is `fail`, or should the orchestrator explicitly request it? (Recommend: orchestrator explicitly requests — automated triggering risks creating remediation plans for reviews the human hasn't acknowledged yet.)
+5. **Re-review report format:** Should the re-review report be a new document type (`re-review`) or reuse the existing `report` type with a `re_review` subtype? (Recommend: reuse `report` type with a `review_remediation` subtype to avoid type proliferation.)

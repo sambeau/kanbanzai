@@ -1,7 +1,7 @@
 {
   "context_servers": {
     "kanbanzai": {
-      "command": "kbz",
+      "command": "/Users/samphillips/Dev/kanbanzai/kbz",
       "args": ["serve"],
     },
   },

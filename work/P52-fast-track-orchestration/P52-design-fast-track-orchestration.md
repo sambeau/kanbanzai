@@ -31,6 +31,8 @@ These are not code defects. They're model-level patterns: the orchestrator is pa
 
 This is a **behavioral profile**, not a code change. It lives in the `orchestrate-development` skill as an alternate procedure branch that activates when the feature's tier (or batch's tier) indicates fast-track. It replaces the full 6-phase procedure with a 3-phase lightweight flow:
 
+**No-Stop Contract (preamble to all phases):** The orchestrator operates under an explicit no-stop contract when in fast-track mode. The contract must be stated at the top of the fast-track profile: "You are in fast-track mode. You will NOT stop for confirmation at any point. The ONLY valid stop conditions are: all work done, build failure requiring code changes beyond your scope, missing dependency that blocks all remaining tasks, or spec ambiguity that cannot be resolved without human input. If you find yourself about to produce a status table or summary, ask: is all work done? If no, continue immediately without producing output." This contract is not a suggestion — it is a structural constraint of the profile. Breaking it constitutes an Implicit Gate anti-pattern.
+
 **Phase 0: Session Start Audit (replaces Cohort Setup)**
 
 1. Call `status()` with the batch or plan ID. Do not proceed until you have confirmed:
@@ -47,6 +49,9 @@ This is a **behavioral profile**, not a code change. It lives in the `orchestrat
 
 1. From the session-start audit, identify the ready frontier — all tasks in `ready` status with satisfied dependencies.
 2. Dispatch all ready frontier tasks in parallel using `handoff(task_id: "TASK-xxx", role: "implementer-go")`.
+
+**Future (P44):** When `dispatch_task` arrives, this phase changes from `handoff` + `spawn_agent` to `dispatch_task(task_id, category: "implementation")`. The behavioral rules (no stops, continuous polling, immediate dispatch of newly-unblocked tasks) remain identical — only the dispatch mechanism changes. See [Architectural Assessment](../P41-opencode-ecosystem-features/P41-assessment-orchestration-architecture-cross-reference.md) §C.4.
+
 3. Do NOT stop after dispatching. If there's nothing to dispatch because tasks are still active, poll `status()` once per minute until something completes.
 4. When a task completes, immediately dispatch any newly-unblocked tasks.
 
@@ -55,6 +60,8 @@ This is a **behavioral profile**, not a code change. It lives in the `orchestrat
 1. When all tasks are terminal, verify each feature can advance.
 2. Transition features through to `done` or `reviewing` as appropriate.
 3. Report completion: list features and their final status.
+
+**Context pressure check (procedural compaction):** Before close-out, estimate context utilisation. If at ~60%+ estimated utilisation and work remains for another feature, produce a compaction artefact using the [U-shaped template defined in P44](../P44-model-routing-agent-launcher/P44-design-model-routing-agent-launcher.md#compaction-artefact-template) and instruct the human to start a fresh session with it. This is a procedural trigger — it does not require model routing. Automated token-count-based triggers come with P44 Phase 3b.
 
 ### What's removed vs. full orchestration
 
@@ -116,6 +123,20 @@ P51 fixes the pipeline so `handoff` defaults to sub-agent roles. The fast-track 
 
 When P44's `dispatch_task` arrives, the fast-track profile's Dispatch phase changes from `handoff` + `spawn_agent` to `dispatch_task(task_id, category: "implementation")`. The behavioral rules (no stops, no ghost work, no implicit gates) remain the same — only the dispatch mechanism changes.
 
+P44's `fast_track` dispatch mode should automate the mechanical parts of the session-start audit:
+- Cross-reference task state against code existence (ghost-work detection)
+- Verify `server_info` binary currency (stale binary detection)
+- Check dirty working-tree state classification
+
+The orchestrator should not need to remember to run these checks — `dispatch_task` should refuse to dispatch if the audit hasn't run.
+
+Additionally, P52's procedural compaction trigger (Phase 2 context pressure check) is a stopgap. When P44 Phase 3b delivers automated token-count-based triggers, the manual estimation step is removed.
+
+**What P44 does NOT replace:**
+- Phase 0: Session Start Audit — the orchestrator-level decisions (which tasks are ghost work, how to classify dirty state, whether entity state is ambiguous) remain orchestrator responsibilities. P44 automates the mechanical checks but not the judgment calls.
+- Phase 2: Close-Out — feature transitions, completion reporting, and verification are orchestrator decisions.
+- All anti-patterns — Implicit Gate, Ghost Work Discovery, State Ambiguity Drift, Milestone Pause govern orchestrator behaviour *between* `dispatch_task` calls.
+
 ## Findings from P50 Implementation
 
 ### Implicit gate behavior (second retrospective)
@@ -174,11 +195,25 @@ The `finish` tool has a 500-character summary limit that isn't documented in the
 - P51 (handoff pipeline unification) is a companion, not a prerequisite
 - P44 will eventually replace the dispatch mechanism, but the behavioral profile remains valid
 
+## Architectural Assessment Cross-Reference
+
+This plan was reviewed in the [Integrated Architectural Assessment: Orchestration & Fast-Track Pipeline Strategy](../P41-opencode-ecosystem-features/P41-assessment-orchestration-architecture-cross-reference.md) (May 2026). Key findings:
+
+- **Horizon 0 placement confirmed.** P52 is the primary Horizon 0 deliverable — a one-day skill documentation change that directly addresses P50's three implicit-gate stops, ghost-work discovery, and entity state ambiguity.
+- **Not made redundant by P44.** The behavioural profile (session-start audit, no-implicit-gates, ghost-work detection) survives the dispatch mechanism change. P44 automates mechanical checks but does not replace orchestrator-level judgment.
+- **No-stop contract added** per assessment recommendation to strengthen the profile against the "summary output → wait" pattern deep in training data.
+- **Procedural compaction trigger added** to Phase 2 close-out per assessment recommendation — P44 Phase 3a procedural triggers can ship today with no dependencies.
+
+### Risk: Behavioural profile may be insufficient
+
+The assessment identifies a Medium risk that even a profile without structural breakpoints may not prevent all implicit gates. Mitigation: track implicit-gate frequency as a metric during the first 5 fast-track runs. If gates persist, analyse common patterns and feed back into the anti-pattern list. P44's `fast_track` dispatch mode should automate the session-start audit checks that are mechanical, making them non-skippable.
+
 ## Open Questions
 
 1. **How should the orchestrator detect fast-track mode?** By the feature's `tier` field (`retro_fix`), by a batch-level flag, or by an explicit instruction in the prompt? (Recommend: feature tier — it's already in the entity state and doesn't require additional configuration.)
 2. **Should the session-start audit be automated?** A tool that cross-references task state against code existence would eliminate the manual ghost-work check. (Recommend: defer — valuable but not blocking; manual audit is sufficient for now.)
 3. **Should the `finish` summary limit be documented in the error message?** The current message says "summary exceeds 500-character limit" but doesn't state the limit in the handler. (Recommend: yes — add the limit to the `finish` tool description so orchestrators know before they hit it.)
+4. **Implicit-gate metric tracking:** How should implicit-gate frequency be tracked? Options: (a) the orchestrator self-reports each time it stops for confirmation, (b) the session transcript is analysed post-hoc for stop patterns, (c) the `status` dashboard shows fast-track feature elapsed time vs. expected time as a drift indicator. (Recommend: start with (a) — add a "report any implicit gates encountered" instruction to the close-out phase. If self-reporting proves unreliable, add (c) as an objective metric.)
 
 ## Findings from System Instrumentation (May 2026 Retrospective)
 

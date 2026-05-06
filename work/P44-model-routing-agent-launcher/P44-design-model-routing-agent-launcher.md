@@ -7,7 +7,9 @@
 
 ## Overview
 
-This is a **feasibility design** — evaluate whether and how Kanbanzai should own the agent dispatch loop, enabling model selection, thinking-level control, and provider fallback. Do not commit to building until P42 (hash-anchored edits) and P43 (fast-track architecture) are stable and prove the pattern of adopting ecosystem features.
+This is a **feasibility design** — evaluate whether and how Kanbanzai should own the agent dispatch loop, enabling model selection, thinking-level control, and provider fallback.
+
+**Build gate:** Do not begin Phase 1 implementation until P43 (fast-track architecture) validators are stable — defined as: spec-validator, plan-validator, and review-gate-validator have each passed on at least 5 real Kanbanzai documents with no false-positive blocking failures. P43's validators are the proof of the fresh-session dispatch pattern that `dispatch_task` generalises. Once this gate is met, P44 Phase 1 can proceed. P42 (hash-anchored edits) is not a build gate for P44 — the two plans touch different parts of the system. See [Architectural Assessment](../P41-opencode-ecosystem-features/P41-assessment-orchestration-architecture-cross-reference.md) §A (P44 §2).
 
 The core problem: Kanbanzai's MCP server is blind to model selection. It receives tool calls and returns results — it has no visibility into or control over the client's model, temperature, thinking mode, or token budget. It can *suggest* in a prompt but cannot *enforce*. The only way to get real control is to own the dispatch loop.
 
@@ -354,12 +356,17 @@ Model routing is the largest architectural change in P41. The research repeatedl
 - Token tracking: report-only (no budget enforcement)
 - Fallback chains: primary → secondary (no tertiary yet)
 - No auto-compaction, no Ralph Loop — these require validated token tracking first
+- Pipeline health assertions: before each `dispatch_task` call, verify that role resolution succeeded (role != ""), skill loading succeeded (skill != ""), knowledge assembly produced entries (len(knowledge) > 0 or explicit empty set), and code-graph context was attached. If any assertion fails, `dispatch_task` returns an error instead of dispatching with degraded context. This is a non-negotiable safety mechanism — see Risk: Pipeline becomes invisible below.
+- Pipeline debug mode: gated behind a `.kbz/local.yaml` config flag (`routing.pipeline_debug: true`), `dispatch_task` returns the assembled provider prompt alongside the result. This is for human validation during the first 20 `dispatch_task` runs and must be disabled in production.
+- Production acceptance gate: P44 must not enter production until 20 consecutive `dispatch_task` calls across different feature types (retro_fix, bug_fix, feature) and categories (deep-reasoning, implementation, review) produce correct role/skill/knowledge context verified by human audit using pipeline debug mode.
+- Agent-facing token budget communication: each `dispatch_task` call includes the task's token budget in the system prompt (budget, used, remaining). The agent self-regulates based on remaining budget. This is a Phase 1 feature, not deferred to Phase 2 — it's required for agents to make informed tradeoffs about what to invest tokens in. See § Agent-Facing Token Budget Communication below.
 
 **Phase 2 (after MVP validated on real features):**
 - Add OpenAI provider + tertiary fallback chains
 - Add `audit` and `quick` categories
 - Token budget enforcement (per-feature caps)
 - Provider health checks (periodic `Health()` calls, auto-skip unhealthy providers)
+- Context-rot monitoring instrumentation: log goal drift signals (compare session-start constraints against mid-session decisions), context utilisation per task dispatch, and decision latency (time/tool-calls between dispatch and completion). This fulfills the strategy report's Horizon 2 monitoring recommendation. The monitoring dashboard can come later; the instrumentation hooks must be in Phase 2 to begin collecting data.
 
 **Phase 3 (after fast-track + Phase 2 stable):**
 - Auto-compaction at threshold with U-shaped state-based compaction artefact (see Compaction section above)
@@ -382,6 +389,21 @@ Model routing is the largest architectural change in P41. The research repeatedl
 - Unlocks: auto-compaction (§6.6), thinking-level control, true Ralph Loop (§6.8)
 - No dependency on P42 or P43 — can be designed in parallel, but should not be built until they are stable
 - When built, P43's `dispatch_validator` abstraction routes validators through the `audit` category automatically (see P43 Forward Compatibility)
+
+## Risk: Pipeline Becomes Invisible (the Silent-Failure Problem)
+
+**Severity:** **High** (elevated from Medium in the [Architectural Assessment](../P41-opencode-ecosystem-features/P41-assessment-orchestration-architecture-cross-reference.md) §D Risk 1)
+
+When `dispatch_task` internalises the pipeline, the orchestrator never sees the assembled prompt. Today, if `handoff` produces wrong output (as it did in P50 — ~9K tokens of orchestrator training material instead of implementer instructions), the orchestrator can detect the mismatch and manually compose prompts. After P44, a pipeline bug — wrong role resolution, missing knowledge entries, truncated spec sections — produces a silently degraded sub-agent with no orchestrator visibility and no manual fallback.
+
+The P50 incident demonstrated that pipeline misconfiguration happens in practice. The orchestrator's ability to detect and compensate was the safety net. P44 removes that safety net. This risk must be explicitly accepted by the architecture team before P44 Phase 1 build begins.
+
+**Mitigations (all in Phase 1):**
+1. P51 must be thoroughly tested before P44 Phase 1 begins — the pipeline must be proven correct before it becomes invisible. P51's testing scope should include 20 consecutive `handoff` calls across different feature types and stages, with human verification of assembled context.
+2. Pipeline health assertions (see Phase 1 above) — `dispatch_task` refuses to dispatch if role/skill/knowledge assembly fails.
+3. Pipeline debug mode (see Phase 1 above) — config flag returns assembled prompt for human inspection.
+4. Production acceptance gate (see Phase 1 above) — 20 consecutive human-verified `dispatch_task` calls before production.
+5. First 20 production `dispatch_task` runs should be on non-critical features with periodic human spot-checks of pipeline output.
 
 ## Enforcement: Closing the Manual-Prompt Gap (May 2026)
 
@@ -505,6 +527,17 @@ The `dispatch_task` tool should:
 
 This design makes the pipeline *non-bypassable* — the only way to dispatch a sub-agent is through `dispatch_task`, and `dispatch_task` always runs the pipeline.
 
+## Architectural Assessment Cross-Reference
+
+This plan was reviewed in the [Integrated Architectural Assessment: Orchestration & Fast-Track Pipeline Strategy](../P41-opencode-ecosystem-features/P41-assessment-orchestration-architecture-cross-reference.md) (May 2026). Key findings:
+
+- **Horizon 1 placement confirmed.** P44 is the strategic architecture decision — the correct long-term fix for context rot at the architectural level.
+- **Build gate clarified.** P43 validator stability (not P42) is the build gate. Defined as: 3 validators × 5 real documents each with no false-positive blocking failures.
+- **Pipeline-invisible risk elevated to High.** The P50 incident demonstrated that pipeline misconfiguration happens. P44 removes the orchestrator's ability to detect and compensate. Pipeline health assertions, debug mode, and a 20-run acceptance gate are now Phase 1 requirements.
+- **Context-rot monitoring assigned here (Phase 2).** The strategy report's Horizon 2 monitoring recommendation (goal drift, utilisation, latency) is now explicitly in P44 Phase 2 scope.
+- **Token-budget communication is Phase 1, not deferred.** Required for agent self-regulation from day one.
+- **P51 is a hard prerequisite.** P51 must be tested with 20 consecutive verified `handoff` calls before P44 Phase 1 begins.
+
 ## Open Questions
 
 1. **Embedded vs. separate server:** Resolved by research validation — Option C (build together, extract later) is the correct initial choice. The `internal/routing/` package boundary keeps extraction viable if model routing proves useful beyond Kanbanzai. DeepSeek's dual-format API (both OpenAI and Anthropic protocols from a single provider) further validates Option C: a single `Provider` interface serves all three providers, demonstrating the boundary is clean enough to extract if needed.
@@ -516,6 +549,6 @@ This design makes the pipeline *non-bypassable* — the only way to dispatch a s
 7. **Thinking vs. temperature irreconcilability:** Resolved — `review` and `audit` categories MUST disable thinking mode because they require low temperature for deterministic output. When thinking is enabled, `temperature` is silently ignored by all major providers. This is a hard design constraint enforced at configuration validation time (see analysis report §4.5).
 8. **DeepSeek protocol choice:** Resolved — use OpenAI Chat Completions format for DeepSeek. Rationale: maximum code sharing with Phase 2 OpenAI integration, access to DeepSeek-specific features (strict mode tool calling, JSON mode). Trade-off: Phase 1 implements two protocols (Anthropic Messages + OpenAI Chat Completions). See analysis report §6.1.
 9. **Pipeline enforcement:** Resolved by this update — `dispatch_task` makes the pipeline non-bypassable by internalizing it. The orchestrator never sees a raw prompt; it only calls `dispatch_task(task_id, category)`. Manual composition is eliminated as a failure mode. P51 removes the legacy 2.0 fallback as a prerequisite. P52 defines the fast-track behavioral profile (no-implicit-gates, session-start audit, ghost-work detection) that the fast_track dispatch mode should automate.
-10. **Stale binary after code changes:** The running `kbz serve` binary showed `git_sha: unknown` (via `server_info`) while the install record showed a valid SHA. The Makefile outputs `kbz` but the editor MCP config references `kanbanzai`. When P44 adds provider API keys and a dispatch loop, stale-binary issues become more dangerous — a running server with old routing config or missing provider credentials could silently fail dispatches. `dispatch_task` should verify at startup that its binary SHA matches the install record, and refuse dispatches if mismatched.
+10. **Stale binary after code changes:** The running `kbz serve` binary showed `git_sha: unknown` (via `server_info`) while the install record showed a valid SHA. The Makefile outputs `kbz` but the editor MCP config references `kanbanzai`. When P44 adds provider API keys and a dispatch loop, stale-binary issues become more dangerous — a running server with old routing config or missing provider credentials could silently fail dispatches. `dispatch_task` should verify at startup that its binary SHA matches the install record, and refuse dispatches if mismatched. This is a Phase 1 requirement — it's part of the pipeline health assertions (see Risk: Pipeline Becomes Invisible above).
 11. **Handoff-to-spawn_agent loop remains unclosed:** The orchestrator must manually call `spawn_agent` after `handoff`. In fast-track auto-validation, validators stop at "prompt generated" and wait. This is the same gap P44's `dispatch_task` closes — but it also means that until P44 ships, the orchestrator is the human-in-the-loop for every sub-agent dispatch. `dispatch_task` should be the highest-priority Phase 1 deliverable to close this loop.
 12. **Context threshold calibration:** The orchestrator role's 45% and 60% context utilisation thresholds were calibrated for ~128K-200K token windows. With 1M token windows now standard, 45% = 450K tokens — more working room than a full 128K window at 90%. The pipeline's `DefaultContextWindowTokens = 200_000` is similarly stale. P44 should recalibrate these to absolute token counts rather than percentages, or to percentages of a configurable window size that defaults to 1M.

@@ -1,0 +1,354 @@
+document_id: P41-opencode-ecosystem-features/research-p41-research-context-pollution-and-rot
+document_path: work/P41-opencode-ecosystem-features/P41-research-context-pollution-and-rot.md
+content_hash: 739fac422575ed55b44713171ab669931c5f10b462e4b3c46f12b52db6e504e4
+indexed_at: 2026-05-06T10:54:25.099618Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Research Report: Context Pollution and Rot in Long-Running Agent Orchestration'
+      byte_offset: 0
+      byte_count: 53035
+      word_count: 7002
+      content_hash: 739fac422575ed55b44713171ab669931c5f10b462e4b3c46f12b52db6e504e4
+      children:
+        - path: "1.1"
+          level: 2
+          title: Research Question
+          byte_offset: 531
+          byte_count: 1744
+          word_count: 210
+          content_hash: 90457777dbd03db36d07d2619b654c0f29716c22cbbf427ca25cf98bf8928d72
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Sub-questions
+              byte_offset: 865
+              byte_count: 1410
+              word_count: 165
+              content_hash: 855dec6564b2bc4468e1dcd2e1d018d357c4f106f0fa124aae953484d1199ebc
+        - path: "1.2"
+          level: 2
+          title: Scope and Methodology
+          byte_offset: 2275
+          byte_count: 3483
+          word_count: 430
+          content_hash: a666c73c3448cefcfef26d6706b0ca597da16cea3fdd1717b3ea9e70ce4ff0ad
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Sources consulted
+              byte_offset: 2301
+              byte_count: 1781
+              word_count: 193
+              content_hash: 55b3c9115150f2965159cc0f4b504dca686ec30c4aebe9c8f299ec69bf229763
+            - path: 1.2.2
+              level: 3
+              title: Search strategy
+              byte_offset: 4082
+              byte_count: 613
+              word_count: 90
+              content_hash: 33c1512aee5b62d66ce0b6820d0a83d7090596b1b747e36ee6a732e5a03931fa
+            - path: 1.2.3
+              level: 3
+              title: Evaluation criteria
+              byte_offset: 4695
+              byte_count: 602
+              word_count: 83
+              content_hash: 44ad969704664ac7606cd024f232714a562799c8b547d5b50af311c0a3326da3
+            - path: 1.2.4
+              level: 3
+              title: Excluded from scope
+              byte_offset: 5297
+              byte_count: 461
+              word_count: 60
+              content_hash: c3b337d832c6c4b3b2c68338262718e6257cda21e1d4a31335bb8a9b66d432af
+        - path: "1.3"
+          level: 2
+          title: Findings
+          byte_offset: 5758
+          byte_count: 22588
+          word_count: 3038
+          content_hash: c640d1bdddd72d2824b2379a4e75e3db173057b77c342c81d8629dca73245081
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Finding 1: Context rot is a distinct, empirically documented failure mode separate from "lost in the middle" retrieval degradation'
+              byte_offset: 5771
+              byte_count: 3975
+              word_count: 543
+              content_hash: 7c623cd678bbf9fec097f261f0405bc32cf2fc2dc54feb7a6a4db46de6b166a9
+            - path: 1.3.2
+              level: 3
+              title: 'Finding 2: Context rot is an architectural consequence, not an inherent limitation — architectures differ substantially in their susceptibility'
+              byte_offset: 9746
+              byte_count: 3862
+              word_count: 511
+              content_hash: e79f03d8a797f6666cf012669600043f53500c54cc09e7f565bb5bd2e15b3481
+            - path: 1.3.3
+              level: 3
+              title: 'Finding 3: Prompt reinjection and constraint pinning have moderate theoretical support but limited direct experimental evidence for agent orchestration'
+              byte_offset: 13608
+              byte_count: 2937
+              word_count: 399
+              content_hash: e6865170525e0005ac85b71135c9b810b34b361fd020c2a242f933b6f347c880
+            - path: 1.3.4
+              level: 3
+              title: 'Finding 4: Dispatch-loop architecture addresses context rot at its architectural root — the orchestrator''s conversation never grows beyond orchestration decisions'
+              byte_offset: 16545
+              byte_count: 3413
+              word_count: 463
+              content_hash: 23168fb50157fba903f34d5f6f31eebe28927efdedcf1912ed51fc7f6324caef
+            - path: 1.3.5
+              level: 3
+              title: 'Finding 5: Compaction is a necessary complement, not a replacement, for architectural change — the two strategies address different failure modes'
+              byte_offset: 19958
+              byte_count: 2750
+              word_count: 356
+              content_hash: 327d958c7fb1d03b0a5bbfbe5741a8fa73b19dfec60f3b184a69ea409c250a15
+            - path: 1.3.6
+              level: 3
+              title: 'Finding 6: The fast-track pipeline mismatch (P50) was a context engineering failure, not an inherent architecture failure — and it is fixable without abandoning the chat-as-orchestrator model'
+              byte_offset: 22708
+              byte_count: 2709
+              word_count: 375
+              content_hash: dae2c15b670d898b5d4febcaa7370ef272166facc294fc07fffdcb4ed7f3ec29
+            - path: 1.3.7
+              level: 3
+              title: 'Finding 7: State-machine and event-driven orchestration are theoretically cleaner but practically less flexible than chat-as-orchestrator with mitigations'
+              byte_offset: 25417
+              byte_count: 2929
+              word_count: 389
+              content_hash: 759587ca2facc01caaa4338ed19c00cc5c42fc116ce2029b4be4ee080eb229a1
+        - path: "1.4"
+          level: 2
+          title: Trade-Off Analysis
+          byte_offset: 28346
+          byte_count: 4482
+          word_count: 567
+          content_hash: feb9d6ae25d37b915da81ac51b9c17418700ad7db31cb4a0ca231f03fa0149a2
+        - path: "1.5"
+          level: 2
+          title: Recommendations
+          byte_offset: 32828
+          byte_count: 9319
+          word_count: 1223
+          content_hash: 6e211c828dcca52099e74c2e93c92e6e549bfd2c0bef50c4f2d8644a7cd99c62
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'Recommendation 1: Continue investing in the chat-as-orchestrator model with near-term mitigations (confidence: high)'
+              byte_offset: 32848
+              byte_count: 2376
+              word_count: 317
+              content_hash: 4673f2b49c433630213def25e193549b892c70c8df3b9a7aae8e06c9fe90977a
+            - path: 1.5.2
+              level: 3
+              title: 'Recommendation 2: Build P44 model routing dispatch as the strategic architecture (confidence: high)'
+              byte_offset: 35224
+              byte_count: 1939
+              word_count: 256
+              content_hash: 8c97821a9a24bfaa0387757c6acda17bcc8ab5dbafebff998945048e42209298
+            - path: 1.5.3
+              level: 3
+              title: 'Recommendation 3: Defer state-machine orchestration as a primary architecture (confidence: medium)'
+              byte_offset: 37163
+              byte_count: 1771
+              word_count: 222
+              content_hash: 6fe9cb1913e61e4d1f1aff0972592c2983b2fc1becaa54416a239d77abfadaf5
+            - path: 1.5.4
+              level: 3
+              title: 'Recommendation 4: Implement the designed compaction system as a complement to architectural change (confidence: high)'
+              byte_offset: 38934
+              byte_count: 1470
+              word_count: 183
+              content_hash: 0409fde7081bfd4de0ef2130b8a99a104460a91f6a9f4d2d436ec568f4e986d1
+            - path: 1.5.5
+              level: 3
+              title: 'Recommendation 5: Establish context rot monitoring as an operational concern (confidence: medium)'
+              byte_offset: 40404
+              byte_count: 1743
+              word_count: 243
+              content_hash: b9d53d493ed595d5077ac8450429dd7d2cc7f31f6f2e203a915176c1911504e8
+        - path: "1.6"
+          level: 2
+          title: Limitations
+          byte_offset: 42147
+          byte_count: 4756
+          word_count: 670
+          content_hash: 9a623089f3712ba700ffc93f8756d60aa7932314cf42fcd399ecd5313a4e337d
+          children:
+            - path: 1.6.1
+              level: 3
+              title: What the research did not cover
+              byte_offset: 42163
+              byte_count: 1527
+              word_count: 207
+              content_hash: 2645702a32e63577d2016674fc89f101604aff09931a55978ed8d5a376890e87
+            - path: 1.6.2
+              level: 3
+              title: Assumptions underpinning the analysis
+              byte_offset: 43690
+              byte_count: 1097
+              word_count: 157
+              content_hash: 415676060cc128a4da72996ce9bd3210306aa6173b3114f4e62a0f943007314c
+            - path: 1.6.3
+              level: 3
+              title: Conditions that could change the conclusions
+              byte_offset: 44787
+              byte_count: 1144
+              word_count: 166
+              content_hash: 588419f76d961c8c38205693483e365521c1a2731c66ce28d252dcb9e5311259
+            - path: 1.6.4
+              level: 3
+              title: Knowledge gaps requiring further investigation
+              byte_offset: 45931
+              byte_count: 972
+              word_count: 138
+              content_hash: 2cfac8bb4b631c4e4525a68b08711295faa00329ef3bb3b1e98230987f4865a9
+        - path: "1.7"
+          level: 2
+          title: Source Index
+          byte_offset: 46903
+          byte_count: 4698
+          word_count: 640
+          content_hash: ff7ae7e4a594aed4cb5a6c9cae4286f47731c33ea396224c57051e10ac5ef6e0
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Primary — Peer-Reviewed
+              byte_offset: 46920
+              byte_count: 427
+              word_count: 64
+              content_hash: 6eb97e5771c43290446a49e876fb188e8edabd638403bfbff7e44b85e35bff92
+            - path: 1.7.2
+              level: 3
+              title: Primary — Vendor Technical Reports
+              byte_offset: 47347
+              byte_count: 945
+              word_count: 124
+              content_hash: add0b7c683c38aabc369927ec7fbd5bcd83c10857265e53f93a4886b150bb44a
+            - path: 1.7.3
+              level: 3
+              title: Secondary — Industry and Field Reports
+              byte_offset: 48292
+              byte_count: 849
+              word_count: 122
+              content_hash: 71d6bcc36a3a4f846813fe7c4794f8c28ec0c683d175d26129983a0d9e9a573d
+            - path: 1.7.4
+              level: 3
+              title: Internal — Kanbanzai Documents
+              byte_offset: 49141
+              byte_count: 1349
+              word_count: 154
+              content_hash: 23ce324bde5e52a164ab430dc8b62ca775e390390dfea7980362093c71a5def7
+            - path: 1.7.5
+              level: 3
+              title: Referenced but Not Directly Accessed (404 or unavailable)
+              byte_offset: 50490
+              byte_count: 1111
+              word_count: 173
+              content_hash: b176538633666a70a56b1eb4a183154134d11bcf38f2a35e96eca842b4ab9dea
+        - path: "1.8"
+          level: 2
+          title: Retrieval Anchors
+          byte_offset: 51601
+          byte_count: 1434
+          word_count: 182
+          content_hash: be2409c757a64d037e367ff177acb782f16395f0c144334f85b4acd46b83e962
+entity_refs:
+    - entity_id: P41-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 195
+    - entity_id: P41-research-context-compaction
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 242
+    - entity_id: P44-design-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 307
+    - entity_id: P43-design-fast-track-architecture
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 389
+    - entity_id: P41-research-context-compaction
+      entity_type: plan
+      section_path: 1.2.1
+      byte_offset: 3249
+    - entity_id: P41-research-context-compaction-summary
+      entity_type: plan
+      section_path: 1.2.1
+      byte_offset: 3397
+    - entity_id: P44-design-model-routing-agent-launcher
+      entity_type: plan
+      section_path: 1.2.1
+      byte_offset: 3497
+    - entity_id: P43-design-fast-track-architecture
+      entity_type: plan
+      section_path: 1.2.1
+      byte_offset: 3640
+    - entity_id: P41-research-context-compaction
+      entity_type: plan
+      section_path: 1.3.5
+      byte_offset: 20579
+    - entity_id: P41-research-context-compaction
+      entity_type: plan
+      section_path: 1.5.4
+      byte_offset: 39821
+    - entity_id: P41-research-context-compaction
+      entity_type: plan
+      section_path: 1.7.4
+      byte_offset: 49257
+    - entity_id: P41-research-context-compaction-summary
+      entity_type: plan
+      section_path: 1.7.4
+      byte_offset: 49456
+    - entity_id: P44-design-model-routing-agent-launcher
+      entity_type: plan
+      section_path: 1.7.4
+      byte_offset: 49640
+    - entity_id: P43-design-fast-track-architecture
+      entity_type: plan
+      section_path: 1.7.4
+      byte_offset: 49885
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: question
+      confidence: high
+    - section_path: 1.1.1
+      role: question
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.4
+      role: constraint
+      confidence: high
+    - section_path: 1.3.1
+      role: narrative
+      confidence: high
+    - section_path: 1.3.2
+      role: narrative
+      confidence: high
+    - section_path: 1.3.3
+      role: constraint
+      confidence: high
+    - section_path: 1.3.4
+      role: decision
+      confidence: high
+    - section_path: 1.3.6
+      role: narrative
+      confidence: high
+    - section_path: 1.5.5
+      role: narrative
+      confidence: high
+    - section_path: 1.6.2
+      role: assumption
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-06T10:54:26.451075Z
+classified: false

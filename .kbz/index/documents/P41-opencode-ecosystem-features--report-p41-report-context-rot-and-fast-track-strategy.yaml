@@ -1,0 +1,345 @@
+document_id: P41-opencode-ecosystem-features/report-p41-report-context-rot-and-fast-track-strategy
+document_path: work/P41-opencode-ecosystem-features/P41-report-context-rot-and-fast-track-strategy.md
+content_hash: 18b3a5d9eef6d309597f0852cc99af1fff73b5159e26059764e8e181d2cbc8e7
+indexed_at: 2026-05-06T12:22:12.856549Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Context Rot & Fast-Track: Strategy for Kanbanzai''s Orchestration Architecture'
+      byte_offset: 0
+      byte_count: 25762
+      word_count: 3551
+      content_hash: 18b3a5d9eef6d309597f0852cc99af1fff73b5159e26059764e8e181d2cbc8e7
+      children:
+        - path: "1.1"
+          level: 2
+          title: Executive Summary
+          byte_offset: 439
+          byte_count: 3555
+          word_count: 529
+          content_hash: 04db9ebbab480b532bb4cb354a01a01f9a26fa8cbf14e6862873261b2e14fdaf
+          children:
+            - path: 1.1.1
+              level: 3
+              title: What happened
+              byte_offset: 461
+              byte_count: 773
+              word_count: 122
+              content_hash: 1fda780670749eeac0a719d57577a764d9e44aeadfac7d2d63b32a52706fb33d
+            - path: 1.1.2
+              level: 3
+              title: The headline finding
+              byte_offset: 1234
+              byte_count: 819
+              word_count: 129
+              content_hash: 28130b90c2e19a095f84e0b75c1501e708fd1efb2198d2f4c241e58061ba9708
+            - path: 1.1.3
+              level: 3
+              title: What we recommend
+              byte_offset: 2053
+              byte_count: 1267
+              word_count: 179
+              content_hash: 95109c50cf45c7330e58da8887fd9b34616cfef51cc92e012b8f4a174be977d3
+            - path: 1.1.4
+              level: 3
+              title: Why this matters to Product
+              byte_offset: 3320
+              byte_count: 674
+              word_count: 96
+              content_hash: 68315943f62c52563a7de84cdde3a8aa3283c1278f4d48341a46a5d3ecdaf5b5
+        - path: "1.2"
+          level: 2
+          title: 'The Problem: Context Rot and the P50 Incident'
+          byte_offset: 3994
+          byte_count: 3787
+          word_count: 552
+          content_hash: 0185c7cebf96fed42db5612fb2ddcc7d83e57ceb05dc4083e7211bd1e59dfce0
+          children:
+            - path: 1.2.1
+              level: 3
+              title: What is context rot?
+              byte_offset: 4044
+              byte_count: 1351
+              word_count: 203
+              content_hash: eb4998df7a73e0385d1dff1977f5b763a4f54aa3f70514a70e0577938c66a44d
+            - path: 1.2.2
+              level: 3
+              title: What happened in P50
+              byte_offset: 5395
+              byte_count: 1383
+              word_count: 190
+              content_hash: 19724d7fbdae40b0626a13ed6f32fe672b42f903092f99aa0d8824ceadaca983
+            - path: 1.2.3
+              level: 3
+              title: The critical distinction
+              byte_offset: 6778
+              byte_count: 1003
+              word_count: 150
+              content_hash: f72ab98919ffd4ba6551fbb401386439ebb624645aa6434fbeeb3bc988483691
+        - path: "1.3"
+          level: 2
+          title: 'Strategy: Three Horizons'
+          byte_offset: 7781
+          byte_count: 9755
+          word_count: 1305
+          content_hash: fcd88824d2339a3b4b8e6646eabe390828c9549cf3d4af6d9a6cd98526d470fe
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Horizon 0: Fix Fast-Track Now (This Sprint)'
+              byte_offset: 7810
+              byte_count: 3805
+              word_count: 499
+              content_hash: 6f96fede5a70ca8beb59f6d24df83a52e8543c3e352e8f85d133cd3cd73a15dd
+              children:
+                - path: 1.3.1.1
+                  level: 4
+                  title: 1. Fast-Track Behavioral Profile (P52)
+                  byte_offset: 7981
+                  byte_count: 1799
+                  word_count: 237
+                  content_hash: 4f1e3bc3759fec8762af4039da789b1dcb75ae1a7f12346cbb928363ef53c98c
+                - path: 1.3.1.2
+                  level: 4
+                  title: 2. Handoff Pipeline Unification (P51)
+                  byte_offset: 9780
+                  byte_count: 1132
+                  word_count: 148
+                  content_hash: 1f48db5e8c15bcb6d62d551f4025284e0344ee30de33e7aef84b3bcc02104c63
+                - path: 1.3.1.3
+                  level: 4
+                  title: 3. Context Budget Recalibration
+                  byte_offset: 10912
+                  byte_count: 703
+                  word_count: 88
+                  content_hash: 72b6aaf503d669c612203f8106c83e913f9efd6ab2e0d5fc927cd5a960d4b4d9
+            - path: 1.3.2
+              level: 3
+              title: 'Horizon 1: Build the Strategic Architecture (This Quarter)'
+              byte_offset: 11615
+              byte_count: 4248
+              word_count: 576
+              content_hash: 0e5c7d8d4f8670eeaf7911f02638990a066633631277dd7bce5daff3805ed283
+              children:
+                - path: 1.3.2.1
+                  level: 4
+                  title: 4. Model Routing Dispatch (P44)
+                  byte_offset: 11771
+                  byte_count: 2709
+                  word_count: 372
+                  content_hash: 5ff657624569a960bb7f5cfa01df102e61404ae0762f5cce2fa82cb70e0632e1
+                - path: 1.3.2.2
+                  level: 4
+                  title: 5. Context Compaction System
+                  byte_offset: 14480
+                  byte_count: 1383
+                  word_count: 182
+                  content_hash: 6c8caa517d2b054d1fb1b89d5fc534afe8b19329c718559ed25868d94307a8c0
+            - path: 1.3.3
+              level: 3
+              title: 'Horizon 2: Validate and Expand (Ongoing)'
+              byte_offset: 15863
+              byte_count: 1673
+              word_count: 226
+              content_hash: 90bf9f8b4ca7d644aa18cd848aefac4c40a6549aa9b978b13daf5a83c7ece899
+              children:
+                - path: 1.3.3.1
+                  level: 4
+                  title: 6. Automated Validators (P43) — Already Built
+                  byte_offset: 15909
+                  byte_count: 952
+                  word_count: 125
+                  content_hash: 0bf1805bc9efbc0c252a67a5bc1fa5a1a10e395d755a3fb0a6c22f8e537dc4b9
+                - path: 1.3.3.2
+                  level: 4
+                  title: 7. Context Rot Monitoring
+                  byte_offset: 16861
+                  byte_count: 675
+                  word_count: 94
+                  content_hash: b5a2ca4493f7ef1b6a725297de10f875fc4622ebadf12879f2ebc16f4dfd88ce
+        - path: "1.4"
+          level: 2
+          title: 'Architecture Decision: Why We''re Building P44'
+          byte_offset: 17536
+          byte_count: 2513
+          word_count: 349
+          content_hash: fda5e87a63ddbb57a329fa1ed164480d2fd9280e73183436ade6280909106ac5
+        - path: "1.5"
+          level: 2
+          title: Immediate Action Plan
+          byte_offset: 20049
+          byte_count: 1740
+          word_count: 224
+          content_hash: b674bd93fa9ea034201ed7f9af4f18d1923c26e87490e7e0f02677923f8f9f19
+          children:
+            - path: 1.5.1
+              level: 3
+              title: This Week
+              byte_offset: 20075
+              byte_count: 991
+              word_count: 128
+              content_hash: 431ea1994f461a45e347c3aac96ce22630e35f1c68d2ab0e51fa9091282b6cba
+            - path: 1.5.2
+              level: 3
+              title: This Quarter
+              byte_offset: 21066
+              byte_count: 457
+              word_count: 56
+              content_hash: 362299c9d9a54e4d2328a862ed1dc622fb0b0ffe9b97882c0b6cc1e0e083b64c
+            - path: 1.5.3
+              level: 3
+              title: Ongoing
+              byte_offset: 21523
+              byte_count: 266
+              word_count: 36
+              content_hash: d686dfb3569e5f1ad90e3554a6273c7fbba777f0b42687d844a29fd16c136c57
+        - path: "1.6"
+          level: 2
+          title: Risk Register
+          byte_offset: 21789
+          byte_count: 1316
+          word_count: 203
+          content_hash: 35d3f126771664c00e3e7c3dea7d87b1ba3affd27d4cb5c9b675fa3ad37e37f8
+        - path: "1.7"
+          level: 2
+          title: 'Summary: From Academic Research to Product Strategy'
+          byte_offset: 23105
+          byte_count: 2657
+          word_count: 335
+          content_hash: 749a6962c10f5f6d8f4930cf4f9bffa519c96b3a25b333b575704a7c0d6efaa1
+entity_refs:
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.3.2.1
+      byte_offset: 12523
+    - entity_id: P41-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 307
+    - entity_id: P52-fast-track-orchestration
+      entity_type: plan
+      section_path: 1.3.1.1
+      byte_offset: 9708
+    - entity_id: P52-design-fast-track-orchestration
+      entity_type: plan
+      section_path: 1.3.1.1
+      byte_offset: 9737
+    - entity_id: P51-handoff-pipeline-unification
+      entity_type: plan
+      section_path: 1.3.1.2
+      byte_offset: 10832
+    - entity_id: P51-design-handoff-pipeline-unification
+      entity_type: plan
+      section_path: 1.3.1.2
+      byte_offset: 10865
+    - entity_id: P41-research-context-compaction
+      entity_type: plan
+      section_path: 1.3.2.2
+      byte_offset: 15693
+    - entity_id: P41-research-context-compaction-summary
+      entity_type: plan
+      section_path: 1.3.2.2
+      byte_offset: 15763
+    - entity_id: P41-research-context-pollution-and-rot
+      entity_type: plan
+      section_path: "1.4"
+      byte_offset: 17605
+    - entity_id: P41-research-context-pollution-and-rot
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 23183
+    - entity_id: P41-research-context-compaction
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 25127
+    - entity_id: P41-research-context-compaction-summary
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 25244
+    - entity_id: P44-design-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 25360
+    - entity_id: P43-design-fast-track-architecture
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 25481
+    - entity_id: P52-design-fast-track-orchestration
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 25578
+    - entity_id: P51-design-handoff-pipeline-unification
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 25662
+cross_doc_links:
+    - target_path: work/P52-fast-track-orchestration/P52-design-fast-track-orchestration.md
+      link_text: work/P52-fast-track-orchestration/P52-design-fast-track-orchestration.md
+      section_path: 1.3.1.1
+    - target_path: work/P51-handoff-pipeline-unification/P51-design-handoff-pipeline-unification.md
+      link_text: work/P51-handoff-pipeline-unification/P51-design-handoff-pipeline-unification.md
+      section_path: 1.3.1.2
+    - target_path: P41-research-context-compaction.md
+      link_text: P41-research-context-compaction.md
+      section_path: 1.3.2.2
+    - target_path: P41-research-context-compaction-summary.md
+      link_text: P41-research-context-compaction-summary.md
+      section_path: 1.3.2.2
+    - target_path: P41-research-context-pollution-and-rot.md
+      link_text: P41-research-context-pollution-and-rot.md
+      section_path: "1.4"
+    - target_path: P41-research-context-pollution-and-rot.md
+      link_text: P41-research-context-pollution-and-rot.md
+      section_path: "1.7"
+    - target_path: P41-research-context-compaction.md
+      link_text: P41-research-context-compaction.md
+      section_path: "1.7"
+    - target_path: P41-research-context-compaction-summary.md
+      link_text: P41-research-context-compaction-summary.md
+      section_path: "1.7"
+    - target_path: P44-design-model-routing-agent-launcher.md
+      link_text: P44-design-model-routing-agent-launcher.md
+      section_path: "1.7"
+    - target_path: P43-design-fast-track-architecture.md
+      link_text: P43-design-fast-track-architecture.md
+      section_path: "1.7"
+    - target_path: P52-design-fast-track-orchestration.md
+      link_text: P52-design-fast-track-orchestration.md
+      section_path: "1.7"
+    - target_path: P51-design-handoff-pipeline-unification.md
+      link_text: P51-design-handoff-pipeline-unification.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.1
+      role: narrative
+      confidence: high
+    - section_path: 1.3.1.3
+      role: narrative
+      confidence: high
+    - section_path: 1.3.2.2
+      role: narrative
+      confidence: high
+    - section_path: 1.3.3.2
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: decision
+      confidence: high
+    - section_path: "1.6"
+      role: risk
+      confidence: high
+    - section_path: "1.7"
+      role: narrative
+      confidence: high
+access_count: 1
+last_accessed_at: 2026-05-06T12:22:13.81364Z
+classified: false

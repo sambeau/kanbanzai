@@ -224,6 +224,24 @@ This abstraction lives in the stage binding configuration, not in validator code
 - New: three roles, three skills, validator rubrics, extended structural validators, `transition_validator` hooks in stage bindings, fast-track config schema, auto-approval pipeline, `dispatch_validator` abstraction
 - No dependency on P42 (hash-anchored edits) or P44 (model routing) — but includes forward-compatible `dispatch_validator` abstraction for future P44 integration
 
+### P44 Build Gate
+
+P43 validators are the stability gate for P44 (Model Routing & Agent Launcher) Phase 1 build start. The gate is met when:
+- spec-validator has passed on at least 5 real Kanbanzai specification documents with no false-positive blocking failures
+- plan-validator has passed on at least 5 real Kanbanzai dev-plan documents with no false-positive blocking failures
+- review-gate-validator has passed on at least 5 real Kanbanzai review reports with no false-positive blocking failures
+
+P43's validators are the proof of the fresh-session, rubric-based dispatch pattern that `dispatch_task` generalises. P44 should not begin Phase 1 implementation until this pattern is proven stable. See [Architectural Assessment](../P41-opencode-ecosystem-features/P41-assessment-orchestration-architecture-cross-reference.md) §A (P44 §2) and Recommendation 8.
+
+## Architectural Assessment Cross-Reference
+
+This plan was reviewed in the [Integrated Architectural Assessment: Orchestration & Fast-Track Pipeline Strategy](../P41-opencode-ecosystem-features/P41-assessment-orchestration-architecture-cross-reference.md) (May 2026). Key findings:
+
+- **Horizon 2 placement confirmed (already built).** P43 validators are the working proof that fresh-session, rubric-based sub-agent dispatch works — the pattern that P44's `dispatch_task` generalises.
+- **P44 build gate defined above** (§ P44 Build Gate). P43 is the stability gate for P44 Phase 1 build start. The 3-validator × 5-document threshold must be met before P44 implementation begins.
+- **Forward compatibility confirmed.** The `dispatch_validator` abstraction correctly isolates P43 from the dispatch mechanism. Transition to P44's `audit` category is a configuration change, not a code change.
+- **Expansion is ongoing Horizon 2 work.** Design validator, threshold tuning, and effectiveness metrics tracking continue in parallel with P44 build.
+
 ## Open Questions
 
 1. What's the validator evidence threshold for auto-approval? Run validators alongside human gates for N features; compare findings. If validators catch everything humans catch, the threshold can be lower.

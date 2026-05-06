@@ -27,6 +27,8 @@ type CreatePlanInput struct {
 	CreatedBy string
 	// Tags are optional freeform tags for organisation.
 	Tags []string
+	// Parent is the optional parent plan ID.
+	Parent string
 }
 
 // UpdatePlanInput contains the fields that can be updated on a Plan.
@@ -86,6 +88,7 @@ func (s *EntityService) CreatePlan(input CreatePlanInput) (CreateResult, error) 
 		Name:           planName,
 		Status:         model.PlanStatusProposed,
 		Summary:        strings.TrimSpace(input.Summary),
+		Parent:         input.Parent,
 		Tags:           normalizeTags(input.Tags),
 		Created:        now,
 		CreatedBy:      strings.TrimSpace(input.CreatedBy),
@@ -480,6 +483,9 @@ func planFields(p model.Plan) map[string]any {
 		"next_feature_seq": p.NextFeatureSeq,
 	}
 
+	if p.Parent != "" {
+		fields["parent"] = p.Parent
+	}
 	if p.Design != "" {
 		fields["design"] = p.Design
 	}
