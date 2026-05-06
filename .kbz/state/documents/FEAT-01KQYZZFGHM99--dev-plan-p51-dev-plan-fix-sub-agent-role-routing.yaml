@@ -1,0 +1,11 @@
+canonical_content_hash: a328aeab8c67e6ce6dae50b3a259919980bc3983e9dc2e4dc6790e4d185aec9e
+content_hash: 7a1e27335a497683e745cc38a3e68a3d423c53d6c85ea9973f2df50f67e4b02d
+created: "2026-05-06T16:52:38Z"
+created_by: sambeau
+id: FEAT-01KQYZZFGHM99/dev-plan-p51-dev-plan-fix-sub-agent-role-routing
+owner: FEAT-01KQYZZFGHM99
+path: work/P51-handoff-pipeline-unification/P51-dev-plan-fix-sub-agent-role-routing.md
+status: draft
+title: "Dev Plan: Fix Sub-Agent Role Routing"
+type: dev-plan
+updated: "2026-05-06T16:52:38Z"

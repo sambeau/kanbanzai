@@ -4,6 +4,10 @@
 **Specification:** FEAT-01KQYZZFGH6DK/spec-p51-spec-documentation-fixes (approved)
 **Date:** 2026-05-06
 
+## Overview
+
+Two documentation-only fixes: add (max 500 characters) to the finish tool summary parameter description, and update the orchestrate-development skill to document the role parameter for handoff. Two independent tasks.
+
 ## Scope
 
 Implements FR-001 through FR-003 and FR-NF-001 through FR-NF-002. Two independent tasks: finish tool description update and orchestrate-development skill update (dual-write).
@@ -44,3 +48,18 @@ Both tasks are entirely independent and can run in parallel. No code dependencie
 | AC-003 | Inspection: compare .kbz/ and internal/kbzinit/ skill copies | T2 |
 | AC-004 | Test: `go test ./internal/mcp/... -run TestFinish` passes | T1 |
 | AC-005 | Test: pipeline test loads skill, no regression | T2 |
+
+## Interface Contracts
+
+- **finish tool** — `summary` parameter description updated to `"Brief description of what was accomplished (max 500 characters)"`. No runtime change.
+- **orchestrate-development skill** — Updated handoff example includes `role: "implementer-go"`. Dual-written to `internal/kbzinit/skills/`.
+
+## Traceability Matrix
+
+| FR | Task |
+|----|------|
+| FR-001 | T1 |
+| FR-002 | T2 |
+| FR-003 | T2 |
+| FR-NF-001 | T1 |
+| FR-NF-002 | T2 |
