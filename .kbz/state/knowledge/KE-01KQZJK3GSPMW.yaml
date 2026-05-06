@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "\"Pre-existing\" test failure is not a valid category. A failing test is a failing test — it means someone didn't run tests before merging. Policy should be: tests must pass before any work commences. If tests are failing on main, the first task is to fix them. No new work should start until the test suite is green."
+created: "2026-05-06T21:20:06Z"
+created_by: sambeau
+id: KE-01KQZJK3GSPMW
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - testing
+  - process
+  - policy
+  - quality
+tier: 2
+topic: testing/no-pre-existing-failure-policy
+ttl_days: 90
+updated: "2026-05-06T21:20:06Z"
+use_count: 0

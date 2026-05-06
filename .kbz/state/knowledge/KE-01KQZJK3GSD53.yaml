@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "Tests are not being run after merges to main. Multiple test failures exist on main (cmd/kbz build failure, kbzinit skill marker tests, MCP tool tests with missing fixtures) that would have been caught if tests were run as a merge gate. These failures have been allowed to accumulate, creating a \"pre-existing failures\" culture where new failures blend in with old ones."
+created: "2026-05-06T21:20:06Z"
+created_by: sambeau
+id: KE-01KQZJK3GSD53
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - testing
+  - process
+  - merge-gate
+  - regression-risk
+tier: 2
+topic: testing/test-gate-not-enforced
+ttl_days: 90
+updated: "2026-05-06T21:20:06Z"
+use_count: 0
