@@ -10,7 +10,8 @@ The fast-track pipeline was built to eliminate human gates for retro fixes and s
 
 These are not code defects. They're model-level patterns: the orchestrator is pattern-matching "summary output → wait for response" from training data, and the fast-track instruction isn't strong enough to override it. The fix is a dedicated lightweight orchestration profile — not a new skill, but a behavioral mode that the existing `orchestrate-development` skill switches into when the feature tier indicates fast-track.
 
-## Goals
+## Goals and Non-Goals
+### Goals
 
 1. **No implicit gates.** The orchestrator must not stop unless it encounters a genuine blocker (build failure, missing dependency, spec ambiguity). "Batch complete" is not a stop condition.
 2. **Session-start state audit.** A single `status()` call at session start must resolve entity state ambiguity — which tasks are actually done, which are stuck, which are ghost work.
@@ -18,7 +19,7 @@ These are not code defects. They're model-level patterns: the orchestrator is pa
 4. **Lightweight context.** Skip cohort management, merge scheduling, and context offloading for fast-track features. These are designed for multi-feature batches.
 5. **No stop-at-milestone behavior.** Completing a feature, transitioning a batch, or dispatching a wave is not a stop condition. Only stop when all work is done or a genuine blocker exists.
 
-## Non-Goals
+### Non-Goals
 
 - Not changing the `orchestrate-development` skill's core procedure — this is an additive profile, not a rewrite
 - Not changing the pipeline's context assembly (that's P51)

@@ -1,10 +1,10 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-06T20:47:43+01:00      |
-| Status | Draft                          |
+| Status | approved |
 | Author | sambeau                        |
 
-## Problem Statement
+## Overview
 
 This specification implements the design described in
 `work/P52-fast-track-orchestration/P52-design-fast-track-orchestration.md` (PROJECT/design-p52-design-fast-track-orchestration).
@@ -23,9 +23,18 @@ changes to the MCP server or underlying tools.
 triggers (P44 Phase 3b), dirty-work attribution (P53), and the `finish` summary limit
 documentation. These are deferred to their respective plans.
 
-## Requirements
+## Scope
 
-### Functional Requirements
+This specification covers the addition of the Fast-Track Profile section to the
+`orchestrate-development` SKILL.md file. It is a documentation-only change affecting
+two files: `.kbz/skills/orchestrate-development/SKILL.md` (local copy) and
+`internal/kbzinit/skills/task-execution/orchestrate-development/SKILL.md` (canonical
+source for generated installations).
+
+Out of scope: P44 dispatch_task integration, P53 dirty-work attribution, finish summary
+limit documentation.
+
+## Functional Requirements
 
 - **REQ-001:** The `orchestrate-development` SKILL.md must gain a `## Fast-Track Profile`
   section that activates when the feature's tier is `retro_fix` or the batch is explicitly
@@ -91,7 +100,7 @@ documentation. These are deferred to their respective plans.
   existing 6-phase procedure or anti-patterns of the `orchestrate-development` skill.
   The profile is an alternate branch activated by feature tier, not a rewrite.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 - **REQ-NF-001:** The Fast-Track Profile section must be placed after the Procedure
   section and before the Output Format section in the SKILL.md file, to maintain the

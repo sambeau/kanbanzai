@@ -1,10 +1,10 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-06T20:47:43+01:00      |
-| Status | Draft                          |
+| Status | approved |
 | Author | sambeau                        |
 
-## Scope
+## Overview
 
 This plan implements the requirements defined in
 `work/P52-fast-track-orchestration/P52-spec-fast-track-profile.md`
@@ -13,10 +13,22 @@ This plan implements the requirements defined in
 It covers the addition of the Fast-Track Profile section to the `orchestrate-development`
 skill file. This is a documentation-only change — no Go code or MCP tool changes.
 
-The plan covers one task: editing both the local skill file and the canonical source copy to
+The plan covers two tasks: editing both the local skill file and the canonical source copy to
 add the new section. It does NOT cover P44 integration (dispatch_task), P53 (dirty-work
 attribution), or the `finish` summary limit documentation — these are deferred to their
 respective plans.
+
+## Scope
+
+This plan implements the specification at
+`work/P52-fast-track-orchestration/P52-spec-fast-track-profile.md`
+(P52-fast-track-orchestration/spec-p52-spec-fast-track-profile).
+
+It is scoped to updating two files:
+- `.kbz/skills/orchestrate-development/SKILL.md` (local development copy)
+- `internal/kbzinit/skills/task-execution/orchestrate-development/SKILL.md` (canonical source)
+
+Out of scope: P44 dispatch_task integration, P53 dirty-work attribution, finish summary limit.
 
 ## Task Breakdown
 
@@ -47,8 +59,34 @@ respective plans.
   Task 1 (no dependencies)
   Task 2 → depends on Task 1
 
-  Parallel groups: [Task 1], [Task 2]
+  Parallel groups: none (Task 2 depends on Task 1)
   Critical path: Task 1 → Task 2
+
+## Interface Contracts
+
+This is a documentation-only change. There are no code-level interface contracts to define.
+The Fast-Track Profile section interfaces with the existing `orchestrate-development` skill by:
+- Referencing its Vocabulary section (no-stop contract, ready frontier concepts)
+- Reusing its Anti-Patterns section structure (Detect/BECAUSE/Resolve format)
+- Providing an alternate procedure branch that replaces the 6-phase flow when activated
+
+The section must be placed after `## Procedure` and before `## Output Format` to maintain the
+document's logical flow.
+
+## Traceability Matrix
+
+| Requirement | Task 1 | Task 2 |
+|-------------|--------|--------|
+| REQ-001 (section heading) | ✓ | ✓ |
+| REQ-002 (no-stop contract) | ✓ | ✓ |
+| REQ-003 (Phase 0) | ✓ | ✓ |
+| REQ-004 (Phase 1) | ✓ | ✓ |
+| REQ-005 (Phase 2) | ✓ | ✓ |
+| REQ-006 (Rules) | ✓ | ✓ |
+| REQ-007 (anti-patterns) | ✓ | ✓ |
+| REQ-008 (integration notes) | ✓ | ✓ |
+| REQ-009 (additive only) | ✓ | ✓ |
+| REQ-NF-001 (section placement) | ✓ | ✓ |
 
 ## Risk Assessment
 
