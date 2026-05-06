@@ -186,7 +186,7 @@ The task completion call:
 ```
 finish(
   task_id: "TASK-xxx",
-  summary: "Brief description of what was accomplished",
+  summary: "Brief description of what was accomplished (max 500 characters)",
   files_modified: ["path/to/file.go", "path/to/test.go"],
   verification: "All tests pass; acceptance criteria AC-1 through AC-3 verified",
   knowledge: [
