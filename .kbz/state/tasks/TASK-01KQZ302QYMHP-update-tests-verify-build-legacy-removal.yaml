@@ -3,7 +3,7 @@ parent_feature: FEAT-01KQYZZFGJA93
 slug: update-tests-verify-build-legacy-removal
 name: Update tests and verify build for legacy removal
 summary: Update fallback tests to verify hard errors. Ensure go build ./... and go test ./internal/mcp/... pass. Verify no legacy function names remain via grep.
-status: queued
+status: ready
 depends_on:
   - TASK-01KQZ302QWNCW
   - TASK-01KQZ302R0ADQ
