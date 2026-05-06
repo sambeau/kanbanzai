@@ -1,0 +1,10 @@
+id: B50-review-remediation-v1
+slug: review-remediation-v1
+name: Review Remediation Workflow v1
+status: proposed
+summary: "Document-driven v1 of the review remediation workflow: procedure, templates, decision tree, and walkthrough."
+created: "2026-05-06T23:05:46Z"
+created_by: sambeau
+updated: "2026-05-06T23:05:46Z"
+next_feature_seq: 1
+parent: P1-review-remediation-workflow
