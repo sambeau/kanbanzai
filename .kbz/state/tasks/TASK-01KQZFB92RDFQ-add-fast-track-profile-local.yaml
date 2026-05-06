@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQZDADYGWSD
 slug: add-fast-track-profile-local
 name: Add Fast-Track Profile to SKILL.md (local copy)
 summary: "Add Fast-Track Profile section to .kbz/skills/orchestrate-development/SKILL.md: No-Stop Contract, Phase 0-2, Rules, anti-patterns, integration notes."
-status: queued
+status: ready
