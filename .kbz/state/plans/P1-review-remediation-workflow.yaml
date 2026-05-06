@@ -1,0 +1,10 @@
+id: P1-review-remediation-workflow
+slug: review-remediation-workflow
+name: Review Remediation Workflow
+status: idea
+summary: "Define the standardized workflow bridge between a failed formal review and executable remediation work: convert blocking findings into a remediation dev-plan, tasks, verification evidence, and a re-review report."
+parent: P41-opencode-ecosystem-features
+order: 0
+created: "2026-05-06T22:46:32Z"
+created_by: sambeau
+updated: "2026-05-06T22:46:32Z"
