@@ -225,7 +225,7 @@ func writeIntegrationPlan(t *testing.T, entitySvc *service.EntityService, id str
 	now := time.Now().UTC().Format(time.RFC3339)
 	slug := integrationPlanSlug(id)
 	record := storage.EntityRecord{
-		Type: "plan",
+		Type: "batch",
 		ID:   id,
 		Slug: slug,
 		Fields: map[string]any{
@@ -430,7 +430,7 @@ func BenchmarkFinishLatency(b *testing.B) {
 	now := time.Now().UTC().Format(time.RFC3339)
 	slug := "bench-finish"
 	record := storage.EntityRecord{
-		Type: "plan",
+		Type: "batch",
 		ID:   planID,
 		Slug: slug,
 		Fields: map[string]any{

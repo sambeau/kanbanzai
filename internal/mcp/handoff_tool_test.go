@@ -12,8 +12,8 @@ import (
 
 	"github.com/sambeau/kanbanzai/internal/binding"
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
-	"github.com/sambeau/kanbanzai/internal/skill"
 	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/skill"
 	"github.com/sambeau/kanbanzai/internal/storage"
 )
 
@@ -89,7 +89,7 @@ func createHandoffPlan(t *testing.T, entitySvc *service.EntityService, slug stri
 	now := time.Now().UTC().Format(time.RFC3339)
 	id := "P1-" + slug
 	record := storage.EntityRecord{
-		Type: "plan",
+		Type: "batch",
 		ID:   id,
 		Slug: slug,
 		Fields: map[string]any{
@@ -391,7 +391,7 @@ func TestHandoff_PromptSuitableForSpawnAgent(t *testing.T) {
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac3")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 	setHandoffFilesPlanned(t, entitySvc, taskID, taskSlug, []string{"internal/foo/bar.go"})
-	
+
 	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id":      taskID,
 		"role":         "be",
@@ -429,7 +429,7 @@ func TestHandoff_ContextMetadataFields(t *testing.T) {
 	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac4")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
-	
+
 	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
@@ -609,7 +609,6 @@ func TestHandoff_RoleShapesKnowledge(t *testing.T) {
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac7ke")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
-	
 	// With role=backend: backend entry must appear; frontend entry must not.
 	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
@@ -807,7 +806,6 @@ func TestHandoff_ProjectScopedKnowledgeWithNoRole(t *testing.T) {
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "noscope")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
-	
 	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 		// no role
@@ -831,7 +829,7 @@ func TestHandoff_ByteUsageIsPositive(t *testing.T) {
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
 	// Add knowledge so there is actual content to measure.
-	
+
 	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})

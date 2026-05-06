@@ -264,10 +264,19 @@ type BatchFilters struct {
 }
 
 func (s *EntityService) listAllPlanIDs() ([]string, error) {
-	rs, _ := s.List("plan")
-	ids := make([]string, 0, len(rs))
-	for _, r := range rs {
-		ids = append(ids, r.ID)
+	records, err := s.listPlanRecordFiles("plans", "batches")
+	if err != nil {
+		return nil, err
+	}
+
+	seen := make(map[string]struct{}, len(records))
+	ids := make([]string, 0, len(records))
+	for _, record := range records {
+		if _, ok := seen[record.id]; ok {
+			continue
+		}
+		seen[record.id] = struct{}{}
+		ids = append(ids, record.id)
 	}
 	return ids, nil
 }
@@ -309,7 +318,8 @@ func (s *EntityService) UpdateBatch(input UpdateBatchInput) error {
 }
 
 func (s *EntityService) GetBatch(id string) (*model.Batch, error) {
-	getR, err := s.Get("batch", id, "")
+	_, _, slug := model.ParseBatchID(id)
+	getR, err := s.loadPlan(id, slug)
 	if err != nil {
 		return nil, err
 	}

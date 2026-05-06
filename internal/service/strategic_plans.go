@@ -150,41 +150,28 @@ func (s *EntityService) GetStrategicPlan(id string) (ListResult, error) {
 
 // ListStrategicPlans returns all strategic Plans, optionally filtered.
 func (s *EntityService) ListStrategicPlans(filters StrategicPlanFilters) ([]ListResult, error) {
-	dir := filepath.Join(s.root, "plans")
-	entries, err := listDirectory(dir)
+	records, err := s.listPlanRecordFiles("plans", "batches")
 	if err != nil {
 		return nil, err
 	}
 
+	seen := make(map[string]struct{}, len(records))
 	var results []ListResult
-	for _, entry := range entries {
-		if !strings.HasSuffix(entry, ".yaml") {
+	for _, record := range records {
+		if !isStrategicPlanFields(record.fields) {
 			continue
 		}
-
-		id, slug, err := parsePlanFileName(entry)
-		if err != nil {
+		if _, ok := seen[record.id]; ok {
 			continue
 		}
-
-		// Load the record to check its entity type.
-		record, err := s.store.Load(entityTypeStrategicPlan, id, slug)
-		if err != nil {
-			// Not a strategic plan (e.g., a batch plan) - skip.
-			continue
-		}
-
-		// Verify it's a strategic plan.
-		if strings.ToLower(strings.TrimSpace(record.Type)) != entityTypeStrategicPlan {
-			continue
-		}
+		seen[record.id] = struct{}{}
 
 		result := ListResult{
 			Type:  entityTypeStrategicPlan,
-			ID:    id,
-			Slug:  slug,
-			Path:  filepath.Join(s.root, "plans", id+".yaml"),
-			State: record.Fields,
+			ID:    record.id,
+			Slug:  record.slug,
+			Path:  record.path,
+			State: record.fields,
 		}
 
 		// Apply filters.

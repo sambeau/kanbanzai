@@ -448,7 +448,7 @@ func writePlanRecord(t *testing.T, entitySvc *service.EntityService, id, status 
 	now := time.Now().UTC().Format(time.RFC3339)
 	slug := extractPlanSlug(id)
 	record := storage.EntityRecord{
-		Type: "plan",
+		Type: "batch",
 		ID:   id,
 		Slug: slug,
 		Fields: map[string]any{
@@ -479,7 +479,7 @@ func extractPlanSlug(id string) string {
 func createTestFeature(t *testing.T, entitySvc *service.EntityService, planID, slug string) service.CreateResult {
 	t.Helper()
 	result, err := entitySvc.CreateFeature(service.CreateFeatureInput{
-		Name: "test",
+		Name:      "test",
 		Slug:      slug,
 		Parent:    planID,
 		Summary:   "Test feature " + slug,

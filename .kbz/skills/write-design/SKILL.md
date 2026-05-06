@@ -89,6 +89,12 @@ Three tiers for surfacing technical risk during design:
 
 If the human acknowledges a risk and decides to proceed anyway, accept the decision. Document the risk, the decision, and the design rationale in the Decisions section so the trade-off is visible to future readers.
 
+## Checklist
+
+- [ ] Conducted corpus discovery (concept search, entity search, decision extraction)
+- [ ] Wrote Related Work section before writing any design content
+- [ ] Cross-referenced at least one prior decision that constrains this design, OR attested that corpus search found no related work
+
 ## Procedure
 
 ### Phase 0: Corpus Discovery
@@ -321,12 +327,6 @@ Each decision entry:
 - If `doc(action: "approve")` fails due to content hash drift, call `doc(action: "refresh")` first to re-sync.
 
 **Next steps after design.** Use `work/templates/specification-prompt-template.md` for the specification. See the `kanbanzai-documents` skill for the full registration and approval procedure.
-
-## Checklist
-
-- [ ] Conducted corpus discovery (concept search, entity search, decision extraction)
-- [ ] Wrote Related Work section before writing any design content
-- [ ] Cross-referenced at least one prior decision that constrains this design, OR attested that corpus search found no related work
 
 ## Evaluation Criteria
 

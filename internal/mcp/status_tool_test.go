@@ -35,7 +35,7 @@ func createTestPlan(t *testing.T, entitySvc *service.EntityService, slug, name s
 	// Use a deterministic but unique-enough ID for tests.
 	id := "P1-" + slug
 	record := storage.EntityRecord{
-		Type: "plan",
+		Type: "batch",
 		ID:   id,
 		Slug: slug,
 		Fields: map[string]any{
@@ -781,8 +781,8 @@ func TestStatusTool_PlanDashboard(t *testing.T) {
 	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
 		t.Fatalf("parse result: %v\nraw: %s", err, text)
 	}
-	if parsed["scope"] != "plan" {
-		t.Errorf("scope = %v, want plan", parsed["scope"])
+	if parsed["scope"] != "strategic_plan" {
+		t.Errorf("scope = %v, want strategic_plan", parsed["scope"])
 	}
 	planField, ok := parsed["plan"].(map[string]any)
 	if !ok {
@@ -2066,7 +2066,7 @@ func TestStatusTool_ShortPlanRef_HappyPath(t *testing.T) {
 	// Verifies FR-010/AC-002: status(id:"P1") resolves to the plan dashboard.
 	// DefaultConfig includes prefix "P", so no real config.yaml is needed.
 	entitySvc, docSvc := setupStatusTest(t)
-	planID := createTestPlan(t, entitySvc, "short-ref-status", "Short Ref Status Plan")
+	planID := createTestStrategicPlan(t, entitySvc, "short-ref-status", "Short Ref Status Plan")
 	// planID == "P1-short-ref-status"
 
 	tool := statusTool(entitySvc, docSvc, nil, "", 0)
@@ -2083,8 +2083,8 @@ func TestStatusTool_ShortPlanRef_HappyPath(t *testing.T) {
 	if _, hasErr := parsed["error"]; hasErr {
 		t.Fatalf("unexpected error: %v", parsed["error"])
 	}
-	if parsed["scope"] != "plan" {
-		t.Errorf("scope = %v, want plan", parsed["scope"])
+	if parsed["scope"] != "strategic_plan" {
+		t.Errorf("scope = %v, want strategic_plan", parsed["scope"])
 	}
 	plan, ok := parsed["plan"].(map[string]any)
 	if !ok {

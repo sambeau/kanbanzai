@@ -471,96 +471,6 @@ Remediation Plan (if rejected):
   2. [B-2] — <brief action required> → route to <agent/human>
 ```
 
-## Examples
-
-### BAD: Static dispatch with unvalidated output
-
-```
-Feature: FEAT-042 — add-user-endpoint
-Reviewers dispatched: reviewer-conformance, reviewer-quality,
-  reviewer-security, reviewer-testing
-Review units: 4
-
-Per-Reviewer Summary:
-  Reviewer: reviewer-conformance — Approved
-  Reviewer: reviewer-quality — Approved
-  Reviewer: reviewer-security — Approved
-  Reviewer: reviewer-testing — Approved
-
-Collated Findings: None
-
-Aggregate Verdict: approved
-```
-
-WHY BAD: All 4 specialists dispatched for what may be a small change
-(no evidence the scope warranted it). No per-dimension outcomes shown.
-No evidence citations from any reviewer. The "approved" verdicts are
-unsubstantiated — this is result-without-evidence propagated to the
-aggregate level. A machine cannot verify what was actually checked.
-
-### GOOD: Adaptive dispatch with validated collation
-
-```
-Feature: FEAT-042 — add-user-endpoint
-Review cycle: 1
-Reviewers dispatched: reviewer-conformance, reviewer-quality
-Review units: 1 (user-endpoint: handler.go, service.go, store.go,
-  handler_test.go, service_test.go)
-
----
-
-Per-Reviewer Summary:
-
-  Reviewer: reviewer-conformance
-  Review unit: user-endpoint
-  Verdict: approved
-  Dimensions:
-    spec_conformance: pass
-      Evidence: AC-1 (user creation, handler.go L22-45),
-      AC-2 (validation, service.go L18-33), AC-3 (error response,
-      handler.go L47-62) — all criteria verified
-
-  Reviewer: reviewer-quality
-  Review unit: user-endpoint
-  Verdict: approved_with_followups
-  Dimensions:
-    implementation_quality: pass_with_notes
-      Evidence: Error wrapping with %w throughout. Interface-based
-      injection at consumer (service.go L8).
-      Finding (non-blocking): handler.go L55 — error response uses
-      http.StatusInternalServerError for a validation failure;
-      should be http.StatusBadRequest
-    test_adequacy: pass
-      Evidence: 18 test cases across handler and service. Table-driven.
-      Covers happy path, validation failures, duplicate detection.
-
----
-
-Collated Findings (deduplicated):
-
-  [NB-1] (non-blocking)
-  Dimension: implementation_quality
-  Location: handler.go:55
-  Description: HTTP status code for validation error is 500 instead of
-    400. Does not violate spec (AC-3 says "error response" without
-    specifying status code) but is a correctness improvement.
-  Reported by: reviewer-quality
-
----
-
-Aggregate Verdict: approved_with_followups
-
-Follow-up items:
-  1. [NB-1] — Consider changing status code to 400 for validation errors
-```
-
-WHY GOOD: Only 2 reviewers dispatched — security reviewer omitted because
-no security-relevant code changed (no auth, no crypto, no external input
-beyond the handler's existing framework validation). Single review unit
-because the files are one cohesive domain. Every dimension has evidence.
-The non-blocking finding is specific with location. Aggregate verdict
-correctly reflects the pass_with_notes from the quality reviewer.
-
 ## Evaluation Criteria
 
 1. Were specialist reviewers selected based on the actual files changed,
@@ -585,16 +495,4 @@ correctly reflects the pass_with_notes from the quality reviewer.
    Weight: high.
 
 ## Questions This Skill Answers
-
-- How do I coordinate a multi-reviewer code review for a feature?
-- When should I dispatch fewer than 4 specialist reviewers?
-- How do I group files into review units for sub-agent dispatch?
-- What do I do when a sub-agent returns a review without evidence?
-- How do I deduplicate findings from multiple reviewers?
-- How do I decide between remediation routing and approval?
-- What does the aggregate review report look like?
-- How do I handle a re-review after remediation?
-- Where do I write the review document and how do I register it?
-- When should I create a human checkpoint during review?
-- What is the context budget strategy for orchestrator vs sub-agents?
-- How do I manage the remediation cycle when findings are blocking?
+- How do I coordinate an evidence-backed feature review?

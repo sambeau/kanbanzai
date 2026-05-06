@@ -345,7 +345,7 @@ func benchWritePlanB(b *testing.B, svc *EntityService, id string) {
 	b.Helper()
 	_, _, slug := model.ParsePlanID(id)
 	_, err := svc.store.Write(storage.EntityRecord{
-		Type: "plan",
+		Type: "batch",
 		ID:   id,
 		Slug: slug,
 		Fields: map[string]any{

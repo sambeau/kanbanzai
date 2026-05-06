@@ -1280,7 +1280,7 @@ func writePlanForTest(t *testing.T, svc *service.EntityService, planID, slug str
 	t.Helper()
 	now := "2024-01-01T00:00:00Z"
 	record := storage.EntityRecord{
-		Type: "plan",
+		Type: "batch",
 		ID:   planID,
 		Slug: slug,
 		Fields: map[string]any{

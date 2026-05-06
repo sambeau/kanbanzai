@@ -969,13 +969,13 @@ func (e *testError) Error() string {
 // ─── fakeDocService ──────────────────────────────────────────────────────────
 
 type fakeDocService struct {
-	lookupResults map[string]service.DocumentResult
+	lookupResults map[string]*service.DocumentResult
 	lookupErr     error
 }
 
 func newFakeDocService() *fakeDocService {
 	return &fakeDocService{
-		lookupResults: map[string]service.DocumentResult{
+		lookupResults: map[string]*service.DocumentResult{
 			"design/existing.md": {
 				ID:     "DOC-001",
 				Path:   "design/existing.md",
@@ -1003,12 +1003,12 @@ func newFakeDocService() *fakeDocService {
 	}
 }
 
-func (f *fakeDocService) LookupByPath(ctx context.Context, path string) (service.DocumentResult, error) {
+func (f *fakeDocService) LookupByPath(ctx context.Context, path string) (*service.DocumentResult, error) {
 	if f.lookupErr != nil {
-		return service.DocumentResult{}, f.lookupErr
+		return &service.DocumentResult{}, f.lookupErr
 	}
 	if r, ok := f.lookupResults[path]; ok {
 		return r, nil
 	}
-	return service.DocumentResult{}, nil
+	return &service.DocumentResult{}, nil
 }

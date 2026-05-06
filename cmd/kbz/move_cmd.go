@@ -270,37 +270,45 @@ func buildDocTargetPath(oldPath, docType, targetShortID, targetPlanSlug string) 
 // "P37-my-plan") to the full plan ID, short ID (prefix+number), and slug.
 // Returns an error if the plan cannot be found.
 func resolvePlanArg(arg, stateRoot string) (fullID, shortID, slug string, err error) {
-	plansDir := filepath.Join(stateRoot, "plans")
+	planDirs := []string{filepath.Join(stateRoot, "batches"), filepath.Join(stateRoot, "plans")}
 
 	if model.IsPlanID(arg) {
-		// Full plan ID — verify the file exists on disk
-		planFile := filepath.Join(plansDir, arg+".yaml")
-		if _, statErr := os.Stat(planFile); os.IsNotExist(statErr) {
-			return "", "", "", fmt.Errorf("plan %q not found", arg)
+		// Full plan ID — verify the file exists on disk.
+		for _, dir := range planDirs {
+			planFile := filepath.Join(dir, arg+".yaml")
+			if _, statErr := os.Stat(planFile); statErr == nil {
+				prefix, num, planSlug := model.ParsePlanID(arg)
+				return arg, prefix + num, planSlug, nil
+			} else if !os.IsNotExist(statErr) {
+				return "", "", "", fmt.Errorf("stat plan %q: %w", arg, statErr)
+			}
 		}
-		prefix, num, planSlug := model.ParsePlanID(arg)
-		return arg, prefix + num, planSlug, nil
+		return "", "", "", fmt.Errorf("plan %q not found", arg)
 	}
 
-	// Short ID like "P37" — scan the plans directory for a matching file
-	entries, readErr := os.ReadDir(plansDir)
-	if readErr != nil {
-		return "", "", "", fmt.Errorf("read plans directory: %w", readErr)
-	}
-
+	// Short ID like "P37" — scan batch storage first, then legacy plan storage.
 	argLower := strings.ToLower(arg)
-	for _, entry := range entries {
-		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".yaml") {
-			continue
+	for _, dir := range planDirs {
+		entries, readErr := os.ReadDir(dir)
+		if readErr != nil {
+			if os.IsNotExist(readErr) {
+				continue
+			}
+			return "", "", "", fmt.Errorf("read plans directory: %w", readErr)
 		}
-		name := strings.TrimSuffix(entry.Name(), ".yaml")
-		if !model.IsPlanID(name) {
-			continue
-		}
-		prefix, num, planSlug := model.ParsePlanID(name)
-		candidate := prefix + num
-		if strings.ToLower(candidate) == argLower {
-			return name, candidate, planSlug, nil
+		for _, entry := range entries {
+			if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".yaml") {
+				continue
+			}
+			name := strings.TrimSuffix(entry.Name(), ".yaml")
+			if !model.IsPlanID(name) {
+				continue
+			}
+			prefix, num, planSlug := model.ParsePlanID(name)
+			candidate := prefix + num
+			if strings.ToLower(candidate) == argLower {
+				return name, candidate, planSlug, nil
+			}
 		}
 	}
 

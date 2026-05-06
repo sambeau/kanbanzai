@@ -61,7 +61,7 @@ func createNextTestPlan(t *testing.T, entitySvc *service.EntityService, slug str
 	now := time.Now().UTC().Format(time.RFC3339)
 	planID := "P1-" + slug
 	record := storage.EntityRecord{
-		Type: "plan",
+		Type: "batch",
 		ID:   planID,
 		Slug: slug,
 		Fields: map[string]any{

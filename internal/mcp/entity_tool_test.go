@@ -48,6 +48,31 @@ func createEntityTestPlan(t *testing.T, entitySvc *service.EntityService, slug s
 	return planID
 }
 
+func createEntityTestStrategicPlan(t *testing.T, entitySvc *service.EntityService, slug string) string {
+	t.Helper()
+	now := time.Now().UTC().Format(time.RFC3339)
+	planID := "P1-" + slug
+	record := storage.EntityRecord{
+		Type: "strategic-plan",
+		ID:   planID,
+		Slug: slug,
+		Fields: map[string]any{
+			"id":         planID,
+			"slug":       slug,
+			"name":       "Test strategic plan " + slug,
+			"status":     "idea",
+			"summary":    "Test strategic plan summary",
+			"created":    now,
+			"created_by": "tester",
+			"updated":    now,
+		},
+	}
+	if _, err := entitySvc.Store().Write(record); err != nil {
+		t.Fatalf("createEntityTestStrategicPlan(%s): %v", slug, err)
+	}
+	return planID
+}
+
 // createEntityTestFeature creates a feature entity for tests.
 func createEntityTestFeature(t *testing.T, entitySvc *service.EntityService, planID, slug string) string {
 	t.Helper()
@@ -396,7 +421,7 @@ func TestEntity_Get_Plan(t *testing.T) {
 	t.Parallel()
 	entitySvc := setupEntityToolTest(t)
 
-	planID := createEntityTestPlan(t, entitySvc, "ent-gp1")
+	planID := createEntityTestBatch(t, entitySvc, "ent-gp1", "")
 
 	result := callEntityToolJSON(t, entitySvc, map[string]any{
 		"action": "get",
@@ -1826,7 +1851,7 @@ func TestEntity_Transition_AutoCommit_MessageFormat(t *testing.T) {
 
 func TestEntityGet_ShortPlanRef_HappyPath(t *testing.T) {
 	entitySvc := setupEntityToolTest(t)
-	planID := createEntityTestPlan(t, entitySvc, "short-ref-happy")
+	planID := createEntityTestStrategicPlan(t, entitySvc, "short-ref-happy")
 
 	result := callEntityToolJSON(t, entitySvc, map[string]any{
 		"action": "get",
@@ -1883,7 +1908,7 @@ func TestEntityGet_ShortPlanRef_NoMatchingPlan(t *testing.T) {
 
 func TestEntityGet_FullPlanIDPassThrough(t *testing.T) {
 	entitySvc := setupEntityToolTest(t)
-	planID := createEntityTestPlan(t, entitySvc, "short-ref-pass")
+	planID := createEntityTestStrategicPlan(t, entitySvc, "short-ref-pass")
 
 	result := callEntityToolJSON(t, entitySvc, map[string]any{
 		"action": "get",
@@ -1904,7 +1929,7 @@ func TestEntityGet_FullPlanIDPassThrough(t *testing.T) {
 
 func TestEntityUpdate_ShortPlanRef_Resolves(t *testing.T) {
 	entitySvc := setupEntityToolTest(t)
-	planID := createEntityTestPlan(t, entitySvc, "short-ref-upd")
+	planID := createEntityTestStrategicPlan(t, entitySvc, "short-ref-upd")
 
 	result := callEntityToolJSON(t, entitySvc, map[string]any{
 		"action":  "update",

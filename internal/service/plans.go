@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"os"
 	"path/filepath"
 	"strings"
 	"time"
@@ -153,35 +154,33 @@ func (s *EntityService) GetPlan(id string) (ListResult, error) {
 
 // ListPlans returns all Plans, optionally filtered.
 func (s *EntityService) ListPlans(filters PlanFilters) ([]ListResult, error) {
+	records, err := s.listPlanRecordFiles("batches", "plans")
+	if err != nil {
+		return nil, err
+	}
+
 	var results []ListResult
-	seen := make(map[string]bool)
-	for _, subdir := range []string{"plans", "batches"} {
-		dir := filepath.Join(s.root, subdir)
-		entries, err := listDirectory(dir)
-		if err != nil {
+	seen := make(map[string]struct{}, len(records))
+	for _, record := range records {
+		if isStrategicPlanFields(record.fields) {
 			continue
 		}
-		for _, entry := range entries {
-			if !strings.HasSuffix(entry, ".yaml") {
-				continue
-			}
-			id, slug, err := parsePlanFileName(entry)
-			if err != nil {
-				continue
-			}
-			if seen[id] {
-				continue
-			}
-			seen[id] = true
-			result, err := s.loadPlan(id, slug)
-			if err != nil {
-				continue
-			}
-			if !matchesPlanFilters(result, filters) {
-				continue
-			}
-			results = append(results, result)
+		if _, ok := seen[record.id]; ok {
+			continue
 		}
+		seen[record.id] = struct{}{}
+
+		result := ListResult{
+			Type:  string(model.EntityKindPlan),
+			ID:    record.id,
+			Slug:  record.slug,
+			Path:  record.path,
+			State: record.fields,
+		}
+		if !matchesPlanFilters(result, filters) {
+			continue
+		}
+		results = append(results, result)
 	}
 	return results, nil
 }
@@ -373,32 +372,82 @@ func (s *EntityService) loadPlan(id, slug string) (ListResult, error) {
 	}, nil
 }
 
-// listPlanIDs returns all existing Plan IDs from both plans/ and batches/ directories.
+// listPlanIDs returns all existing execution Plan IDs from both plans/ and batches/ directories.
 func (s *EntityService) listPlanIDs() ([]string, error) {
+	records, err := s.listPlanRecordFiles("batches", "plans")
+	if err != nil {
+		return nil, err
+	}
+
+	seen := make(map[string]struct{}, len(records))
 	var ids []string
-	seen := make(map[string]bool)
-	for _, subdir := range []string{"plans", "batches"} {
-		dir := filepath.Join(s.root, subdir)
-		entries, err := listDirectory(dir)
-		if err != nil {
+	for _, record := range records {
+		if isStrategicPlanFields(record.fields) {
 			continue
+		}
+		if _, ok := seen[record.id]; ok {
+			continue
+		}
+		seen[record.id] = struct{}{}
+		ids = append(ids, record.id)
+	}
+	return ids, nil
+}
+
+type planRecordFile struct {
+	id     string
+	slug   string
+	path   string
+	fields map[string]any
+}
+
+func (s *EntityService) listPlanRecordFiles(dirNames ...string) ([]planRecordFile, error) {
+	var records []planRecordFile
+	for _, dirName := range dirNames {
+		entries, err := listDirectory(filepath.Join(s.root, dirName))
+		if err != nil {
+			return nil, err
 		}
 		for _, entry := range entries {
 			if !strings.HasSuffix(entry, ".yaml") {
 				continue
 			}
-			id, _, err := parsePlanFileName(entry)
+			id, slug, err := parsePlanFileName(entry)
 			if err != nil {
 				continue
 			}
-			if seen[id] {
-				continue
+			path := filepath.Join(s.root, dirName, entry)
+			data, err := os.ReadFile(path)
+			if err != nil {
+				return nil, fmt.Errorf("read plan file %s: %w", path, err)
 			}
-			seen[id] = true
-			ids = append(ids, id)
+			fields, err := storage.UnmarshalCanonicalYAML(string(data))
+			if err != nil {
+				return nil, fmt.Errorf("unmarshal plan file %s: %w", path, err)
+			}
+			records = append(records, planRecordFile{id: id, slug: slug, path: path, fields: fields})
 		}
 	}
-	return ids, nil
+	return records, nil
+}
+
+func isStrategicPlanFields(fields map[string]any) bool {
+	switch stringFromState(fields, "status") {
+	case string(model.PlanningStatusIdea), string(model.PlanningStatusShaping), string(model.PlanningStatusReady):
+		return true
+	case string(model.BatchStatusProposed), string(model.BatchStatusDesigning), string(model.BatchStatusReviewing):
+		return false
+	}
+	if _, ok := fields["depends_on"]; ok {
+		return true
+	}
+	if _, ok := fields["order"]; ok {
+		return true
+	}
+	if _, ok := fields["next_feature_seq"]; ok {
+		return false
+	}
+	return false
 }
 
 // countPostDesigningFeaturesForPlan returns the number of features belonging to planID

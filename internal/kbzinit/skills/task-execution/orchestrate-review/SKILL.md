@@ -124,6 +124,11 @@ Copy this checklist and track your progress:
 - [ ] Wrote review document and registered with doc()
 - [ ] Created human checkpoint for ambiguous or high-stakes findings (if applicable)
 - [ ] Managed remediation cycle within iteration cap (if rejected)
+- [ ] Post-review merge: verified all tasks terminal
+- [ ] Post-review merge: transitioned feature to merging
+- [ ] Post-review merge: ran merge check and execute
+- [ ] Post-review merge: verified merge ancestry (git merge-base --is-ancestor)
+- [ ] Post-review merge: transitioned to verifying, ran build and tests, transitioned to done (or needs-rework on failure)
 ```
 
 ## Procedure
@@ -220,8 +225,8 @@ They each produce a structured review output in the `review-code` format.
      with its location and spec reference. Route to the implementing agent
      or human for resolution.
    - `approved_with_followups` → list non-blocking findings for follow-up.
-     Feature can proceed to done.
-   - `approved` → feature can proceed to done.
+     Proceed to the Post-Review Merge phase below.
+   - `approved` → proceed to the Post-Review Merge phase below.
 3. IF this is a re-review (review cycle count > 1), verify that previously
    blocking findings have been resolved. Do not approve if prior blocking
    findings were not addressed.
@@ -253,8 +258,9 @@ Enter this phase only when the aggregate verdict is `rejected`.
    `next(id: "<task-id>")` to claim and activate.
 5. After remediation tasks complete, re-review ONLY affected sections — not
    the entire feature. Spawn sub-agents for affected review units only.
-6. If re-review passes: transition feature to `done`. If new blocking
-   findings: repeat from step 1 of this phase.
+6. If re-review passes: transition feature to `reviewing` status (the
+   approved verdict state) and proceed to the Post-Review Merge phase
+   below. If new blocking findings: repeat from step 1 of this phase.
 7. **Iteration cap:** Maximum 3 remediation-re-review cycles. If issues
    persist after 3 cycles, escalate to human via
    `checkpoint(action: "create")`.
@@ -278,6 +284,129 @@ For each scenario, include in the checkpoint context:
 
 Wait for the human response before proceeding. Do not dispatch remediation
 or transition feature state while a checkpoint is pending.
+
+### Post-Review Merge (when verdict is approved or approved_with_followups)
+
+Enter this phase only when the aggregate verdict is `approved` or
+`approved_with_followups` and a PR exists for the feature.
+
+The `merging` stage gate is `auto` — no human checkpoint is required, but the
+orchestrator must complete all five steps before the feature reaches `done`.
+
+**Step 1: Verify all tasks are terminal**
+
+Confirm every task under the feature is in a terminal state — `done`,
+`not-planned`, or `duplicate`. No task may remain in `ready`, `active`,
+`needs-review`, or `needs-rework`.
+
+```
+entity(action: "list", type: "task", parent: "<feature-id>")
+```
+
+If any task is non-terminal, STOP. Do not proceed to merge. Either complete
+the remaining tasks or transition them to a terminal state with justification.
+
+**Step 2: Transition feature to `merging`**
+
+Advance the feature from `reviewing` to `merging`:
+
+```
+entity(action: "transition", id: "<feature-id>", status: "merging")
+```
+
+This transition requires all tasks to be terminal and at least one approved
+report document. If the transition fails, check the gate prerequisites and
+resolve before retrying.
+
+**Step 3: Run merge check and execute**
+
+Verify the PR exists and check merge gates:
+
+```
+pr(action: "status", entity_id: "<feature-id>")
+merge(action: "check", entity_id: "<feature-id>")
+```
+
+If `merge(action: "check")` reports blocking gates, resolve them before
+proceeding. Common blockers: missing PR, CI failures, unreviewed code.
+
+Execute the merge:
+
+```
+merge(action: "execute", entity_id: "<feature-id>")
+```
+
+If the merge fails, STOP. Review the failure output, resolve the issue, and
+retry from step 3. Do not advance the feature to `verifying` until the merge
+succeeds.
+
+**Step 4: Verify merge ancestry**
+
+Confirm the feature branch is an ancestor of main:
+
+```
+git merge-base --is-ancestor <feature-branch> main
+```
+
+If the command exits non-zero, the merge did not complete successfully. The
+worktree record will remain `active` and the feature will stay in `merging`.
+Investigate and retry from step 3.
+
+If the command exits zero, the merge is confirmed. The worktree record is
+automatically marked `merged`.
+
+**Step 5: Build, test, and transition**
+
+Advance the feature from `merging` to `verifying`:
+
+```
+entity(action: "transition", id: "<feature-id>", status: "verifying")
+```
+
+Run the build from the repository root:
+
+```
+go build ./...
+```
+
+If the build fails:
+
+```
+entity(action: "transition", id: "<feature-id>", status: "needs-rework",
+       reason: "Build failed on main after merge: <build-error-output>")
+```
+
+STOP. Report the build failure and do not proceed further.
+
+Run the tests from the repository root:
+
+```
+go test ./...
+```
+
+If any test fails:
+
+```
+entity(action: "transition", id: "<feature-id>", status: "needs-rework",
+       reason: "Tests failed on main after merge: <test-failure-output>")
+```
+
+STOP. Report the test failure and do not proceed further.
+
+If both build and tests pass:
+
+```
+entity(action: "transition", id: "<feature-id>", status: "done")
+```
+
+Contribute a knowledge entry summarizing the merge:
+
+```
+knowledge(action: "contribute",
+    topic: "merge-complete-<feature-id>",
+    content: "Feature merged and verified. PR: <pr-url>. Build and tests passed on main.",
+    scope: "project")
+```
 
 ### Context Budget Strategy
 
@@ -344,96 +473,6 @@ Remediation Plan (if rejected):
   2. [B-2] — <brief action required> → route to <agent/human>
 ```
 
-## Examples
-
-### BAD: Static dispatch with unvalidated output
-
-```
-Feature: FEAT-042 — add-user-endpoint
-Reviewers dispatched: reviewer-conformance, reviewer-quality,
-  reviewer-security, reviewer-testing
-Review units: 4
-
-Per-Reviewer Summary:
-  Reviewer: reviewer-conformance — Approved
-  Reviewer: reviewer-quality — Approved
-  Reviewer: reviewer-security — Approved
-  Reviewer: reviewer-testing — Approved
-
-Collated Findings: None
-
-Aggregate Verdict: approved
-```
-
-WHY BAD: All 4 specialists dispatched for what may be a small change
-(no evidence the scope warranted it). No per-dimension outcomes shown.
-No evidence citations from any reviewer. The "approved" verdicts are
-unsubstantiated — this is result-without-evidence propagated to the
-aggregate level. A machine cannot verify what was actually checked.
-
-### GOOD: Adaptive dispatch with validated collation
-
-```
-Feature: FEAT-042 — add-user-endpoint
-Review cycle: 1
-Reviewers dispatched: reviewer-conformance, reviewer-quality
-Review units: 1 (user-endpoint: handler.go, service.go, store.go,
-  handler_test.go, service_test.go)
-
----
-
-Per-Reviewer Summary:
-
-  Reviewer: reviewer-conformance
-  Review unit: user-endpoint
-  Verdict: approved
-  Dimensions:
-    spec_conformance: pass
-      Evidence: AC-1 (user creation, handler.go L22-45),
-      AC-2 (validation, service.go L18-33), AC-3 (error response,
-      handler.go L47-62) — all criteria verified
-
-  Reviewer: reviewer-quality
-  Review unit: user-endpoint
-  Verdict: approved_with_followups
-  Dimensions:
-    implementation_quality: pass_with_notes
-      Evidence: Error wrapping with %w throughout. Interface-based
-      injection at consumer (service.go L8).
-      Finding (non-blocking): handler.go L55 — error response uses
-      http.StatusInternalServerError for a validation failure;
-      should be http.StatusBadRequest
-    test_adequacy: pass
-      Evidence: 18 test cases across handler and service. Table-driven.
-      Covers happy path, validation failures, duplicate detection.
-
----
-
-Collated Findings (deduplicated):
-
-  [NB-1] (non-blocking)
-  Dimension: implementation_quality
-  Location: handler.go:55
-  Description: HTTP status code for validation error is 500 instead of
-    400. Does not violate spec (AC-3 says "error response" without
-    specifying status code) but is a correctness improvement.
-  Reported by: reviewer-quality
-
----
-
-Aggregate Verdict: approved_with_followups
-
-Follow-up items:
-  1. [NB-1] — Consider changing status code to 400 for validation errors
-```
-
-WHY GOOD: Only 2 reviewers dispatched — security reviewer omitted because
-no security-relevant code changed (no auth, no crypto, no external input
-beyond the handler's existing framework validation). Single review unit
-because the files are one cohesive domain. Every dimension has evidence.
-The non-blocking finding is specific with location. Aggregate verdict
-correctly reflects the pass_with_notes from the quality reviewer.
-
 ## Evaluation Criteria
 
 1. Were specialist reviewers selected based on the actual files changed,
@@ -458,16 +497,4 @@ correctly reflects the pass_with_notes from the quality reviewer.
    Weight: high.
 
 ## Questions This Skill Answers
-
-- How do I coordinate a multi-reviewer code review for a feature?
-- When should I dispatch fewer than 4 specialist reviewers?
-- How do I group files into review units for sub-agent dispatch?
-- What do I do when a sub-agent returns a review without evidence?
-- How do I deduplicate findings from multiple reviewers?
-- How do I decide between remediation routing and approval?
-- What does the aggregate review report look like?
-- How do I handle a re-review after remediation?
-- Where do I write the review document and how do I register it?
-- When should I create a human checkpoint during review?
-- What is the context budget strategy for orchestrator vs sub-agents?
-- How do I manage the remediation cycle when findings are blocking?
+- How do I coordinate an evidence-backed feature review?
