@@ -1,0 +1,67 @@
+document_id: FEAT-01KQTNYN00M4P/report-p50-report-review-decompose-cycle2
+document_path: work/P50-retro-may-2026/P50-report-review-decompose-cycle2.md
+content_hash: 0ff267343be87f438b63306ba8dfc3354b3e2c688bb4b7dc85e12481693fa8e8
+indexed_at: 2026-05-06T22:22:39.37479Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Decompose Proposal Quality (F2) — Cycle 2'
+      byte_offset: 0
+      byte_count: 3933
+      word_count: 501
+      content_hash: 0ff267343be87f438b63306ba8dfc3354b3e2c688bb4b7dc85e12481693fa8e8
+      children:
+        - path: "1.1"
+          level: 2
+          title: Findings Resolution
+          byte_offset: 228
+          byte_count: 1110
+          word_count: 124
+          content_hash: 669bdf888d32f18d5f58ba7dc65f6f5509c0d37ee9458a036d31a8dff6545a99
+          children:
+            - path: 1.1.1
+              level: 3
+              title: 'BF-1: paired=false opt-out'
+              byte_offset: 252
+              byte_count: 1086
+              word_count: 121
+              content_hash: eb052fa0ee012d9a10f937fa5f75d5584a42fc3dd1e102136a8eeba19c3b6d90
+        - path: "1.2"
+          level: 2
+          title: Acceptance Criteria Verification
+          byte_offset: 1338
+          byte_count: 1131
+          word_count: 161
+          content_hash: 3e854fa15f44b1cb540c716d36c411f33fdccd4964fbf9080411a1aba4883086
+        - path: "1.3"
+          level: 2
+          title: Remaining Findings
+          byte_offset: 2469
+          byte_count: 1122
+          word_count: 141
+          content_hash: cc39710850907501d90265468fae63dfd9b3a373ef9d44ac17d304dc1b964f32
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'F1 (minor): Stale test `TestPairedTestTasks_OptOutFlagNotYetImplemented`'
+              byte_offset: 2492
+              byte_count: 1099
+              word_count: 138
+              content_hash: 2c0f04552cbea9402afa4dec22592aea30583ec426818b7a148be9be2bfd2737
+        - path: "1.4"
+          level: 2
+          title: Verdict
+          byte_offset: 3591
+          byte_count: 342
+          word_count: 39
+          content_hash: 0e59457ae0e6e52b0e2e9e97a833adac07b6215742d7c51463bc042d31987c0e
+entity_refs:
+    - entity_id: FEAT-01KQTNYN00M4P
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 110
+conventional_roles:
+    - section_path: "1.2"
+      role: requirement
+      confidence: high
+classified: false

@@ -1,0 +1,63 @@
+document_id: FEAT-01KQTNYN01ZF8/report-p50-report-review-commit-discipline-cycle2
+document_path: work/P50-retro-may-2026/P50-report-review-commit-discipline-cycle2.md
+content_hash: 9f081fe54c008a1fce786fdd93f215811415683fbd00b1e384c47a09e2b54491
+indexed_at: 2026-05-06T22:21:48.74724Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Commit Discipline Prompts (F3) — Cycle 2'
+      byte_offset: 0
+      byte_count: 3891
+      word_count: 501
+      content_hash: 9f081fe54c008a1fce786fdd93f215811415683fbd00b1e384c47a09e2b54491
+      children:
+        - path: "1.1"
+          level: 2
+          title: Findings Resolution
+          byte_offset: 212
+          byte_count: 1078
+          word_count: 135
+          content_hash: 947239e1e228e684bcc81151d6b61dc1dee758a1b641502d60df65a9bbce0051
+          children:
+            - path: 1.1.1
+              level: 3
+              title: 'BF-4: getting-started mirror'
+              byte_offset: 236
+              byte_count: 1054
+              word_count: 132
+              content_hash: 50ca9e62a40e1cffdc19586b95640355a249e7efe3467e86e821d753507b39c2
+        - path: "1.2"
+          level: 2
+          title: Remaining Findings
+          byte_offset: 1290
+          byte_count: 1933
+          word_count: 247
+          content_hash: 293b966e41f1e961df62eaab9ab64b9297939e70ec6e0cc8511a6fcf436f169d
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Minor observation (non-blocking)
+              byte_offset: 2840
+              byte_count: 383
+              word_count: 52
+              content_hash: 0d1326fb43bc7e8ed1e696b1894fb141a6743fc4b84662a1effa7e9723bde47f
+        - path: "1.3"
+          level: 2
+          title: Verdict
+          byte_offset: 3223
+          byte_count: 668
+          word_count: 83
+          content_hash: 2e97343f6fb3d0b19ee155e691ac9c27ad142704fe97aa7a782621e82e3c0db2
+entity_refs:
+    - entity_id: FEAT-01KQTNYN01ZF8
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 109
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.1.1
+    - target_path: internal/kbzinit/skills/getting-started/SKILL.md
+      link_text: internal/kbzinit/skills/getting-started/SKILL.md
+      section_path: 1.1.1
+classified: false
