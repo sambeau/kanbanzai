@@ -1,9 +1,9 @@
 id: P51-handoff-pipeline-unification
 slug: handoff-pipeline-unification
 name: Handoff Pipeline Unification
-status: shaping
+status: ready
 summary: "Remove the legacy 2.0 context assembly fallback from handoff, making the 3.0 pipeline the single path. Fix sub-agent role routing so handoff(role: 'implementer-go') correctly resolves the implementer role and skill. Add hard errors for missing bindings instead of silent degradation."
 order: 0
 created: "2026-05-05T09:49:18Z"
 created_by: sambeau
-updated: "2026-05-06T15:28:04Z"
+updated: "2026-05-06T15:29:20Z"
