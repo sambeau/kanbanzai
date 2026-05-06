@@ -1,0 +1,6 @@
+id: TASK-01KQZS1JJZ4EV
+parent_feature: FEAT-01KQZS0PHZM1E
+slug: task3-re-review-report-template
+name: Task 3 - Define the Re-Review Report Template
+summary: "Create a re-review report template reusing the report document type with review_remediation subtype. Include original review citation, per-finding resolution status table, verification evidence per finding, and aggregate resolution verdict."
+status: queued
