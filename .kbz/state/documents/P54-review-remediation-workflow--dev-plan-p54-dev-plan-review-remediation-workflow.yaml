@@ -1,3 +1,5 @@
+approved_at: "2026-05-06T23:13:23Z"
+approved_by: sambeau
 canonical_content_hash: 3d6f05e17f6b57133fab6943363053c7446d9a605c56b1a85d0fd2cd641b5bb1
 content_hash: 3d6f05e17f6b57133fab6943363053c7446d9a605c56b1a85d0fd2cd641b5bb1
 created: "2026-05-06T23:13:14Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: P54-review-remediation-workflow/dev-plan-p54-dev-plan-review-remediation-workflow
 owner: P54-review-remediation-workflow
 path: work/P54-review-remediation-workflow/P54-dev-plan-review-remediation-workflow.md
-status: draft
+status: approved
 title: "Dev-Plan: Review Remediation Workflow (v1)"
 type: dev-plan
-updated: "2026-05-06T23:13:14Z"
+updated: "2026-05-06T23:13:23Z"
