@@ -17,12 +17,15 @@ Additionally, the orchestrator can bypass `handoff` entirely and manually compos
 3. Remove the dead code: `assembleContext`, `renderHandoffPrompt`, `buildLegacyResponse`, and the `asmInput`/`assembledContext` types
 4. Simplify the `handoffTool` function signature — drop parameters that are now pipeline-only
 5. Update `renderHandoffPrompt` callers in tests
+6. Recalibrate context budgets: update `DefaultContextWindowTokens` to 1,000,000 (from 200,000) and raise `assemblyDefaultBudget` (from 30,720) to stop silently trimming knowledge entries and spec sections from `next`/`handoff` responses
+7. Document the `finish` tool 500-character summary limit in the tool description (add "(max 500 characters)" to the summary parameter)
 
 ## Non-Goals
 
 - Not changing the `next` tool — it uses the same `assembleContext`, but `next` returns structured JSON, not a rendered prompt. `next` can be unified in a follow-up.
 - Not building a `dispatch_task` tool (that's P44)
 - Not changing the pipeline itself — just making it unconditional
+- Not changing the pipeline's token budget system — only the constants that configure it
 
 ## Design
 
@@ -203,6 +206,19 @@ The `finish` tool enforces a 500-character summary limit. The error message stat
 
 **For P51:** Add the 500-character limit to the `finish` tool description. The current description says "Brief description of what was accomplished" — it should say "Brief description of what was accomplished (max 500 characters)." This is a one-line documentation change.
 
+## Architectural Assessment Cross-Reference
+
+This plan was reviewed in the [Integrated Architectural Assessment: Orchestration & Fast-Track Pipeline Strategy](../P41-opencode-ecosystem-features/P41-assessment-orchestration-architecture-cross-reference.md) (May 2026). Key findings:
+
+- **Horizon 0 placement confirmed.** P51 is the prerequisite cleanup for P44 — it ensures there is only one context assembly path to internalise when `dispatch_task` arrives.
+- **Not made redundant by P44.** The legacy path removal and role routing fix remain essential even after `dispatch_task` internalises the pipeline. The trimming metadata improvement (topic-level detail) remains valuable for `next` output.
+- **Context-budget recalibration assigned here.** The strategy report's Horizon 0 item #3 (recalibrate `DefaultContextWindowTokens` and `assemblyDefaultBudget`) is now an explicit goal of this plan (Goal 6).
+- **`finish` summary limit documentation assigned here** (Goal 7).
+
+### Risk: Pipeline becomes invisible after P44
+
+The assessment raises the severity of the P44 silent-failure risk from Medium to High based on the P50 incident. Mitigation: P51 must be thoroughly tested before P44 Phase 1 begins — the pipeline must be proven correct before it becomes invisible. This plan's testing scope should include verification that role resolution, skill loading, and knowledge assembly all produce correct output for at least 20 consecutive `handoff` calls across different feature types and stages.
+
 ## Open Questions
 
 1. Should `next` also be unified in this plan, or left for a follow-up? (Recommend: follow-up — `next` has its own output format and callers.)
@@ -214,3 +230,5 @@ The `finish` tool enforces a 500-character summary limit. The error message stat
 5. **stale MCP binary:** The running `kbz serve` binary showed `git_sha: unknown` and a different path than the install record. The Makefile produces `kbz` but the editor MCP config expects `kanbanzai`. This mismatch means `go install` never updates the running binary. The `server_info` tool detects the problem but doesn't fix it. Consider adding a `rebuild` or `restart` capability, or aligning the binary names.
 6. **test compilation errors:** `internal/mcp/` has pre-existing test compilation errors (redeclared functions, wrong `newServerWithConfig` signatures) from recent merges. These block running new tests and would block CI. They need to be fixed before any handoff/assembly changes are testable.
 7. **plan numbering reuse:** Creating plans via `entity(action: "create", type: "strategic-plan")` reuses stale P1 numbers. P51 and P52 were both assigned P1, requiring manual state file renaming. Root cause: `listAllPlanIDs` scans `s.List("plan")` which reads batch plans, not strategic plans. The `NextPlanNumber` scan needs to include both plan types.
+8. **Context budget recalibration values:** Should `DefaultContextWindowTokens` be set to 1,000,000 or should it be made configurable via `.kbz/local.yaml` with a 1,000,000 default? (Recommend: configurable with 1M default — different models have different context windows, and future models may have larger ones.)
+9. **`assemblyDefaultBudget` replacement:** Should the 30,720-byte MCP response cap be raised to a higher fixed value, or should it be replaced with a percentage-of-token-budget approach? (Recommend: raise to 64KB for now; P44's `dispatch_task` bypasses this cap entirely, so over-investing in the fix is not warranted.)
