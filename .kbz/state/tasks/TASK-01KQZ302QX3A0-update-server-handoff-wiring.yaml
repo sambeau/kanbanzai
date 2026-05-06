@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQYZZFGJA93
 slug: update-server-handoff-wiring
 name: Update server.go HandoffTools wiring
 summary: "Update HandoffTools(...) call in internal/mcp/server.go to pass only entitySvc and pipeline. Remove profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, mergedToolHints, roleStore, worktreeStore from handoff wiring."
-status: queued
+status: ready

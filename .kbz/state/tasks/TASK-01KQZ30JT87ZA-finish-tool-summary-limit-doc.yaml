@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQYZZFGH6DK
 slug: finish-tool-summary-limit-doc
 name: Add 500-char limit to finish tool description
 summary: "Update the finish tool's summary parameter description to include (max 500 characters). Full description: Brief description of what was accomplished (max 500 characters)."
-status: queued
+status: ready
