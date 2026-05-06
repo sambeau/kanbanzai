@@ -2,10 +2,12 @@ id: FEAT-01KQZDADYGWSD
 slug: fast-track-skill-profile
 name: Add Fast-Track Profile to orchestrate-development Skill
 parent: B1-fast-track-profile-implementation
-status: proposed
+status: designing
 summary: "Add the Fast-Track Profile section to the orchestrate-development SKILL.md, including the no-stop contract, 3-phase lightweight flow (Session Start Audit, Dispatch, Close-Out), anti-patterns, and integration notes with P51/P44."
 design: work/P52-fast-track-orchestration/P52-design-fast-track-orchestration.md
 created: "2026-05-06T19:47:59Z"
 created_by: sambeau
 display_id: B1-F1
 tier: feature
+verification: "TASK-01KQZFB92RDFQ: All 9 ACs verified: section placement, no-stop contract, 5 Phase 0 steps, 4 Phase 1 steps, 4 Phase 2 steps, 5 rules, 4 anti-patterns with Detect/BECAUSE/Resolve, integration notes, additive-only.\nTASK-01KQZFBH6VFGW: Content comparison confirmed identical Fast-Track Profile sections in both .kbz/skills/orchestrate-development/SKILL.md and internal/kbzinit/skills/task-execution/orchestrate-development/SKILL.md."
+verification_status: passed
