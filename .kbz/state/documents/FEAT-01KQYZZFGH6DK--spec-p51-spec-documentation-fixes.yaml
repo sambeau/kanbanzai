@@ -1,0 +1,11 @@
+canonical_content_hash: 5161acf17ce0a39f8c22e215222054df28ff9c8f36498a79bb41371aeb34a3ee
+content_hash: 5161acf17ce0a39f8c22e215222054df28ff9c8f36498a79bb41371aeb34a3ee
+created: "2026-05-06T16:27:32Z"
+created_by: sambeau
+id: FEAT-01KQYZZFGH6DK/spec-p51-spec-documentation-fixes
+owner: FEAT-01KQYZZFGH6DK
+path: work/P51-handoff-pipeline-unification/P51-spec-documentation-fixes.md
+status: draft
+title: "Specification: Documentation Fixes for Handoff Pipeline"
+type: spec
+updated: "2026-05-06T16:27:32Z"
