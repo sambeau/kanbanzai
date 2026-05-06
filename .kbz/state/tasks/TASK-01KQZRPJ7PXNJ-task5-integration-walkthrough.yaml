@@ -1,0 +1,6 @@
+id: TASK-01KQZRPJ7PXNJ
+parent_feature: FEAT-01KQZRMT0JGVX
+slug: task5-integration-walkthrough
+name: Task 5 - Integration Verification Walkthrough
+summary: "Run a real failed review through the documented workflow end-to-end using all templates and guides. Verify all six dev-plan sections, finding-to-task traceability, correct ownership model, re-review report with citations, and traversable audit trail."
+status: queued
