@@ -1,0 +1,101 @@
+document_id: PROJECT/dev-plan-p51-dev-plan-context-budget-recalibration
+document_path: work/P51-handoff-pipeline-unification/P51-dev-plan-context-budget-recalibration.md
+content_hash: 2cb608449519a7456353bc63a56ca4a99c46ceed3e47e37339b6837d014828ea
+indexed_at: 2026-05-06T16:50:16.298447Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Context Budget Recalibration'
+      byte_offset: 0
+      byte_count: 2366
+      word_count: 366
+      content_hash: 2cb608449519a7456353bc63a56ca4a99c46ceed3e47e37339b6837d014828ea
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 188
+          byte_count: 187
+          word_count: 25
+          content_hash: 3393e915eab79a7072bc8564549304f4d7d019deb29bec794f04ccf1ff477214
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 375
+          byte_count: 883
+          word_count: 129
+          content_hash: c4632c27a8587d0a2eb3757721f70196fe8df976c1d740a9dc4c803f1698c6d4
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Update budget constants and add config override (TASK-01KQZ2YJVEDYW)'
+              byte_offset: 394
+              byte_count: 399
+              word_count: 52
+              content_hash: 6f790cc5e4921342637beeaf9d6e8d42237ab6bfbca7b04904bbf47018083c46
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Add topic field to trimmed knowledge metadata (TASK-01KQZ2YJVEPBS)'
+              byte_offset: 793
+              byte_count: 232
+              word_count: 37
+              content_hash: f93bc00f0f3fae35143b894b3dea463582c29ac926d3f5472cca340c876e0694
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Tests for context budget recalibration (TASK-01KQZ2YJVEGCS)'
+              byte_offset: 1025
+              byte_count: 233
+              word_count: 37
+              content_hash: 76ad07c1131b5314f31dc62f8951267857723c513806b6b37dca3d878afaf4ef
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 1258
+          byte_count: 184
+          word_count: 31
+          content_hash: 36d7bdbe1a9ca0f0f60c0ca3a82e630a3e6012f1ae0f338a77d53e286dcd13fb
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 1442
+          byte_count: 376
+          word_count: 50
+          content_hash: 71e97bbcdc55bbb53042dbcb8eabf468ccc2bb7e886fa9fb73fda28abb02313b
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 1818
+          byte_count: 548
+          word_count: 118
+          content_hash: 398de7c23d39a2d75de6079d9c04c916e6187c75d785574aa14784a7a7e91578
+entity_refs:
+    - entity_id: FEAT-01KQYZZFGBGQK
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 55
+    - entity_id: TASK-01KQZ2YJVEDYW
+      entity_type: task
+      section_path: 1.2.1
+      byte_offset: 455
+    - entity_id: TASK-01KQZ2YJVEPBS
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 852
+    - entity_id: TASK-01KQZ2YJVEGCS
+      entity_type: task
+      section_path: 1.2.3
+      byte_offset: 1077
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.3
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+classified: false

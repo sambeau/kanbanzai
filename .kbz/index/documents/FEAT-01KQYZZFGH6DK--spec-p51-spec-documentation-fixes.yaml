@@ -1,0 +1,148 @@
+document_id: FEAT-01KQYZZFGH6DK/spec-p51-spec-documentation-fixes
+document_path: work/P51-handoff-pipeline-unification/P51-spec-documentation-fixes.md
+content_hash: 5161acf17ce0a39f8c22e215222054df28ff9c8f36498a79bb41371aeb34a3ee
+indexed_at: 2026-05-06T16:27:32.09453Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Documentation Fixes for Handoff Pipeline'
+      byte_offset: 222
+      byte_count: 6036
+      word_count: 763
+      content_hash: e0550574bc515bf9a04f6ff7e02e327db8a5197b54738d2a98bc0282323bd9a9
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 482
+          byte_count: 846
+          word_count: 98
+          content_hash: 41fa8d1ea1becd3bfe78efae89d1e87bad4828af37da49d0bbd5318cf8efdbc7
+        - path: "1.2"
+          level: 2
+          title: Problem Statement
+          byte_offset: 1328
+          byte_count: 1504
+          word_count: 210
+          content_hash: 9a367ef3510b15948d32b72ec690927559da05610b65723c227447ca2762f912
+        - path: "1.3"
+          level: 2
+          title: Requirements
+          byte_offset: 2832
+          byte_count: 1226
+          word_count: 152
+          content_hash: 6bf58fb284bd1edba723c036d9be28ea8144ca806e9fb16a94e24cc9520e36dc
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 2849
+              byte_count: 818
+              word_count: 93
+              content_hash: 4c32f60fe56c3e9403aab08d4eb3eae20ac2b75a3a1acc45f196cc321c999ee7
+            - path: 1.3.2
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 3667
+              byte_count: 391
+              word_count: 57
+              content_hash: 2b898af0949b0c9358b6b193117ab7ff05670e65880204b2fc944e9963069e76
+        - path: "1.4"
+          level: 2
+          title: Constraints
+          byte_offset: 4058
+          byte_count: 646
+          word_count: 76
+          content_hash: 2342e2673e8903494b2d5ef4f9307ee95c4276221579e97356e0abed1b572070
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 4704
+          byte_count: 958
+          word_count: 125
+          content_hash: 2a312064aa684c71ad704b12ddfa188a2680eb547e6321050d5e37c584e819f1
+        - path: "1.6"
+          level: 2
+          title: Verification Plan
+          byte_offset: 5662
+          byte_count: 596
+          word_count: 83
+          content_hash: 138d2851dd6ad7cd53b6169621952dafcfe9bf50ac24c206d708d4873d5b8319
+entity_refs:
+    - entity_id: FEAT-01KQYZZFGH6DK
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 294
+    - entity_id: FEAT-01KQYZZFGH6DK
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 704
+    - entity_id: FEAT-01KQYZZFGHM99
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 724
+    - entity_id: FEAT-01KQYZZFGHM99
+      entity_type: feature
+      section_path: "1.2"
+      byte_offset: 2122
+    - entity_id: FEAT-01KQYZZFGHM99
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 4576
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 2062
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.3.1
+      byte_offset: 3374
+    - entity_id: B1-p51-exec
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 374
+    - entity_id: P51-handoff-pipeline-unification
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 404
+    - entity_id: P51-design-handoff-pipeline-unification
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 437
+    - entity_id: P51-design-handoff-pipeline-unification
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 953
+cross_doc_links:
+    - target_path: work/P51-handoff-pipeline-unification/P51-design-handoff-pipeline-unification.md
+      link_text: work/P51-handoff-pipeline-unification/P51-design-handoff-pipeline-unification.md
+      section_path: "1"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.3.1
+    - target_path: internal/kbzinit/skills/orchestrate-development/SKILL.md
+      link_text: internal/kbzinit/skills/orchestrate-development/SKILL.md
+      section_path: 1.3.1
+    - target_path: internal/kbzinit/skills/*/SKILL.md
+      link_text: internal/kbzinit/skills/*/SKILL.md
+      section_path: "1.4"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.1
+      role: requirement
+      confidence: high
+    - section_path: 1.3.2
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+classified: false

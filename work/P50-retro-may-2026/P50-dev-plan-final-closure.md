@@ -3,7 +3,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-06                     |
-| Status | draft |
+| Status | approved |
 | Author | architect                      |
 
 ## Overview
@@ -166,3 +166,18 @@ C8 ─────────────────┘
 | C8 | `status(id: "FEAT-01KQTNYMZRT6V")` shows `done` |
 | C9 | Each feature has an approved review report with no blocking findings |
 | C10 | `status(id: "P50-retro-may-2026")` shows `done` |
+
+## Traceability Matrix
+
+| Review Finding / Requirement | Closure Task(s) |
+|------------------------------|-----------------|
+| BF-1: F2 missing paired=false opt-out | C5 |
+| BF-4: F3 getting-started mirror missing | C6 |
+| BF-5: F4 transition state machine unenforced | C2 |
+| BF-8: F4 agents skill missing merge prompt | C3 |
+| BF-9: F4 missing needs-rework → developing | C1 |
+| F4 incomplete tasks (4 ready) | C4 |
+| F5 incomplete tasks / never reviewed | C7 |
+| F1 needs transition to done | C8 |
+| F2, F3, F4 review not re-approved | C9 |
+| P50 final closure | C10 |

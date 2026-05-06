@@ -1,0 +1,206 @@
+document_id: P50-retro-may-2026/dev-plan-p50-dev-plan-final-closure
+document_path: work/P50-retro-may-2026/P50-dev-plan-final-closure.md
+content_hash: ac518ae2bc9d1112350037e8be1539cdee6c660cd0d8f4b15f6bf3693102abb7
+indexed_at: 2026-05-06T20:53:54.715819Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: P50 Final Closure'
+      byte_offset: 0
+      byte_count: 8893
+      word_count: 1227
+      content_hash: ac518ae2bc9d1112350037e8be1539cdee6c660cd0d8f4b15f6bf3693102abb7
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 227
+          byte_count: 1042
+          word_count: 176
+          content_hash: da8b40148af6baa0ea48454b6afe375b491cc8575cc2d72cbe88ca6db3ed60c7
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Feature Status Summary
+              byte_offset: 734
+              byte_count: 535
+              word_count: 94
+              content_hash: e25edcad4fdb85f93de3f0a8b39dee8960b5c4479dc76ad42b2854cacb040a3b
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1269
+          byte_count: 4704
+          word_count: 614
+          content_hash: a17c8e5f5f65a3d0698c2c196d378c99cae18df851443422074762a4bbd1b9d0
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'C1: Fix F4 — needs-rework → developing transition'
+              byte_offset: 1288
+              byte_count: 373
+              word_count: 44
+              content_hash: b703453a7e305f315fc07aa1a3325f60ca3b390842191db33406290df40362a2
+            - path: 1.2.2
+              level: 3
+              title: 'C2: Wire F4 transition enforcement into entity handler'
+              byte_offset: 1661
+              byte_count: 484
+              word_count: 62
+              content_hash: 8e3c2f9d11c67428a9d807e6806a51ba8dd63dcdd30bf2cff779e615de16883f
+            - path: 1.2.3
+              level: 3
+              title: 'C3: Add F4 merge prompt to kanbanzai-agents skill + mirror'
+              byte_offset: 2145
+              byte_count: 413
+              word_count: 47
+              content_hash: c111313d8efb8b79b3be286a14504c31f1eec547e642facdac1a3d98dd02c0e8
+            - path: 1.2.4
+              level: 3
+              title: 'C4: Complete F4 remaining ready tasks'
+              byte_offset: 2558
+              byte_count: 880
+              word_count: 119
+              content_hash: ae005cebd174651d7cdfaf8ef61273a25cd96ace1693a1872413d77d7bf60bc8
+            - path: 1.2.5
+              level: 3
+              title: 'C5: Verify F2 paired=false opt-out exists'
+              byte_offset: 3438
+              byte_count: 492
+              word_count: 60
+              content_hash: 229bfde1c9c3d589d14d15496b2c7986661834ed39c3f2d717a9525b6170dca6
+            - path: 1.2.6
+              level: 3
+              title: 'C6: Fix F3 getting-started dual-write mirror'
+              byte_offset: 3930
+              byte_count: 465
+              word_count: 51
+              content_hash: 9dfb0c1c1e2177ae822b9fccc8186992aa303b115ce1c5fccc673eaed49c8bee
+            - path: 1.2.7
+              level: 3
+              title: 'C7: Complete or defer F5 Document Path Tool'
+              byte_offset: 4395
+              byte_count: 562
+              word_count: 82
+              content_hash: 4c93c8cea509ae108698d22fc058f355f3f86b8cf7285b58da4e4c41a41d445b
+            - path: 1.2.8
+              level: 3
+              title: 'C8: Transition F1 to done'
+              byte_offset: 4957
+              byte_count: 287
+              word_count: 41
+              content_hash: 87b5da1c4bc78e5039932d2ea42803a3b259fe7982edef9457e4e72bce2f9941
+            - path: 1.2.9
+              level: 3
+              title: 'C9: Re-review F2, F3, F4'
+              byte_offset: 5244
+              byte_count: 429
+              word_count: 60
+              content_hash: 01a330891e7f8b82763f623738f71e0cd28b368233e4551309a224bfd0557806
+            - path: 1.2.10
+              level: 3
+              title: 'C10: Close P50'
+              byte_offset: 5673
+              byte_count: 300
+              word_count: 45
+              content_hash: 8c79012b3ef8bcbae093d17b131b117d2b6ea448a28a44bd6c68065622a03a43
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 5973
+          byte_count: 616
+          word_count: 72
+          content_hash: 37690e6a563e15f2c3cb1669de922aa35d1d3a2f9c5efb54252a90753b08d112
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 6589
+          byte_count: 673
+          word_count: 88
+          content_hash: c2a36607e6d1354cb53421993683e0ac85ff2c50e2183d57c011c8093eccde7e
+        - path: "1.5"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 7262
+          byte_count: 765
+          word_count: 122
+          content_hash: 73c41f7c6877f82ed2e11cffd0a31877d350192a1e0dbda2be9d13ec61297a5d
+        - path: "1.6"
+          level: 2
+          title: Verification Approach
+          byte_offset: 8027
+          byte_count: 866
+          word_count: 129
+          content_hash: 9deff422514c76ec2f41921b4d6bf06a9d52dbf7fb31301784ae1604a17668cb
+entity_refs:
+    - entity_id: FEAT-01KQTNYMZRT6V
+      entity_type: feature
+      section_path: 1.2.8
+      byte_offset: 5047
+    - entity_id: FEAT-01KQTWFY52EG1
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 8407
+    - entity_id: FEAT-01KQTNYN00HZA
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 8636
+    - entity_id: FEAT-01KQTNYMZRT6V
+      entity_type: feature
+      section_path: "1.6"
+      byte_offset: 8720
+    - entity_id: TASK-01KQTX80GGSG8
+      entity_type: task
+      section_path: 1.2.4
+      byte_offset: 2665
+    - entity_id: TASK-01KQTX80GGSYS
+      entity_type: task
+      section_path: 1.2.4
+      byte_offset: 2734
+    - entity_id: TASK-01KQTX80KQX77
+      entity_type: task
+      section_path: 1.2.4
+      byte_offset: 2810
+    - entity_id: TASK-01KQTX80GGJS2
+      entity_type: task
+      section_path: 1.2.4
+      byte_offset: 2883
+    - entity_id: TASK-01KQTX65HWP1R
+      entity_type: task
+      section_path: 1.2.7
+      byte_offset: 4491
+    - entity_id: TASK-01KQTX65HWZ93
+      entity_type: task
+      section_path: 1.2.7
+      byte_offset: 4543
+    - entity_id: P50-retro-may-2026
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 8856
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.2.3
+    - target_path: internal/kbzinit/skills/agents/SKILL.md
+      link_text: internal/kbzinit/skills/agents/SKILL.md
+      section_path: 1.2.3
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: 1.2.3
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.2.6
+    - target_path: internal/kbzinit/skills/getting-started/SKILL.md
+      link_text: internal/kbzinit/skills/getting-started/SKILL.md
+      section_path: 1.2.6
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.1.1
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: risk
+      confidence: high
+classified: false

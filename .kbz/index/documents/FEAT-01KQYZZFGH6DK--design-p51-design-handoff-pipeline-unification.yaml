@@ -1,0 +1,248 @@
+document_id: FEAT-01KQYZZFGH6DK/design-p51-design-handoff-pipeline-unification
+document_path: work/P51-handoff-pipeline-unification/P51-design-handoff-pipeline-unification.md
+content_hash: 4445e42708c5caab30b068104d1910ee74d50ab52f8b216de85b54a2f6e3a9e6
+indexed_at: 2026-05-06T16:21:17.288028Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Handoff Pipeline Unification'
+      byte_offset: 0
+      byte_count: 20758
+      word_count: 2763
+      content_hash: 4445e42708c5caab30b068104d1910ee74d50ab52f8b216de85b54a2f6e3a9e6
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 158
+          byte_count: 791
+          word_count: 116
+          content_hash: eb71638ec3a71f845a54475cf21d27fc56be5979f41bf932430853d00896b314
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 949
+          byte_count: 1381
+          word_count: 184
+          content_hash: 1f5808ea2b6b23aff988778799fd71fcb238a6aa0fedfd9c1eae632678cd5d54
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 2330
+          byte_count: 9663
+          word_count: 1183
+          content_hash: beceaaba080f3b68973d3b2952504ffdbee76003e9da69d9478d0ec29ec5d6cc
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Current state (dual-path)
+              byte_offset: 2341
+              byte_count: 483
+              word_count: 56
+              content_hash: 89b91947bf61d677d9e03c2160a91c18e5e23d78f1142d92743dc74f4b7bbf51
+            - path: 1.3.2
+              level: 3
+              title: Target state (pipeline-only)
+              byte_offset: 2824
+              byte_count: 498
+              word_count: 55
+              content_hash: 0211a24910014ca8c2bc05f3fcea2b36ea819729d326b37467fdbe2934d42ccf
+            - path: 1.3.3
+              level: 3
+              title: Changes
+              byte_offset: 3322
+              byte_count: 7485
+              word_count: 906
+              content_hash: ca5f6877650fe8b33bb8fe7e3c855608a92f19fd79c09a771775964d1c023a33
+              children:
+                - path: 1.3.3.1
+                  level: 4
+                  title: 1. `internal/mcp/handoff_tool.go`
+                  byte_offset: 3335
+                  byte_count: 540
+                  word_count: 61
+                  content_hash: 4ed823ba967b2a5acc259f6bac95f3eac6364ea0f5e1092449eece32ec6f6214
+                - path: 1.3.3.2
+                  level: 4
+                  title: 2. `internal/mcp/assembly.go`
+                  byte_offset: 3875
+                  byte_count: 635
+                  word_count: 53
+                  content_hash: d77fdcf86f2a99391b8173a27dcaec57115a7a5eb85d9bfe517caba53ce49df8
+                - path: 1.3.3.3
+                  level: 4
+                  title: 3. `internal/mcp/server.go`
+                  byte_offset: 4510
+                  byte_count: 257
+                  word_count: 26
+                  content_hash: b2aff12828ab363a83cc82496da29d089780bf2236eb4efda9da09d14b3ad0cd
+                - path: 1.3.3.4
+                  level: 4
+                  title: 4. Sub-agent role routing fix
+                  byte_offset: 4767
+                  byte_count: 5655
+                  word_count: 718
+                  content_hash: 44e864b07c6bfeed35346b2de5186c635ca67378ac4abb80406f7c598b8137ce
+                - path: 1.3.3.5
+                  level: 4
+                  title: 5. Test fixes
+                  byte_offset: 10422
+                  byte_count: 385
+                  word_count: 46
+                  content_hash: 2403115cff8f2d6b37b443f345d1a545549fbbae8a17c01998665b9d0f5d0e57
+            - path: 1.3.4
+              level: 3
+              title: Files affected
+              byte_offset: 10807
+              byte_count: 560
+              word_count: 70
+              content_hash: fa134d0242900c2e0e6b1d2d6502f991503ff480bb231f244a9395de3b714a10
+            - path: 1.3.5
+              level: 3
+              title: Risk assessment
+              byte_offset: 11367
+              byte_count: 626
+              word_count: 94
+              content_hash: 17bf6b28cb0a2c351354c7868ca54e97d2807e23c1fdea06610c8f066b735e99
+        - path: "1.4"
+          level: 2
+          title: Dependencies
+          byte_offset: 11993
+          byte_count: 247
+          word_count: 41
+          content_hash: 70ded3425a83df38f302c307a4beb908d1773e57da4573e77d176f154b574e32
+        - path: "1.5"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 12240
+          byte_count: 1290
+          word_count: 196
+          content_hash: 5149c1d3e2da6aa3e0b4ac4c301384e7ef49fe2207f4e8244729ba765e3d6304
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Keep the fallback, add a visible warning
+              byte_offset: 12268
+              byte_count: 464
+              word_count: 71
+              content_hash: fab82ce3f4f69f4db20d20f6e1c6959eb87f7780e09f05bc8db36b070309cfaa
+            - path: 1.5.2
+              level: 3
+              title: Merge handoff output into next
+              byte_offset: 12732
+              byte_count: 367
+              word_count: 55
+              content_hash: 1b03a8999d91329a59acdaf8f1a75d79e8e86ae075c6caccd1efd1fcc084cdc1
+            - path: 1.5.3
+              level: 3
+              title: Build dispatch_task now (P44 Phase 1)
+              byte_offset: 13099
+              byte_count: 431
+              word_count: 67
+              content_hash: e883e9e98cf4f7566998a8866ab22b7f3ee4270c7fd3e62fcd2429edd47cbb4a
+        - path: "1.6"
+          level: 2
+          title: Findings from P50 Fast-Track Implementation
+          byte_offset: 13530
+          byte_count: 2661
+          word_count: 386
+          content_hash: f15eb436eada49eaea42812ed7a1085bb3cccaf93853f4904b932ddbe19d84f2
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Trimming visibility gap
+              byte_offset: 13578
+              byte_count: 1288
+              word_count: 181
+              content_hash: d461b0308ae709f518aeafc5dc95ddc159f8b89ad26cf78b71b1e68c86fc0bab
+            - path: 1.6.2
+              level: 3
+              title: Repeated context across task claims
+              byte_offset: 14866
+              byte_count: 736
+              word_count: 110
+              content_hash: 9ce3d67172fde024d61f3aff2f1717cff6fb1f8f7fd013467a75d099c6a86582
+            - path: 1.6.3
+              level: 3
+              title: finish summary limit (second retrospective)
+              byte_offset: 15602
+              byte_count: 589
+              word_count: 89
+              content_hash: f84feb86a1444f9098b5cc9b5ae5533b5a6244e56d0b6db2a38cb30bdc282278
+        - path: "1.7"
+          level: 2
+          title: Architectural Assessment Cross-Reference
+          byte_offset: 16191
+          byte_count: 1503
+          word_count: 197
+          content_hash: 0859eed53611967da09ca26ff97143442aede3ede2fb4218e2aa8859f46ce0e0
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 'Risk: Pipeline becomes invisible after P44'
+              byte_offset: 17167
+              byte_count: 527
+              word_count: 80
+              content_hash: 3aef243b610d8d69313ef9199d8fbd00cf23676ab534d6e55e246c10e9ce1947
+        - path: "1.8"
+          level: 2
+          title: Open Questions
+          byte_offset: 17694
+          byte_count: 3064
+          word_count: 443
+          content_hash: a24521dde920ff2eb1398ae8006419aaee99f680a8de49629b5584a6325cccd9
+entity_refs:
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1137
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.3.3.4
+      byte_offset: 5511
+    - entity_id: TASK-01KQTX5DXKRTH
+      entity_type: task
+      section_path: 1.3.3.4
+      byte_offset: 7539
+    - entity_id: P51-handoff-pipeline-unification
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 53
+    - entity_id: P41-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 16353
+    - entity_id: P41-assessment-orchestration-architecture-cross-reference
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 16385
+cross_doc_links:
+    - target_path: ../P41-opencode-ecosystem-features/P41-assessment-orchestration-architecture-cross-reference.md
+      link_text: 'Integrated Architectural Assessment: Orchestration & Fast-Track Pipeline Strategy'
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.3.5
+      role: risk
+      confidence: high
+    - section_path: "1.5"
+      role: alternative
+      confidence: high
+    - section_path: 1.6.2
+      role: narrative
+      confidence: high
+    - section_path: 1.6.3
+      role: narrative
+      confidence: high
+    - section_path: 1.7.1
+      role: risk
+      confidence: high
+    - section_path: "1.8"
+      role: question
+      confidence: high
+classified: false

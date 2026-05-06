@@ -1,0 +1,119 @@
+document_id: FEAT-01KQYZZFGBGQK/spec-p51-spec-context-budget-recalibration
+document_path: work/P51-handoff-pipeline-unification/P51-spec-context-budget-recalibration.md
+content_hash: 8e11b8bafd922e04cda2071c3abac9087fc973a2fdae4772a097a0cd88e7fbda
+indexed_at: 2026-05-06T16:27:32.092993Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Context Budget Recalibration'
+      byte_offset: 222
+      byte_count: 7735
+      word_count: 1042
+      content_hash: 12d80724fe760efbddf1d7ebc0a269a75ea165969691936cef6d949254722e92
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 458
+          byte_count: 800
+          word_count: 95
+          content_hash: 8583500f77951525092036f88a6c8fc0ae0c2d380a65fb37d1d1694ed958c587
+        - path: "1.2"
+          level: 2
+          title: Problem Statement
+          byte_offset: 1258
+          byte_count: 1672
+          word_count: 223
+          content_hash: a44d787f03a89ad388b15c3796d78fa3158946eb6109bdb8fb18a54e92376883
+        - path: "1.3"
+          level: 2
+          title: Requirements
+          byte_offset: 2930
+          byte_count: 1842
+          word_count: 259
+          content_hash: aaa85f6267a0764db4c7a8940d92e71b19f4058859d7df8a7037ffed8b491fa5
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Functional Requirements
+              byte_offset: 2947
+              byte_count: 1128
+              word_count: 160
+              content_hash: 20a84f1a7586a9da1ef5e73ce279e63e1a8499c060a25bbd0e319fc510f1b1d4
+            - path: 1.3.2
+              level: 3
+              title: Non-Functional Requirements
+              byte_offset: 4075
+              byte_count: 697
+              word_count: 97
+              content_hash: c29327a01c3283052159b9b48654492deddeffce5cc4cf7e8df200bca4989c94
+        - path: "1.4"
+          level: 2
+          title: Constraints
+          byte_offset: 4772
+          byte_count: 514
+          word_count: 73
+          content_hash: acbb33a772fe354701829e3772c704174913359bfda0c2960ff7c7f961648ed1
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 5286
+          byte_count: 1722
+          word_count: 218
+          content_hash: e03e3c366a47bbdf304d0abb321c72367fe167ec3fcf0b30737b97975597397c
+        - path: "1.6"
+          level: 2
+          title: Verification Plan
+          byte_offset: 7008
+          byte_count: 949
+          word_count: 159
+          content_hash: 0dafe1063a4cde8f0c6ce1cceab73c065faffa46cae0d4aa646131cbb1954e41
+entity_refs:
+    - entity_id: FEAT-01KQYZZFGBGQK
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 282
+    - entity_id: FEAT-01KQYZZFGBGQK
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 655
+    - entity_id: B1-p51-exec
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 350
+    - entity_id: P51-handoff-pipeline-unification
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 380
+    - entity_id: P51-design-handoff-pipeline-unification
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 413
+    - entity_id: P51-design-handoff-pipeline-unification
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 934
+cross_doc_links:
+    - target_path: work/P51-handoff-pipeline-unification/P51-design-handoff-pipeline-unification.md
+      link_text: work/P51-handoff-pipeline-unification/P51-design-handoff-pipeline-unification.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.1
+      role: requirement
+      confidence: high
+    - section_path: 1.3.2
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+classified: false

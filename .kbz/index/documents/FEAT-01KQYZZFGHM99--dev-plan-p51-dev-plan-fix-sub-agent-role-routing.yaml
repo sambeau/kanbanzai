@@ -1,0 +1,130 @@
+document_id: FEAT-01KQYZZFGHM99/dev-plan-p51-dev-plan-fix-sub-agent-role-routing
+document_path: work/P51-handoff-pipeline-unification/P51-dev-plan-fix-sub-agent-role-routing.md
+content_hash: 7a1e27335a497683e745cc38a3e68a3d423c53d6c85ea9973f2df50f67e4b02d
+indexed_at: 2026-05-06T16:52:38.587056Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Fix Sub-Agent Role Routing'
+      byte_offset: 0
+      byte_count: 3211
+      word_count: 461
+      content_hash: 7a1e27335a497683e745cc38a3e68a3d423c53d6c85ea9973f2df50f67e4b02d
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 184
+          byte_count: 304
+          word_count: 42
+          content_hash: 45a92d282a485c26f3b43ab216bbd1127746efca72ba452d9e7038fd7ff661e1
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 488
+          byte_count: 136
+          word_count: 18
+          content_hash: 806fa9b519faa5dae5c5e23ad1981ed6a740dc1900c85f9fcfa4e066afe9f8e8
+        - path: "1.3"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 624
+          byte_count: 954
+          word_count: 114
+          content_hash: 78bb07ae28866f33fac8b513bbcca96abbc44535172b010c638fa656c5c5976c
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Task 1: Fix stepResolveRole and stepLoadSkill defaults (TASK-01KQZ2ZA2AKMN)'
+              byte_offset: 643
+              byte_count: 394
+              word_count: 51
+              content_hash: cd657ad2005d64552c046039aeaf25e9c26504caf88af6f74791d10d56abb0ca
+            - path: 1.3.2
+              level: 3
+              title: 'Task 2: Update orchestrate-development skill for role param (TASK-01KQZ2ZA2G9QA)'
+              byte_offset: 1037
+              byte_count: 294
+              word_count: 28
+              content_hash: 6d5e36effdce9330eda40ff5cb0d9a7322fde156638c5e333d6c3547b4bf047e
+            - path: 1.3.3
+              level: 3
+              title: 'Task 3: Tests for sub-agent role routing (TASK-01KQZ2ZA2738D)'
+              byte_offset: 1331
+              byte_count: 247
+              word_count: 32
+              content_hash: cc4444cd1e74e5562720fecb4689b29a20ce95c1cb8cb07c8e41b18ca48050d6
+        - path: "1.4"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 1578
+          byte_count: 186
+          word_count: 31
+          content_hash: 94993e6f48cb285ed98f5ca0088ca5e550d9513afe19e817f070cf3e82514917
+        - path: "1.5"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 1764
+          byte_count: 393
+          word_count: 55
+          content_hash: 682b49f00dfe996d950f2671a2a0139b2e62fd901b3e5ab37221a84e5bfc7e56
+        - path: "1.6"
+          level: 2
+          title: Verification Approach
+          byte_offset: 2157
+          byte_count: 479
+          word_count: 95
+          content_hash: 55d6e17970e72af715ca18ce57cdca7be95828f177451541ea550892d9d0dcb6
+        - path: "1.7"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 2636
+          byte_count: 381
+          word_count: 41
+          content_hash: a38253995b4b5e05873abfb8664f2f10fedad243614f986c1af312fd3032cc16
+        - path: "1.8"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 3017
+          byte_count: 194
+          word_count: 51
+          content_hash: 61e2bd60b1697b2b2e0453b7001cab667801963a7b95ef8e0c1a0b535d6ef438
+entity_refs:
+    - entity_id: FEAT-01KQYZZFGHM99
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 53
+    - entity_id: FEAT-01KQYZZFGH6DK
+      entity_type: feature
+      section_path: "1.5"
+      byte_offset: 1982
+    - entity_id: TASK-01KQZ2ZA2AKMN
+      entity_type: task
+      section_path: 1.3.1
+      byte_offset: 703
+    - entity_id: TASK-01KQZ2ZA2G9QA
+      entity_type: task
+      section_path: 1.3.2
+      byte_offset: 1102
+    - entity_id: TASK-01KQZ2ZA2738D
+      entity_type: task
+      section_path: 1.3.3
+      byte_offset: 1377
+cross_doc_links:
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.3.2
+    - target_path: internal/kbzinit/skills/orchestrate-development/SKILL.md
+      link_text: internal/kbzinit/skills/orchestrate-development/SKILL.md
+      section_path: 1.3.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: risk
+      confidence: high
+classified: false

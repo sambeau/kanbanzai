@@ -1,0 +1,120 @@
+document_id: PROJECT/dev-plan-p51-dev-plan-remove-legacy-assembly-path
+document_path: work/P51-handoff-pipeline-unification/P51-dev-plan-remove-legacy-assembly-path.md
+content_hash: e5e247d0b739f76e5a99732eb5d4def02fe3ef07506f2f605fa8c5e097938f9f
+indexed_at: 2026-05-06T16:50:16.298636Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Remove Legacy Assembly Path'
+      byte_offset: 0
+      byte_count: 3412
+      word_count: 496
+      content_hash: e5e247d0b739f76e5a99732eb5d4def02fe3ef07506f2f605fa8c5e097938f9f
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 186
+          byte_count: 226
+          word_count: 30
+          content_hash: 0584c3d2a49f53f636d41393362a7e991eb492a9370a4d6bc625de56924f30dd
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 412
+          byte_count: 1410
+          word_count: 190
+          content_hash: 8c15a6e58ff2b247168db346648ccbb1ce63b33ad848a1ca7bf508c82c855cd4
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Remove legacy functions from handoff_tool.go (TASK-01KQZ302QWNCW)'
+              byte_offset: 431
+              byte_count: 249
+              word_count: 28
+              content_hash: 83f37a60abf2660820fb3e25a64f46e09cdb4f659bc76b849d8a0f563496b5ba
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Remove assembleContext and legacy types from assembly.go (TASK-01KQZ302R0ADQ)'
+              byte_offset: 680
+              byte_count: 259
+              word_count: 31
+              content_hash: d38fc8182b7310d65118ac5c487e388127a3551a1da3bcfd43449f6ab1b4823e
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Update server.go HandoffTools wiring (TASK-01KQZ302QX3A0)'
+              byte_offset: 939
+              byte_count: 208
+              word_count: 29
+              content_hash: b4a593562f7763fe43af9c698ce1a3070d4d6785ebb77c8ee70e071c93b4beb0
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Make handoff pipeline-only with hard errors (TASK-01KQZ302QZYFZ)'
+              byte_offset: 1147
+              byte_count: 352
+              word_count: 49
+              content_hash: 34a205357315a3fa7c258e30cf57a6839e1b5c90a8caa22a22bde5d217843a2b
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Update tests and verify build for legacy removal (TASK-01KQZ302QYMHP)'
+              byte_offset: 1499
+              byte_count: 323
+              word_count: 50
+              content_hash: ee73d5aa12edb745ab01550caae42920d5276cec6d632fc9c07532614a255367
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 1822
+          byte_count: 385
+          word_count: 62
+          content_hash: 6327af5a7c09b29887394fafc504a2993cd8a762e63a67f25dd1b88c4904430a
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 2207
+          byte_count: 524
+          word_count: 70
+          content_hash: 56700597b276d7ade8f84cf85fafbe2ea7ba22b0a45dda6d5976394375a648aa
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 2731
+          byte_count: 681
+          word_count: 130
+          content_hash: 8899e1ad38ad662381b6c4b4d7f648e5fd4e3e8d4f723de50d1e5549b7785c2d
+entity_refs:
+    - entity_id: FEAT-01KQYZZFGJA93
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 54
+    - entity_id: TASK-01KQZ302QWNCW
+      entity_type: task
+      section_path: 1.2.1
+      byte_offset: 489
+    - entity_id: TASK-01KQZ302R0ADQ
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 750
+    - entity_id: TASK-01KQZ302QX3A0
+      entity_type: task
+      section_path: 1.2.3
+      byte_offset: 989
+    - entity_id: TASK-01KQZ302QZYFZ
+      entity_type: task
+      section_path: 1.2.4
+      byte_offset: 1204
+    - entity_id: TASK-01KQZ302QYMHP
+      entity_type: task
+      section_path: 1.2.5
+      byte_offset: 1561
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+classified: false
