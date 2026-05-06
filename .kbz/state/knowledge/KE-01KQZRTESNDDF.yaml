@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "Uncommitted production code changes on main branch are causing 44 test failures. The changes (plan→batch rename, handoff pipeline refactor, lifecycle state changes) should have been developed in an isolated worktree under a feature entity to avoid polluting main and to enable parallel work."
+created: "2026-05-06T23:08:59Z"
+created_by: sambeau
+id: KE-01KQZRTESNDDF
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - workflow-friction
+  - git-discipline
+  - tool-gap
+tier: 3
+topic: retrospective-signal
+ttl_days: 30
+updated: "2026-05-06T23:08:59Z"
+use_count: 0

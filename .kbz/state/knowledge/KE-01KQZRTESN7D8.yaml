@@ -1,0 +1,16 @@
+confidence: "0.5"
+content: "User asked for a plan to fix 44 failing tests but received a root-cause summary/analysis instead of an actionable, sequenced fix plan with concrete steps."
+created: "2026-05-06T23:08:59Z"
+created_by: sambeau
+id: KE-01KQZRTESN7D8
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - workflow-friction
+  - communication
+tier: 3
+topic: retrospective-signal
+ttl_days: 30
+updated: "2026-05-06T23:08:59Z"
+use_count: 0
