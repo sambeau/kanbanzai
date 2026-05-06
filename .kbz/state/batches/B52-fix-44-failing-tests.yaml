@@ -1,0 +1,9 @@
+id: B52-fix-44-failing-tests
+slug: fix-44-failing-tests
+name: Fix 44 failing tests across 4 packages
+status: proposed
+summary: "Systematically fix 44 failing tests in internal/mcp (16), internal/service (23), internal/storage (4), and internal/validate (1) caused by uncommitted production code refactors on main."
+created: "2026-05-06T23:13:12Z"
+created_by: sambeau
+updated: "2026-05-06T23:13:12Z"
+next_feature_seq: 1
