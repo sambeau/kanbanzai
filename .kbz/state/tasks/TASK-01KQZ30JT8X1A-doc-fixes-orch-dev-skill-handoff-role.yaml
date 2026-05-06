@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQYZZFGH6DK
 slug: doc-fixes-orch-dev-skill-handoff-role
 name: Update orchestrate-development skill with handoff role param
 summary: "Update .kbz/skills/orchestrate-development/SKILL.md to include role: implementer-go in handoff invocation. Apply dual-write to internal/kbzinit/skills/orchestrate-development/SKILL.md."
-status: queued
+status: ready
