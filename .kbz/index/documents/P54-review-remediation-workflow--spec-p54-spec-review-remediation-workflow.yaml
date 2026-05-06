@@ -1,0 +1,282 @@
+document_id: P54-review-remediation-workflow/spec-p54-spec-review-remediation-workflow
+document_path: work/P54-review-remediation-workflow/P54-spec-review-remediation-workflow.md
+content_hash: 5f1c7e80f3cb4ba3bc74a9fd46617fbb604b8f2f107563fa193295ac260da9ad
+indexed_at: 2026-05-06T23:13:14.908333Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Review Remediation Workflow'
+      byte_offset: 0
+      byte_count: 17966
+      word_count: 2392
+      content_hash: 5f1c7e80f3cb4ba3bc74a9fd46617fbb604b8f2f107563fa193295ac260da9ad
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 282
+          byte_count: 679
+          word_count: 92
+          content_hash: 8daa39a20f9f8653e1caf8340ab481d915b23fc52e8772a3c5f99c84ed0d026e
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 961
+          byte_count: 1241
+          word_count: 161
+          content_hash: eb610003905ee2796e39d79157b9ca93331fad26ee18cbb917f98ea36da92e3b
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2202
+          byte_count: 9359
+          word_count: 1275
+          content_hash: ece221ce0f7b75bc2bd2bea876ad1eac5797d2f9d3effbcb0a0e043d6b4543de
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'FR-01: Remediation Entry Point'
+              byte_offset: 2230
+              byte_count: 884
+              word_count: 122
+              content_hash: 59e564be06acfd9701a1ad1888026dc1f3ce679e864023441f8bd44c5e4c4f4d
+            - path: 1.3.2
+              level: 3
+              title: 'FR-02: Remediation Dev-Plan Structure'
+              byte_offset: 3114
+              byte_count: 1002
+              word_count: 130
+              content_hash: 46dc46aacad138604a66b30937f81c3a4830763998297cba776bc5b0eda29c60
+            - path: 1.3.3
+              level: 3
+              title: 'FR-03: Finding-to-Task Traceability'
+              byte_offset: 4116
+              byte_count: 957
+              word_count: 138
+              content_hash: 5a3af1dbf8e496768258535419c81bef13bd11a6bc0cb68abe62824d72e6b857
+            - path: 1.3.4
+              level: 3
+              title: 'FR-04: Remediation Ownership Model'
+              byte_offset: 5073
+              byte_count: 1282
+              word_count: 177
+              content_hash: b6cc7b354a467a449c5693ff0b2c9ed66eb26e52999d7096ae7a108b8e443607
+            - path: 1.3.5
+              level: 3
+              title: 'FR-05: Re-Review Closure Criteria'
+              byte_offset: 6355
+              byte_count: 1082
+              word_count: 154
+              content_hash: 55a8ab686350b2c83f9854bc8b0c01824c5b61fa2b22a86544a92f7a551d359c
+            - path: 1.3.6
+              level: 3
+              title: 'FR-06: Original Review Immutability'
+              byte_offset: 7437
+              byte_count: 857
+              word_count: 121
+              content_hash: 5ad4bbe5e8f604a6960220ffc7fed7c49ed4ada1201ce0c45a5acd658d4694d0
+            - path: 1.3.7
+              level: 3
+              title: 'FR-07: Re-Review Report Format'
+              byte_offset: 8294
+              byte_count: 957
+              word_count: 127
+              content_hash: 5c8089945f92bb110c519252bf53105cc4bc8d1e5c1b0b8bea253251b993af66
+            - path: 1.3.8
+              level: 3
+              title: 'FR-08: Integration with P51 — Handoff Reliability'
+              byte_offset: 9251
+              byte_count: 685
+              word_count: 87
+              content_hash: 5733c26650195c37b3fc96ec6648b93f46623f0fc434fd253cfa454154c96f49
+            - path: 1.3.9
+              level: 3
+              title: 'FR-09: Integration with P52 — Session-Start Audit'
+              byte_offset: 9936
+              byte_count: 700
+              word_count: 96
+              content_hash: 2cde5a33e5b0928e18873e33e69b138a710c0b6642d27361e604cbaf2551ac99
+            - path: 1.3.10
+              level: 3
+              title: 'FR-10: Integration with P53 — Scope Inspection'
+              byte_offset: 10636
+              byte_count: 925
+              word_count: 120
+              content_hash: 09d79e56d507101e9170347ee83d97cc18bfcc0ea6824e7b2d26f12f6b7f243d
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 11561
+          byte_count: 1274
+          word_count: 166
+          content_hash: 1a65d9ac23ca1ea5ec89dc35baf3bb801672c06e8c643ee35d16df7910465d01
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'NFR-01: Procedural Clarity'
+              byte_offset: 11593
+              byte_count: 396
+              word_count: 50
+              content_hash: 61683b4357e57fa4d9fe6443b2c5e19249921b99f4fa79792bdbdecdf7ed4298
+            - path: 1.4.2
+              level: 3
+              title: 'NFR-02: Audit Trail Integrity'
+              byte_offset: 11989
+              byte_count: 475
+              word_count: 64
+              content_hash: 38fd9a6580ed6cdb2a849af895df6395b9e7afb7530726750e239863fd9d0da5
+            - path: 1.4.3
+              level: 3
+              title: 'NFR-03: No New Tool Dependencies (v1)'
+              byte_offset: 12464
+              byte_count: 371
+              word_count: 49
+              content_hash: 0f58595cbd77d8b3d573c46705c999393cb78f2ed2cb710135ff7707c244c6eb
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 12835
+          byte_count: 1595
+          word_count: 229
+          content_hash: b0589fcf85835632ed78a31fbe1d8d7acbe989a969862bff93e98582af0538d2
+        - path: "1.6"
+          level: 2
+          title: Constraints and Exclusions
+          byte_offset: 14430
+          byte_count: 1455
+          word_count: 204
+          content_hash: 65d9b57fdb65c80904b6fb663927c770d21feb954c20386ca224c15f6786764f
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Constraints
+              byte_offset: 14461
+              byte_count: 776
+              word_count: 109
+              content_hash: fd300cfbe5f0290c17218f5305d44dc282c6de550619590f0b8c69061caddfaa
+            - path: 1.6.2
+              level: 3
+              title: Exclusions
+              byte_offset: 15237
+              byte_count: 648
+              word_count: 91
+              content_hash: 843d454372e89459d9f82c182a61f35ce20dbfd918af79c1475c9021bf03ebe5
+        - path: "1.7"
+          level: 2
+          title: Verification Plan
+          byte_offset: 15885
+          byte_count: 1343
+          word_count: 199
+          content_hash: 49ef88c36382043cf8543f4a6b1bb020b7587d3fc7c961087267d876dece8846
+        - path: "1.8"
+          level: 2
+          title: Design References
+          byte_offset: 17228
+          byte_count: 738
+          word_count: 45
+          content_hash: 22ac683c069dd40d7fbc9ba0ed491f4950e7dba4f2c902749e1084bbb6288c09
+entity_refs:
+    - entity_id: P1-review-remediation-workflow
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 56
+    - entity_id: P41-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 125
+    - entity_id: P54-design-review-remediation-workflow
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 213
+    - entity_id: P54-design-review-remediation-workflow
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 17294
+    - entity_id: P51-handoff-pipeline-unification
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 17409
+    - entity_id: P51-design-handoff-pipeline-unification
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 17442
+    - entity_id: P52-fast-track-orchestration
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 17538
+    - entity_id: P52-design-fast-track-orchestration
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 17567
+    - entity_id: P44-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 17657
+    - entity_id: P44-design-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 17690
+    - entity_id: P41-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 17790
+    - entity_id: P41-roadmap-orchestration-fast-track
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 17822
+    - entity_id: P50-retro-may-2026
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 17907
+    - entity_id: P50-report-batch-conformance-review
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 17926
+cross_doc_links:
+    - target_path: P54-design-review-remediation-workflow.md
+      link_text: 'P54 Design: Review Remediation Workflow'
+      section_path: "1"
+    - target_path: P54-design-review-remediation-workflow.md
+      link_text: 'P54 Design: Review Remediation Workflow'
+      section_path: "1.8"
+    - target_path: ../P51-handoff-pipeline-unification/P51-design-handoff-pipeline-unification.md
+      link_text: 'P51 Design: Handoff Pipeline Unification'
+      section_path: "1.8"
+    - target_path: ../P52-fast-track-orchestration/P52-design-fast-track-orchestration.md
+      link_text: 'P52 Design: Fast-Track Orchestration Profile'
+      section_path: "1.8"
+    - target_path: ../P44-model-routing-agent-launcher/P44-design-model-routing-agent-launcher.md
+      link_text: 'P44 Design: Model Routing & Agent Launcher'
+      section_path: "1.8"
+    - target_path: ../P41-opencode-ecosystem-features/P41-roadmap-orchestration-fast-track.md
+      link_text: 'P41 Roadmap: Orchestration & Fast-Track Pipeline'
+      section_path: "1.8"
+    - target_path: ../P50-retro-may-2026/P50-report-batch-conformance-review.md
+      link_text: 'P50 Report: Batch Conformance Review'
+      section_path: "1.8"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.10
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: constraint
+      confidence: high
+    - section_path: 1.6.1
+      role: constraint
+      confidence: high
+classified: false

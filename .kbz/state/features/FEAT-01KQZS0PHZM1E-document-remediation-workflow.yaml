@@ -2,9 +2,25 @@ id: FEAT-01KQZS0PHZM1E
 slug: document-remediation-workflow
 name: Document the review remediation workflow
 parent: B51-review-remediation-v1
-status: proposed
+status: developing
 summary: "Produce the document-driven v1: procedure, remediation dev-plan template, re-review report template, ownership model decision tree, and integration walkthrough."
 created: "2026-05-06T23:12:23Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: designing
+    reason: "All three documents (design, spec, dev-plan) are approved. Design doc lives under PROJECT owner. Resuming in-flight batch B51."
+    timestamp: "2026-05-07T00:17:47+01:00"
+    to_status: specifying
+  -
+    from_status: specifying
+    reason: "All three documents (design, spec, dev-plan) are approved. Design doc lives under PROJECT owner. Resuming in-flight batch B51."
+    timestamp: "2026-05-07T00:17:47+01:00"
+    to_status: dev-planning
+  -
+    from_status: dev-planning
+    reason: "All three documents (design, spec, dev-plan) are approved. Design doc lives under PROJECT owner. Resuming in-flight batch B51."
+    timestamp: "2026-05-07T00:17:47+01:00"
+    to_status: developing
 display_id: B51-F1
 tier: feature
