@@ -716,6 +716,15 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 		if pre, preErr := entitySvc.Get(entityType, entityID, ""); preErr == nil {
 			fromStatus, _ = pre.State["status"].(string)
 		}
+
+		// Validate feature lifecycle transitions against the state machine (C2/BF-5).
+		if entityType == "feature" && fromStatus != "" && !override {
+			if !model.IsValidFeatureTransition(model.FeatureStatus(fromStatus), model.FeatureStatus(newStatus)) {
+				return entityTransitionError(entitySvc, entityType, entityID, newStatus,
+					fmt.Errorf("invalid transition %q → %q", fromStatus, newStatus)), nil
+			}
+		}
+
 		r, err := entitySvc.UpdateStatus(service.UpdateStatusInput{Type: entityType, ID: entityID, Status: newStatus})
 		if err != nil {
 			return entityTransitionError(entitySvc, entityType, entityID, newStatus, err), nil

@@ -195,6 +195,7 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 		},
 		string(model.FeatureStatusDeveloping): {
 			string(model.FeatureStatusReviewing):   {},
+			string(model.FeatureStatusNeedsRework): {},
 			string(model.FeatureStatusDevPlanning): {},
 			string(model.FeatureStatusSuperseded):  {},
 			string(model.FeatureStatusCancelled):   {},
