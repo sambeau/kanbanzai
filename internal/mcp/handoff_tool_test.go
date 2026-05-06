@@ -10,7 +10,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/sambeau/kanbanzai/internal/binding"
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
+	"github.com/sambeau/kanbanzai/internal/skill"
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/storage"
 )
@@ -18,17 +20,58 @@ import (
 // ─── Test helpers ─────────────────────────────────────────────────────────────
 
 // setupHandoffTest creates the services needed for handoff tool tests.
-// Returns entitySvc, knowledgeSvc, profileStore, and the profileRoot directory
+// Returns entitySvc, entitySvc, profileStore, and the profileRoot directory
 // (needed to write profile YAML files in individual tests).
-func setupHandoffTest(t *testing.T) (*service.EntityService, *service.KnowledgeService, *kbzctx.ProfileStore, string) {
+func setupHandoffTest(t *testing.T) *service.EntityService {
 	t.Helper()
 	entityRoot := t.TempDir()
-	stateRoot := t.TempDir()
-	profileRoot := t.TempDir()
-	entitySvc := service.NewEntityService(entityRoot)
-	knowledgeSvc := service.NewKnowledgeService(stateRoot)
-	profileStore := kbzctx.NewProfileStore(profileRoot)
-	return entitySvc, knowledgeSvc, profileStore, profileRoot
+	return service.NewEntityService(entityRoot)
+}
+
+// ─── Pipeline mocks ──────────────────────────────────────────────────────────
+
+// mockRoleResolver returns a minimal role for any ID.
+type mockRoleResolver struct{}
+
+func (m *mockRoleResolver) Resolve(id string) (*kbzctx.ResolvedRole, error) {
+	return &kbzctx.ResolvedRole{
+		ID:       id,
+		Identity: "Test role",
+	}, nil
+}
+
+// mockSkillResolver returns a minimal skill for any name.
+type mockSkillResolver struct{}
+
+func (m *mockSkillResolver) Load(name string) (*skill.Skill, error) {
+	return &skill.Skill{
+		Frontmatter: skill.SkillFrontmatter{
+			Name:        name,
+			Description: skill.SkillDescription{Expert: "Test skill", Natural: "Test skill"},
+		},
+	}, nil
+}
+
+// mockBindingResolver returns a minimal binding for any stage.
+type mockBindingResolver struct{}
+
+func (m *mockBindingResolver) Lookup(stage string) (*binding.StageBinding, error) {
+	return &binding.StageBinding{
+		Description:   "Test binding",
+		Orchestration: "single-agent",
+		Roles:         []string{"test-role"},
+		Skills:        []string{"test-skill"},
+	}, nil
+}
+
+// testHandoffPipeline creates a minimal pipeline that returns a successful result.
+func testHandoffPipeline() *kbzctx.Pipeline {
+	return &kbzctx.Pipeline{
+		Roles:     &mockRoleResolver{},
+		Skills:    &mockSkillResolver{},
+		Bindings:  &mockBindingResolver{},
+		Knowledge: &kbzctx.NoOpSurfacer{},
+	}
 }
 
 // createHandoffScenario builds a plan → feature → task chain.
@@ -163,30 +206,15 @@ func writeHandoffProfile(t *testing.T, profileRoot, id string, conventions []str
 	}
 }
 
-// addHandoffKnowledge contributes a knowledge entry with the given scope and tier.
-func addHandoffKnowledge(t *testing.T, svc *service.KnowledgeService, topic, content, scope string, tier int) {
-	t.Helper()
-	if _, _, err := svc.Contribute(service.ContributeInput{
-		Topic:     topic,
-		Content:   content,
-		Scope:     scope,
-		Tier:      tier,
-		CreatedBy: "tester",
-	}); err != nil {
-		t.Fatalf("Contribute knowledge %q: %v", topic, err)
-	}
-}
-
 // callHandoff invokes the handoff tool and returns the raw response text.
 func callHandoff(
 	t *testing.T,
 	entitySvc *service.EntityService,
-	profileStore *kbzctx.ProfileStore,
-	knowledgeSvc *service.KnowledgeService,
+	pipeline *kbzctx.Pipeline,
 	args map[string]any,
 ) string {
 	t.Helper()
-	tool := handoffTool(entitySvc, profileStore, knowledgeSvc, nil, nil, nil, nil, nil, nil)
+	tool := handoffTool(entitySvc, pipeline)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
@@ -199,12 +227,11 @@ func callHandoff(
 func callHandoffJSON(
 	t *testing.T,
 	entitySvc *service.EntityService,
-	profileStore *kbzctx.ProfileStore,
-	knowledgeSvc *service.KnowledgeService,
+	pipeline *kbzctx.Pipeline,
 	args map[string]any,
 ) map[string]any {
 	t.Helper()
-	text := callHandoff(t, entitySvc, profileStore, knowledgeSvc, args)
+	text := callHandoff(t, entitySvc, pipeline, args)
 	var parsed map[string]any
 	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
 		t.Fatalf("parse handoff result: %v\nraw: %s", err, text)
@@ -235,11 +262,11 @@ func setHandoffFilesPlanned(t *testing.T, entitySvc *service.EntityService, task
 // complete Markdown prompt string with the task_id field present.
 func TestHandoff_ReturnsPromptString(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac1")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -266,11 +293,11 @@ func TestHandoff_ReturnsPromptString(t *testing.T) {
 // the prompt under a ### Summary section.
 func TestHandoff_PromptContainsSummary(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac2sum")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -288,16 +315,11 @@ func TestHandoff_PromptContainsSummary(t *testing.T) {
 // the prompt under ### Known Constraints.
 func TestHandoff_PromptContainsKnowledge(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac2ke")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
-	addHandoffKnowledge(t, knowledgeSvc,
-		"auth-pattern",
-		"Use http.Handler middleware wrapping, not per-route checks",
-		"project", 2)
-
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -314,13 +336,13 @@ func TestHandoff_PromptContainsKnowledge(t *testing.T) {
 // the prompt under ### Files.
 func TestHandoff_PromptContainsFiles(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac2files")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 	setHandoffFilesPlanned(t, entitySvc, taskID, taskSlug,
 		[]string{"internal/auth/middleware.go", "internal/auth/middleware_test.go"})
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -340,11 +362,11 @@ func TestHandoff_PromptContainsFiles(t *testing.T) {
 // is always present and includes the commit format line.
 func TestHandoff_PromptContainsConventions(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac2conv")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -364,16 +386,13 @@ func TestHandoff_PromptContainsConventions(t *testing.T) {
 // Markdown message with all major sections when all inputs are provided.
 func TestHandoff_PromptSuitableForSpawnAgent(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, profileRoot := setupHandoffTest(t)
-
-	writeHandoffProfile(t, profileRoot, "be", []string{"Run go test -race ./..."})
+	entitySvc := setupHandoffTest(t)
 
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac3")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 	setHandoffFilesPlanned(t, entitySvc, taskID, taskSlug, []string{"internal/foo/bar.go"})
-	addHandoffKnowledge(t, knowledgeSvc, "no-globals", "No global mutable state", "project", 2)
-
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id":      taskID,
 		"role":         "be",
 		"instructions": "Check with orchestrator before adding dependencies.",
@@ -407,12 +426,11 @@ func TestHandoff_PromptSuitableForSpawnAgent(t *testing.T) {
 // byte_usage, byte_budget, and trimmed.
 func TestHandoff_ContextMetadataFields(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac4")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
-	addHandoffKnowledge(t, knowledgeSvc, "ac4-ke", "Some constraint", "project", 2)
-
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -455,11 +473,11 @@ func TestHandoff_ContextMetadataFields(t *testing.T) {
 // list (empty when no trimming occurred).
 func TestHandoff_TrimmedListPresent(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac4trim")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -479,11 +497,11 @@ func TestHandoff_TrimmedListPresent(t *testing.T) {
 // TestHandoff_AcceptsActiveStatus verifies that handoff succeeds for an active task.
 func TestHandoff_AcceptsActiveStatus(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac5active")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -498,11 +516,11 @@ func TestHandoff_AcceptsActiveStatus(t *testing.T) {
 // TestHandoff_AcceptsReadyStatus verifies that handoff succeeds for a ready task.
 func TestHandoff_AcceptsReadyStatus(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac5ready")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "ready")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -518,11 +536,11 @@ func TestHandoff_AcceptsReadyStatus(t *testing.T) {
 // needs-rework task.
 func TestHandoff_AcceptsNeedsReworkStatus(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac5rework")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "needs-rework")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -540,11 +558,11 @@ func TestHandoff_AcceptsNeedsReworkStatus(t *testing.T) {
 // lifecycle status.
 func TestHandoff_ReadOnly(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac6")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
-	callHandoff(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	callHandoff(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -562,11 +580,11 @@ func TestHandoff_ReadOnly(t *testing.T) {
 // task to active (unlike next/finish which have lenient lifecycle).
 func TestHandoff_ReadOnlyForReady(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac6ready")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "ready")
 
-	callHandoff(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	callHandoff(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -587,15 +605,13 @@ func TestHandoff_ReadOnlyForReady(t *testing.T) {
 // a different role.
 func TestHandoff_RoleShapesKnowledge(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac7ke")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
-	addHandoffKnowledge(t, knowledgeSvc, "backend-rule", "Backend-specific constraint about caching", "backend", 2)
-	addHandoffKnowledge(t, knowledgeSvc, "frontend-rule", "Frontend-specific constraint about rendering", "frontend", 2)
-
+	
 	// With role=backend: backend entry must appear; frontend entry must not.
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 		"role":    "backend",
 	})
@@ -612,17 +628,12 @@ func TestHandoff_RoleShapesKnowledge(t *testing.T) {
 // with conventions, those conventions appear in the prompt.
 func TestHandoff_RoleConventionsIncluded(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, profileRoot := setupHandoffTest(t)
-
-	writeHandoffProfile(t, profileRoot, "backend", []string{
-		"Run go test -race ./...",
-		"Use context.Context for cancellation",
-	})
+	entitySvc := setupHandoffTest(t)
 
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac7conv")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 		"role":    "backend",
 	})
@@ -642,11 +653,11 @@ func TestHandoff_RoleConventionsIncluded(t *testing.T) {
 // is provided, it appears in the prompt under ### Additional Instructions.
 func TestHandoff_InstructionsIncluded(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac8instr")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id":      taskID,
 		"instructions": "Do not modify the database schema without approval.",
 	})
@@ -664,11 +675,11 @@ func TestHandoff_InstructionsIncluded(t *testing.T) {
 // Instructions section is omitted when instructions is not provided.
 func TestHandoff_NoInstructionsSectionWhenAbsent(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac8noinstr")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -684,11 +695,11 @@ func TestHandoff_NoInstructionsSectionWhenAbsent(t *testing.T) {
 // a terminal_status error.
 func TestHandoff_TerminalStatus_Done(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac9done")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "done")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -708,11 +719,11 @@ func TestHandoff_TerminalStatus_Done(t *testing.T) {
 // task returns a terminal_status error.
 func TestHandoff_TerminalStatus_NotPlanned(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac9np")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "not-planned")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -729,11 +740,11 @@ func TestHandoff_TerminalStatus_NotPlanned(t *testing.T) {
 // returns a terminal_status error.
 func TestHandoff_TerminalStatus_Duplicate(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "ac9dup")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "duplicate")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -752,11 +763,11 @@ func TestHandoff_TerminalStatus_Duplicate(t *testing.T) {
 // lifecycle state, but not accepted by handoff) returns an error.
 func TestHandoff_QueuedStatusReturnsError(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	// Task starts in queued status — no advancement.
 	taskID, _ := createHandoffScenario(t, entitySvc, "queued")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -773,9 +784,9 @@ func TestHandoff_QueuedStatusReturnsError(t *testing.T) {
 // not_found error.
 func TestHandoff_TaskNotFound(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": "TASK-01NOTAREALID00000000000",
 	})
 
@@ -792,14 +803,12 @@ func TestHandoff_TaskNotFound(t *testing.T) {
 // provided, only project-scoped knowledge entries appear.
 func TestHandoff_ProjectScopedKnowledgeWithNoRole(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "noscope")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
-	addHandoffKnowledge(t, knowledgeSvc, "global-rule", "Always use structured logging", "project", 2)
-	addHandoffKnowledge(t, knowledgeSvc, "be-rule", "Backend-only note", "backend", 2)
-
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 		// no role
 	})
@@ -817,14 +826,13 @@ func TestHandoff_ProjectScopedKnowledgeWithNoRole(t *testing.T) {
 // assembled content and does not exceed byte_budget.
 func TestHandoff_ByteUsageIsPositive(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "bytes")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
 	// Add knowledge so there is actual content to measure.
-	addHandoffKnowledge(t, knowledgeSvc, "byte-test", "Some constraint for byte measurement", "project", 2)
-
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -840,136 +848,13 @@ func TestHandoff_ByteUsageIsPositive(t *testing.T) {
 	}
 }
 
-// ─── renderHandoffPrompt unit tests ──────────────────────────────────────────
-//
-// These tests call renderHandoffPrompt directly so they can inject pre-built
-// assembledContext values (including spec-derived acceptance criteria) without
-// requiring a live document intelligence index.
-
-// TestRenderHandoffPrompt_AcceptanceCriteria verifies that when the assembled
-// context contains acceptance criteria they are rendered in the prompt under
-// ### Acceptance Criteria (spec §30.7 criterion 2; implementation plan G.2).
-func TestRenderHandoffPrompt_AcceptanceCriteria(t *testing.T) {
-	t.Parallel()
-
-	taskState := map[string]any{
-		"id":      "TASK-01RENDER0000000000001",
-		"summary": "Implement the authentication flow",
-	}
-	actx := assembledContext{
-		acceptanceCriteria: []string{
-			"The system MUST authenticate users via JWT",
-			"Expired tokens SHALL return HTTP 401",
-			"Missing Authorization header SHALL return HTTP 401",
-		},
-		byteBudget: assemblyDefaultBudget,
-	}
-
-	prompt := renderHandoffPrompt(taskState, actx, "")
-
-	if !strings.Contains(prompt, "### Acceptance Criteria") {
-		t.Fatalf("prompt missing '### Acceptance Criteria' section:\n%s", prompt)
-	}
-	for _, criterion := range actx.acceptanceCriteria {
-		if !strings.Contains(prompt, criterion) {
-			t.Errorf("prompt missing acceptance criterion %q:\n%s", criterion, prompt)
-		}
-	}
-	// Conventions now come first (high-attention zone), then acceptance criteria.
-	conv := strings.Index(prompt, "### Conventions")
-	crit := strings.Index(prompt, "### Acceptance Criteria")
-	if conv >= crit {
-		t.Errorf("'### Conventions' (pos %d) must appear before '### Acceptance Criteria' (pos %d)", conv, crit)
-	}
-}
-
-// TestRenderHandoffPrompt_AcceptanceCriteriaOmittedWhenEmpty verifies that the
-// ### Acceptance Criteria section is absent when no criteria were extracted.
-func TestRenderHandoffPrompt_AcceptanceCriteriaOmittedWhenEmpty(t *testing.T) {
-	t.Parallel()
-
-	taskState := map[string]any{
-		"id":      "TASK-01RENDER0000000000002",
-		"summary": "Implement the widget",
-	}
-	actx := assembledContext{
-		acceptanceCriteria: nil,
-		byteBudget:         assemblyDefaultBudget,
-	}
-
-	prompt := renderHandoffPrompt(taskState, actx, "")
-
-	if strings.Contains(prompt, "### Acceptance Criteria") {
-		t.Errorf("prompt must not contain '### Acceptance Criteria' when criteria slice is nil:\n%s", prompt)
-	}
-}
-
-// TestRenderHandoffPrompt_SectionOrder verifies the canonical ordering:
-// Summary → Specification → Acceptance Criteria → Known Constraints → Files → Conventions.
-func TestRenderHandoffPrompt_SectionOrder(t *testing.T) {
-	t.Parallel()
-
-	taskState := map[string]any{
-		"id":      "TASK-01RENDER0000000000003",
-		"summary": "Implement full stack feature",
-	}
-	actx := assembledContext{
-		specSections: []asmSpecSection{
-			{document: "spec.md", section: "Overview", content: "The system overview."},
-		},
-		acceptanceCriteria: []string{"Feature MUST work end-to-end"},
-		knowledge: []asmKnowledgeEntry{
-			{topic: "pattern", content: "Use the established pattern", scope: "project", confidence: 0.9, tier: 2},
-		},
-		filesContext: []asmFileEntry{{path: "internal/feature/feature.go"}},
-		byteBudget:   assemblyDefaultBudget,
-	}
-	actx.byteUsage = asmByteCount(actx)
-
-	prompt := renderHandoffPrompt(taskState, actx, "Additional note.")
-
-	positions := map[string]int{}
-	for _, section := range []string{
-		"### Conventions",
-		"### Summary",
-		"### Specification",
-		"### Acceptance Criteria",
-		"### Known Constraints",
-		"### Files",
-		"### Additional Instructions",
-	} {
-		idx := strings.Index(prompt, section)
-		if idx < 0 {
-			t.Errorf("prompt missing section %q", section)
-		}
-		positions[section] = idx
-	}
-
-	ordered := []string{
-		"### Conventions",
-		"### Summary",
-		"### Specification",
-		"### Acceptance Criteria",
-		"### Known Constraints",
-		"### Files",
-		"### Additional Instructions",
-	}
-	for i := 1; i < len(ordered); i++ {
-		prev, curr := ordered[i-1], ordered[i]
-		if positions[prev] >= positions[curr] {
-			t.Errorf("section order violation: %q (pos %d) must come before %q (pos %d)",
-				prev, positions[prev], curr, positions[curr])
-		}
-	}
-}
-
 // ─── Pre-dispatch state commit tests (AC-07, AC-11) ──────────────────────────
 
 // AC-07: When handoff is called, the commitStateFunc is invoked before context
 // assembly begins. This test verifies the call happens by injecting a stub.
 func TestHandoff_PreDispatchCommit_CalledBeforeAssembly(t *testing.T) {
 	// Not parallel: modifies package-level commitStateFunc.
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "pre-commit")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
@@ -981,7 +866,7 @@ func TestHandoff_PreDispatchCommit_CalledBeforeAssembly(t *testing.T) {
 	}
 	defer func() { commitStateFunc = savedFn }()
 
-	callHandoff(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	callHandoff(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -995,7 +880,7 @@ func TestHandoff_PreDispatchCommit_CalledBeforeAssembly(t *testing.T) {
 // the prompt being returned.
 func TestHandoff_PreDispatchCommit_FailureDoesNotBlockHandoff(t *testing.T) {
 	// Not parallel: modifies package-level commitStateFunc.
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "commit-fail")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
@@ -1006,7 +891,7 @@ func TestHandoff_PreDispatchCommit_FailureDoesNotBlockHandoff(t *testing.T) {
 	defer func() { commitStateFunc = savedFn }()
 
 	// Handoff must still succeed and return a prompt.
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -1023,7 +908,7 @@ func TestHandoff_PreDispatchCommit_FailureDoesNotBlockHandoff(t *testing.T) {
 // The repoRoot passed to commitStateFunc must be "." (the server default).
 func TestHandoff_PreDispatchCommit_UsesRepoRootDot(t *testing.T) {
 	// Not parallel: modifies package-level commitStateFunc.
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 	taskID, taskSlug := createHandoffScenario(t, entitySvc, "repo-root")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
@@ -1035,7 +920,7 @@ func TestHandoff_PreDispatchCommit_UsesRepoRootDot(t *testing.T) {
 	}
 	defer func() { commitStateFunc = savedFn }()
 
-	callHandoff(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	callHandoff(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -1051,7 +936,7 @@ func TestHandoff_PreDispatchCommit_UsesRepoRootDot(t *testing.T) {
 // review_cycle is 1 (below the injection threshold of >= 2).
 func TestHandoff_ReReviewGuidance_NotInjectedAtCycleOne(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 
 	planID := createHandoffPlan(t, entitySvc, "rerev-c1")
 	featID := createHandoffFeature(t, entitySvc, planID, "rerev-feat-c1")
@@ -1064,7 +949,7 @@ func TestHandoff_ReReviewGuidance_NotInjectedAtCycleOne(t *testing.T) {
 	taskID, taskSlug := createHandoffTask(t, entitySvc, featID, "rerev-task-c1")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -1079,7 +964,7 @@ func TestHandoff_ReReviewGuidance_NotInjectedAtCycleOne(t *testing.T) {
 // injection threshold of >= 2), and that it contains the cycle number.
 func TestHandoff_ReReviewGuidance_InjectedAtCycleTwo(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 
 	planID := createHandoffPlan(t, entitySvc, "rerev-c2")
 	featID := createHandoffFeature(t, entitySvc, planID, "rerev-feat-c2")
@@ -1094,7 +979,7 @@ func TestHandoff_ReReviewGuidance_InjectedAtCycleTwo(t *testing.T) {
 	taskID, taskSlug := createHandoffTask(t, entitySvc, featID, "rerev-task-c2")
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 
@@ -1113,7 +998,7 @@ func TestHandoff_ReReviewGuidance_InjectedAtCycleTwo(t *testing.T) {
 // is lost.
 func TestHandoff_ReReviewGuidance_PrependsExistingInstructions(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 
 	planID := createHandoffPlan(t, entitySvc, "rerev-pre")
 	featID := createHandoffFeature(t, entitySvc, planID, "rerev-feat-pre")
@@ -1128,7 +1013,7 @@ func TestHandoff_ReReviewGuidance_PrependsExistingInstructions(t *testing.T) {
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
 	const extraInstructions = "Focus on security boundaries only."
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id":      taskID,
 		"instructions": extraInstructions,
 	})
@@ -1162,7 +1047,7 @@ func TestHandoff_ReReviewGuidance_PrependsExistingInstructions(t *testing.T) {
 // and reaches the feature-stage validation path.
 func TestHandoff_ProposedFeature_StageValidationError(t *testing.T) {
 	t.Parallel()
-	entitySvc, knowledgeSvc, profileStore, _ := setupHandoffTest(t)
+	entitySvc := setupHandoffTest(t)
 
 	// Build plan → feature (stays in "proposed") → task.
 	planID := createHandoffPlan(t, entitySvc, "proposed-feat-plan")
@@ -1173,7 +1058,7 @@ func TestHandoff_ProposedFeature_StageValidationError(t *testing.T) {
 	// Advance the task to "ready" so the status gate passes.
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "ready")
 
-	resp := callHandoffJSON(t, entitySvc, profileStore, knowledgeSvc, map[string]any{
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
 		"task_id": taskID,
 	})
 

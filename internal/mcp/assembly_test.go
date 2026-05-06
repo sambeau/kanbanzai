@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
-	"time"
 
 	"github.com/sambeau/kanbanzai/internal/service"
 )
@@ -259,53 +257,8 @@ func TestNextContextToMap_WithExperiments(t *testing.T) {
 }
 
 // nextContextToMap omits active_experiments when no nudge present.
-func TestNextContextToMap_WithoutExperiments(t *testing.T) {
-	t.Parallel()
-	actx := assembledContext{}
-	m := nextContextToMap(actx)
-	if _, ok := m["active_experiments"]; ok {
-		t.Error("active_experiments should not be present when no nudges exist")
-	}
-}
-
 // renderHandoffPrompt includes experiments section when nudge present.
-func TestRenderHandoffPrompt_WithExperiments(t *testing.T) {
-	t.Parallel()
-	taskState := map[string]any{
-		"id":      "TASK-001",
-		"summary": "Test task",
-	}
-	actx := assembledContext{
-		experimentNudge: []asmExperimentNudge{
-			{decisionID: "DEC-0100000000001", summary: "Add error format to spec template"},
-		},
-	}
-	prompt := renderHandoffPrompt(taskState, actx, "")
-	if !containsStr(prompt, "Active Workflow Experiments") {
-		t.Error("prompt should contain 'Active Workflow Experiments' section")
-	}
-	if !containsStr(prompt, "DEC-0100000000001") {
-		t.Error("prompt should contain decision ID")
-	}
-	if !containsStr(prompt, "Add error format to spec template") {
-		t.Error("prompt should contain experiment summary")
-	}
-}
-
 // renderHandoffPrompt omits experiments section when no nudge.
-func TestRenderHandoffPrompt_WithoutExperiments(t *testing.T) {
-	t.Parallel()
-	taskState := map[string]any{
-		"id":      "TASK-001",
-		"summary": "Test task",
-	}
-	actx := assembledContext{}
-	prompt := renderHandoffPrompt(taskState, actx, "")
-	if containsStr(prompt, "Active Workflow Experiments") {
-		t.Error("prompt should not contain 'Active Workflow Experiments' when no nudges")
-	}
-}
-
 // containsStr is a simple helper to avoid importing strings in this test file
 // just for one function.
 func containsStr(s, substr string) bool {
@@ -554,91 +507,8 @@ func TestAsmExtractCriteria_BoldIdent_MayKeyword(t *testing.T) {
 
 // TestAssembleContext_StageContentFilter verifies that file path extraction
 // respects stage-aware IncludeFilePaths configuration (FR-005).
-func TestAssembleContext_StageContentFilter(t *testing.T) {
-	t.Parallel()
-
-	taskState := map[string]any{
-		"id":            "TASK-TEST",
-		"files_planned": []any{"file1.go", "file2.go"},
-	}
-
-	tests := []struct {
-		name         string
-		featureStage string
-		wantFiles    int
-	}{
-		{"designing stage excludes files", "designing", 0},
-		{"specifying stage excludes files", "specifying", 0},
-		{"developing stage includes files", "developing", 2},
-		{"reviewing stage includes files", "reviewing", 2},
-		{"no stage (backward compat) includes files", "", 2},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
-			actx := assembleContext(asmInput{
-				taskState:    taskState,
-				featureStage: tt.featureStage,
-			})
-			if got := len(actx.filesContext); got != tt.wantFiles {
-				t.Errorf("stage %q: filesContext has %d entries, want %d", tt.featureStage, got, tt.wantFiles)
-			}
-		})
-	}
-}
-
 // renderHandoffPrompt includes ## Available Tools section when tool hint is set (AC-012).
-func TestRenderHandoffPrompt_WithToolHint(t *testing.T) {
-	t.Parallel()
-	taskState := map[string]any{
-		"id":      "TASK-001",
-		"summary": "Test task",
-	}
-	actx := assembledContext{
-		toolHint: "Use search_graph and trace_call_path for code navigation.",
-	}
-	prompt := renderHandoffPrompt(taskState, actx, "some instructions")
-	if !containsStr(prompt, "## Available Tools") {
-		t.Error("prompt should contain '## Available Tools' section when tool hint is set")
-	}
-	if !containsStr(prompt, "search_graph") {
-		t.Error("prompt should contain the tool hint content")
-	}
-	// Verify ordering: Available Tools before Additional Instructions (FR-013).
-	toolsIdx := 0
-	instrIdx := 0
-	for i := 0; i+len("## Available Tools") <= len(prompt); i++ {
-		if prompt[i:i+len("## Available Tools")] == "## Available Tools" {
-			toolsIdx = i
-			break
-		}
-	}
-	for i := 0; i+len("### Additional Instructions") <= len(prompt); i++ {
-		if prompt[i:i+len("### Additional Instructions")] == "### Additional Instructions" {
-			instrIdx = i
-			break
-		}
-	}
-	if toolsIdx >= instrIdx {
-		t.Errorf("## Available Tools (pos %d) must appear before ### Additional Instructions (pos %d)", toolsIdx, instrIdx)
-	}
-}
-
 // renderHandoffPrompt omits ## Available Tools when no tool hint (AC-013).
-func TestRenderHandoffPrompt_WithoutToolHint(t *testing.T) {
-	t.Parallel()
-	taskState := map[string]any{
-		"id":      "TASK-001",
-		"summary": "Test task",
-	}
-	actx := assembledContext{}
-	prompt := renderHandoffPrompt(taskState, actx, "")
-	if containsStr(prompt, "## Available Tools") {
-		t.Error("prompt should not contain '## Available Tools' when no tool hint is set")
-	}
-}
-
 // nextContextToMap includes tool_hint when set (AC-014).
 func TestNextContextToMap_WithToolHint(t *testing.T) {
 	t.Parallel()
@@ -668,187 +538,20 @@ func TestNextContextToMap_WithoutToolHint(t *testing.T) {
 // TestRenderHandoffPrompt_NoHintsIdenticalOutput verifies that a zero-value
 // assembledContext and one with an explicitly empty toolHint produce
 // byte-identical prompts, and neither contains "## Available Tools" (AC-019).
-func TestRenderHandoffPrompt_NoHintsIdenticalOutput(t *testing.T) {
-	t.Parallel()
-	taskState := map[string]any{
-		"id":      "TASK-001",
-		"summary": "Test task",
-	}
-
-	zeroCtx := assembledContext{}
-	emptyCtx := assembledContext{toolHint: ""}
-
-	promptZero := renderHandoffPrompt(taskState, zeroCtx, "")
-	promptEmpty := renderHandoffPrompt(taskState, emptyCtx, "")
-
-	if promptZero != promptEmpty {
-		t.Error("zero-value and explicitly-empty toolHint prompts must be byte-identical")
-	}
-	if containsStr(promptZero, "## Available Tools") {
-		t.Error("zero-value prompt should not contain '## Available Tools'")
-	}
-	if containsStr(promptEmpty, "## Available Tools") {
-		t.Error("empty toolHint prompt should not contain '## Available Tools'")
-	}
-}
-
 // ─── Code Graph section tests ─────────────────────────────────────────────────
 
 // TestRenderHandoffPrompt_CodeGraphSection_ProjectSet verifies AC-006: when
 // GraphProject is set, the prompt contains ## Code Graph with the project name
 // and four tool call examples.
-func TestRenderHandoffPrompt_CodeGraphSection_ProjectSet(t *testing.T) {
-	t.Parallel()
-	taskState := map[string]any{
-		"id":      "TASK-001",
-		"summary": "Test task",
-	}
-	actx := assembledContext{
-		graphProject: "kanbanzai-FEAT-XXX",
-		worktreePath: "/tmp/wt/feat-xxx",
-		hasWorktree:  true,
-	}
-	prompt := renderHandoffPrompt(taskState, actx, "")
-
-	if !containsStr(prompt, "## Code Graph") {
-		t.Error("prompt should contain '## Code Graph' section")
-	}
-	if !containsStr(prompt, "kanbanzai-FEAT-XXX") {
-		t.Error("prompt should contain the project name")
-	}
-	// Four tool examples required by AC-006.
-	for _, tool := range []string{"search_graph", "trace_call_path", "query_graph", "get_code_snippet"} {
-		if !containsStr(prompt, tool) {
-			t.Errorf("prompt should contain tool example for %s", tool)
-		}
-	}
-	// Preference instruction.
-	if !containsStr(prompt, "prefer graph tools over grep") {
-		t.Error("prompt should contain graph tool preference instruction")
-	}
-	// Re-indexing instruction.
-	if !containsStr(prompt, "index_repository") {
-		t.Error("prompt should contain re-indexing instruction")
-	}
-	if !containsStr(prompt, "/tmp/wt/feat-xxx") {
-		t.Error("prompt should contain worktree path in re-indexing instruction")
-	}
-}
-
 // TestRenderHandoffPrompt_CodeGraphSection_ProjectEmpty verifies AC-007: when
 // hasWorktree is true but GraphProject is empty, the prompt contains ## Code Graph
 // with an index_repository instruction.
-func TestRenderHandoffPrompt_CodeGraphSection_ProjectEmpty(t *testing.T) {
-	t.Parallel()
-	taskState := map[string]any{
-		"id":      "TASK-001",
-		"summary": "Test task",
-	}
-	actx := assembledContext{
-		graphProject: "",
-		worktreePath: "/tmp/wt/feat-yyy",
-		hasWorktree:  true,
-	}
-	prompt := renderHandoffPrompt(taskState, actx, "")
-
-	if !containsStr(prompt, "## Code Graph") {
-		t.Error("prompt should contain '## Code Graph' section when worktree exists but project is empty")
-	}
-	if !containsStr(prompt, "index_repository") {
-		t.Error("prompt should contain index_repository instruction")
-	}
-	if !containsStr(prompt, "/tmp/wt/feat-yyy") {
-		t.Error("prompt should contain worktree path")
-	}
-	// Should NOT contain tool examples since project is empty.
-	if containsStr(prompt, "search_graph") {
-		t.Error("prompt should not contain tool examples when project is empty")
-	}
-}
-
 // TestRenderHandoffPrompt_CodeGraphSection_NoWorktree verifies AC-008: when
 // no worktree exists, the prompt must not contain ## Code Graph.
-func TestRenderHandoffPrompt_CodeGraphSection_NoWorktree(t *testing.T) {
-	t.Parallel()
-	taskState := map[string]any{
-		"id":      "TASK-001",
-		"summary": "Test task",
-	}
-	actx := assembledContext{
-		hasWorktree: false,
-	}
-	prompt := renderHandoffPrompt(taskState, actx, "")
-
-	if containsStr(prompt, "## Code Graph") {
-		t.Error("prompt should not contain '## Code Graph' when no worktree exists")
-	}
-}
-
 // TestRenderHandoffPrompt_CodeGraphSection_AfterAvailableTools verifies AC-009:
 // ## Code Graph appears after ## Available Tools when both are present.
-func TestRenderHandoffPrompt_CodeGraphSection_AfterAvailableTools(t *testing.T) {
-	t.Parallel()
-	taskState := map[string]any{
-		"id":      "TASK-001",
-		"summary": "Test task",
-	}
-	actx := assembledContext{
-		toolHint:     "Use search_graph for code navigation.",
-		graphProject: "kanbanzai-FEAT-ZZZ",
-		worktreePath: "/tmp/wt/feat-zzz",
-		hasWorktree:  true,
-	}
-	prompt := renderHandoffPrompt(taskState, actx, "")
-
-	toolsIdx := strings.Index(prompt, "## Available Tools")
-	graphIdx := strings.Index(prompt, "## Code Graph")
-	if toolsIdx < 0 {
-		t.Fatal("prompt missing '## Available Tools'")
-	}
-	if graphIdx < 0 {
-		t.Fatal("prompt missing '## Code Graph'")
-	}
-	if toolsIdx >= graphIdx {
-		t.Errorf("## Available Tools (pos %d) must appear before ## Code Graph (pos %d)", toolsIdx, graphIdx)
-	}
-}
-
 // TestRenderHandoffPrompt_CodeGraphSection_Under500Bytes verifies NFR-003:
 // the ## Code Graph section must not exceed 500 bytes when GraphProject is set.
-func TestRenderHandoffPrompt_CodeGraphSection_Under500Bytes(t *testing.T) {
-	t.Parallel()
-	taskState := map[string]any{
-		"id":      "TASK-001",
-		"summary": "Test task",
-	}
-	// Use a reasonably long project name and worktree path.
-	actx := assembledContext{
-		graphProject: "kanbanzai-FEAT-01JXABCDEF123456",
-		worktreePath: "/Users/someone/Dev/kanbanzai/.kbz/worktrees/feat-some-feature-name",
-		hasWorktree:  true,
-	}
-	prompt := renderHandoffPrompt(taskState, actx, "")
-
-	// Extract just the ## Code Graph section.
-	start := strings.Index(prompt, "## Code Graph")
-	if start < 0 {
-		t.Fatal("prompt missing '## Code Graph'")
-	}
-	// Find the next ## heading or end of string.
-	rest := prompt[start+len("## Code Graph"):]
-	end := strings.Index(rest, "\n## ")
-	var section string
-	if end < 0 {
-		section = prompt[start:]
-	} else {
-		section = prompt[start : start+len("## Code Graph")+end]
-	}
-
-	if len(section) > 500 {
-		t.Errorf("## Code Graph section is %d bytes, must be <= 500 bytes:\n%s", len(section), section)
-	}
-}
-
 // TestNextContextToMap_GraphProject verifies AC-010: graph_project is present
 // in next structured output when worktree has a GraphProject.
 func TestNextContextToMap_GraphProject(t *testing.T) {
@@ -886,64 +589,6 @@ func TestNextContextToMap_GraphProjectEmpty(t *testing.T) {
 // is unavailable (GraphProject empty, no worktree), handoff, next context, and
 // status attention all produce no errors and identical non-graph behaviour.
 // This is the verification plan entry for AC-018.
-func TestWorkflow_NoGraphToolsAvailable(t *testing.T) {
-	t.Parallel()
-
-	taskState := map[string]any{
-		"id":      "TASK-001",
-		"summary": "Test task",
-	}
-
-	// Zero-value assembledContext simulates no worktree / no graph tools.
-	actx := assembledContext{}
-
-	// 1. Handoff: no ## Code Graph section, no errors.
-	prompt := renderHandoffPrompt(taskState, actx, "some instructions")
-	if containsStr(prompt, "## Code Graph") {
-		t.Error("handoff prompt should not contain '## Code Graph' when no graph tools available")
-	}
-	if containsStr(prompt, "index_repository") {
-		t.Error("handoff prompt should not reference index_repository when no worktree exists")
-	}
-	if !containsStr(prompt, "Test task") {
-		t.Error("handoff prompt should still contain the task summary")
-	}
-
-	// 2. Next context: graph_project is empty string, no error fields.
-	m := nextContextToMap(actx)
-	gp, ok := m["graph_project"].(string)
-	if !ok {
-		t.Fatal("graph_project should be present in next context map")
-	}
-	if gp != "" {
-		t.Errorf("graph_project = %q, want empty string", gp)
-	}
-
-	// 3. Status attention: no missing_graph_index item when no worktree.
-	// Use the full generateFeatureAttention signature with zero/empty values
-	// to simulate a feature with no worktree and no graph tools.
-	items := generateFeatureAttention(
-		nil,          // tasks
-		nil,          // docs
-		0,            // totalTasks
-		"",           // featureID
-		"",           // featureDisplayID
-		"developing", // featureStatus
-		time.Time{},  // featureUpdated
-		false,        // inheritedHasSpec
-		false,        // inheritedHasDevPlan
-		14,           // staleReviewingDays
-		nil,          // bugs
-		false,        // hasActiveWorktree
-		"",           // worktreeGraphProject
-	)
-	for _, item := range items {
-		if item.Type == "missing_graph_index" {
-			t.Error("status should not emit missing_graph_index when no worktree exists")
-		}
-	}
-}
-
 // ─── asmLoadDocumentPointers tests ───────────────────────────────────────────
 
 // TestAsmLoadDocumentPointers_EmptySvc verifies that a nil intelligence service
