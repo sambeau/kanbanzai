@@ -1,3 +1,5 @@
+approved_at: "2026-05-06T22:22:45Z"
+approved_by: sambeau
 canonical_content_hash: ce5f6b36c486cd1acd69d5d4035eff21063f6c298d5d9ae0d23399d5dbce2a3c
 content_hash: 0ff267343be87f438b63306ba8dfc3354b3e2c688bb4b7dc85e12481693fa8e8
 created: "2026-05-06T22:22:39Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KQTNYN00M4P/report-p50-report-review-decompose-cycle2
 owner: FEAT-01KQTNYN00M4P
 path: work/P50-retro-may-2026/P50-report-review-decompose-cycle2.md
-status: draft
+status: approved
 title: "Review Report: Decompose Proposal Quality (F2) — Cycle 2"
 type: report
-updated: "2026-05-06T22:22:39Z"
+updated: "2026-05-06T22:22:45Z"
