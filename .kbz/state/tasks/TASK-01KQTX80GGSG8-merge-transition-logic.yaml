@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQTWFY52EG1
 slug: merge-transition-logic
 name: Implement merging stage transition logic
 summary: "Transition handler enforcing merging prerequisites: all tasks terminal, approved report. Advances to merging on success."
-status: ready
+status: not-planned
