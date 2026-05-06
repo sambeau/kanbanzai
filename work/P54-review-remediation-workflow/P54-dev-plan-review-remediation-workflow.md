@@ -3,14 +3,18 @@
 | Field  | Value                                 |
 |--------|---------------------------------------|
 | Date   | 2026-05-06                            |
-| Status | Draft                                 |
+| Status | approved |
 | Author | sambeau (architect)                   |
 
 ---
 
+## Overview
+
+This plan implements the document-driven v1 of the review remediation workflow as specified in [`P54-spec-review-remediation-workflow.md`](P54-spec-review-remediation-workflow.md). The v1 is purely procedural — it defines documents, templates, and a decision tree that orchestrators use to convert a failed review into executable remediation work. No code changes or new MCP tool actions are required. The automated phase (finding extraction via `dispatch_task`) is deferred to a follow-up plan gated on P44 Phase 1.
+
 ## Scope
 
-This plan implements the document-driven v1 of the review remediation workflow as specified in [`P54-spec-review-remediation-workflow.md`](P54-spec-review-remediation-workflow.md), producing:
+This plan covers the document-driven v1 of the review remediation workflow as specified in [`P54-spec-review-remediation-workflow.md`](P54-spec-review-remediation-workflow.md), producing:
 
 1. A documented remediation procedure for orchestrators.
 2. A remediation dev-plan template matching the six-section structure (FR-02).
@@ -119,3 +123,27 @@ Critical path: Task 1 → Task 5
 | AC-SPEC-08: No new tool actions required | Inspection of procedure document for tool references | Task 1 |
 
 Note: AC-SPEC-05 (handoff context) is verified by P51's existing test suite — no remediation-specific task needed.
+
+---
+
+## Interface Contracts
+
+This plan has no code-level interface contracts — the v1 is document-driven with no software changes. The document-format contracts are:
+
+| Contract | Defined By | Consumed By |
+|---|---|---|
+| Remediation dev-plan structure (six sections) | Task 2 (template) | Task 5 (walkthrough), orchestrators |
+| Re-review report format (`report` type, `review_remediation` subtype) | Task 3 (template) | Task 5 (walkthrough), orchestrators |
+| Ownership model decision criteria | Task 4 (guide) | Task 5 (walkthrough), orchestrators |
+
+---
+
+## Traceability Matrix
+
+| Task | Spec Requirements | Acceptance Criteria |
+|---|---|---|
+| Task 1: Document Remediation Procedure | FR-01, FR-04, FR-05, FR-06 | AC-SPEC-06, AC-SPEC-08 |
+| Task 2: Remediation Dev-Plan Template | FR-02, FR-03 | — |
+| Task 3: Re-Review Report Template | FR-07 | — |
+| Task 4: Ownership Model Decision Tree | FR-04 | — |
+| Task 5: Integration Walkthrough | FR-01–FR-07 | AC-SPEC-01, AC-SPEC-02, AC-SPEC-03, AC-SPEC-04, AC-SPEC-07 |
