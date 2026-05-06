@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQTNYN00HZA
 slug: doc-path-prompt
 name: Add prompt path support
 summary: "doc(action: path, type: prompt) returns paths under work/{plan-slug}/prompts/ or work/_project/prompts/"
-status: ready
+status: not-planned
