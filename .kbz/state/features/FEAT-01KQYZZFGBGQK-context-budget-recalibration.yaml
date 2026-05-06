@@ -2,7 +2,7 @@ id: FEAT-01KQYZZFGBGQK
 slug: context-budget-recalibration
 name: Context Budget Recalibration
 parent: B1-p51-exec
-status: proposed
+status: designing
 summary: "Update DefaultContextWindowTokens to 1,000,000 (from 200,000) and raise assemblyDefaultBudget from 30,720. Make DefaultContextWindowTokens configurable via .kbz/local.yaml. Add topic-level detail to trimmed metadata in next/handoff responses."
 created: "2026-05-06T15:54:49Z"
 created_by: sambeau

@@ -2,7 +2,7 @@ id: FEAT-01KQYZZFGH6DK
 slug: doc-fixes-handoff-pipeline
 name: Documentation Fixes for Handoff Pipeline
 parent: B1-p51-exec
-status: proposed
+status: designing
 summary: "Add (max 500 characters) to the finish tool summary parameter description. Update orchestrate-development skill to explicitly instruct passing role: implementer-go with handoff calls for spawn_agent dispatch."
 created: "2026-05-06T15:54:49Z"
 created_by: sambeau
