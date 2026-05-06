@@ -351,8 +351,11 @@ func (p *Pipeline) stepExtractOrchestration(state *PipelineState) {
 
 // stepResolveRole resolves the role (step 5) and merges vocabulary/anti-patterns.
 func (p *Pipeline) stepResolveRole(state *PipelineState) error {
-	// Determine which role to resolve: caller override > binding's first role.
+	// Determine which role to resolve: caller override > sub-agent's first role > binding's first role.
 	roleID := state.Input.Role
+	if roleID == "" && state.Binding.SubAgents != nil && len(state.Binding.SubAgents.Roles) > 0 {
+		roleID = state.Binding.SubAgents.Roles[0]
+	}
 	if roleID == "" && len(state.Binding.Roles) > 0 {
 		roleID = state.Binding.Roles[0]
 	}
@@ -405,6 +408,11 @@ func (p *Pipeline) stepLoadSkill(state *PipelineState) error {
 				break
 			}
 		}
+	}
+
+	// Default to sub-agent's first skill when no explicit role is given (same conditions as stepResolveRole).
+	if skillName == "" && state.Input.Role == "" && state.Binding.SubAgents != nil && len(state.Binding.SubAgents.Skills) > 0 {
+		skillName = state.Binding.SubAgents.Skills[0]
 	}
 
 	// Fall back to the binding's primary skill.
