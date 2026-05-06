@@ -1,0 +1,20 @@
+confidence: "0.5"
+content: "Large failing test suites must be turned into durable workflow entities immediately. Create or link a bug or incident with failing packages and test counts in the summary, link it to the affected feature/refactor, and keep it visible until resolved. Terminal output and handover prose are not durable workflow state."
+created: "2026-05-06T23:00:04Z"
+created_by: GPT-5.5
+id: KE-01KQZRA52Y9G8
+learned_from: user-retro-2026-05-06-failures-not-workflow-entities
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retro
+  - testing
+  - workflow-discipline
+  - entity-tracking
+  - status-visibility
+tier: 2
+topic: testing-failures-must-be-workflow-entities
+ttl_days: 90
+updated: "2026-05-06T23:00:04Z"
+use_count: 0

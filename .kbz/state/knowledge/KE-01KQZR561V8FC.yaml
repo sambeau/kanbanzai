@@ -1,0 +1,19 @@
+confidence: "0.5"
+content: "Never normalise or defer a large failing test suite as \"pre-existing\" without explicit tracking. When full-suite failures are discovered, create or link bugs/incidents, record the failing packages and counts, and keep them visible until they are fixed; 60+ failing tests is a release-blocking disaster, not background noise."
+created: "2026-05-06T22:57:21Z"
+created_by: GPT-5.5
+id: KE-01KQZR561V8FC
+learned_from: user-retro-2026-05-06-failing-tests
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retro
+  - testing
+  - workflow-discipline
+  - status-visibility
+tier: 2
+topic: testing-discipline-failing-suite-visibility
+ttl_days: 90
+updated: "2026-05-06T22:57:21Z"
+use_count: 0

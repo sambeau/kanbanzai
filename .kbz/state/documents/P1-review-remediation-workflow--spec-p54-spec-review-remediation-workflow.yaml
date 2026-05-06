@@ -1,3 +1,5 @@
+approved_at: "2026-05-06T23:02:08Z"
+approved_by: sambeau
 canonical_content_hash: 8cb89b874c9211b8d8c4c539f0fcfe87954ecd0644961eee08ad37ecc0f7c876
 content_hash: 5f1c7e80f3cb4ba3bc74a9fd46617fbb604b8f2f107563fa193295ac260da9ad
 created: "2026-05-06T22:50:31Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: P1-review-remediation-workflow/spec-p54-spec-review-remediation-workflow
 owner: P1-review-remediation-workflow
 path: work/P54-review-remediation-workflow/P54-spec-review-remediation-workflow.md
-status: draft
+status: approved
 title: "Specification: Review Remediation Workflow"
 type: spec
-updated: "2026-05-06T22:50:31Z"
+updated: "2026-05-06T23:02:08Z"
