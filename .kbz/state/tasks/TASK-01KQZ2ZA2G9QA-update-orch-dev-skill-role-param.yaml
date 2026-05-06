@@ -1,0 +1,6 @@
+id: TASK-01KQZ2ZA2G9QA
+parent_feature: FEAT-01KQYZZFGHM99
+slug: update-orch-dev-skill-role-param
+name: Update orchestrate-development skill for role param
+summary: "Update .kbz/skills/orchestrate-development/SKILL.md to instruct orchestrators to pass role: implementer-go with handoff calls for spawn_agent dispatch. Apply dual-write to internal/kbzinit/skills/orchestrate-development/SKILL.md."
+status: queued

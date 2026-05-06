@@ -1,0 +1,6 @@
+id: TASK-01KQZ2ZA2AKMN
+parent_feature: FEAT-01KQYZZFGHM99
+slug: fix-resolve-role-load-skill-defaults
+name: Fix stepResolveRole and stepLoadSkill defaults
+summary: "When state.Input.Role is empty and state.Binding.SubAgents != nil, stepResolveRole must resolve to SubAgents.Roles[0] instead of Binding.Roles[0]. stepLoadSkill must load from SubAgents.Skills[0] instead of Binding.Skills[0]. Preserve existing behavior for explicit roles, non-prefix-match roles, and nil SubAgents."
+status: queued
