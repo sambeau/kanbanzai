@@ -267,6 +267,14 @@ When dispatching via `handoff`, ensure the role is `implementer-go` (not `orches
 
 Use `status(id: "<FEAT-xxx>")` to track task completion. Each task follows the standard path: `active → done` (or `needs-review` if review is required).
 
+Key fields to check in `status` output:
+
+- **`task_summary`** — confirms the count of tasks in each state (`queued`, `ready`, `active`, `done`). All remediation tasks should eventually reach `done: <N>` with zero in `queued`, `ready`, and `active`.
+- **`attention`** — watch for `ready_tasks` entries disappearing as tasks are claimed and completed. New `attention` items (e.g., `blocked_tasks`) signal issues needing intervention.
+- **`progress`** — track `progress_pct` approaching 100% as tasks complete.
+
+If a task remains in `active` or `ready` for an extended period, check the entity record for dispatch details: `entity(action: "get", id: "<TASK-xxx>")`.
+
 ### Step 6.3: Verify each finding
 
 As tasks complete, confirm that verification evidence exists for each finding (FR-05):

@@ -69,7 +69,7 @@ When a review fails, blocking findings must be placed under the correct ownershi
 | No findings reference batch-level or cross-cutting concerns | Review each finding's "Affected entity" field |
 | Fix does not require changes to shared packages used by other features | Check file paths in findings against other active worktrees |
 
-### Entity-creation steps
+### Setup steps
 
 ```text
 # 1. Transition the feature to needs-rework (if not already)
@@ -115,7 +115,7 @@ Finding BF-3 ("state_modified code exists only on main, not in worktree") was sc
 | No findings require a new plan (e.g., reusable workflow gap) | Review finding descriptions for cross-batch scope |
 | Fixes are confined to the batch's features | Check affected file paths |
 
-### Entity-creation steps
+### Setup steps
 
 ```text
 # 1. Transition each affected feature to needs-rework
