@@ -843,6 +843,11 @@ func TestFeatureValidTransitions(t *testing.T) {
 		t.Error("verifying→needs-rework should be a valid transition")
 	}
 
+	// needs-rework→developing is valid
+	if !model.IsValidFeatureTransition(model.FeatureStatusNeedsRework, model.FeatureStatusDeveloping) {
+		t.Error("needs-rework→developing should be a valid transition")
+	}
+
 	// reviewing→done is valid (backward compatibility, requires override)
 	if !model.IsValidFeatureTransition(model.FeatureStatusReviewing, model.FeatureStatusDone) {
 		t.Error("reviewing→done should be a valid transition (backward compatibility)")
