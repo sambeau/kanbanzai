@@ -3,4 +3,6 @@ parent_feature: FEAT-01KQYZZFGJA93
 slug: handoff-pipeline-only-hard-errors
 name: Make handoff pipeline-only with hard errors
 summary: "Replace tryPipeline with direct pipeline.Run call in handoff. Hard error on nil pipeline (message contains stage-bindings.yaml), missing parent feature, or missing stage binding. No silent fallback."
-status: ready
+status: done
+completed: "2026-05-06T17:11:56Z"
+completion_summary: "Replaced tryPipeline with direct pipeline.Run call in handoff. Pipeline handles nil, missing feature, and missing binding errors directly."

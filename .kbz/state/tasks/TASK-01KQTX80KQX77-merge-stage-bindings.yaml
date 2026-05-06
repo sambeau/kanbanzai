@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQTWFY52EG1
 slug: merge-stage-bindings
 name: Add stage bindings for merging and verifying
 summary: Add merging and verifying stage entries to .kbz/stage-bindings.yaml. Mirror to internal/kbzinit/stage-bindings.yaml.
-status: queued
+status: ready
