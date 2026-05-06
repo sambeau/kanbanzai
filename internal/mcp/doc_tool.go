@@ -166,7 +166,7 @@ func docTool(docSvc *service.DocumentService, intelligenceSvc *service.Intellige
 
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		return DispatchAction(ctx, req, map[string]ActionHandler{
-			"register":              docRegisterAction(docSvc, intelligenceSvc),
+			"register":              docRegisterAction(docSvc, intelligenceSvc, entitySvc),
 			"approve":               docApproveAction(docSvc, intelligenceSvc),
 			"move":                  docMoveAction(docSvc),
 			"delete":                docDeleteAction(docSvc),
@@ -216,7 +216,7 @@ func docPathAction(entitySvc *service.EntityService) ActionHandler {
 
 // ─── register ─────────────────────────────────────────────────────────────────
 
-func docRegisterAction(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService) ActionHandler {
+func docRegisterAction(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService, entitySvc *service.EntityService) ActionHandler {
 	return func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
 		SignalMutation(ctx)
 		SignalStateModified(ctx)
@@ -235,7 +235,7 @@ func docRegisterAction(docSvc *service.DocumentService, intelligenceSvc *service
 				if _, has := doc["created_by"]; !has && topCreatedBy != "" {
 					doc["created_by"] = topCreatedBy
 				}
-				return docRegisterOne(docSvc, intelligenceSvc, doc)
+				return docRegisterOne(docSvc, intelligenceSvc, entitySvc, doc)
 			})
 		}
 
@@ -243,12 +243,12 @@ func docRegisterAction(docSvc *service.DocumentService, intelligenceSvc *service
 		if docArgStr(args, "path") == "" {
 			return nil, fmt.Errorf("Cannot register document: path is missing.\n\nTo resolve:\n  Provide path: doc(action: \"register\", path: \"work/spec/foo.md\", type: \"...\", title: \"...\")")
 		}
-		_, result, err := docRegisterOne(docSvc, intelligenceSvc, args)
+		_, result, err := docRegisterOne(docSvc, intelligenceSvc, entitySvc, args)
 		return result, err
 	}
 }
 
-func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService, args map[string]any) (string, any, error) {
+func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.IntelligenceService, entitySvc *service.EntityService, args map[string]any) (string, any, error) {
 	path := docArgStr(args, "path")
 	docType := docArgStr(args, "type")
 	title := docArgStr(args, "title")
@@ -299,6 +299,18 @@ func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.In
 		log.Printf("[doc] WARNING: auto-commit after register %s failed: %v", result.ID, commitErr)
 	}
 
+	// Canonical path warning (REQ-006): when a parent entity is specified,
+	// compare the provided path against the canonical form for this doc type.
+	var pathWarnings []string
+	if entitySvc != nil && owner != "" && docType != "prompt" {
+		if canonical, cErr := entitySvc.CanonicalDocPath(docType, owner); cErr == nil && canonical != "" {
+			if path != canonical {
+				pathWarnings = append(pathWarnings,
+					fmt.Sprintf("Path does not match canonical form. Expected: %s", canonical))
+			}
+		}
+	}
+
 	nudgeMsg := fmt.Sprintf(
 		"Layer 3 classification pending for %s.\nCall doc_intel(action: \"guide\", id: \"%s\") then read the section outline.\nThen call doc_intel(action: \"classify\", id: \"%s\", content_hash: \"...\", ...) to classify.",
 		result.ID, result.ID, result.ID,
@@ -318,8 +330,9 @@ func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.In
 		"document":             docRecordToMap(result),
 		"classification_nudge": nudge,
 	}
-	if len(result.Warnings) > 0 {
-		out["warnings"] = result.Warnings
+	allWarnings := append(result.Warnings, pathWarnings...)
+	if len(allWarnings) > 0 {
+		out["warnings"] = allWarnings
 	}
 	return result.ID, out, nil
 }
