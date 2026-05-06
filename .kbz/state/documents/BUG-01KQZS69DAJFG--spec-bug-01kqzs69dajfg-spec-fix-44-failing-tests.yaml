@@ -1,0 +1,11 @@
+canonical_content_hash: 4367008d71384df43e449fee39d0dc79d4176c1a839253b7a7ece81c26811af3
+content_hash: 4367008d71384df43e449fee39d0dc79d4176c1a839253b7a7ece81c26811af3
+created: "2026-05-06T23:19:22Z"
+created_by: sambeau
+id: BUG-01KQZS69DAJFG/spec-bug-01kqzs69dajfg-spec-fix-44-failing-tests
+owner: BUG-01KQZS69DAJFG
+path: work/B52-fix-44-failing-tests/BUG-01KQZS69DAJFG-spec-fix-44-failing-tests.md
+status: draft
+title: "Spec: Fix 44 Failing Tests from Uncommitted Refactors"
+type: spec
+updated: "2026-05-06T23:19:22Z"
