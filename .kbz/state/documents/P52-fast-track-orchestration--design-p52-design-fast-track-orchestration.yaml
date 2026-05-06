@@ -1,11 +1,13 @@
+approved_at: "2026-05-06T19:34:31Z"
+approved_by: sambeau
 canonical_content_hash: 5278b80032f7b1be3b1eec20c53453cb53aff0fda79b9839660b8fcde979f381
-content_hash: 1c93522bf65cfe266a740cfb13ad54ef644c0f9ad6fc14fa8eedf9a65e9b4d48
+content_hash: 3fe8501cb9a7aa6ee8758a8fc3beee5a70e1023446dffe8e5568b476a6752dc6
 created: "2026-05-06T19:34:17Z"
 created_by: sambeau
 id: P52-fast-track-orchestration/design-p52-design-fast-track-orchestration
 owner: P52-fast-track-orchestration
 path: work/P52-fast-track-orchestration/P52-design-fast-track-orchestration.md
-status: draft
+status: approved
 title: Fast-Track Orchestration Profile
 type: design
-updated: "2026-05-06T19:34:17Z"
+updated: "2026-05-06T19:34:31Z"
