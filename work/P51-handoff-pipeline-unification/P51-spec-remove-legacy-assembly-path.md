@@ -10,6 +10,23 @@
 **Parent Batch:** B1-p51-exec
 **Design:** `work/P51-handoff-pipeline-unification/P51-design-handoff-pipeline-unification.md`
 
+## Overview
+
+This specification implements the legacy assembly path removal described in `work/P51-handoff-pipeline-unification/P51-design-handoff-pipeline-unification.md` (design document for P51, §1–§3). It removes the dual-path architecture from `handoff` by deleting the legacy 2.0 fallback code and making the 3.0 pipeline the single, unconditional code path with hard errors for misconfiguration.
+
+## Scope
+
+**In scope:**
+- Remove `tryPipeline`, `buildLegacyResponse`, `renderHandoffPrompt` functions
+- Remove `assembleContext` and all its helper functions and types
+- Simplify `HandoffTools` signature (remove 7 parameters)
+- Update handoff tests to verify hard errors instead of fallback behavior
+
+**Out of scope:**
+- Removing the `next` tool's use of `assembleContext` (deferred to follow-up)
+- Changing the pipeline itself
+- Building `dispatch_task` (P44)
+
 ## Related Work
 
 Concepts searched: `assembleContext`, `renderHandoffPrompt`, `buildLegacyResponse`, `asmInput`, `assembledContext`, `tryPipeline`, `legacy assembly fallback`, `handoffTool`.
@@ -26,22 +43,7 @@ The `handoff` MCP tool currently has a dual-path architecture: a 3.0 pipeline (r
 
 The legacy path produces prompts without role-attuned vocabulary, without skill-specific anti-patterns, and without code-graph context — exactly the deficiencies that the pipeline was built to address. After the P50 incident demonstrated that the pipeline is the active path for all real-world calls, keeping the legacy code creates dead code risk, makes the `handoffTool` signature unnecessarily wide (10+ dependencies), and complicates P44's planned `dispatch_task` internalization.
 
-**In scope:**
-- Remove `tryPipeline` — `handoff` calls `pipeline.Run` directly
-- Remove `buildLegacyResponse` and `renderHandoffPrompt` functions
-- Remove `assembleContext` and all its helper functions and types (`asmInput`, `assembledContext`, `asmSpecSection`, `asmKnowledgeEntry`, `asmFileEntry`, `asmTrimmedEntry`, `asmExperimentNudge`, `asmDocPointer`, and all `asm*` helper functions)
-- Simplify `HandoffTools` function signature — remove `profileStore`, `knowledgeSvc`, `intelligenceSvc`, `docRecordSvc`, `mergedToolHints`, `roleStore`, `worktreeStore`
-- Update handoff tests to verify hard errors instead of fallback behavior
-- Remove or repurpose `assembly_test.go`
-
-**Out of scope:**
-- Removing the `next` tool's use of `assembleContext` (deferred to follow-up — `next` returns structured JSON, not a rendered prompt)
-- Changing the pipeline itself
-- Building `dispatch_task` (P44)
-
-## Requirements
-
-### Functional Requirements
+## Functional Requirements
 
 - **FR-001:** The `handoffTool` function MUST call `pipeline.Run(input)` directly without checking for nil pipeline, empty parent feature, or missing stage binding. The pipeline's own validation steps (`stepValidateLifecycle`, `stepLookupBinding`) handle these errors.
 - **FR-002:** When the pipeline is nil (stage-bindings.yaml not loaded), `handoff` MUST return a hard error with the message containing "stage-bindings.yaml".
@@ -53,7 +55,7 @@ The legacy path produces prompts without role-attuned vocabulary, without skill-
 - **FR-008:** Functions and types still used by the `next` tool in `assembly.go` MUST be preserved. If `assembleContext` shares types with `next`'s assembly path, those shared types MUST be extracted to a separate file or left in place with only the handoff-specific code removed.
 - **FR-009:** All tests that verify fallback behavior (legacy assembly path activation) MUST be updated to verify hard errors instead.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 - **FR-NF-001:** Removing the legacy path MUST NOT change the pipeline-based handoff output. For every valid input, the handoff response MUST be identical before and after the removal.
 - **FR-NF-002:** The `go build ./...` command MUST succeed with no errors after the removal.
