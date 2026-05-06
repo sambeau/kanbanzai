@@ -30,8 +30,9 @@ const (
 // AssemblyItem is a single piece of context in the assembled packet.
 type AssemblyItem struct {
 	Source     AssemblySource
-	EntryID    string // for knowledge entries
-	Priority   string // "high", "normal", "low"
+	EntryID    string  // for knowledge entries
+	Topic      string  // for knowledge entries: the topic string
+	Priority   string  // "high", "normal", "low"
 	Content    string
 	Confidence float64 // for knowledge entries
 }
@@ -149,10 +150,12 @@ func Assemble(
 				continue
 			}
 			entryID, _ := rec.Fields["id"].(string)
+			topic, _ := rec.Fields["topic"].(string)
 			conf := assemblyFieldFloat(rec.Fields, "confidence")
 			tier2Items = append(tier2Items, AssemblyItem{
 				Source:     SourceKnowledgeT2,
 				EntryID:    entryID,
+				Topic:      topic,
 				Priority:   "normal",
 				Content:    formatKnowledgeEntry(rec.Fields),
 				Confidence: conf,
@@ -174,10 +177,12 @@ func Assemble(
 				continue
 			}
 			entryID, _ := rec.Fields["id"].(string)
+			topic, _ := rec.Fields["topic"].(string)
 			conf := assemblyFieldFloat(rec.Fields, "confidence")
 			tier3Items = append(tier3Items, AssemblyItem{
 				Source:     SourceKnowledgeT3,
 				EntryID:    entryID,
+				Topic:      topic,
 				Priority:   "low",
 				Content:    formatKnowledgeEntry(rec.Fields),
 				Confidence: conf,
@@ -230,6 +235,7 @@ func Assemble(
 			te := TrimmedEntry{
 				EntryID:   cut.EntryID,
 				Type:      "knowledge",
+				Topic:     cut.Topic,
 				SizeBytes: len(cut.Content),
 			}
 			// Source is always SourceKnowledgeT3 here, but guard anyway.
@@ -238,7 +244,6 @@ func Assemble(
 			} else {
 				te.Tier = 3
 			}
-			te.Topic = extractTopicFromContent(cut.Content)
 			trimmedEntries = append(trimmedEntries, te)
 		}
 	}
@@ -256,10 +261,10 @@ func Assemble(
 			te := TrimmedEntry{
 				EntryID:   cut.EntryID,
 				Type:      "knowledge",
+				Topic:     cut.Topic,
 				Tier:      2,
 				SizeBytes: len(cut.Content),
 			}
-			te.Topic = extractTopicFromContent(cut.Content)
 			trimmedEntries = append(trimmedEntries, te)
 		}
 	}

@@ -46,7 +46,7 @@ const (
 
 // Token budget thresholds relative to context window (FR-014, FR-015).
 const (
-	DefaultContextWindowTokens = 200_000
+	DefaultContextWindowTokens = 1_000_000
 	BudgetWarnRatio            = 0.40
 	BudgetRefuseRatio          = 0.60
 )
@@ -192,12 +192,18 @@ func (p *Pipeline) stalenessWindow() int {
 	return 30
 }
 
-// windowTokens returns the effective context window size.
-func (p *Pipeline) windowTokens() int {
+// WindowTokens returns the active context window size: the configured value if set,
+// otherwise DefaultContextWindowTokens.
+func (p *Pipeline) WindowTokens() int {
 	if p.WindowSize > 0 {
 		return p.WindowSize
 	}
 	return DefaultContextWindowTokens
+}
+
+// windowTokens returns the effective context window size (internal).
+func (p *Pipeline) windowTokens() int {
+	return p.WindowTokens()
 }
 
 // Run executes the 10-step pipeline and returns the assembled result.

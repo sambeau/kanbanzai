@@ -49,7 +49,7 @@ func hasRFC2119Keyword(text string) bool {
 	return false
 }
 
-const assemblyDefaultBudget = 30720
+const assemblyDefaultBudget = 65536
 
 // Stage content guidance text constants (B-07).
 const (
@@ -104,9 +104,12 @@ type asmFileEntry struct {
 
 // asmTrimmedEntry records a context item removed to stay within the byte budget.
 type asmTrimmedEntry struct {
-	entryType string
-	topic     string
-	sizeBytes int
+	entryType     string
+	topic         string
+	scope         string
+	tier          int
+	sizeBytes     int
+	tokenEstimate int
 }
 
 // assembledContext holds the result of the context assembly pipeline.
@@ -886,12 +889,16 @@ func asmTrimContext(actx assembledContext) assembledContext {
 	for len(t3) > 0 && current > actx.byteBudget {
 		cut := t3[0]
 		t3 = t3[1:]
-		sz := len(cut.content) + len(cut.topic) + 30
+		topic := truncateTopic(cut.topic, actx.byteBudget-current)
+		sz := len(cut.content) + len(topic) + 30
 		current -= sz
 		actx.trimmed = append(actx.trimmed, asmTrimmedEntry{
-			entryType: "knowledge",
-			topic:     cut.topic,
-			sizeBytes: sz,
+			entryType:     "knowledge",
+			topic:         topic,
+			scope:         cut.scope,
+			tier:          cut.tier,
+			sizeBytes:     sz,
+			tokenEstimate: sz / 4, // rough estimate: ~4 chars per token
 		})
 	}
 
@@ -899,12 +906,16 @@ func asmTrimContext(actx assembledContext) assembledContext {
 	for len(t2) > 0 && current > actx.byteBudget {
 		cut := t2[0]
 		t2 = t2[1:]
-		sz := len(cut.content) + len(cut.topic) + 30
+		topic := truncateTopic(cut.topic, actx.byteBudget-current)
+		sz := len(cut.content) + len(topic) + 30
 		current -= sz
 		actx.trimmed = append(actx.trimmed, asmTrimmedEntry{
-			entryType: "knowledge",
-			topic:     cut.topic,
-			sizeBytes: sz,
+			entryType:     "knowledge",
+			topic:         topic,
+			scope:         cut.scope,
+			tier:          cut.tier,
+			sizeBytes:     sz,
+			tokenEstimate: sz / 4,
 		})
 	}
 
@@ -912,12 +923,14 @@ func asmTrimContext(actx assembledContext) assembledContext {
 	for len(actx.specSections) > 0 && current > actx.byteBudget {
 		cut := actx.specSections[len(actx.specSections)-1]
 		actx.specSections = actx.specSections[:len(actx.specSections)-1]
-		sz := len(cut.content) + len(cut.document) + len(cut.section) + 40
+		topic := truncateTopic(cut.section, actx.byteBudget-current)
+		sz := len(cut.content) + len(cut.document) + len(topic) + 40
 		current -= sz
 		actx.trimmed = append(actx.trimmed, asmTrimmedEntry{
-			entryType: "spec",
-			topic:     cut.section,
-			sizeBytes: sz,
+			entryType:     "spec",
+			topic:         topic,
+			sizeBytes:     sz,
+			tokenEstimate: sz / 4,
 		})
 	}
 
@@ -992,6 +1005,31 @@ func asmFieldFloat(fields map[string]any, key string) float64 {
 		return float64(typed)
 	}
 	return 0
+}
+
+// truncateTopic truncates a topic string with … (U+2026) to stay within the
+// remaining byte budget. budgetRemaining is the number of bytes left before
+// hitting the cap. Returns the original topic if it fits, or a truncated
+// version ending with … otherwise. The … character adds 3 bytes (UTF-8).
+// Truncation is safe for multi-byte UTF-8 characters.
+func truncateTopic(topic string, budgetRemaining int) string {
+	if budgetRemaining <= 0 {
+		return "…"
+	}
+	if len(topic) <= budgetRemaining {
+		return topic
+	}
+	// Reserve 3 bytes for the ellipsis.
+	if budgetRemaining <= 3 {
+		return "…"
+	}
+	// Truncate at byte boundary, then adjust backward to a valid UTF-8 boundary.
+	trunc := topic[:budgetRemaining-3]
+	// Walk back to the start of the last rune if we split a multi-byte character.
+	for len(trunc) > 0 && trunc[len(trunc)-1]&0xC0 == 0x80 {
+		trunc = trunc[:len(trunc)-1]
+	}
+	return trunc + "…"
 }
 
 // asmFieldInt reads an int value from a fields map.
