@@ -1,7 +1,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-06T16:19:45Z           |
-| Status | Draft                          |
+| Status | approved |
 | Author | spec-author                     |
 
 # Specification: Remove Legacy Assembly Path

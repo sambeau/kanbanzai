@@ -4,6 +4,10 @@
 **Specification:** FEAT-01KQYZZFGHM99/spec-p51-spec-fix-sub-agent-role-routing (approved)
 **Date:** 2026-05-06
 
+## Overview
+
+Fixes pipeline sub-agent role routing: when handoff is called without an explicit role and the stage binding has sub_agents configured, default to the sub-agent role/skill instead of the orchestrator's. Updates the orchestrate-development skill to document the role parameter. Three tasks.
+
 ## Scope
 
 Implements FR-001 through FR-006 and FR-NF-001 through FR-NF-002. Three tasks: pipeline fix, skill documentation, and tests.
@@ -51,3 +55,22 @@ T1 and T2 can run in parallel. T3 requires T1.
 | AC-004 | Unit test: role "reviewer" → caller role | T1, T3 |
 | AC-005 | Unit test: no SubAgents → primary fallback | T1, T3 |
 | AC-006 | Inspection: skill file contains role param | T2 |
+
+## Interface Contracts
+
+- **stepResolveRole** — When `state.Input.Role == ""` and `state.Binding.SubAgents != nil`, resolves to `SubAgents.Roles[0]`.
+- **stepLoadSkill** — When `state.Input.Role == ""` and `state.Binding.SubAgents != nil`, loads from `SubAgents.Skills[0]`.
+- **orchestrate-development skill** — Updated handoff invocation includes `role: "implementer-go"`.
+
+## Traceability Matrix
+
+| FR | Task |
+|----|------|
+| FR-001 | T1 |
+| FR-002 | T1 |
+| FR-003 | T1 |
+| FR-004 | T1 |
+| FR-005 | T1 |
+| FR-006 | T2 |
+| FR-NF-001 | T1, T3 |
+| FR-NF-002 | T1, T3 |

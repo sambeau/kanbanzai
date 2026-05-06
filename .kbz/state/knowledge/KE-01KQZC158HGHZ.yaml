@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "All 4 P51 features were worked on concurrently in overlapping worktrees, resulting in interleaved changes across shared files (server.go, handoff_tool.go, assembly.go). Worktree isolation was not enforced at the MCP tool level. Consider adding a guard at worktree(action: create) that warns when modified files overlap with an existing active worktree."
+created: "2026-05-06T19:25:27Z"
+created_by: sambeau
+id: KE-01KQZC158HGHZ
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - workflow-friction
+  - worktree
+  - isolation
+tier: 2
+topic: workflow-friction/worktree-isolation-not-enforced
+ttl_days: 90
+updated: "2026-05-06T19:25:27Z"
+use_count: 0

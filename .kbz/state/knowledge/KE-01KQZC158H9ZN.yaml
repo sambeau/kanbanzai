@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "finish() called for all 13 tasks across 4 features in B1-p51-exec, but none produced a code commit. Only .kbz/state/ metadata was committed. The worktree dirty state accumulated without ever being committed. Consider adding a health check that warns when a feature has all tasks done but its worktree has uncommitted changes."
+created: "2026-05-06T19:25:27Z"
+created_by: sambeau
+id: KE-01KQZC158H9ZN
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - tool-friction
+  - finish
+  - commit
+tier: 2
+topic: tool-friction/finish-no-code-commit
+ttl_days: 90
+updated: "2026-05-06T19:25:27Z"
+use_count: 0
