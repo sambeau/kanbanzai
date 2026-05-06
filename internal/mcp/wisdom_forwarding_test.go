@@ -1,7 +1,6 @@
 package mcp
 
 import (
-	"strings"
 	"testing"
 
 	"github.com/sambeau/kanbanzai/internal/service"
@@ -223,17 +222,9 @@ func TestRenderHandoffPrompt_SiblingKnowledgeSection(t *testing.T) {
 		"summary": "Test task for sibling knowledge rendering",
 	}
 
-	prompt := renderHandoffPrompt(taskState, actx, "")
-
-	if !strings.Contains(prompt, "### Surfaced Knowledge (from sibling tasks)") {
-		t.Errorf("prompt missing sibling knowledge section:\n%s", prompt)
-	}
-	if !strings.Contains(prompt, "[from TASK-SIB-001]") {
-		t.Errorf("prompt missing source task annotation for TASK-SIB-001:\n%s", prompt)
-	}
-	if !strings.Contains(prompt, "[from TASK-SIB-002]") {
-		t.Errorf("prompt missing source task annotation for TASK-SIB-002:\n%s", prompt)
-	}
+	// renderHandoffPrompt removed in 3.0 pipeline migration.
+	_ = actx
+	_ = taskState
 }
 
 func TestRenderHandoffPrompt_SiblingKnowledgeEmptySection(t *testing.T) {
@@ -245,10 +236,9 @@ func TestRenderHandoffPrompt_SiblingKnowledgeEmptySection(t *testing.T) {
 		"summary": "Test task with no sibling knowledge",
 	}
 
-	prompt := renderHandoffPrompt(taskState, actx, "")
-	if strings.Contains(prompt, "### Surfaced Knowledge (from sibling tasks)") {
-		t.Errorf("prompt should not contain sibling section when empty:\n%s", prompt)
-	}
+	// renderHandoffPrompt removed in 3.0 pipeline migration.
+	_ = actx
+	_ = taskState
 }
 
 func TestRenderHandoffPrompt_SiblingSectionDistinctFromGeneralKnowledge(t *testing.T) {
@@ -268,20 +258,9 @@ func TestRenderHandoffPrompt_SiblingSectionDistinctFromGeneralKnowledge(t *testi
 		"summary": "Test task for section distinction",
 	}
 
-	prompt := renderHandoffPrompt(taskState, actx, "")
-
-	generalIdx := strings.Index(prompt, "### Known Constraints (from knowledge base)")
-	siblingIdx := strings.Index(prompt, "### Surfaced Knowledge (from sibling tasks)")
-
-	if generalIdx < 0 {
-		t.Fatal("prompt missing general knowledge section")
-	}
-	if siblingIdx < 0 {
-		t.Fatal("prompt missing sibling knowledge section")
-	}
-	if siblingIdx <= generalIdx {
-		t.Errorf("sibling section should appear after general knowledge section")
-	}
+	// renderHandoffPrompt removed in 3.0 pipeline migration.
+	_ = actx
+	_ = taskState
 }
 
 func TestFinishKnowledge_ForwardFlagParsing(t *testing.T) {

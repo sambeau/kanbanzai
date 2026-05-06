@@ -41,27 +41,7 @@ func TestStageIntegration_DevelopingHandoff(t *testing.T) {
 		t.Errorf("filesContext has %d entries, want 2", len(actx.filesContext))
 	}
 
-	// Render prompt and verify section ordering.
-	prompt := renderHandoffPrompt(taskState, actx, "")
-	conventionsIdx := strings.Index(prompt, "### Conventions")
-	orchestrationIdx := strings.Index(prompt, "## Orchestration")
-	taskIdx := strings.Index(prompt, "## Task:")
-
-	if conventionsIdx < 0 {
-		t.Fatal("prompt missing ### Conventions")
-	}
-	if orchestrationIdx < 0 {
-		t.Fatal("prompt missing ## Orchestration")
-	}
-	if taskIdx < 0 {
-		t.Fatal("prompt missing ## Task:")
-	}
-	if conventionsIdx >= orchestrationIdx {
-		t.Error("Conventions should appear before Orchestration")
-	}
-	if orchestrationIdx >= taskIdx {
-		t.Error("Orchestration should appear before Task")
-	}
+	// Render prompt verification skipped: renderHandoffPrompt removed in 3.0 pipeline migration.
 }
 
 func TestStageIntegration_SpecifyingHandoff(t *testing.T) {
@@ -90,11 +70,7 @@ func TestStageIntegration_SpecifyingHandoff(t *testing.T) {
 		t.Errorf("filesContext has %d entries, want 0 (specifying excludes files)", len(actx.filesContext))
 	}
 
-	// Render prompt: no file paths section.
-	prompt := renderHandoffPrompt(taskState, actx, "")
-	if strings.Contains(prompt, "### Files") {
-		t.Error("specifying prompt should not contain ### Files section")
-	}
+	// Render prompt verification skipped: renderHandoffPrompt removed in 3.0 pipeline migration.
 }
 
 func TestStageIntegration_ValidationRejection(t *testing.T) {

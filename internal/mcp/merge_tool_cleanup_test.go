@@ -16,17 +16,7 @@ import (
 )
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
-
-// runGit runs a git command in the given directory, failing the test on error.
-func runGit(t *testing.T, dir string, args ...string) {
-	t.Helper()
-	cmd := exec.Command("git", args...)
-	cmd.Dir = dir
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		t.Fatalf("git %v failed: %v\nOutput: %s", args, err, out)
-	}
-}
+// (runGit is shared from branch_tool_test.go)
 
 // setupMergeTestRepo creates a real git repo with two commits on main and a
 // feature branch with one additional commit. Returns the repo path, the
