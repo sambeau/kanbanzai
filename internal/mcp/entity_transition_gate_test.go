@@ -799,3 +799,115 @@ func assertFeatureStatus(t *testing.T, entitySvc *service.EntityService, featID,
 		t.Errorf("feature %s status = %q, want %q", featID, gotStatus, wantStatus)
 	}
 }
+
+// ─── Transition state machine enforcement ─────────────────────────────────────
+
+// TestEntityTransition_InvalidRejected verifies that invalid feature lifecycle
+// transitions are rejected. Covers C2 (P50 dev-plan) and BF-5.
+func TestEntityTransition_InvalidRejected(t *testing.T) {
+	t.Parallel()
+
+	invalidCases := []struct {
+		name   string
+		setup  string
+		target string
+	}{
+		// Terminal states have no outgoing transitions.
+		{"cancelled→developing", "cancelled", "developing"},
+	}
+
+	for _, tc := range invalidCases {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+			stateRoot := t.TempDir()
+			repoRoot := t.TempDir()
+			entitySvc := service.NewEntityService(stateRoot)
+			docSvc := service.NewDocumentService(stateRoot, repoRoot)
+
+			planID := createEntityTestPlan(t, entitySvc, "gate-inv-"+strings.ReplaceAll(tc.name, "→", "-"))
+			featID := createEntityTestFeatureWithStatus(t, entitySvc, planID, "feat-inv-"+strings.ReplaceAll(tc.name, "→", "-"), tc.setup)
+
+			result := callEntityToolWithDocSvcJSON(t, entitySvc, docSvc, map[string]any{
+				"action": "transition",
+				"id":     featID,
+				"status": tc.target,
+			})
+
+			// Must return an error — check for error in either string or map form.
+			hasError := false
+			if errStr, ok := result["error"].(string); ok && errStr != "" {
+				hasError = true
+			}
+			if errMap, ok := result["error"].(map[string]any); ok && len(errMap) > 0 {
+				hasError = true
+			}
+			if !hasError {
+				t.Fatalf("expected error for invalid transition %q → %q, got: %v", tc.setup, tc.target, result)
+			}
+
+			// Feature must remain in the setup status (no mutation occurred).
+			assertFeatureStatus(t, entitySvc, featID, tc.setup)
+		})
+	}
+}
+
+// TestEntityTransition_ValidPasses verifies that valid feature lifecycle
+// transitions pass through the transition validation.
+func TestEntityTransition_ValidPasses(t *testing.T) {
+	t.Parallel()
+
+	validCases := []struct {
+		name   string
+		setup  string
+		target string
+	}{
+		{"designing→specifying", "designing", "specifying"},
+		{"developing→needs-rework", "developing", "needs-rework"},
+		{"needs-rework→reviewing", "needs-rework", "reviewing"},
+		{"developing→reviewing", "developing", "reviewing"},
+		{"dev-planning→developing", "dev-planning", "developing"},
+	}
+
+	for _, tc := range validCases {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+			stateRoot := t.TempDir()
+			repoRoot := t.TempDir()
+			entitySvc := service.NewEntityService(stateRoot)
+			docSvc := service.NewDocumentService(stateRoot, repoRoot)
+
+			planID := createEntityTestPlan(t, entitySvc, "gate-val-"+strings.ReplaceAll(tc.name, "→", "-"))
+			featID := createEntityTestFeatureWithStatus(t, entitySvc, planID, "feat-val-"+strings.ReplaceAll(tc.name, "→", "-"), tc.setup)
+
+			result := callEntityToolWithDocSvcJSON(t, entitySvc, docSvc, map[string]any{
+				"action": "transition",
+				"id":     featID,
+				"status": tc.target,
+			})
+
+			// Check if error is present.
+			var errStr string
+			if s, ok := result["error"].(string); ok {
+				errStr = s
+			} else if m, ok := result["error"].(map[string]any); ok {
+				if msg, _ := m["message"].(string); msg != "" {
+					errStr = msg
+				}
+			}
+
+			// Gate failures (e.g. no design doc, no rework tasks) are expected.
+			// Just ensure the error isn't an "invalid transition" or "terminal state" rejection.
+			if errStr != "" {
+				if strings.Contains(errStr, "invalid transition") || strings.Contains(errStr, "terminal state") {
+					t.Errorf("valid transition %q → %q was rejected: %s", tc.setup, tc.target, errStr)
+				}
+				return
+			}
+
+			// If no error, verify the entity field is present.
+			if _, hasEntity := result["entity"]; !hasEntity {
+				t.Errorf("expected entity field in successful transition, got: %v", result)
+			}
+		})
+	}
+}

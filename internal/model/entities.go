@@ -779,6 +779,7 @@ var FeatureValidTransitions = map[FeatureStatus]map[FeatureStatus]bool{
 		FeatureStatusCancelled:   true,
 	},
 	FeatureStatusNeedsRework: {
+		FeatureStatusDeveloping: true,
 		FeatureStatusReviewing:  true,
 		FeatureStatusSuperseded: true,
 		FeatureStatusCancelled:  true,

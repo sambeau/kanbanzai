@@ -153,36 +153,36 @@ func (s *EntityService) GetPlan(id string) (ListResult, error) {
 
 // ListPlans returns all Plans, optionally filtered.
 func (s *EntityService) ListPlans(filters PlanFilters) ([]ListResult, error) {
-	dir := filepath.Join(s.root, "plans")
-	entries, err := listDirectory(dir)
-	if err != nil {
-		return nil, err
-	}
-
 	var results []ListResult
-	for _, entry := range entries {
-		if !strings.HasSuffix(entry, ".yaml") {
-			continue
-		}
-
-		id, slug, err := parsePlanFileName(entry)
+	seen := make(map[string]bool)
+	for _, subdir := range []string{"plans", "batches"} {
+		dir := filepath.Join(s.root, subdir)
+		entries, err := listDirectory(dir)
 		if err != nil {
 			continue
 		}
-
-		result, err := s.loadPlan(id, slug)
-		if err != nil {
-			continue
+		for _, entry := range entries {
+			if !strings.HasSuffix(entry, ".yaml") {
+				continue
+			}
+			id, slug, err := parsePlanFileName(entry)
+			if err != nil {
+				continue
+			}
+			if seen[id] {
+				continue
+			}
+			seen[id] = true
+			result, err := s.loadPlan(id, slug)
+			if err != nil {
+				continue
+			}
+			if !matchesPlanFilters(result, filters) {
+				continue
+			}
+			results = append(results, result)
 		}
-
-		// Apply filters
-		if !matchesPlanFilters(result, filters) {
-			continue
-		}
-
-		results = append(results, result)
 	}
-
 	return results, nil
 }
 
@@ -373,26 +373,31 @@ func (s *EntityService) loadPlan(id, slug string) (ListResult, error) {
 	}, nil
 }
 
-// listPlanIDs returns all existing Plan IDs.
+// listPlanIDs returns all existing Plan IDs from both plans/ and batches/ directories.
 func (s *EntityService) listPlanIDs() ([]string, error) {
-	dir := filepath.Join(s.root, "plans")
-	entries, err := listDirectory(dir)
-	if err != nil {
-		return nil, nil // Directory doesn't exist yet
-	}
-
 	var ids []string
-	for _, entry := range entries {
-		if !strings.HasSuffix(entry, ".yaml") {
-			continue
-		}
-		id, _, err := parsePlanFileName(entry)
+	seen := make(map[string]bool)
+	for _, subdir := range []string{"plans", "batches"} {
+		dir := filepath.Join(s.root, subdir)
+		entries, err := listDirectory(dir)
 		if err != nil {
 			continue
 		}
-		ids = append(ids, id)
+		for _, entry := range entries {
+			if !strings.HasSuffix(entry, ".yaml") {
+				continue
+			}
+			id, _, err := parsePlanFileName(entry)
+			if err != nil {
+				continue
+			}
+			if seen[id] {
+				continue
+			}
+			seen[id] = true
+			ids = append(ids, id)
+		}
 	}
-
 	return ids, nil
 }
 

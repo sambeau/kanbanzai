@@ -412,10 +412,65 @@ When a workflow problem is discovered that isn't tied to a specific task
 
 ---
 
+## Post-Review Merge
+
+After the review gate passes (all specialist reviewers produce reports, review-gate-validator
+passes) and a PR exists, the orchestrator must complete a 5-step merge sequence. The
+`merging` stage gate is `auto` — no human checkpoint is required.
+
+**Step 1: Verify all tasks are terminal** — Confirm every task under the feature is in a
+terminal state (`done`, `not-planned`, or `duplicate`). No task may remain in `ready`,
+`active`, `needs-review`, or `needs-rework`:
+
+```
+entity(action: "list", type: "task", parent: "<feature-id>")
+```
+
+If any task is non-terminal, STOP. Complete or transition them first.
+
+**Step 2: Transition feature to `merging`** — Advance from `reviewing` to `merging`:
+
+```
+entity(action: "transition", id: "<feature-id>", status: "merging")
+```
+
+**Step 3: Run merge check and execute** — Verify the PR and merge:
+
+```
+pr(action: "status", entity_id: "<feature-id>")
+merge(action: "check", entity_id: "<feature-id>")
+merge(action: "execute", entity_id: "<feature-id>")
+```
+
+**Step 4: Verify merge ancestry** — Confirm the feature branch is an ancestor of main:
+
+```
+git merge-base --is-ancestor <feature-branch> main
+```
+
+**Step 5: Build, test, and transition** — Advance to `verifying`, then run build and tests:
+
+```
+entity(action: "transition", id: "<feature-id>", status: "verifying")
+go build ./...
+go test ./...
+```
+
+If both pass:
+
+```
+entity(action: "transition", id: "<feature-id>", status: "done")
+```
+
+If either fails, transition to `needs-rework` with the failure output as the reason.
+
+---
+
 ## Related
 
 - `kanbanzai-getting-started` — session orientation, work queue
 - `kanbanzai-workflow` — stage gates, lifecycle, when to stop
 - `kanbanzai-documents` — document management
 - `orchestrate-development` — orchestrating multi-task feature work
+- `orchestrate-review` — full review procedure including Post-Review Merge
 - `refs/sub-agents.md` — required context template for spawn_agent
