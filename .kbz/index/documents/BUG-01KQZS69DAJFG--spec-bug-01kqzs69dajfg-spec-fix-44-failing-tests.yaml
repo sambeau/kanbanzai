@@ -1,0 +1,120 @@
+document_id: BUG-01KQZS69DAJFG/spec-bug-01kqzs69dajfg-spec-fix-44-failing-tests
+document_path: work/B52-fix-44-failing-tests/BUG-01KQZS69DAJFG-spec-fix-44-failing-tests.md
+content_hash: 4367008d71384df43e449fee39d0dc79d4176c1a839253b7a7ece81c26811af3
+indexed_at: 2026-05-06T23:19:22.88948Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Spec: Fix 44 Failing Tests from Uncommitted Refactors'
+      byte_offset: 0
+      byte_count: 3317
+      word_count: 440
+      content_hash: 4367008d71384df43e449fee39d0dc79d4176c1a839253b7a7ece81c26811af3
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 110
+          byte_count: 248
+          word_count: 37
+          content_hash: c9acceda9eae4c836503d28d5bc727bb8ad1fc278cf0180f2b5e0413ce555d7d
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 358
+          byte_count: 500
+          word_count: 72
+          content_hash: 5bb2e7aad4752ffd8a94c9ba457c67372fd201ec6137fa1f7503c0fc439a6c60
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 858
+          byte_count: 1457
+          word_count: 188
+          content_hash: de66657fd3de0bbc2b8a70a1d48038afd2346b1f7252a4157295986aab6edd90
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'FR-01: Restore merging/verifying feature lifecycle states'
+              byte_offset: 886
+              byte_count: 312
+              word_count: 36
+              content_hash: 44ef6c231bb58667b06a1a49951d1d9d634a3a4f289cf1291eb9c62d0e4c8448
+            - path: 1.3.2
+              level: 3
+              title: 'FR-02: Fix entity classification heuristics'
+              byte_offset: 1198
+              byte_count: 268
+              word_count: 32
+              content_hash: f72d963c40fa2add1ea105d376c295cf89e218edfa906b90e9434916c6a50c2d
+            - path: 1.3.3
+              level: 3
+              title: 'FR-03: Fix intelligence access counters'
+              byte_offset: 1466
+              byte_count: 175
+              word_count: 24
+              content_hash: 8cc66474f635f67df66f958741cd9c8c1e64eb871ab835c1ec0c08951502d8ff
+            - path: 1.3.4
+              level: 3
+              title: 'FR-04: Update storage tests for batches/ path'
+              byte_offset: 1641
+              byte_count: 125
+              word_count: 18
+              content_hash: d4934411534b7f2cf37a7e8f3c63ab6dfe8cedad91b327f4d56f210637b10e9d
+            - path: 1.3.5
+              level: 3
+              title: 'FR-05: Update handoff tests for pipeline v3.0'
+              byte_offset: 1766
+              byte_count: 166
+              word_count: 25
+              content_hash: 304ae24e9bb51363267d27315795b92fcad442ec332df8d873216325e7998d09
+            - path: 1.3.6
+              level: 3
+              title: 'FR-06: Update error message assertions'
+              byte_offset: 1932
+              byte_count: 124
+              word_count: 18
+              content_hash: 7538f20d412973137449e58b79da4e7baa4ed589d8209647bce179a928425f7d
+            - path: 1.3.7
+              level: 3
+              title: 'FR-07: Update decompose test expectations'
+              byte_offset: 2056
+              byte_count: 137
+              word_count: 18
+              content_hash: dc3cb88b0745eb31497b376037799ede51e04fed0af9f230f3a9931797e2efbd
+            - path: 1.3.8
+              level: 3
+              title: 'FR-08: Fix context trimming order test'
+              byte_offset: 2193
+              byte_count: 122
+              word_count: 14
+              content_hash: a6283fb9b602f7fa0b3f72a626bdb35257fea2c9d6de515a7b9250f1288d5979
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 2315
+          byte_count: 1002
+          word_count: 129
+          content_hash: 02755617705c7e18da96f73c17489d764bc1b1989dc9478703663923dab56bed
+entity_refs:
+    - entity_id: BUG-01KQZS69DAJFG
+      entity_type: bug
+      section_path: "1"
+      byte_offset: 73
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.8
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

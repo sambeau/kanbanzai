@@ -1,0 +1,73 @@
+document_id: BUG-01KQZS69DAJFG/dev-plan-bug-01kqzs69dajfg-dev-plan-fix-44-failing-tests
+document_path: work/B52-fix-44-failing-tests/BUG-01KQZS69DAJFG-dev-plan-fix-44-failing-tests.md
+content_hash: c80fbcd9ba845c26b30c61f1a0012cad87e61d6cfd4161a5ceb1af35d25af780
+indexed_at: 2026-05-06T23:20:07.656724Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Fix 44 Failing Tests from Uncommitted Refactors'
+      byte_offset: 0
+      byte_count: 3363
+      word_count: 445
+      content_hash: c80fbcd9ba845c26b30c61f1a0012cad87e61d6cfd4161a5ceb1af35d25af780
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 114
+          byte_count: 186
+          word_count: 27
+          content_hash: fb8967b40e5da0439b0a67f3bd3a229941e37bdbc74e276070129043580b472a
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 300
+          byte_count: 2079
+          word_count: 244
+          content_hash: c390cc3df81195425ccc3af6c3d891b49788e14f0551d10e59a33ecf2d73b3a7
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Phase 1: Production Code Fixes'
+              byte_offset: 319
+              byte_count: 845
+              word_count: 111
+              content_hash: a7cd27d35ed195afc05487bb49440c6dd5698afd9c1349b3d6214759007a5172
+            - path: 1.2.2
+              level: 3
+              title: 'Phase 2: Test Updates'
+              byte_offset: 1164
+              byte_count: 1215
+              word_count: 130
+              content_hash: 5c29c6e923e5af2e90788921afefa640b75e0d723ca1ee4eb5065228c05c8511
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 2379
+          byte_count: 393
+          word_count: 51
+          content_hash: d7281f6bdb0d74ad0955f6544309fe28dfa6baef58dff580a2a74d0921d8ca96
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 2772
+          byte_count: 322
+          word_count: 39
+          content_hash: 55fd1ef7957f7a148484b0ef7805fca9072f285732d46abc44fc5cf4365f294c
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 3094
+          byte_count: 269
+          word_count: 70
+          content_hash: 0b1cd02a0d289596948612e96a0af2bbd878d4362c5e18c185a82aa409a967c4
+entity_refs:
+    - entity_id: BUG-01KQZS69DAJFG
+      entity_type: bug
+      section_path: "1"
+      byte_offset: 77
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false
