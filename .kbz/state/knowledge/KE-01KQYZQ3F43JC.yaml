@@ -1,0 +1,16 @@
+confidence: "0.5"
+content: "The kbz serve MCP server has no built-in restart mechanism. When a new binary is built (via make install), the running server process must be killed and restarted manually by the human operator. A `kbz server restart` CLI command would let agents reload the server in-band after a build, eliminating the need for human intervention. The server already reads its binary path from the install record and could compare git SHAs to detect staleness."
+created: "2026-05-06T15:50:14Z"
+created_by: sambeau
+id: KE-01KQYZQ3F43JC
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - tool-gap
+  - server
+tier: 2
+topic: mcp-server-restart
+ttl_days: 90
+updated: "2026-05-06T15:50:14Z"
+use_count: 0

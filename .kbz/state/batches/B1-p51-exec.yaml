@@ -1,0 +1,10 @@
+id: B1-p51-exec
+slug: p51-exec
+name: Handoff Pipeline Unification
+status: proposed
+summary: Implementation features for P51.
+created: "2026-05-06T15:54:25Z"
+created_by: sambeau
+updated: "2026-05-06T15:54:25Z"
+next_feature_seq: 1
+parent: P51-handoff-pipeline-unification
