@@ -1,10 +1,12 @@
+approved_at: "2026-05-06T16:52:08Z"
+approved_by: sambeau
 canonical_content_hash: 7ca1b501ec0a3ac5ad7ebfe9635c123154ec24d07eef9753a1036f7f8e0f52f9
-content_hash: e5e247d0b739f76e5a99732eb5d4def02fe3ef07506f2f605fa8c5e097938f9f
+content_hash: 0bdd018c96c6684a0b19cc121d9aaa8ee5eaa9f86f2b19b687297ea4c5b88496
 created: "2026-05-06T16:50:16Z"
 created_by: sambeau
 id: PROJECT/dev-plan-p51-dev-plan-remove-legacy-assembly-path
 path: work/P51-handoff-pipeline-unification/P51-dev-plan-remove-legacy-assembly-path.md
-status: draft
+status: approved
 title: "Dev Plan: Remove Legacy Assembly Path"
 type: dev-plan
-updated: "2026-05-06T16:50:16Z"
+updated: "2026-05-06T16:52:08Z"
