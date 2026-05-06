@@ -146,6 +146,10 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 			}
 			return fields, nil
 		}
+		windowSize := 0
+		if localConfig != nil && localConfig.ContextWindowTokens > 0 {
+			windowSize = localConfig.ContextWindowTokens
+		}
 		pipeline = &kbzctx.Pipeline{
 			Roles:               &kbzctx.RoleStoreAdapter{Store: roleStore},
 			Skills:              &kbzctx.SkillStoreAdapter{Store: skillStore},
@@ -153,6 +157,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 			Knowledge:           kbzctx.NewSurfacer(entryLoader, capTracker, nil),
 			MergedToolHints:     mergedToolHints,
 			ToolHintRoleStore:   roleStore,
+			WindowSize:          windowSize,
 			StalenessWindowDays: cfg.Freshness.StalenessWindowDays,
 		}
 		log.Printf("[server] 3.0 context assembly pipeline loaded with %d stage bindings", len(bf.StageBindings))

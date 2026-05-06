@@ -47,6 +47,9 @@ type LocalConfig struct {
 	ToolHints map[string]string `yaml:"tool_hints,omitempty"`
 	// CodebaseMemory holds codebase-memory-mcp settings for this machine.
 	CodebaseMemory CodebaseMemoryConfig `yaml:"codebase_memory,omitempty"`
+	// ContextWindowTokens is an optional override for the context window size in tokens.
+	// When set, must be >= 100,000. The recommended value is 1,000,000.
+	ContextWindowTokens int `yaml:"context_window_tokens,omitempty"`
 }
 
 // GetGitHubToken returns the configured GitHub token, or empty string if not set.
@@ -66,7 +69,22 @@ func (lc *LocalConfig) GetGitHubRepo() string {
 
 // LoadLocalConfig loads the local configuration from the default location.
 func LoadLocalConfig() (*LocalConfig, error) {
-	return LoadLocalConfigFrom(filepath.Join(core.RootPath(), LocalConfigFile))
+	lc, err := LoadLocalConfigFrom(filepath.Join(core.RootPath(), LocalConfigFile))
+	if err != nil {
+		return nil, err
+	}
+	if err := lc.Validate(); err != nil {
+		return nil, err
+	}
+	return lc, nil
+}
+
+// Validate checks the local config for semantic correctness.
+func (lc *LocalConfig) Validate() error {
+	if lc.ContextWindowTokens > 0 && lc.ContextWindowTokens < 100_000 {
+		return fmt.Errorf("context_window_tokens must be at least 100,000 (recommended: 1,000,000)")
+	}
+	return nil
 }
 
 // LoadLocalConfigFrom loads the local configuration from the specified path.

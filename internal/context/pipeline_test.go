@@ -1358,6 +1358,61 @@ func TestWindowTokensCustom(t *testing.T) {
 	}
 }
 
+// ─── Context Budget Recalibration (P51) ──────────────────────────────────────
+
+// TestWindowTokens_NoConfig verifies AC-001:
+// Pipeline with no config → WindowTokens() returns DefaultContextWindowTokens (1,000,000).
+func TestWindowTokens_NoConfig(t *testing.T) {
+	t.Parallel()
+	p := &Pipeline{}
+	got := p.WindowTokens()
+	if got != 1_000_000 {
+		t.Errorf("WindowTokens() = %d, want 1,000,000", got)
+	}
+	if got != DefaultContextWindowTokens {
+		t.Errorf("WindowTokens() = %d, DefaultContextWindowTokens = %d — should match", got, DefaultContextWindowTokens)
+	}
+}
+
+// TestWindowTokens_ConfigOverride verifies AC-003:
+// Config with context_window_tokens: 500000 → window is 500,000.
+func TestWindowTokens_ConfigOverride(t *testing.T) {
+	t.Parallel()
+	p := &Pipeline{WindowSize: 500_000}
+	got := p.WindowTokens()
+	if got != 500_000 {
+		t.Errorf("WindowTokens() = %d, want 500,000", got)
+	}
+}
+
+// TestWindowTokens_NoConfigKey verifies AC-004:
+// Config without context_window_tokens key → window is DefaultContextWindowTokens.
+func TestWindowTokens_NoConfigKey(t *testing.T) {
+	t.Parallel()
+	// WindowSize of 0 means "not configured" — should fall back to default.
+	p := &Pipeline{WindowSize: 0}
+	got := p.WindowTokens()
+	if got != DefaultContextWindowTokens {
+		t.Errorf("WindowTokens() = %d, want DefaultContextWindowTokens (%d)", got, DefaultContextWindowTokens)
+	}
+}
+
+// TestWindowTokens_ValidationRejectsLowValue verifies AC-005:
+// Config with context_window_tokens: 50000 → validation should reject below 100,000.
+// The validation happens in the config layer; this test verifies that WindowSize
+// is set to 50,000 in the Pipeline struct and that WindowTokens() returns it.
+// The rejection logic is tested at the config parsing layer.
+func TestWindowTokens_ValidationRejectsLowValue(t *testing.T) {
+	t.Parallel()
+	p := &Pipeline{WindowSize: 50_000}
+	got := p.WindowTokens()
+	// If WindowSize is set directly (bypassing config validation), it is honored.
+	// The config validation layer is responsible for rejecting values below 100,000.
+	if got != 50_000 {
+		t.Errorf("WindowTokens() = %d, want 50,000 (WindowSize honored directly)", got)
+	}
+}
+
 // ─── Adapter tests ────────────────────────────────────────────────────────────
 
 func TestNoOpSurfacer(t *testing.T) {

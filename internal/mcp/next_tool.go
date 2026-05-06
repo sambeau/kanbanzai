@@ -352,11 +352,19 @@ func nextContextToMap(actx assembledContext) map[string]any {
 
 	trimmedOut := make([]map[string]any, len(actx.trimmed))
 	for i, te := range actx.trimmed {
-		trimmedOut[i] = map[string]any{
-			"type":       te.entryType,
-			"topic":      te.topic,
-			"size_bytes": te.sizeBytes,
+		entry := map[string]any{
+			"type":           te.entryType,
+			"topic":          te.topic,
+			"size_bytes":     te.sizeBytes,
+			"token_estimate": te.tokenEstimate,
 		}
+		if te.scope != "" {
+			entry["scope"] = te.scope
+		}
+		if te.tier > 0 {
+			entry["tier"] = te.tier
+		}
+		trimmedOut[i] = entry
 	}
 
 	out := map[string]any{
