@@ -1,0 +1,12 @@
+id: BUG-01KQZS69DAJFG
+slug: fix-44-tests
+name: Fix 44 failing tests from uncommitted refactors
+status: reported
+severity: high
+priority: high
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-05-06T23:15:26Z"
+observed: "44 tests fail across 4 packages (internal/mcp: 16, internal/service: 23, internal/storage: 4, internal/validate: 1). Root causes: plan→batch rename breaking storage paths and entity classification, merging/verifying feature states missing from validate/lifecycle.go, handoff pipeline v3.0 format changes, intelligence access counters not incrementing, plan rollup returning nil, decompose diagnostics format changed."
+expected: All 44 tests pass. Production code changes are correctly reflected in tests and validation logic.
+tier: bug_fix
