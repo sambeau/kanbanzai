@@ -1,0 +1,19 @@
+confidence: "0.5"
+content: "The fast-track pipeline failed again on 2026-05-06: it hit a gate where there shouldn't have been one. The orchestrator stopped at a milestone transition (batch complete or feature transition) when it should have continued. This is the same implicit-gate pattern that P50 exhibited and which P52 is designed to fix. Reinforces the need for the fast-track orchestration profile — the behavioural instruction isn't strong enough to override the training-data pattern of \"summary output → wait for response\"."
+created: "2026-05-06T19:45:39Z"
+created_by: sambeau
+id: KE-01KQZD64ZGZTR
+learned_from: P52-fast-track-orchestration
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - fast-track
+  - orchestration
+  - implicit-gate
+  - P52
+tier: 2
+topic: fast-track-pipeline-gate-failure-2026-05-06
+ttl_days: 90
+updated: "2026-05-06T19:45:39Z"
+use_count: 0
