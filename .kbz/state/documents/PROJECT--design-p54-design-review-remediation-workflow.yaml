@@ -1,11 +1,13 @@
-canonical_content_hash: 9c3858b7cc10d1788ef2c3e09026e6bb8d2425d53784e891b330556eb6eaf078
-content_hash: ba7e9b8bb5ac6fa60cf4ce6375cecbcecef86fa626d4a1030afc7cc80f9597d4
+approved_at: "2026-05-06T22:45:53Z"
+approved_by: sambeau
+canonical_content_hash: 1e48642bc27275eca85fe31c50f9fa5cceaa839647604c5c5e7c5aeef1a02fad
+content_hash: d4dc82d7c4c0ab0d40cf3bfb2c39ccd4f0828c1e31176e363963a4ed5b8c73fe
 created: "2026-05-05T12:32:24Z"
 created_by: sambeau
 id: PROJECT/design-p54-design-review-remediation-workflow
 owner: PROJECT
 path: work/P54-review-remediation-workflow/P54-design-review-remediation-workflow.md
-status: draft
+status: approved
 title: "Design: Review Remediation Workflow"
 type: design
-updated: "2026-05-05T12:32:44Z"
+updated: "2026-05-06T22:45:53Z"
