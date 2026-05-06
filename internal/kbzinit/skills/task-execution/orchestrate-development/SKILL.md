@@ -216,6 +216,170 @@ After all tasks reach a terminal state, the feature must be explicitly advanced 
    no open feature branches from cohort N remain (`git branch | grep FEAT` returns only
    cohort-N+1 or later branches).
 
+## Fast-Track Profile
+
+When the feature's tier is `retro_fix` or the batch is explicitly marked fast-track,
+replace the full 6-phase procedure with this lightweight 3-phase flow.
+
+### No-Stop Contract
+
+You are in fast-track mode. You will NOT stop for confirmation at any point.
+
+The ONLY valid stop conditions are:
+- All work is done (all features transitioned, all branches merged)
+- A build failure requires code changes beyond the orchestrator's scope
+- A missing dependency blocks all remaining tasks
+- Spec ambiguity cannot be resolved without human input
+
+If you find yourself about to produce a status table or summary, ask: is all work done?
+If no, continue immediately without producing output. This contract is a structural
+constraint — breaking it constitutes the Implicit Gate anti-pattern.
+
+### Phase 0: Session Start Audit
+
+Replaces Phase 0 (Cohort Setup) from the full procedure. Fast-track has no cohorts —
+single-feature batches only.
+
+1. **Call `status()` to build authoritative entity state.** Call `status()` with the plan
+   or batch ID. Identify:
+   - Terminal tasks (done, not-planned, duplicate)
+   - In-flight tasks (active, claimed)
+   - Ready tasks (all dependencies satisfied)
+   - Stuck tasks (queued with unmet dependencies, active but stale)
+
+2. **Cross-reference task state against code existence.** For each task marked `done`,
+   verify the described change exists in the codebase. If a task is `done` but its
+   deliverable does not exist, flag it — the task state is unreliable.
+
+3. **Check review-readiness drift before dispatch.** If a feature is in `reviewing` via
+   override but still has non-terminal tasks, surface that as a blocker. Lifecycle
+   status alone is not authoritative — verify task terminality independently.
+
+4. **Check dirty working-tree state.** Run `git status`. Before implementing, classify
+   any uncommitted changes as:
+   - Current-scope changes (related to this feature)
+   - Prior unfinished implementation work
+   - Workflow/index metadata
+   Do not proceed if the working tree contains unrelated implementation changes that
+   would create merge conflicts.
+
+5. **Identify ghost work.** For each ready task, check whether the described change
+   already exists in the codebase. If yes, mark the task `not-planned` — do not claim
+   or implement it. Ghost work wastes cycles and creates merge conflicts.
+
+### Phase 1: Dispatch
+
+Replaces Phase 1 (Read Dev-Plan), Phase 2 (Identify Parallel-Dispatchable), and
+Phase 3 (Dispatch Sub-Agents) from the full procedure.
+
+1. **Identify the ready frontier.** From the session-start audit, select all tasks in
+   `ready` status with all `depends_on` tasks in a terminal state.
+
+2. **Dispatch all ready frontier tasks in parallel.** Use
+   `handoff(task_id: "TASK-xxx", role: "implementer-go")` for every task in the ready
+   frontier. Dispatch them all in one batch — do not serialise independent tasks.
+
+   **Integration note (P51):** The `role: "implementer-go"` parameter is explicit
+   regardless of P51's handoff pipeline state. This ensures correctness even if P51
+   default-role routing is not yet active.
+
+   **Integration note (P44):** When `dispatch_task` arrives, this step changes from
+   `handoff` + `spawn_agent` to `dispatch_task(task_id, category: "implementation")`.
+   The behavioral rules (no stops, continuous polling, immediate dispatch of
+   newly-unblocked tasks) remain identical — only the dispatch mechanism changes.
+
+3. **Do NOT stop after dispatching.** If there is nothing to dispatch because tasks are
+   still active, poll `status()` once per minute until something completes. Do not
+   produce a status table or wait for confirmation.
+
+4. **Dispatch newly-unblocked tasks immediately.** When a task completes, immediately
+   dispatch any tasks that are now unblocked. Do not wait for the full batch to finish.
+
+### Phase 2: Close-Out
+
+Replaces Phase 4 (Monitor Progress), Phase 5 (Context Compaction), and Phase 6
+(Close-Out) from the full procedure.
+
+1. **Verify all tasks are terminal.** When all tasks reach a terminal state, confirm
+   each feature can advance. Call `status()` and verify no non-terminal tasks remain.
+
+2. **Transition features.** Call `entity(action: "transition", id: "FEAT-xxx", status: ...)`
+   to advance each feature through to `done` or `reviewing` as appropriate. Follow the
+   full procedure's Phase 6 steps for merge, branch deletion, and worktree cleanup.
+
+3. **Report completion.** Produce a completion summary listing features and their final
+   status. This is the ONLY status output produced during a fast-track session — every
+   other output is extraneous.
+
+4. **Procedural compaction trigger.** Before close-out, estimate context utilisation. If
+   at ~60%+ estimated utilisation and work remains for another feature, produce a
+   compaction artefact using the U-shaped template and instruct the human to start a
+   fresh session with it.
+
+   **Integration note (P44):** This manual estimation step is a stopgap. P44 Phase 3b
+   will replace it with automated token-count-based compaction triggers.
+
+### Rules
+
+These rules are structural constraints — violating any of them brings the fast-track
+profile back into implicit full-orchestration behaviour:
+
+- **NO stops at batch boundaries, milestone completions, or wave dispatches.** The only
+  valid stop is the close-out completion report.
+- **NO status tables until all work is done.** Status tables are pattern-matched as
+  confirmation requests. Do not produce them.
+- **NO ghost work.** Audit every ready task against the codebase before claiming. Mark
+  already-completed work `not-planned`.
+- **NO user summaries.** Trust `status()` output only. User-provided state summaries go
+  stale and are not authoritative.
+- **ALWAYS use `handoff(task_id, role: "implementer-go")` for sub-agent dispatch.**
+  Never compose implementation prompts manually.
+
+### Fast-Track Anti-Patterns
+
+These are additions to the main Anti-Patterns section. They apply only when operating
+under the fast-track profile.
+
+#### Implicit Gate
+
+- **Detect:** The orchestrator stops after a batch of work completes, presents a status
+  table, and waits for confirmation.
+- **BECAUSE:** Fast-track has no human gates. The no-stop contract prohibits stopping at
+  any point other than the four valid stop conditions. An implicit gate wastes the
+  human's time and adds latency the profile exists to remove.
+- **Resolve:** After completing work, check whether more work exists. If yes, continue
+  immediately. Do not produce summary output until all work is done.
+
+#### Ghost Work Discovery
+
+- **Detect:** The orchestrator discovers mid-implementation that a task's work already
+  exists in the codebase.
+- **BECAUSE:** The session-start audit should catch this. Implementing already-done work
+  wastes cycles, creates unnecessary merge conflicts, and produces duplicate or
+  conflicting changes.
+- **Resolve:** Before claiming any task, verify its described change does not already
+  exist in the codebase. If it does, mark `not-planned` and move on.
+
+#### State Ambiguity Drift
+
+- **Detect:** The orchestrator relies on a user's summary table or conversation context
+  instead of calling `status()` to get authoritative entity state.
+- **BECAUSE:** User summaries and conversation context go stale. Task YAML is the single
+  source of truth for entity state. Trusting stale summaries leads to dispatching
+  already-complete tasks, missing blockers, and operating on incorrect dependency graphs.
+- **Resolve:** Call `status()` at session start. Trust the entity system, not the
+  conversation. Reconcile any discrepancies before dispatching.
+
+#### Milestone Pause
+
+- **Detect:** The orchestrator treats "feature transitioned" or "wave dispatched" as a
+  stop-and-report event, producing intermediate status output.
+- **BECAUSE:** In fast-track, the only report that matters is the final completion
+  report. Intermediate milestones are implementation details — pausing at them creates
+  unnecessary friction and invites implicit gate behaviour.
+- **Resolve:** After a milestone, immediately proceed to the next action. Do not produce
+  a status table unless all work is done.
+
 ## Output Format
 
 When a feature is completed (all tasks done and merged), produce a **Feature Completion
