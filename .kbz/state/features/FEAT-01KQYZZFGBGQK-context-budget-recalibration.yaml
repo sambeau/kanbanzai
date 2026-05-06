@@ -2,7 +2,7 @@ id: FEAT-01KQYZZFGBGQK
 slug: context-budget-recalibration
 name: Context Budget Recalibration
 parent: B1-p51-exec
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Update DefaultContextWindowTokens to 1,000,000 (from 200,000) and raise assemblyDefaultBudget from 30,720. Make DefaultContextWindowTokens configurable via .kbz/local.yaml. Add topic-level detail to trimmed metadata in next/handoff responses."
 design: FEAT-01KQYZZFGBGQK/design-p51-design-handoff-pipeline-unification
@@ -14,7 +14,12 @@ overrides:
   -
     from_status: developing
     reason: "Batch conformance review (work/reviews/batch-review-p51-exec-handoff-pipeline-unification-2026-05-06.md) serves as the aggregate review for all B1-p51-exec features. All 4 features verified: code committed and merged to main, all tasks done, all docs approved, go build/test pass."
-    timestamp: "2026-05-06T20:30:35+01:00"
+    timestamp: "2026-05-06T20:31:02+01:00"
     to_status: reviewing
+  -
+    from_status: reviewing
+    reason: "Batch conformance review passed. Code committed and merged to main. All 3 tasks done, all docs approved. go build/test passes."
+    timestamp: "2026-05-06T20:31:02+01:00"
+    to_status: done
 display_id: B1-F1
 tier: feature

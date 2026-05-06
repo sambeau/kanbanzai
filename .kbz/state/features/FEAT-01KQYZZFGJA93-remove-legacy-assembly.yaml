@@ -2,7 +2,7 @@ id: FEAT-01KQYZZFGJA93
 slug: remove-legacy-assembly
 name: Remove Legacy Assembly Path
 parent: B1-p51-exec
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Remove the legacy 2.0 context assembly fallback from handoff: delete assembleContext, renderHandoffPrompt, buildLegacyResponse, and the asmInput/assembledContext types from assembly.go and handoff_tool.go. Simplify HandoffTools signature. Make the pipeline the single, unconditional code path with hard errors for misconfiguration."
 design: FEAT-01KQYZZFGJA93/design-p51-design-handoff-pipeline-unification
@@ -10,5 +10,11 @@ spec: FEAT-01KQYZZFGJA93/spec-p51-spec-remove-legacy-assembly-path
 dev_plan: FEAT-01KQYZZFGJA93/dev-plan-p51-dev-plan-remove-legacy-assembly-path
 created: "2026-05-06T15:54:49Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: Batch conformance review passed. Code committed and merged to main.
+    timestamp: "2026-05-06T20:31:02+01:00"
+    to_status: done
 display_id: B1-F4
 tier: feature
