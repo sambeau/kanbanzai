@@ -1,0 +1,104 @@
+document_id: P52-fast-track-orchestration/spec-p52-spec-fast-track-profile
+document_path: work/P52-fast-track-orchestration/P52-spec-fast-track-profile.md
+content_hash: 2afe47a1f6883fb3d5b71f385178c44df929b22f2fbfbc867c7f3f9765ac1928
+indexed_at: 2026-05-06T19:50:19.134325Z
+sections:
+    - path: "1"
+      level: 2
+      title: Problem Statement
+      byte_offset: 221
+      byte_count: 1088
+      word_count: 129
+      content_hash: 4123a5e02c33e45ae0de5d2b199e678319fc50d9378ed1ca7eec68476a045120
+    - path: "2"
+      level: 2
+      title: Requirements
+      byte_offset: 1309
+      byte_count: 4510
+      word_count: 618
+      content_hash: 9a2660313b114c6c9ed0be112c3d90dcfbc944b7e4e85fac00294d25ec9ee98d
+      children:
+        - path: "2.1"
+          level: 3
+          title: Functional Requirements
+          byte_offset: 1326
+          byte_count: 4148
+          word_count: 569
+          content_hash: 9f0c11b2c5e32d30abbf1942f7556eced810188215a1a621126a6f540ae60cbc
+        - path: "2.2"
+          level: 3
+          title: Non-Functional Requirements
+          byte_offset: 5474
+          byte_count: 345
+          word_count: 47
+          content_hash: 02a40c2419c8cd49028a48bc45316e113782ad4e2b1bbb3d9c1509a978623d62
+    - path: "3"
+      level: 2
+      title: Constraints
+      byte_offset: 5819
+      byte_count: 956
+      word_count: 126
+      content_hash: 7057522e8c0e330e0bc7fe2362a90e0967ddc199f6fcfec6c8abe2839313ab0b
+    - path: "4"
+      level: 2
+      title: Acceptance Criteria
+      byte_offset: 6775
+      byte_count: 2515
+      word_count: 340
+      content_hash: 3e15f3eb175af765be67a560526bcea377e5688f896d38b86cf2ecbc09b35fe3
+    - path: "5"
+      level: 2
+      title: Verification Plan
+      byte_offset: 9290
+      byte_count: 913
+      word_count: 152
+      content_hash: 21b14967ab5fd9bf2690a0afbfad5ac193ad14cff162fce0e1193c85bf417679
+entity_refs:
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: "2.1"
+      byte_offset: 3147
+    - entity_id: P52-fast-track-orchestration
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 303
+    - entity_id: P52-design-fast-track-orchestration
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 332
+cross_doc_links:
+    - target_path: work/P52-fast-track-orchestration/P52-design-fast-track-orchestration.md
+      link_text: work/P52-fast-track-orchestration/P52-design-fast-track-orchestration.md
+      section_path: "1"
+    - target_path: SKILL.md
+      link_text: " SKILL.md file. It is purely a documentation change — no code\nchanges to the MCP server or underlying tools.\n\n**Out of scope:** Integration with P44's "
+      section_path: "1"
+    - target_path: SKILL.md
+      link_text: ' SKILL.md must gain a '
+      section_path: "2.1"
+    - target_path: internal/kbzinit/skills/task-execution/orchestrate-development/SKILL.md
+      link_text: internal/kbzinit/skills/task-execution/orchestrate-development/SKILL.md
+      section_path: "3"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "4"
+    - target_path: SKILL.md
+      link_text: "\n  SKILL.md file, when the Fast-Track Profile section is added, then all pre-existing\n  content (vocabulary, anti-patterns, checklist, procedure, output format, examples)\n  remains unchanged — only the new section is added.\n\n## Verification Plan\n\n| Criterion | Method | Description |\n|-----------|--------|-------------|\n| AC-001 | Inspection | Read SKILL.md and verify "
+      section_path: "4"
+conventional_roles:
+    - section_path: "2"
+      role: requirement
+      confidence: high
+    - section_path: "2.1"
+      role: requirement
+      confidence: high
+    - section_path: "2.2"
+      role: requirement
+      confidence: high
+    - section_path: "3"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: requirement
+      confidence: high
+classified: false

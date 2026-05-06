@@ -1,0 +1,113 @@
+document_id: P52-fast-track-orchestration/dev-plan-p52-dev-plan-fast-track-profile
+document_path: work/P52-fast-track-orchestration/P52-dev-plan-fast-track-profile.md
+content_hash: db83f21207b204cac13cd34095f1bae6407978b774b2e6b1e897b296d849d38c
+indexed_at: 2026-05-06T19:50:40.20107Z
+sections:
+    - path: "1"
+      level: 2
+      title: Scope
+      byte_offset: 221
+      byte_count: 657
+      word_count: 83
+      content_hash: 5e5aba35ae504e5590044df531325758bdd6b3cbec489c8417876487d447cae1
+    - path: "2"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 878
+      byte_count: 1345
+      word_count: 159
+      content_hash: b0c6ee89f3bd79cfc545b4bb26112ac07ff4133eea294e87c8d820100e3f45a3
+      children:
+        - path: "2.1"
+          level: 3
+          title: 'Task 1: Add Fast-Track Profile section to orchestrate-development SKILL.md'
+          byte_offset: 897
+          byte_count: 811
+          word_count: 100
+          content_hash: 9cc70f1f8793124c324b1dab8cb1108327542afffd9887889f80e5cc451d4b84
+        - path: "2.2"
+          level: 3
+          title: 'Task 2: Mirror change to canonical source file'
+          byte_offset: 1708
+          byte_count: 515
+          word_count: 56
+          content_hash: b261906052e4fa7ccd770c628c46f9425926adf9ce671f22fc70711d5c1dd951
+    - path: "3"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 2223
+      byte_count: 154
+      word_count: 27
+      content_hash: c39a55225acee0c49eb7165846f46a311ecdfac13ac06d692e2805e8caac1adc
+    - path: "4"
+      level: 2
+      title: Risk Assessment
+      byte_offset: 2377
+      byte_count: 1172
+      word_count: 171
+      content_hash: ff806a8ef8d8db9190ac0c5df61eb270c691167be97e8a02d84d948a857c8f96
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Risk: Incorrect section placement'
+          byte_offset: 2397
+          byte_count: 320
+          word_count: 45
+          content_hash: 69a35f09dcd579286f40aa28cbbd8acfba10b69317e8e4ce4a2ae8c4b7107ba7
+        - path: "4.2"
+          level: 3
+          title: 'Risk: Content drift between local and canonical copies'
+          byte_offset: 2717
+          byte_count: 366
+          word_count: 56
+          content_hash: b4b06ef4abb9798b7a459a7f438f85105cb3c6c82ce4c0a38377a34d5fdfea82
+        - path: "4.3"
+          level: 3
+          title: 'Risk: No-stop contract is not strong enough to prevent implicit gates'
+          byte_offset: 3083
+          byte_count: 466
+          word_count: 67
+          content_hash: 08eaa7a5d5a9034af83b86c8740383322d88ccc2373ac61a2117445390bad572
+    - path: "5"
+      level: 2
+      title: Verification Approach
+      byte_offset: 3549
+      byte_count: 804
+      word_count: 145
+      content_hash: 0ee8b927c3597a880bbb49af8b169ab4680e390feca792366afc9958ccb0b4e4
+entity_refs:
+    - entity_id: P52-fast-track-orchestration
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 286
+    - entity_id: P52-spec-fast-track-profile
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 315
+cross_doc_links:
+    - target_path: work/P52-fast-track-orchestration/P52-spec-fast-track-profile.md
+      link_text: work/P52-fast-track-orchestration/P52-spec-fast-track-profile.md
+      section_path: "1"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "2.1"
+    - target_path: internal/kbzinit/skills/task-execution/orchestrate-development/SKILL.md
+      link_text: internal/kbzinit/skills/task-execution/orchestrate-development/SKILL.md
+      section_path: "2.2"
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: risk
+      confidence: high
+    - section_path: "4.1"
+      role: risk
+      confidence: high
+    - section_path: "4.2"
+      role: risk
+      confidence: high
+    - section_path: "4.3"
+      role: risk
+      confidence: high
+classified: false

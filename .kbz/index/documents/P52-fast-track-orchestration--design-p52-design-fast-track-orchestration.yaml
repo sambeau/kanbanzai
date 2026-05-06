@@ -1,0 +1,291 @@
+document_id: P52-fast-track-orchestration/design-p52-design-fast-track-orchestration
+document_path: work/P52-fast-track-orchestration/P52-design-fast-track-orchestration.md
+content_hash: 1c93522bf65cfe266a740cfb13ad54ef644c0f9ad6fc14fa8eedf9a65e9b4d48
+indexed_at: 2026-05-06T19:34:17.965348Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Fast-Track Orchestration Profile'
+      byte_offset: 0
+      byte_count: 21406
+      word_count: 3040
+      content_hash: 1c93522bf65cfe266a740cfb13ad54ef644c0f9ad6fc14fa8eedf9a65e9b4d48
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 158
+          byte_count: 976
+          word_count: 137
+          content_hash: 670c606236ba886a5743baf63b33ba80f24f84331c02960c2aa45e53e5d95adc
+        - path: "1.2"
+          level: 2
+          title: Goals
+          byte_offset: 1134
+          byte_count: 962
+          word_count: 141
+          content_hash: a1bd29dd1083da070e3efeb127144439c13d8a086e42cc6c84c0f44387352b27
+        - path: "1.3"
+          level: 2
+          title: Non-Goals
+          byte_offset: 2096
+          byte_count: 302
+          word_count: 45
+          content_hash: 84c9ed7b0ea721fe642d0e460ba269349705794409da09b11737b3ec598987eb
+        - path: "1.4"
+          level: 2
+          title: Design
+          byte_offset: 2398
+          byte_count: 8809
+          word_count: 1249
+          content_hash: 002c7f5d14cc843a6ee0ddb69e59644d506aa65fb0579b84d0098326479ec983
+          children:
+            - path: 1.4.1
+              level: 3
+              title: The fast-track behavioral profile
+              byte_offset: 2409
+              byte_count: 3965
+              word_count: 548
+              content_hash: e62536ed32542d1fc5e3d1e496e3e136dcf2c41c362138b76a47579a6e146e8b
+            - path: 1.4.2
+              level: 3
+              title: What's removed vs. full orchestration
+              byte_offset: 6374
+              byte_count: 780
+              word_count: 133
+              content_hash: dca7f453a3c72d64abb8348820c1fbea64bf12708174a4f2d247658421c7dd88
+            - path: 1.4.3
+              level: 3
+              title: Anti-patterns specific to fast-track
+              byte_offset: 7154
+              byte_count: 1580
+              word_count: 221
+              content_hash: 1db9e17ad285aab070ff5248c2509052ad003b7fccc28a5165103d1a1d8ad861
+            - path: 1.4.4
+              level: 3
+              title: Skill documentation changes
+              byte_offset: 8734
+              byte_count: 733
+              word_count: 111
+              content_hash: 71680c977475b9c996f64ec9495aaf3f5d4c2871a0a02baa7d90109403f6c27f
+            - path: 1.4.5
+              level: 3
+              title: Integration with P51
+              byte_offset: 9467
+              byte_count: 222
+              word_count: 30
+              content_hash: e1b2e8c4a41d4d7ea0e70931dc7c2b44b380021b73329e0fad51d18c951d9f79
+            - path: 1.4.6
+              level: 3
+              title: Integration with P44
+              byte_offset: 9689
+              byte_count: 1518
+              word_count: 204
+              content_hash: 606680fa9df474419e6bf1e56f184ea7523e62bc7556c0af134524cb9937a191
+        - path: "1.5"
+          level: 2
+          title: Findings from P50 Implementation
+          byte_offset: 11207
+          byte_count: 3245
+          word_count: 468
+          content_hash: e198f033855fd6d3f1011d3af542a65f1eebd89cbfd8d67b48543f350a8c0d76
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Implicit gate behavior (second retrospective)
+              byte_offset: 11244
+              byte_count: 905
+              word_count: 127
+              content_hash: fbcd50458230751eaab699f1df3c6df214557d7100115b4dbf110ecf8ea5c503
+            - path: 1.5.2
+              level: 3
+              title: Ghost work discovery
+              byte_offset: 12149
+              byte_count: 377
+              word_count: 54
+              content_hash: bae924f07de1ef536597f08b73db926c081f0f9fee2e82e1d87d24abcdf4ab20
+            - path: 1.5.3
+              level: 3
+              title: Entity state ambiguity
+              byte_offset: 12526
+              byte_count: 495
+              word_count: 74
+              content_hash: 14d2f9f1b45c2f5e7ee84018d86a52e6e5281095d8ab357ae7228d3a2f56cb4a
+            - path: 1.5.4
+              level: 3
+              title: 'P50 review follow-up: lifecycle status is not enough'
+              byte_offset: 13021
+              byte_count: 582
+              word_count: 91
+              content_hash: 6fb821f40f180e780ccdea382843ae84c5f6bb0b7b3126babdc55a7815a1b962
+            - path: 1.5.5
+              level: 3
+              title: 'P50 review follow-up: dirty work needs attribution'
+              byte_offset: 13603
+              byte_count: 509
+              word_count: 65
+              content_hash: 266c93c972aa61678e4ad90240e528501ccd8b6d4c5e0dfb26ea753f8fc27385
+            - path: 1.5.6
+              level: 3
+              title: finish summary limit
+              byte_offset: 14112
+              byte_count: 340
+              word_count: 52
+              content_hash: 21ac1bf3054907ef4dce1e7105ce85d09b51ac7669eca845cbfcf147cf427b29
+        - path: "1.6"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 14452
+          byte_count: 1339
+          word_count: 184
+          content_hash: 1e7047d4265a7f9b3639c3dda09fc50b328dea4ccf827a2b68e9810a9c604491
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Just tell the orchestrator not to stop
+              byte_offset: 14480
+              byte_count: 490
+              word_count: 64
+              content_hash: bbcb71989b4f5b834938c61492995cc72b7253866e2344aa75af3623bb8de8c2
+            - path: 1.6.2
+              level: 3
+              title: Create a separate fast-track skill
+              byte_offset: 14970
+              byte_count: 406
+              word_count: 57
+              content_hash: 898c91ba93670903206db8198118ad25feefda2222cdf14023566cb1ac34c3c6
+            - path: 1.6.3
+              level: 3
+              title: Wait for P44
+              byte_offset: 15376
+              byte_count: 415
+              word_count: 60
+              content_hash: 1de373ac0eb870edb485b78b6c281636e547d0094be55ae1dea5d652271a7749
+        - path: "1.7"
+          level: 2
+          title: Dependencies
+          byte_offset: 15791
+          byte_count: 249
+          word_count: 38
+          content_hash: 70b1c1d620a2a724f810735a0694f2cf6e950ba40705172355832a6b3a2504e9
+        - path: "1.8"
+          level: 2
+          title: Architectural Assessment Cross-Reference
+          byte_offset: 16040
+          byte_count: 1554
+          word_count: 196
+          content_hash: f921b04a92fee01174801f9f615fe4c8b301a49cde29403ab90fb9e26f5c390e
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 'Risk: Behavioural profile may be insufficient'
+              byte_offset: 17113
+              byte_count: 481
+              word_count: 68
+              content_hash: 230dc2368e6c8ffdc5e2dde97b70045acbebb6d48c861fe8a8085886b76f667b
+        - path: "1.9"
+          level: 2
+          title: Open Questions
+          byte_offset: 17594
+          byte_count: 1361
+          word_count: 199
+          content_hash: 29d4f128735c4154e00d823aed1002345016d297ecc48b4fb6e52b0d57154f21
+        - path: "1.10"
+          level: 2
+          title: Findings from System Instrumentation (May 2026 Retrospective)
+          byte_offset: 18955
+          byte_count: 2451
+          word_count: 366
+          content_hash: fcf8e53a60d9bba251af4511b6b4502723f1d7b46b9fec7d544d2f37407cc88e
+          children:
+            - path: 1.10.1
+              level: 3
+              title: Stale binary caused false verification failures
+              byte_offset: 19021
+              byte_count: 813
+              word_count: 126
+              content_hash: 875217a389353cc354d52bb651b3276b34f70e4fffa614df08ceacd67ba2c72f
+            - path: 1.10.2
+              level: 3
+              title: Health checker false positives
+              byte_offset: 19834
+              byte_count: 578
+              word_count: 84
+              content_hash: 7f08260a3c0951adb0b062d96fece60b1c33b165f1211d1f6c9ada8fbb137d6a
+            - path: 1.10.3
+              level: 3
+              title: Store consistency issues
+              byte_offset: 20412
+              byte_count: 615
+              word_count: 94
+              content_hash: 247784426f87af090efdb881e1a9f9f21194624ad4378a429244c1a668d6ca04
+            - path: 1.10.4
+              level: 3
+              title: Plan numbering reuse
+              byte_offset: 21027
+              byte_count: 379
+              word_count: 54
+              content_hash: 7eeb2b60fa526c08aab8b65638f787718ecfe3da9825b1ec633a53f564d0ee94
+entity_refs:
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.4.1
+      byte_offset: 4833
+    - entity_id: P52-fast-track-orchestration
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 57
+    - entity_id: P41-opencode-ecosystem-features
+      entity_type: plan
+      section_path: 1.4.1
+      byte_offset: 5215
+    - entity_id: P41-assessment-orchestration-architecture-cross-reference
+      entity_type: plan
+      section_path: 1.4.1
+      byte_offset: 5247
+    - entity_id: P44-model-routing-agent-launcher
+      entity_type: plan
+      section_path: 1.4.1
+      byte_offset: 6081
+    - entity_id: P44-design-model-routing-agent-launcher
+      entity_type: plan
+      section_path: 1.4.1
+      byte_offset: 6114
+    - entity_id: P41-opencode-ecosystem-features
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 16202
+    - entity_id: P41-assessment-orchestration-architecture-cross-reference
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 16234
+cross_doc_links:
+    - target_path: ../P41-opencode-ecosystem-features/P41-assessment-orchestration-architecture-cross-reference.md
+      link_text: Architectural Assessment
+      section_path: 1.4.1
+    - target_path: ../P44-model-routing-agent-launcher/P44-design-model-routing-agent-launcher.md
+      link_text: U-shaped template defined in P44
+      section_path: 1.4.1
+    - target_path: ../P41-opencode-ecosystem-features/P41-assessment-orchestration-architecture-cross-reference.md
+      link_text: 'Integrated Architectural Assessment: Orchestration & Fast-Track Pipeline Strategy'
+      section_path: "1.8"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: 1.5.6
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: alternative
+      confidence: high
+    - section_path: 1.8.1
+      role: risk
+      confidence: high
+    - section_path: "1.9"
+      role: question
+      confidence: high
+classified: false
