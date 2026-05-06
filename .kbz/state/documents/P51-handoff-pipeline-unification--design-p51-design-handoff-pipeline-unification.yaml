@@ -1,11 +1,13 @@
+approved_at: "2026-05-06T15:29:09Z"
+approved_by: sambeau
 canonical_content_hash: b2b73431d6f05d22c62887d73149bc15920bd9d16c89bad3be62973a4928e014
-content_hash: 1ddb15115793dcde70658b892d7ae1257436f1700464fe4711ec91d29a12812b
+content_hash: 4445e42708c5caab30b068104d1910ee74d50ab52f8b216de85b54a2f6e3a9e6
 created: "2026-05-06T15:28:26Z"
 created_by: sambeau
 id: P51-handoff-pipeline-unification/design-p51-design-handoff-pipeline-unification
 owner: P51-handoff-pipeline-unification
 path: work/P51-handoff-pipeline-unification/P51-design-handoff-pipeline-unification.md
-status: draft
+status: approved
 title: "Design: Handoff Pipeline Unification"
 type: design
-updated: "2026-05-06T15:28:26Z"
+updated: "2026-05-06T15:29:09Z"
