@@ -1,10 +1,10 @@
 id: P54-review-remediation-workflow
 slug: review-remediation-workflow
 name: Review Remediation Workflow
-status: idea
+status: shaping
 summary: Define the standardized workflow bridge between a failed formal review and executable remediation work.
 parent: P41-opencode-ecosystem-features
 order: 0
 created: "2026-05-06T23:11:24Z"
 created_by: sambeau
-updated: "2026-05-06T23:11:24Z"
+updated: "2026-05-06T23:13:40Z"
