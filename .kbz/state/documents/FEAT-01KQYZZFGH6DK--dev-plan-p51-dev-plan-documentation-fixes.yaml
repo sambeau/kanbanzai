@@ -1,3 +1,5 @@
+approved_at: "2026-05-06T16:52:50Z"
+approved_by: sambeau
 canonical_content_hash: 6f39761369a9c52a890e9494ffa8ac6b5a4d963797b3ee632e4860f2bdf4b030
 content_hash: 6f39761369a9c52a890e9494ffa8ac6b5a4d963797b3ee632e4860f2bdf4b030
 created: "2026-05-06T16:52:38Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KQYZZFGH6DK/dev-plan-p51-dev-plan-documentation-fixes
 owner: FEAT-01KQYZZFGH6DK
 path: work/P51-handoff-pipeline-unification/P51-dev-plan-documentation-fixes.md
-status: draft
+status: approved
 title: "Dev Plan: Documentation Fixes for Handoff Pipeline"
 type: dev-plan
-updated: "2026-05-06T16:52:38Z"
+updated: "2026-05-06T16:52:50Z"
