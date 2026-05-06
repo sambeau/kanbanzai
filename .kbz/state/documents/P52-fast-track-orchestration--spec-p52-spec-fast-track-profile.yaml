@@ -1,11 +1,13 @@
+approved_at: "2026-05-06T20:22:48Z"
+approved_by: sambeau
 canonical_content_hash: 44b7fcff57169baa46b149f06eaebd0473c7e00126a68c82d98a63c7f423d2ba
-content_hash: 2afe47a1f6883fb3d5b71f385178c44df929b22f2fbfbc867c7f3f9765ac1928
+content_hash: 71e63afe2a7fb8b543e85df294c67a2e83b1250c81be51959c92a9f6a0630d19
 created: "2026-05-06T19:50:19Z"
 created_by: sambeau
 id: P52-fast-track-orchestration/spec-p52-spec-fast-track-profile
 owner: P52-fast-track-orchestration
 path: work/P52-fast-track-orchestration/P52-spec-fast-track-profile.md
-status: draft
+status: approved
 title: Fast-Track Orchestration Profile Specification
 type: spec
-updated: "2026-05-06T19:50:19Z"
+updated: "2026-05-06T20:22:48Z"
