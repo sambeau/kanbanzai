@@ -1,0 +1,6 @@
+id: TASK-01KQZ302R0ADQ
+parent_feature: FEAT-01KQYZZFGJA93
+slug: remove-assemble-context-types
+name: Remove assembleContext and legacy types from assembly.go
+summary: "Remove assembleContext, asmInput, assembledContext, and all asm* helper functions/types from internal/mcp/assembly.go that are only used by the legacy handoff path. Preserve functions/types still used by next_tool.go."
+status: queued
