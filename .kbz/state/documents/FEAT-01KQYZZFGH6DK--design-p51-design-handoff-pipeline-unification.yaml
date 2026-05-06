@@ -1,0 +1,11 @@
+canonical_content_hash: 26d5aee656e72689d990d4e0a8faa05c10a11dc0eb167da2e6c5e977768a8deb
+content_hash: 4445e42708c5caab30b068104d1910ee74d50ab52f8b216de85b54a2f6e3a9e6
+created: "2026-05-06T16:21:17Z"
+created_by: sambeau
+id: FEAT-01KQYZZFGH6DK/design-p51-design-handoff-pipeline-unification
+owner: FEAT-01KQYZZFGH6DK
+path: work/P51-handoff-pipeline-unification/P51-design-handoff-pipeline-unification.md
+status: draft
+title: "Design: Handoff Pipeline Unification (Documentation Fixes)"
+type: design
+updated: "2026-05-06T16:21:17Z"
