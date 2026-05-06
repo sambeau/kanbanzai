@@ -32,10 +32,12 @@ func TestMergeVerifyDone_Flow_Success(t *testing.T) {
 		transitionEntityStatus(t, entitySvc, "feature", featID, status)
 	}
 
-	// Create a task and mark it done so the reviewing gate (all tasks terminal)
-	// is satisfied.
+	// Create a task and advance it through the full lifecycle so the reviewing
+	// gate (all tasks terminal) is satisfied.
 	taskID, _ := createEntityTestTask(t, entitySvc, featID, "mvd-task")
-	transitionEntityStatus(t, entitySvc, "task", taskID, "done")
+	for _, s := range []string{"ready", "active", "done"} {
+		transitionEntityStatus(t, entitySvc, "task", taskID, s)
+	}
 
 	// Transition to reviewing (requires all tasks terminal).
 	transitionEntityStatus(t, entitySvc, "feature", featID, "reviewing")
@@ -83,9 +85,11 @@ func TestMergeVerifyDone_Flow_Failure(t *testing.T) {
 		transitionEntityStatus(t, entitySvc, "feature", featID, status)
 	}
 
-	// Create a task and mark it done.
+	// Create a task and advance it through the full lifecycle.
 	taskID, _ := createEntityTestTask(t, entitySvc, featID, "mvd-fail-task")
-	transitionEntityStatus(t, entitySvc, "task", taskID, "done")
+	for _, s := range []string{"ready", "active", "done"} {
+		transitionEntityStatus(t, entitySvc, "task", taskID, s)
+	}
 
 	// Transition to reviewing, then merging, then verifying.
 	transitionEntityStatus(t, entitySvc, "feature", featID, "reviewing")
@@ -103,9 +107,11 @@ func TestMergeVerifyDone_Flow_Failure(t *testing.T) {
 	// needs-rework → developing → reviewing → merging → verifying → done
 	transitionEntityStatus(t, entitySvc, "feature", featID, "developing")
 
-	// Mark another task done to satisfy the developing→reviewing gate.
+	// Mark another task done (through full lifecycle) to satisfy the developing→reviewing gate.
 	task2ID, _ := createEntityTestTask(t, entitySvc, featID, "mvd-rework-task")
-	transitionEntityStatus(t, entitySvc, "task", task2ID, "done")
+	for _, s := range []string{"ready", "active", "done"} {
+		transitionEntityStatus(t, entitySvc, "task", task2ID, s)
+	}
 
 	transitionEntityStatus(t, entitySvc, "feature", featID, "reviewing")
 	transitionEntityStatus(t, entitySvc, "feature", featID, string(model.FeatureStatusMerging))
@@ -304,10 +310,10 @@ func TestMergeVerifyDone_ReviewingGate_RequiresTerminalTasks(t *testing.T) {
 		transitionEntityStatus(t, entitySvc, "feature", featID, status)
 	}
 
-	// Create a task but leave it in active (non-terminal) state.
+	// Create a task, advance to ready then active (non-terminal state).
 	taskID, _ := createEntityTestTask(t, entitySvc, featID, "mvd-active-task")
+	transitionEntityStatus(t, entitySvc, "task", taskID, "ready")
 	transitionEntityStatus(t, entitySvc, "task", taskID, "active")
-
 	// Try transitioning to reviewing — should fail because task is not terminal.
 	result := callEntityToolJSON(t, entitySvc, map[string]any{
 		"action": "transition",

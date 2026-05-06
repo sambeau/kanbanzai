@@ -201,6 +201,18 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 			string(model.FeatureStatusCancelled):   {},
 		},
 		string(model.FeatureStatusReviewing): {
+			string(model.FeatureStatusMerging):     {},
+			string(model.FeatureStatusNeedsRework): {},
+			string(model.FeatureStatusSuperseded):  {},
+			string(model.FeatureStatusCancelled):   {},
+			string(model.FeatureStatusDone):        {}, // backward compatibility (requires override)
+		},
+		string(model.FeatureStatusMerging): {
+			string(model.FeatureStatusVerifying):  {},
+			string(model.FeatureStatusSuperseded): {},
+			string(model.FeatureStatusCancelled):  {},
+		},
+		string(model.FeatureStatusVerifying): {
 			string(model.FeatureStatusDone):        {},
 			string(model.FeatureStatusNeedsRework): {},
 			string(model.FeatureStatusSuperseded):  {},

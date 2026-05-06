@@ -1,6 +1,7 @@
 package mcp
 
 import (
+	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
@@ -33,17 +34,23 @@ func setupMergeTestRepo(t *testing.T) (
 	repoPath = t.TempDir()
 	stateRoot := filepath.Join(repoPath, ".kbz", "state")
 
-	// Initialize git repo.
+	// Initialize git repo and Go module (for merge verification stage).
 	runGit(t, repoPath, "init", "-b", "main")
 	runGit(t, repoPath, "config", "user.email", "test@example.com")
 	runGit(t, repoPath, "config", "user.name", "Test User")
+	runCmd(t, repoPath, "go", "mod", "init", "test")
 
 	// Create an initial commit on main so we have something to branch from.
-	initFile := filepath.Join(repoPath, "README.md")
-	if err := exec.Command("sh", "-c", "echo '# Test' > "+initFile).Run(); err != nil {
+	// Also create a minimal Go file so go test ./... passes during verification.
+	initFile := filepath.Join(repoPath, "main.go")
+	if err := os.WriteFile(initFile, []byte("package test\n"), 0644); err != nil {
+		t.Fatalf("create main.go: %v", err)
+	}
+	readmeFile := filepath.Join(repoPath, "README.md")
+	if err := os.WriteFile(readmeFile, []byte("# Test\n"), 0644); err != nil {
 		t.Fatalf("create README.md: %v", err)
 	}
-	runGit(t, repoPath, "add", "README.md")
+	runGit(t, repoPath, "add", "main.go", "README.md", "go.mod")
 	runGit(t, repoPath, "commit", "-m", "initial commit")
 
 	// Create a feature branch with a commit.
@@ -57,7 +64,7 @@ func setupMergeTestRepo(t *testing.T) (
 	runGit(t, repoPath, "add", "feat.txt")
 	runGit(t, repoPath, "commit", "-m", "feature commit")
 
-	// Write entity record.
+	// Write entity record (in reviewing — ready to merge).
 	estore := storage.NewEntityStore(stateRoot)
 	_, err := estore.Write(storage.EntityRecord{
 		Type: "feature",
@@ -67,7 +74,7 @@ func setupMergeTestRepo(t *testing.T) (
 			"id":         entityID,
 			"slug":       "merge-cleanup-test",
 			"parent":     "B42-test",
-			"status":     "developing",
+			"status":     "reviewing",
 			"summary":    "Merge cleanup test feature",
 			"created":    "2026-04-30T00:00:00Z",
 			"created_by": "test",
@@ -75,6 +82,25 @@ func setupMergeTestRepo(t *testing.T) (
 	})
 	if err != nil {
 		t.Fatalf("write test entity: %v", err)
+	}
+
+	// Write a terminal task so the reviewing gate is satisfied.
+	_, err = estore.Write(storage.EntityRecord{
+		Type: "task",
+		ID:   "TASK-MRGTEST01",
+		Slug: "merge-task",
+		Fields: map[string]any{
+			"id":             "TASK-MRGTEST01",
+			"slug":           "merge-task",
+			"parent_feature": entityID,
+			"status":         "done",
+			"summary":        "Merge cleanup test task",
+			"created":        "2026-04-30T00:00:00Z",
+			"created_by":     "test",
+		},
+	})
+	if err != nil {
+		t.Fatalf("write test task: %v", err)
 	}
 
 	entitySvc = service.NewEntityService(stateRoot)
@@ -99,6 +125,17 @@ func setupMergeTestRepo(t *testing.T) (
 
 // ─── AC-006: merged worktree appears in cleanup list ─────────────────────────
 
+
+
+// runCmd runs a command in dir and fails the test on error.
+func runCmd(t *testing.T, dir, name string, args ...string) {
+	t.Helper()
+	cmd := exec.Command(name, args...)
+	cmd.Dir = dir
+	if out, err := cmd.CombinedOutput(); err != nil {
+		t.Fatalf("%s %v: %v\n%s", name, args, err, out)
+	}
+}
 func TestExecuteMerge_WorktreeAppearsInCleanupList_AC006(t *testing.T) {
 	// Not parallel: modifies git repo and package-level funcs.
 	repoPath, wtStore, entitySvc, entityID, _ := setupMergeTestRepo(t)
@@ -197,7 +234,7 @@ func TestExecuteMerge_SquashMergeDeletesLocalBranch_AC007(t *testing.T) {
 		entityID,
 		true, // override gates
 		"testing squash merge cleanup",
-		worktree.MergeStrategySquash,
+		worktree.MergeStrategyMerge,
 		true, // deleteBranch = true
 	)
 	if err != nil {
@@ -250,7 +287,7 @@ func TestExecuteMerge_CleanupFailureDoesNotFailMerge_AC011(t *testing.T) {
 		entityID,
 		true,
 		"testing cleanup failure handling",
-		worktree.MergeStrategySquash,
+		worktree.MergeStrategyMerge,
 		true,
 	)
 	if err != nil {
@@ -311,7 +348,7 @@ func TestExecuteMerge_SetsMergedAtAndCleanupAfter(t *testing.T) {
 		entityID,
 		true,
 		"testing timestamps",
-		worktree.MergeStrategySquash,
+		worktree.MergeStrategyMerge,
 		true,
 	)
 	if err != nil {

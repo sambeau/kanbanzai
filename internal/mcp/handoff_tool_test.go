@@ -87,7 +87,7 @@ func createHandoffScenario(t *testing.T, entitySvc *service.EntityService, suffi
 func createHandoffPlan(t *testing.T, entitySvc *service.EntityService, slug string) string {
 	t.Helper()
 	now := time.Now().UTC().Format(time.RFC3339)
-	id := "P1-" + slug
+	id := "B1-" + slug
 	record := storage.EntityRecord{
 		Type: "batch",
 		ID:   id,
