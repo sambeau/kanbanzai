@@ -69,7 +69,7 @@ func finishTool(entitySvc *service.EntityService, dispatchSvc *service.DispatchS
 				"Items are processed independently; a failure on one does not block others.",
 		),
 		mcp.WithString("task_id", mcp.Description("Task ID to complete (single-item mode)")),
-		mcp.WithString("summary", mcp.Description("Brief description of what was accomplished")),
+		mcp.WithString("summary", mcp.Description("Brief description of what was accomplished (max 500 characters)")),
 		mcp.WithString("to_status", mcp.Description("Target status: done (default) or needs-review")),
 		mcp.WithArray("files_modified", mcp.WithStringItems(), mcp.Description("Files created or modified")),
 		mcp.WithString("verification", mcp.Description("Testing or verification performed")),

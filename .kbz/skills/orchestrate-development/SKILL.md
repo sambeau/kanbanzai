@@ -85,7 +85,7 @@ constraint_level: medium
 
 ### Manual Prompt Composition
 
-- **Detect:** The orchestrator writes implementation prompts by hand instead of using `handoff(task_id: "TASK-xxx")`
+- **Detect:** The orchestrator writes implementation prompts by hand instead of using `handoff(task_id: "TASK-xxx", role: "implementer-go")`
 - **BECAUSE:** Manual composition silently omits graph project context, knowledge entries, and spec sections that the handoff tool automatically assembles. The sub-agent starts without critical context, producing lower-quality outputs or failures.
 - **Resolve:** Always use `handoff` to generate sub-agent prompts. Reserve manual composition for exceptional cases where handoff does not apply.
 
@@ -145,13 +145,13 @@ For features with more than three tasks where tasks involve reading or rewriting
 
 Features with small files or documentation-only tasks do not require per-task isolation — batch dispatch remains appropriate.
 
-**Rule:** Always use `handoff(task_id: "TASK-xxx")` to generate sub-agent prompts. Never compose implementation prompts manually — manual composition silently omits graph project context, knowledge entries, and spec sections.
+**Rule:** Always use `handoff(task_id: "TASK-xxx", role: "implementer-go")` to generate sub-agent prompts. Never compose implementation prompts manually — manual composition silently omits graph project context, knowledge entries, and spec sections.
 
 0. **Before creating worktrees**, verify `.kbz/local.yaml` has `codebase_memory.graph_project` set
    (e.g. `Users-alice-Dev-myrepo`). If missing, add it now — worktrees created without it will not
    inject Code Graph context into sub-agent handoffs. Once set in local config, the `worktree` tool
    picks it up automatically and you never need to pass `graph_project` explicitly.
-1. For each task in the dispatch batch, generate a sub-agent prompt using `handoff(task_id: "TASK-xxx")`.
+1. For each task in the dispatch batch, generate a sub-agent prompt using `handoff(task_id: "TASK-xxx", role: "implementer-go")`.
 2. Include file scope boundaries in the dispatch — tell each agent which files it owns and which it must not modify (because a parallel agent owns them).
 3. Include codebase knowledge graph context per `refs/sub-agents.md`: project name, tool preferences, and the propagation rule for nested delegation.
 4. Dispatch all agents in the batch. Record which tasks were dispatched and when.
