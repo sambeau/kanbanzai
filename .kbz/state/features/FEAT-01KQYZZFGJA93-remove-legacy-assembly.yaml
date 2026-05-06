@@ -1,0 +1,10 @@
+id: FEAT-01KQYZZFGJA93
+slug: remove-legacy-assembly
+name: Remove Legacy Assembly Path
+parent: B1-p51-exec
+status: proposed
+summary: "Remove the legacy 2.0 context assembly fallback from handoff: delete assembleContext, renderHandoffPrompt, buildLegacyResponse, and the asmInput/assembledContext types from assembly.go and handoff_tool.go. Simplify HandoffTools signature. Make the pipeline the single, unconditional code path with hard errors for misconfiguration."
+created: "2026-05-06T15:54:49Z"
+created_by: sambeau
+display_id: B1-F4
+tier: feature
