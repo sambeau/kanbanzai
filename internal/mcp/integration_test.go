@@ -41,7 +41,7 @@ func TestIntegration_NextHandoffFinish(t *testing.T) {
 
 	// ── Create entities: plan → feature → task ──────────────────────────
 
-	planID := "P1-integration"
+	planID := "B1-integration"
 	writeIntegrationPlan(t, entitySvc, planID)
 
 	feat, err := entitySvc.CreateFeature(service.CreateFeatureInput{
@@ -125,7 +125,7 @@ func TestIntegration_NextHandoffFinish(t *testing.T) {
 
 	// ── Step 2: handoff(task_id) — generate sub-agent prompt ────────────
 
-	handoffTools := HandoffTools(entitySvc, nil)
+	handoffTools := HandoffTools(entitySvc, testHandoffPipeline())
 	if len(handoffTools) == 0 {
 		t.Fatal("HandoffTools returned no tools")
 	}
