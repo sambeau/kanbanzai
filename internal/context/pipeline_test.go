@@ -684,16 +684,23 @@ func TestStepLoadSkill_FirstPrefixMatchWins(t *testing.T) {
 	}
 }
 
-func TestStepLoadSkill_EmptyRoleLoadsPrimary(t *testing.T) {
+func TestStepLoadSkill_EmptyRoleLoadsSubAgentDefault(t *testing.T) {
 	t.Parallel()
-	p := testPipeline()
+	p := &Pipeline{
+		Skills: &mockSkillResolver{
+			skills: map[string]*skill.Skill{
+				"implement-task":     testSkill(),
+				"implement-task-sub": {Frontmatter: skill.SkillFrontmatter{Name: "implement-task-sub", Description: skill.SkillDescription{Expert: "sub", Natural: "sub"}, Triggers: []string{"sub"}, Roles: []string{"implementer"}, Stage: "developing", ConstraintLevel: "medium"}},
+			},
+		},
+	}
 	b := testBinding()
 	b.SubAgents = &binding.SubAgents{
 		Roles:    []string{"implementer"},
 		Skills:   []string{"implement-task-sub"},
 		Topology: "parallel",
 	}
-	// Empty caller role — sub-agent routing is skipped
+	// Empty caller role + SubAgents configured → loads sub-agent skill (AC-002/FR-002).
 	state := &PipelineState{
 		Input:   PipelineInput{Role: ""},
 		Binding: b,
@@ -701,8 +708,218 @@ func TestStepLoadSkill_EmptyRoleLoadsPrimary(t *testing.T) {
 	if err := p.stepLoadSkill(state); err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
+	if state.Skill.Frontmatter.Name != "implement-task-sub" {
+		t.Errorf("skill name = %q, want sub-agent default %q", state.Skill.Frontmatter.Name, "implement-task-sub")
+	}
+}
+
+// ─── Sub-Agent Role Routing (P51) ────────────────────────────────────────────
+
+// TestStepResolveRole_SubAgentsDefault verifies AC-001 (FR-001):
+// No role + SubAgents configured → resolved role is SubAgents.Roles[0].
+func TestStepResolveRole_SubAgentsDefault(t *testing.T) {
+	t.Parallel()
+	p := &Pipeline{
+		Roles: &mockRoleResolver{
+			roles: map[string]*ResolvedRole{
+				"implementer":   {ID: "implementer", Identity: "Implementer role"},
+				"orchestrator":  {ID: "orchestrator", Identity: "Orchestrator role"},
+			},
+		},
+	}
+	b := testBinding()
+	b.Roles = []string{"orchestrator"}
+	b.SubAgents = &binding.SubAgents{
+		Roles:    []string{"implementer"},
+		Skills:   []string{"implement-task"},
+		Topology: "parallel",
+	}
+	state := &PipelineState{
+		Input:   PipelineInput{Role: ""},
+		Binding: b,
+	}
+	if err := p.stepResolveRole(state); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if state.Role == nil {
+		t.Fatal("role should not be nil")
+	}
+	if state.Role.ID != "implementer" {
+		t.Errorf("role ID = %q, want %q (sub-agent default)", state.Role.ID, "implementer")
+	}
+}
+
+// TestStepLoadSkill_SubAgentsDefault verifies AC-002 (FR-002):
+// No role + SubAgents configured → loaded skill is SubAgents.Skills[0].
+func TestStepLoadSkill_SubAgentsDefault(t *testing.T) {
+	t.Parallel()
+	p := &Pipeline{
+		Skills: &mockSkillResolver{
+			skills: map[string]*skill.Skill{
+				"implement-task": testSkill(),
+				"implement-task-sub": {
+					Frontmatter: skill.SkillFrontmatter{
+						Name:            "implement-task-sub",
+						Description:     skill.SkillDescription{Expert: "Sub impl", Natural: "Sub impl"},
+						Triggers:        []string{"implement sub"},
+						Roles:           []string{"implementer"},
+						Stage:           "developing",
+						ConstraintLevel: "medium",
+					},
+				},
+				"orchestrate-development": {
+					Frontmatter: skill.SkillFrontmatter{
+						Name:            "orchestrate-development",
+						Description:     skill.SkillDescription{Expert: "Orch", Natural: "Orch"},
+						Triggers:        []string{"orchestrate"},
+						Roles:           []string{"orchestrator"},
+						Stage:           "developing",
+						ConstraintLevel: "medium",
+					},
+				},
+			},
+		},
+	}
+	b := testBinding()
+	b.Skills = []string{"orchestrate-development"}
+	b.SubAgents = &binding.SubAgents{
+		Roles:    []string{"implementer"},
+		Skills:   []string{"implement-task-sub"},
+		Topology: "parallel",
+	}
+	state := &PipelineState{
+		Input:   PipelineInput{Role: ""},
+		Binding: b,
+	}
+	if err := p.stepLoadSkill(state); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if state.Skill == nil {
+		t.Fatal("skill should not be nil")
+	}
+	if state.Skill.Frontmatter.Name != "implement-task-sub" {
+		t.Errorf("skill name = %q, want %q (sub-agent default)", state.Skill.Frontmatter.Name, "implement-task-sub")
+	}
+}
+
+// TestStepResolveRole_SubAgentsDefaultWithExplicitRole verifies AC-003 (FR-003):
+// Explicit role "implementer-go" + SubAgents → prefix-match routes to sub-agent.
+func TestStepResolveRole_SubAgentsDefaultWithExplicitRole(t *testing.T) {
+	t.Parallel()
+	p := &Pipeline{
+		Roles: &mockRoleResolver{
+			roles: map[string]*ResolvedRole{
+				"implementer-go": {ID: "implementer-go", Identity: "Go implementer"},
+				"implementer":    {ID: "implementer", Identity: "Generic implementer"},
+			},
+		},
+	}
+	b := testBinding()
+	b.Roles = []string{"orchestrator"}
+	b.SubAgents = &binding.SubAgents{
+		Roles:    []string{"implementer"},
+		Skills:   []string{"implement-task"},
+		Topology: "parallel",
+	}
+	// Explicit role takes precedence over sub-agent default (FR-003).
+	state := &PipelineState{
+		Input:   PipelineInput{Role: "implementer-go"},
+		Binding: b,
+	}
+	if err := p.stepResolveRole(state); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if state.Role == nil {
+		t.Fatal("role should not be nil")
+	}
+	if state.Role.ID != "implementer-go" {
+		t.Errorf("role ID = %q, want %q (explicit role takes precedence)", state.Role.ID, "implementer-go")
+	}
+}
+
+// TestStepResolveRole_CallerRoleNoPrefixMatch verifies AC-004 (FR-004):
+// Explicit role "reviewer" + SubAgents (no prefix match) → caller role takes precedence.
+func TestStepResolveRole_CallerRoleNoPrefixMatch(t *testing.T) {
+	t.Parallel()
+	p := &Pipeline{
+		Roles: &mockRoleResolver{
+			roles: map[string]*ResolvedRole{
+				"reviewer":    {ID: "reviewer", Identity: "Reviewer role"},
+				"implementer": {ID: "implementer", Identity: "Implementer role"},
+			},
+		},
+	}
+	b := testBinding()
+	b.Roles = []string{"implementer"}
+	b.SubAgents = &binding.SubAgents{
+		Roles:    []string{"implementer"},
+		Skills:   []string{"implement-task"},
+		Topology: "parallel",
+	}
+	state := &PipelineState{
+		Input:   PipelineInput{Role: "reviewer"},
+		Binding: b,
+	}
+	if err := p.stepResolveRole(state); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if state.Role == nil {
+		t.Fatal("role should not be nil")
+	}
+	if state.Role.ID != "reviewer" {
+		t.Errorf("role ID = %q, want %q (caller role prevails)", state.Role.ID, "reviewer")
+	}
+}
+
+// TestStepResolveRole_NoSubAgentsFallback verifies AC-005 (FR-005):
+// No SubAgents configured → primary binding fallback unchanged.
+func TestStepResolveRole_NoSubAgentsFallback(t *testing.T) {
+	t.Parallel()
+	p := &Pipeline{
+		Roles: &mockRoleResolver{
+			roles: map[string]*ResolvedRole{
+				"spec-author": {ID: "spec-author", Identity: "Spec author role"},
+			},
+		},
+	}
+	b := testBinding()
+	b.Roles = []string{"spec-author"}
+	b.SubAgents = nil
+	state := &PipelineState{
+		Input:   PipelineInput{Role: ""},
+		Binding: b,
+	}
+	if err := p.stepResolveRole(state); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if state.Role == nil {
+		t.Fatal("role should not be nil")
+	}
+	if state.Role.ID != "spec-author" {
+		t.Errorf("role ID = %q, want %q (primary binding fallback)", state.Role.ID, "spec-author")
+	}
+}
+
+// TestStepLoadSkill_NoSubAgentsFallback verifies AC-005 (FR-005) for skill loading:
+// No SubAgents configured → primary binding skill fallback unchanged.
+func TestStepLoadSkill_NoSubAgentsFallback(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	b := testBinding()
+	b.Skills = []string{"implement-task"}
+	b.SubAgents = nil
+	state := &PipelineState{
+		Input:   PipelineInput{Role: ""},
+		Binding: b,
+	}
+	if err := p.stepLoadSkill(state); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if state.Skill == nil {
+		t.Fatal("skill should not be nil")
+	}
 	if state.Skill.Frontmatter.Name != "implement-task" {
-		t.Errorf("skill name = %q, want primary %q", state.Skill.Frontmatter.Name, "implement-task")
+		t.Errorf("skill name = %q, want %q (primary binding fallback)", state.Skill.Frontmatter.Name, "implement-task")
 	}
 }
 
