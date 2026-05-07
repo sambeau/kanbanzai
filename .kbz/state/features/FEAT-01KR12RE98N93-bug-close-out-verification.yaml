@@ -2,11 +2,23 @@ id: FEAT-01KR12RE98N93
 slug: bug-close-out-verification
 name: Bug Close-Out Verification
 parent: B56-bug-lifecycle-hardening
-status: developing
+status: done
+review_cycle: 1
 summary: "Gate-dispatched verifier sub-agent at verifying->closed transition, bug-adapted 8-item DoD checklist. Depends on P55 Component 7."
 spec: FEAT-01KR12RE98N93/spec-p56-f4-spec-bug-close-out-verification
 dev_plan: FEAT-01KR12RE98N93/dev-plan-bug-close-out-verification-decomposed
 created: "2026-05-07T11:21:53Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: developing
+    reason: "Fast-track close-out: all 3 tasks done, advancing to reviewing"
+    timestamp: "2026-05-07T20:23:47+01:00"
+    to_status: reviewing
+  -
+    from_status: reviewing
+    reason: "Review complete, blocking finding FR-412 fixed. Advancing to done."
+    timestamp: "2026-05-07T20:23:47+01:00"
+    to_status: done
 display_id: B56-F3
 tier: feature

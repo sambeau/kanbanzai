@@ -2,7 +2,8 @@ id: FEAT-01KR12RE939M7
 slug: bug-worktree-enforcement
 name: Bug Worktree Enforcement
 parent: B56-bug-lifecycle-hardening
-status: developing
+status: done
+review_cycle: 1
 summary: "Health checks for bare in-progress bugs, warnings on repo-root mutations during active bug work, and worktree cleanup verification."
 spec: FEAT-01KR12RE939M7/spec-p56-f3-spec-bug-worktree-enforcement
 dev_plan: FEAT-01KR12RE939M7/dev-plan-bug-worktree-enforcement-decomposed
@@ -12,8 +13,13 @@ overrides:
   -
     from_status: dev-planning
     reason: "Fast-track: dev-plan approved, tasks created, proceeding to developing"
-    timestamp: "2026-05-07T14:15:43+01:00"
+    timestamp: "2026-05-07T20:23:47+01:00"
     to_status: developing
+  -
+    from_status: reviewing
+    reason: Review passed with non-blocking notes only. Advancing to done.
+    timestamp: "2026-05-07T20:23:47+01:00"
+    to_status: done
 display_id: B56-F1
 tier: feature
 verification: "TASK-01KR197N74YTY: 7 tests cover all scenarios: no bugs, with worktree, without worktree, non-in-progress statuses, mixed statuses, merged worktree, exact message format. All pass.\nTASK-01KR197N7BA4R: go test ./internal/mcp/... ./internal/health/... passed (all 6 new tests pass, existing tests green). go build ./... passes."
