@@ -1,0 +1,12 @@
+id: FEAT-01KR003J39A59
+slug: retro-commit-discipline
+name: Commit discipline for management actions
+parent: B53-retro-fixes-may-2026
+status: proposed
+summary: Add explicit commit step to kanbanzai-agents/SKILL.md for non-task workflows to prevent state drift between sessions.
+tags:
+  - retro
+created: "2026-05-07T01:16:17Z"
+created_by: sambeau
+display_id: B53-F1
+tier: retro_fix
