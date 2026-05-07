@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR1AS0QG90E
 slug: retrofix-active-task
 name: Retrofix Active Task
 summary: Test task for handoff verification - retro_fix active
-status: ready
+status: active
