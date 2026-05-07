@@ -1,0 +1,11 @@
+id: P57-retro-pipeline-tightening
+slug: retro-pipeline-tightening
+name: Retrospective Pipeline Tightening
+status: idea
+summary: "Tighten the retrospective pipeline with a P55/P56-style exercise: add retro_fix entity creation path, auto-generated specs from themes, close-out verification with adapted DoD, document trail, and stage binding. Bridge the gap from synthesis report to executable fix features."
+order: 0
+tags:
+  - retro
+created: "2026-05-07T13:58:31Z"
+created_by: sambeau
+updated: "2026-05-07T13:58:31Z"
