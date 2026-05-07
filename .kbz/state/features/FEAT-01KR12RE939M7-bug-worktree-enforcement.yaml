@@ -16,5 +16,5 @@ overrides:
     to_status: developing
 display_id: B56-F1
 tier: feature
-verification: "TASK-01KR197N74YTY: 7 tests cover all scenarios: no bugs, with worktree, without worktree, non-in-progress statuses, mixed statuses, merged worktree, exact message format. All pass."
+verification: "TASK-01KR197N74YTY: 7 tests cover all scenarios: no bugs, with worktree, without worktree, non-in-progress statuses, mixed statuses, merged worktree, exact message format. All pass.\nTASK-01KR197N7BA4R: go test ./internal/mcp/... ./internal/health/... passed (all 6 new tests pass, existing tests green). go build ./... passes."
 verification_status: passed
