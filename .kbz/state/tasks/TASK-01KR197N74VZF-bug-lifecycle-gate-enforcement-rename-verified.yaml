@@ -3,8 +3,11 @@ parent_feature: FEAT-01KR12RE970R8
 slug: bug-lifecycle-gate-enforcement-rename-verified
 name: Rename BugStatusVerified to BugStatusVerifying
 summary: "Rename BugStatusVerified to BugStatusVerifying in model, lifecycle, schema, and all references. Update the lifecycle state machine transitions. Ensure backward compat for existing state files with status: verified."
-status: active
+status: done
+completed: "2026-05-07T13:29:31Z"
 claimed_at: "2026-05-07T13:18:12Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-07T13:18:12Z"
 dispatched_by: sambeau
+completion_summary: "Renamed BugStatusVerified to BugStatusVerifying across model, lifecycle, schema, and all references. Updated lifecycle state machine transitions (needs-review→verifying, verifying→closed). Added backward compat in entity_store.go to normalize \"verified\"→\"verifying\" on load. Regenerated schema JSON. All tests pass for affected packages."
+verification: go test ./internal/model/... ./internal/validate/... ./internal/storage/... ./internal/service/... ./kbzschema/... — all pass. go vet — clean.
