@@ -3,7 +3,7 @@ parent_feature: FEAT-01KR1GJGJ9BZS
 slug: retro-integration-tests
 name: Integration Tests and End-to-End Verification
 summary: "Wire all components together, write end-to-end integration tests verifying all 18 acceptance criteria pass."
-status: active
+status: done
 depends_on:
   - TASK-01KR1GRAJMFSK
   - TASK-01KR1GS8T687B
@@ -11,7 +11,10 @@ depends_on:
   - TASK-01KR1GS8WVMEC
   - TASK-01KR1GS8T3E18
   - TASK-01KR1GS8T9SD2
+completed: "2026-05-07T16:17:26Z"
 claimed_at: "2026-05-07T16:05:20Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-07T16:05:20Z"
 dispatched_by: sambeau
+completion_summary: "Added 4 integration tests covering AC-007 (auto mode approved docs), AC-014 (batch summary response shape), AC-015 (feature tags contain signal IDs), and AC-017 (DefaultFastTrackConfig retro_fix unchanged). All 12 spec-focused tests pass. go vet clean. Inspection verified implement-retro-fix SKILL.md exists with required sections; stage-bindings retro-fixing present in project root (worktree task still ready). Full service/mcp/model/config suites pass green."
+verification: "go test ./internal/service/ -run 'TestCreateFix|TestReport|TestSelectAutoThemes|TestDefaultFastTrackConfig' -v -count=1 — 12/12 pass. go test ./internal/service/ ./internal/mcp/ ./internal/model/ ./internal/config/ — all pass. go vet ./... — clean."
