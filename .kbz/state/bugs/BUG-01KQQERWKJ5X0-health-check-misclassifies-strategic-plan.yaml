@@ -1,7 +1,7 @@
 id: BUG-01KQQERWKJ5X0
 slug: health-check-misclassifies-strategic-plan
 name: Health check misclassifies StrategicPlan as batch
-status: triaged
+status: planned
 severity: medium
 priority: medium
 type: implementation-defect

@@ -1,7 +1,7 @@
 id: BUG-01KQR5XA77Y49
 slug: status-dashboard-plan-batch-misclassification
 name: Plan-to-batch misclassification in status dashboard
-status: reported
+status: triaged
 severity: medium
 priority: medium
 type: implementation-defect
