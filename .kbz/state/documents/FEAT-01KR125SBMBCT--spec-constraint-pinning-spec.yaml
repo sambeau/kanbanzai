@@ -1,0 +1,11 @@
+canonical_content_hash: 233d97f09962bf80115db472ce95dc30b804901adb7a9d6bfe63a442c2f7a48e
+content_hash: 233d97f09962bf80115db472ce95dc30b804901adb7a9d6bfe63a442c2f7a48e
+created: "2026-05-07T11:23:34Z"
+created_by: sambeau
+id: FEAT-01KR125SBMBCT/spec-constraint-pinning-spec
+owner: FEAT-01KR125SBMBCT
+path: work/FEAT-01KR125SBMBCT/constraint-pinning-spec.md
+status: draft
+title: "Specification: Constraint Pinning in Pipeline"
+type: spec
+updated: "2026-05-07T11:23:34Z"

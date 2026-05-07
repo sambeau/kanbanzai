@@ -2,8 +2,9 @@ id: FEAT-01KR125SBMBCT
 slug: constraint-pinning
 name: Constraint pinning in pipeline
 parent: B55-orchestrator-context-hygiene-impl
-status: proposed
+status: specifying
 summary: Add orchestrator role reminder to every next and handoff response using recency peak of U-shaped attention curve.
+spec: FEAT-01KR125SBMBCT/spec-constraint-pinning-spec
 tags:
   - pipeline
   - constraint-pinning
