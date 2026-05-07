@@ -1,6 +1,6 @@
 # Specification: Review Remediation Workflow
 
-**Plan:** P1-review-remediation-workflow (design reference: P54)  
+**Plan:** P54-review-remediation-workflow
 **Parent:** P41-opencode-ecosystem-features  
 **Design:** [P54 Design: Review Remediation Workflow](P54-design-review-remediation-workflow.md)  
 **Status:** Draft

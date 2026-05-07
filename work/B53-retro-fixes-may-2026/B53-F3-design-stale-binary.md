@@ -24,10 +24,27 @@ Add a `server_info` check to the pre-task checklist and verification guidance in
 - Pre-task checklist: "If the MCP server may be stale, run `server_info` to verify the running binary matches the latest build"
 - Verification guidance: "When test results are unexpected (passes that should fail, failures that should pass), run `server_info` before debugging code"
 
-## Non-Goals
+## Goals and Non-Goals
+
+### Goals
+
+- Implement the change described in the Design section
+- Keep scope minimal — no unrelated refactoring
+
+### Non-Goals
 
 - Does not modify the server_info tool itself
 - Does not add automated binary freshness checks
+
+## Alternatives Considered
+
+### Do nothing
+
+Leave the friction in place. Rejected: the retro signals show this wastes agent cycles and causes state drift.
+
+### Automated enforcement
+
+Add tooling to automatically enforce the desired behavior. Rejected: over-engineered for the current scale; documentation is sufficient.
 
 ## Dependencies
 
