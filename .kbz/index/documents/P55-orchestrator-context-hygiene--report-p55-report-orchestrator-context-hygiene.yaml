@@ -1,0 +1,166 @@
+document_id: P55-orchestrator-context-hygiene/report-p55-report-orchestrator-context-hygiene
+document_path: work/P55-orchestrator-context-hygiene/P55-report-orchestrator-context-hygiene.md
+content_hash: 94c97fb9b146f50babc321956f792dd59d59daffb5dced34fb89e64203bcd5ec
+indexed_at: 2026-05-07T13:09:41.579083Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: P55 Orchestrator Context Hygiene'
+      byte_offset: 0
+      byte_count: 4435
+      word_count: 518
+      content_hash: 94c97fb9b146f50babc321956f792dd59d59daffb5dced34fb89e64203bcd5ec
+      children:
+        - path: "1.1"
+          level: 2
+          title: 'Aggregate Verdict: APPROVED (all blocking findings resolved)'
+          byte_offset: 340
+          byte_count: 249
+          word_count: 37
+          content_hash: 428905d9c940f809d7d389def1fb901def62f877573a4ab3242d28f36525a3e2
+        - path: "1.2"
+          level: 2
+          title: Review Unit Breakdown
+          byte_offset: 589
+          byte_count: 826
+          word_count: 77
+          content_hash: 51e183c394d6ef2b1bb672506253377f1573bb3aee72f947587c863332ab9aad
+        - path: "1.3"
+          level: 2
+          title: Blocking Findings — All Resolved
+          byte_offset: 1415
+          byte_count: 868
+          word_count: 102
+          content_hash: bcd3ef6ad254be06fb5eb72379db27caa99f4fb6f66fc3cd362b03d20084a9f0
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'B1: Handoff missing orchestrator role reminder (Conformance)'
+              byte_offset: 1454
+              byte_count: 250
+              word_count: 29
+              content_hash: 78f07f7ec4ec70410209a5cd7cd6d94e74a5f9263e73670d8d79bc5b30969a14
+            - path: 1.3.2
+              level: 3
+              title: 'B2: Constraints missing `type` metadata (Conformance)'
+              byte_offset: 1704
+              byte_count: 267
+              word_count: 29
+              content_hash: b7a601fc25dff9e8a245c1b5c652116201b28b9952dc7d063415d7911da24424
+            - path: 1.3.3
+              level: 3
+              title: 'B3: Duplicate Phase 0 header (Quality)'
+              byte_offset: 1971
+              byte_count: 137
+              word_count: 17
+              content_hash: e948b3917c37cb5bb6830a8482f8b365a65f50b61e87af2de4ea83e4578c06d8
+            - path: 1.3.4
+              level: 3
+              title: 'B4: Inconsistent YAML quoting in anti-pattern (Quality)'
+              byte_offset: 2108
+              byte_count: 175
+              word_count: 21
+              content_hash: 54d7e32182e3a49a5a570db11f0a3ea0d8a0bdf0d78a835786a6b362b03a7a6f
+        - path: "1.4"
+          level: 2
+          title: Non-Blocking Findings
+          byte_offset: 2283
+          byte_count: 1120
+          word_count: 139
+          content_hash: 32cafee65c884f7f116f101d3b4adf209c9de0b11a7fe566e7e987c3e3c04c45
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'N1: Anti-pattern ordering not strictly alphabetical (Conformance)'
+              byte_offset: 2309
+              byte_count: 258
+              word_count: 32
+              content_hash: 1846e0e1e3cdf51695f4d9b9925e6ba9fe0b08f828a6d2d64450e646db002a78
+            - path: 1.4.2
+              level: 3
+              title: 'N2: No worktree/branch isolation (Process)'
+              byte_offset: 2567
+              byte_count: 313
+              word_count: 43
+              content_hash: 59d6267fc6fe0b9be197905579bb2cb4ac80aa76ec28ce9e1aa6e99c76b4b8ed
+            - path: 1.4.3
+              level: 3
+              title: 'N3: Pre-existing test failures (Quality)'
+              byte_offset: 2880
+              byte_count: 297
+              word_count: 32
+              content_hash: faf5278219ed959a6f7d3f0abe00a2120f0973704167ac3398b1ea35ce0447e7
+            - path: 1.4.4
+              level: 3
+              title: 'N4: `trace_call_path` naming in codebase-memory skills (Quality)'
+              byte_offset: 3177
+              byte_count: 226
+              word_count: 29
+              content_hash: 36864f4d94e5cea2da9475c7ed523c56c7a92ca7adbaf436e3c3adbaa9e48ab2
+        - path: "1.5"
+          level: 2
+          title: Feature Conformance Summary
+          byte_offset: 3403
+          byte_count: 830
+          word_count: 124
+          content_hash: d72b959a9bcadfdd2b45a6d63d68be919ea2942ec21b5b1c88bc5c64950d4831
+        - path: "1.6"
+          level: 2
+          title: Embedded Seed Parity
+          byte_offset: 4233
+          byte_count: 202
+          word_count: 18
+          content_hash: d22ab48238378c96523f9fa3bafb930979706d3f34d041a08e53c78d83208034
+entity_refs:
+    - entity_id: FEAT-01KR12539CXH6
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 140
+    - entity_id: FEAT-01KR125SBM4FN
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 160
+    - entity_id: FEAT-01KR125SBM4JQ
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 180
+    - entity_id: FEAT-01KR125SBMBCT
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 200
+    - entity_id: FEAT-01KR125SBMPQT
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 220
+    - entity_id: P55-orchestrator-context-hygiene
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 253
+    - entity_id: P55-relevant
+      entity_type: plan
+      section_path: 1.4.3
+      byte_offset: 3094
+cross_doc_links:
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "1.2"
+    - target_path: .kbz/skills/verify-closeout/SKILL.md
+      link_text: .kbz/skills/verify-closeout/SKILL.md
+      section_path: "1.2"
+    - target_path: .github/skills/codebase-memory-*/SKILL.md
+      link_text: .github/skills/codebase-memory-*/SKILL.md
+      section_path: "1.2"
+    - target_path: internal/kbzinit/skills/task-execution/orchestrate-development/SKILL.md
+      link_text: internal/kbzinit/skills/task-execution/orchestrate-development/SKILL.md
+      section_path: "1.2"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: 1.3.2
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+classified: false
