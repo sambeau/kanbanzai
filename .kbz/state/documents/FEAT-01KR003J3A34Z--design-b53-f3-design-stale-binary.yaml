@@ -1,11 +1,13 @@
+approved_at: "2026-05-07T01:22:01Z"
+approved_by: sambeau
 canonical_content_hash: 99db9367657d208eb6e51c69cd2a1992d9ce67f17b3e2c02ed4c622257180370
-content_hash: 99db9367657d208eb6e51c69cd2a1992d9ce67f17b3e2c02ed4c622257180370
+content_hash: 511db0271b81706653b570136a4df78bbd2a7cdcafe996126c63ee2eabad2b5b
 created: "2026-05-07T01:19:40Z"
 created_by: sambeau
 id: FEAT-01KR003J3A34Z/design-b53-f3-design-stale-binary
 owner: FEAT-01KR003J3A34Z
 path: work/B53-retro-fixes-may-2026/B53-F3-design-stale-binary.md
-status: draft
+status: approved
 title: "Design: Stale Binary Detection Discoverability"
 type: design
-updated: "2026-05-07T01:19:40Z"
+updated: "2026-05-07T01:22:01Z"
