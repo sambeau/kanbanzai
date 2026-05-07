@@ -3,4 +3,14 @@ parent_feature: FEAT-01KR03G3TTF5H
 slug: fix-status-dashboard-misclassification
 name: Fix status dashboard plan-to-batch misclassification
 summary: "The status dashboard's runStatusProjectOverview also hits the same dual-directory problem — P-prefix entities in batches/ with strategic-plan statuses. Additionally, the 'ready to close' attention item fires for strategic plans that are in 'done' status but stored as batches. Fix: either filter P-prefix entities out of the batches/ scan in the status dashboard, or properly distinguish types before generating attention items."
-status: ready
+status: done
+files_planned:
+  - internal/service/plans.go
+  - internal/service/strategic_plans_test.go
+  - internal/service/entities_test.go
+  - internal/service/display_id_test.go
+  - internal/mcp/status_tool_test.go
+  - internal/mcp/doc_currency_health_test.go
+completed: "2026-05-07T02:32:06Z"
+completion_summary: "Fixed status dashboard plan-to-batch misclassification. The same isStrategicPlanRecord fix cascades through ListPlans into synthesiseProject and generateProjectAttention, filtering out stale P-prefix copies from batches/ before they reach the dashboard. Also fixed 'ready to close' false positives for strategic plans with non-done or invalid statuses."
+verification: "All relevant tests pass: TestProjectAttention_PlanAlreadyDone_NoCloseItem, TestProjectAttention_PlanNotAllFeaturesDone_NoCloseItem, TestProjectAttention_PlanAllFeaturesDone_NotClosed_Fires, TestSynthesiseProject_WithPlans, synthesise feature/task tests"
