@@ -1,11 +1,13 @@
+approved_at: "2026-05-07T14:04:42Z"
+approved_by: sambeau
 canonical_content_hash: cdfa76d3eab6e984eb687425f2a7bc487139e994007b77bc49c68d7b097a8c47
-content_hash: 584aad42233a21403fc20c1b5040b9614788bb63880075a3fe363125f342be9e
+content_hash: 23fbde5e7e67bdb56cf3772ecd465117098c5582a3cc095036d0b1682c81d9ca
 created: "2026-05-07T14:04:30Z"
 created_by: sambeau
 id: P57-retro-pipeline-tightening/design-p57-design-retro-pipeline-tightening
 owner: P57-retro-pipeline-tightening
 path: work/P57-retro-pipeline-tightening/P57-design-retro-pipeline-tightening.md
-status: draft
+status: approved
 title: "Design: Retrospective Pipeline Tightening"
 type: design
-updated: "2026-05-07T14:04:30Z"
+updated: "2026-05-07T14:04:42Z"
