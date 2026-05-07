@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR03G3TQW6P
 slug: filter-strategic-plans-from-list-plans
 name: Filter strategic plans from ListPlans health check
 summary: "The HealthCheck function calls ListPlans() which scans the batches/ directory. P-prefix entities like P40-P46 are stored in both plans/ and batches/ directories, but the batches/ copies have strategic-plan statuses (idea, shaping) that are invalid for the Batch lifecycle validator. The health check already loads strategic plans separately via ListStrategicPlans, so we need to ensure batches/ doesn't contain stale P-prefix copies, or that the health check doesn't validate them as batches."
-status: queued
+status: ready
