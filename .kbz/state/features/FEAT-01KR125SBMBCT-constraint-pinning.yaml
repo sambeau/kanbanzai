@@ -2,7 +2,8 @@ id: FEAT-01KR125SBMBCT
 slug: constraint-pinning
 name: Constraint pinning in pipeline
 parent: B55-orchestrator-context-hygiene-impl
-status: dev-planning
+status: done
+review_cycle: 1
 summary: Add orchestrator role reminder to every next and handoff response using recency peak of U-shaped attention curve.
 spec: FEAT-01KR125SBMBCT/spec-constraint-pinning-spec
 tags:
@@ -10,5 +11,16 @@ tags:
   - constraint-pinning
 created: "2026-05-07T11:11:41Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: dev-planning
+    reason: "Fast-track: all changes committed. Go code compiles and tests pass. Dual-write sync confirmed."
+    timestamp: "2026-05-07T12:45:28+01:00"
+    to_status: developing
+  -
+    from_status: reviewing
+    reason: "Fast-track: all changes committed. Go code compiles and tests pass. Dual-write sync confirmed."
+    timestamp: "2026-05-07T12:45:28+01:00"
+    to_status: done
 display_id: B55-F2
 tier: feature

@@ -2,7 +2,8 @@ id: FEAT-01KR125SBMPQT
 slug: close-out-verifier
 name: Close-out verifier sub-agent
 parent: B55-orchestrator-context-hygiene-impl
-status: dev-planning
+status: done
+review_cycle: 1
 summary: Create verifier role and verify-closeout skill with 10-item DoD checklist. Integrate into verifying stage as clean-context sub-agent delegation.
 spec: FEAT-01KR125SBMPQT/spec-close-out-verifier-spec
 tags:
@@ -11,5 +12,16 @@ tags:
   - definition-of-done
 created: "2026-05-07T11:11:41Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: dev-planning
+    reason: "Fast-track: all changes committed. New role/skill files created. Build passes. Dual-write sync confirmed."
+    timestamp: "2026-05-07T12:45:28+01:00"
+    to_status: developing
+  -
+    from_status: reviewing
+    reason: "Fast-track: all changes committed. New role/skill files created. Build passes. Dual-write sync confirmed."
+    timestamp: "2026-05-07T12:45:28+01:00"
+    to_status: done
 display_id: B55-F2
 tier: feature

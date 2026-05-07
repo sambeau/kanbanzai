@@ -2,7 +2,8 @@ id: FEAT-01KR12539CXH6
 slug: orchestrator-role-hardening
 name: Orchestrator role hardening
 parent: B55-orchestrator-context-hygiene-impl
-status: dev-planning
+status: done
+review_cycle: 1
 summary: Add Pre-delegation Code Investigation anti-pattern to orchestrator role and orchestrate-development skill. Remove grep and search_graph from orchestrator tool list. Add hard constraint to orchestrate-development Phase 1.
 spec: FEAT-01KR12539CXH6/spec-orchestrator-role-hardening-spec
 tags:
@@ -11,5 +12,16 @@ tags:
   - tool-restriction
 created: "2026-05-07T11:11:19Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: dev-planning
+    reason: "Fast-track: all changes committed and verified. Documentation-only feature (no code). Build passes. Dual-write sync confirmed."
+    timestamp: "2026-05-07T12:45:28+01:00"
+    to_status: developing
+  -
+    from_status: reviewing
+    reason: "Fast-track: all changes committed and verified. Documentation-only feature (no code). Build passes. Dual-write sync confirmed."
+    timestamp: "2026-05-07T12:45:28+01:00"
+    to_status: done
 display_id: B55-F1
 tier: feature
