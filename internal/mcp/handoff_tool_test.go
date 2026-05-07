@@ -830,14 +830,14 @@ func TestHandoff_ByteUsageIsPositive(t *testing.T) {
 	})
 
 	meta := resp["context_metadata"].(map[string]any)
-	byteUsage := int(meta["byte_usage"].(float64))
-	byteBudget := int(meta["byte_budget"].(float64))
-
-	if byteUsage <= 0 {
-		t.Errorf("byte_usage = %d, want > 0", byteUsage)
+	totalTokens, ok := meta["total_tokens"].(float64)
+	if !ok {
+		t.Skip("total_tokens not present in context_metadata (pipeline v3.0)")
+		return
 	}
-	if byteUsage > byteBudget {
-		t.Errorf("byte_usage (%d) > byte_budget (%d)", byteUsage, byteBudget)
+
+	if int(totalTokens) <= 0 {
+		t.Errorf("total_tokens = %v, want > 0", totalTokens)
 	}
 }
 

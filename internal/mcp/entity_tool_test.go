@@ -643,7 +643,7 @@ func TestEntity_List_Plans(t *testing.T) {
 
 	result := callEntityToolJSON(t, entitySvc, map[string]any{
 		"action": "list",
-		"type":   "plan",
+		"type":   "batch",
 	})
 
 	entities, _ := result["entities"].([]any)
@@ -1456,7 +1456,7 @@ func writeFile(path, content string) error {
 func TestEntity_Create_Plan(t *testing.T) {
 	// Plan creation requires a valid prefix registered in .kbz/config.yaml.
 	// This test is skipped in CI / fresh checkouts that lack a config file.
-	// Verifies §30.8: entity(action: "create", type: "plan", ...) creates a plan.
+	// Verifies §30.8: entity(action: "create", type: "batch", ...) creates a plan.
 	cfg, err := config.Load()
 	if err != nil {
 		t.Skipf("skipping plan creation test: config not available: %v", err)
@@ -1470,7 +1470,7 @@ func TestEntity_Create_Plan(t *testing.T) {
 
 	result := callEntityToolJSON(t, entitySvc, map[string]any{
 		"action":  "create",
-		"type":    "plan",
+		"type":    "batch",
 		"prefix":  testPrefix,
 		"slug":    "entity-tool-test-plan",
 		"name":    "Entity Tool Test Plan",
@@ -1481,7 +1481,7 @@ func TestEntity_Create_Plan(t *testing.T) {
 	if !ok {
 		t.Fatalf("expected 'entity' in response, got: %v", result)
 	}
-	if entity["type"] != "plan" {
+	if entity["type"] != "batch" {
 		t.Errorf("entity.type = %v, want plan", entity["type"])
 	}
 	if entity["status"] != "proposed" {

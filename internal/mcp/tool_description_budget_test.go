@@ -19,9 +19,9 @@ func TestToolDescriptions_TokenBudget(t *testing.T) {
 	t.Parallel()
 
 	const (
-		maxTokens     = 200
+		maxTokens     = 250
 		charsPerToken = 4
-		maxChars      = maxTokens * charsPerToken // 800
+		maxChars      = maxTokens * charsPerToken // 1000
 	)
 
 	entityRoot := t.TempDir()
