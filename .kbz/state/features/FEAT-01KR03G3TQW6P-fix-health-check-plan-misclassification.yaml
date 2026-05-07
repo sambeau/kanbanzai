@@ -1,0 +1,13 @@
+id: FEAT-01KR03G3TQW6P
+slug: fix-health-check-plan-misclassification
+name: Fix health check StrategicPlan misclassification
+parent: B54-strategic-plan-classification-fixes
+status: proposed
+summary: "BUG-01KQQERWKJ5X0: Health check misclassifies StrategicPlan entities as batches, producing false 'unknown batch status' errors for P40-P46"
+tags:
+  - fast-track
+  - bug_fix
+created: "2026-05-07T02:15:34Z"
+created_by: sambeau
+display_id: B54-F1
+tier: feature
