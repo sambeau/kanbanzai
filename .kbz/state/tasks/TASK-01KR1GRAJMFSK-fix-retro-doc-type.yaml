@@ -3,8 +3,13 @@ parent_feature: FEAT-01KR1GJGJ9BZS
 slug: fix-retro-doc-type
 name: Fix Document Type Registration in RetroService.Report()
 summary: Change RetroService.Report() to register retro reports as type retro instead of report. One-line change in internal/service/retro_synthesis.go plus test verification.
-status: active
+status: done
+files_planned:
+  - internal/service/retro_synthesis.go
+  - internal/service/retro_synthesis_test.go
+completed: "2026-05-07T15:35:27Z"
 claimed_at: "2026-05-07T15:30:16Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-07T15:30:16Z"
 dispatched_by: sambeau
+completion_summary: "Changed Report() to register retro reports as type \"retro\" instead of \"report\" in SubmitDocumentInput. Added TestReport_DocumentTypeRetro to verify the document type."
