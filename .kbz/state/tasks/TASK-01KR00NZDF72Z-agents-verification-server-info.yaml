@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR003J3A34Z
 slug: agents-verification-server-info
 name: Add server_info to kanbanzai-agents verification guidance
 summary: Add server_info guidance to .agents/skills/kanbanzai-agents/SKILL.md verification section for unexpected test results.
-status: queued
+status: ready
