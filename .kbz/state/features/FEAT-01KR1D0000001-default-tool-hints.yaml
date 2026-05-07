@@ -6,6 +6,7 @@ status: dev-planning
 summary: "Add hardcoded default tool hints to stepResolveToolHint. One task, ~50 lines in internal/context/pipeline.go."
 design: FEAT-01KR1D0000001/design-p58-f1-design-default-tool-hints
 spec: FEAT-01KR1D0000001/spec-p58-f1-spec-default-tool-hints
+dev_plan: FEAT-01KR1D0000001/dev-plan-p58-f1-dev-plan-default-tool-hints
 created: "2026-05-07T14:34:00Z"
 created_by: sambeau
 updated: "2026-05-07T14:34:00Z"
