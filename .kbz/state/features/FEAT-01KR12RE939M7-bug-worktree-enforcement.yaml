@@ -2,10 +2,17 @@ id: FEAT-01KR12RE939M7
 slug: bug-worktree-enforcement
 name: Bug Worktree Enforcement
 parent: B56-bug-lifecycle-hardening
-status: dev-planning
+status: developing
 summary: "Health checks for bare in-progress bugs, warnings on repo-root mutations during active bug work, and worktree cleanup verification."
 spec: FEAT-01KR12RE939M7/spec-p56-f3-spec-bug-worktree-enforcement
+dev_plan: FEAT-01KR12RE939M7/dev-plan-bug-worktree-enforcement-decomposed
 created: "2026-05-07T11:21:53Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: dev-planning
+    reason: "Fast-track: dev-plan approved, tasks created, proceeding to developing"
+    timestamp: "2026-05-07T14:15:43+01:00"
+    to_status: developing
 display_id: B56-F1
 tier: feature

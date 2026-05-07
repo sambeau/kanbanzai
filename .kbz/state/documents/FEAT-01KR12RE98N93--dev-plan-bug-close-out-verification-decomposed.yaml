@@ -1,0 +1,13 @@
+approved_at: "2026-05-07T13:15:03Z"
+approved_by: decompose apply
+canonical_content_hash: 987a47c88c3c7ab6f47eadee6bb68519022eb0d8fa58707dc87d28b345b951cb
+content_hash: 183e2fdc2c4bc18cf848fbcbebb7c390820e709b7ecc1883c10642193f1b3047
+created: "2026-05-07T13:15:03Z"
+created_by: decompose apply
+id: FEAT-01KR12RE98N93/dev-plan-bug-close-out-verification-decomposed
+owner: FEAT-01KR12RE98N93
+path: work/dev-plan/bug-close-out-verification-decomposed.md
+status: approved
+title: "Dev Plan: Bug Close-Out Verification (Decomposed)"
+type: dev-plan
+updated: "2026-05-07T13:15:03Z"

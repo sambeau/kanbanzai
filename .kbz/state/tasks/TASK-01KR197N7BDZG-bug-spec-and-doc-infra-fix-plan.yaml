@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR12RE99QPT
 slug: bug-spec-and-doc-infra-fix-plan
 name: Add fix_plan field and dev-plan generation
 summary: Add FixPlan field to CreateBugInput and bug model. Write fix-plan.md and register as dev-plan when non-empty. Store field in bug state YAML.
-status: queued
+status: ready

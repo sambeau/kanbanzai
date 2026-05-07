@@ -1,0 +1,13 @@
+approved_at: "2026-05-07T13:15:03Z"
+approved_by: decompose apply
+canonical_content_hash: 43d49b25112d0dca365b9bcbbfb064db7fea2fb9a9c90697c1794ee108ae775d
+content_hash: fe4a4144dcaf218dc995c8022ec539c8cdaea440f41aad61bc47abab852d35f5
+created: "2026-05-07T13:15:03Z"
+created_by: decompose apply
+id: FEAT-01KR12RE970R8/dev-plan-bug-lifecycle-gate-enforcement-decomposed
+owner: FEAT-01KR12RE970R8
+path: work/dev-plan/bug-lifecycle-gate-enforcement-decomposed.md
+status: approved
+title: "Dev Plan: Bug Lifecycle Gate Enforcement (Decomposed)"
+type: dev-plan
+updated: "2026-05-07T13:15:03Z"

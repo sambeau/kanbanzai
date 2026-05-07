@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR12RE970R8
 slug: bug-lifecycle-gate-enforcement-stop-state
 name: Add needs-review stop-state and bugStopStates
 summary: Add bugStopStates map with needs-review as mandatory halt. Add health check for bugs that skipped needs-review.
-status: queued
+status: ready

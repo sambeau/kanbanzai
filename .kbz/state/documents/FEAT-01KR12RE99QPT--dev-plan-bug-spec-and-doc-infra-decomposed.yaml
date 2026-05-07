@@ -1,0 +1,13 @@
+approved_at: "2026-05-07T13:15:03Z"
+approved_by: decompose apply
+canonical_content_hash: 355a8d89839430b25c6fb8ef932a5c25ba1e81d88d97b6ef0b83c2191046de62
+content_hash: 5743c95736602f87dce534d74da0811e98023acf336e5276921cc6959bc22e5a
+created: "2026-05-07T13:15:03Z"
+created_by: decompose apply
+id: FEAT-01KR12RE99QPT/dev-plan-bug-spec-and-doc-infra-decomposed
+owner: FEAT-01KR12RE99QPT
+path: work/dev-plan/bug-spec-and-doc-infra-decomposed.md
+status: approved
+title: "Dev Plan: Bug Spec and Document Infrastructure (Decomposed)"
+type: dev-plan
+updated: "2026-05-07T13:15:03Z"

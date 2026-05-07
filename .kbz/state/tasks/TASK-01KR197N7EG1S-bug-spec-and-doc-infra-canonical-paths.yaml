@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR12RE99QPT
 slug: bug-spec-and-doc-infra-canonical-paths
 name: Add canonical doc paths for bugs
 summary: "Extend CanonicalDocPath for bug entities: spec, dev-plan, report paths. Return error for unsupported types. Support both BUG-TSID and BUG-TSID-slug formats."
-status: queued
+status: ready

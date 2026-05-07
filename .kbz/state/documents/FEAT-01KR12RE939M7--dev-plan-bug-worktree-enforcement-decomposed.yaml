@@ -1,0 +1,13 @@
+approved_at: "2026-05-07T13:15:03Z"
+approved_by: decompose apply
+canonical_content_hash: 486e62993649f528e67e9b0df615748527387332bbb9a7ae687714d9c953f535
+content_hash: 5e31e487d9a7d806f1833702b12fee438f41c75f52757a21ba7a46da215b9284
+created: "2026-05-07T13:15:03Z"
+created_by: decompose apply
+id: FEAT-01KR12RE939M7/dev-plan-bug-worktree-enforcement-decomposed
+owner: FEAT-01KR12RE939M7
+path: work/dev-plan/bug-worktree-enforcement-decomposed.md
+status: approved
+title: "Dev Plan: Bug Worktree Enforcement (Decomposed)"
+type: dev-plan
+updated: "2026-05-07T13:15:03Z"
