@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR003J3ATM2
 slug: copilot-instructions-worktree
 name: Update copilot-instructions for worktree file operations
 summary: Add note to .github/copilot-instructions.md that kanbanzai_edit_file and write_file accept entity_id for worktree targeting.
-status: queued
+status: ready

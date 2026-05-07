@@ -3,4 +3,8 @@ parent_feature: FEAT-01KR1GJGJ9BZS
 slug: implement-retro-fix-skill
 name: Create implement-retro-fix Skill
 summary: "Create .kbz/skills/implement-retro-fix/SKILL.md with vocabulary, anti-patterns, procedure, and stage-specific guidance."
-status: ready
+status: active
+claimed_at: "2026-05-07T15:30:16Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-07T15:30:16Z"
+dispatched_by: sambeau

@@ -3,9 +3,9 @@ content: "Infrastructure issues from May 2026 retrospective: stale binary (kbz v
 created: "2026-05-05T11:21:13Z"
 created_by: sambeau
 id: KE-01KQVXXSKFJ1Z
-last_accessed_at: "2026-05-07T15:04:26Z"
+last_accessed_at: "2026-05-07T15:30:48Z"
 miss_count: 0
-recent_use_count: 48
+recent_use_count: 55
 scope: project
 status: contributed
 tags:

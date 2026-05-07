@@ -3,4 +3,8 @@ parent_feature: FEAT-01KR1GJGJ9BZS
 slug: retro-dod-verifier
 name: Add Retro-Adapted Definition of Done to Verifier
 summary: Add dod_variant retro-fix support to verify-closeout skill. Item 10 checks signal resolution instead of knowledge curation.
-status: ready
+status: active
+claimed_at: "2026-05-07T15:30:16Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-07T15:30:16Z"
+dispatched_by: sambeau

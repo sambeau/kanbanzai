@@ -3,10 +3,10 @@ content: "[moderate] tool-friction: Pre-existing test compilation errors in inte
 created: "2026-05-05T09:44:12Z"
 created_by: unknown
 id: KE-01KQVRC4WPVJF
-last_accessed_at: "2026-05-07T15:04:26Z"
+last_accessed_at: "2026-05-07T15:30:48Z"
 learned_from: TASK-01KQTX80GF8Y7
 miss_count: 0
-recent_use_count: 62
+recent_use_count: 70
 scope: project
 status: contributed
 tags:
