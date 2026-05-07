@@ -340,7 +340,6 @@ func TestStrategicPlan_CreateWithNonexistentParent(t *testing.T) {
 
 // ─── AC-011: Cycle detection ──────────────────────────────────────────────────
 
-
 // TestStrategicPlan_CreateWithValidParent verifies the success path for
 // creating a strategic plan with a valid, existing parent.
 func TestStrategicPlan_CreateWithValidParent(t *testing.T) {
@@ -442,6 +441,7 @@ func TestStrategicPlan_UpdateParentCycleDetection(t *testing.T) {
 
 	}
 }
+
 // ─── AC-012: Deep nesting (depth 5) ───────────────────────────────────────────
 
 func TestStrategicPlan_DeepNesting(t *testing.T) {
@@ -559,8 +559,72 @@ func TestStrategicPlan_CoexistenceWithBatch(t *testing.T) {
 		if batchIDs[p.ID] {
 			t.Errorf("ID %s appears in both ListPlans and ListStrategicPlans", p.ID)
 		}
-}
 	}
+}
+
+func TestStrategicPlan_StaleBatchCopy_ListPlansExcludes(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-04-28T12:00:00Z")
+
+	// Write a P-prefix record to the batches/ directory using writeTestPlan.
+	// This simulates a stale strategic-plan copy that ended up in batches/.
+	writeTestPlan(t, svc, "P99-legacy")
+
+	// Write a proper strategic plan to the plans/ directory.
+	writeTestStrategicPlan(t, svc, "P1-strategic-plan", "idea")
+
+	// Write a proper batch to the batches/ directory.
+	writeTestPlan(t, svc, "B99-batch-plan")
+
+	// ListPlans should NOT include P99-legacy (P-prefix record in batches/).
+	batchPlans, err := svc.ListPlans(PlanFilters{})
+	if err != nil {
+		t.Fatalf("ListPlans error = %v", err)
+	}
+
+	for _, p := range batchPlans {
+		if p.ID == "P99-legacy" {
+			t.Errorf("ListPlans contained stale strategic-plan copy P99-legacy from batches/")
+		}
+	}
+
+	// ListPlans should still include B99-batch-plan.
+	foundBatch := false
+	for _, p := range batchPlans {
+		if p.ID == "B99-batch-plan" {
+			foundBatch = true
+			break
+		}
+	}
+	if !foundBatch {
+		t.Error("ListPlans did not contain B99-batch-plan")
+	}
+
+	// ListStrategicPlans should include P99-legacy (P-prefix record from batches/).
+	spPlans, err := svc.ListStrategicPlans(StrategicPlanFilters{})
+	if err != nil {
+		t.Fatalf("ListStrategicPlans error = %v", err)
+	}
+
+	foundLegacy := false
+	foundSP := false
+	for _, p := range spPlans {
+		if p.ID == "P99-legacy" {
+			foundLegacy = true
+		}
+		if p.ID == "P1-strategic-plan" {
+			foundSP = true
+		}
+	}
+	if !foundLegacy {
+		t.Error("ListStrategicPlans did not include P99-legacy (stale copy in batches/)")
+	}
+	if !foundSP {
+		t.Error("ListStrategicPlans did not include P1-strategic-plan")
+	}
+}
 
 func TestStrategicPlan_InvalidTransitionNoStateChange(t *testing.T) {
 	t.Parallel()
