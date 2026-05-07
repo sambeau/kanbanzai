@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "RenderRetroDesign(theme RetroTheme, featureID string) string and RenderRetroSpec(theme RetroTheme, featureID string) string in internal/service/retro_templates.go. Both produce complete markdown documents from RetroTheme data. Design template: Overview, Goals and Non-Goals, Design, Alternatives Considered, Dependencies. Spec template: Overview, Scope, Functional Requirements, Non-Functional Requirements, Acceptance Criteria. Both handle empty TopSuggestion without panicking."
+created: "2026-05-07T15:40:07Z"
+created_by: unknown
+id: KE-01KR1HH9VKRX2
+learned_from: TASK-01KR1GS8T687B
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retro
+  - templates
+  - service
+tier: 2
+topic: retro-templates
+ttl_days: 90
+updated: "2026-05-07T15:40:07Z"
+use_count: 0
