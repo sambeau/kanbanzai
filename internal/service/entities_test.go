@@ -694,6 +694,40 @@ func TestParseRecordIdentity(t *testing.T) {
 	}
 }
 
+func TestExtractCoordinationCounter(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name   string
+		id     string
+		prefix string
+		want   int
+	}{
+		{"BUG-1-slug", "BUG-1-slug", "BUG-", 1},
+		{"BUG-42-slug", "BUG-42-slug", "BUG-", 42},
+		{"BUG-999-multi-word-slug", "BUG-999-multi-word-slug", "BUG-", 999},
+		{"B123-batch-slug", "B123-batch-slug", "B", 123},
+		{"P50-plan-name", "P50-plan-name", "P", 50},
+		{"TSID format returns 0", "BUG-01KQZ-WYMNEMTX", "BUG-", 0},
+		{"wrong prefix returns 0", "BUG-1-slug", "FEAT-", 0},
+		{"no digits returns 0", "BUG--slug", "BUG-", 0},
+		{"no hyphen after digits returns 0", "BUG-1slug", "BUG-", 0},
+		{"empty string returns 0", "", "BUG-", 0},
+		{"short prefix returns 0", "B", "BUG-", 0},
+	}
+
+	for _, tt := range tests {
+		tt := tt
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got := extractCoordinationCounter(tt.id, tt.prefix)
+			if got != tt.want {
+				t.Errorf("extractCoordinationCounter(%q, %q) = %d, want %d", tt.id, tt.prefix, got, tt.want)
+			}
+		})
+	}
+}
+
 func newTestEntityService(root string, now string) *EntityService {
 	svc := NewEntityService(root)
 
