@@ -2,7 +2,7 @@
 |--------|--------------------------------|
 | Date   | 2026-05-07                     |
 | Author | spec-author                     |
-| Status | draft                          |
+| Status | approved |
 | Feature| FEAT-01KR125SBMBCT              |
 | Design | P55-orchestrator-context-hygiene/design-p55-design-orchestrator-context-hygiene |
 
