@@ -1,0 +1,11 @@
+canonical_content_hash: b78365753ea96fa5ccf756ad94c70c3a97b8db743f8f8caa61b3359d3798b926
+content_hash: b78365753ea96fa5ccf756ad94c70c3a97b8db743f8f8caa61b3359d3798b926
+created: "2026-05-07T01:23:31Z"
+created_by: sambeau
+id: FEAT-01KR003J3ATM2/spec-b53-f2-spec-worktree-tooling
+owner: FEAT-01KR003J3ATM2
+path: work/B53-retro-fixes-may-2026/B53-F2-spec-worktree-tooling.md
+status: draft
+title: "Spec: Worktree File-Writing Tooling"
+type: spec
+updated: "2026-05-07T01:23:31Z"

@@ -1,0 +1,11 @@
+canonical_content_hash: 7583023596b52a197a5eb5e0afd2162feb254e6774a0ecc1b4c98fc53521af08
+content_hash: 7583023596b52a197a5eb5e0afd2162feb254e6774a0ecc1b4c98fc53521af08
+created: "2026-05-07T01:23:31Z"
+created_by: sambeau
+id: FEAT-01KR003J3A34Z/spec-b53-f3-spec-stale-binary
+owner: FEAT-01KR003J3A34Z
+path: work/B53-retro-fixes-may-2026/B53-F3-spec-stale-binary.md
+status: draft
+title: "Spec: Stale Binary Detection Discoverability"
+type: spec
+updated: "2026-05-07T01:23:31Z"
