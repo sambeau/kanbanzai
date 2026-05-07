@@ -225,6 +225,43 @@ type RetroReportInput struct {
 	CreatedBy  string // identity of the caller (for document registration)
 }
 
+// ─── CreateFix types ───────────────────────────────────────────────────────────
+
+// CreateFixInput holds parameters for the retro create_fix action.
+// In human-gated mode, a single theme at ThemeIndex is selected.
+// In auto mode, themes are selected by ThemeCount (top N) and/or
+// SeverityThreshold (score ≥ threshold). When both are specified, the
+// intersection is used: themes in the top N that also meet the threshold.
+type CreateFixInput struct {
+	RetroSynthesisInput
+	Mode              string // "human-gated" (default) or "auto"
+	ThemeIndex        int    // 0-based index into themes for human-gated mode
+	ThemeCount        int    // top N themes for auto mode (0 means all)
+	SeverityThreshold int    // minimum severity score for auto mode (0 means no filter)
+	Name              string // optional feature name override (applied to first feature)
+	ParentPlan        string // optional parent plan ID; auto-created if omitted
+	CreatedBy         string // identity of the caller
+}
+
+// CreateFixFeatureResult describes a single feature created from a retro theme.
+type CreateFixFeatureResult struct {
+	FeatureID    string `json:"feature_id"`
+	ThemeRank    int    `json:"theme_rank"`
+	ThemeTitle   string `json:"theme_title"`
+	DesignDocID  string `json:"design_doc_id,omitempty"`
+	SpecDocID    string `json:"spec_doc_id,omitempty"`
+	DevPlanDocID string `json:"dev_plan_doc_id,omitempty"`
+	WasSkipped   bool   `json:"was_skipped,omitempty"`
+	SkipReason   string `json:"skip_reason,omitempty"`
+}
+
+// CreateFixResult is the result of a retro create_fix action.
+type CreateFixResult struct {
+	PlanID          string                   `json:"plan_id"`
+	Features        []CreateFixFeatureResult `json:"features"`
+	ThemesProcessed int                      `json:"themes_processed"`
+}
+
 // ─── Service ──────────────────────────────────────────────────────────────────
 
 // RetroService provides retrospective signal synthesis (Phase 2 of P5).
@@ -428,7 +465,7 @@ func (s *RetroService) Report(input RetroReportInput) (RetroReportResult, error)
 
 	docResult, err := s.docSvc.SubmitDocument(SubmitDocumentInput{
 		Path:      input.OutputPath,
-		Type:      "report",
+		Type:      "retro",
 		Title:     title,
 		CreatedBy: createdBy,
 	})
@@ -443,6 +480,433 @@ func (s *RetroService) Report(input RetroReportInput) (RetroReportResult, error)
 			DocumentID: docResult.ID,
 		},
 	}, nil
+}
+
+// CreateFix synthesises retrospective signals, selects themes by mode, and
+// creates Feature entities to address them. In human-gated mode, the caller
+// picks a single theme by index. In auto mode, themes are selected by count
+// and/or severity threshold, and features are auto-advanced through the
+// full lifecycle (design → spec → dev-plan → developing with tasks).
+func (s *RetroService) CreateFix(input CreateFixInput) (CreateFixResult, error) {
+	mode := strings.TrimSpace(input.Mode)
+	if mode == "" {
+		mode = "human-gated"
+	}
+	if mode != "human-gated" && mode != "auto" {
+		return CreateFixResult{}, fmt.Errorf("invalid mode %q; valid modes: human-gated, auto", mode)
+	}
+
+	createdBy := strings.TrimSpace(input.CreatedBy)
+	if createdBy == "" {
+		createdBy = "retro"
+	}
+
+	// 1. Synthesise.
+	synthesis, err := s.Synthesise(input.RetroSynthesisInput)
+	if err != nil {
+		return CreateFixResult{}, fmt.Errorf("synthesise: %w", err)
+	}
+
+	// 2. Select themes by mode.
+	if len(synthesis.Themes) == 0 {
+		// In human-gated mode, an index into an empty list is an error.
+		if mode == "human-gated" {
+			return CreateFixResult{}, fmt.Errorf(
+				"theme_index %d out of range: synthesis returned 0 themes",
+				input.ThemeIndex,
+			)
+		}
+		return CreateFixResult{
+			Features:        []CreateFixFeatureResult{},
+			ThemesProcessed: 0,
+		}, nil
+	}
+	var selected []RetroTheme
+	switch mode {
+	case "human-gated":
+		if input.ThemeIndex < 0 || input.ThemeIndex >= len(synthesis.Themes) {
+			return CreateFixResult{}, fmt.Errorf(
+				"theme_index %d out of range: synthesis returned %d themes",
+				input.ThemeIndex, len(synthesis.Themes),
+			)
+		}
+		selected = []RetroTheme{synthesis.Themes[input.ThemeIndex]}
+	case "auto":
+		selected = selectAutoThemes(synthesis.Themes, input.ThemeCount, input.SeverityThreshold)
+		if len(selected) == 0 {
+			return CreateFixResult{
+				Features:        []CreateFixFeatureResult{},
+				ThemesProcessed: 0,
+			}, nil
+		}
+	}
+
+	// 3. Resolve parent plan (auto-create if needed).
+	planID, err := s.resolveOrCreatePlan(input.ParentPlan, createdBy)
+	if err != nil {
+		return CreateFixResult{}, fmt.Errorf("resolve parent plan: %w", err)
+	}
+
+	// 4. For each selected theme, create a feature (with idempotency check).
+	var features []CreateFixFeatureResult
+	for i, theme := range selected {
+		// Idempotency: skip if feature already exists for this theme's signals.
+		if existing, found := s.findExistingFixFeature(theme.Signals); found {
+			features = append(features, CreateFixFeatureResult{
+				FeatureID:  existing,
+				ThemeRank:  theme.Rank,
+				ThemeTitle: theme.Title,
+				WasSkipped: true,
+				SkipReason: fmt.Sprintf("feature %s already exists for these signals", existing),
+			})
+			continue
+		}
+
+		feat, featErr := s.createFixFeature(theme, planID, createdBy, mode, i)
+		if featErr != nil {
+			return CreateFixResult{}, fmt.Errorf("create feature for theme %q: %w", theme.Title, featErr)
+		}
+		features = append(features, feat)
+	}
+
+	return CreateFixResult{
+		PlanID:          planID,
+		Features:        features,
+		ThemesProcessed: len(features),
+	}, nil
+}
+
+// selectAutoThemes selects themes for auto mode. When both themeCount and
+// severityThreshold are > 0, the intersection is used: themes in the top N
+// that also meet the severity threshold.
+func selectAutoThemes(themes []RetroTheme, themeCount, severityThreshold int) []RetroTheme {
+	if themeCount <= 0 && severityThreshold <= 0 {
+		return nil
+	}
+
+	candidates := make([]RetroTheme, 0, len(themes))
+	for _, t := range themes {
+		if themeCount > 0 && severityThreshold > 0 {
+			// Intersection: must satisfy both.
+			if t.Rank <= themeCount && t.SeverityScore >= severityThreshold {
+				candidates = append(candidates, t)
+			}
+		} else if themeCount > 0 {
+			// Only top-N filter active.
+			if t.Rank <= themeCount {
+				candidates = append(candidates, t)
+			}
+		} else {
+			// Only severity threshold filter active.
+			if t.SeverityScore >= severityThreshold {
+				candidates = append(candidates, t)
+			}
+		}
+	}
+	return candidates
+}
+
+// resolveOrCreatePlan returns the parent plan ID. If parentPlan is empty,
+// a new plan is auto-created with a name like "Pnn-retro-fixes-{month-year}".
+func (s *RetroService) resolveOrCreatePlan(parentPlan, createdBy string) (string, error) {
+	parentPlan = strings.TrimSpace(parentPlan)
+	if parentPlan != "" {
+		// Verify the plan exists.
+		_, err := s.entitySvc.GetPlan(parentPlan)
+		if err != nil {
+			return "", fmt.Errorf("parent plan %s: %w", parentPlan, err)
+		}
+		return parentPlan, nil
+	}
+
+	now := s.now()
+	slug := fmt.Sprintf("retro-fixes-%s", now.Format("2006-01"))
+	name := fmt.Sprintf("Retro Fixes — %s", now.Format("January 2006"))
+
+	result, err := s.entitySvc.CreatePlan(CreatePlanInput{
+		Prefix:    "P",
+		Slug:      slug,
+		Name:      name,
+		Summary:   fmt.Sprintf("Auto-created plan for retrospective fixes generated in %s.", now.Format("January 2006")),
+		CreatedBy: createdBy,
+	})
+	if err != nil {
+		return "", fmt.Errorf("auto-create plan: %w", err)
+	}
+	return result.ID, nil
+}
+
+// extractTags normalises the tags field from entity state (which may be
+// []string or []interface{} from YAML/JSON deserialisation) into []string.
+func extractTags(state map[string]any) []string {
+	raw, ok := state["tags"]
+	if !ok {
+		return nil
+	}
+	switch v := raw.(type) {
+	case []string:
+		return v
+	case []interface{}:
+		out := make([]string, 0, len(v))
+		for _, item := range v {
+			if s, ok := item.(string); ok {
+				out = append(out, s)
+			}
+		}
+		return out
+	default:
+		return nil
+	}
+}
+
+// findExistingFixFeature checks whether a feature already exists for the given
+// signal IDs by scanning existing features' tags. Returns the feature ID and
+// true if found.
+func (s *RetroService) findExistingFixFeature(signalIDs []string) (string, bool) {
+	if len(signalIDs) == 0 {
+		return "", false
+	}
+	sigSet := make(map[string]bool, len(signalIDs))
+	for _, id := range signalIDs {
+		sigSet[id] = true
+	}
+
+	features, err := s.entitySvc.List("feature")
+	if err != nil {
+		return "", false
+	}
+
+	for _, f := range features {
+		tags := extractTags(f.State)
+		if hasRetroTag(tags) && sharesSignal(tags, sigSet) {
+			if id, ok := f.State["id"].(string); ok {
+				return id, true
+			}
+		}
+	}
+	return "", false
+}
+
+// hasRetroTag checks whether a tag slice contains the "retro" tag.
+func hasRetroTag(tags []string) bool {
+	for _, t := range tags {
+		if t == "retro" {
+			return true
+		}
+	}
+	return false
+}
+
+// sharesSignal checks whether any of the given signal IDs appear in the tags.
+// A match means at least one signal ID from sigSet is present in the tags.
+func sharesSignal(tags []string, sigSet map[string]bool) bool {
+	for _, t := range tags {
+		if sigSet[t] {
+			return true
+		}
+	}
+	return false
+}
+
+// createFixFeature creates a single feature for a retro theme.
+// In auto mode, it also generates and approves design, spec, dev-plan documents,
+// creates tasks, and advances the feature lifecycle.
+func (s *RetroService) createFixFeature(theme RetroTheme, planID, createdBy, mode string, index int) (CreateFixFeatureResult, error) {
+	// Build a slug from the theme title.
+	slug := themeToSlug(theme)
+	summary := fmt.Sprintf("Retro fix: %s (rank #%d, %d signals, score %d)",
+		theme.Title, theme.Rank, theme.SignalCount, theme.SeverityScore)
+
+	// Build tags: retro + signal IDs.
+	tags := append([]string{"retro"}, theme.Signals...)
+
+	featResult, err := s.entitySvc.CreateFeature(CreateFeatureInput{
+		Slug:      slug,
+		Parent:    planID,
+		Name:      sanitizeFeatureName(theme.Title),
+		Summary:   summary,
+		CreatedBy: createdBy,
+		Tags:      tags,
+		Tier:      "retro_fix",
+	})
+	if err != nil {
+		return CreateFixFeatureResult{}, fmt.Errorf("create feature: %w", err)
+	}
+
+	result := CreateFixFeatureResult{
+		FeatureID:  featResult.ID,
+		ThemeRank:  theme.Rank,
+		ThemeTitle: theme.Title,
+	}
+
+	// Human-gated mode: stop after feature creation — no auto-advance.
+	if mode == "human-gated" {
+		return result, nil
+	}
+
+	// ─── Auto mode: generate docs, create tasks, advance lifecycle ───────
+
+	// 4a. Generate and approve design.
+	designContent := RenderRetroDesign(theme, featResult.ID)
+	designPath := fmt.Sprintf("work/_project/design-%s.md", featResult.Slug)
+	if docID, err := s.writeAndRegisterDoc(designContent, designPath, "design",
+		fmt.Sprintf("Design: %s", theme.Title), featResult.ID, createdBy, false); err == nil {
+		result.DesignDocID = docID
+	}
+
+	// 4b. Generate and approve spec.
+	specContent := RenderRetroSpec(theme, featResult.ID)
+	specPath := fmt.Sprintf("work/_project/spec-%s.md", featResult.Slug)
+	if docID, err := s.writeAndRegisterDoc(specContent, specPath, "spec",
+		fmt.Sprintf("Specification: %s", theme.Title), featResult.ID, createdBy, false); err == nil {
+		result.SpecDocID = docID
+	}
+
+	// 4c. Generate and auto-approve dev-plan.
+	devPlanContent := renderRetroFixDevPlan(theme, featResult.ID)
+	devPlanPath := fmt.Sprintf("work/_project/dev-plan-%s.md", featResult.Slug)
+	if docID, err := s.writeAndRegisterDoc(devPlanContent, devPlanPath, "dev-plan",
+		fmt.Sprintf("Implementation Plan: %s", theme.Title), featResult.ID, createdBy, true); err == nil {
+		result.DevPlanDocID = docID
+	}
+
+	// 4d. Advance feature through lifecycle: proposed → designing → specifying → dev-planning → developing.
+	_ = s.advanceFeatureLifecycle(featResult.ID, featResult.Slug)
+
+	// 4e. Create a task for the fix.
+	_ = s.createFixTask(featResult.ID, theme, createdBy)
+
+	return result, nil
+}
+
+// writeAndRegisterDoc writes a document to disk, registers it, and optionally
+// auto-approves it. Returns the document ID.
+func (s *RetroService) writeAndRegisterDoc(content, path, docType, title, owner, createdBy string, autoApprove bool) (string, error) {
+	fullPath := filepath.Join(s.repoRoot, path)
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0755); err != nil {
+		return "", err
+	}
+	if err := os.WriteFile(fullPath, []byte(content), 0644); err != nil {
+		return "", err
+	}
+
+	docResult, err := s.docSvc.SubmitDocument(SubmitDocumentInput{
+		Path:        path,
+		Type:        docType,
+		Title:       title,
+		Owner:       owner,
+		CreatedBy:   createdBy,
+		AutoApprove: autoApprove,
+	})
+	if err != nil {
+		return "", err
+	}
+
+	// For non-auto-approve types (design, spec), approve separately.
+	if !autoApprove {
+		approveResult, approveErr := s.docSvc.ApproveDocument(ApproveDocumentInput{
+			ID:         docResult.ID,
+			ApprovedBy: createdBy,
+		})
+		if approveErr != nil {
+			return docResult.ID, nil // return ID even if approval fails (doc still exists)
+		}
+		return approveResult.ID, nil
+	}
+
+	return docResult.ID, nil
+}
+
+// advanceFeatureLifecycle advances a feature from proposed through to developing.
+func (s *RetroService) advanceFeatureLifecycle(featureID, slug string) error {
+	stages := []string{"designing", "specifying", "dev-planning", "developing"}
+	for _, status := range stages {
+		_, err := s.entitySvc.UpdateStatus(UpdateStatusInput{
+			Type:   "feature",
+			ID:     featureID,
+			Slug:   slug,
+			Status: status,
+		})
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// createFixTask creates a single task for a retro fix feature.
+func (s *RetroService) createFixTask(featureID string, theme RetroTheme, createdBy string) error {
+	taskSlug := themeToSlug(theme) + "-impl"
+	summary := fmt.Sprintf("Implement fix for retro theme: %s", theme.Title)
+
+	if theme.TopSuggestion != "" {
+		summary = theme.TopSuggestion
+	}
+
+	_, err := s.entitySvc.CreateTask(CreateTaskInput{
+		ParentFeature: featureID,
+		Slug:          taskSlug,
+		Summary:       summary,
+	})
+	return err
+}
+
+// sanitizeFeatureName converts a theme title into a valid feature name
+// by removing characters not allowed in entity names (colons, etc.).
+func sanitizeFeatureName(title string) string {
+	s := strings.ReplaceAll(title, ":", " -")
+	// Remove multiple consecutive spaces.
+	for strings.Contains(s, "  ") {
+		s = strings.ReplaceAll(s, "  ", " ")
+	}
+	return strings.TrimSpace(s)
+}
+
+// themeToSlug converts a retro theme title into a URL-friendly slug.
+func themeToSlug(theme RetroTheme) string {
+	s := strings.ToLower(theme.Title)
+	s = strings.ReplaceAll(s, " ", "-")
+	// Remove any characters that aren't lowercase letters, digits, or hyphens.
+	filtered := make([]byte, 0, len(s))
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+		if (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '-' {
+			filtered = append(filtered, c)
+		}
+	}
+	result := string(filtered)
+	// Collapse multiple hyphens.
+	for strings.Contains(result, "--") {
+		result = strings.ReplaceAll(result, "--", "-")
+	}
+	result = strings.Trim(result, "-")
+	if result == "" {
+		return fmt.Sprintf("retro-fix-%d", theme.Rank)
+	}
+	return fmt.Sprintf("retro-fix-%s", result)
+}
+
+// renderRetroFixDevPlan produces a minimal dev-plan markdown for a retro fix.
+func renderRetroFixDevPlan(theme RetroTheme, featureID string) string {
+	var b strings.Builder
+	fmt.Fprintf(&b, "# Implementation Plan: %s\n\n", theme.Title)
+	fmt.Fprintf(&b, "| Field  | Value                          |\n")
+	fmt.Fprintf(&b, "|--------|--------------------------------|\n")
+	fmt.Fprintf(&b, "| Feature | %s |\n", featureID)
+	fmt.Fprintf(&b, "| Source | Retro theme #%d (%s) |\n\n", theme.Rank, theme.Category)
+
+	b.WriteString("## Task Breakdown\n\n")
+	fmt.Fprintf(&b, "### Task 1: Implement fix for %s\n\n", theme.Title)
+	if theme.TopSuggestion != "" {
+		fmt.Fprintf(&b, "%s\n\n", theme.TopSuggestion)
+	} else {
+		fmt.Fprintf(&b, "Address the %q theme identified by %d retrospective signal(s).\n\n", theme.Title, theme.SignalCount)
+	}
+	b.WriteString("**Acceptance criteria:**\n\n")
+	fmt.Fprintf(&b, "- No new retrospective signals are generated for the %q theme.\n", theme.Title)
+	fmt.Fprintf(&b, "- Existing tests continue to pass.\n")
+
+	return b.String()
 }
 
 // ─── Scope resolution ─────────────────────────────────────────────────────────

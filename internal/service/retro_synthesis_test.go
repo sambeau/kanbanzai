@@ -8,6 +8,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/sambeau/kanbanzai/internal/config"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/storage"
 )
@@ -1590,6 +1591,30 @@ func TestReport_DocumentInDraftStatus(t *testing.T) {
 	}
 }
 
+// Verify that Report() registers the document with type "retro" instead of "report".
+func TestReport_DocumentTypeRetro(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceWithReport(t, root)
+
+	result, err := svc.Report(RetroReportInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		OutputPath:          "retro/type-retro-test.md",
+		CreatedBy:           "test",
+	})
+	if err != nil {
+		t.Fatalf("Report() error = %v", err)
+	}
+
+	doc, err := svc.docSvc.GetDocument(result.Report.DocumentID, false)
+	if err != nil {
+		t.Fatalf("GetDocument(%s): %v", result.Report.DocumentID, err)
+	}
+	if doc.Type != "retro" {
+		t.Errorf("document type = %q, want %q", doc.Type, "retro")
+	}
+}
+
 // P5-2.15: response includes report.path and report.document_id.
 func TestReport_ReportPathAndDocumentID(t *testing.T) {
 	t.Parallel()
@@ -1873,5 +1898,715 @@ func TestSynthesise_ExperimentsExcludeNonAcceptedDecisions(t *testing.T) {
 	// The nudge (assembly.go) is what filters to accepted-only.
 	if result.Experiments == nil {
 		t.Fatal("Experiments should not be nil when signals reference a workflow-experiment decision")
+	}
+}
+
+// ─── selectAutoThemes ─────────────────────────────────────────────────────────
+
+func TestSelectAutoThemes_TopNOnly(t *testing.T) {
+	t.Parallel()
+	themes := []RetroTheme{
+		{Rank: 1, Title: "Theme A", SeverityScore: 10},
+		{Rank: 2, Title: "Theme B", SeverityScore: 8},
+		{Rank: 3, Title: "Theme C", SeverityScore: 5},
+		{Rank: 4, Title: "Theme D", SeverityScore: 3},
+	}
+	got := selectAutoThemes(themes, 2, 0)
+	if len(got) != 2 {
+		t.Fatalf("expected 2 themes, got %d", len(got))
+	}
+	if got[0].Title != "Theme A" || got[1].Title != "Theme B" {
+		t.Errorf("got %v, want [Theme A, Theme B]", got)
+	}
+}
+
+func TestSelectAutoThemes_ThresholdOnly(t *testing.T) {
+	t.Parallel()
+	themes := []RetroTheme{
+		{Rank: 1, Title: "Theme A", SeverityScore: 10},
+		{Rank: 2, Title: "Theme B", SeverityScore: 4},
+		{Rank: 3, Title: "Theme C", SeverityScore: 8},
+	}
+	got := selectAutoThemes(themes, 0, 5)
+	if len(got) != 2 {
+		t.Fatalf("expected 2 themes (score >= 5), got %d", len(got))
+	}
+	// Theme B has score 4, should not be included.
+	for _, th := range got {
+		if th.Title == "Theme B" {
+			t.Errorf("Theme B (score 4) should not be included with threshold 5")
+		}
+	}
+}
+
+func TestSelectAutoThemes_Intersection(t *testing.T) {
+	t.Parallel()
+	themes := []RetroTheme{
+		{Rank: 1, Title: "Theme A", SeverityScore: 10},
+		{Rank: 2, Title: "Theme B", SeverityScore: 4},
+		{Rank: 3, Title: "Theme C", SeverityScore: 8},
+		{Rank: 4, Title: "Theme D", SeverityScore: 6},
+	}
+	// Top 3 AND score >= 5 => Theme A (10), Theme C (8). Theme B (4) fails threshold, Theme D (6) fails top-N.
+	got := selectAutoThemes(themes, 3, 5)
+	if len(got) != 2 {
+		t.Fatalf("expected 2 themes in intersection, got %d", len(got))
+	}
+	titles := make([]string, len(got))
+	for i, t := range got {
+		titles[i] = t.Title
+	}
+	if titles[0] != "Theme A" || titles[1] != "Theme C" {
+		t.Errorf("got %v, want [Theme A, Theme C]", titles)
+	}
+}
+
+func TestSelectAutoThemes_NoMatch(t *testing.T) {
+	t.Parallel()
+	themes := []RetroTheme{
+		{Rank: 1, Title: "Theme A", SeverityScore: 10},
+	}
+	got := selectAutoThemes(themes, 0, 0)
+	if got != nil {
+		t.Errorf("expected nil when both filters are 0, got %v", got)
+	}
+}
+
+// ─── themeToSlug ──────────────────────────────────────────────────────────────
+
+func TestThemeToSlug_Basic(t *testing.T) {
+	t.Parallel()
+	theme := RetroTheme{Rank: 1, Title: "Error handling underspecified"}
+	got := themeToSlug(theme)
+	if got != "retro-fix-error-handling-underspecified" {
+		t.Errorf("themeToSlug = %q, want %q", got, "retro-fix-error-handling-underspecified")
+	}
+}
+
+func TestThemeToSlug_SpecialChars(t *testing.T) {
+	t.Parallel()
+	theme := RetroTheme{Rank: 3, Title: "Fix: tool-gap (urgent)!"}
+	got := themeToSlug(theme)
+	if !strings.HasPrefix(got, "retro-fix-") {
+		t.Errorf("themeToSlug = %q, should start with retro-fix-", got)
+	}
+	if strings.Contains(got, "(") || strings.Contains(got, ")") || strings.Contains(got, "!") {
+		t.Errorf("themeToSlug = %q, contains invalid characters", got)
+	}
+}
+
+func TestThemeToSlug_EmptyTitle(t *testing.T) {
+	t.Parallel()
+	theme := RetroTheme{Rank: 5, Title: ""}
+	got := themeToSlug(theme)
+	if got != "retro-fix-5" {
+		t.Errorf("themeToSlug = %q, want %q", got, "retro-fix-5")
+	}
+}
+
+// ─── renderRetroFixDevPlan ────────────────────────────────────────────────────
+
+func TestRenderRetroFixDevPlan(t *testing.T) {
+	t.Parallel()
+	theme := RetroTheme{
+		Rank:          1,
+		Category:      "spec-ambiguity",
+		Title:         "Error handling underspecified",
+		SignalCount:   3,
+		SeverityScore: 15,
+		TopSuggestion: "Add explicit error format section to the spec",
+	}
+	got := renderRetroFixDevPlan(theme, "FEAT-001")
+	if !strings.Contains(got, "# Implementation Plan: Error handling underspecified") {
+		t.Error("dev-plan missing title")
+	}
+	if !strings.Contains(got, "FEAT-001") {
+		t.Error("dev-plan missing feature ID")
+	}
+	if !strings.Contains(got, "Add explicit error format section") {
+		t.Error("dev-plan missing suggestion")
+	}
+	if !strings.Contains(got, "## Task Breakdown") {
+		t.Error("dev-plan missing Task Breakdown section")
+	}
+}
+
+// ─── CreateFix (integration) ──────────────────────────────────────────────────
+
+// newRetroTestServiceForCreateFix creates a RetroService with all dependencies
+// for CreateFix tests (knowledge, entity, doc, repoRoot).
+func newRetroTestServiceForCreateFix(t *testing.T, root string) *RetroService {
+	t.Helper()
+	knowledgeSvc := NewKnowledgeService(root)
+	t.Cleanup(knowledgeSvc.Close)
+	entitySvc := NewEntityService(root)
+	docSvc := NewDocumentService(root, root)
+	return &RetroService{
+		knowledgeSvc: knowledgeSvc,
+		entitySvc:    entitySvc,
+		docSvc:       docSvc,
+		repoRoot:     root,
+		now:          func() time.Time { return time.Date(2026, 3, 28, 0, 0, 0, 0, time.UTC) },
+	}
+}
+
+func TestCreateFix_HumanGated_CreatesFeature(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceForCreateFix(t, root)
+
+	// Write a retro signal to synthesise.
+	writeRetroKnowledgeRecord(t, root,
+		"KE-HG01", "spec-ambiguity", "moderate",
+		"[moderate] spec-ambiguity: Error format undefined Suggestion: Add error format section",
+		"TASK-HG01", "2026-03-01T10:00:00Z",
+	)
+
+	// Auto-create plan and create feature at theme index 0.
+	result, err := svc.CreateFix(CreateFixInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		Mode:                "human-gated",
+		ThemeIndex:          0,
+		CreatedBy:           "test",
+	})
+	if err != nil {
+		t.Fatalf("CreateFix() error = %v", err)
+	}
+	if result.PlanID == "" {
+		t.Error("PlanID should not be empty (auto-created)")
+	}
+	if !strings.HasPrefix(result.PlanID, "P") {
+		t.Errorf("PlanID should start with P: %q", result.PlanID)
+	}
+	if result.ThemesProcessed != 1 {
+		t.Errorf("ThemesProcessed = %d, want 1", result.ThemesProcessed)
+	}
+	if len(result.Features) != 1 {
+		t.Fatalf("expected 1 feature, got %d", len(result.Features))
+	}
+	f := result.Features[0]
+	if f.FeatureID == "" {
+		t.Error("FeatureID should not be empty")
+	}
+	if f.ThemeRank != 1 {
+		t.Errorf("ThemeRank = %d, want 1", f.ThemeRank)
+	}
+	if f.WasSkipped {
+		t.Error("WasSkipped should be false for new feature")
+	}
+	// Human-gated mode: no doc IDs should be set.
+	if f.DesignDocID != "" {
+		t.Error("DesignDocID should be empty in human-gated mode")
+	}
+	if f.SpecDocID != "" {
+		t.Error("SpecDocID should be empty in human-gated mode")
+	}
+}
+
+func TestCreateFix_HumanGated_ThemeIndexOutOfRange(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceForCreateFix(t, root)
+
+	_, err := svc.CreateFix(CreateFixInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		Mode:                "human-gated",
+		ThemeIndex:          5, // No signals = empty themes.
+		CreatedBy:           "test",
+	})
+	if err == nil {
+		t.Fatal("expected error for out-of-range theme_index")
+	}
+	if !strings.Contains(err.Error(), "out of range") {
+		t.Errorf("error should mention out of range: %v", err)
+	}
+}
+
+func TestCreateFix_Auto_CreatesMultipleFeatures(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceForCreateFix(t, root)
+
+	// Write multiple signals in different categories.
+	writeRetroKnowledgeRecord(t, root,
+		"KE-A01", "spec-ambiguity", "significant",
+		"[significant] spec-ambiguity: Error format completely undefined Suggestion: Add comprehensive error spec",
+		"TASK-A01", "2026-03-01T10:00:00Z",
+	)
+	writeRetroKnowledgeRecord(t, root,
+		"KE-A02", "tool-gap", "moderate",
+		"[moderate] tool-gap: No deploy automation tool exists Suggestion: Add deploy tool integration",
+		"TASK-A02", "2026-03-02T10:00:00Z",
+	)
+	writeRetroKnowledgeRecord(t, root,
+		"KE-A03", "context-gap", "minor",
+		"[minor] context-gap: Missing context for handoff packets Suggestion: Add context assembly guide",
+		"TASK-A03", "2026-03-03T10:00:00Z",
+	)
+
+	// Select top 2 themes in auto mode.
+	result, err := svc.CreateFix(CreateFixInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		Mode:                "auto",
+		ThemeCount:          2,
+		CreatedBy:           "test",
+	})
+	if err != nil {
+		t.Fatalf("CreateFix() error = %v", err)
+	}
+	if result.ThemesProcessed != 2 {
+		t.Errorf("ThemesProcessed = %d, want 2", result.ThemesProcessed)
+	}
+	if len(result.Features) != 2 {
+		t.Fatalf("expected 2 features, got %d", len(result.Features))
+	}
+	// Auto mode: features should have doc IDs.
+	for i, f := range result.Features {
+		if f.DesignDocID == "" {
+			t.Errorf("feature[%d]: DesignDocID should not be empty in auto mode", i)
+		}
+		if f.SpecDocID == "" {
+			t.Errorf("feature[%d]: SpecDocID should not be empty in auto mode", i)
+		}
+		if f.DevPlanDocID == "" {
+			t.Errorf("feature[%d]: DevPlanDocID should not be empty in auto mode", i)
+		}
+		if f.WasSkipped {
+			t.Errorf("feature[%d]: WasSkipped should be false", i)
+		}
+	}
+}
+
+func TestCreateFix_Auto_SeverityThreshold(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceForCreateFix(t, root)
+
+	// Create signals that produce themes with different severity scores.
+	// The significant one should get score 5, the minor ones score 1.
+	writeRetroKnowledgeRecord(t, root,
+		"KE-ST01", "spec-ambiguity", "significant",
+		"[significant] spec-ambiguity: Critical error format gap Suggestion: Fix error handling",
+		"TASK-ST01", "2026-03-01T10:00:00Z",
+	)
+	writeRetroKnowledgeRecord(t, root,
+		"KE-ST02", "tool-gap", "minor",
+		"[minor] tool-gap: Minor tool request Suggestion: Add helper",
+		"TASK-ST02", "2026-03-02T10:00:00Z",
+	)
+
+	// Threshold of 5 should only select the significant theme.
+	result, err := svc.CreateFix(CreateFixInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		Mode:                "auto",
+		SeverityThreshold:   5,
+		CreatedBy:           "test",
+	})
+	if err != nil {
+		t.Fatalf("CreateFix() error = %v", err)
+	}
+	// The minor tool-gap theme has severity score 1 (<5), should be excluded.
+	if result.ThemesProcessed < 1 {
+		t.Error("expected at least 1 theme with severity >= 5")
+	}
+	for _, f := range result.Features {
+		if f.ThemeTitle == "" {
+			t.Error("ThemeTitle should not be empty")
+		}
+	}
+}
+
+func TestCreateFix_Auto_Intersection(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceForCreateFix(t, root)
+
+	// Three distinct categories with varying severities.
+	writeRetroKnowledgeRecord(t, root,
+		"KE-IN01", "spec-ambiguity", "significant",
+		"[significant] spec-ambiguity: Critical spec gap Suggestion: Complete the spec",
+		"TASK-IN01", "2026-03-01T10:00:00Z",
+	)
+	writeRetroKnowledgeRecord(t, root,
+		"KE-IN02", "tool-gap", "significant",
+		"[significant] tool-gap: Missing critical tool Suggestion: Build the tool",
+		"TASK-IN02", "2026-03-02T10:00:00Z",
+	)
+	writeRetroKnowledgeRecord(t, root,
+		"KE-IN03", "context-gap", "minor",
+		"[minor] context-gap: Minor context issue Suggestion: Update docs",
+		"TASK-IN03", "2026-03-03T10:00:00Z",
+	)
+	// Top 2 by rank AND severity >= 5.
+	// spec-ambiguity (score 5) and tool-gap (score 5) should qualify.
+	// context-gap (score 1) fails severity threshold.
+	result, err := svc.CreateFix(CreateFixInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		Mode:                "auto",
+		ThemeCount:          2,
+		SeverityThreshold:   5,
+		CreatedBy:           "test",
+	})
+	if err != nil {
+		t.Fatalf("CreateFix() error = %v", err)
+	}
+	if result.ThemesProcessed < 1 {
+		t.Error("intersection should select at least 1 theme")
+	}
+	// Verify no feature has minor severity (context-gap).
+	for _, f := range result.Features {
+		if strings.Contains(f.ThemeTitle, "context") {
+			t.Errorf("context-gap theme should not be selected in intersection: %v", f)
+		}
+	}
+}
+
+func TestCreateFix_Idempotency_SkipsExisting(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceForCreateFix(t, root)
+
+	// Signal that will generate a theme.
+	writeRetroKnowledgeRecord(t, root,
+		"KE-ID01", "spec-ambiguity", "moderate",
+		"[moderate] spec-ambiguity: Error format undefined Suggestion: Add error format section",
+		"TASK-ID01", "2026-03-01T10:00:00Z",
+	)
+
+	// First call: create the feature.
+	result1, err := svc.CreateFix(CreateFixInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		Mode:                "human-gated",
+		ThemeIndex:          0,
+		CreatedBy:           "test",
+	})
+	if err != nil {
+		t.Fatalf("first CreateFix() error = %v", err)
+	}
+	if len(result1.Features) != 1 || result1.Features[0].WasSkipped {
+		t.Fatal("first call should create a feature, not skip")
+	}
+	firstFeatureID := result1.Features[0].FeatureID
+
+	// Second call: should detect the existing feature and skip.
+	result2, err := svc.CreateFix(CreateFixInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		Mode:                "human-gated",
+		ThemeIndex:          0,
+		CreatedBy:           "test",
+	})
+	if err != nil {
+		t.Fatalf("second CreateFix() error = %v", err)
+	}
+	if len(result2.Features) != 1 {
+		t.Fatalf("expected 1 result on second call, got %d", len(result2.Features))
+	}
+	f := result2.Features[0]
+	if !f.WasSkipped {
+		t.Error("second call should skip the existing feature")
+	}
+	if f.FeatureID != firstFeatureID {
+		t.Errorf("skipped feature ID = %q, want %q", f.FeatureID, firstFeatureID)
+	}
+	if f.SkipReason == "" {
+		t.Error("SkipReason should not be empty")
+	}
+}
+
+func TestCreateFix_ParentPlan(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceForCreateFix(t, root)
+
+	// Create a plan explicitly.
+	planResult, err := svc.entitySvc.CreatePlan(CreatePlanInput{
+		Prefix:    "P",
+		Slug:      "my-custom-plan",
+		Name:      "My Custom Plan",
+		Summary:   "Custom plan for testing",
+		CreatedBy: "test",
+	})
+	if err != nil {
+		t.Fatalf("CreatePlan: %v", err)
+	}
+
+	writeRetroKnowledgeRecord(t, root,
+		"KE-PP01", "spec-ambiguity", "moderate",
+		"[moderate] spec-ambiguity: Error format undefined",
+		"TASK-PP01", "2026-03-01T10:00:00Z",
+	)
+
+	result, err := svc.CreateFix(CreateFixInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		Mode:                "human-gated",
+		ThemeIndex:          0,
+		ParentPlan:          planResult.ID,
+		CreatedBy:           "test",
+	})
+	if err != nil {
+		t.Fatalf("CreateFix() error = %v", err)
+	}
+	if result.PlanID != planResult.ID {
+		t.Errorf("PlanID = %q, want %q", result.PlanID, planResult.ID)
+	}
+}
+
+func TestCreateFix_InvalidMode(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceForCreateFix(t, root)
+
+	_, err := svc.CreateFix(CreateFixInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		Mode:                "invalid-mode",
+		CreatedBy:           "test",
+	})
+	if err == nil {
+		t.Fatal("expected error for invalid mode")
+	}
+	if !strings.Contains(err.Error(), "invalid mode") {
+		t.Errorf("error should mention invalid mode: %v", err)
+	}
+}
+
+func TestCreateFix_NoThemes(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceForCreateFix(t, root)
+
+	result, err := svc.CreateFix(CreateFixInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		Mode:                "auto",
+		ThemeCount:          3,
+		CreatedBy:           "test",
+	})
+	if err != nil {
+		t.Fatalf("CreateFix() error = %v", err)
+	}
+	if len(result.Features) != 0 {
+		t.Errorf("expected 0 features with no signals, got %d", len(result.Features))
+	}
+	if result.ThemesProcessed != 0 {
+		t.Errorf("ThemesProcessed = %d, want 0", result.ThemesProcessed)
+	}
+}
+
+// ═══ AC-007: Auto mode creates approved docs ═══════════════════════════════════
+
+func TestCreateFix_Auto_ApprovedDocs(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceForCreateFix(t, root)
+
+	writeRetroKnowledgeRecord(t, root,
+		"KE-AP01", "spec-ambiguity", "significant",
+		"[significant] spec-ambiguity: Critical spec gap Suggestion: Complete the spec",
+		"TASK-AP01", "2026-03-01T10:00:00Z",
+	)
+
+	result, err := svc.CreateFix(CreateFixInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		Mode:                "auto",
+		ThemeCount:          1,
+		CreatedBy:           "test",
+	})
+	if err != nil {
+		t.Fatalf("CreateFix() error = %v", err)
+	}
+	if len(result.Features) != 1 {
+		t.Fatalf("expected 1 feature, got %d", len(result.Features))
+	}
+	f := result.Features[0]
+
+	// Design doc must be approved.
+	if f.DesignDocID == "" {
+		t.Fatal("DesignDocID should not be empty in auto mode")
+	}
+	designDoc, err := svc.docSvc.GetDocument(f.DesignDocID, false)
+	if err != nil {
+		t.Fatalf("GetDocument(design %s): %v", f.DesignDocID, err)
+	}
+	if designDoc.Status != "approved" {
+		t.Errorf("design doc status = %q, want %q", designDoc.Status, "approved")
+	}
+
+	// Spec doc must be approved.
+	if f.SpecDocID == "" {
+		t.Fatal("SpecDocID should not be empty in auto mode")
+	}
+	specDoc, err := svc.docSvc.GetDocument(f.SpecDocID, false)
+	if err != nil {
+		t.Fatalf("GetDocument(spec %s): %v", f.SpecDocID, err)
+	}
+	if specDoc.Status != "approved" {
+		t.Errorf("spec doc status = %q, want %q", specDoc.Status, "approved")
+	}
+
+	// Dev-plan doc must be approved (auto-approved).
+	if f.DevPlanDocID == "" {
+		t.Fatal("DevPlanDocID should not be empty in auto mode")
+	}
+	devPlanDoc, err := svc.docSvc.GetDocument(f.DevPlanDocID, false)
+	if err != nil {
+		t.Fatalf("GetDocument(dev-plan %s): %v", f.DevPlanDocID, err)
+	}
+	if devPlanDoc.Status != "approved" {
+		t.Errorf("dev-plan doc status = %q, want %q", devPlanDoc.Status, "approved")
+	}
+}
+
+// ═══ AC-014: Batch summary response shape ══════════════════════════════════════
+
+func TestCreateFix_BatchSummaryResponseShape(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceForCreateFix(t, root)
+
+	// Multiple signals in different categories to produce multiple themes.
+	writeRetroKnowledgeRecord(t, root,
+		"KE-BS01", "spec-ambiguity", "significant",
+		"[significant] spec-ambiguity: Gap one Suggestion: Fix gap one",
+		"TASK-BS01", "2026-03-01T10:00:00Z",
+	)
+	writeRetroKnowledgeRecord(t, root,
+		"KE-BS02", "tool-gap", "significant",
+		"[significant] tool-gap: Gap two Suggestion: Fix gap two",
+		"TASK-BS02", "2026-03-02T10:00:00Z",
+	)
+
+	result, err := svc.CreateFix(CreateFixInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		Mode:                "auto",
+		ThemeCount:          2,
+		CreatedBy:           "test",
+	})
+	if err != nil {
+		t.Fatalf("CreateFix() error = %v", err)
+	}
+
+	// AC-014: Verify response shape fields.
+	if result.PlanID == "" {
+		t.Error("PlanID should not be empty")
+	}
+	if !strings.HasPrefix(result.PlanID, "P") {
+		t.Errorf("PlanID should start with P: %q", result.PlanID)
+	}
+	if result.ThemesProcessed != len(result.Features) {
+		t.Errorf("ThemesProcessed = %d should equal len(Features) = %d",
+			result.ThemesProcessed, len(result.Features))
+	}
+	if result.ThemesProcessed != 2 {
+		t.Errorf("ThemesProcessed = %d, want 2", result.ThemesProcessed)
+	}
+
+	// Each feature must have required fields.
+	for i, f := range result.Features {
+		if f.FeatureID == "" {
+			t.Errorf("Features[%d].FeatureID empty", i)
+		}
+		if !strings.HasPrefix(f.FeatureID, "FEAT-") {
+			t.Errorf("Features[%d].FeatureID = %q, should start with FEAT-", i, f.FeatureID)
+		}
+		if f.ThemeRank == 0 {
+			t.Errorf("Features[%d].ThemeRank = 0, want non-zero", i)
+		}
+		if f.ThemeTitle == "" {
+			t.Errorf("Features[%d].ThemeTitle empty", i)
+		}
+		if f.WasSkipped {
+			t.Errorf("Features[%d].WasSkipped should be false", i)
+		}
+	}
+}
+
+// ═══ AC-015: Feature tags contain signal IDs ═══════════════════════════════════
+
+func TestCreateFix_FeatureTagsContainSignalIDs(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	svc := newRetroTestServiceForCreateFix(t, root)
+
+	writeRetroKnowledgeRecord(t, root,
+		"KE-TG01", "spec-ambiguity", "moderate",
+		"[moderate] spec-ambiguity: Error format undefined Suggestion: Add error format section",
+		"TASK-TG01", "2026-03-01T10:00:00Z",
+	)
+
+	result, err := svc.CreateFix(CreateFixInput{
+		RetroSynthesisInput: RetroSynthesisInput{},
+		Mode:                "human-gated",
+		ThemeIndex:          0,
+		CreatedBy:           "test",
+	})
+	if err != nil {
+		t.Fatalf("CreateFix() error = %v", err)
+	}
+	if len(result.Features) != 1 {
+		t.Fatalf("expected 1 feature, got %d", len(result.Features))
+	}
+
+	featID := result.Features[0].FeatureID
+	entity, err := svc.entitySvc.Get("feature", featID, "")
+	if err != nil {
+		t.Fatalf("Get(%s): %v", featID, err)
+	}
+	tags := extractTags(entity.State)
+
+	// AC-015: tags must contain signal ID KE-TG01.
+	found := false
+	for _, tag := range tags {
+		if tag == "KE-TG01" {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Errorf("tags %v should contain KE-TG01 (signal ID)", tags)
+	}
+
+	// Tags must also include "retro".
+	retroFound := false
+	for _, tag := range tags {
+		if tag == "retro" {
+			retroFound = true
+			break
+		}
+	}
+	if !retroFound {
+		t.Errorf("tags %v should contain 'retro'", tags)
+	}
+
+	// Tier must be retro_fix.
+	tier, _ := entity.State["tier"].(string)
+	if tier != "retro_fix" {
+		t.Errorf("tier = %q, want %q", tier, "retro_fix")
+	}
+}
+
+// ═══ AC-017: DefaultFastTrackConfig unchanged (REQ-NF-004) ═════════════════════
+
+func TestDefaultFastTrackConfig_RetroFixUnchanged(t *testing.T) {
+	t.Parallel()
+	cfg := config.DefaultFastTrackConfig()
+
+	tier, ok := cfg.Tiers[config.TierRetroFix]
+	if !ok {
+		t.Fatal("retro_fix tier missing from DefaultFastTrackConfig")
+	}
+
+	if tier.Design != string(config.GateModeHuman) {
+		t.Errorf("retro_fix Design = %q, want %q", tier.Design, config.GateModeHuman)
+	}
+	if tier.Spec != string(config.GateModeAuto) {
+		t.Errorf("retro_fix Spec = %q, want %q", tier.Spec, config.GateModeAuto)
+	}
+	if tier.DevPlan != string(config.GateModeAuto) {
+		t.Errorf("retro_fix DevPlan = %q, want %q", tier.DevPlan, config.GateModeAuto)
+	}
+	if tier.Review != string(config.GateModeConditional) {
+		t.Errorf("retro_fix Review = %q, want %q", tier.Review, config.GateModeConditional)
+	}
+	if tier.MaxCycles != 3 {
+		t.Errorf("retro_fix MaxCycles = %d, want 3", tier.MaxCycles)
 	}
 }

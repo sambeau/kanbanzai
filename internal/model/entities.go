@@ -481,6 +481,7 @@ type Bug struct {
 	Reported   time.Time   `yaml:"reported"`
 	Observed   string      `yaml:"observed"`
 	Expected   string      `yaml:"expected"`
+	FixPlan    string      `yaml:"fix_plan,omitempty"`
 
 	Affects       []string `yaml:"affects,omitempty"`
 	OriginFeature string   `yaml:"origin_feature,omitempty"`

@@ -5,6 +5,10 @@
 //     themes by severity-weighted signal count, and returns a structured response.
 //   - report: runs synthesis and additionally generates a markdown document, writes it
 //     to the given output_path, and registers it as a document record.
+//   - create_fix: synthesises signals and creates Feature entities to address themes.
+//     In human-gated mode, a single theme is selected by index. In auto mode, themes
+//     are selected by count and/or severity threshold, and features are auto-advanced
+//     through the full lifecycle (design → spec → dev-plan → developing).
 //
 // The retro tool is a member of the planning feature group (spec §7.5).
 package mcp
@@ -12,6 +16,7 @@ package mcp
 import (
 	"context"
 	"fmt"
+	"math"
 	"strings"
 
 	"github.com/mark3labs/mcp-go/mcp"
@@ -40,10 +45,10 @@ func retroTool(retroSvc *service.RetroService) server.ServerTool {
 				"missing signals. Use finish(retrospective: [...]) to record individual signals — use this "+
 				"tool to analyse them. action: report requires output_path; generates a markdown file and "+
 				"registers it as a document record. "+
-				"Actions: synthesise (default — cluster and rank), report.",
+				"Actions: synthesise (default — cluster and rank), report, create_fix.",
 		),
 		mcp.WithString("action",
-			mcp.Description("Action: synthesise (default) or report"),
+			mcp.Description("Action: synthesise (default), report, or create_fix"),
 		),
 		mcp.WithString("scope",
 			mcp.Description("Plan ID, Feature ID, or \"project\" (default: \"project\")"),
@@ -63,6 +68,25 @@ func retroTool(retroSvc *service.RetroService) server.ServerTool {
 		mcp.WithString("title",
 			mcp.Description("Title for the document record (report action; defaults to \"Retrospective: {scope} {date}\")"),
 		),
+		// create_fix parameters.
+		mcp.WithString("mode",
+			mcp.Description("create_fix mode: human-gated (default, select by theme_index) or auto (batch select by theme_count and/or severity_threshold)"),
+		),
+		mcp.WithNumber("theme_index",
+			mcp.Description("0-based index into ranked themes for human-gated mode (create_fix)"),
+		),
+		mcp.WithNumber("theme_count",
+			mcp.Description("Top N themes to select in auto mode (create_fix)"),
+		),
+		mcp.WithNumber("severity_threshold",
+			mcp.Description("Minimum severity score for theme selection in auto mode (create_fix)"),
+		),
+		mcp.WithString("name",
+			mcp.Description("Optional feature name (create_fix)"),
+		),
+		mcp.WithString("parent_plan",
+			mcp.Description("Optional parent plan ID for created features (create_fix; auto-created if omitted)"),
+		),
 	)
 
 	handler := WithSideEffects(func(ctx context.Context, req mcp.CallToolRequest) (any, error) {
@@ -78,9 +102,12 @@ func retroTool(retroSvc *service.RetroService) server.ServerTool {
 		case "report":
 			SignalMutation(ctx)
 			return retroReportAction(ctx, args, retroSvc)
+		case "create_fix":
+			SignalMutation(ctx)
+			return retroCreateFixAction(ctx, args, retroSvc)
 		default:
 			return inlineErr("unknown_action", fmt.Sprintf(
-				"unknown action %q; valid actions: synthesise, report", action,
+				"unknown action %q; valid actions: synthesise, report, create_fix", action,
 			))
 		}
 	})
@@ -134,6 +161,42 @@ func retroReportAction(_ context.Context, args map[string]any, svc *service.Retr
 	return result, nil
 }
 
+// retroCreateFixAction handles the create_fix action.
+func retroCreateFixAction(_ context.Context, args map[string]any, svc *service.RetroService) (any, error) {
+	// Auto-resolve the caller identity.
+	createdBy, err := config.ResolveIdentity("")
+	if err != nil {
+		createdBy = "retro"
+	}
+
+	mode := retroArgStr(args, "mode")
+
+	themeIndex := retroArgFloatAsInt(args, "theme_index")
+	themeCount := retroArgFloatAsInt(args, "theme_count")
+	severityThreshold := retroArgFloatAsInt(args, "severity_threshold")
+
+	input := service.CreateFixInput{
+		RetroSynthesisInput: service.RetroSynthesisInput{
+			Scope:       retroArgStr(args, "scope"),
+			Since:       retroArgStr(args, "since"),
+			Until:       retroArgStr(args, "until"),
+			MinSeverity: retroArgStr(args, "min_severity"),
+		},
+		Mode:              mode,
+		ThemeIndex:        themeIndex,
+		ThemeCount:        themeCount,
+		SeverityThreshold: severityThreshold,
+		Name:              retroArgStr(args, "name"),
+		ParentPlan:        retroArgStr(args, "parent_plan"),
+		CreatedBy:         createdBy,
+	}
+	result, err := svc.CreateFix(input)
+	if err != nil {
+		return inlineErr("create_fix_failed", err.Error())
+	}
+	return result, nil
+}
+
 // retroArgStr extracts and trims a string field from an args map.
 func retroArgStr(args map[string]any, key string) string {
 	if args == nil {
@@ -141,4 +204,20 @@ func retroArgStr(args map[string]any, key string) string {
 	}
 	s, _ := args[key].(string)
 	return strings.TrimSpace(s)
+}
+
+// retroArgFloatAsInt extracts a numeric field from an args map and returns it
+// as an int. MCP numbers are transmitted as float64. NaN and Inf are treated as 0.
+func retroArgFloatAsInt(args map[string]any, key string) int {
+	if args == nil {
+		return 0
+	}
+	v, ok := args[key].(float64)
+	if !ok {
+		return 0
+	}
+	if math.IsNaN(v) || math.IsInf(v, 0) {
+		return 0
+	}
+	return int(v)
 }
