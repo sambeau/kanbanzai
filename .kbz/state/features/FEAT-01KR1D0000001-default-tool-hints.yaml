@@ -4,6 +4,7 @@ name: Default tool hint fallbacks
 parent: P58-default-tool-hint-fallbacks
 status: designing
 summary: "Add hardcoded default tool hints to stepResolveToolHint. One task, ~50 lines in internal/context/pipeline.go."
+design: FEAT-01KR1D0000001/design-p58-f1-design-default-tool-hints
 created: "2026-05-07T14:34:00Z"
 created_by: sambeau
 updated: "2026-05-07T14:34:00Z"
