@@ -1,3 +1,5 @@
+approved_at: "2026-05-07T09:25:24Z"
+approved_by: sambeau
 canonical_content_hash: 201eab6288f0d76929f23fd6b8a9e6c342451ee3a9ab70925aa542345246c0cb
 content_hash: 201eab6288f0d76929f23fd6b8a9e6c342451ee3a9ab70925aa542345246c0cb
 created: "2026-05-07T09:25:17Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KR03G3TQW6P/report-b54-f1-review-health-check-misclassification
 owner: FEAT-01KR03G3TQW6P
 path: work/B54-strategic-plan-classification-fixes/B54-F1-review-health-check-misclassification.md
-status: draft
+status: approved
 title: "Review: FEAT-01KR03G3TQW6P — Fix health check StrategicPlan misclassification"
 type: report
-updated: "2026-05-07T09:25:17Z"
+updated: "2026-05-07T09:25:24Z"
