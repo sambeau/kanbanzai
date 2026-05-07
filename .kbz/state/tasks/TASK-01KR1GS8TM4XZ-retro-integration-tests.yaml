@@ -3,7 +3,7 @@ parent_feature: FEAT-01KR1GJGJ9BZS
 slug: retro-integration-tests
 name: Integration Tests and End-to-End Verification
 summary: "Wire all components together, write end-to-end integration tests verifying all 18 acceptance criteria pass."
-status: ready
+status: active
 depends_on:
   - TASK-01KR1GRAJMFSK
   - TASK-01KR1GS8T687B
@@ -11,3 +11,7 @@ depends_on:
   - TASK-01KR1GS8WVMEC
   - TASK-01KR1GS8T3E18
   - TASK-01KR1GS8T9SD2
+claimed_at: "2026-05-07T16:05:20Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-07T16:05:20Z"
+dispatched_by: sambeau
