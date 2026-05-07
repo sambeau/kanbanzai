@@ -1,0 +1,13 @@
+id: FEAT-01KR125SBMBCT
+slug: constraint-pinning
+name: Constraint pinning in pipeline
+parent: B55-orchestrator-context-hygiene-impl
+status: proposed
+summary: Add orchestrator role reminder to every next and handoff response using recency peak of U-shaped attention curve.
+tags:
+  - pipeline
+  - constraint-pinning
+created: "2026-05-07T11:11:41Z"
+created_by: sambeau
+display_id: B55-F2
+tier: feature
