@@ -4,3 +4,5 @@ slug: bug-close-out-verification-dispatch
 name: Implement verifier dispatch at verifying to closed gate
 summary: "Gate spawns verifier sub-agent with verifier role and verify-closeout skill. Passes bug ID, slug, 8-item checklist, entity state. Waits for structured JSON report. Blocks transition unless all-pass."
 status: done
+verification: "Verifier dispatch, prompt assembly with 8-item checklist and JSON schema verified."
+verification_status: passed

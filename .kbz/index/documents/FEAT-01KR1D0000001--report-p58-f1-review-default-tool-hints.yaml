@@ -1,0 +1,44 @@
+document_id: FEAT-01KR1D0000001/report-p58-f1-review-default-tool-hints
+document_path: work/P58-default-tool-hint-fallbacks/P58-F1-review-default-tool-hints.md
+content_hash: a02b7d2cf600c17796b870bbd4853ccc869ed46286c5ee4bf821b7fda38b7432
+indexed_at: 2026-05-07T14:54:52.497719Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: P58-F1 Default Tool Hint Fallbacks'
+      byte_offset: 0
+      byte_count: 737
+      word_count: 97
+      content_hash: a02b7d2cf600c17796b870bbd4853ccc869ed46286c5ee4bf821b7fda38b7432
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 154
+          byte_count: 184
+          word_count: 22
+          content_hash: e01f07c19591db30ccb2aaee08b160e5d6bbfb34838f605d8bc45da672f30bba
+        - path: "1.2"
+          level: 2
+          title: Findings
+          byte_offset: 338
+          byte_count: 97
+          word_count: 18
+          content_hash: 4d5e744eb89b6211099d85b2ac15c73fd4776c83a63837a33a95dea0552443df
+        - path: "1.3"
+          level: 2
+          title: 'Verdict: approved'
+          byte_offset: 435
+          byte_count: 302
+          word_count: 41
+          content_hash: 0ee77a2fe7e60ab4fcc3ab423f9dbe1cc6bc60e93b5267e0ebceb926d9146199
+entity_refs:
+    - entity_id: FEAT-01KR1D0000001
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 66
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

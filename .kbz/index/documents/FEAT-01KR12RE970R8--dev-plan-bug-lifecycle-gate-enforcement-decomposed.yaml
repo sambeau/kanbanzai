@@ -1,0 +1,53 @@
+document_id: FEAT-01KR12RE970R8/dev-plan-bug-lifecycle-gate-enforcement-decomposed
+document_path: work/dev-plan/bug-lifecycle-gate-enforcement-decomposed.md
+content_hash: fe4a4144dcaf218dc995c8022ec539c8cdaea440f41aad61bc47abab852d35f5
+indexed_at: 2026-05-07T13:15:03.532402Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Bug Lifecycle Gate Enforcement (Decomposed)'
+      byte_offset: 0
+      byte_count: 1246
+      word_count: 172
+      content_hash: fe4a4144dcaf218dc995c8022ec539c8cdaea440f41aad61bc47abab852d35f5
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 223
+          byte_count: 158
+          word_count: 21
+          content_hash: d3f281c149ad6fb2c84bc4150b1847d27f8ed65e0a1ba0e5e4f4d7f25523d78c
+        - path: "1.2"
+          level: 2
+          title: Tasks
+          byte_offset: 381
+          byte_count: 865
+          word_count: 115
+          content_hash: d16b1156e728b1643fd640dd316ea2b8525e1f2be2df9573e38b2df818ec5c88
+entity_refs:
+    - entity_id: FEAT-01KR12RE970R8
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 109
+    - entity_id: TASK-01KR197N74VZF
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 438
+    - entity_id: TASK-01KR197N7C84V
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 678
+    - entity_id: TASK-01KR197N7FXGT
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 815
+    - entity_id: TASK-01KR197N7JW4G
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1114
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

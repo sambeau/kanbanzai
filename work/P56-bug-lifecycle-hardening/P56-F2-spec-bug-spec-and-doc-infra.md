@@ -2,7 +2,7 @@
 |--------|--------------------------------|
 | Date   | 2026-05-07                     |
 | Author | spec-author                     |
-| Status | draft                          |
+| Status | approved |
 | Plan   | P56-bug-lifecycle-hardening    |
 | Feature | FEAT-01KR12RE99QPT             |
 

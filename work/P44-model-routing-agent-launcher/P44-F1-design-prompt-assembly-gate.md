@@ -4,6 +4,27 @@
 | Status | Draft                          |
 | Author | sambeau                        |
 
+## Overview
+
+This design proposes a **prompt assembly gate** — a non-bypassable quality check that P44's `dispatch_task` runs before dispatching any sub-agent. It addresses a systemic gap discovered in May 2026: sub-agent prompts are missing roles, skills, tool hints, vocabulary, anti-patterns, and any mention of `codebase-memory-mcp` or `kanbanzai_edit_file` — despite all these features being implemented in the 3.0 context assembly pipeline.
+
+The root causes are: (1) tool hints are implemented but gated on configuration that doesn't exist, (2) hardcoded defaults were never added as a safety net, and (3) the orchestrator may be bypassing `handoff` and composing prompts manually from `next(id)` JSON output. P44's `dispatch_task` will make the pipeline invisible — this design ensures it's correct before that happens.
+
+## Goals and Non-Goals
+
+**Goals:**
+- Guarantee every sub-agent prompt includes role identity, skill procedure, and tool guidance
+- Add hardcoded default tool hints so `codebase-memory-mcp` and `kanbanzai_edit_file` appear in every implementer prompt
+- Add assembly gate checks to `dispatch_task` that catch degraded prompts before dispatch
+- Make `next(id)` return a rendered prompt field to reduce manual composition
+- Zero configuration required — existing projects get the fix immediately
+
+**Non-Goals:**
+- Not modifying the 3.0 pipeline structure itself
+- Not changing the `stage-bindings.yaml` schema
+- Not removing the config override mechanism — config still wins over defaults
+- Not building a prompter sub-agent step (evaluated as Alternative C, rejected for now)
+
 ## Problem and Motivation
 
 Sub-agent prompts in Kanbanzai are missing critical features that were designed, built, and tested — but never reach the agents they're meant to guide. An investigation of the latest pipeline work (May 2026) found that sub-agent prompts are bare: no role identity, no vocabulary, no anti-patterns, no tool lists, no procedure guidance, and — critically — no mention of `codebase-memory-mcp` or the hash-based `kanbanzai_edit_file` tool.
@@ -25,6 +46,21 @@ Sub-agents without role guidance make avoidable mistakes. Sub-agents without too
 ### Who is affected
 
 Every feature in the developing stage. Every sub-agent dispatched by an orchestrator. This is systemic — not isolated to one feature or batch.
+
+### Evidence log
+
+This problem has been observed across multiple plans, persisting despite fixes to the pipeline itself:
+
+| Date | Plan | Observation |
+|------|------|-------------|
+| 2026-05-03 | P51 | Legacy fallback silently degraded prompts. P51 removed the fallback, making the pipeline the only path — but orchestrators could still bypass `handoff` entirely. |
+| 2026-05-04 | P55/P56 | Orchestrator dispatched sub-agents for bug lifecycle work. Prompts were bare: no role, no skill, no tools, no knowledge. Source traced to `next(id)` JSON being hand-assembled into prompts instead of using `handoff`. |
+| 2026-05-07 | P57 | **Confirmed bypass despite P58 fix.** P58 added hardcoded default tool hints — verified working via direct `handoff` call. But all four P57 implementation prompts are manually composed from `next(id)` output: no Role section, no Vocabulary, no Anti-Patterns, no Available Tools, no Knowledge, no Evaluation Criteria. The orchestrator skill says "Always use `handoff`" — the orchestrator ignores it. |
+| 2026-05-07 | P58 | P58 implemented and merged. Direct `handoff(task_id, role: "implementer-go")` now produces all 11 pipeline sections including Available Tools with `codebase_memory_mcp_search_code` and `kanbanzai_edit_file`. The pipeline is fixed — but the orchestrator still doesn't call it. |
+
+**Root cause analysis:** The AI chat-based orchestrator receives `next(id)` which returns structured JSON context (spec sections, knowledge entries, file paths). It then composes a prompt by hand from that JSON. The `handoff` tool produces a complete rendered prompt, but the orchestrator has to (a) know about it, (b) choose to call it, and (c) forward its output to `spawn_agent`. At each step, the orchestrator can take a shortcut. The evidence shows it always does.
+
+**Architectural implication:** The chat-based orchestrator is the wrong architecture for prompt assembly enforcement. A prompt gate that depends on agent discipline is not a gate — it's a suggestion. The gate must live in the dispatch mechanism itself, where the orchestrator cannot bypass it. This means P44's `dispatch_task` — a tool that runs the pipeline internally and sends the assembled prompt directly to the provider — is not an optimisation. It's the only architecture that works.
 
 ## Design
 
@@ -279,7 +315,9 @@ During the dev-planning stage, generate the full handoff prompt for each task an
 
 ## Open Questions
 
-1. **Should assembly gate failures trigger a checkpoint?** If `dispatch_task` can't resolve a role or skill, the orchestrator can't proceed. A checkpoint asking the human to fix the configuration might be better than an error the orchestrator can't resolve. But checkpoints block all work, not just one feature.
+1. **Should we abandon the chat-based orchestrator entirely?** The P57 evidence is damning: despite a working pipeline, a verified fix (P58), and an explicit skill rule, the orchestrator still composes prompts by hand. P44's `dispatch_task` would enforce the pipeline in code, but the orchestrator still needs to call `dispatch_task` instead of `spawn_agent`. If the orchestrator can also bypass `dispatch_task`, we're back to the same problem one layer up. A more radical architecture — where the MCP server itself spawns sub-agents in response to task state transitions, removing the orchestrator from the dispatch loop entirely — may be necessary.
+
+2. **Should assembly gate failures trigger a checkpoint?** If `dispatch_task` can't resolve a role or skill, the orchestrator can't proceed. A checkpoint asking the human to fix the configuration might be better than an error the orchestrator can't resolve. But checkpoints block all work, not just one feature.
 
 2. **Should the hardcoded defaults be per-role only, or also per-skill?** The design proposes per-role defaults. Skills could theoretically have different tool preferences — e.g., `implement-task` (Go) vs. `implement-task` (TypeScript) might need different tool hints. But the current skill system doesn't have per-skill tool hints, and adding that is a separate feature.
 

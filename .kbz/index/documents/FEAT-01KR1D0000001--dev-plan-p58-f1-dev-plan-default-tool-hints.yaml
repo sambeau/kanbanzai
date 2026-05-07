@@ -1,0 +1,46 @@
+document_id: FEAT-01KR1D0000001/dev-plan-p58-f1-dev-plan-default-tool-hints
+document_path: work/P58-default-tool-hint-fallbacks/P58-F1-dev-plan-default-tool-hints.md
+content_hash: ff47569f8c96e494a525efdd9e4b3f38995bcb12a1ab43a45036e2b831d1d2bf
+indexed_at: 2026-05-07T14:45:59.484888Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Default Tool Hint Fallbacks'
+      byte_offset: 0
+      byte_count: 470
+      word_count: 64
+      content_hash: ff47569f8c96e494a525efdd9e4b3f38995bcb12a1ab43a45036e2b831d1d2bf
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 41
+          byte_count: 97
+          word_count: 12
+          content_hash: 4e77b1da2d343f45cf88e434a7005cacd0e30b03eb4ee98eca3d1774877cc7f1
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 138
+          byte_count: 205
+          word_count: 29
+          content_hash: f1c4c6111c7c075f7d0cf0e2eaba512a2371a11a0c2e717ba6e62a2ca09d3411
+        - path: "1.3"
+          level: 2
+          title: Dependencies
+          byte_offset: 343
+          byte_count: 50
+          word_count: 7
+          content_hash: 472a839cc684fd27bed2e1ac14ee1563dcb2d7f01f307e74af79de157e77dfa7
+        - path: "1.4"
+          level: 2
+          title: Verification
+          byte_offset: 393
+          byte_count: 77
+          word_count: 9
+          content_hash: a963334498a178df8f951cc82273b03982e74a34a09e872feb7aaa4eb4ee7e4c
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

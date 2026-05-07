@@ -16,6 +16,8 @@ type GateResult struct {
 	Reason           string                   // human-readable explanation
 	StructuralChecks []structural.CheckResult // populated when structural checks ran
 	ReviewCapReached bool                     // true when the review iteration cap was reached
+	VerifierPrompt   string                   // handoff prompt for verifier sub-agent (verified→closed gate)
+	NeedsVerifier    bool                     // true when the gate requires verifier sub-agent dispatch
 }
 
 // stageDocMapping maps feature lifecycle stages to their required document types.

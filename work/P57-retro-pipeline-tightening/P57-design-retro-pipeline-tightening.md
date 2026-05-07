@@ -2,7 +2,7 @@
 |--------|--------------------------------|
 | Date   | 2026-05-07                     |
 | Author | architect                       |
-| Status | draft |
+| Status | approved |
 | Plan   | P57-retro-pipeline-tightening |
 
 # Design: Retrospective Pipeline Tightening
@@ -21,14 +21,15 @@ Kanbanzai's retrospective system collects process observations from agents durin
 - Add a stage binding profile and skill for the retro-fix workflow
 - Fix the retro `report` tool's document type registration (`"report"` → `"retro"`)
 - Link fix features back to source signals for traceability (humans can see what was identified and what was done)
-- Keep human gates at design approval and theme picking; automate everything downstream
+- Support two modes: **human-gated** (default — human picks themes and approves design) and **full-auto** (human initiates the cycle, system handles everything through to done)
+- In full-auto mode: auto-pick themes by severity threshold, auto-generate design from theme data, auto-approve all stage gates
 
 ### Non-Goals
 
 - Changing how agents contribute retrospective signals via `finish` (this works)
 - Changing the synthesis engine's clustering or ranking algorithm
 - Creating a new entity type (`RetroFix`) — reuse `Feature` with `tier: retro_fix`
-- Auto-picking themes for fixing (frequency-threshold automation is a future design decision)
+- Making full-auto the default — human-gated remains the default mode; auto is opt-in per cycle
 - Changing the `orchestrate-development` or `orchestrate-review` skills
 - Building a dedicated `retro-analyst` role (defer to existing roles for now)
 
@@ -100,28 +101,59 @@ The bug pipeline (P56) provides the template:
 
 ### Component 1: Theme-to-Entity Creation Path
 
-Add a `create_fix` action to the `retro` tool. Given a synthesis scope and a theme index (or signal ID set), it creates a `Feature` entity with `tier: retro_fix` and populates it with theme-derived fields.
+Add a `create_fix` action to the `retro` tool. This is the single entry point for spawning retro fix features from synthesis themes, with two operating modes.
 
 **Input:**
 - `scope` — plan ID, feature ID, or `"project"` (must match a prior synthesis)
-- `theme_index` — the rank number of the theme from the synthesis result (e.g., `1` for the top-ranked theme)
+- `mode` — `"human-gated"` (default) or `"auto"`
+- `theme_index` — the rank number of the theme from the synthesis result (human-gated mode only)
+- `theme_count` — number of top themes to fix (auto mode only; default: top theme only)
+- `severity_threshold` — minimum severity score for auto-picking (auto mode only; default: no threshold, use theme_count)
 - `name` — human-readable feature name (optional; defaults to the theme title)
-- `parent_plan` — plan ID to group the fix under (optional; defaults to the scope if scope is a plan)
+- `parent_plan` — plan ID to group fixes under (optional; auto-created if omitted, see below)
 
-**Behaviour:**
+**Human-gated mode behaviour:**
 1. Run `synthesise` with the given scope to get current themes
 2. Select the theme at `theme_index`
-3. Create a `Feature` entity with:
-   - `tier: "retro_fix"`
-   - `tags: ["retro", "<signal_id_1>", "<signal_id_2>", ...]`
-   - `summary`: auto-generated from the theme's representative observation and top suggestion
-   - `parent`: the specified plan or a default retro-fixes plan
-4. Register an auto-generated specification document from the theme data (see Component 2)
-5. Return the feature ID, spec document ID, and a summary of what was created
+3. Create a `Feature` entity with `tier: "retro_fix"`, tags linking to source signals, and an auto-generated summary
+4. Register an auto-generated specification document from the theme data (Component 2)
+5. Return the feature ID, spec document ID, and a summary. The human must then approve the design at the `designing` stage gate.
 
-The action is idempotent: if a feature already exists for the same theme (matched by signal ID set), return the existing feature rather than creating a duplicate.
+**Auto mode behaviour:**
+1. Run `synthesise` with the given scope to get current themes
+2. Select themes by `theme_count` (top N by severity score) and/or `severity_threshold` (all themes with severity score ≥ threshold)
+3. For each selected theme:
+   - Auto-create a parent plan if `parent_plan` is omitted (see below)
+   - Create a `Feature` entity with `tier: "retro_fix"` and signal tags
+   - Auto-generate and auto-approve a design document (Component 1a)
+   - Auto-generate and auto-approve a specification document (Component 2)
+   - Auto-generate and auto-approve a dev-plan document
+   - Auto-decompose into tasks via `decompose(action: "propose", feature_id: "...")`
+   - The feature then flows through the standard lifecycle with all gates set to `auto`
+4. Return a batch summary: plan ID, list of feature IDs with their spec and dev-plan document IDs
 
-**Alternate path — manual:** Users can also create retro fix features manually via `entity(action: "create", type: "feature", tier: "retro_fix", tags: ["retro", ...])`. The `create_fix` tool action is a convenience, not a requirement.
+The action is idempotent: if a feature already exists for the same theme (matched by signal ID set), skip creation rather than duplicating.
+
+**Parent plan auto-creation:**
+When `parent_plan` is omitted, the system auto-creates a plan named `Pnn-retro-fixes-{month-year}` (e.g. `P58-retro-fixes-june-2026`). This follows the convention established by P40 and P50: one plan per retro cycle, containing multiple fix features. The synthesis report generated at the start of the cycle serves as the plan's context. If a plan with the same month-year already exists, fixes are added to it rather than creating a duplicate.
+
+When `parent_plan` is explicitly provided, fixes are grouped under that plan — useful when retro fixes are scoped to a specific parent plan's signals.
+
+### Component 1a: Auto-Generated Design Document (Auto Mode)
+
+In auto mode, the system auto-generates and auto-approves a design document for each retro fix feature. This satisfies the `designing` stage gate prerequisite (the `specifying` stage requires an approved design).
+
+**Template mapping:**
+
+| Design Section | Source |
+|---|---|
+| Overview | Theme title + representative observation |
+| Goals and Non-Goals | Goal: implement the theme's top suggestion. Non-goal: any change not implied by the suggestion |
+| Design | The suggestion verbatim, with implementation notes inferred from the signal category (e.g. tool-gap → new MCP tool, spec-ambiguity → spec template update) |
+| Alternatives Considered | "Do nothing — accept the friction as a known limitation" (always included as the default alternative) |
+| Dependencies | Inferred from affected files mentioned in signal content, if any |
+
+The design document is registered as `type: "design"` with `owner: "<FEATURE-ID>"` and auto-approved immediately. It is deliberately minimal — it exists to satisfy the stage gate, not to provide creative design rationale. In auto mode, the theme's suggestion *is* the design.
 
 ### Component 2: Auto-Generated Retro Fix Specification
 
@@ -152,27 +184,40 @@ Adapt the verifier's 10-item DoD for retro fixes. Items 1–9 are identical to t
 
 ### Component 4: Stage Binding Profile — `retro-fixing`
 
-Add a tier profile to `stage-bindings.yaml` for retro fix work. Rather than creating a new lifecycle stage, this profiles the existing feature lifecycle with retro-specific gates and templates:
+Add tier profiles to `stage-bindings.yaml` for retro fix work, covering both operating modes. Rather than creating new lifecycle stages, these profile the existing feature lifecycle with retro-specific gates and templates:
 
 ```yaml
 retro-fixing:
   description: "Implementing a fix for a retrospective theme"
   profile: true
   tier: retro_fix
-  design_gate: human
-  spec_gate: auto
-  dev_plan_gate: auto
-  review_gate: conditional
-  max_review_cycles: 3
+  modes:
+    human-gated:
+      design_gate: human
+      spec_gate: auto
+      dev_plan_gate: auto
+      review_gate: conditional
+      max_review_cycles: 3
+      notes: >
+        Human picks which themes to fix and approves the design approach.
+        Spec is auto-generated from theme data. Review is conditional:
+        doc-only changes skip review, implementation changes trigger full
+        panel.
+    auto:
+      design_gate: auto
+      spec_gate: auto
+      dev_plan_gate: auto
+      review_gate: conditional
+      max_review_cycles: 3
+      notes: >
+        Human initiates the cycle and steps back. System auto-picks themes
+        by severity, auto-generates and auto-approves design and spec, then
+        decomposes, implements, reviews, and verifies without checkpoints.
+        Human reviews results after completion.
   verifying:
     roles: [verifier]
     skills: [verify-closeout]
     dod_variant: retro-fix
-  notes: >
-    Design is the only human gate. Spec is auto-generated from theme data.
-    Review is conditional: doc-only changes skip review, implementation
-    changes trigger full panel. The verifier checks the retro-adapted DoD
-    including signal-addressed verification.
 ```
 
 ### Component 5: Document Registration Fix
@@ -252,15 +297,7 @@ Create a dedicated `RetroFix` entity type with its own lifecycle, state machine,
 
 **Decision:** Rejected. Reuse `Feature` with `tier: retro_fix`. If retro fixes develop genuinely distinct lifecycle needs, a dedicated entity type can be extracted later.
 
-### Alternative B: Full Automation — No Human Gates
 
-Remove the human gate at design. Let the system auto-create fix features for all themes above a severity-score threshold, auto-generate designs, and run the full pipeline autonomously.
-
-**Advantages:** Fully autonomous self-improvement. No human bottleneck.
-
-**Disadvantages:** The system could make destructive changes based on misinterpreting a signal. Design decisions (how to fix a tool-gap, what approach to take for a spec-ambiguity fix) require judgment about tradeoffs and side effects. Severity scores measure frequency and friction, not fix complexity or risk.
-
-**Decision:** Rejected for this plan. Keep the human gate at design. Frequency-threshold auto-picking of themes (not auto-design) is a reasonable future iteration.
 
 ### Alternative C: Dedicated `retro-analyst` Role
 
@@ -308,6 +345,10 @@ The one-line `"report"` → `"retro"` fix in `RetroService.Report()` is included
 
 Unlike P55 (7 parallel features), this plan's components are tightly coupled. A single feature with sequential tasks is more appropriate. The feature spec will decompose into ordered tasks.
 
+### Decision 7: Dual-mode — human-gated default, auto opt-in
+
+Rather than choosing between human-gated and fully-automated, the design provides both. `create_fix` defaults to `mode: "human-gated"` with the existing `retro_fix` tier gates (design: human, spec: auto, dev_plan: auto, review: conditional). `mode: "auto"` sets all gates to auto and the system handles theme picking, design generation, and document approval without checkpoints. This enables the original retrospective experiment — "can the system fix its own bugbears without me?" — while keeping human-gated as the safe default.
+
 ## Dependencies
 
 - **P55-orchestrator-context-hygiene** (done) — Provides the verifier role, `verify-closeout` skill, and 10-item DoD pattern that Component 3 adapts.
@@ -317,14 +358,14 @@ Unlike P55 (7 parallel features), this plan's components are tightly coupled. A 
 
 ## Open Questions
 
-1. **Parent plan for retro fixes:** Should `create_fix` auto-create a default retro-fixes plan (e.g., `Pnn-retro-fixes-may-2026`), or should the caller always specify a parent plan? Auto-creation is convenient but may create plan sprawl.
+1. **Theme index stability:** If new signals arrive between synthesis and `create_fix`, the theme ranking may shift. Should `create_fix` cache the synthesis result, or re-synthesise and warn if the theme at the given index has changed?
 
-2. **Theme index stability:** If new signals arrive between synthesis and `create_fix`, the theme ranking may shift. Should `create_fix` cache the synthesis result, or re-synthesise and warn if the theme at the given index has changed?
+2. **Signal retirement semantics:** When a fix is verified, should source signals be automatically retired, or should a human explicitly confirm? Automatic retirement closes the loop but may hide signals that need further attention.
 
-3. **Signal retirement semantics:** When a fix is verified, should source signals be automatically retired, or should a human explicitly confirm? Automatic retirement closes the loop but may hide signals that need further attention.
+3. **Multi-theme fixes:** A single fix might address multiple themes (e.g., a tool-gap fix also resolves a tool-friction theme). Should `create_fix` support multiple theme indices?
 
-4. **Multi-theme fixes:** A single fix might address multiple themes (e.g., a tool-gap fix also resolves a tool-friction theme). Should `create_fix` support multiple theme indices?
+4. **Review panel composition for retro fixes:** The conditional gate dispatches the full review panel (conformance, quality, security, testing) for implementation changes. Should retro fixes use a lighter panel (conformance only) given they're typically smaller in scope?
 
-5. **Review panel composition for retro fixes:** The conditional gate dispatches the full review panel (conformance, quality, security, testing) for implementation changes. Should retro fixes use a lighter panel (conformance only) given they're typically smaller in scope?
+5. **Skill location:** Should `implement-retro-fix` live in `.kbz/skills/` (agent-facing execution skill) or `.agents/skills/` (kanbanzai-system usage skill)? P55's `verify-closeout` lives in `.kbz/skills/` as an agent-execution skill. The retro fix skill is similar — it's an execution skill, not a system-usage skill.
 
-6. **Skill location:** Should `implement-retro-fix` live in `.kbz/skills/` (agent-facing execution skill) or `.agents/skills/` (kanbanzai-system usage skill)? P55's `verify-closeout` lives in `.kbz/skills/` as an agent-execution skill. The retro fix skill is similar — it's an execution skill, not a system-usage skill.
+6. **Theme count vs. severity threshold interaction in auto mode:** If both `theme_count` and `severity_threshold` are specified, do they combine (themes that satisfy both) or does one take precedence? The current design says "and/or" — this needs precise semantics.

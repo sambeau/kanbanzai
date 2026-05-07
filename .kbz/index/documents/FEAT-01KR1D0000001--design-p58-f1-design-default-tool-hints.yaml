@@ -1,0 +1,64 @@
+document_id: FEAT-01KR1D0000001/design-p58-f1-design-default-tool-hints
+document_path: work/P58-default-tool-hint-fallbacks/P58-F1-design-default-tool-hints.md
+content_hash: 9c80e5e8e7b79c5e7e504e77ebb5cf0569dd54c3ed395af4ee85356cca5d936f
+indexed_at: 2026-05-07T14:44:55.290811Z
+sections:
+    - path: "1"
+      level: 2
+      title: Overview
+      byte_offset: 221
+      byte_count: 267
+      word_count: 32
+      content_hash: 1767c46f1e0386eef9209a8b9b1d620f3f1f42291ecb3641fc84417171db29ec
+    - path: "2"
+      level: 2
+      title: Goals and Non-Goals
+      byte_offset: 488
+      byte_count: 263
+      word_count: 31
+      content_hash: 84f4d076f5f98cc14a8bae03517bb87d01621f3bdcfb78872765948d25da9c13
+    - path: "3"
+      level: 2
+      title: Design
+      byte_offset: 751
+      byte_count: 322
+      word_count: 34
+      content_hash: d295b44687bd85dfb33dec1024ebaea1db7c2209f8b3000b6fdc0cc8407a8e39
+    - path: "4"
+      level: 2
+      title: Alternatives Considered
+      byte_offset: 1073
+      byte_count: 155
+      word_count: 19
+      content_hash: 860628b607a72c642bdd2e8aaf418ac1ceebe175e3f4c1e2497c8c5fe2e6018f
+    - path: "5"
+      level: 2
+      title: Dependencies
+      byte_offset: 1228
+      byte_count: 68
+      word_count: 11
+      content_hash: e748f992cb038da1809cd35ffcf245d303c61b3a12d5f6bff5c825aa31a25eb9
+entity_refs:
+    - entity_id: P44-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "3"
+      byte_offset: 772
+    - entity_id: F1-design-prompt-assembly-gate
+      entity_type: plan
+      section_path: "3"
+      byte_offset: 809
+cross_doc_links:
+    - target_path: work/P44-model-routing-agent-launcher/P44-F1-design-prompt-assembly-gate.md
+      link_text: work/P44-model-routing-agent-launcher/P44-F1-design-prompt-assembly-gate.md
+      section_path: "3"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "2"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: alternative
+      confidence: high
+classified: false

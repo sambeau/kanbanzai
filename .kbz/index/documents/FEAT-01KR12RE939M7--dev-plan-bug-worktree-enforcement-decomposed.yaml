@@ -1,0 +1,45 @@
+document_id: FEAT-01KR12RE939M7/dev-plan-bug-worktree-enforcement-decomposed
+document_path: work/dev-plan/bug-worktree-enforcement-decomposed.md
+content_hash: 5e31e487d9a7d806f1833702b12fee438f41c75f52757a21ba7a46da215b9284
+indexed_at: 2026-05-07T13:15:03.533461Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Bug Worktree Enforcement (Decomposed)'
+      byte_offset: 0
+      byte_count: 743
+      word_count: 106
+      content_hash: 5e31e487d9a7d806f1833702b12fee438f41c75f52757a21ba7a46da215b9284
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 217
+          byte_count: 158
+          word_count: 21
+          content_hash: d3f281c149ad6fb2c84bc4150b1847d27f8ed65e0a1ba0e5e4f4d7f25523d78c
+        - path: "1.2"
+          level: 2
+          title: Tasks
+          byte_offset: 375
+          byte_count: 368
+          word_count: 50
+          content_hash: bcb57ceefc98dc27e73307e5285c203d9e819a68687deed54218f3f60fcec753
+entity_refs:
+    - entity_id: FEAT-01KR12RE939M7
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 103
+    - entity_id: TASK-01KR197N74YTY
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 432
+    - entity_id: TASK-01KR197N7BA4R
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 567
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

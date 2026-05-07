@@ -4,3 +4,5 @@ slug: bug-close-out-verification-placeholder
 name: Implement verifying to closed placeholder gate
 summary: "Add placeholder pass-through for verifying to closed gate. Log 'verifier not yet implemented'. Auto-detect P55 verifier role file for activation."
 status: done
+verification: Placeholder gate passes through when verifier absent. Auto-detection test passes.
+verification_status: passed

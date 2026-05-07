@@ -1,0 +1,49 @@
+document_id: FEAT-01KR12RE98N93/dev-plan-bug-close-out-verification-decomposed
+document_path: work/dev-plan/bug-close-out-verification-decomposed.md
+content_hash: 183e2fdc2c4bc18cf848fbcbebb7c390820e709b7ecc1883c10642193f1b3047
+indexed_at: 2026-05-07T13:15:03.532369Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Bug Close-Out Verification (Decomposed)'
+      byte_offset: 0
+      byte_count: 989
+      word_count: 143
+      content_hash: 183e2fdc2c4bc18cf848fbcbebb7c390820e709b7ecc1883c10642193f1b3047
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 219
+          byte_count: 158
+          word_count: 21
+          content_hash: d3f281c149ad6fb2c84bc4150b1847d27f8ed65e0a1ba0e5e4f4d7f25523d78c
+        - path: "1.2"
+          level: 2
+          title: Tasks
+          byte_offset: 377
+          byte_count: 612
+          word_count: 87
+          content_hash: 78c2bfa484d5d27f37519db940ab17fde8ed3d58fbe34de8b02c5ec23618bbfb
+entity_refs:
+    - entity_id: FEAT-01KR12RE98N93
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 105
+    - entity_id: TASK-01KR197N74AEA
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 434
+    - entity_id: TASK-01KR197N7CCJD
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 605
+    - entity_id: TASK-01KR197N7E1TC
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 829
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

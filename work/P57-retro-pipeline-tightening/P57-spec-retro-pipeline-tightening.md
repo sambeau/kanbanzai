@@ -1,7 +1,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-07                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | spec-author                     |
 
 # Specification: Retrospective Pipeline Tightening

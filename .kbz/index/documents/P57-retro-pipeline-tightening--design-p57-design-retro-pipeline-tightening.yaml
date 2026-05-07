@@ -1,0 +1,415 @@
+document_id: P57-retro-pipeline-tightening/design-p57-design-retro-pipeline-tightening
+document_path: work/P57-retro-pipeline-tightening/P57-design-retro-pipeline-tightening.md
+content_hash: 584aad42233a21403fc20c1b5040b9614788bb63880075a3fe363125f342be9e
+indexed_at: 2026-05-07T14:04:30.600143Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Retrospective Pipeline Tightening'
+      byte_offset: 240
+      byte_count: 23980
+      word_count: 3328
+      content_hash: 88a534a675f18200939d4ed98f5d50adc3e62364c780974713d7686d418d5133
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 285
+          byte_count: 776
+          word_count: 107
+          content_hash: 4e33c29ca4558486f36a7c7c8ed5ae0afc31951403f2eaa2f0eb0c80831d8ff8
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 1061
+          byte_count: 1197
+          word_count: 175
+          content_hash: 04c6b7bd10f3d4586cc9881315e54cf3d77fd3de92bb2407ba00509ced0ff7a2
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Goals
+              byte_offset: 1085
+              byte_count: 681
+              word_count: 105
+              content_hash: 1b22127e356886bcd86cc9a286b261903833b6850849d965ab3aa91f061d1ff5
+            - path: 1.2.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 1766
+              byte_count: 492
+              word_count: 66
+              content_hash: 4e7704fd51b77362e91f71a56e2de8fd2348418951ec5c70e7c6662fff734536
+        - path: "1.3"
+          level: 2
+          title: Problem and Motivation
+          byte_offset: 2258
+          byte_count: 2930
+          word_count: 416
+          content_hash: 1207d992148cf512d63e69420b47082f28c188af038f528c2e9c00e65fb599d8
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Problem
+              byte_offset: 2285
+              byte_count: 954
+              word_count: 137
+              content_hash: 2518e93f45945533c6961acd305389edcbb41b1f07e258f7e76287c62b03f3ea
+            - path: 1.3.2
+              level: 3
+              title: Evidence
+              byte_offset: 3239
+              byte_count: 1212
+              word_count: 171
+              content_hash: bd91afbeec121e8f6b17ddd527a93175e911d11bc02fb85d20eb0f7a0d79997e
+            - path: 1.3.3
+              level: 3
+              title: Why This Matters Now
+              byte_offset: 4451
+              byte_count: 395
+              word_count: 53
+              content_hash: 374eeeb2026b5c889a07560ac62506e22faf8964582daac8a9a99e382b923c9a
+            - path: 1.3.4
+              level: 3
+              title: Motivation
+              byte_offset: 4846
+              byte_count: 342
+              word_count: 51
+              content_hash: fa8a8d1e410442d9839eb9931bf70e295935e27b5a5a70767755efe87de4df2a
+        - path: "1.4"
+          level: 2
+          title: Related Work
+          byte_offset: 5188
+          byte_count: 2541
+          word_count: 343
+          content_hash: 80ba6e13ef1e7ec8d076a6224bf8917cafdcdfe943d09b652857f4ce4f406e3c
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Prior Research
+              byte_offset: 5205
+              byte_count: 341
+              word_count: 38
+              content_hash: ad65abee60f4b9996412882bfd7f4d07d7634ead9a3fb3f6998a7ed1ba5ff11e
+            - path: 1.4.2
+              level: 3
+              title: Prior Designs
+              byte_offset: 5546
+              byte_count: 830
+              word_count: 102
+              content_hash: 39abb192a6b66df0c4e2d23f95b641ccc1a12bde63c35f4875106f2119fcc8cc
+            - path: 1.4.3
+              level: 3
+              title: 'Key Reference: Bug Pipeline Structure'
+              byte_offset: 6376
+              byte_count: 627
+              word_count: 93
+              content_hash: a850827b111064a6f61f6565b6594f88855d6911a69611ea797ed5b13b0bac97
+            - path: 1.4.4
+              level: 3
+              title: Constraining Decisions
+              byte_offset: 7003
+              byte_count: 726
+              word_count: 107
+              content_hash: 0b3fce83cc3de19fc68775b3e01a5d730d85ecf0c97fe886f7c05e811daa3009
+        - path: "1.5"
+          level: 2
+          title: Design
+          byte_offset: 7729
+          byte_count: 8217
+          word_count: 1136
+          content_hash: e01bc1f7ded3ab054fdb2cb3902f32d60512e41a51234c56b310ed3f0eff7e09
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Design Principle
+              byte_offset: 7740
+              byte_count: 372
+              word_count: 48
+              content_hash: 6f32cd08f2148b9652edc18bf842a0cc10d1f44dfc352c32dc12a8617116bff0
+            - path: 1.5.2
+              level: 3
+              title: 'Component 1: Theme-to-Entity Creation Path'
+              byte_offset: 8112
+              byte_count: 1612
+              word_count: 247
+              content_hash: ca9dcae32a2f48b13cedd5b9b5afb99761f5b681334d1c5ff0699109e23d7f67
+            - path: 1.5.3
+              level: 3
+              title: 'Component 2: Auto-Generated Retro Fix Specification'
+              byte_offset: 9724
+              byte_count: 1043
+              word_count: 145
+              content_hash: 2ae65a00862f07b36262145be3afc18a652f9781ebe16e493bde77f0a920662d
+            - path: 1.5.4
+              level: 3
+              title: 'Component 3: Retro Fix Definition of Done'
+              byte_offset: 10767
+              byte_count: 1200
+              word_count: 181
+              content_hash: d7d6cb5b0a63fa600409f80b3fc3de16856942d56059a82d79b25ab5fd1c02f2
+            - path: 1.5.5
+              level: 3
+              title: 'Component 4: Stage Binding Profile — `retro-fixing`'
+              byte_offset: 11967
+              byte_count: 857
+              word_count: 103
+              content_hash: b34bf77ac02252c624c59772aa393b5bff3c04961ac4030f215010cf87367649
+            - path: 1.5.6
+              level: 3
+              title: 'Component 5: Document Registration Fix'
+              byte_offset: 12824
+              byte_count: 376
+              word_count: 50
+              content_hash: 885a0bb698fb6f8d8accba38eed1ce71b48a85c7a283fddf27fd2a7cf9c88858
+            - path: 1.5.7
+              level: 3
+              title: 'Component 6: Document Trail for Human Visibility'
+              byte_offset: 13200
+              byte_count: 1033
+              word_count: 134
+              content_hash: ba9ebbde391551dfd53e63d1ad5571f79fd07c5eb4316329896353ae7de7a132
+            - path: 1.5.8
+              level: 3
+              title: 'Component 7: Skill — `implement-retro-fix`'
+              byte_offset: 14233
+              byte_count: 885
+              word_count: 113
+              content_hash: da4bfe81a3c44f5c8134553b8745b021b50689c26e6e04573848a65d425e84e1
+            - path: 1.5.9
+              level: 3
+              title: What This Design Does NOT Do
+              byte_offset: 15118
+              byte_count: 828
+              word_count: 113
+              content_hash: a4d145f7cfd99cfd31668db1424bfd8179d891f9fada2ecaeb08f036619aeb57
+        - path: "1.6"
+          level: 2
+          title: Definition of Done
+          byte_offset: 15946
+          byte_count: 1551
+          word_count: 234
+          content_hash: 9d084eb4273bc4deb72c1492b102a9a5b23636eb5f5d4ce9f5d49f907577e421
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Rationale for a Single Definition
+              byte_offset: 17114
+              byte_count: 383
+              word_count: 60
+              content_hash: edd433f6f35f67cb232b615105b64ea616d2e64bf07a14f753469a337cd7bea4
+        - path: "1.7"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 17497
+          byte_count: 2923
+          word_count: 386
+          content_hash: e77c88f5694513bc788ceb87f59063cc7d0c613f9c5f3386bee86a07c1181c94
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 'Alternative A: New `RetroFix` Entity Type'
+              byte_offset: 17525
+              byte_count: 732
+              word_count: 89
+              content_hash: 4641bcba6c996c3edc5bf181848ad5db297fb0f0429ec5707a3a650151f84333
+            - path: 1.7.2
+              level: 3
+              title: 'Alternative B: Full Automation — No Human Gates'
+              byte_offset: 18257
+              byte_count: 792
+              word_count: 110
+              content_hash: 467639ad4837342e6de28b01eebdfe137d1ce045a6c7d200cf7b09420dee2b0d
+            - path: 1.7.3
+              level: 3
+              title: 'Alternative C: Dedicated `retro-analyst` Role'
+              byte_offset: 19049
+              byte_count: 804
+              word_count: 106
+              content_hash: 5f7812fdf1c67bdb938b1810304e25ac59c486436d4b49008027008d7622e548
+            - path: 1.7.4
+              level: 3
+              title: 'Alternative D: Do Nothing — Manual Retro Pipeline'
+              byte_offset: 19853
+              byte_count: 567
+              word_count: 78
+              content_hash: c52dbd2690d4a9e9cc7297fd934ed45ef2f626544de61111c1f5c6081ed53510
+        - path: "1.8"
+          level: 2
+          title: Decisions
+          byte_offset: 20420
+          byte_count: 1633
+          word_count: 237
+          content_hash: ab865260c0b1c520a53edc0c0805b32d919711c29ec63c6623ca45468faa56fa
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 'Decision 1: Reuse Feature entity with tier=retro_fix'
+              byte_offset: 20434
+              byte_count: 299
+              word_count: 39
+              content_hash: 382c9ba0aea8e59fd790a85bce4d7dfedf4301dee9741748af56d5b6b8f53be7
+            - path: 1.8.2
+              level: 3
+              title: 'Decision 2: Add create_fix action to retro tool'
+              byte_offset: 20733
+              byte_count: 251
+              word_count: 40
+              content_hash: db916c2d7ac426e6f5070bd538bd4bf45c5b66920d0f293feef577332c9aa928
+            - path: 1.8.3
+              level: 3
+              title: 'Decision 3: Design-only human gate'
+              byte_offset: 20984
+              byte_count: 294
+              word_count: 45
+              content_hash: f1163d201a759a26e407e8271197871e7cc576774f658932c05bf0c8f098cc66
+            - path: 1.8.4
+              level: 3
+              title: 'Decision 4: Retro-adapted DoD adds signal-addressed check'
+              byte_offset: 21278
+              byte_count: 299
+              word_count: 43
+              content_hash: d0d4fe876f469680062ca77ce124aa5163dfce98cf14bf92d58505c3ab7f1cde
+            - path: 1.8.5
+              level: 3
+              title: 'Decision 5: Fix report document type now'
+              byte_offset: 21577
+              byte_count: 217
+              word_count: 31
+              content_hash: f289ba437686bcecca3dc092c4e06cb5b0df3dad47c8a7c9d4cee429a2549036
+            - path: 1.8.6
+              level: 3
+              title: 'Decision 6: Single integrated feature, not parallel components'
+              byte_offset: 21794
+              byte_count: 259
+              word_count: 37
+              content_hash: e149da8e4fcdb8aabd84afc5f16d676018a03ecf5780c28bed4adbea256d3f5b
+        - path: "1.9"
+          level: 2
+          title: Dependencies
+          byte_offset: 22053
+          byte_count: 660
+          word_count: 82
+          content_hash: ecb7d42668e52af073a82447cb2de95d92e1bf6f2c034514c6d1b8172f723498
+        - path: "1.10"
+          level: 2
+          title: Open Questions
+          byte_offset: 22713
+          byte_count: 1507
+          word_count: 207
+          content_hash: ef5f08624ca2f446508b7ef476a8e50b9799297a51d27e4afe0ef9cecb214828
+entity_refs:
+    - entity_id: P57-retro-pipeline-tightening
+      entity_type: plan
+      section_path: ""
+      byte_offset: 207
+    - entity_id: P5-workflow-retrospective
+      entity_type: plan
+      section_path: 1.4.1
+      byte_offset: 5229
+    - entity_id: P55-design-orchestrator-context-hygiene
+      entity_type: plan
+      section_path: 1.4.2
+      byte_offset: 5569
+    - entity_id: P56-design-bug-lifecycle-hardening
+      entity_type: plan
+      section_path: 1.4.2
+      byte_offset: 5896
+    - entity_id: P52-design-fast-track-orchestration
+      entity_type: plan
+      section_path: 1.4.2
+      byte_offset: 6194
+    - entity_id: P55-orchestrator-context-hygiene
+      entity_type: plan
+      section_path: "1.9"
+      byte_offset: 22074
+    - entity_id: P56-bug-lifecycle-hardening
+      entity_type: plan
+      section_path: "1.9"
+      byte_offset: 22226
+    - entity_id: P5-workflow-retrospective
+      entity_type: plan
+      section_path: "1.9"
+      byte_offset: 22450
+    - entity_id: P52-fast-track-orchestration
+      entity_type: plan
+      section_path: "1.9"
+      byte_offset: 22584
+cross_doc_links:
+    - target_path: work/retro/retro-{scope}.md
+      link_text: work/retro/retro-{scope}.md
+      section_path: 1.5.7
+    - target_path: work/{plan}/...-spec-{slug}.md
+      link_text: work/{plan}/...-spec-{slug}.md
+      section_path: 1.5.7
+    - target_path: work/{plan}/...-dev-plan-{slug}.md
+      link_text: work/{plan}/...-dev-plan-{slug}.md
+      section_path: 1.5.7
+    - target_path: work/review/review-{feature-id}.md
+      link_text: work/review/review-{feature-id}.md
+      section_path: 1.5.7
+    - target_path: .kbz/skills/implement-retro-fix/SKILL.md
+      link_text: .kbz/skills/implement-retro-fix/SKILL.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: 1.4.4
+      role: decision
+      confidence: high
+    - section_path: 1.5.4
+      role: definition
+      confidence: high
+    - section_path: "1.6"
+      role: definition
+      confidence: high
+    - section_path: 1.6.1
+      role: definition
+      confidence: high
+    - section_path: "1.7"
+      role: alternative
+      confidence: high
+    - section_path: 1.7.1
+      role: alternative
+      confidence: high
+    - section_path: 1.7.2
+      role: alternative
+      confidence: high
+    - section_path: 1.7.3
+      role: alternative
+      confidence: high
+    - section_path: 1.7.4
+      role: alternative
+      confidence: high
+    - section_path: "1.8"
+      role: decision
+      confidence: high
+    - section_path: 1.8.1
+      role: decision
+      confidence: high
+    - section_path: 1.8.2
+      role: decision
+      confidence: high
+    - section_path: 1.8.3
+      role: decision
+      confidence: high
+    - section_path: 1.8.4
+      role: decision
+      confidence: high
+    - section_path: 1.8.5
+      role: decision
+      confidence: high
+    - section_path: 1.8.6
+      role: decision
+      confidence: high
+    - section_path: "1.10"
+      role: question
+      confidence: high
+classified: false

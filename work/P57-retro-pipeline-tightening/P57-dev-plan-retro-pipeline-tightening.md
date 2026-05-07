@@ -1,7 +1,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-07                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | architect                       |
 | Feature | FEAT-01KR1GJGJ9BZS |
 

@@ -1,0 +1,118 @@
+document_id: FEAT-01KR1GJGJ9BZS/dev-plan-p57-dev-plan-retro-pipeline-tightening
+document_path: work/P57-retro-pipeline-tightening/P57-dev-plan-retro-pipeline-tightening.md
+content_hash: aeadb66346851f20991257de39e22eb372183892f6b7fa38564566b73e97f284
+indexed_at: 2026-05-07T15:24:42.417341Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Retrospective Pipeline Tightening'
+      byte_offset: 255
+      byte_count: 7201
+      word_count: 948
+      content_hash: eba7600889c838cd0d1841c40836e3b49430518ae9c8ead6843502758d773a96
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 302
+          byte_count: 334
+          word_count: 47
+          content_hash: 19276225f36f6c7b5770a8315d6d2ada0e2477fc0aaa7ca694c82fcceac3cd07
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 636
+          byte_count: 4128
+          word_count: 492
+          content_hash: 78f93c03a37d5364a49bf4efaac3e41ca50d0107ab26ab97753cefabfe01fc6f
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Document Type Registration Fix'
+              byte_offset: 655
+              byte_count: 537
+              word_count: 63
+              content_hash: 8537206f6aa1bd0acb1b9430ecd850dbf66ce66874752ecac16cb09701fb3018
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Auto-Generated Document Templates'
+              byte_offset: 1192
+              byte_count: 767
+              word_count: 88
+              content_hash: a9f2113ed4ce8e848b621d5967cd025f7109b5c0ee42c60af81e863b030b6e13
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: create_fix Action on retro Tool'
+              byte_offset: 1959
+              byte_count: 794
+              word_count: 99
+              content_hash: ca68335151e3d5e3abc6cd317406ac2d5707529b32861c8d8d69381a55cb351c
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Retro-Adapted Definition of Done'
+              byte_offset: 2753
+              byte_count: 657
+              word_count: 81
+              content_hash: 249388d23f9517624421eb803cf7b58bafa228e07882e9f7ac4640f0b4ce1474
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Stage Binding Profile'
+              byte_offset: 3410
+              byte_count: 398
+              word_count: 47
+              content_hash: ee846779735120de49c767c0c9a74216230ea0294ddfa11f246e320bbbfd0b94
+            - path: 1.2.6
+              level: 3
+              title: 'Task 6: implement-retro-fix Skill'
+              byte_offset: 3808
+              byte_count: 463
+              word_count: 49
+              content_hash: 5c655d34656014f422fd76a59095c3e2b71557fb6e3b9efd71cb3fc883ef3b5b
+            - path: 1.2.7
+              level: 3
+              title: 'Task 7: Integration and End-to-End Verification'
+              byte_offset: 4271
+              byte_count: 493
+              word_count: 62
+              content_hash: 58ca9c1dc2f719bacb2a8f480b8a98f624d3f271497fbe6173de87d2e9a7f22b
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 4764
+          byte_count: 865
+          word_count: 85
+          content_hash: c512362f1cca8d4a069b368658b9f285bf12084f05f807106e9779d41395e5f1
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 5629
+          byte_count: 692
+          word_count: 98
+          content_hash: f8f178f3d147dbe7124029ff70b0d931b355f44fca3f3c79ffc8573123835e56
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 6321
+          byte_count: 1135
+          word_count: 221
+          content_hash: bdec559bbaee3e6fdb19bd5d84a5ab3ad9496ec4db0354d190a6b90dafefc947
+entity_refs:
+    - entity_id: FEAT-01KR1GJGJ9BZS
+      entity_type: feature
+      section_path: ""
+      byte_offset: 233
+cross_doc_links:
+    - target_path: .kbz/skills/verify-closeout/SKILL.md
+      link_text: .kbz/skills/verify-closeout/SKILL.md
+      section_path: 1.2.4
+    - target_path: .kbz/skills/implement-retro-fix/SKILL.md
+      link_text: .kbz/skills/implement-retro-fix/SKILL.md
+      section_path: 1.2.6
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.4
+      role: definition
+      confidence: high
+classified: false

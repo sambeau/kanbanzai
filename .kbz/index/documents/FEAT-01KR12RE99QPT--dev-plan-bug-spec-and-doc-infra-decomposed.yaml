@@ -1,0 +1,57 @@
+document_id: FEAT-01KR12RE99QPT/dev-plan-bug-spec-and-doc-infra-decomposed
+document_path: work/dev-plan/bug-spec-and-doc-infra-decomposed.md
+content_hash: 5743c95736602f87dce534d74da0811e98023acf336e5276921cc6959bc22e5a
+indexed_at: 2026-05-07T13:15:03.534685Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Bug Spec and Document Infrastructure (Decomposed)'
+      byte_offset: 0
+      byte_count: 1125
+      word_count: 158
+      content_hash: 5743c95736602f87dce534d74da0811e98023acf336e5276921cc6959bc22e5a
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 229
+          byte_count: 158
+          word_count: 21
+          content_hash: d3f281c149ad6fb2c84bc4150b1847d27f8ed65e0a1ba0e5e4f4d7f25523d78c
+        - path: "1.2"
+          level: 2
+          title: Tasks
+          byte_offset: 387
+          byte_count: 738
+          word_count: 100
+          content_hash: f1a4ec9f20716dbe57e16345e48f94d32bb7c7038f041dae7f499f9aca619fcf
+entity_refs:
+    - entity_id: FEAT-01KR12RE99QPT
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 115
+    - entity_id: TASK-01KR197N74F20
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 444
+    - entity_id: TASK-01KR197N7BDZG
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 670
+    - entity_id: TASK-01KR197N7EG1S
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 836
+    - entity_id: TASK-01KR197N7F61Y
+      entity_type: task
+      section_path: "1.2"
+      byte_offset: 1018
+    - entity_id: BUG-TSID
+      entity_type: bug
+      section_path: "1.2"
+      byte_offset: 978
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

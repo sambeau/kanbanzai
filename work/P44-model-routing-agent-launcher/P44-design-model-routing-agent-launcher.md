@@ -399,7 +399,7 @@ When `dispatch_task` internalises the pipeline, the orchestrator never sees the 
 The P50 incident demonstrated that pipeline misconfiguration happens in practice. The orchestrator's ability to detect and compensate was the safety net. P44 removes that safety net. This risk must be explicitly accepted by the architecture team before P44 Phase 1 build begins.
 
 **Mitigations (all in Phase 1):**
-1. P51 must be thoroughly tested before P44 Phase 1 begins — the pipeline must be proven correct before it becomes invisible. P51's testing scope should include 20 consecutive `handoff` calls across different feature types and stages, with human verification of assembled context.
+1. P51 must be thoroughly tested before P44 Phase 1 begins — the pipeline must be proven correct before it becomes invisible. ✅ **Complete.** 20 consecutive `handoff` calls across feature, bug_fix, and retro_fix types in developing and reviewing stages verified correct pipeline-3.0 output with appropriate role (implementer/reviewer-conformance), skill (implement-task/review-code), and knowledge assembly. Report approved at `work/P51-handoff-pipeline-unification/P51-report-handoff-verification.md`.
 2. Pipeline health assertions (see Phase 1 above) — `dispatch_task` refuses to dispatch if role/skill/knowledge assembly fails.
 3. Pipeline debug mode (see Phase 1 above) — config flag returns assembled prompt for human inspection.
 4. Production acceptance gate (see Phase 1 above) — 20 consecutive human-verified `dispatch_task` calls before production.
@@ -476,6 +476,8 @@ P51 removes the legacy 2.0 fallback path from `handoff` and makes the 3.0 pipeli
 
 These changes ensure that `handoff` produces an implementer-focused prompt by default, closing the gap between "pipeline was called" and "pipeline produced useful output."
 
+**Status (May 2026):** ✅ All P51 changes implemented and verified. The legacy 2.0 fallback is removed, sub-agent role routing defaults to `implementer` (not `orchestrator`), the `orchestrate-development` skill documents the `role` parameter, and the 20-call handoff verification is complete (see §Risk: Pipeline Becomes Invisible mitigation 1).
+
 ### The byte_budget and context-window confusion
 
 A separate but related discovery from P50: the orchestrator's context packets showed `byte_budget: 30720` and `byte_usage: 30301` (98.6% full), creating an impression of extreme context pressure. Investigation revealed that `byte_budget` has nothing to do with the model's context window — it's a hardcoded assembly cap (`assemblyDefaultBudget = 30720`) in `internal/mcp/assembly.go` that limits how much JSON the MCP server packs into a single `next` or `handoff` response. This cap causes knowledge entries and spec sections to be trimmed from the response before they ever reach the orchestrator.
@@ -527,6 +529,203 @@ The `dispatch_task` tool should:
 
 This design makes the pipeline *non-bypassable* — the only way to dispatch a sub-agent is through `dispatch_task`, and `dispatch_task` always runs the pipeline.
 
+## Updates for May 2026 Pipeline Designs (P55, P56, P57, P44-F1)
+
+Since the original P44 design was written, three pipeline-hardening plans (P55, P56, P57)
+and one P44 feature design (P44-F1) have been created. These designs change the landscape
+that P44's `dispatch_task` must operate within. This section cross-references each and
+documents the implications for P44.
+
+### P55 — Orchestrator Context Hygiene
+
+P55 adds procedural guardrails to prevent the orchestrator from diluting its context by
+investigating implementation code before delegating. It is explicitly designed as a
+**bridge to P44** — P55 Decision 5: "Procedural mitigations now, P44 as strategic
+architecture."
+
+**What P44 must account for:**
+
+1. **Constraint pinning (P55 Component 4).** P55 places constraint messages in every
+   `next`/`handoff` response using the recency peak of the U-shaped attention curve.
+   When P44 internalises the pipeline, the orchestrator never sees these responses —
+   constraint pinning disappears. **P44 must embed the orchestrator's identity
+   constraint in every `dispatch_task` system prompt** as a system-level instruction:
+   "You are the orchestrator — coordinate, dispatch, verify. Do not investigate
+   implementation code. Sub-agents handle all code reading and writing."
+
+2. **Fast-track review dispatch (P55 Component 5).** P55 mandates that fast-track
+   close-out must dispatch review sub-agents before transitioning features to `done`:
+   > "For each feature that modified source code (not documentation-only changes),
+   > dispatch at minimum one review sub-agent."
+   P44's `fast_track` dispatch mode (see §Fast-track pipeline mismatch) previously
+   focused on skipping cohort setup and context offloading. It must now also handle
+   review dispatch. For `bug_fix` features with ≤5 files changed, dispatch one
+   `reviewer-conformance` sub-agent via `dispatch_task(category: "review")`. For
+   `retro_fix` with source changes, dispatch `reviewer-conformance` at minimum.
+
+3. **Close-out verification sub-agent (P55 Component 7).** P55 introduces a `verifier`
+   role with a `verify-closeout` skill — a clean-context sub-agent that runs a
+   strict 10-item checklist against the Definition of Done. **This verifier is NOT
+   dispatched via `dispatch_task`.** It is dispatched by the lifecycle gate at
+   `verifying → done` (P56 Component D makes this explicit for bugs: "the gate
+   dispatches the verifier, not the orchestrator"). P44 should explicitly scope this
+   out: `dispatch_task` handles implementation and review dispatch; verification is
+   gate-dispatched and outside P44's scope.
+
+4. **Orchestrator tool restrictions (P55 Component 2).** `grep` and `search_graph` are
+   removed from the orchestrator's tool list. This doesn't affect `dispatch_task`
+   directly (it runs in the server, not the orchestrator), but it means the
+   orchestrator cannot pre-investigate code before calling `dispatch_task`. This is
+   desirable — it pushes all code investigation into the sub-agent's context.
+
+### P56 — Bug Lifecycle Hardening
+
+P56 gives bugs a full lifecycle structurally equivalent to features:
+`in-progress → needs-review → verifying → closed`. Bugs now have auto-generated specs,
+mandatory review gates, worktree isolation, and close-out verification.
+
+**What P44 must account for:**
+
+1. **Bug task dispatch.** `dispatch_task` was designed around feature tasks in
+   `developing` stage. It must also accept bug tasks in `in-progress` status. The
+   pipeline already handles this via stage bindings — the bug's `bug_fix` tier maps
+   to the `developing` stage binding, resolving to `implementer`/`implement-task`.
+   P44's implementation should explicitly test bug task dispatch.
+
+2. **Auto-generated bug specs.** P56 Component B auto-generates specification
+   documents from bug report `observed`/`expected` fields. The pipeline must surface
+   these inline specs when assembling context for bug tasks — they replace the
+   separate specification document that features have.
+
+3. **Bug review dispatch.** Bugs now have a mandatory `needs-review` stop-state.
+   P44's `dispatch_task` with `category: "review"` should handle dispatching
+   reviewer sub-agents for bugs. For bugs, a single `reviewer-conformance` sub-agent
+   is sufficient (P56 Decision 4: "One reviewer for bugs, not a panel").
+
+4. **Gate-dispatched verifier.** P56 Component G explicitly adopts P55's verifier
+   pattern with a critical architectural distinction: "the gate dispatches the
+   verifier, not the orchestrator." The `verifying → closed` gate in
+   `CheckBugTransitionGate` spawns the verifier sub-agent and blocks the transition
+   until it returns all-pass. This reinforces the boundary: P44's `dispatch_task` is
+   for orchestrator-initiated dispatch; verification is gate-initiated.
+
+5. **Bug worktrees.** P56 Component E gives bugs worktrees (auto-created on
+   `in-progress` transition). P44's `dispatch_task` must resolve the correct
+   worktree for bug tasks — the same mechanism as feature worktrees, just scoped
+   to the bug entity.
+
+### P57 — Retrospective Pipeline Tightening
+
+P57 adds structure to the `retro_fix` tier: theme-to-entity creation, auto-generated
+specs, a `retro-fixing` stage binding profile, retro-adapted DoD with signal-addressed
+verification, and a document trail from synthesis to close-out.
+
+**What P44 must account for:**
+
+1. **Retro-fixing stage binding.** P57 Component 4 defines a `retro-fixing` profile:
+   `design_gate: human`, `spec_gate: auto`, `dev_plan_gate: auto`, `review_gate:
+   conditional`. The pipeline resolves correct roles/skills for retro_fix features
+   from this binding. P44's category routing doesn't need changes — retro_fix
+   implementation uses the same `implementer` role and `implementation` category.
+
+2. **Auto-generated retro specs.** P57 Component 2 generates specification documents
+   from theme data. The pipeline surfaces these for retro_fix tasks, similar to bug
+   inline specs. No P44 changes needed — the pipeline already handles spec surfacing.
+
+3. **Conditional review gate.** Retro fixes with documentation-only changes skip
+   review; those with source changes trigger the full review panel. P44's
+   `dispatch_task` with `category: "review"` handles the review dispatch when
+   triggered. The orchestrator decides whether to dispatch based on the
+   `review_gate: conditional` setting.
+
+4. **Retro-adapted DoD.** P57 Component 3 adds a signal-addressed check to the
+   verifier's DoD checklist (Item 10: "Signals Addressed"). This is handled by the
+   gate-dispatched verifier, not by P44's `dispatch_task`. No P44 changes needed.
+
+5. **`implement-retro-fix` skill.** P57 Component 7 defines a lightweight skill for
+   retro fix work that reuses `implement-task` for sub-agent work. P44's pipeline
+   resolves skills from stage bindings — it will pick up `implement-retro-fix`
+   automatically when the binding specifies it. No category mapping changes needed.
+
+### P44-F1 — Prompt Assembly Gate
+
+P44-F1 is a feature design for P44 itself. It defines the **assembly gate** — a
+non-bypassable quality check that `dispatch_task` runs before dispatching any
+sub-agent. This directly implements P44's pipeline health assertions (see §Risk:
+Pipeline Becomes Invisible).
+
+**Key design decisions P44 must adopt:**
+
+1. **Hardcoded default tool hints (P44-F1 Change 1).** Add a `defaultToolHints` map
+   in the pipeline's `stepResolveToolHint` that activates when `MergedToolHints` is
+   empty. This guarantees `codebase-memory-mcp` and `kanbanzai_edit_file` appear in
+   every implementer prompt — closing the gap where these tools were built but never
+   surfaced. Config still wins over defaults.
+
+2. **Assembly gate checks (P44-F1 Change 2).** `dispatch_task` must validate pipeline
+   output before dispatch:
+   - **Blocking:** Role not resolved, skill not loaded — cannot dispatch
+   - **Advisory:** Tool hints missing, <5 sections, <500 tokens — warn but proceed
+   This formalises P44's pipeline health assertions with specific thresholds.
+
+3. **`next(id)` returns `handoff_prompt` (P44-F1 Change 4).** Adding a rendered
+   prompt field to `next` responses reduces the orchestrator's incentive to compose
+   prompts manually. This is a transitional mitigation — once `dispatch_task` ships,
+   the orchestrator won't need `next` + `handoff` at all. But until then, it closes
+   the manual-composition gap.
+
+4. **P51 verification prerequisite satisfied.** P44-F1 lists P51 as a dependency:
+   "Must be complete and verified before P44 Phase 1 begins." The P51 handoff
+   pipeline verification (20 calls across feature types and stages) is now complete
+   and the report is approved at
+   `work/P51-handoff-pipeline-unification/P51-report-handoff-verification.md`.
+
+### Summary of P44 scope clarifications
+
+| Concern | In P44 scope? | Mechanism |
+|---------|--------------|-----------|
+| Implementation dispatch (feature tasks) | Yes | `dispatch_task(category: "implementation")` |
+| Implementation dispatch (bug tasks) | Yes | Same mechanism, bug tasks in `in-progress` |
+| Implementation dispatch (retro_fix tasks) | Yes | Same mechanism, `implement-retro-fix` skill |
+| Review dispatch (feature, bug, retro_fix) | Yes | `dispatch_task(category: "review")` |
+| Close-out verification | No — gate-dispatched | Verifier runs in lifecycle gate, not via dispatch_task |
+| Assembly gate checks | Yes | P44-F1: blocking for role/skill, advisory for tool hints |
+| Default tool hints | Yes | P44-F1: hardcoded fallbacks in stepResolveToolHint |
+| Constraint pinning | Yes | Embed orchestrator identity constraint in system prompt |
+| Fast-track review dispatch | Yes | Add review dispatch step to fast_track mode |
+| Session-scoped context | Yes | Original P44 design — avoid per-claim redundancy |
+| Model routing (provider/model selection) | Yes | Original P44 design — category → provider mapping |
+| Token budget communication | Yes | Original P44 design — Phase 1 |
+
+### Updated fast-track dispatch mode specification
+
+P44's `fast_track` dispatch mode (see §Fast-track pipeline mismatch) must now include:
+
+1. **Skip:** cohort setup, merge scheduling, context offloading instructions
+   (original design)
+2. **Suppress:** full `orchestrate-development` procedure — use lightweight
+   orchestration context (task graph, file ownership, dependency status)
+3. **Add: review dispatch** — before transitioning any feature to `done` or
+   `reviewing`, dispatch review sub-agents via `dispatch_task(category: "review")`:
+   - `bug_fix` features with ≤5 files: one `reviewer-conformance`
+   - `retro_fix` features with source changes: `reviewer-conformance` at minimum
+   - `feature` tier: full review panel per `orchestrate-review` skill
+4. **Add: close-out delegation** — the orchestrator transitions to `verifying` but
+   does NOT self-verify. The gate dispatches the verifier sub-agent. The
+   orchestrator's role in close-out is: transition to `verifying`, read verifier
+   report when gate completes, act on results.
+
+### Updated P44 Phase 1 category scope
+
+P44-F1 and P55/P56 confirm that `review` category dispatch is needed for:
+- P43 fast-track validators (original justification)
+- P55 fast-track review dispatch (bug_fix and retro_fix reviews)
+- P56 bug review gate (mandatory conformance review for bugs)
+- P57 conditional retro_fix review (when source changes exist)
+
+`review` was already in P44 Phase 1 scope. These designs validate that decision and
+increase the expected review dispatch volume P44 must handle.
+
 ## Architectural Assessment Cross-Reference
 
 This plan was reviewed in the [Integrated Architectural Assessment: Orchestration & Fast-Track Pipeline Strategy](../P41-opencode-ecosystem-features/P41-assessment-orchestration-architecture-cross-reference.md) (May 2026). Key findings:
@@ -552,3 +751,8 @@ This plan was reviewed in the [Integrated Architectural Assessment: Orchestratio
 10. **Stale binary after code changes:** The running `kbz serve` binary showed `git_sha: unknown` (via `server_info`) while the install record showed a valid SHA. The Makefile outputs `kbz` but the editor MCP config references `kanbanzai`. When P44 adds provider API keys and a dispatch loop, stale-binary issues become more dangerous — a running server with old routing config or missing provider credentials could silently fail dispatches. `dispatch_task` should verify at startup that its binary SHA matches the install record, and refuse dispatches if mismatched. This is a Phase 1 requirement — it's part of the pipeline health assertions (see Risk: Pipeline Becomes Invisible above).
 11. **Handoff-to-spawn_agent loop remains unclosed:** The orchestrator must manually call `spawn_agent` after `handoff`. In fast-track auto-validation, validators stop at "prompt generated" and wait. This is the same gap P44's `dispatch_task` closes — but it also means that until P44 ships, the orchestrator is the human-in-the-loop for every sub-agent dispatch. `dispatch_task` should be the highest-priority Phase 1 deliverable to close this loop.
 12. **Context threshold calibration:** The orchestrator role's 45% and 60% context utilisation thresholds were calibrated for ~128K-200K token windows. With 1M token windows now standard, 45% = 450K tokens — more working room than a full 128K window at 90%. The pipeline's `DefaultContextWindowTokens = 200_000` is similarly stale. P44 should recalibrate these to absolute token counts rather than percentages, or to percentages of a configurable window size that defaults to 1M.
+13. **P51 handoff verification prerequisite:** Resolved. The 20-call handoff verification across feature types (feature, bug_fix, retro_fix) and stages (developing, reviewing) is complete. All 19 pipeline-3.0 calls produced correct role (implementer/reviewer-conformance), skill (implement-task/review-code), and knowledge assembly. The verification report is approved at `work/P51-handoff-pipeline-unification/P51-report-handoff-verification.md`.
+14. **P44-F1 assembly gate integration:** The assembly gate checks (P44-F1 Change 2) should be the first code written in P44 Phase 1 — they validate the pipeline before it becomes invisible. Should the gate checks be implemented as a separate `internal/pipeline/gate.go` package or integrated directly into the `dispatch_task` handler? Separate package is preferred for testability.
+15. **Verifier dispatch boundary:** P55, P56, and P57 all use a gate-dispatched verifier sub-agent for close-out. Should P44's `dispatch_task` accept a `dispatch_verifier` variant for gate-initiated dispatch, or should the gate use the same provider API directly without going through `dispatch_task`? Recommendation: gate uses provider API directly — the verifier is a lightweight, deterministic checklist runner that doesn't need model routing sophistication. But this should be explicitly decided.
+16. **Bug task dispatch testing:** P56 gives bugs a full lifecycle with tasks. `dispatch_task` must be tested against bug tasks in `in-progress` status (not just feature tasks in `developing`). Should this be part of the P44 production acceptance gate (20 consecutive `dispatch_task` calls) or a separate test suite?
+17. **Constraint pinning in system prompts:** P55's constraint messages must be embedded in `dispatch_task` system prompts. Should these be hardcoded (like P44-F1's tool hints) or configurable via `.kbz/routing.yaml`? Hardcoded with config override matches the P44-F1 pattern and is recommended.

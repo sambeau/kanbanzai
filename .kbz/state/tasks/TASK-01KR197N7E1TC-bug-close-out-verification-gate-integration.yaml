@@ -4,3 +4,5 @@ slug: bug-close-out-verification-gate-integration
 name: Implement gate integration and report registration
 summary: "Parse verifier report. Allow transition on all-pass, block with itemised failures on fail. Register report as document. Handle timeout."
 status: done
+verification: "14 tests pass. Verifier dispatch, prompt assembly, report parsing, gate integration all tested."
+verification_status: passed

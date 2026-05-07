@@ -1,0 +1,256 @@
+document_id: P44-model-routing-agent-launcher/design-p44-design-feature-execution-pipeline
+document_path: work/P44-model-routing-agent-launcher/P44-design-feature-execution-pipeline.md
+content_hash: 0bc05dfe6439f9a4e89d45ba96f766f60ca56d7316b83c5a8949872f81e60a4d
+indexed_at: 2026-05-07T16:06:53.066214Z
+sections:
+    - path: "1"
+      level: 2
+      title: Overview
+      byte_offset: 221
+      byte_count: 962
+      word_count: 140
+      content_hash: 1c3a97a66bc616e8d4972ed280ea643fd57cca4013f42651b9b0357b812b6c28
+    - path: "2"
+      level: 2
+      title: Goals and Non-Goals
+      byte_offset: 1183
+      byte_count: 1080
+      word_count: 164
+      content_hash: 8e04531fd21643dbe874562708cc8094632ecc56f591d03f4301e8d8392c7271
+    - path: "3"
+      level: 2
+      title: Problem and Motivation
+      byte_offset: 2263
+      byte_count: 1688
+      word_count: 250
+      content_hash: 2fdb867c6d0c94de12aa3b6d96a7001df27e165a2922c2fa84d33be3bf0f82d3
+      children:
+        - path: "3.1"
+          level: 3
+          title: 'Evidence: four plans, same failure mode'
+          byte_offset: 2290
+          byte_count: 962
+          word_count: 145
+          content_hash: 6acf4ddb54eada58e09602c40e76a0c8baed6ffd8d4efbfaaf9deb4bf39cc888
+        - path: "3.2"
+          level: 3
+          title: Root cause
+          byte_offset: 3252
+          byte_count: 366
+          word_count: 52
+          content_hash: a7e7d51ce036d5f39d8568bd76d03caca1d3fbec03e8ceef71de9665a8559805
+        - path: "3.3"
+          level: 3
+          title: The fix
+          byte_offset: 3618
+          byte_count: 333
+          word_count: 49
+          content_hash: cfc6bba819d6f8b79a105bbd7ea4f59cc31f5f5b848d85428dbd9d308c8daaf4
+    - path: "4"
+      level: 2
+      title: Design
+      byte_offset: 3951
+      byte_count: 8282
+      word_count: 1066
+      content_hash: 96a003820bba6a4e03860963c098f52311df345733399b17da50d931c99fa466
+      children:
+        - path: "4.1"
+          level: 3
+          title: Architecture overview
+          byte_offset: 3962
+          byte_count: 639
+          word_count: 68
+          content_hash: 3b9011d6c7aba3f953160c3b9d63923b743a99ebefe751208fc0c06b44df230d
+        - path: "4.2"
+          level: 3
+          title: Stage controllers
+          byte_offset: 4601
+          byte_count: 3238
+          word_count: 392
+          content_hash: d6e92a5f59a70921fcb3ae6ff3f7a9eb986b41d4740cb9475be7c560979d3c06
+          children:
+            - path: 4.2.1
+              level: 4
+              title: Developing stage controller
+              byte_offset: 4781
+              byte_count: 1176
+              word_count: 140
+              content_hash: 48be1c31ef7faeb756660b9f7af86a3ec270ea22c566bb3672bce2f478ba5218
+            - path: 4.2.2
+              level: 4
+              title: Reviewing stage controller
+              byte_offset: 5957
+              byte_count: 1046
+              word_count: 121
+              content_hash: ca49c20fc61b228f527e88600bf4eb113e3ea15ff2bd135bd3125e678fffdcb9
+            - path: 4.2.3
+              level: 4
+              title: Verifying stage controller
+              byte_offset: 7003
+              byte_count: 836
+              word_count: 104
+              content_hash: dfeaf00984d821a6a2c93bc52bb5c76b714fe2ad3e621d51679cede2b1deee23
+        - path: "4.3"
+          level: 3
+          title: Transition hook integration
+          byte_offset: 7839
+          byte_count: 1362
+          word_count: 157
+          content_hash: 8baef0c7dc1e30c6654b3f35689983c02ef8c911264ee5e29a3ba57ec1ba1da1
+        - path: "4.4"
+          level: 3
+          title: Provider integration
+          byte_offset: 9201
+          byte_count: 904
+          word_count: 121
+          content_hash: f5f3b2730e41050f142f9146f9f7726b72d5107045d07b87b06177f5b420ad67
+        - path: "4.5"
+          level: 3
+          title: What the orchestrator does
+          byte_offset: 10105
+          byte_count: 869
+          word_count: 124
+          content_hash: 1688fe3f7c91a17f8fb107a23fdd14a54001f25cdbf9f137531b55a943aeb7b7
+        - path: "4.6"
+          level: 3
+          title: Human interaction points
+          byte_offset: 10974
+          byte_count: 688
+          word_count: 112
+          content_hash: c40662ff3a9f53e96c783cfe76edd369a30fe9291ed8fd54a4d4f79b885ba390
+        - path: "4.7"
+          level: 3
+          title: What this design does NOT change
+          byte_offset: 11662
+          byte_count: 571
+          word_count: 90
+          content_hash: 137d60600046b49f7287da1165c62cfac242a25767ce2bb1af1d0af9b2b1d461
+    - path: "5"
+      level: 2
+      title: Alternatives Considered
+      byte_offset: 12233
+      byte_count: 2022
+      word_count: 270
+      content_hash: 7a71ce94f794911d2d42b0c40dc85ec1e3b490acd9ab62eb889e9ab1f3cac580
+      children:
+        - path: "5.1"
+          level: 3
+          title: 'Alternative A: Keep chat-based orchestrator, add dispatch_task tool (current P44 approach)'
+          byte_offset: 12261
+          byte_count: 776
+          word_count: 104
+          content_hash: 0073f7d9e565fdd49c7b6d051f3af291e86fc94b2a253f430a9131fbbdaebd55
+        - path: "5.2"
+          level: 3
+          title: 'Alternative B: Pre-generate prompts during dev-planning'
+          byte_offset: 13037
+          byte_count: 611
+          word_count: 84
+          content_hash: 8553026e4e683c6e2688cc75656b1e6ecd3cb08f89bb794467193df95b6ed0a1
+        - path: "5.3"
+          level: 3
+          title: 'Alternative C: One sub-agent per feature (no orchestrator at all)'
+          byte_offset: 13648
+          byte_count: 607
+          word_count: 79
+          content_hash: 9ddfb4bdb27716861a669f2b43f729e5d1034de0e47c52fb9308171a8185651a
+    - path: "6"
+      level: 2
+      title: Decisions
+      byte_offset: 14255
+      byte_count: 3249
+      word_count: 458
+      content_hash: 8a18d8aa0b58a12a607943a33503e041c97e17c3920f97aee58b151097fa4f1c
+      children:
+        - path: "6.1"
+          level: 3
+          title: 'Decision 1: Dispatch is a side effect of lifecycle transitions, not an orchestrator action'
+          byte_offset: 14269
+          byte_count: 886
+          word_count: 131
+          content_hash: 38a359afbd484399f6784893e76b727144071fb95969b7df7a4527ed7c030254
+        - path: "6.2"
+          level: 3
+          title: 'Decision 2: Stage controllers manage bounded loops with clear exit conditions'
+          byte_offset: 15155
+          byte_count: 785
+          word_count: 110
+          content_hash: 8448566985c3abefbe5e74128cdcd01189482c96588b6ce576686ec230058c5c
+        - path: "6.3"
+          level: 3
+          title: 'Decision 3: The orchestrator remains but is demoted from dispatcher to supervisor'
+          byte_offset: 15940
+          byte_count: 769
+          word_count: 103
+          content_hash: 09b4c918ae8c355f5c966440d3d4f71cc6de877e8f8e61331e0b00dcb158195d
+        - path: "6.4"
+          level: 3
+          title: 'Decision 4: Provider integration is abstracted behind a single interface'
+          byte_offset: 16709
+          byte_count: 795
+          word_count: 112
+          content_hash: bc29207ab743e1d8218b434784e2b4ec1510c6d9a0628c529ab7cf997d014ef4
+    - path: "7"
+      level: 2
+      title: Dependencies
+      byte_offset: 17504
+      byte_count: 528
+      word_count: 72
+      content_hash: 3512cb876e30715feb52b2892f946ab9e8946d938104e4f8b9b6c839e1cf6a28
+    - path: "8"
+      level: 2
+      title: Open Questions
+      byte_offset: 18032
+      byte_count: 1632
+      word_count: 238
+      content_hash: ee35287a59ba8b776ea22faf6e451c6fcff698fdf311ed2fa097f2f794c57252
+entity_refs:
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: "4.5"
+      byte_offset: 10373
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: "4.6"
+      byte_offset: 11530
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "2"
+      role: constraint
+      confidence: high
+    - section_path: "4.1"
+      role: narrative
+      confidence: high
+    - section_path: "5"
+      role: alternative
+      confidence: high
+    - section_path: "5.1"
+      role: alternative
+      confidence: high
+    - section_path: "5.2"
+      role: alternative
+      confidence: high
+    - section_path: "5.3"
+      role: alternative
+      confidence: high
+    - section_path: "6"
+      role: decision
+      confidence: high
+    - section_path: "6.1"
+      role: decision
+      confidence: high
+    - section_path: "6.2"
+      role: decision
+      confidence: high
+    - section_path: "6.3"
+      role: decision
+      confidence: high
+    - section_path: "6.4"
+      role: decision
+      confidence: high
+    - section_path: "8"
+      role: question
+      confidence: high
+classified: false

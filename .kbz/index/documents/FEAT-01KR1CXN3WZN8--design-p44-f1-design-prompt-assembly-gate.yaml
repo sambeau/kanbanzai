@@ -1,0 +1,215 @@
+document_id: FEAT-01KR1CXN3WZN8/design-p44-f1-design-prompt-assembly-gate
+document_path: work/P44-model-routing-agent-launcher/P44-F1-design-prompt-assembly-gate.md
+content_hash: 8c5e850fa221cd5ff2c3ea3e84e4b5cbad8e4dfc9437f9a3ef00b30346841941
+indexed_at: 2026-05-07T14:23:48.44925Z
+sections:
+    - path: "1"
+      level: 2
+      title: Problem and Motivation
+      byte_offset: 221
+      byte_count: 2978
+      word_count: 416
+      content_hash: b103854a14e635c0bba2dd6427185df8f1131d04c35470e90b9e01326f1d1f14
+      children:
+        - path: "1.1"
+          level: 3
+          title: What's broken
+          byte_offset: 692
+          byte_count: 2014
+          word_count: 274
+          content_hash: 0c20de9ee9be5e4b1e82b51483840a9030499fa47f1c79e4d3fa57ea105301dc
+        - path: "1.2"
+          level: 3
+          title: Why this matters
+          byte_offset: 2706
+          byte_count: 326
+          word_count: 46
+          content_hash: d7c21ac359ef7d904371750d94ea172a517687f3fce844b95fbfd5439c29f36e
+        - path: "1.3"
+          level: 3
+          title: Who is affected
+          byte_offset: 3032
+          byte_count: 167
+          word_count: 27
+          content_hash: 5ac002869470fc1524304139a4642a4f241e9f661e234934bc65ecbe65e40346
+    - path: "2"
+      level: 2
+      title: Design
+      byte_offset: 3199
+      byte_count: 7629
+      word_count: 1048
+      content_hash: f69c8c264a3fb1cd2969c97622b87b16ba77b36d8c52ff605df3b430db3f98a5
+      children:
+        - path: "2.1"
+          level: 3
+          title: Component overview
+          byte_offset: 3481
+          byte_count: 832
+          word_count: 88
+          content_hash: f015d48328fac6d3a25ed71c0a3890f79970509bf8dd7ebd0d43093de249b764
+        - path: "2.2"
+          level: 3
+          title: 'Change 1: Hardcoded default tool hints'
+          byte_offset: 4313
+          byte_count: 3418
+          word_count: 447
+          content_hash: 13016649a009e45e6e01c2f6293a1f05d966a6eb7aa265062f9a72a9e357be79
+        - path: "2.3"
+          level: 3
+          title: 'Change 2: Assembly gate checks'
+          byte_offset: 7731
+          byte_count: 924
+          word_count: 144
+          content_hash: c614d057b18dea7ce16fed7f76a8187a3e2bca37cfaa734937143e43d64332e5
+        - path: "2.4"
+          level: 3
+          title: 'Change 3: Ship default tool hints in `kbz init` config'
+          byte_offset: 8655
+          byte_count: 315
+          word_count: 49
+          content_hash: ade8e1d95c622d45730aa9253b50e66229b1a06e8f174ec515387672db87511f
+        - path: "2.5"
+          level: 3
+          title: 'Change 4: Make `next(id)` return a rendered prompt field'
+          byte_offset: 8970
+          byte_count: 615
+          word_count: 85
+          content_hash: b22af827f6bbf8678dede2526847d3c589f2c327fdeeea15f9e0ebb9755aa2d0
+        - path: "2.6"
+          level: 3
+          title: What this design does NOT change
+          byte_offset: 9585
+          byte_count: 443
+          word_count: 68
+          content_hash: e9759134e68b6f7732d1d388598b48521a8585660678f2c865b656ab4277e4e0
+        - path: "2.7"
+          level: 3
+          title: Failure modes and handling
+          byte_offset: 10028
+          byte_count: 800
+          word_count: 129
+          content_hash: 9e8c36d2380320b8d9484b046bab9c0277ef8c8f43fcea675a185e7b055a6fa6
+    - path: "3"
+      level: 2
+      title: Alternatives Considered
+      byte_offset: 10828
+      byte_count: 2594
+      word_count: 358
+      content_hash: 40494f857b9c56db4984d24e52d458d78ba2d4dfcdf10f38a6d3ef472f3030b3
+      children:
+        - path: "3.1"
+          level: 3
+          title: 'Alternative A: Config-only tool hints (status quo improvement)'
+          byte_offset: 10856
+          byte_count: 608
+          word_count: 91
+          content_hash: 8a0abdb40f2d811227772eb98a62fc3fc3e409a716fbb6a4d30736d119e319a1
+        - path: "3.2"
+          level: 3
+          title: 'Alternative B: Remove tool hints from config entirely, only use hardcoded defaults'
+          byte_offset: 11464
+          byte_count: 512
+          word_count: 71
+          content_hash: bc9c0fc01f076e56d93999aaa70bf9b0c237fb92a3e2836c6ad5a2e70c3a178f
+        - path: "3.3"
+          level: 3
+          title: 'Alternative C: Prompter sub-agent step'
+          byte_offset: 11976
+          byte_count: 717
+          word_count: 94
+          content_hash: 35b72d8fffed3b24960e1443ea4575167f908372bdefd9e52e460864fff3d7f2
+        - path: "3.4"
+          level: 3
+          title: 'Alternative D: Pre-generate prompts during dev-planning'
+          byte_offset: 12693
+          byte_count: 729
+          word_count: 99
+          content_hash: 0b790f6f53187e4dcb79778061e3d11d4f67f61b07c19cb53c7204d49f8c1c70
+    - path: "4"
+      level: 2
+      title: Decisions
+      byte_offset: 13422
+      byte_count: 3404
+      word_count: 473
+      content_hash: 8ac7b1373eb738fc3484a971137699c886ac323c865cd687fdcd12ae451d8e53
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Decision 1: Hardcoded default tool hints as a safety net, config as the canonical source'
+          byte_offset: 13436
+          byte_count: 935
+          word_count: 131
+          content_hash: 6bb4c9d41e986f32a3ea31ef5f6362166517bf4550b966624a96fa0ddc7b376e
+        - path: "4.2"
+          level: 3
+          title: 'Decision 2: Assembly gate checks are synchronous and blocking for critical failures (role, skill)'
+          byte_offset: 14371
+          byte_count: 919
+          word_count: 125
+          content_hash: 9f14a2aea8e05c2c63cf7a400e7b55a7bb2981c6078f67f684c5ef97e1627c61
+        - path: "4.3"
+          level: 3
+          title: 'Decision 3: Assembly gate checks are advisory (warn) for non-critical gaps (tool hints, token budget)'
+          byte_offset: 15290
+          byte_count: 785
+          word_count: 111
+          content_hash: 115746dfddcd5c48ce1f9be1eea969be78e1ebede7c8dc02e9c3be1d7197e84a
+        - path: "4.4"
+          level: 3
+          title: 'Decision 4: `next(id)` returns a `handoff_prompt` field alongside structured context'
+          byte_offset: 16075
+          byte_count: 751
+          word_count: 104
+          content_hash: 6b77cd1a702d816b39d6a7f6acaa6e31468264319176d9c2d9bd942e0f4304a8
+    - path: "5"
+      level: 2
+      title: Dependencies
+      byte_offset: 16826
+      byte_count: 665
+      word_count: 98
+      content_hash: 65bc24383681d923e8291417de0a4f948fcc579f0e816b5f60b0e3f63715f746
+    - path: "6"
+      level: 2
+      title: Open Questions
+      byte_offset: 17491
+      byte_count: 1062
+      word_count: 154
+      content_hash: a3c194ee12d4553784fd6921316e44d7d4ef69e9153ca14fa0377acdbaa5bc46
+conventional_roles:
+    - section_path: "2.1"
+      role: narrative
+      confidence: high
+    - section_path: "3"
+      role: alternative
+      confidence: high
+    - section_path: "3.1"
+      role: alternative
+      confidence: high
+    - section_path: "3.2"
+      role: alternative
+      confidence: high
+    - section_path: "3.3"
+      role: alternative
+      confidence: high
+    - section_path: "3.4"
+      role: alternative
+      confidence: high
+    - section_path: "4"
+      role: decision
+      confidence: high
+    - section_path: "4.1"
+      role: decision
+      confidence: high
+    - section_path: "4.2"
+      role: decision
+      confidence: high
+    - section_path: "4.3"
+      role: decision
+      confidence: high
+    - section_path: "4.4"
+      role: decision
+      confidence: high
+    - section_path: "6"
+      role: question
+      confidence: high
+classified: false
