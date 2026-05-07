@@ -931,13 +931,13 @@ func TestValidNextStates(t *testing.T) {
 			name:       "feature developing includes reviewing (AC-11)",
 			kind:       EntityFeature,
 			from:       string(model.FeatureStatusDeveloping),
-			wantStates: []string{"cancelled", "dev-planning", "reviewing", "superseded"},
+			wantStates: []string{"cancelled", "dev-planning", "needs-rework", "reviewing", "superseded"},
 		},
 		{
-			name:       "feature reviewing includes done and needs-rework (AC-12)",
+			name:       "feature reviewing includes merging, done and needs-rework (AC-12)",
 			kind:       EntityFeature,
 			from:       string(model.FeatureStatusReviewing),
-			wantStates: []string{"cancelled", "done", "needs-rework", "superseded"},
+			wantStates: []string{"cancelled", "done", "merging", "needs-rework", "superseded"},
 		},
 		{
 			name:       "feature needs-rework includes developing and reviewing (AC-13)",

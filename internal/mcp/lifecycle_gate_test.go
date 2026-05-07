@@ -11,13 +11,13 @@ import (
 
 // ─── Local helpers ────────────────────────────────────────────────────────────
 
-// createActivePlan writes a plan record in "active" status directly, bypassing the plan lifecycle.
+// createActivePlan writes a batch record in "active" status directly, bypassing the batch lifecycle.
 func createActivePlan(t *testing.T, entitySvc *service.EntityService, slug string) string {
 	t.Helper()
 	now := time.Now().UTC().Format(time.RFC3339)
-	planID := "P1-" + slug
+	planID := "B1-" + slug
 	record := storage.EntityRecord{
-		Type: "plan",
+		Type: "batch",
 		ID:   planID,
 		Slug: slug,
 		Fields: map[string]any{
@@ -37,16 +37,15 @@ func createActivePlan(t *testing.T, entitySvc *service.EntityService, slug strin
 	return planID
 }
 
-// assertPlanStatus reads a plan entity and asserts its status field.
+// assertPlanStatus reads a batch entity and asserts its status field.
 func assertPlanStatus(t *testing.T, entitySvc *service.EntityService, planID, wantStatus string) {
 	t.Helper()
-	got, err := entitySvc.GetPlan(planID)
+	got, err := entitySvc.GetBatch(planID)
 	if err != nil {
-		t.Fatalf("GetPlan %s: %v", planID, err)
+		t.Fatalf("GetBatch %s: %v", planID, err)
 	}
-	gotStatus, _ := got.State["status"].(string)
-	if gotStatus != wantStatus {
-		t.Errorf("plan %s status = %q, want %q", planID, gotStatus, wantStatus)
+	if string(got.Status) != wantStatus {
+		t.Errorf("plan %s status = %q, want %q", planID, got.Status, wantStatus)
 	}
 }
 

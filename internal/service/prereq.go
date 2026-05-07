@@ -75,7 +75,7 @@ func CheckFeatureGate(stage string, feature *model.Feature, docSvc *DocumentServ
 		}
 	}
 
-	return checkDocumentGate(stage, docType, feature, docSvc)
+	return checkDocumentGate(stage, docType, feature, docSvc, entitySvc)
 }
 
 // CheckFeatureGates checks all document-driven stage gates for a feature.
@@ -101,7 +101,7 @@ func CheckFeatureGates(feature *model.Feature, docSvc *DocumentService, entitySv
 //  1. Feature's own document field reference
 //  2. Documents owned by the feature
 //  3. Documents owned by the parent plan
-func checkDocumentGate(stage, docType string, feature *model.Feature, docSvc *DocumentService) GateResult {
+func checkDocumentGate(stage, docType string, feature *model.Feature, docSvc *DocumentService, entitySvc *EntityService) GateResult {
 	fieldName := stageDocField[stage]
 
 	// 1. Check feature's own document field reference.
@@ -131,7 +131,7 @@ func checkDocumentGate(stage, docType string, feature *model.Feature, docSvc *Do
 		}
 	}
 
-	// 3. Check documents owned by the parent plan.
+	// 3. Check documents owned by the parent batch/plan.
 	if feature.Parent != "" {
 		parentDocs, err := docSvc.ListDocuments(DocumentFilters{
 			Owner:  feature.Parent,
@@ -142,7 +142,25 @@ func checkDocumentGate(stage, docType string, feature *model.Feature, docSvc *Do
 			return GateResult{
 				Stage:     stage,
 				Satisfied: true,
-				Reason:    fmt.Sprintf("approved %s document owned by parent plan %s: %s", docType, feature.Parent, parentDocs[0].ID),
+				Reason:    fmt.Sprintf("approved %s document owned by parent %s: %s", docType, feature.Parent, parentDocs[0].ID),
+			}
+		}
+
+		// 4. Check documents owned by the grandparent plan (batch → plan chain).
+		if batch, batchErr := entitySvc.GetBatch(feature.Parent); batchErr == nil {
+			if batch.Parent != "" {
+				gpDocs, gpErr := docSvc.ListDocuments(DocumentFilters{
+					Owner:  batch.Parent,
+					Type:   docType,
+					Status: string(model.DocumentStatusApproved),
+				})
+				if gpErr == nil && len(gpDocs) > 0 {
+					return GateResult{
+						Stage:     stage,
+						Satisfied: true,
+						Reason:    fmt.Sprintf("approved %s document owned by grandparent plan %s: %s", docType, batch.Parent, gpDocs[0].ID),
+					}
+				}
 			}
 		}
 	}
@@ -174,7 +192,7 @@ func CheckTransitionGate(from, to string, feature *model.Feature, docSvc *Docume
 
 	case string(model.FeatureStatusDesigning) + "→" + string(model.FeatureStatusSpecifying):
 		// designing→specifying: requires approved design document (FR-004)
-		docResult := checkDocumentGate(string(model.FeatureStatusDesigning), string(model.DocumentTypeDesign), feature, docSvc)
+		docResult := checkDocumentGate(string(model.FeatureStatusDesigning), string(model.DocumentTypeDesign), feature, docSvc, entitySvc)
 		if !docResult.Satisfied {
 			return docResult
 		}
@@ -188,7 +206,7 @@ func CheckTransitionGate(from, to string, feature *model.Feature, docSvc *Docume
 
 	case string(model.FeatureStatusSpecifying) + "→" + string(model.FeatureStatusDevPlanning):
 		// specifying→dev-planning: requires approved specification document (FR-005)
-		docResult := checkDocumentGate(string(model.FeatureStatusSpecifying), string(model.DocumentTypeSpec), feature, docSvc)
+		docResult := checkDocumentGate(string(model.FeatureStatusSpecifying), string(model.DocumentTypeSpec), feature, docSvc, entitySvc)
 		if !docResult.Satisfied {
 			return docResult
 		}
@@ -202,7 +220,7 @@ func CheckTransitionGate(from, to string, feature *model.Feature, docSvc *Docume
 
 	case string(model.FeatureStatusDevPlanning) + "→" + string(model.FeatureStatusDeveloping):
 		// dev-planning→developing: requires approved dev-plan AND at least one child task (FR-006)
-		docResult := checkDocumentGate(string(model.FeatureStatusDevPlanning), string(model.DocumentTypeDevPlan), feature, docSvc)
+		docResult := checkDocumentGate(string(model.FeatureStatusDevPlanning), string(model.DocumentTypeDevPlan), feature, docSvc, entitySvc)
 		if !docResult.Satisfied {
 			return docResult
 		}

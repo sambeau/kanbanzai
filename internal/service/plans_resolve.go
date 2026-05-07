@@ -21,7 +21,7 @@ func (s *EntityService) ResolvePlanByNumber(cfg config.Config, prefix, number st
 		return "", "", fmt.Errorf("unknown plan prefix %q — valid prefixes are: [%s]", prefix, strings.Join(names, ", "))
 	}
 
-	ids, listErr := s.listPlanIDs()
+	ids, listErr := s.listAllPlanIDs()
 	if listErr != nil {
 		return "", "", fmt.Errorf("list plan IDs: %w", listErr)
 	}

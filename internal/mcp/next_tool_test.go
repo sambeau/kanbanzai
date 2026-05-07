@@ -61,7 +61,7 @@ func createNextTestPlan(t *testing.T, entitySvc *service.EntityService, slug str
 	now := time.Now().UTC().Format(time.RFC3339)
 	planID := "P1-" + slug
 	record := storage.EntityRecord{
-		Type: "plan",
+		Type: "batch",
 		ID:   planID,
 		Slug: slug,
 		Fields: map[string]any{
@@ -1016,7 +1016,7 @@ func TestNextTrimContext_T3BeforeT2(t *testing.T) {
 	t.Parallel()
 
 	actx := assembledContext{
-		byteBudget: 10, // very small budget to force trimming
+		byteBudget: 100, // budget small enough to force T3 trim, large enough to avoid topic truncation
 		knowledge: []asmKnowledgeEntry{
 			{topic: "t2-low", content: "tier 2 content that is quite long and will consume budget space", confidence: 0.4, tier: 2},
 			{topic: "t3-high", content: "tier 3 content that is also quite long and consuming budget space", confidence: 0.9, tier: 3},
@@ -1026,12 +1026,12 @@ func TestNextTrimContext_T3BeforeT2(t *testing.T) {
 
 	result := asmTrimContext(actx)
 
-	// T3 should be trimmed before T2.
+	// T3 should be trimmed before T2. Topic may be truncated in tight budgets.
 	if len(result.trimmed) == 0 {
 		t.Fatal("expected trimmed entries")
 	}
-	if result.trimmed[0].topic != "t3-high" {
-		t.Errorf("first trimmed entry should be t3-high, got %q", result.trimmed[0].topic)
+	if result.trimmed[0].tier != 3 {
+		t.Errorf("first trimmed entry tier = %d, want 3 (topic=%q)", result.trimmed[0].tier, result.trimmed[0].topic)
 	}
 }
 

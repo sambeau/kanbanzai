@@ -271,10 +271,19 @@ type BatchFilters struct {
 }
 
 func (s *EntityService) listAllPlanIDs() ([]string, error) {
-	rs, _ := s.List("plan")
-	ids := make([]string, 0, len(rs))
-	for _, r := range rs {
-		ids = append(ids, r.ID)
+	records, err := s.listPlanRecordFiles("plans", "batches")
+	if err != nil {
+		return nil, err
+	}
+
+	seen := make(map[string]struct{}, len(records))
+	ids := make([]string, 0, len(records))
+	for _, record := range records {
+		if _, ok := seen[record.id]; ok {
+			continue
+		}
+		seen[record.id] = struct{}{}
+		ids = append(ids, record.id)
 	}
 	return ids, nil
 }
@@ -316,7 +325,8 @@ func (s *EntityService) UpdateBatch(input UpdateBatchInput) error {
 }
 
 func (s *EntityService) GetBatch(id string) (*model.Batch, error) {
-	getR, err := s.Get("batch", id, "")
+	_, _, slug := model.ParseBatchID(id)
+	getR, err := s.loadPlan(id, slug)
 	if err != nil {
 		return nil, err
 	}
@@ -602,12 +612,25 @@ func (s *EntityService) HealthCheck() (*validate.HealthReport, error) {
 	loadAll := func() ([]validate.EntityInfo, error) {
 		var all []validate.EntityInfo
 
-		// Load Plans via ListPlans (Plans use different filename format).
+		// Load Plans via ListPlans (execution plans/batches only).
 		plans, err := s.ListPlans(PlanFilters{})
 		if err != nil {
 			return nil, fmt.Errorf("listing plan entities: %w", err)
 		}
 		for _, r := range plans {
+			all = append(all, validate.EntityInfo{
+				Type:   r.Type,
+				ID:     r.ID,
+				Fields: r.State,
+			})
+		}
+
+		// Load strategic plans separately.
+		strats, err := s.ListStrategicPlans(StrategicPlanFilters{})
+		if err != nil {
+			return nil, fmt.Errorf("listing strategic plan entities: %w", err)
+		}
+		for _, r := range strats {
 			all = append(all, validate.EntityInfo{
 				Type:   r.Type,
 				ID:     r.ID,
@@ -1233,9 +1256,8 @@ func validateKindForType(entityType string) (validate.EntityKind, error) {
 func parseRecordIdentity(entityType, idPart string) (string, string, error) {
 	switch entityType {
 	case string(model.EntityKindPlan), string(model.EntityKindStrategicPlan):
-		// Plan/batch/strategic-plan files use {id}.yaml with no slug suffix.
-		// The entire idPart is the ID; extract the human-readable slug from ParsePlanID.
-		if prefix, _, slug := model.ParsePlanID(idPart); prefix != "" {
+		// Plan/Batch/StrategicPlan files use {id}.yaml with no slug suffix. Extract slug from ID.
+		if _, _, slug := model.ParsePlanID(idPart); slug != "" {
 			return idPart, slug, nil
 		}
 		return "", "", fmt.Errorf("invalid plan/batch record filename %q", idPart)

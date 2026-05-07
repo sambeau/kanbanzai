@@ -41,7 +41,7 @@ func TestIntegration_NextHandoffFinish(t *testing.T) {
 
 	// ── Create entities: plan → feature → task ──────────────────────────
 
-	planID := "P1-integration"
+	planID := "B1-integration"
 	writeIntegrationPlan(t, entitySvc, planID)
 
 	feat, err := entitySvc.CreateFeature(service.CreateFeatureInput{
@@ -125,7 +125,7 @@ func TestIntegration_NextHandoffFinish(t *testing.T) {
 
 	// ── Step 2: handoff(task_id) — generate sub-agent prompt ────────────
 
-	handoffTools := HandoffTools(entitySvc, nil)
+	handoffTools := HandoffTools(entitySvc, testHandoffPipeline())
 	if len(handoffTools) == 0 {
 		t.Fatal("HandoffTools returned no tools")
 	}
@@ -225,7 +225,7 @@ func writeIntegrationPlan(t *testing.T, entitySvc *service.EntityService, id str
 	now := time.Now().UTC().Format(time.RFC3339)
 	slug := integrationPlanSlug(id)
 	record := storage.EntityRecord{
-		Type: "plan",
+		Type: "batch",
 		ID:   id,
 		Slug: slug,
 		Fields: map[string]any{
@@ -430,7 +430,7 @@ func BenchmarkFinishLatency(b *testing.B) {
 	now := time.Now().UTC().Format(time.RFC3339)
 	slug := "bench-finish"
 	record := storage.EntityRecord{
-		Type: "plan",
+		Type: "batch",
 		ID:   planID,
 		Slug: slug,
 		Fields: map[string]any{

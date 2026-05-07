@@ -163,11 +163,11 @@ func TestEntityStore_WriteAndLoad_Plan(t *testing.T) {
 	store := NewEntityStore(root)
 
 	record := EntityRecord{
-		Type: "plan",
-		ID:   "P1-basic-ui",
+		Type: "batch",
+		ID:   "B1-basic-ui",
 		Slug: "basic-ui",
 		Fields: map[string]any{
-			"id":         "P1-basic-ui",
+			"id":         "B1-basic-ui",
 			"slug":       "basic-ui",
 			"name":       "Basic UI",
 			"status":     "proposed",
@@ -183,35 +183,35 @@ func TestEntityStore_WriteAndLoad_Plan(t *testing.T) {
 		t.Fatalf("Write() error = %v", err)
 	}
 
-	// Plan files must use {id}.yaml, not {id}-{slug}.yaml, because the
-	// Plan ID already contains the slug (spec §15.1).
-	wantPath := filepath.Join(root, "batches", "P1-basic-ui.yaml")
+	// Batch files must use {id}.yaml, not {id}-{slug}.yaml, because the
+	// Batch ID already contains the slug (spec §15.1).
+	wantPath := filepath.Join(root, "batches", "B1-basic-ui.yaml")
 	if path != wantPath {
 		t.Fatalf("Write() path = %q, want %q", path, wantPath)
 	}
 
 	// Verify the file actually exists at that path
 	if _, err := os.Stat(path); err != nil {
-		t.Fatalf("Plan file does not exist at %q: %v", path, err)
+		t.Fatalf("Batch file does not exist at %q: %v", path, err)
 	}
 
-	got, err := store.Load("plan", "P1-basic-ui", "basic-ui")
+	got, err := store.Load("batch", "B1-basic-ui", "basic-ui")
 	if err != nil {
 		t.Fatalf("Load() error = %v", err)
 	}
 
-	if got.Type != "plan" {
-		t.Errorf("Load() type = %q, want %q", got.Type, "plan")
+	if got.Type != "batch" {
+		t.Errorf("Load() type = %q, want %q", got.Type, "batch")
 	}
-	if got.ID != "P1-basic-ui" {
-		t.Errorf("Load() id = %q, want %q", got.ID, "P1-basic-ui")
+	if got.ID != "B1-basic-ui" {
+		t.Errorf("Load() id = %q, want %q", got.ID, "B1-basic-ui")
 	}
 	if got.Slug != "basic-ui" {
 		t.Errorf("Load() slug = %q, want %q", got.Slug, "basic-ui")
 	}
 
 	want := map[string]any{
-		"id":         "P1-basic-ui",
+		"id":         "B1-basic-ui",
 		"slug":       "basic-ui",
 		"name":       "Basic UI",
 		"status":     "proposed",
@@ -231,7 +231,7 @@ func TestEntityStore_Write_RejectsMismatchedIdentity(t *testing.T) {
 	store := NewEntityStore(t.TempDir())
 
 	record := EntityRecord{
-		Type: "plan",
+		Type: "batch",
 		ID:   "P1-test-plan",
 		Slug: "test-plan",
 		Fields: map[string]any{
@@ -322,11 +322,11 @@ func TestEntityStore_Load_FixtureFiles(t *testing.T) {
 		{
 			name:       "plan",
 			sourcePath: filepath.Join("..", "..", "testdata", "entities", "plan.yaml"),
-			entityType: "plan",
-			id:         "P1-initial-kernel",
+			entityType: "batch",
+			id:         "B1-initial-kernel",
 			slug:       "initial-kernel",
 			wantFields: map[string]any{
-				"id":         "P1-initial-kernel",
+				"id":         "B1-initial-kernel",
 				"slug":       "initial-kernel",
 				"name":       "Phase 1 Kernel",
 				"status":     "active",
@@ -337,7 +337,7 @@ func TestEntityStore_Load_FixtureFiles(t *testing.T) {
 				"created_by": "sam",
 				"updated":    "2026-03-20T10:00:00Z",
 			},
-			wantFilePath: filepath.Join(root, "batches", "P1-initial-kernel.yaml"),
+			wantFilePath: filepath.Join(root, "batches", "B1-initial-kernel.yaml"),
 		},
 
 		{
@@ -921,11 +921,11 @@ func TestEntityStore_Load_CorruptYAML(t *testing.T) {
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		t.Fatalf("MkdirAll() error = %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(dir, "P1-corrupt.yaml"), []byte("{{{{"), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(dir, "B1-corrupt.yaml"), []byte("{{{{"), 0o644); err != nil {
 		t.Fatalf("WriteFile() error = %v", err)
 	}
 
-	_, err := store.Load("plan", "P1-corrupt", "corrupt")
+	_, err := store.Load("batch", "B1-corrupt", "corrupt")
 	if err == nil {
 		t.Fatal("Load() error = nil, want non-nil for corrupt YAML")
 	}
@@ -992,11 +992,11 @@ func TestEntityStore_Load_EmptyFile(t *testing.T) {
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		t.Fatalf("MkdirAll() error = %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(dir, "P1-empty.yaml"), []byte(""), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(dir, "B1-empty.yaml"), []byte(""), 0o644); err != nil {
 		t.Fatalf("WriteFile() error = %v", err)
 	}
 
-	got, err := store.Load("plan", "P1-empty", "empty")
+	got, err := store.Load("batch", "B1-empty", "empty")
 	if err != nil {
 		t.Fatalf("Load() error = %v", err)
 	}
@@ -1414,11 +1414,11 @@ func TestNameRoundTrip_Plan(t *testing.T) {
 	store := NewEntityStore(root)
 
 	record := EntityRecord{
-		Type: "plan",
-		ID:   "P1-named-plan",
+		Type: "batch",
+		ID:   "B1-named-plan",
 		Slug: "named-plan",
 		Fields: map[string]any{
-			"id":         "P1-named-plan",
+			"id":         "B1-named-plan",
 			"slug":       "named-plan",
 			"name":       "Named Plan",
 			"status":     "proposed",
@@ -1433,7 +1433,7 @@ func TestNameRoundTrip_Plan(t *testing.T) {
 		t.Fatalf("Write() error = %v", err)
 	}
 
-	got, err := store.Load("plan", "P1-named-plan", "named-plan")
+	got, err := store.Load("batch", "B1-named-plan", "named-plan")
 	if err != nil {
 		t.Fatalf("Load() error = %v", err)
 	}

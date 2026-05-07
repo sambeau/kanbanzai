@@ -30,7 +30,7 @@ func commitStaged(t *testing.T, dir string) {
 
 // ── Test helpers ─────────────────────────────────────────────────────────────
 
-// writePlanState writes a minimal plan YAML at .kbz/state/plans/{planID}.yaml.
+// writePlanState writes a minimal execution plan YAML at .kbz/state/batches/{planID}.yaml.
 // planID must be in the form "{Prefix}{n}-{slug}", e.g. "P1-source-plan".
 func writePlanState(t *testing.T, dir, planID string) {
 	t.Helper()
@@ -41,7 +41,7 @@ func writePlanState(t *testing.T, dir, planID string) {
 	}
 	slug := planID[idx+1:]
 
-	stateDir := filepath.Join(dir, ".kbz", "state", "plans")
+	stateDir := filepath.Join(dir, ".kbz", "state", "batches")
 	if err := os.MkdirAll(stateDir, 0o755); err != nil {
 		t.Fatal(err)
 	}
@@ -413,7 +413,7 @@ func TestReParentEntityUpdate(t *testing.T) {
 	}
 
 	// Plan next_feature_seq must have been incremented (was 1, now 2).
-	planFile := filepath.Join(dir, ".kbz", "state", "plans", "P2-target-plan.yaml")
+	planFile := filepath.Join(dir, ".kbz", "state", "batches", "P2-target-plan.yaml")
 	planData, err := os.ReadFile(planFile)
 	if err != nil {
 		t.Fatalf("read plan YAML after re-parent: %v", err)

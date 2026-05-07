@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: prompt-engineering
 description:
   expert: "Prompt and skill authoring following attention-optimised section
