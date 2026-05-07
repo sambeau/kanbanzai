@@ -1,0 +1,10 @@
+id: FEAT-01KR12RE98N93
+slug: bug-close-out-verification
+name: Bug Close-Out Verification
+parent: B56-bug-lifecycle-hardening
+status: proposed
+summary: "Gate-dispatched verifier sub-agent at verifying->closed transition, bug-adapted 8-item DoD checklist. Depends on P55 Component 7."
+created: "2026-05-07T11:21:53Z"
+created_by: sambeau
+display_id: B56-F3
+tier: feature

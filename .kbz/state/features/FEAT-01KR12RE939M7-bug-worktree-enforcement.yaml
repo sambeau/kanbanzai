@@ -1,0 +1,10 @@
+id: FEAT-01KR12RE939M7
+slug: bug-worktree-enforcement
+name: Bug Worktree Enforcement
+parent: B56-bug-lifecycle-hardening
+status: proposed
+summary: "Health checks for bare in-progress bugs, warnings on repo-root mutations during active bug work, and worktree cleanup verification."
+created: "2026-05-07T11:21:53Z"
+created_by: sambeau
+display_id: B56-F1
+tier: feature
