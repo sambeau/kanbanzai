@@ -1,0 +1,11 @@
+canonical_content_hash: f45ac90acdc758117dee6425403407f52103f759d778434deea917fadb46b1af
+content_hash: c80fbcd9ba845c26b30c61f1a0012cad87e61d6cfd4161a5ceb1af35d25af780
+created: "2026-05-06T23:20:07Z"
+created_by: sambeau
+id: BUG-01KQZS69DAJFG/dev-plan-bug-01kqzs69dajfg-dev-plan-fix-44-failing-tests
+owner: BUG-01KQZS69DAJFG
+path: work/B52-fix-44-failing-tests/BUG-01KQZS69DAJFG-dev-plan-fix-44-failing-tests.md
+status: draft
+title: "Dev-Plan: Fix 44 Failing Tests from Uncommitted Refactors"
+type: dev-plan
+updated: "2026-05-06T23:20:07Z"

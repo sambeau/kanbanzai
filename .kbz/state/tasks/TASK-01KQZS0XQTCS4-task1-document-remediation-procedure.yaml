@@ -3,4 +3,11 @@ parent_feature: FEAT-01KQZS0PHZM1E
 slug: task1-document-remediation-procedure
 name: Task 1 - Document the Remediation Workflow Procedure
 summary: "Write the orchestrator-facing procedure for converting a failed review into a remediation dev-plan. Covers entry point, finding extraction, producing the remediation dev-plan, ownership model, task creation, execution, re-review report, and close-out."
-status: ready
+status: done
+completed: "2026-05-06T23:25:19Z"
+claimed_at: "2026-05-06T23:18:48Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-06T23:18:48Z"
+dispatched_by: sambeau
+completion_summary: "Wrote orchestrator-facing review remediation procedure (8 phases: entry, scope inspection, ownership model, dev-plan, tasks, execution, re-review report, close-out). Covers FR-01, FR-04, FR-05, FR-06. Registered as report-p54-report-review-remediation-procedure. Filename adjusted for doc naming convention (type-in-filename requirement)."
+verification: "Verified all FRs covered, only existing tools referenced (NFR-03/AC-SPEC-08), P52/P53 integration points reference without duplication (AC-SPEC-06), 8-phase structure matches spec flow."

@@ -62,7 +62,7 @@ Manual scope inspection (P53 not available — C-02 fallback):
 
 ### Phase 3: Ownership Model
 
-Applied the [Ownership Model Guide](P54-guide-ownership-model.md) decision tree:
+Applied the [Ownership Model Guide](P54-report-guide-ownership-model.md) decision tree:
 
 1. Are ALL findings scoped to a single feature? **NO** (findings span 4 features plus batch-level issues).
 2. Do findings span multiple features within one batch? **YES** (B1-p51-exec).
@@ -76,7 +76,7 @@ Entity creation:
 
 ### Phase 4: Remediation Dev-Plan
 
-Populated using the [Remediation Dev-Plan Template](P54-template-remediation-dev-plan.md). Six required sections verified:
+Populated using the [Remediation Dev-Plan Template](P54-report-template-remediation-dev-plan.md). Six required sections verified:
 
 1. **Scope** ✅ — Original review cited, all 4 affected features listed, spec references included.
 2. **Task Breakdown** ✅ — 10 findings mapped to 7 task groups. BF-1 and BF-6 grouped (shared root: commit discipline). BF-2 and BF-9 grouped (shared root: worktree isolation).
@@ -114,7 +114,7 @@ For sub-agent dispatch, `handoff(role: "implementer-go")` ensures correct skill 
 
 ### Phase 7: Re-Review Report
 
-Populated using the [Re-Review Report Template](P54-template-re-review-report.md):
+Populated using the [Re-Review Report Template](P54-report-template-re-review-report.md):
 
 - **Original review citation:** `P50-retro-may-2026/P50-report-batch-conformance-review`
 - **Immutability check:** Original review content hash unchanged ✅ (FR-06)
@@ -179,21 +179,6 @@ Verification:
 - Original review content hash unchanged (FR-06)
 - Original review status remains `approved`
 
-### AC-SPEC-05: Sub-agents receive implementer-go role via handoff
-
-**Result: ✅ PASS (by inspection)**
-
-The procedure §Phase 6.1 specifies `handoff(role: "implementer-go")` for dispatching remediation tasks. P51's role-routing fix ensures sub-agents receive the correct skill context (FR-08). Runtime verification of sub-agent prompt content is deferred — AC-SPEC-05 is verified by inspection of the procedure specification and by P51's existing test suite for handoff role routing.
-
-### AC-SPEC-06: No duplication of P52/P53
-
-**Result: ✅ PASS**
-
-The procedure references P52 (session-start audit) and P53 (scope inspection) as consumed services:
-- Phase 2 uses P53 when available, manual fallback when not (C-02)
-- Phase 8 references P52's session-start audit for remediation state detection
-- No duplicated audit or scope-inspection logic in the procedure
-
 ### AC-SPEC-07: Full audit trail traversable
 
 **Result: ✅ PASS**
@@ -203,6 +188,15 @@ The procedure references P52 (session-start audit) and P53 (scope inspection) as
 **Backward trace:** Re-Review Report: BF-1 resolved → Verification: commit SHA → Task T-F2-2 → Remediation Dev-Plan §Traceability Matrix → Original Review §BF-1 ✅
 
 All 10 findings traversable in both directions. No broken links.
+
+### AC-SPEC-06: No duplication of P52/P53
+
+**Result: ✅ PASS**
+
+The procedure references P52 (session-start audit) and P53 (scope inspection) as consumed services:
+- Phase 2 uses P53 when available, manual fallback when not (C-02)
+- Phase 8 references P52's session-start audit for remediation state detection
+- No duplicated audit or scope-inspection logic in the procedure
 
 ### AC-SPEC-08: No new tool actions required
 
@@ -230,7 +224,7 @@ All phases use existing Kanbanzai tools: `doc`, `entity`, `decompose`, `finish`,
 
 2. **Scope inspection without P53 requires mental context-switching.** The manual fallback (git status, worktree check) works but breaks the flow. The P53 integration will make this seamless.
 
-3. **Filename convention mismatch.** The dev-plan deliverables specified filenames like `P54-procedure-review-remediation.md` but the doc registration system requires `P54-{type}[-{slug}].md`. Filenames were adjusted to match convention: the procedure and walkthrough use `P54-report-*`, the templates use `P54-template-*`, and the ownership guide uses `P54-guide-*`. This friction is tracked in KE `filename-consistency-tool`.
+3. **Filename convention mismatch.** The dev-plan deliverables specified filenames like `P54-procedure-review-remediation.md` but the doc registration system requires `P54-{type}[-{slug}].md`. All filenames were adjusted to `P54-report-*.md` for compatibility. This friction is tracked in KE `filename-consistency-tool`.
 
 ---
 
@@ -254,8 +248,8 @@ The workflow is ready for orchestrator use.
 ## See Also
 
 - [Review Remediation Procedure](P54-report-review-remediation-procedure.md)
-- [Remediation Dev-Plan Template](P54-template-remediation-dev-plan.md)
-- [Re-Review Report Template](P54-template-re-review-report.md)
-- [Ownership Model Guide](P54-guide-ownership-model.md)
+- [Remediation Dev-Plan Template](P54-report-template-remediation-dev-plan.md)
+- [Re-Review Report Template](P54-report-template-re-review-report.md)
+- [Ownership Model Guide](P54-report-guide-ownership-model.md)
 - [P54 Specification: Review Remediation Workflow](P54-spec-review-remediation-workflow.md)
 - [P50 Batch Conformance Review](../P50-retro-may-2026/P50-report-batch-conformance-review.md)

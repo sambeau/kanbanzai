@@ -1,0 +1,156 @@
+document_id: P54-review-remediation-workflow/report-p54-report-template-re-review-report
+document_path: work/P54-review-remediation-workflow/P54-report-template-re-review-report.md
+content_hash: e743710ab7f49904db3b8edc4e96acf19c078d71063b01135bfc724074c19468
+indexed_at: 2026-05-06T23:32:07.649258Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Template: Re-Review Report'
+      byte_offset: 0
+      byte_count: 5619
+      word_count: 731
+      content_hash: e743710ab7f49904db3b8edc4e96acf19c078d71063b01135bfc724074c19468
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 620
+          byte_count: 503
+          word_count: 56
+          content_hash: 39f6c49cc931c14f40791bef8f31a2ffdf788c2dda7648755f9006c08faafc3a
+        - path: "1.2"
+          level: 2
+          title: Original Review Citation
+          byte_offset: 1123
+          byte_count: 480
+          word_count: 80
+          content_hash: 391bd7086cebb3cad826de63f538037ac28e108492cc42dcf0b761431133537a
+        - path: "1.3"
+          level: 2
+          title: Finding Resolution Status
+          byte_offset: 1603
+          byte_count: 994
+          word_count: 159
+          content_hash: a112ae1c2fc2a8580b51ff3b149a9f597a9685918b0564506d3b89d373be9de9
+        - path: "1.4"
+          level: 2
+          title: Verification Evidence
+          byte_offset: 2597
+          byte_count: 758
+          word_count: 103
+          content_hash: 67f56cdfde86480a45a42bf469663c8ed1bf2e7dec0270257c902cd3433b7499
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'BF-1: [finding summary]'
+              byte_offset: 2835
+              byte_count: 236
+              word_count: 31
+              content_hash: be7e05b6a681f48d4720685a1310a6324fc5b2b84fe31150edaef19e7054ccd1
+            - path: 1.4.2
+              level: 3
+              title: 'BF-2: [finding summary]'
+              byte_offset: 3071
+              byte_count: 284
+              word_count: 39
+              content_hash: 50e798883dde0aba44a44fc2f67f096c5a10b6379384afd95f1791135fcce182
+        - path: "1.5"
+          level: 2
+          title: Deferred Findings
+          byte_offset: 3355
+          byte_count: 449
+          word_count: 70
+          content_hash: 2ada2b25232a1e23712c9bd56422d1126a92a05b4e489d1284959cf614af93bf
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'DF-1: BF-3 — [finding summary]'
+              byte_offset: 3566
+              byte_count: 238
+              word_count: 33
+              content_hash: 687a93a16e7ddb590d87461d9da0bb256b1dc2f4657fb6b3dc9cb1d9c60e3151
+        - path: "1.6"
+          level: 2
+          title: Aggregate Resolution Verdict
+          byte_offset: 3804
+          byte_count: 687
+          word_count: 108
+          content_hash: 14dd65f55322522adef811df56836c03d7600be4fbd37215973cc392daefcbc0
+        - path: "1.7"
+          level: 2
+          title: Audit Trail
+          byte_offset: 4491
+          byte_count: 804
+          word_count: 92
+          content_hash: 6b6898b96be8d6856c6cd9abc18835ba12e6380c9f2e412028b559e5b1f2cb4d
+        - path: "1.8"
+          level: 2
+          title: See Also
+          byte_offset: 5295
+          byte_count: 324
+          word_count: 21
+          content_hash: d761b85dae8b48dad8080fdea0645a5ee9b7bfbb0c7f05389d846b223d757682
+entity_refs:
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: "1.7"
+      byte_offset: 4834
+    - entity_id: DOC-ID
+      entity_type: document
+      section_path: "1.1"
+      byte_offset: 939
+    - entity_id: DOC-ID
+      entity_type: document
+      section_path: "1.2"
+      byte_offset: 1222
+    - entity_id: DOC-ID
+      entity_type: document
+      section_path: "1.7"
+      byte_offset: 4712
+    - entity_id: P54-review-remediation-workflow
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 189
+    - entity_id: P54-report-review-remediation-procedure
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 5341
+    - entity_id: P54-spec-review-remediation-workflow
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 5436
+    - entity_id: P54-report-template-remediation-dev-plan
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 5511
+    - entity_id: P54-report-guide-ownership-model
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 5582
+cross_doc_links:
+    - target_path: P54-report-review-remediation-procedure.md
+      link_text: Review Remediation Procedure
+      section_path: "1.8"
+    - target_path: P54-spec-review-remediation-workflow.md
+      link_text: 'P54 Specification: Review Remediation Workflow'
+      section_path: "1.8"
+    - target_path: P54-report-template-remediation-dev-plan.md
+      link_text: Remediation Dev-Plan Template
+      section_path: "1.8"
+    - target_path: P54-report-guide-ownership-model.md
+      link_text: Ownership Model Guide
+      section_path: "1.8"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.4.1
+      role: narrative
+      confidence: high
+    - section_path: 1.4.2
+      role: narrative
+      confidence: high
+    - section_path: 1.5.1
+      role: narrative
+      confidence: high
+classified: false
