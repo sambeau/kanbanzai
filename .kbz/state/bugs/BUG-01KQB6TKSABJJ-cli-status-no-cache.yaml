@@ -1,7 +1,7 @@
 id: BUG-01KQB6TKSABJJ
 slug: cli-status-no-cache
 name: "CLI status command doesn't use SQLite cache"
-status: triaged
+status: planned
 severity: medium
 priority: high
 type: implementation-defect
