@@ -3,8 +3,11 @@ parent_feature: FEAT-01KR12RE939M7
 slug: bug-worktree-enforcement-health-check
 name: Add health check for bare in-progress bugs
 summary: Add bug_worktree health check category. Flag in-progress bugs without active worktrees with warning severity.
-status: active
+status: done
+completed: "2026-05-07T13:33:36Z"
 claimed_at: "2026-05-07T13:18:12Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-07T13:18:12Z"
 dispatched_by: sambeau
+completion_summary: Added bug_worktree health check category. Flags in-progress bugs without active worktrees with warning severity. Integrated into default health check run via Phase3HealthChecker.
+verification: "7 tests cover all scenarios: no bugs, with worktree, without worktree, non-in-progress statuses, mixed statuses, merged worktree, exact message format. All pass."
