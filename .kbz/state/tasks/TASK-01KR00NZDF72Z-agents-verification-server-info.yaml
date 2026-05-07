@@ -3,4 +3,11 @@ parent_feature: FEAT-01KR003J3A34Z
 slug: agents-verification-server-info
 name: Add server_info to kanbanzai-agents verification guidance
 summary: Add server_info guidance to .agents/skills/kanbanzai-agents/SKILL.md verification section for unexpected test results.
-status: ready
+status: done
+completed: "2026-05-07T01:30:59Z"
+claimed_at: "2026-05-07T01:30:29Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-07T01:30:29Z"
+dispatched_by: sambeau
+completion_summary: "Added \"Verifying Results\" section to kanbanzai-agents/SKILL.md with server_info guidance for unexpected test results. Also added server_info to getting-started pre-task checklist."
+verification: "Both edits verified: getting-started checklist (commit 2ed792c3) and agents verification guidance (commit c13fd3f7). AC-001 and AC-002 satisfied."
