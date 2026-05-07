@@ -13,6 +13,7 @@ import (
 
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/structural"
 )
 
 func TestSubmitDocument_Success(t *testing.T) {
@@ -2424,6 +2425,65 @@ func TestApproveDocument_SectionProvider_PassesWhenAllPresent(t *testing.T) {
 	})
 	if err != nil {
 		t.Fatalf("ApproveDocument should succeed when all required sections present: %v", err)
+	}
+	if result.Status != string(model.DocumentStatusApproved) {
+		t.Errorf("Status = %q, want approved", result.Status)
+	}
+}
+
+func TestApproveDocument_FalsePositiveBypassesMissingSections(t *testing.T) {
+	t.Parallel()
+
+	stateRoot := t.TempDir()
+	repoRoot := t.TempDir()
+	svc := NewDocumentService(stateRoot, repoRoot)
+
+	// Set a section provider that requires two sections.
+	svc.SetSectionProvider(func(docType string) []string {
+		if docType == "spec" {
+			return []string{"Overview", "Acceptance Criteria"}
+		}
+		return nil
+	})
+
+	// Write a file missing "Acceptance Criteria".
+	docPath := "work/spec/incomplete.md"
+	if err := os.MkdirAll(filepath.Join(repoRoot, "work/spec"), 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	content := "# Spec\n\n## Overview\n\nJust the overview, no AC section.\n"
+	if err := os.WriteFile(filepath.Join(repoRoot, docPath), []byte(content), 0o644); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	submitted, err := svc.SubmitDocument(SubmitDocumentInput{
+		Path:      docPath,
+		Type:      "specification",
+		Title:     "Incomplete Spec",
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("SubmitDocument: %v", err)
+	}
+
+	// Record a false positive for required_sections/specification so approval
+	// should bypass the missing-sections gate.
+	ps, err := structural.LoadPromotionState(stateRoot)
+	if err != nil {
+		t.Fatalf("LoadPromotionState: %v", err)
+	}
+	key := structural.CheckKey{CheckType: "required_sections", DocumentType: "spec"}
+	ps.RecordFalsePositive(key, "known section format difference")
+	if err := ps.Save(); err != nil {
+		t.Fatalf("Save: %v", err)
+	}
+
+	result, err := svc.ApproveDocument(ApproveDocumentInput{
+		ID:         submitted.ID,
+		ApprovedBy: "reviewer",
+	})
+	if err != nil {
+		t.Fatalf("ApproveDocument should succeed when false positive recorded: %v", err)
 	}
 	if result.Status != string(model.DocumentStatusApproved) {
 		t.Errorf("Status = %q, want approved", result.Status)

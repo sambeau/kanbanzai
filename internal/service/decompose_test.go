@@ -1269,6 +1269,34 @@ func TestDecomposeFeature_BoldACSpec_NoLongerReturnsError(t *testing.T) {
 
 // TestParseSpecStructure_BoldIdent_InACSection verifies that parseSpecStructure
 // correctly extracts bold-identifier criteria from an acceptance criteria section.
+func TestParseSpecStructure_BoldIdent_WithREQTrace(t *testing.T) {
+	t.Parallel()
+
+	content := `# Test Spec
+
+## Acceptance Criteria
+
+**AC-001 (REQ-001):** Given a user When they login Then they see dashboard.
+**AC-002 (REQ-003):** The system must validate input.
+`
+
+	spec := parseSpecStructure(content)
+
+	if len(spec.acceptanceCriteria) != 2 {
+		t.Fatalf("len(acceptanceCriteria) = %d, want 2; criteria: %v",
+			len(spec.acceptanceCriteria),
+			spec.acceptanceCriteria)
+	}
+	if spec.acceptanceCriteria[0].text != "AC-001: Given a user When they login Then they see dashboard." {
+		t.Errorf("criterion[0].text = %q, want %q",
+			spec.acceptanceCriteria[0].text, "AC-001: Given a user When they login Then they see dashboard.")
+	}
+	if spec.acceptanceCriteria[1].text != "AC-002: The system must validate input." {
+		t.Errorf("criterion[1].text = %q, want %q",
+			spec.acceptanceCriteria[1].text, "AC-002: The system must validate input.")
+	}
+}
+
 func TestParseSpecStructure_BoldIdent_InACSection(t *testing.T) {
 	t.Parallel()
 

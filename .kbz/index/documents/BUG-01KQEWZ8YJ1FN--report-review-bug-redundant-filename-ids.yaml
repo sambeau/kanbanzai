@@ -1,0 +1,110 @@
+document_id: BUG-01KQEWZ8YJ1FN/report-review-bug-redundant-filename-ids
+document_path: work/_project/review-bug-redundant-filename-ids.md
+content_hash: c8712a06c7b8bf4d69d02717d5e22d090f149b77cab392fd3a7af0dd57feb85b
+indexed_at: 2026-05-07T09:52:46.975951Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: BUG-01KQEWZ8YJ1FN — Agent filenames have redundant repeated IDs'
+      byte_offset: 0
+      byte_count: 2608
+      word_count: 339
+      content_hash: c8712a06c7b8bf4d69d02717d5e22d090f149b77cab392fd3a7af0dd57feb85b
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 221
+          byte_count: 525
+          word_count: 58
+          content_hash: bdfea5b9503b2fdf16d919888a3df26601c388ab9e9b3f2ef94ca5030159ebae
+        - path: "1.2"
+          level: 2
+          title: Bug description
+          byte_offset: 746
+          byte_count: 249
+          word_count: 26
+          content_hash: 155f81dc2b0466fdd21d5a41ff862569ef35f1a2daa1c8f6cb2222ad37c190de
+        - path: "1.3"
+          level: 2
+          title: Fix summary
+          byte_offset: 995
+          byte_count: 671
+          word_count: 85
+          content_hash: 3c94abb31541adebe255b7276bf0db5fa082e925c6701d0dfd24c478befe6f20
+        - path: "1.4"
+          level: 2
+          title: Findings
+          byte_offset: 1666
+          byte_count: 632
+          word_count: 104
+          content_hash: 68267952eb02d153117238ec6c73482ffadcb0bf594e585533c4945dc47dcfef
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Blocking: None'
+              byte_offset: 1679
+              byte_count: 595
+              word_count: 99
+              content_hash: 5bb16c56aa5679a5156dd1c0addd8d20aa7d8df1cf77308ffdc0e0484c3a9e96
+            - path: 1.4.2
+              level: 3
+              title: 'Non-blocking: None'
+              byte_offset: 2274
+              byte_count: 24
+              word_count: 3
+              content_hash: b64c1bf0e42b8b7a068ead7565578adc7b22895648f1f38dfc6d3990acb40996
+        - path: "1.5"
+          level: 2
+          title: Review unit breakdown
+          byte_offset: 2298
+          byte_count: 214
+          word_count: 29
+          content_hash: 89076b9e0384efa83f1e907be2e9561f15cd3d9fa9f7fde030400470a468a5cf
+        - path: "1.6"
+          level: 2
+          title: Verdict
+          byte_offset: 2512
+          byte_count: 96
+          word_count: 13
+          content_hash: af9c9003d11be5be951f344320aa86da99e46ee7844cdcb1703b2c220a61efbb
+entity_refs:
+    - entity_id: BUG-01KQEWZ8YJ1FN
+      entity_type: bug
+      section_path: "1"
+      byte_offset: 10
+    - entity_id: F1-dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids
+      entity_type: plan
+      section_path: "1.2"
+      byte_offset: 890
+    - entity_id: F3-spec-oauth-flow
+      entity_type: plan
+      section_path: "1.3"
+      byte_offset: 1452
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-documents/SKILL.md
+      link_text: .agents/skills/kanbanzai-documents/SKILL.md
+      section_path: "1.1"
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: "1.1"
+    - target_path: internal/kbzinit/skills/documents/SKILL.md
+      link_text: internal/kbzinit/skills/documents/SKILL.md
+      section_path: "1.1"
+    - target_path: internal/kbzinit/skills/getting-started/SKILL.md
+      link_text: internal/kbzinit/skills/getting-started/SKILL.md
+      section_path: "1.1"
+    - target_path: B37-F1-dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids.md
+      link_text: B37-F1-dev-plan-p37-f1-dev-plan-plan-scoped-feature-display-ids.md
+      section_path: "1.2"
+    - target_path: B24-F3-spec-oauth-flow.md
+      link_text: B24-F3-spec-oauth-flow.md
+      section_path: "1.3"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+classified: false

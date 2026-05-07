@@ -108,6 +108,46 @@ func TestPromotionState_FalsePositiveResetsConsecutiveClean(t *testing.T) {
 	}
 }
 
+func TestPromotionState_Entry_Exists(t *testing.T) {
+	t.Parallel()
+
+	dir := t.TempDir()
+	ps, err := LoadPromotionState(dir)
+	if err != nil {
+		t.Fatalf("LoadPromotionState: %v", err)
+	}
+
+	key := CheckKey{CheckType: "required_sections", DocumentType: "specification"}
+
+	// Record a false positive to create an entry.
+	ps.RecordFalsePositive(key, "test fp")
+
+	entry, ok := ps.Entry(key)
+	if !ok {
+		t.Fatal("Entry() returned ok=false after RecordFalsePositive")
+	}
+	if entry.FalsePositiveCount != 1 {
+		t.Errorf("FalsePositiveCount = %d, want 1", entry.FalsePositiveCount)
+	}
+}
+
+func TestPromotionState_Entry_NotFound(t *testing.T) {
+	t.Parallel()
+
+	dir := t.TempDir()
+	ps, err := LoadPromotionState(dir)
+	if err != nil {
+		t.Fatalf("LoadPromotionState: %v", err)
+	}
+
+	key := CheckKey{CheckType: "required_sections", DocumentType: "specification"}
+
+	_, ok := ps.Entry(key)
+	if ok {
+		t.Fatal("Entry() returned ok=true for nonexistent key")
+	}
+}
+
 func TestPromotionState_Persistence(t *testing.T) {
 	t.Parallel()
 

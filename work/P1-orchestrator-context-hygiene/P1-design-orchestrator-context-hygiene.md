@@ -7,6 +7,27 @@
 
 # Design: Orchestrator Context Hygiene
 
+## Overview
+
+The Kanbanzai orchestrator accumulates implementation context over the course of a development cycle by reading source code before delegating to sub-agents. This causes context rot: forgotten constraints, skipped close-out steps, and degraded orchestration decisions. The fix is a set of procedural mitigations — an explicit anti-pattern, tool restrictions, hard constraints, and constraint pinning — that prevent the orchestrator from investigating code and keep it focused on coordination decisions. P44's `dispatch_task` is the long-term architectural fix; these mitigations provide immediate protection.
+
+## Goals and Non-Goals
+
+### Goals
+
+- Prevent the orchestrator from reading implementation source code before delegating to sub-agents
+- Add explicit anti-patterns and hard constraints that name the specific behaviour (pre-delegation code investigation)
+- Restrict orchestrator tools to remove codebase investigation capabilities (`grep`, `search_graph`)
+- Pin orchestrator identity constraints in every `next`/`handoff` response to maintain role awareness
+- Reduce context rot and the associated close-out failures (forgotten review, merge, cleanup)
+
+### Non-Goals
+
+- Changing the `handoff` pipeline or `implement-task` skill
+- Building P44 `dispatch_task` (this is the strategic architecture, not this plan)
+- Restricting `read_file` to document-only paths (deferred to a future iteration)
+- Changing task decomposition or the orchestrator-workers pattern
+
 ## Problem and Motivation
 
 ### Problem
@@ -214,6 +235,14 @@ Rely solely on context compaction (U-shaped artefact, 60%/80% triggers) to manag
 **Rationale:** The procedural mitigations (anti-patterns, tool restrictions, constraint language) are implementable immediately and provide protection while P44 is built. P44's `dispatch_task` is the architectural fix that makes these procedural guardrails unnecessary by making the pipeline non-bypassable. This is a two-phase approach: stop the bleeding now, fix the architecture later.
 
 **References:** P41 Recommendation 1 (near-term mitigations) and Recommendation 2 (P44 as strategic architecture).
+
+## Dependencies
+
+- **P44-design-model-routing-agent-launcher** — The strategic architecture that makes these procedural mitigations unnecessary. This design is a bridge to P44, not a replacement.
+- **P52-design-fast-track-orchestration** — The fast-track behavioural profile that already defines no-stop contracts and implicit-gate rules. This design extends those guardrails.
+- **P41-research-context-pollution-and-rot** — The evidence base for all recommendations.
+- **orchestrator.yaml** role file — Modified to add the anti-pattern and remove tools.
+- **orchestrate-development/SKILL.md** — Modified to add the ℋ constraint in Phase 1.
 
 ## Open Questions
 
