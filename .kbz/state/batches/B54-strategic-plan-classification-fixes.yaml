@@ -1,7 +1,7 @@
 id: B54-strategic-plan-classification-fixes
 slug: strategic-plan-classification-fixes
 name: Strategic Plan Classification Fixes
-status: proposed
+status: active
 summary: Fix health check and status dashboard misclassification of strategic plan entities as batches
 tags:
   - fast-track
