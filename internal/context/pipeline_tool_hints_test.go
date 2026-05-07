@@ -47,7 +47,7 @@ func TestStepResolveToolHint_Inherited(t *testing.T) {
 	}
 }
 
-// TestStepResolveToolHint_NoMatch verifies that unrelated roles get no hint (AC-011).
+// TestStepResolveToolHint_NoMatch verifies fallback to default hints when config hints don't match.
 func TestStepResolveToolHint_NoMatch(t *testing.T) {
 	dir := t.TempDir()
 	toolHintWriteRole(t, dir, "implementer-go", "implementer")
@@ -63,20 +63,22 @@ func TestStepResolveToolHint_NoMatch(t *testing.T) {
 		Role: &ResolvedRole{ID: "implementer-go"},
 	}
 	p.stepResolveToolHint(state)
-	if state.ToolHint != "" {
-		t.Errorf("expected no hint, got %q", state.ToolHint)
+	// Config has no hint for implementer-go, but defaultToolHints fallback provides one.
+	if state.ToolHint == "" {
+		t.Error("expected default tool hint for implementer-go, got empty")
 	}
 }
 
-// TestStepResolveToolHint_NilHints verifies no panic on nil hints map.
+// TestStepResolveToolHint_NilHints verifies fallback to default hints when MergedToolHints is nil.
 func TestStepResolveToolHint_NilHints(t *testing.T) {
 	p := &Pipeline{}
 	state := &PipelineState{
 		Role: &ResolvedRole{ID: "implementer-go"},
 	}
 	p.stepResolveToolHint(state)
-	if state.ToolHint != "" {
-		t.Errorf("expected no hint with nil map, got %q", state.ToolHint)
+	// Nil MergedToolHints falls back to defaultToolHints.
+	if state.ToolHint == "" {
+		t.Error("expected default tool hint with nil map, got empty")
 	}
 }
 

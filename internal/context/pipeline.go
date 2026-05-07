@@ -678,13 +678,77 @@ func (p *Pipeline) stepAssembleSections(state *PipelineState) {
 	}
 }
 
+// defaultToolHints provides built-in tool guidance when no config-supplied hints exist.
+// Config (project or local) always wins over these defaults per-key.
+var defaultToolHints = map[string]string{
+	"implementer-go": `## Available Tools
+
+**Codebase navigation (preferred over grep):**
+- search_graph — find functions, classes, and routes by name or natural language
+- codebase_memory_mcp_search_code — graph-augmented code search with structural ranking
+- get_code_snippet — read source code for a specific function/class
+- query_graph — execute Cypher queries against the knowledge graph
+- trace_path — trace call/data-flow paths through the code graph
+
+**File operations (use entity_id for worktree-isolated writes):**
+- kanbanzai_edit_file — create or edit files with entity_id scoping
+- write_file — write file content with entity_id scoping
+- read_file — read file content
+- grep — search file content by pattern (use search_graph for structural queries)
+
+**Workflow:**
+- finish — mark a task done and contribute knowledge
+- entity — manage workflow entities
+- status — check project/entity health and progress`,
+
+	"architect": `## Available Tools
+- search_graph — structural code search
+- query_graph — complex graph queries
+- trace_path — call chain analysis
+- codebase_memory_mcp_search_code — code search with ranking
+- decompose — task breakdown from specs
+- doc — document registration and approval
+- doc_intel — document content analysis`,
+
+	"reviewer-conformance": `## Available Tools
+- search_graph — find functions and trace calls
+- codebase_memory_mcp_search_code — code search
+- get_code_snippet — read function source
+- read_file — read files directly`,
+
+	"reviewer-quality": `## Available Tools
+- search_graph — structural analysis
+- codebase_memory_mcp_search_code — code search
+- get_code_snippet — read source`,
+
+	"reviewer-security": `## Available Tools
+- search_graph — trace data flow
+- query_graph — find all callers/callees
+- trace_path — trace data flow paths`,
+
+	"reviewer-testing": `## Available Tools
+- search_graph — find test coverage gaps
+- codebase_memory_mcp_search_code — search for test patterns`,
+}
+
 // stepResolveToolHint resolves the tool hint for the active role (step 8b).
 // Uses exact match then walks the role inheritance chain via Pipeline.Roles.
+// Falls back to defaultToolHints when no config-supplied hint resolves.
 func (p *Pipeline) stepResolveToolHint(state *PipelineState) {
-	if len(p.MergedToolHints) == 0 || state.Role == nil {
+	if state.Role == nil {
 		return
 	}
-	state.ToolHint = ResolveToolHint(p.MergedToolHints, state.Role.ID, p.ToolHintRoleStore)
+	// 1. Try config-supplied hints (project + local merged).
+	if len(p.MergedToolHints) > 0 {
+		state.ToolHint = ResolveToolHint(p.MergedToolHints, state.Role.ID, p.ToolHintRoleStore)
+		if state.ToolHint != "" {
+			return
+		}
+	}
+	// 2. Fall back to hardcoded defaults.
+	if hint, ok := defaultToolHints[state.Role.ID]; ok {
+		state.ToolHint = hint
+	}
 }
 
 // stepTokenBudget estimates total tokens and enforces budget thresholds (step 9).
