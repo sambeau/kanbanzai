@@ -247,7 +247,7 @@ func assembleContext(input asmInput) assembledContext {
 		}
 	}
 
-	// Orchestrator role reminder (constraint pinning per P55).
+	// Orchestrator role reminder (constraint pinning — maintains role awareness via the recency peak of the U-shaped attention curve).
 	if input.role == "orchestrator" {
 		actx.constraints = append(actx.constraints, asmConstraintEntry{
 			Type:    "role_reminder",
