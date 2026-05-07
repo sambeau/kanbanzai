@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "BUG entity status should be surfaced in the status() project overview dashboard — currently only plans, batches, features, and tasks appear. Open bugs are a key health signal that agents and humans need visibility into without separately querying entity(type: bug)."
+created: "2026-05-07T02:09:59Z"
+created_by: sambeau
+id: KE-01KR035WXSWBY
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - status
+  - bugs
+  - dashboard
+  - visibility
+tier: 2
+topic: retro
+ttl_days: 90
+updated: "2026-05-07T02:09:59Z"
+use_count: 0
