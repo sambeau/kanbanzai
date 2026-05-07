@@ -216,7 +216,7 @@ func TestDocCurrencyHealth_DetectsMissingScopeGuard(t *testing.T) {
 	entityRoot := t.TempDir()
 	entitySvc := service.NewEntityService(entityRoot)
 
-	writePlanRecord(t, entitySvc, "P9-my-cool-plan", "done")
+	writePlanRecord(t, entitySvc, "B9-my-cool-plan", "done")
 
 	// AGENTS.md without the plan in Scope Guard.
 	agentsContent := "# Agent Instructions\n\n## Scope Guard\n\nNothing here about the plan.\n"
@@ -232,7 +232,7 @@ func TestDocCurrencyHealth_DetectsMissingScopeGuard(t *testing.T) {
 
 	found := false
 	for _, w := range report.Warnings {
-		if strings.Contains(w.Message, "P9-my-cool-plan") &&
+		if strings.Contains(w.Message, "B9-my-cool-plan") &&
 			strings.Contains(w.Message, "Scope Guard") {
 			found = true
 			break
@@ -253,7 +253,7 @@ func TestDocCurrencyHealth_DetectsDraftSpec(t *testing.T) {
 	entitySvc := service.NewEntityService(entityRoot)
 	docSvc := service.NewDocumentService(docStateRoot, repoRoot)
 
-	planID := "P9-draft-spec-plan"
+	planID := "B9-draft-spec-plan"
 	writePlanRecord(t, entitySvc, planID, "done")
 
 	feat := createTestFeature(t, entitySvc, planID, "draft-spec-feat")
@@ -274,7 +274,7 @@ func TestDocCurrencyHealth_DetectsDraftSpec(t *testing.T) {
 	}
 
 	// AGENTS.md mentions the plan in Scope Guard to avoid Tier 2 noise.
-	agentsContent := "# Agent Instructions\n\n## Scope Guard\n\nP9 is listed.\n"
+	agentsContent := "# Agent Instructions\n\n## Scope Guard\n\nB9 is listed.\n"
 	writeAgentsMD(t, repoRoot, agentsContent)
 
 	toolNames := testToolNameSet()
@@ -306,7 +306,7 @@ func TestDocCurrencyHealth_IgnoresActivePlan(t *testing.T) {
 	entityRoot := t.TempDir()
 	entitySvc := service.NewEntityService(entityRoot)
 
-	writePlanRecord(t, entitySvc, "P9-active-plan", "active")
+	writePlanRecord(t, entitySvc, "B9-active-plan", "active")
 
 	// AGENTS.md with no mention at all — but since the plan is active, no warning.
 	agentsContent := "# Agent Instructions\n\n## Scope Guard\n\nNothing.\n"
@@ -321,7 +321,7 @@ func TestDocCurrencyHealth_IgnoresActivePlan(t *testing.T) {
 	}
 
 	for _, w := range report.Warnings {
-		if strings.Contains(w.Message, "P9-active-plan") {
+		if strings.Contains(w.Message, "B9-active-plan") {
 			t.Errorf("active plan should not be flagged; got: %s", w.Message)
 		}
 	}
@@ -334,9 +334,9 @@ func TestDocCurrencyHealth_PassesWhenMentioned(t *testing.T) {
 	entityRoot := t.TempDir()
 	entitySvc := service.NewEntityService(entityRoot)
 
-	writePlanRecord(t, entitySvc, "P9-well-documented", "done")
+	writePlanRecord(t, entitySvc, "B9-well-documented", "done")
 
-	agentsContent := "# Agent Instructions\n\n## Scope Guard\n\nP9 is handled.\n"
+	agentsContent := "# Agent Instructions\n\n## Scope Guard\n\nB9 is handled.\n"
 	writeAgentsMD(t, repoRoot, agentsContent)
 
 	toolNames := testToolNameSet()
@@ -348,7 +348,7 @@ func TestDocCurrencyHealth_PassesWhenMentioned(t *testing.T) {
 	}
 
 	for _, w := range report.Warnings {
-		if strings.Contains(w.Message, "P9-well-documented") {
+		if strings.Contains(w.Message, "B9-well-documented") {
 			t.Errorf("well-mentioned plan should not be flagged; got: %s", w.Message)
 		}
 	}
@@ -361,10 +361,10 @@ func TestDocCurrencyHealth_ScopeGuardMatchesByPrefix(t *testing.T) {
 	entityRoot := t.TempDir()
 	entitySvc := service.NewEntityService(entityRoot)
 
-	writePlanRecord(t, entitySvc, "P9-prefix-test", "done")
+	writePlanRecord(t, entitySvc, "B9-prefix-test", "done")
 
-	// Scope Guard mentions "P9" but not the full slug.
-	agentsContent := "# Agent Instructions\n\n## Scope Guard\n\nP9 is handled.\n"
+	// Scope Guard mentions "B9" but not the full slug.
+	agentsContent := "# Agent Instructions\n\n## Scope Guard\n\nB9 is handled.\n"
 	writeAgentsMD(t, repoRoot, agentsContent)
 
 	toolNames := testToolNameSet()
@@ -376,8 +376,8 @@ func TestDocCurrencyHealth_ScopeGuardMatchesByPrefix(t *testing.T) {
 	}
 
 	for _, w := range report.Warnings {
-		if strings.Contains(w.Message, "Scope Guard") && strings.Contains(w.Message, "P9-prefix-test") {
-			t.Errorf("plan with prefix P9 in Scope Guard should not be flagged; got: %s", w.Message)
+		if strings.Contains(w.Message, "Scope Guard") && strings.Contains(w.Message, "B9-prefix-test") {
+			t.Errorf("plan with prefix B9 in Scope Guard should not be flagged; got: %s", w.Message)
 		}
 	}
 }

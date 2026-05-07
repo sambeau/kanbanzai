@@ -433,7 +433,7 @@ func (s *EntityService) listPlanRecordFiles(dirNames ...string) ([]planRecordFil
 }
 
 func isStrategicPlanRecord(r planRecordFile) bool {
-	return r.dirName == "plans"
+	return r.dirName == "plans" || strings.HasPrefix(r.id, "P")
 }
 
 // isStrategicPlanFields is kept for backward compatibility.

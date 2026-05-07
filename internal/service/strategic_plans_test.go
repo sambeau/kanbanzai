@@ -491,7 +491,7 @@ func TestStrategicPlan_CoexistenceWithBatch(t *testing.T) {
 	svc := newTestEntityService(root, "2026-04-28T12:00:00Z")
 
 	// Create a batch (old plan) via writeTestPlan.
-	writeTestPlan(t, svc, "P99-batch-plan")
+	writeTestPlan(t, svc, "B99-batch-plan")
 
 	// Create a strategic plan with the same ID pattern.
 	writeTestStrategicPlan(t, svc, "P1-strategic-plan", "idea")
@@ -509,9 +509,9 @@ func TestStrategicPlan_CoexistenceWithBatch(t *testing.T) {
 	}
 
 	// Batch GetPlan should still find batch plan.
-	_, err = svc.GetPlan("P99-batch-plan")
+	_, err = svc.GetPlan("B99-batch-plan")
 	if err != nil {
-		t.Fatalf("GetPlan(P99-batch-plan) should succeed: %v", err)
+		t.Fatalf("GetPlan(B99-batch-plan) should succeed: %v", err)
 	}
 
 	// Strategic GetStrategicPlan should find strategic plan.
@@ -526,13 +526,13 @@ func TestStrategicPlan_CoexistenceWithBatch(t *testing.T) {
 	}
 	foundBatch := false
 	for _, p := range batchPlans {
-		if p.ID == "P99-batch-plan" {
+		if p.ID == "B99-batch-plan" {
 			foundBatch = true
 			break
 		}
 	}
 	if !foundBatch {
-		t.Error("ListPlans did not contain P99-batch-plan")
+		t.Error("ListPlans did not contain B99-batch-plan")
 	}
 
 	// Verify ListStrategicPlans returns the strategic plan entity.

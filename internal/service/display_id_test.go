@@ -535,7 +535,7 @@ func TestDisplayID_AC015_MigrationAssignsInCreatedOrder(t *testing.T) {
 	root := t.TempDir()
 	svc := newTestEntityService(root, "2026-01-01T00:00:00Z")
 
-	planID := "P24-migrate-test"
+	planID := "B24-migrate-test"
 	writeTestPlanWithSeq(t, svc, planID, 1)
 
 	// Write 3 features directly WITHOUT display_id, with different timestamps.
@@ -592,7 +592,7 @@ func TestDisplayID_AC016_MigrationSetsPlanCounter(t *testing.T) {
 	root := t.TempDir()
 	svc := newTestEntityService(root, "2026-01-01T00:00:00Z")
 
-	planID := "P24-counter-migrate"
+	planID := "B24-counter-migrate"
 	writeTestPlanWithSeq(t, svc, planID, 1)
 
 	// Write 3 features without display_id.

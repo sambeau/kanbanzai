@@ -33,7 +33,7 @@ func createTestPlan(t *testing.T, entitySvc *service.EntityService, slug, name s
 	t.Helper()
 	now := time.Now().UTC().Format(time.RFC3339)
 	// Use a deterministic but unique-enough ID for tests.
-	id := "P1-" + slug
+	id := "B1-" + slug
 	record := storage.EntityRecord{
 		Type: "batch",
 		ID:   id,

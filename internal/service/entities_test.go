@@ -1086,7 +1086,7 @@ func TestEntityService_HealthCheck_CleanProject(t *testing.T) {
 	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
 	// Create a valid plan and a feature referencing it.
-	planID := "P1-health-test"
+	planID := "B1-health-test"
 	writeTestPlan(t, svc, planID)
 
 	_, err := svc.CreateFeature(CreateFeatureInput{
