@@ -2,7 +2,7 @@ id: FEAT-01KR125SBM4JQ
 slug: fast-track-review-dispatch
 name: Fast-track review dispatch
 parent: B55-orchestrator-context-hygiene-impl
-status: specifying
+status: dev-planning
 summary: Add mandatory review sub-agent dispatch step to fast-track Phase 2 Close-Out. One reviewer-conformance for bug_fix with 5 or fewer files.
 spec: FEAT-01KR125SBM4JQ/spec-fast-track-review-dispatch-spec
 tags:

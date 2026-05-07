@@ -1,11 +1,13 @@
+approved_at: "2026-05-07T11:33:33Z"
+approved_by: sambeau
 canonical_content_hash: fd9de7b7e7ded17228118c5ee6f7ab3e95c49fd02bda41b7b48c064e0be180b5
-content_hash: 7e5977b381bed4cd23ce5ab7ec60fa3ef3e19d71e7356b24a9886f9a69a9bde6
+content_hash: 32ebaed973f794ec101ba538f51dc81e268075d270f8a23d713b70dc572f42f6
 created: "2026-05-07T11:30:16Z"
 created_by: sambeau
 id: FEAT-01KR125SBMPQT/spec-close-out-verifier-spec
 owner: FEAT-01KR125SBMPQT
 path: work/FEAT-01KR125SBMPQT/close-out-verifier-spec.md
-status: draft
+status: approved
 title: "Specification: Close-Out Verifier Sub-Agent"
 type: spec
-updated: "2026-05-07T11:30:16Z"
+updated: "2026-05-07T11:33:33Z"

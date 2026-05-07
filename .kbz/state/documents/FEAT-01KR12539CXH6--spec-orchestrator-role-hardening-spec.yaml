@@ -1,11 +1,13 @@
+approved_at: "2026-05-07T11:33:33Z"
+approved_by: sambeau
 canonical_content_hash: 3d8a2e0bc199ee974f86c3a402d13d591762c51f20f67c3e2a9bf2d560606902
-content_hash: 3d8a2e0bc199ee974f86c3a402d13d591762c51f20f67c3e2a9bf2d560606902
+content_hash: 2e14b4a35efe9c50317364dff38cfadef3652b7f2ee065cb062fb5d925ecc597
 created: "2026-05-07T11:19:25Z"
 created_by: sambeau
 id: FEAT-01KR12539CXH6/spec-orchestrator-role-hardening-spec
 owner: FEAT-01KR12539CXH6
 path: work/FEAT-01KR12539CXH6/orchestrator-role-hardening-spec.md
-status: draft
+status: approved
 title: "Specification: Orchestrator Role Hardening"
 type: spec
-updated: "2026-05-07T11:19:25Z"
+updated: "2026-05-07T11:33:33Z"
