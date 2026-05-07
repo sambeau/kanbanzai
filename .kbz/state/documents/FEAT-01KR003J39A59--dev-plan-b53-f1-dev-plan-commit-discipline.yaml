@@ -1,3 +1,5 @@
+approved_at: "2026-05-07T01:25:09Z"
+approved_by: sambeau
 canonical_content_hash: a5cefdd3e78af0efa8ca353941d75778150c7944486ad1fd12e5877d97637c0b
 content_hash: a5cefdd3e78af0efa8ca353941d75778150c7944486ad1fd12e5877d97637c0b
 created: "2026-05-07T01:24:56Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KR003J39A59/dev-plan-b53-f1-dev-plan-commit-discipline
 owner: FEAT-01KR003J39A59
 path: work/B53-retro-fixes-may-2026/B53-F1-dev-plan-commit-discipline.md
-status: draft
+status: approved
 title: "Dev-Plan: Commit Discipline for Management Actions"
 type: dev-plan
-updated: "2026-05-07T01:24:56Z"
+updated: "2026-05-07T01:25:09Z"
