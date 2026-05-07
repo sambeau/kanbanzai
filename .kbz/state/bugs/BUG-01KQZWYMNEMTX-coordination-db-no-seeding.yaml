@@ -1,7 +1,7 @@
 id: BUG-01KQZWYMNEMTX
 slug: coordination-db-no-seeding
 name: Coordination DB starts IDs at 1 — no seeding
-status: in-progress
+status: needs-review
 severity: high
 priority: high
 type: design-problem
