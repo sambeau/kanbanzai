@@ -1,7 +1,7 @@
 id: B56-bug-lifecycle-hardening
 slug: bug-lifecycle-hardening
 name: Bug Lifecycle Hardening
-status: designing
+status: active
 summary: "Implementation batch for P56: mandatory review gate, spec generation, worktree enforcement, and close-out verification for bugs."
 created: "2026-05-07T11:21:29Z"
 created_by: sambeau
