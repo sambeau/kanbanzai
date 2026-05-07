@@ -2,7 +2,8 @@ id: FEAT-01KR003J3A34Z
 slug: retro-stale-binary
 name: Stale binary detection discoverability
 parent: B53-retro-fixes-may-2026
-status: developing
+status: reviewing
+review_cycle: 1
 summary: Make server_info tool usage proactive in workflow guides and pre-task checklists to prevent wasted verification from stale MCP binary.
 design: FEAT-01KR003J3A34Z/design-b53-f3-design-stale-binary
 spec: FEAT-01KR003J3A34Z/spec-b53-f3-spec-stale-binary
@@ -13,5 +14,5 @@ created: "2026-05-07T01:16:17Z"
 created_by: sambeau
 display_id: B53-F2
 tier: retro_fix
-verification: "TASK-01KR00NZB6E51: Verified edit applied (commit 2ed792c3). AC-001: server_info check present in pre-task checklist."
+verification: "TASK-01KR00NZB6E51: Verified edit applied (commit 2ed792c3). AC-001: server_info check present in pre-task checklist.\nTASK-01KR00NZDF72Z: Both edits verified: getting-started checklist (commit 2ed792c3) and agents verification guidance (commit c13fd3f7). AC-001 and AC-002 satisfied."
 verification_status: passed
