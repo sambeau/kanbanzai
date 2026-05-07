@@ -13,3 +13,5 @@ created: "2026-05-07T01:16:17Z"
 created_by: sambeau
 display_id: B53-F2
 tier: retro_fix
+verification: "TASK-01KR00NZB6E51: Verified edit applied (commit 2ed792c3). AC-001: server_info check present in pre-task checklist."
+verification_status: passed

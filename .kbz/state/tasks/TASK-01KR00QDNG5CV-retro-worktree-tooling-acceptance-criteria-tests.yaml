@@ -3,6 +3,6 @@ parent_feature: FEAT-01KR003J3ATM2
 slug: retro-worktree-tooling-acceptance-criteria-tests
 name: Test Implement Acceptance Criteria
 summary: Write tests covering acceptance criteria
-status: ready
+status: not-planned
 depends_on:
   - TASK-01KR00QDMHH86

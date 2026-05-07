@@ -13,3 +13,5 @@ created: "2026-05-07T01:16:17Z"
 created_by: sambeau
 display_id: B53-F1
 tier: retro_fix
+verification: "TASK-01KR00NZDF3C2: Verified edit applied to worktree: commit 9d4d4dac on feature/FEAT-01KR003J39A59-retro-commit-discipline. AC-001: new section visible in skill file. AC-002: mentions .kbz/state/ and .kbz/index/. AC-003: existing task-claimed checklist unchanged."
+verification_status: passed
