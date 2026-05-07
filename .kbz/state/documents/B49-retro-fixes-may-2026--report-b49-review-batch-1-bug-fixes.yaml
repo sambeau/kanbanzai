@@ -1,3 +1,5 @@
+approved_at: "2026-05-07T09:54:39Z"
+approved_by: sambeau
 canonical_content_hash: efb42e940b72d6feaf4fbe6a9efb0e994b9779d4a749052b8d15f8b760081d5b
 content_hash: efb42e940b72d6feaf4fbe6a9efb0e994b9779d4a749052b8d15f8b760081d5b
 created: "2026-05-07T09:54:34Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: B49-retro-fixes-may-2026/report-b49-review-batch-1-bug-fixes
 owner: B49-retro-fixes-may-2026
 path: work/B49-retro-fixes-may-2026/B49-review-batch-1-bug-fixes.md
-status: draft
+status: approved
 title: Batch 1 Bug Fixes — Review Report
 type: report
-updated: "2026-05-07T09:54:34Z"
+updated: "2026-05-07T09:54:39Z"
