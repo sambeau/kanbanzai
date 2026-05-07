@@ -1,0 +1,6 @@
+id: TASK-01KR1AY79TVJX
+parent_feature: FEAT-01KR1AS0QG90E
+slug: retrofix-ready-task
+name: Retrofix Ready Task
+summary: Test task for handoff verification - retro_fix ready
+status: queued
