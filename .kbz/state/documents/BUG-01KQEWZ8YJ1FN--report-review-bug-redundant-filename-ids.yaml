@@ -1,3 +1,5 @@
+approved_at: "2026-05-07T09:52:52Z"
+approved_by: sambeau
 canonical_content_hash: c8712a06c7b8bf4d69d02717d5e22d090f149b77cab392fd3a7af0dd57feb85b
 content_hash: c8712a06c7b8bf4d69d02717d5e22d090f149b77cab392fd3a7af0dd57feb85b
 created: "2026-05-07T09:52:46Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: BUG-01KQEWZ8YJ1FN/report-review-bug-redundant-filename-ids
 owner: BUG-01KQEWZ8YJ1FN
 path: work/_project/review-bug-redundant-filename-ids.md
-status: draft
+status: approved
 title: "Review: BUG-01KQEWZ8YJ1FN — Redundant filename IDs"
 type: report
-updated: "2026-05-07T09:52:46Z"
+updated: "2026-05-07T09:52:52Z"
