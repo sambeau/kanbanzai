@@ -158,7 +158,7 @@ func (s *EntityService) ListStrategicPlans(filters StrategicPlanFilters) ([]List
 	seen := make(map[string]struct{}, len(records))
 	var results []ListResult
 	for _, record := range records {
-		if !isStrategicPlanFields(record.fields) {
+		if !isStrategicPlanRecord(record) {
 			continue
 		}
 		if _, ok := seen[record.id]; ok {

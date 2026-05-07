@@ -162,7 +162,7 @@ func (s *EntityService) ListPlans(filters PlanFilters) ([]ListResult, error) {
 	var results []ListResult
 	seen := make(map[string]struct{}, len(records))
 	for _, record := range records {
-		if isStrategicPlanFields(record.fields) {
+		if isStrategicPlanRecord(record) {
 			continue
 		}
 		if _, ok := seen[record.id]; ok {
@@ -382,7 +382,7 @@ func (s *EntityService) listPlanIDs() ([]string, error) {
 	seen := make(map[string]struct{}, len(records))
 	var ids []string
 	for _, record := range records {
-		if isStrategicPlanFields(record.fields) {
+		if isStrategicPlanRecord(record) {
 			continue
 		}
 		if _, ok := seen[record.id]; ok {
@@ -395,10 +395,11 @@ func (s *EntityService) listPlanIDs() ([]string, error) {
 }
 
 type planRecordFile struct {
-	id     string
-	slug   string
-	path   string
-	fields map[string]any
+	id      string
+	slug    string
+	path    string
+	dirName string // source directory: "plans" or "batches"
+	fields  map[string]any
 }
 
 func (s *EntityService) listPlanRecordFiles(dirNames ...string) ([]planRecordFile, error) {
@@ -425,27 +426,26 @@ func (s *EntityService) listPlanRecordFiles(dirNames ...string) ([]planRecordFil
 			if err != nil {
 				return nil, fmt.Errorf("unmarshal plan file %s: %w", path, err)
 			}
-			records = append(records, planRecordFile{id: id, slug: slug, path: path, fields: fields})
+			records = append(records, planRecordFile{id: id, slug: slug, path: path, dirName: dirName, fields: fields})
 		}
 	}
 	return records, nil
 }
 
+func isStrategicPlanRecord(r planRecordFile) bool {
+	return r.dirName == "plans"
+}
+
+// isStrategicPlanFields is kept for backward compatibility.
+// Prefer isStrategicPlanRecord which uses the source directory.
 func isStrategicPlanFields(fields map[string]any) bool {
-	switch stringFromState(fields, "status") {
-	case string(model.PlanningStatusIdea), string(model.PlanningStatusShaping), string(model.PlanningStatusReady):
-		return true
-	case string(model.BatchStatusProposed), string(model.BatchStatusDesigning), string(model.BatchStatusReviewing):
-		return false
-	}
+	// Legacy heuristic: check for strategic-plan-only fields.
+	// New code should use isStrategicPlanRecord with the source directory.
 	if _, ok := fields["depends_on"]; ok {
 		return true
 	}
 	if _, ok := fields["order"]; ok {
 		return true
-	}
-	if _, ok := fields["next_feature_seq"]; ok {
-		return false
 	}
 	return false
 }

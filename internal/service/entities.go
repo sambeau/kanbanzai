@@ -605,12 +605,25 @@ func (s *EntityService) HealthCheck() (*validate.HealthReport, error) {
 	loadAll := func() ([]validate.EntityInfo, error) {
 		var all []validate.EntityInfo
 
-		// Load Plans via ListPlans (Plans use different filename format).
+		// Load Plans via ListPlans (execution plans/batches only).
 		plans, err := s.ListPlans(PlanFilters{})
 		if err != nil {
 			return nil, fmt.Errorf("listing plan entities: %w", err)
 		}
 		for _, r := range plans {
+			all = append(all, validate.EntityInfo{
+				Type:   r.Type,
+				ID:     r.ID,
+				Fields: r.State,
+			})
+		}
+
+		// Load strategic plans separately.
+		strats, err := s.ListStrategicPlans(StrategicPlanFilters{})
+		if err != nil {
+			return nil, fmt.Errorf("listing strategic plan entities: %w", err)
+		}
+		for _, r := range strats {
 			all = append(all, validate.EntityInfo{
 				Type:   r.Type,
 				ID:     r.ID,
