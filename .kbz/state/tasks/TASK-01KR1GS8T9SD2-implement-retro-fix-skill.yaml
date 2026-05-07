@@ -3,8 +3,13 @@ parent_feature: FEAT-01KR1GJGJ9BZS
 slug: implement-retro-fix-skill
 name: Create implement-retro-fix Skill
 summary: "Create .kbz/skills/implement-retro-fix/SKILL.md with vocabulary, anti-patterns, procedure, and stage-specific guidance."
-status: active
+status: done
+files_planned:
+  - .kbz/skills/implement-retro-fix/SKILL.md
+completed: "2026-05-07T15:36:27Z"
 claimed_at: "2026-05-07T15:30:16Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-07T15:30:16Z"
 dispatched_by: sambeau
+completion_summary: "Created .kbz/skills/implement-retro-fix/SKILL.md with Vocabulary (13 terms), Anti-Patterns (6 entries: writing without synthesise, skipping traceability, human-gated assumption in auto mode, ignoring conditional review, implementing without reading theme, signal retirement neglect), Procedure with stage-specific guidance for designing (dual-mode), specifying, dev-planning, developing, reviewing, verifying (retro-fix DoD variant), plus Checklist, Output Format, and Questions sections."
+verification: "File exists in worktree. All required sections confirmed: Vocabulary, Anti-Patterns (6), Procedure (6 stages with dual-mode notes), Checklist, Output Format, Questions. Designing section covers human-gated vs auto mode. Verifying section references dod_variant: retro-fix."
