@@ -83,6 +83,19 @@ func (s *EntityStore) Load(entityType, id, slug string) (EntityRecord, error) {
 	return record, nil
 }
 
+// SetField loads an entity, sets a single field, and writes it back.
+// entityType is required (e.g. "bug", "feature"). slug is required for Load.
+// Returns an error if the entity cannot be loaded or written.
+func (s *EntityStore) SetField(entityType, id, slug, field, value string) error {
+	record, err := s.Load(entityType, id, slug)
+	if err != nil {
+		return fmt.Errorf("set field %s on %s: %w", field, id, err)
+	}
+	record.Fields[field] = value
+	_, err = s.Write(record)
+	return err
+}
+
 func validateRecord(record EntityRecord) error {
 	if strings.TrimSpace(record.Type) == "" {
 		return errors.New("entity type is required")

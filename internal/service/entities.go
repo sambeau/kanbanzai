@@ -48,6 +48,7 @@ type CreateBugInput struct {
 	ReportedBy string
 	Observed   string
 	Expected   string
+	FixPlan    string
 	Severity   string
 	Priority   string
 	Type       string
@@ -84,6 +85,9 @@ type CreateResult struct {
 	Slug  string
 	Path  string
 	State map[string]any
+
+	// Warnings contains non-fatal warnings (e.g., spec generation failure).
+	Warnings []string `json:"warnings,omitempty"`
 
 	// WorktreeHookResult is set by the status transition hook when a
 	// worktree was automatically created (or attempted) during a status
@@ -542,6 +546,7 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 		Reported:   s.now(),
 		Observed:   strings.TrimSpace(input.Observed),
 		Expected:   strings.TrimSpace(input.Expected),
+		FixPlan:    strings.TrimSpace(input.FixPlan),
 		Tags:       append([]string(nil), input.Tags...),
 		Tier:       tier,
 	}
@@ -554,8 +559,125 @@ func (s *EntityService) CreateBug(input CreateBugInput) (CreateResult, error) {
 	if err != nil {
 		return result, err
 	}
+
+	// Auto-generate specification and fix-plan documents (FR-101, FR-109).
+	repoRoot := "."
+	docSvc := NewDocumentService(s.root, repoRoot)
+	s.generateBugSpec(&result, entity, docSvc, repoRoot)
+	s.generateBugFixPlan(&result, entity, docSvc, repoRoot)
+
 	s.cacheUpsertFromResult(result)
 	return result, nil
+}
+
+// generateBugSpec writes the auto-generated specification for a bug
+// and registers it as an approved document (FR-101, FR-102).
+func (s *EntityService) generateBugSpec(result *CreateResult, bug model.Bug, docSvc *DocumentService, repoRoot string) {
+	specDir := filepath.Join(repoRoot, "work", "bugs", bug.Slug)
+	if err := os.MkdirAll(specDir, 0o755); err != nil {
+		warn := fmt.Sprintf("spec generation: failed to create directory %s: %v", specDir, err)
+		log.Println(warn)
+		result.Warnings = append(result.Warnings, warn)
+		return
+	}
+
+	specPath := filepath.Join(specDir, "spec.md")
+	// FR-104: do not overwrite existing spec.
+	if _, statErr := os.Stat(specPath); statErr == nil {
+		// File exists: re-register the existing document (idempotent).
+		s.registerExistingBugDoc(result, bug, docSvc, specPath, "specification", "Bug Specification: "+bug.Name)
+		return
+	}
+
+	content := fmt.Sprintf("# Bug Specification: %s\n\n## Observed Behaviour\n%s\n\n## Expected Behaviour\n%s\n\n## Severity\n%s | Priority: %s | Type: %s\n",
+		bug.Name, bug.Observed, bug.Expected, bug.Severity, bug.Priority, bug.Type)
+
+	if err := os.WriteFile(specPath, []byte(content), 0o644); err != nil {
+		warn := fmt.Sprintf("spec generation: failed to write %s: %v", specPath, err)
+		log.Println(warn)
+		result.Warnings = append(result.Warnings, warn)
+		return
+	}
+
+	s.registerAndApproveBugDoc(result, bug, docSvc, specPath, "specification", "Bug Specification: "+bug.Name)
+}
+
+// generateBugFixPlan writes the fix-plan file and registers it as an approved
+// dev-plan document when FixPlan is non-empty (FR-109, FR-110).
+func (s *EntityService) generateBugFixPlan(result *CreateResult, bug model.Bug, docSvc *DocumentService, repoRoot string) {
+	if bug.FixPlan == "" {
+		return // FR-110: empty fix_plan is not an error.
+	}
+
+	planDir := filepath.Join(repoRoot, "work", "bugs", bug.Slug)
+	if err := os.MkdirAll(planDir, 0o755); err != nil {
+		warn := fmt.Sprintf("fix-plan generation: failed to create directory %s: %v", planDir, err)
+		log.Println(warn)
+		result.Warnings = append(result.Warnings, warn)
+		return
+	}
+
+	planPath := filepath.Join(planDir, "fix-plan.md")
+	// Do not overwrite existing fix-plan.
+	if _, statErr := os.Stat(planPath); statErr == nil {
+		s.registerExistingBugDoc(result, bug, docSvc, planPath, "dev-plan", "Fix Plan: "+bug.Name)
+		return
+	}
+
+	if err := os.WriteFile(planPath, []byte(bug.FixPlan+"\n"), 0o644); err != nil {
+		warn := fmt.Sprintf("fix-plan generation: failed to write %s: %v", planPath, err)
+		log.Println(warn)
+		result.Warnings = append(result.Warnings, warn)
+		return
+	}
+
+	s.registerAndApproveBugDoc(result, bug, docSvc, planPath, "dev-plan", "Fix Plan: "+bug.Name)
+}
+
+// registerAndApproveBugDoc registers a document and auto-approves it.
+func (s *EntityService) registerAndApproveBugDoc(result *CreateResult, bug model.Bug, docSvc *DocumentService, path, docType, title string) {
+	docResult, err := docSvc.SubmitDocument(SubmitDocumentInput{
+		Path:        path,
+		Type:        docType,
+		Title:       title,
+		Owner:       bug.ID,
+		CreatedBy:   bug.ReportedBy,
+		AutoApprove: true,
+	})
+	if err != nil {
+		warn := fmt.Sprintf("document registration failed for %s (%s): %v", path, docType, err)
+		log.Println(warn)
+		result.Warnings = append(result.Warnings, warn)
+		return
+	}
+
+	// Store document reference on the bug entity.
+	var docField string
+	if docType == "specification" {
+		docField = "spec"
+	} else if docType == "dev-plan" {
+		docField = "dev_plan"
+	}
+	if docField != "" && docResult.Owner != "" {
+		_ = s.store.SetField(string(model.EntityKindBug), bug.ID, bug.Slug, docField, docResult.ID)
+	}
+
+	_ = docResult // ensure usage
+}
+
+// registerExistingBugDoc re-registers an already-existing document (FR-104).
+func (s *EntityService) registerExistingBugDoc(result *CreateResult, bug model.Bug, docSvc *DocumentService, path, docType, title string) {
+	_, err := docSvc.SubmitDocument(SubmitDocumentInput{
+		Path:      path,
+		Type:      docType,
+		Title:     title,
+		Owner:     bug.ID,
+		CreatedBy: bug.ReportedBy,
+	})
+	if err != nil {
+		// If already registered, this error is expected and non-fatal.
+		log.Printf("re-register existing doc %s: %v", path, err)
+	}
 }
 
 func (s *EntityService) CreateDecision(input CreateDecisionInput) (CreateResult, error) {
