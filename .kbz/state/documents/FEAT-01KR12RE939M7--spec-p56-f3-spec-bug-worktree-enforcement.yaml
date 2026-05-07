@@ -1,11 +1,13 @@
+approved_at: "2026-05-07T13:13:26Z"
+approved_by: sambeau
 canonical_content_hash: 32d86b43306ae3a944b755439068de9207dd8b41de8c4054e27a5db05be928e3
-content_hash: 32d86b43306ae3a944b755439068de9207dd8b41de8c4054e27a5db05be928e3
+content_hash: 7dffabec9e22877bd225b211e361d8d39093b398f1a8e8f34d63c491022960ca
 created: "2026-05-07T11:26:45Z"
 created_by: sambeau
 id: FEAT-01KR12RE939M7/spec-p56-f3-spec-bug-worktree-enforcement
 owner: FEAT-01KR12RE939M7
 path: work/P56-bug-lifecycle-hardening/P56-F3-spec-bug-worktree-enforcement.md
-status: draft
+status: approved
 title: "Specification: Bug Worktree Enforcement"
 type: spec
-updated: "2026-05-07T11:26:45Z"
+updated: "2026-05-07T13:13:26Z"

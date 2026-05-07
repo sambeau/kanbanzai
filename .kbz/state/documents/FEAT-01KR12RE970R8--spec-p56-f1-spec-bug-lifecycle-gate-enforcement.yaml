@@ -1,11 +1,13 @@
+approved_at: "2026-05-07T13:13:26Z"
+approved_by: sambeau
 canonical_content_hash: 29b4ac792b2ad5c1e034125543a9b5db417c986a610630c5e424ec7caef3d7ec
-content_hash: 29b4ac792b2ad5c1e034125543a9b5db417c986a610630c5e424ec7caef3d7ec
+content_hash: 5cd0bf3bafecf6de386906f14be1ac0952ae873a315e2ee206c2a128af99c4ce
 created: "2026-05-07T11:26:45Z"
 created_by: sambeau
 id: FEAT-01KR12RE970R8/spec-p56-f1-spec-bug-lifecycle-gate-enforcement
 owner: FEAT-01KR12RE970R8
 path: work/P56-bug-lifecycle-hardening/P56-F1-spec-bug-lifecycle-gate-enforcement.md
-status: draft
+status: approved
 title: "Specification: Bug Lifecycle Gate Enforcement"
 type: spec
-updated: "2026-05-07T11:26:45Z"
+updated: "2026-05-07T13:13:26Z"

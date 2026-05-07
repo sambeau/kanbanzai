@@ -2,7 +2,7 @@ id: FEAT-01KR12RE99QPT
 slug: bug-spec-and-doc-infra
 name: Bug Spec and Document Infrastructure
 parent: B56-bug-lifecycle-hardening
-status: specifying
+status: dev-planning
 summary: "Auto-generate spec from bug observed/expected, add fix_plan field, canonical doc paths, and change bug_fix Spec gate to auto."
 spec: FEAT-01KR12RE99QPT/spec-p56-f2-spec-bug-spec-and-doc-infra
 created: "2026-05-07T11:21:53Z"
