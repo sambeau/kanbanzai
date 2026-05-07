@@ -6,6 +6,7 @@ status: dev-planning
 summary: Fix worktree file-writing friction. Update implement-task/SKILL.md and copilot-instructions.md to prefer kanbanzai_edit_file/write_file with entity_id over terminal-based workarounds.
 design: FEAT-01KR003J3ATM2/design-b53-f2-design-worktree-tooling
 spec: FEAT-01KR003J3ATM2/spec-b53-f2-spec-worktree-tooling
+dev_plan: FEAT-01KR003J3ATM2/dev-plan-b53-f2-dev-plan-worktree-tooling
 tags:
   - retro
 created: "2026-05-07T01:16:17Z"

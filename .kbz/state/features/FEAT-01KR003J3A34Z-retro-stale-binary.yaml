@@ -6,6 +6,7 @@ status: dev-planning
 summary: Make server_info tool usage proactive in workflow guides and pre-task checklists to prevent wasted verification from stale MCP binary.
 design: FEAT-01KR003J3A34Z/design-b53-f3-design-stale-binary
 spec: FEAT-01KR003J3A34Z/spec-b53-f3-spec-stale-binary
+dev_plan: FEAT-01KR003J3A34Z/dev-plan-b53-f3-dev-plan-stale-binary
 tags:
   - retro
 created: "2026-05-07T01:16:17Z"
