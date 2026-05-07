@@ -1,7 +1,7 @@
 id: BUG-01KQZS69DAJFG
 slug: fix-44-tests
 name: Fix 44 failing tests from uncommitted refactors
-status: verified
+status: closed
 severity: high
 priority: high
 type: implementation-defect
