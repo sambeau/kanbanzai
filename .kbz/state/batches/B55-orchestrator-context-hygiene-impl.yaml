@@ -1,7 +1,7 @@
 id: B55-orchestrator-context-hygiene-impl
 slug: orchestrator-context-hygiene-impl
 name: Orchestrator Context Hygiene implementation
-status: reviewing
+status: done
 summary: "Implement the seven components from the P55 design: anti-patterns, tool restrictions, constraint pinning, fast-track review dispatch, close-out verifier, DoD enforcement, and documentation updates."
 created: "2026-05-07T11:10:14Z"
 created_by: sambeau
