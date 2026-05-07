@@ -6,9 +6,9 @@ id: KE-01KR1EPST17EN
 learned_from: TASK-01KR1EFVWN5MT
 miss_count: 0
 scope: project
-status: contributed
+status: confirmed
 tier: 2
 topic: config-optional-for-tool-hints
 ttl_days: 90
-updated: "2026-05-07T14:50:42Z"
+updated: "2026-05-07T14:55:01Z"
 use_count: 0

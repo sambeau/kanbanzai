@@ -1,7 +1,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-07T14:34:00Z           |
-| Status | Approved                       |
+| Status | approved |
 | Author | sambeau                        |
 
 ## Overview
