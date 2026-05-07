@@ -76,6 +76,10 @@ For file/directory exploration within the indexed project:
 list_directory(path="src/services")
 ```
 
+## Role Availability
+
+Graph tools (`search_graph`, `query_graph`, `get_code_snippet`, `trace_call_path`) are available to **implementer** and **reviewer** roles. The **orchestrator** role does not use graph tools — it delegates code understanding to sub-agents via `handoff`.
+
 ## When to Use Grep Instead
 
 - Searching for **string literals** or error messages → `search_code` or Grep

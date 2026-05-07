@@ -116,6 +116,10 @@ detect_changes(scope="branch", base_branch="main")
 
 Returns changed files, changed symbols, and impacted callers with risk classification. Scopes: `unstaged`, `staged`, `all` (default), `branch`.
 
+## Role Availability
+
+Graph tools (`search_graph`, `query_graph`, `trace_call_path`, `get_code_snippet`) are available to **implementer** and **reviewer** roles. The **orchestrator** role does not use graph tools — it delegates code understanding to sub-agents via `handoff`.
+
 ## Key Tips
 
 - Start with `depth=1` for quick answers, increase only if needed (max 5).

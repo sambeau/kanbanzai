@@ -119,13 +119,17 @@ stage_bindings:
     notes: "Auto gate — no human checkpoint. Orchestrator completes merge, verifies ancestry, then advances to verifying. Full procedure: .agents/skills/kanbanzai-agents/SKILL.md §Post-Review Merge."
 
   verifying:
-    description: "Running build and tests on main after merge to confirm integration"
+    description: "Delegating close-out verification of the Definition of Done to a clean-context verifier sub-agent"
     orchestration: single-agent
     roles: [orchestrator]
     skills: [orchestrate-review]
     human_gate: false
     effort_budget: "5-10 tool calls"
-    notes: "Auto gate — no human checkpoint. Run go build ./... and go test ./... on main. On pass: transition to done. On failure: transition to needs-rework with failure output."
+    sub_agents:
+      roles: [verifier]
+      skills: [verify-closeout]
+      topology: single
+    notes: "Auto gate — no human checkpoint. Dispatch the verifier sub-agent with the feature ID and the verify-closeout skill. The verifier runs the 10-item DoD checklist independently and returns a structured pass/fail report. The orchestrator reads the report: if all-pass, transition to done. On failure, route to remediation."
 
   batch-reviewing:
     description: "Reviewing a completed batch for aggregate delivery"

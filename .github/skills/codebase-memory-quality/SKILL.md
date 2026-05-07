@@ -93,6 +93,10 @@ search_graph(
 )
 ```
 
+## Role Availability
+
+Graph tools (`search_graph`, `query_graph`) are available to **implementer** and **reviewer** roles. The **orchestrator** role does not use graph tools — it delegates code understanding to sub-agents via `handoff`.
+
 ## Key Tips
 
 - `search_graph` with degree filters has no row cap (unlike `query_graph` which caps at 200).

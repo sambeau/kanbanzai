@@ -139,6 +139,10 @@ search_code(pattern="(?i)(POST|PUT).*\\/api\\/v[0-9]\\/orders", regex=true)
 3. **`trace_call_path` needs exact names** — use `search_graph(name_pattern=".*Partial.*")` first to discover names.
 4. **`direction="outbound"` misses cross-service callers** — use `direction="both"` for full context.
 
+## Role Availability
+
+Graph tools (`search_graph`, `query_graph`, `get_code_snippet`, `trace_call_path`) are available to **implementer** and **reviewer** roles. The **orchestrator** role does not use graph tools — it delegates code understanding to sub-agents via `handoff`.
+
 ## Decision Matrix
 
 | Question | Use |

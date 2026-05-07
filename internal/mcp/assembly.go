@@ -241,6 +241,11 @@ func assembleContext(input asmInput) assembledContext {
 		}
 	}
 
+	// Orchestrator role reminder (constraint pinning per P55).
+	if input.role == "orchestrator" {
+		actx.constraints = append(actx.constraints, kbzctx.OrchestratorRoleReminder)
+	}
+
 	// Tool hint resolution: resolve role-scoped hint via inheritance (FR-015, FR-016).
 	if len(input.mergedToolHints) > 0 && input.role != "" {
 		actx.toolHint = kbzctx.ResolveToolHint(input.mergedToolHints, input.role, input.roleStore)

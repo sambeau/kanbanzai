@@ -30,9 +30,9 @@ const (
 // AssemblyItem is a single piece of context in the assembled packet.
 type AssemblyItem struct {
 	Source     AssemblySource
-	EntryID    string  // for knowledge entries
-	Topic      string  // for knowledge entries: the topic string
-	Priority   string  // "high", "normal", "low"
+	EntryID    string // for knowledge entries
+	Topic      string // for knowledge entries: the topic string
+	Priority   string // "high", "normal", "low"
 	Content    string
 	Confidence float64 // for knowledge entries
 }
@@ -55,6 +55,11 @@ type AssemblyResult struct {
 	Trimmed        int            // number of items trimmed (kept for backwards compatibility)
 	TrimmedEntries []TrimmedEntry // details of trimmed entries
 }
+
+// OrchestratorRoleReminder is injected into every next and handoff response when
+// the role is orchestrator. It leverages the recency peak of the U-shaped attention
+// curve to maintain role awareness across long sessions.
+const OrchestratorRoleReminder = "You are the orchestrator — coordinate, dispatch, verify. Do not investigate implementation code. Sub-agents handle all code reading and writing via `handoff`."
 
 const defaultMaxBytes = 30720
 
