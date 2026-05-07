@@ -90,6 +90,13 @@ This section covers the lifecycle of a single task, from claim to finish.
    in the spec.
 5. Commit changes before finishing.
 
+### Verifying Results
+
+When test results are unexpected — passes that should fail, failures that should pass —
+run `server_info` before debugging code. A stale MCP binary can produce false negatives
+that waste verification time. If `server_info` shows `in_sync: false` or `git_sha: unknown`,
+the running server is stale and results are not reliable.
+
 ### Finishing work
 
 1. Ensure all changes are committed. `git status` should show a clean tree.
