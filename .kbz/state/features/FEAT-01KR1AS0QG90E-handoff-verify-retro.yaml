@@ -2,7 +2,8 @@ id: FEAT-01KR1AS0QG90E
 slug: handoff-verify-retro
 name: Handoff Verification - Retro Fix Type
 parent: B1-p51-exec
-status: developing
+status: reviewing
+review_cycle: 1
 summary: Temporary retro_fix for P51 handoff pipeline verification. DELETE after verification.
 tags:
   - test-fixture
@@ -14,17 +15,22 @@ overrides:
   -
     from_status: designing
     reason: Test fixture for P51 handoff verification — bypassing document gates
-    timestamp: "2026-05-07T14:43:26+01:00"
+    timestamp: "2026-05-07T14:47:35+01:00"
     to_status: specifying
   -
     from_status: specifying
     reason: Test fixture for P51 handoff verification — bypassing document gates
-    timestamp: "2026-05-07T14:43:26+01:00"
+    timestamp: "2026-05-07T14:47:35+01:00"
     to_status: dev-planning
   -
     from_status: dev-planning
     reason: Test fixture for P51 handoff verification — bypassing document gates
-    timestamp: "2026-05-07T14:43:26+01:00"
+    timestamp: "2026-05-07T14:47:35+01:00"
     to_status: developing
+  -
+    from_status: developing
+    reason: Test fixture for P51 handoff verification — bypassing document gates for reviewing stage
+    timestamp: "2026-05-07T14:47:36+01:00"
+    to_status: reviewing
 display_id: B1-F5
 tier: retro_fix
