@@ -1566,7 +1566,7 @@ func TestEntityService_BugLifecycle_FullPath(t *testing.T) {
 
 	transitions := []string{
 		"triaged", "reproduced", "planned", "in-progress",
-		"needs-review", "verified", "closed",
+		"needs-review", "verifying", "closed",
 	}
 	current := created
 	for _, next := range transitions {
@@ -1595,6 +1595,187 @@ func TestEntityService_BugLifecycle_FullPath(t *testing.T) {
 	})
 	if err == nil {
 		t.Fatal("UpdateStatus() from terminal state should fail, got nil error")
+	}
+}
+
+// TestEntityService_BugReviewCycle_InitialZero verifies FR-012: new bugs have review_cycle=0.
+func TestEntityService_BugReviewCycle_InitialZero(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	created, err := svc.CreateBug(CreateBugInput{
+		Slug:       "cycle-zero-bug",
+		Name:       "Cycle Zero Bug",
+		ReportedBy: "sam",
+		Observed:   "Something broke",
+		Expected:   "It should work",
+	})
+	if err != nil {
+		t.Fatalf("CreateBug() error = %v", err)
+	}
+
+	// Re-read the bug from the store to verify review_cycle.
+	rec, err := svc.store.Load("bug", created.ID, created.Slug)
+	if err != nil {
+		t.Fatalf("Load bug: %v", err)
+	}
+	rc, _ := rec.Fields["review_cycle"].(int)
+	if rc != 0 {
+		t.Errorf("review_cycle = %d, want 0 (FR-012)", rc)
+	}
+}
+
+// TestEntityService_BugIncrementReviewCycle verifies FR-013: IncrementBugReviewCycle
+// increments the review_cycle field.
+func TestEntityService_BugIncrementReviewCycle(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	created, err := svc.CreateBug(CreateBugInput{
+		Slug:       "increment-cycle-bug",
+		Name:       "Increment Cycle Bug",
+		ReportedBy: "sam",
+		Observed:   "Something broke",
+		Expected:   "It should work",
+	})
+	if err != nil {
+		t.Fatalf("CreateBug() error = %v", err)
+	}
+
+	// Increment once.
+	if err := svc.IncrementBugReviewCycle(created.ID, created.Slug); err != nil {
+		t.Fatalf("IncrementBugReviewCycle(1): %v", err)
+	}
+	rec, err := svc.store.Load("bug", created.ID, created.Slug)
+	if err != nil {
+		t.Fatalf("Load bug: %v", err)
+	}
+	rc, _ := rec.Fields["review_cycle"].(int)
+	if rc != 1 {
+		t.Errorf("review_cycle after 1 increment = %d, want 1 (FR-013)", rc)
+	}
+
+	// Increment again.
+	if err := svc.IncrementBugReviewCycle(created.ID, created.Slug); err != nil {
+		t.Fatalf("IncrementBugReviewCycle(2): %v", err)
+	}
+	rec, err = svc.store.Load("bug", created.ID, created.Slug)
+	if err != nil {
+		t.Fatalf("Load bug: %v", err)
+	}
+	rc, _ = rec.Fields["review_cycle"].(int)
+	if rc != 2 {
+		t.Errorf("review_cycle after 2 increments = %d, want 2 (FR-013)", rc)
+	}
+}
+
+// TestEntityService_BugReviewCycleCapBlocks verifies FR-014: when review_cycle >= MaxCycles,
+// the needs-review→needs-rework gate blocks with blocked_reason and ReviewCapReached.
+func TestEntityService_BugReviewCycleCapBlocks(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	created, err := svc.CreateBug(CreateBugInput{
+		Slug:       "cap-block-bug",
+		Name:       "Cap Block Bug",
+		ReportedBy: "sam",
+		Observed:   "Something broke",
+		Expected:   "It should work",
+		Tier:       "bug_fix",
+	})
+	if err != nil {
+		t.Fatalf("CreateBug() error = %v", err)
+	}
+
+	// Set review_cycle to the cap (MaxCycles=2 for bug_fix).
+	for i := 0; i < 2; i++ {
+		if err := svc.IncrementBugReviewCycle(created.ID, created.Slug); err != nil {
+			t.Fatalf("IncrementBugReviewCycle(%d): %v", i+1, err)
+		}
+	}
+
+	// Re-read the bug to get current ReviewCycle value.
+	rec, err := svc.store.Load("bug", created.ID, created.Slug)
+	if err != nil {
+		t.Fatalf("Load bug: %v", err)
+	}
+	rc, _ := rec.Fields["review_cycle"].(int)
+	if rc != 2 {
+		t.Fatalf("review_cycle = %d, want 2 for cap test", rc)
+	}
+
+	// Verify CheckBugTransitionGate blocks needs-review→needs-rework at cap.
+	bug := model.Bug{
+		ID:          created.ID,
+		Slug:        created.Slug,
+		Status:      model.BugStatusNeedsReview,
+		Tier:        "bug_fix",
+		ReviewCycle: rc,
+	}
+	result := CheckBugTransitionGate(
+		string(model.BugStatusNeedsReview),
+		string(model.BugStatusNeedsRework),
+		&bug,
+		nil, // docSvc not needed for this gate
+		svc,
+	)
+	if result.Satisfied {
+		t.Error("expected gate to be unsatisfied at cap")
+	}
+	if !result.ReviewCapReached {
+		t.Error("expected ReviewCapReached=true (FR-014)")
+	}
+}
+
+// TestEntityService_BugReviewCycle_OnlyReworkIncrements verifies FR-015: only
+// needs-review→needs-rework increments review_cycle; other transitions do not.
+func TestEntityService_BugReviewCycle_OnlyReworkIncrements(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	created, err := svc.CreateBug(CreateBugInput{
+		Slug:       "no-increment-bug",
+		Name:       "No Increment Bug",
+		ReportedBy: "sam",
+		Observed:   "Something broke",
+		Expected:   "It should work",
+	})
+	if err != nil {
+		t.Fatalf("CreateBug() error = %v", err)
+	}
+
+	// Walk through several non-rework transitions.
+	transitions := []string{"triaged", "reproduced", "planned", "in-progress"}
+	current := created
+	for _, next := range transitions {
+		updated, err := svc.UpdateStatus(UpdateStatusInput{
+			Type:   current.Type,
+			ID:     current.ID,
+			Slug:   current.Slug,
+			Status: next,
+		})
+		if err != nil {
+			t.Fatalf("UpdateStatus(%q -> %q) error = %v", current.State["status"], next, err)
+		}
+		current = updated
+	}
+
+	// After all non-rework transitions, review_cycle should still be 0.
+	rec, err := svc.store.Load("bug", created.ID, created.Slug)
+	if err != nil {
+		t.Fatalf("Load bug: %v", err)
+	}
+	rc, _ := rec.Fields["review_cycle"].(int)
+	if rc != 0 {
+		t.Errorf("review_cycle after non-rework transitions = %d, want 0 (FR-015)", rc)
 	}
 }
 

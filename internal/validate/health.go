@@ -145,6 +145,19 @@ func CheckHealth(loadAll func() ([]EntityInfo, error), entityExists func(entityT
 			checkRef("origin_task", string(EntityTask), toString(e.Fields["origin_task"]))
 			checkRef("duplicate_of", string(EntityBug), toString(e.Fields["duplicate_of"]))
 
+			// FR-004: Flag bugs that reached closed/verifying without passing through needs-review.
+			status := toString(e.Fields["status"])
+			if status == string(model.BugStatusVerifying) || status == string(model.BugStatusClosed) {
+				if toString(e.Fields["needs_review_at"]) == "" {
+					report.Warnings = append(report.Warnings, ValidationWarning{
+						EntityType: e.Type,
+						EntityID:   e.ID,
+						Field:      "status",
+						Message:    fmt.Sprintf("bug reached %q without passing through needs-review", status),
+					})
+				}
+			}
+
 		case string(EntityDecision):
 			checkRef("supersedes", string(EntityDecision), toString(e.Fields["supersedes"]))
 			checkRef("superseded_by", string(EntityDecision), toString(e.Fields["superseded_by"]))

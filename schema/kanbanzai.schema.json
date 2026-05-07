@@ -105,7 +105,7 @@
             "in-progress",
             "needs-review",
             "needs-rework",
-            "verified",
+            "verifying",
             "closed",
             "duplicate",
             "not-planned",

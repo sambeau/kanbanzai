@@ -54,3 +54,53 @@ func (s *EntityService) IncrementFeatureReviewCycle(featureID, slug string) erro
 	_, err = s.store.Write(record)
 	return err
 }
+
+// PersistBugBlockedReason writes the blocked_reason field to the bug
+// entity on disk. Pass an empty string to clear the blocked reason.
+func (s *EntityService) PersistBugBlockedReason(bugID, slug, reason string) error {
+	if slug == "" {
+		_, resolvedSlug, err := s.ResolvePrefix("bug", bugID)
+		if err != nil {
+			return err
+		}
+		slug = resolvedSlug
+	}
+
+	record, err := s.store.Load("bug", bugID, slug)
+	if err != nil {
+		return err
+	}
+
+	if reason == "" {
+		delete(record.Fields, "blocked_reason")
+	} else {
+		record.Fields["blocked_reason"] = reason
+	}
+
+	_, err = s.store.Write(record)
+	return err
+}
+
+// IncrementBugReviewCycle increments the review_cycle field on the bug
+// entity by 1 and persists the change to disk. Called each time a bug
+// transitions needs-review → needs-rework (FR-013).
+func (s *EntityService) IncrementBugReviewCycle(bugID, slug string) error {
+	if slug == "" {
+		_, resolvedSlug, err := s.ResolvePrefix("bug", bugID)
+		if err != nil {
+			return err
+		}
+		slug = resolvedSlug
+	}
+
+	record, err := s.store.Load("bug", bugID, slug)
+	if err != nil {
+		return err
+	}
+
+	current, _ := record.Fields["review_cycle"].(int)
+	record.Fields["review_cycle"] = current + 1
+
+	_, err = s.store.Write(record)
+	return err
+}

@@ -2,11 +2,17 @@ package service
 
 import (
 	"fmt"
+	"log"
+	"os/exec"
+	"path/filepath"
 	"strings"
 
+	"github.com/sambeau/kanbanzai/internal/config"
+	"github.com/sambeau/kanbanzai/internal/git"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/structural"
 	"github.com/sambeau/kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // GateResult describes whether a stage gate prerequisite is satisfied.
@@ -400,6 +406,154 @@ func checkReworkTaskExists(feature *model.Feature, entitySvc *EntityService) Gat
 		Satisfied: false,
 		Reason:    "no non-terminal rework tasks found; create a rework task before resuming development",
 	}
+}
+
+// CheckBugTransitionGate checks the gate prerequisite for a specific (from, to)
+// bug lifecycle transition. It returns a satisfied GateResult for ungated
+// transitions (terminal targets, pre-in-progress transitions) and an
+// unsatisfied GateResult when prerequisites are not met (FR-005 through FR-011).
+func CheckBugTransitionGate(from, to string, bug *model.Bug, docSvc *DocumentService, entitySvc *EntityService) GateResult {
+	// Terminal state transitions are always ungated.
+	if to == string(model.BugStatusClosed) || to == string(model.BugStatusDuplicate) || to == string(model.BugStatusNotPlanned) {
+		return GateResult{Stage: to, Satisfied: true}
+	}
+
+	transition := from + "→" + to
+	switch transition {
+	case string(model.BugStatusInProgress) + "→" + string(model.BugStatusNeedsReview):
+		// FR-006: in-progress→needs-review requires worktree commits beyond base.
+		return checkBugWorktreeHasCommits(bug, docSvc)
+
+	case string(model.BugStatusNeedsReview) + "→" + string(model.BugStatusVerifying):
+		// FR-007: needs-review→verifying requires review report AND passing tests.
+		return checkBugReviewReportAndTests(bug, docSvc)
+
+	case string(model.BugStatusNeedsReview) + "→" + string(model.BugStatusNeedsRework):
+		// FR-008: needs-review→needs-rework (first step back to in-progress).
+		// Increment review_cycle, check cap, escalate if reached.
+		return checkBugReviewCap(bug, entitySvc)
+
+	case string(model.BugStatusVerifying) + "→" + string(model.BugStatusClosed):
+		// FR-009: verifying→closed is a pass-through placeholder until F4.
+		log.Printf("[bug-gate] verifying→closed: verifier not yet implemented — see F4")
+		return GateResult{Stage: to, Satisfied: true, Reason: "verifier not yet implemented — see F4"}
+
+	default:
+		// All other bug transitions (pre-in-progress, backward, unknown) are ungated.
+		return GateResult{Stage: to, Satisfied: true}
+	}
+}
+
+// checkBugWorktreeHasCommits verifies that the bug's worktree branch has at
+// least one commit beyond the base branch (FR-006).
+func checkBugWorktreeHasCommits(bug *model.Bug, docSvc *DocumentService) GateResult {
+	repoRoot := docSvc.RepoRoot()
+	branchName := worktree.GenerateBranchName(bug.ID, bug.Slug)
+
+	// GetCommitsBehindAhead returns an error if the branch doesn't exist, which
+	// we treat as "no fix commits found on worktree".
+	_, ahead, err := git.GetCommitsBehindAhead(repoRoot, branchName, "")
+	if err != nil {
+		return GateResult{
+			Stage:     string(model.BugStatusNeedsReview),
+			Satisfied: false,
+			Reason:    "no fix commits found on worktree",
+		}
+	}
+
+	if ahead == 0 {
+		return GateResult{
+			Stage:     string(model.BugStatusNeedsReview),
+			Satisfied: false,
+			Reason:    "no fix commits found on worktree",
+		}
+	}
+
+	return GateResult{
+		Stage:     string(model.BugStatusNeedsReview),
+		Satisfied: true,
+		Reason:    fmt.Sprintf("worktree has %d commit(s) ahead of base", ahead),
+	}
+}
+
+// checkBugReviewReportAndTests verifies that a review report document exists
+// for the bug and that go test passes on the worktree (FR-007).
+func checkBugReviewReportAndTests(bug *model.Bug, docSvc *DocumentService) GateResult {
+	// Check 1: Review report document exists and is owned by the bug.
+	docs, err := docSvc.ListDocuments(DocumentFilters{
+		Owner: bug.ID,
+		Type:  string(model.DocumentTypeReport),
+	})
+	if err != nil || len(docs) == 0 {
+		return GateResult{
+			Stage:     string(model.BugStatusVerifying),
+			Satisfied: false,
+			Reason:    "no review report document registered for this bug",
+		}
+	}
+
+	// Check 2: go test ./... passes on the worktree.
+	repoRoot := docSvc.RepoRoot()
+	wtPath := worktree.GenerateWorktreePath(bug.ID, bug.Slug)
+	absWTPath := filepath.Join(repoRoot, wtPath)
+
+	cmd := exec.Command("go", "test", "./...")
+	cmd.Dir = absWTPath
+	if out, testErr := cmd.CombinedOutput(); testErr != nil {
+		return GateResult{
+			Stage:     string(model.BugStatusVerifying),
+			Satisfied: false,
+			Reason:    fmt.Sprintf("go test failed: %v\n%s", testErr, string(out)),
+		}
+	}
+
+	return GateResult{
+		Stage:     string(model.BugStatusVerifying),
+		Satisfied: true,
+		Reason:    fmt.Sprintf("review report found (%s) and go test passes", docs[0].ID),
+	}
+}
+
+// checkBugReviewCap increments the bug's review_cycle, checks the tier cap,
+// and blocks the transition if the cap is reached (FR-008/FR-014).
+func checkBugReviewCap(bug *model.Bug, entitySvc *EntityService) GateResult {
+	// Increment review_cycle (persisted before gate evaluation).
+	newCycle := bug.ReviewCycle + 1
+	if err := entitySvc.IncrementBugReviewCycle(bug.ID, bug.Slug); err != nil {
+		log.Printf("[bug-gate] WARNING: failed to increment review cycle for %s: %v", bug.ID, err)
+		// Continue with in-memory value even if persist fails.
+	}
+
+	// Resolve tier's MaxCycles.
+	tierCfg := ResolveBugTierConfig(bug.Tier)
+
+	if newCycle >= tierCfg.MaxCycles {
+		return GateResult{
+			Stage:            string(model.BugStatusNeedsRework),
+			Satisfied:        false,
+			Reason:           fmt.Sprintf("Review iteration cap reached (%d/%d). Human decision required: accept with known issues, rework with revised scope, or cancel.", newCycle, tierCfg.MaxCycles),
+			ReviewCapReached: true,
+		}
+	}
+
+	return GateResult{
+		Stage:     string(model.BugStatusNeedsRework),
+		Satisfied: true,
+		Reason:    fmt.Sprintf("review cycle %d/%d", newCycle, tierCfg.MaxCycles),
+	}
+}
+
+// ResolveBugTierConfig returns the TierConfig for the bug's tier, defaulting
+// to the bug_fix tier config if the bug has no tier or the tier is unknown.
+func ResolveBugTierConfig(tier string) config.TierConfig {
+	ft := config.DefaultFastTrackConfig()
+	if tier == "" {
+		tier = config.TierBugFix
+	}
+	if cfg, ok := ft.Tiers[tier]; ok {
+		return cfg
+	}
+	return ft.Tiers[config.TierBugFix]
 }
 
 // checkDevelopingGate checks whether the feature has at least one child task.

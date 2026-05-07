@@ -77,6 +77,14 @@ func (s *EntityStore) Load(entityType, id, slug string) (EntityRecord, error) {
 	if err != nil {
 		return record, fmt.Errorf("unmarshal canonical yaml: %w", err)
 	}
+	// Backward compat: bugs with status "verified" are interpreted as "verifying"
+	if entityType == "bug" {
+		if status, ok := fields["status"]; ok {
+			if s, isStr := status.(string); isStr && s == "verified" {
+				fields["status"] = "verifying"
+			}
+		}
+	}
 	record.Fields = fields
 	h := sha256.Sum256(data)
 	record.FileHash = hex.EncodeToString(h[:])

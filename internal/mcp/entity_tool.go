@@ -712,6 +712,51 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 				}
 			}
 		}
+		// Bug lifecycle gate enforcement (FR-010).
+		if entityType == "bug" && !override {
+			getR, err := entitySvc.Get("bug", entityID, "")
+			if err != nil {
+				return entityTransitionError(entitySvc, entityType, entityID, newStatus, err), nil
+			}
+			bug := bugFromState(getR.ID, getR.Slug, getR.State)
+			currentStatus := string(bug.Status)
+
+			// Only enforce gates for transitions from in-progress onward.
+			gatedFrom := map[string]bool{
+				string(model.BugStatusInProgress):  true,
+				string(model.BugStatusNeedsReview): true,
+				string(model.BugStatusNeedsRework): true,
+				string(model.BugStatusVerifying):   true,
+			}
+			if gatedFrom[currentStatus] {
+				gateResult := service.CheckBugTransitionGate(currentStatus, newStatus, bug, docSvc, entitySvc)
+				if !gateResult.Satisfied {
+					if gateResult.ReviewCapReached {
+						_ = entitySvc.PersistBugBlockedReason(entityID, "", gateResult.Reason)
+						chkStore := checkpoint.NewStore(entitySvc.Root())
+						maxCycles := service.ResolveBugTierConfig(bug.Tier).MaxCycles
+						chk, chkErr := chkStore.Create(checkpoint.Record{
+							Question: fmt.Sprintf("Bug %s has reached the review iteration cap (%d/%d). What should happen next?", entityID, bug.ReviewCycle+1, maxCycles),
+							Context:  fmt.Sprintf("Review cycle: %d/%d", bug.ReviewCycle+1, maxCycles),
+							Status:   checkpoint.StatusPending, CreatedAt: time.Now().UTC(), CreatedBy: "system",
+						})
+						resp := map[string]any{"error": gateResult.Reason, "blocked_reason": gateResult.Reason, "bug_id": entityID}
+						if chkErr == nil {
+							resp["checkpoint_id"] = chk.ID
+						}
+						return resp, nil
+					}
+					return map[string]any{
+						"error": fmt.Sprintf("Cannot transition %s from %q to %q: %s", entityID, currentStatus, newStatus, gateResult.Reason),
+						"gate_failed": map[string]any{
+							"from_status": currentStatus,
+							"to_status":   newStatus,
+							"reason":      gateResult.Reason,
+						},
+					}, nil
+				}
+			}
+		}
 		var fromStatus string
 		if pre, preErr := entitySvc.Get(entityType, entityID, ""); preErr == nil {
 			fromStatus, _ = pre.State["status"].(string)
@@ -743,6 +788,16 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			}
 		}
 		resp := map[string]any{"entity": entityFullRecord(r.ID, r.Type, r.Slug, r.State)}
+		if entityType == "bug" && newStatus == string(model.BugStatusNeedsReview) {
+			now := time.Now().UTC()
+			if _, err := entitySvc.UpdateEntity(service.UpdateEntityInput{
+				Type: "bug", ID: entityID,
+				Fields: map[string]string{"needs_review_at": now.Format(time.RFC3339)},
+			}); err != nil {
+				log.Printf("ERROR: failed to record needs-review timestamp for %s: %v", entityID, err)
+			}
+			resp["stop_state"] = true
+		}
 		if structuralChecks != nil {
 			resp["structural_checks"] = structuralChecks
 		}
@@ -858,6 +913,19 @@ func featureFromState(entityID, slug string, state map[string]any) *model.Featur
 		Status: model.FeatureStatus(entityStateStr(state, "status")), ReviewCycle: rc,
 		Tier: entityStateStr(state, "tier"), BlockedReason: br, Design: entityStateStr(state, "design"), Spec: entityStateStr(state, "spec"),
 		DevPlan: entityStateStr(state, "dev_plan"), Overrides: overridesFromState(state),
+	}
+}
+
+// bugFromState constructs a model.Bug from the entity store state map.
+func bugFromState(entityID, slug string, state map[string]any) *model.Bug {
+	rc, _ := state["review_cycle"].(int)
+	br, _ := state["blocked_reason"].(string)
+	return &model.Bug{
+		ID: entityID, Slug: slug,
+		Status:        model.BugStatus(entityStateStr(state, "status")),
+		ReviewCycle:   rc,
+		BlockedReason: br,
+		Tier:          entityStateStr(state, "tier"),
 	}
 }
 

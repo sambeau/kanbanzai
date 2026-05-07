@@ -547,8 +547,8 @@ func TestEnumStringValues(t *testing.T) {
 	if model.BugStatusNeedsRework != "needs-rework" {
 		t.Errorf("BugStatusNeedsRework = %q, want %q", model.BugStatusNeedsRework, "needs-rework")
 	}
-	if model.BugStatusVerified != "verified" {
-		t.Errorf("BugStatusVerified = %q, want %q", model.BugStatusVerified, "verified")
+	if model.BugStatusVerifying != "verifying" {
+		t.Errorf("BugStatusVerifying = %q, want %q", model.BugStatusVerifying, "verifying")
 	}
 	if model.BugStatusClosed != "closed" {
 		t.Errorf("BugStatusClosed = %q, want %q", model.BugStatusClosed, "closed")

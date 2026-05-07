@@ -71,6 +71,13 @@ var terminalStates = map[EntityKind]map[string]struct{}{
 // Deprecated aliases for backward compatibility.
 var _ = terminalStates[EntityPlan]
 
+// bugStopStates are bug lifecycle states where transition-based processing
+// should halt. These represent mandatory human/orchestrator gates that
+// cannot be auto-transitioned through.
+var bugStopStates = map[string]bool{
+	string(model.BugStatusNeedsReview): true,
+}
+
 var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 	// StrategicPlan lifecycle: idea → shaping → ready → active → done
 	EntityStrategicPlan: {
@@ -277,13 +284,13 @@ var allowedTransitions = map[EntityKind]map[string]map[string]struct{}{
 			string(model.BugStatusNeedsReview): {},
 		},
 		string(model.BugStatusNeedsReview): {
-			string(model.BugStatusVerified):    {},
+			string(model.BugStatusVerifying):   {},
 			string(model.BugStatusNeedsRework): {},
 		},
 		string(model.BugStatusNeedsRework): {
 			string(model.BugStatusInProgress): {},
 		},
-		string(model.BugStatusVerified): {
+		string(model.BugStatusVerifying): {
 			string(model.BugStatusClosed): {},
 		},
 		string(model.BugStatusCannotReproduce): {

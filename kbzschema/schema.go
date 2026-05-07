@@ -147,7 +147,7 @@ func bugSchema() *jsonSchema {
 			"id":             strProp("Unique Bug identifier (BUG-…)"),
 			"slug":           strProp("URL-friendly slug"),
 			"title":          strProp("Human-readable bug title"),
-			"status":         enumProp("Lifecycle status", BugStatusReported, BugStatusTriaged, BugStatusReproduced, BugStatusPlanned, BugStatusInProgress, BugStatusNeedsReview, BugStatusNeedsRework, BugStatusVerified, BugStatusClosed, BugStatusDuplicate, BugStatusNotPlanned, BugStatusCannotReproduce),
+			"status":         enumProp("Lifecycle status", BugStatusReported, BugStatusTriaged, BugStatusReproduced, BugStatusPlanned, BugStatusInProgress, BugStatusNeedsReview, BugStatusNeedsRework, BugStatusVerifying, BugStatusClosed, BugStatusDuplicate, BugStatusNotPlanned, BugStatusCannotReproduce),
 			"estimate":       numProp("Story point estimate"),
 			"severity":       enumProp("Bug severity", SeverityLow, SeverityMedium, SeverityHigh, SeverityCritical),
 			"priority":       enumProp("Bug priority", PriorityLow, PriorityMedium, PriorityHigh, PriorityCritical),

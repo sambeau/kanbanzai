@@ -116,7 +116,7 @@ const (
 	BugStatusInProgress      BugStatus = "in-progress"
 	BugStatusNeedsReview     BugStatus = "needs-review"
 	BugStatusNeedsRework     BugStatus = "needs-rework"
-	BugStatusVerified        BugStatus = "verified"
+	BugStatusVerifying       BugStatus = "verifying"
 	BugStatusClosed          BugStatus = "closed"
 	BugStatusDuplicate       BugStatus = "duplicate"
 	BugStatusNotPlanned      BugStatus = "not-planned"
@@ -494,6 +494,10 @@ type Bug struct {
 	ReleaseTarget string   `yaml:"release_target,omitempty"`
 	Tags          []string `yaml:"tags,omitempty"`
 	Tier          string   `yaml:"tier,omitempty"` // fast-track risk tier
+
+	ReviewCycle   int        `yaml:"review_cycle,omitempty"`    // number of review→rework cycles (FR-012)
+	BlockedReason string     `yaml:"blocked_reason,omitempty"`  // reason when cap blocks rework (FR-014)
+	NeedsReviewAt *time.Time `yaml:"needs_review_at,omitempty"` // set when bug enters needs-review; used by health checks
 }
 
 // GetKind returns the entity kind.

@@ -53,51 +53,89 @@ const (
 
 // Bug status constants
 const (
-	BugStatusReported        = "reported"
-	BugStatusTriaged         = "triaged"
-	BugStatusReproduced      = "reproduced"
-	BugStatusPlanned         = "planned"
-	BugStatusInProgress      = "in-progress"
-	BugStatusNeedsReview     = "needs-review"
-	BugStatusNeedsRework     = "needs-rework"
-	BugStatusVerified        = "verified"
-	BugStatusClosed          = "closed"
-	BugStatusDuplicate       = "duplicate"
-	BugStatusNotPlanned      = "not-planned"
-	BugStatusCannotReproduce = "cannot-reproduce"
+	BugStatusReported           = "reported"
+	BugStatusTriaged            = "triaged"
+	BugStatusReproduced         = "reproduced"
+	BugStatusPlanned            = "planned"
+	BugStatusInProgress         = "in-progress"
+	BugStatusNeedsReview        = "needs-review"
+	BugStatusNeedsRework        = "needs-rework"
+	BugStatusVerifying          = "verifying"
+	BugStatusVerifiedDeprecated = "verified" // backward compat: old state files may use "verified"
+	BugStatusClosed             = "closed"
+	BugStatusDuplicate          = "duplicate"
+	BugStatusNotPlanned         = "not-planned"
+	BugStatusCannotReproduce    = "cannot-reproduce"
 )
 
 // Bug severity constants
-const (SeverityLow = "low"; SeverityMedium = "medium"; SeverityHigh = "high"; SeverityCritical = "critical")
+const (
+	SeverityLow      = "low"
+	SeverityMedium   = "medium"
+	SeverityHigh     = "high"
+	SeverityCritical = "critical"
+)
 
 // Bug priority constants
-const (PriorityLow = "low"; PriorityMedium = "medium"; PriorityHigh = "high"; PriorityCritical = "critical")
+const (
+	PriorityLow      = "low"
+	PriorityMedium   = "medium"
+	PriorityHigh     = "high"
+	PriorityCritical = "critical"
+)
 
 // Bug type constants
-const (BugTypeImplementationDefect = "implementation-defect"; BugTypeSpecificationDefect = "specification-defect"; BugTypeDesignProblem = "design-problem")
+const (
+	BugTypeImplementationDefect = "implementation-defect"
+	BugTypeSpecificationDefect  = "specification-defect"
+	BugTypeDesignProblem        = "design-problem"
+)
 
 // Decision status constants
-const (DecisionStatusProposed = "proposed"; DecisionStatusAccepted = "accepted"; DecisionStatusRejected = "rejected"; DecisionStatusSuperseded = "superseded")
+const (
+	DecisionStatusProposed   = "proposed"
+	DecisionStatusAccepted   = "accepted"
+	DecisionStatusRejected   = "rejected"
+	DecisionStatusSuperseded = "superseded"
+)
 
 // Document type constants
 const (
-	DocTypeDesign = "design"; DocTypeSpecification = "specification"; DocTypeDevPlan = "dev-plan"
-	DocTypeResearch = "research"; DocTypeReport = "report"; DocTypePolicy = "policy"; DocTypeRCA = "rca"
+	DocTypeDesign        = "design"
+	DocTypeSpecification = "specification"
+	DocTypeDevPlan       = "dev-plan"
+	DocTypeResearch      = "research"
+	DocTypeReport        = "report"
+	DocTypePolicy        = "policy"
+	DocTypeRCA           = "rca"
 )
 
 // Document status constants
-const (DocStatusDraft = "draft"; DocStatusApproved = "approved"; DocStatusSuperseded = "superseded")
+const (
+	DocStatusDraft      = "draft"
+	DocStatusApproved   = "approved"
+	DocStatusSuperseded = "superseded"
+)
 
 // Knowledge entry status constants
 const (
-	KnowledgeStatusContributed = "contributed"; KnowledgeStatusConfirmed = "confirmed"
-	KnowledgeStatusDisputed = "disputed"; KnowledgeStatusStale = "stale"; KnowledgeStatusRetired = "retired"
+	KnowledgeStatusContributed = "contributed"
+	KnowledgeStatusConfirmed   = "confirmed"
+	KnowledgeStatusDisputed    = "disputed"
+	KnowledgeStatusStale       = "stale"
+	KnowledgeStatusRetired     = "retired"
 )
 
-const (KnowledgeTier2 = 2; KnowledgeTier3 = 3)
+const (
+	KnowledgeTier2 = 2
+	KnowledgeTier3 = 3
+)
 
 // Checkpoint status constants
-const (CheckpointStatusPending = "pending"; CheckpointStatusResponded = "responded")
+const (
+	CheckpointStatusPending   = "pending"
+	CheckpointStatusResponded = "responded"
+)
 
 // Entity types
 
@@ -124,25 +162,25 @@ type Plan = Batch
 
 // Feature represents a Feature entity record.
 type Feature struct {
-	ID           string   `yaml:"id" json:"id"`
-	Slug         string   `yaml:"slug" json:"slug"`
-	Parent       string   `yaml:"parent,omitempty" json:"parent,omitempty"`
-	Status       string   `yaml:"status" json:"status"`
-	Estimate     *float64 `yaml:"estimate,omitempty" json:"estimate,omitempty"`
-	Summary      string   `yaml:"summary" json:"summary"`
-	Design       string   `yaml:"design,omitempty" json:"design,omitempty"`
-	Spec         string   `yaml:"spec,omitempty" json:"spec,omitempty"`
-	DevPlan      string   `yaml:"dev_plan,omitempty" json:"dev_plan,omitempty"`
-	Tasks        []string `yaml:"tasks,omitempty" json:"tasks,omitempty"`
-	Decisions    []string `yaml:"decisions,omitempty" json:"decisions,omitempty"`
-	Tags         []string `yaml:"tags,omitempty" json:"tags,omitempty"`
-	Branch       string   `yaml:"branch,omitempty" json:"branch,omitempty"`
-	Created      string   `yaml:"created" json:"created"`
-	CreatedBy    string   `yaml:"created_by" json:"created_by"`
-	Updated      string   `yaml:"updated" json:"updated"`
+	ID             string   `yaml:"id" json:"id"`
+	Slug           string   `yaml:"slug" json:"slug"`
+	Parent         string   `yaml:"parent,omitempty" json:"parent,omitempty"`
+	Status         string   `yaml:"status" json:"status"`
+	Estimate       *float64 `yaml:"estimate,omitempty" json:"estimate,omitempty"`
+	Summary        string   `yaml:"summary" json:"summary"`
+	Design         string   `yaml:"design,omitempty" json:"design,omitempty"`
+	Spec           string   `yaml:"spec,omitempty" json:"spec,omitempty"`
+	DevPlan        string   `yaml:"dev_plan,omitempty" json:"dev_plan,omitempty"`
+	Tasks          []string `yaml:"tasks,omitempty" json:"tasks,omitempty"`
+	Decisions      []string `yaml:"decisions,omitempty" json:"decisions,omitempty"`
+	Tags           []string `yaml:"tags,omitempty" json:"tags,omitempty"`
+	Branch         string   `yaml:"branch,omitempty" json:"branch,omitempty"`
+	Created        string   `yaml:"created" json:"created"`
+	CreatedBy      string   `yaml:"created_by" json:"created_by"`
+	Updated        string   `yaml:"updated" json:"updated"`
 	NextFeatureSeq int      `yaml:"next_feature_seq" json:"next_feature_seq"`
-	Supersedes   string   `yaml:"supersedes,omitempty" json:"supersedes,omitempty"`
-	SupersededBy string   `yaml:"superseded_by,omitempty" json:"superseded_by,omitempty"`
+	Supersedes     string   `yaml:"supersedes,omitempty" json:"supersedes,omitempty"`
+	SupersededBy   string   `yaml:"superseded_by,omitempty" json:"superseded_by,omitempty"`
 }
 
 // Task represents a Task entity record.
@@ -212,22 +250,22 @@ type Decision struct {
 
 // DocumentRecord represents a document record.
 type DocumentRecord struct {
-	ID           string   `yaml:"id" json:"id"`
-	Path         string   `yaml:"path" json:"path"`
-	Type         string   `yaml:"type" json:"type"`
-	Name         string   `yaml:"name" json:"name"`
-	Status       string   `yaml:"status" json:"status"`
-	Owner        string   `yaml:"owner,omitempty" json:"owner,omitempty"`
-	ApprovedBy   string   `yaml:"approved_by,omitempty" json:"approved_by,omitempty"`
-	ApprovedAt   string   `yaml:"approved_at,omitempty" json:"approved_at,omitempty"`
-	ContentHash  string   `yaml:"content_hash" json:"content_hash"`
-	Supersedes   string   `yaml:"supersedes,omitempty" json:"supersedes,omitempty"`
-	SupersededBy string   `yaml:"superseded_by,omitempty" json:"superseded_by,omitempty"`
-	Created      string   `yaml:"created" json:"created"`
-	CreatedBy    string   `yaml:"created_by" json:"created_by"`
-	Updated      string   `yaml:"updated" json:"updated"`
+	ID             string   `yaml:"id" json:"id"`
+	Path           string   `yaml:"path" json:"path"`
+	Type           string   `yaml:"type" json:"type"`
+	Name           string   `yaml:"name" json:"name"`
+	Status         string   `yaml:"status" json:"status"`
+	Owner          string   `yaml:"owner,omitempty" json:"owner,omitempty"`
+	ApprovedBy     string   `yaml:"approved_by,omitempty" json:"approved_by,omitempty"`
+	ApprovedAt     string   `yaml:"approved_at,omitempty" json:"approved_at,omitempty"`
+	ContentHash    string   `yaml:"content_hash" json:"content_hash"`
+	Supersedes     string   `yaml:"supersedes,omitempty" json:"supersedes,omitempty"`
+	SupersededBy   string   `yaml:"superseded_by,omitempty" json:"superseded_by,omitempty"`
+	Created        string   `yaml:"created" json:"created"`
+	CreatedBy      string   `yaml:"created_by" json:"created_by"`
+	Updated        string   `yaml:"updated" json:"updated"`
 	NextFeatureSeq int      `yaml:"next_feature_seq" json:"next_feature_seq"`
-	Tags         []string `yaml:"tags,omitempty" json:"tags,omitempty"`
+	Tags           []string `yaml:"tags,omitempty" json:"tags,omitempty"`
 }
 
 // KnowledgeEntry represents a knowledge entry.
@@ -269,9 +307,9 @@ type HumanCheckpoint struct {
 
 // ProjectConfig represents the project configuration.
 type ProjectConfig struct {
-	Version      string        `yaml:"version" json:"version"`
-	SchemaVersion string       `yaml:"schema_version" json:"schema_version"`
-	Prefixes     []PrefixEntry `yaml:"prefixes,omitempty" json:"prefixes,omitempty"`
+	Version       string        `yaml:"version" json:"version"`
+	SchemaVersion string        `yaml:"schema_version" json:"schema_version"`
+	Prefixes      []PrefixEntry `yaml:"prefixes,omitempty" json:"prefixes,omitempty"`
 }
 
 // PrefixEntry represents a single prefix entry.

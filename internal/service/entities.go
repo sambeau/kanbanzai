@@ -1696,6 +1696,9 @@ func bugFields(e model.Bug) map[string]any {
 	if e.Tier != "" {
 		fields["tier"] = e.Tier
 	}
+	if e.NeedsReviewAt != nil {
+		fields["needs_review_at"] = e.NeedsReviewAt.Format(time.RFC3339)
+	}
 	return fields
 }
 
