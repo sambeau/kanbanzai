@@ -58,6 +58,25 @@ commit conventions, knowledge contribution, and entity naming rules.
 
 **Do not call `finish` on a task you have not claimed.**
 
+### Committing State Outside Task Workflows
+
+The `state_modified: true` check above only fires when a task has been claimed
+via `next(id)`. Sessions that perform management work without claiming a task
+(doc registration, entity transitions, knowledge contributions) never see it.
+State changes accumulate silently and are only caught at the start of the next
+session.
+
+**Rule:** After any tool call that writes to `.kbz/state/` or `.kbz/index/`,
+commit those changes before moving to a different concern — regardless of
+whether a task was claimed:
+
+```
+git add .kbz/ && git commit -m "chore(state): commit workflow state changes"
+```
+
+This applies to doc registrations, entity transitions, knowledge contributions,
+and any other operation that modifies the project's workflow state.
+
 ---
 
 ## Context Assembly
