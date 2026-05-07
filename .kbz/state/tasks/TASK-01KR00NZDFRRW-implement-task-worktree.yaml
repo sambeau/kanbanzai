@@ -1,0 +1,6 @@
+id: TASK-01KR00NZDFRRW
+parent_feature: FEAT-01KR003J3ATM2
+slug: implement-task-worktree
+name: Update implement-task SKILL.md for worktree file operations
+summary: Add guidance to .kbz/skills/implement-task/SKILL.md for worktree file writing using kanbanzai_edit_file and write_file with entity_id.
+status: queued
