@@ -10,3 +10,5 @@ created: "2026-05-07T11:21:53Z"
 created_by: sambeau
 display_id: B56-F2
 tier: feature
+verification: "TASK-01KR197N74VZF: go test ./internal/model/... ./internal/validate/... ./internal/storage/... ./internal/service/... ./kbzschema/... — all pass. go vet — clean.\nTASK-01KR197N7C84V: go test -count=1 ./internal/validate/... ./internal/model/... ./internal/service/... — all pass. go test -count=1 -run 'Transition|Bug' ./internal/mcp/... — passes. go build ./... succeeds.\nTASK-01KR197N7FXGT: go build ./... and go test ./... pass (kbzinit failures pre-existing and unrelated). Verified all four gates handle success and failure paths.\nTASK-01KR197N7JW4G: go test ./internal/service/ -run 'TestEntityService_BugReviewCycle|TestEntityService_BugIncrementReviewCycle' - all 4 tests pass"
+verification_status: passed

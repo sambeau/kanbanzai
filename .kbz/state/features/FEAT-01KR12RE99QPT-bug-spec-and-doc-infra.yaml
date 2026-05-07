@@ -10,3 +10,5 @@ created: "2026-05-07T11:21:53Z"
 created_by: sambeau
 display_id: B56-F4
 tier: feature
+verification: "TASK-01KR197N74F20: Ran go test ./... (excluding kbzinit pre-existing failures) - all 31 packages pass including internal/service and internal/mcp. New tests cover: spec file generation (FR-101), document registration (FR-102), idempotency (FR-104), failure isolation (FR-106), and no-hook path.\nTASK-01KR197N7BDZG: go test ./internal/service/ -run 'TestEntityService_BugFixPlan' - both tests pass (creates file, empty no-error)\nTASK-01KR197N7EG1S: go test ./internal/service/ -run 'TestCanonicalDocPath_Bug' - all 4 tests pass; go test ./internal/... passes all service/mcp packages\nTASK-01KR197N7F61Y: (no verification recorded)"
+verification_status: partial
