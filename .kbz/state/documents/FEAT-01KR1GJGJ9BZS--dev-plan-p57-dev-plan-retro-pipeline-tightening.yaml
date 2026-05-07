@@ -1,11 +1,13 @@
+approved_at: "2026-05-07T15:24:51Z"
+approved_by: sambeau
 canonical_content_hash: ea337a552b9f0d6765689e1894b270a0a4d9221e03c4c0b17e0281f2645884db
-content_hash: aeadb66346851f20991257de39e22eb372183892f6b7fa38564566b73e97f284
+content_hash: d26e3f30e0779d3c68dd28d1e6f3bcb428b00aba79dbb592cceab6c51238aafb
 created: "2026-05-07T15:24:42Z"
 created_by: sambeau
 id: FEAT-01KR1GJGJ9BZS/dev-plan-p57-dev-plan-retro-pipeline-tightening
 owner: FEAT-01KR1GJGJ9BZS
 path: work/P57-retro-pipeline-tightening/P57-dev-plan-retro-pipeline-tightening.md
-status: draft
+status: approved
 title: "Dev-Plan: Retrospective Pipeline Tightening"
 type: dev-plan
-updated: "2026-05-07T15:24:42Z"
+updated: "2026-05-07T15:24:51Z"
