@@ -3,8 +3,16 @@ parent_feature: FEAT-01KR12RE970R8
 slug: bug-lifecycle-gate-enforcement-check-gate
 name: Implement CheckBugTransitionGate
 summary: "Add CheckBugTransitionGate with all four gates: in-progress to needs-review (commit check), needs-review to verifying (review report + tests), needs-review to in-progress (review cycle), verifying to closed (verifier dispatch placeholder). Wire into entityTransitionAction."
-status: active
+status: done
+files_planned:
+  - internal/model/entities.go
+  - internal/service/prereq.go
+  - internal/service/review_rework.go
+  - internal/mcp/entity_tool.go
+completed: "2026-05-07T14:22:41Z"
 claimed_at: "2026-05-07T14:08:47Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-07T14:08:47Z"
 dispatched_by: sambeau
+completion_summary: "Implemented CheckBugTransitionGate in prereq.go with four gates: in-progress->needs-review (worktree commits), needs-review->verifying (review report + go test), needs-review->needs-rework (review cycle cap), verifying->closed (placeholder). Added ReviewCycle/BlockedReason to Bug model, IncrementBugReviewCycle/PersistBugBlockedReason service methods, bugFromState helper, and wired into entityTransitionAction. All tests pass."
+verification: go build ./... and go test ./... pass (kbzinit failures pre-existing and unrelated). Verified all four gates handle success and failure paths.
