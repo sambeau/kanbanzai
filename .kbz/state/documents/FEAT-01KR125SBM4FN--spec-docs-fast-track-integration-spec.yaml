@@ -1,11 +1,13 @@
+approved_at: "2026-05-07T11:33:33Z"
+approved_by: sambeau
 canonical_content_hash: 5a0b2b479ec1693b0340ab50a534a59e2be40bbd27c818e249c773b253432fce
-content_hash: 5a0b2b479ec1693b0340ab50a534a59e2be40bbd27c818e249c773b253432fce
+content_hash: c631b49a4c0585f6ff1363863454e086fd448d0f90de2b02558d5eb4de794eab
 created: "2026-05-07T11:30:16Z"
 created_by: sambeau
 id: FEAT-01KR125SBM4FN/spec-docs-fast-track-integration-spec
 owner: FEAT-01KR125SBM4FN
 path: work/FEAT-01KR125SBM4FN/docs-fast-track-integration-spec.md
-status: draft
+status: approved
 title: "Specification: Documentation and Fast-Track Integration"
 type: spec
-updated: "2026-05-07T11:30:16Z"
+updated: "2026-05-07T11:33:33Z"
