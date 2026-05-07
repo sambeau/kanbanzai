@@ -1,0 +1,6 @@
+id: TASK-01KR1GS8T687B
+parent_feature: FEAT-01KR1GJGJ9BZS
+slug: retro-doc-templates
+name: Create Auto-Generated Document Templates for Retro Fixes
+summary: Create RenderRetroDesign() and RenderRetroSpec() template functions that generate complete design and specification markdown documents from RetroTheme data.
+status: queued

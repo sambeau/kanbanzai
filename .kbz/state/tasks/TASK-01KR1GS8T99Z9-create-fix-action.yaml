@@ -1,0 +1,6 @@
+id: TASK-01KR1GS8T99Z9
+parent_feature: FEAT-01KR1GJGJ9BZS
+slug: create-fix-action
+name: Add create_fix Action to retro MCP Tool
+summary: "Add the create_fix action to the retro tool with dual-mode, theme selection, parent plan auto-creation, idempotency, and full auto-mode pipeline."
+status: queued

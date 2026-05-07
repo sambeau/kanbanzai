@@ -1,0 +1,6 @@
+id: TASK-01KR1GS8TM4XZ
+parent_feature: FEAT-01KR1GJGJ9BZS
+slug: retro-integration-tests
+name: Integration Tests and End-to-End Verification
+summary: "Wire all components together, write end-to-end integration tests verifying all 18 acceptance criteria pass."
+status: queued
