@@ -1,9 +1,9 @@
 id: P55-orchestrator-context-hygiene
 slug: orchestrator-context-hygiene
 name: Orchestrator Context Hygiene
-status: shaping
+status: ready
 summary: "Prevent the orchestrator from diluting its context by investigating implementation code before delegating to sub-agents. Add explicit anti-patterns, tool restrictions, procedural constraints, and fast-track review dispatch to keep the orchestrator focused on coordination decisions."
 order: 0
 created: "2026-05-07T10:12:38Z"
 created_by: sambeau
-updated: "2026-05-07T10:13:18Z"
+updated: "2026-05-07T11:08:33Z"
