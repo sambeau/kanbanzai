@@ -194,8 +194,8 @@ func TestDisplayID_AC005_CreateFeatureRequiresParent(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected error for missing parent, got nil")
 	}
-	if !strings.Contains(err.Error(), "parent plan is required") {
-		t.Errorf("error = %q; want message containing 'parent plan is required'", err.Error())
+	if !strings.Contains(err.Error(), "parent plan or batch is required") {
+		t.Errorf("error = %q; want message containing 'parent plan or batch is required'", err.Error())
 	}
 
 	// Verify no feature file was written.
