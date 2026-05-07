@@ -1,0 +1,6 @@
+id: TASK-01KR03MSGQ5KJ
+parent_feature: FEAT-01KR03G3TTF5H
+slug: fix-status-dashboard-misclassification
+name: Fix status dashboard plan-to-batch misclassification
+summary: "The status dashboard's runStatusProjectOverview also hits the same dual-directory problem — P-prefix entities in batches/ with strategic-plan statuses. Additionally, the 'ready to close' attention item fires for strategic plans that are in 'done' status but stored as batches. Fix: either filter P-prefix entities out of the batches/ scan in the status dashboard, or properly distinguish types before generating attention items."
+status: queued
