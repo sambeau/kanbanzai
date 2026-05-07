@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR1AS0QF3FF
 slug: feature-active-task
 name: Feature Active Task
 summary: Test task for handoff verification - active status
-status: ready
+status: active

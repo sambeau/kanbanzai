@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR1ATQM9D63
 slug: bugfix-active-task
 name: Bugfix Active Task
 summary: Test task for handoff verification - bug_fix active
-status: queued
+status: ready
