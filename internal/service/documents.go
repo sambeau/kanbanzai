@@ -16,6 +16,7 @@ import (
 	"github.com/sambeau/kanbanzai/internal/fsutil"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/structural"
 )
 
 // SubmitDocumentInput contains the fields needed to submit a new document.
@@ -527,10 +528,26 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 				return DocumentResult{}, fmt.Errorf("validate document sections: %w", valErr)
 			}
 			if !validation.Valid {
-				return DocumentResult{}, fmt.Errorf(
-					"cannot approve document %s: missing required sections: %s",
-					input.ID, strings.Join(validation.Missing, ", "),
-				)
+				// Check if false positives have been recorded for this check type.
+				// If so, the user has acknowledged the failure and approval proceeds.
+				ps, psErr := structural.LoadPromotionState(s.stateRoot)
+				hasFalsePositive := false
+				if psErr == nil {
+					key := structural.CheckKey{
+						CheckType:    "required_sections",
+						DocumentType: string(doc.Type),
+					}
+					entry, entryOk := ps.Entry(key)
+					if entryOk && entry.FalsePositiveCount > 0 {
+						hasFalsePositive = true
+					}
+				}
+				if !hasFalsePositive {
+					return DocumentResult{}, fmt.Errorf(
+						"cannot approve document %s: missing required sections: %s",
+						input.ID, strings.Join(validation.Missing, ", "),
+					)
+				}
 			}
 		}
 	}

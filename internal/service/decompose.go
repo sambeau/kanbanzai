@@ -410,7 +410,7 @@ var (
 	// Matches bold-identifier criteria: "**XX-NN.** text"
 	// where XX is one or more uppercase ASCII letters and NN is one or more digits.
 	// Group 1: identifier prefix (e.g. "AC"), Group 2: number (e.g. "01"), Group 3: criterion text.
-	reBoldIdent = regexp.MustCompile(`^\*\*([A-Z]+)-(\d+)\.\*\*\s+(.+)$`)
+	reBoldIdent = regexp.MustCompile(`^\*\*([A-Z]+)-(\d+)(?:\s+\([A-Z]+-\d+\))?[\.:]?\*\*\s+(.+)$`)
 
 	// Dev-plan parsing regexes.
 	reDevPlanTaskBreakdown = regexp.MustCompile(`(?im)^## Task Breakdown\s*$`)

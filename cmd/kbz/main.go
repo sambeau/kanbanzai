@@ -4,8 +4,11 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"strings"
+	"sync"
+	"time"
 
 	"path/filepath"
 	"strconv"
@@ -61,12 +64,35 @@ type docService interface {
 type renderService = *render.Renderer
 
 func defaultDependencies() dependencies {
+	// Open the local derived cache once and attach to every entity service
+	// created by the factory. The cache is best-effort: if it can't be opened
+	// (e.g. no .kbz/ directory yet), we continue without cache acceleration.
+	var (
+		cacheOnce sync.Once
+		sqlCache  *cache.Cache
+	)
+	if c, err := cache.Open(filepath.Join(core.InstanceRootDir, cache.CacheDir)); err == nil {
+		sqlCache = c
+	}
+
 	return dependencies{
 		stdout:  os.Stdout,
 		stdin:   os.Stdin,
 		version: version,
 		newEntityService: func(root string) entityService {
-			return service.NewEntityService(root)
+			svc := service.NewEntityService(root)
+			if sqlCache != nil {
+				svc.SetCache(sqlCache)
+				cacheOnce.Do(func() {
+					start := time.Now()
+					if n, err := svc.RebuildCache(); err != nil {
+						log.Printf("[cli] cache warm-up failed (continuing without cache): %v", err)
+					} else {
+						log.Printf("[cli] cache warm-up: loaded %d entities in %s", n, time.Since(start))
+					}
+				})
+			}
+			return svc
 		},
 	}
 }

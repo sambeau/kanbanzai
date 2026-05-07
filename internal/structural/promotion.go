@@ -11,10 +11,10 @@ import (
 )
 
 const (
-	promotionStateFile       = "structural-check-state.yaml"
-	promotionThreshold       = 5
-	modeWarning              = "warning"
-	modeHardGate             = "hard_gate"
+	promotionStateFile = "structural-check-state.yaml"
+	promotionThreshold = 5
+	modeWarning        = "warning"
+	modeHardGate       = "hard_gate"
 )
 
 // CheckKey identifies a (check_type, document_type) promotion state entry.
@@ -104,6 +104,13 @@ func (ps *PromotionState) GetMode(key CheckKey) string {
 		return modeWarning
 	}
 	return entry.Mode
+}
+
+// Entry returns the promotion entry for the given key, and a boolean indicating
+// whether an entry exists. Useful for consulting false positive counts.
+func (ps *PromotionState) Entry(key CheckKey) (PromotionEntry, bool) {
+	entry, ok := ps.entries[entryKey(key)]
+	return entry, ok
 }
 
 // RecordPass records a successful (clean) run for the given check key.
