@@ -2,8 +2,9 @@ id: FEAT-01KR12RE970R8
 slug: bug-lifecycle-gate-enforcement
 name: Bug Lifecycle Gate Enforcement
 parent: B56-bug-lifecycle-hardening
-status: proposed
+status: specifying
 summary: "Mandatory needs-review stop-state, CheckBugTransitionGate, review cycle tracking, and rename verified to verifying in the bug lifecycle."
+spec: FEAT-01KR12RE970R8/spec-p56-f1-spec-bug-lifecycle-gate-enforcement
 created: "2026-05-07T11:21:53Z"
 created_by: sambeau
 display_id: B56-F2

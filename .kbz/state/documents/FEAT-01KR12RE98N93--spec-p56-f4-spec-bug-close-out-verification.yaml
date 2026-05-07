@@ -1,0 +1,11 @@
+canonical_content_hash: 6a24aaa1d997946d6b813c1fc2bf21c248f6dc9b6e39ea3fff03c2229817bb66
+content_hash: 1912fdd615b492a3f05262fde2c87a615c6e36077473b2541607b93934194703
+created: "2026-05-07T11:26:45Z"
+created_by: sambeau
+id: FEAT-01KR12RE98N93/spec-p56-f4-spec-bug-close-out-verification
+owner: FEAT-01KR12RE98N93
+path: work/P56-bug-lifecycle-hardening/P56-F4-spec-bug-close-out-verification.md
+status: draft
+title: "Specification: Bug Close-Out Verification"
+type: spec
+updated: "2026-05-07T11:26:45Z"

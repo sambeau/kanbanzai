@@ -1,0 +1,11 @@
+canonical_content_hash: fd65e7d96175e87bce4d9c5de77b9c43baa821454b50bb7b1c0e6bc3a59d3bab
+content_hash: 88c834c01ee297061a33e77a3322aeced3b831fd691dc33cfd00fd1ad1e82a94
+created: "2026-05-07T11:26:45Z"
+created_by: sambeau
+id: FEAT-01KR12RE99QPT/spec-p56-f2-spec-bug-spec-and-doc-infra
+owner: FEAT-01KR12RE99QPT
+path: work/P56-bug-lifecycle-hardening/P56-F2-spec-bug-spec-and-doc-infra.md
+status: draft
+title: "Specification: Bug Spec and Document Infrastructure"
+type: spec
+updated: "2026-05-07T11:26:45Z"
