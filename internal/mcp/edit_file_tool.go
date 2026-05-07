@@ -11,16 +11,17 @@ import (
 	"github.com/mark3labs/mcp-go/server"
 
 	"github.com/sambeau/kanbanzai/internal/fsutil"
+	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // EditFileTool returns the edit_file tool that edits a file within
 // a repo root or worktree, with worktree path resolution and traversal prevention.
-func EditFileTool(repoRoot string, worktreeStore *worktree.Store) []server.ServerTool {
-	return []server.ServerTool{editFileTool(repoRoot, worktreeStore)}
+func EditFileTool(repoRoot string, worktreeStore *worktree.Store, entitySvc *service.EntityService) []server.ServerTool {
+	return []server.ServerTool{editFileTool(repoRoot, worktreeStore, entitySvc)}
 }
 
-func editFileTool(repoRoot string, worktreeStore *worktree.Store) server.ServerTool {
+func editFileTool(repoRoot string, worktreeStore *worktree.Store, entitySvc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("edit_file",
 		mcp.WithReadOnlyHintAnnotation(false),
 		mcp.WithDestructiveHintAnnotation(false),
@@ -116,10 +117,14 @@ func editFileTool(repoRoot string, worktreeStore *worktree.Store) server.ServerT
 				return nil, fmt.Errorf("write file: %w", err)
 			}
 
-			return map[string]any{
+			resp := map[string]any{
 				"path":  resolved,
 				"bytes": len(content),
-			}, nil
+			}
+			if warning := activeBugWorktreeWarning(entitySvc, worktreeStore, entityID); warning != "" {
+				resp["warning"] = warning
+			}
+			return resp, nil
 
 		case "edit":
 			args, _ := req.Params.Arguments.(map[string]any)
@@ -188,11 +193,15 @@ func editFileTool(repoRoot string, worktreeStore *worktree.Store) server.ServerT
 				return nil, fmt.Errorf("write edited file: %w", err)
 			}
 
-			return map[string]any{
+			resp := map[string]any{
 				"path":          resolved,
 				"display":       display,
 				"edits_applied": len(edits),
-			}, nil
+			}
+			if warning := activeBugWorktreeWarning(entitySvc, worktreeStore, entityID); warning != "" {
+				resp["warning"] = warning
+			}
+			return resp, nil
 		}
 
 		return inlineErr("invalid_parameter", "unknown mode: "+mode)

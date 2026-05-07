@@ -255,8 +255,8 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	// GroupGit: worktree, merge, pr, branch, cleanup.
 	if groups[config.GroupGit] {
 		mcpServer.AddTools(WorktreeTool(worktreeStore, entitySvc, gitOps, repoRoot)...)
-		mcpServer.AddTools(WriteFileTool(repoRoot, worktreeStore)...)
-		mcpServer.AddTools(EditFileTool(repoRoot, worktreeStore)...)
+		mcpServer.AddTools(WriteFileTool(repoRoot, worktreeStore, entitySvc)...)
+		mcpServer.AddTools(EditFileTool(repoRoot, worktreeStore, entitySvc)...)
 		mcpServer.AddTools(MergeTool(worktreeStore, entitySvc, docRecordSvc, repoRoot, branchThresholds, localConfig)...)
 		mcpServer.AddTools(PRTool(worktreeStore, entitySvc, repoRoot, branchThresholds, localConfig)...)
 		mcpServer.AddTools(BranchTool(worktreeStore, repoRoot, branchThresholds)...)
@@ -287,7 +287,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		mcpServer.AddTools(HealthTool(entitySvc,
 			knowledgeHealthChecker(knowledgeSvc, profileStore),
 			profileHealthChecker(roleStore),
-			Phase3HealthChecker(worktreeStore, knowledgeSvc, cfg, repoRoot),
+			Phase3HealthChecker(worktreeStore, knowledgeSvc, entitySvc, cfg, repoRoot),
 			Phase4aHealthChecker(entitySvc, worktreeStore, checkpointStore, cfg.Dispatch.StallThresholdDays, repoRoot),
 			Phase4bHealthChecker(entitySvc, cfg.Incidents.RCALinkWarnAfterDays),
 			DocCurrencyHealthChecker(toolNames, repoRoot, entitySvc, docRecordSvc),

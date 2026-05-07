@@ -11,6 +11,7 @@ import (
 
 	"github.com/mark3labs/mcp-go/mcp"
 
+	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
@@ -19,7 +20,35 @@ import (
 func invokeEditFile(t *testing.T, repoRoot string, store *worktree.Store, args map[string]any) map[string]any {
 	t.Helper()
 
-	tool := editFileTool(repoRoot, store)
+	tool := editFileTool(repoRoot, store, nil)
+	req := mcp.CallToolRequest{}
+	req.Params.Arguments = args
+
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("edit_file handler returned unexpected error: %v", err)
+	}
+	if len(result.Content) == 0 {
+		t.Fatal("edit_file handler returned empty content")
+	}
+
+	tc, ok := result.Content[0].(mcp.TextContent)
+	if !ok {
+		t.Fatalf("expected mcp.TextContent, got %T", result.Content[0])
+	}
+
+	var resp map[string]any
+	if err := json.Unmarshal([]byte(tc.Text), &resp); err != nil {
+		t.Fatalf("unmarshal response: %v\nraw: %s", err, tc.Text)
+	}
+	return resp
+}
+
+// invokeEditFileWithSvc is like invokeEditFile but passes an entity service.
+func invokeEditFileWithSvc(t *testing.T, repoRoot string, store *worktree.Store, entitySvc *service.EntityService, args map[string]any) map[string]any {
+	t.Helper()
+
+	tool := editFileTool(repoRoot, store, entitySvc)
 	req := mcp.CallToolRequest{}
 	req.Params.Arguments = args
 
@@ -648,6 +677,106 @@ func TestEditFile_FuzzyMatchPreservesTabIndentation(t *testing.T) {
 	wantContent := "var tools = []string{\n\t\"read\",\n\t\"write\",\n\t\"download\",\n}\n"
 	if string(data) != wantContent {
 		t.Errorf("content =\n%q\nwant =\n%q", string(data), wantContent)
+	}
+}
+
+// TestEditFile_WarningWhenActiveBugWorktree verifies FR-206 and FR-207
+// for the edit_file tool.
+func TestEditFile_WarningWhenActiveBugWorktree(t *testing.T) {
+	t.Parallel()
+
+	repoRoot := t.TempDir()
+	stateRoot := t.TempDir()
+
+	entitySvc := service.NewEntityService(stateRoot)
+	bugID := "BUG-01FFFFFFFFFFFFF"
+	createTestBug(t, entitySvc, bugID, "edit-bug", "in-progress")
+
+	wtStore := worktree.NewStore(t.TempDir())
+	wtDir := t.TempDir()
+	_, err := wtStore.Create(worktree.Record{
+		EntityID:  bugID,
+		Branch:    "bug/edit-bug",
+		Path:      wtDir,
+		Status:    worktree.StatusActive,
+		Created:   time.Now().UTC(),
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("create worktree: %v", err)
+	}
+
+	// First create a file to edit.
+	origFile := filepath.Join(repoRoot, "edit-test.txt")
+	if err := os.WriteFile(origFile, []byte("original content"), 0o644); err != nil {
+		t.Fatalf("write original file: %v", err)
+	}
+
+	resp := invokeEditFileWithSvc(t, repoRoot, wtStore, entitySvc, map[string]any{
+		"path":                "edit-test.txt",
+		"mode":                "edit",
+		"edits":               []any{map[string]any{"old_text": "original", "new_text": "modified"}},
+		"display_description": "test edit",
+	})
+
+	if _, hasErr := resp["error"]; hasErr {
+		t.Fatalf("unexpected error: %v", resp["error"])
+	}
+
+	warning, ok := resp["warning"].(string)
+	if !ok || warning == "" {
+		t.Fatal("expected warning but none was returned")
+	}
+	if !strings.Contains(warning, bugID) {
+		t.Errorf("warning should contain bug ID %q, got: %q", bugID, warning)
+	}
+}
+
+// TestEditFile_NoWarningWhenEntityIDProvided verifies FR-210
+// for the edit_file tool.
+func TestEditFile_NoWarningWhenEntityIDProvided(t *testing.T) {
+	t.Parallel()
+
+	repoRoot := t.TempDir()
+	stateRoot := t.TempDir()
+	wtDir := t.TempDir()
+
+	entitySvc := service.NewEntityService(stateRoot)
+	bugID := "BUG-01GGGGGGGGGGGGG"
+	createTestBug(t, entitySvc, bugID, "scoped-bug", "in-progress")
+
+	wtStore := worktree.NewStore(t.TempDir())
+	_, err := wtStore.Create(worktree.Record{
+		EntityID:  bugID,
+		Branch:    "bug/scoped-bug",
+		Path:      wtDir,
+		Status:    worktree.StatusActive,
+		Created:   time.Now().UTC(),
+		CreatedBy: "tester",
+	})
+	if err != nil {
+		t.Fatalf("create worktree: %v", err)
+	}
+
+	// Write the file inside the worktree (entity_id scopes to it).
+	origFile := filepath.Join(wtDir, "scoped.txt")
+	if err := os.WriteFile(origFile, []byte("original"), 0o644); err != nil {
+		t.Fatalf("write original file: %v", err)
+	}
+
+	resp := invokeEditFileWithSvc(t, repoRoot, wtStore, entitySvc, map[string]any{
+		"entity_id":           bugID,
+		"path":                "scoped.txt",
+		"mode":                "edit",
+		"edits":               []any{map[string]any{"old_text": "original", "new_text": "modified"}},
+		"display_description": "scoped edit",
+	})
+
+	if _, hasErr := resp["error"]; hasErr {
+		t.Fatalf("unexpected error: %v", resp["error"])
+	}
+	if w, ok := resp["warning"].(string); ok && w != "" {
+		t.Errorf("unexpected warning with entity_id: %q", w)
 	}
 }
 

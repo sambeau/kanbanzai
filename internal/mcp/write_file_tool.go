@@ -11,16 +11,17 @@ import (
 	"github.com/mark3labs/mcp-go/server"
 
 	"github.com/sambeau/kanbanzai/internal/fsutil"
+	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // WriteFileTool returns the write_file tool that writes content to a file within
 // a repo root or worktree, with full path resolution and traversal prevention.
-func WriteFileTool(repoRoot string, worktreeStore *worktree.Store) []server.ServerTool {
-	return []server.ServerTool{writeFileTool(repoRoot, worktreeStore)}
+func WriteFileTool(repoRoot string, worktreeStore *worktree.Store, entitySvc *service.EntityService) []server.ServerTool {
+	return []server.ServerTool{writeFileTool(repoRoot, worktreeStore, entitySvc)}
 }
 
-func writeFileTool(repoRoot string, worktreeStore *worktree.Store) server.ServerTool {
+func writeFileTool(repoRoot string, worktreeStore *worktree.Store, entitySvc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("write_file",
 		mcp.WithReadOnlyHintAnnotation(false),
 		mcp.WithDestructiveHintAnnotation(false),
@@ -100,10 +101,14 @@ func writeFileTool(repoRoot string, worktreeStore *worktree.Store) server.Server
 			return nil, fmt.Errorf("write file: %w", err)
 		}
 
-		return map[string]any{
+		resp := map[string]any{
 			"path":  resolved,
 			"bytes": len(content),
-		}, nil
+		}
+		if warning := activeBugWorktreeWarning(entitySvc, worktreeStore, entityID); warning != "" {
+			resp["warning"] = warning
+		}
+		return resp, nil
 	})
 
 	return server.ServerTool{Tool: tool, Handler: handler}

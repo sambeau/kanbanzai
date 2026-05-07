@@ -114,10 +114,11 @@ func mergeHealthReports(dst, src *validate.HealthReport) {
 }
 
 // Phase3HealthChecker returns an AdditionalHealthChecker that validates
-// worktrees, branches, knowledge entries, and cleanup status.
+// worktrees, branches, knowledge entries, cleanup status, and bug worktree isolation.
 func Phase3HealthChecker(
 	worktreeStore *worktree.Store,
 	knowledgeSvc *service.KnowledgeService,
+	entitySvc *service.EntityService,
 	cfg *config.Config,
 	repoPath string,
 ) AdditionalHealthChecker {
@@ -142,6 +143,23 @@ func Phase3HealthChecker(
 		// Check worktree state consistency
 		worktreeResult := health.CheckWorktree(repoPath, worktrees)
 		mergeHealthResult(report, "worktree", worktreeResult)
+
+		// Check bug worktree isolation: flag in-progress bugs without active worktrees
+		bugs, err := entitySvc.List("bug")
+		if err != nil {
+			report.Errors = append(report.Errors, validate.ValidationError{
+				EntityType: "bug_worktree",
+				Message:    "failed to list bugs: " + err.Error(),
+			})
+			report.Summary.ErrorCount++
+		} else {
+			bugMaps := make([]map[string]any, len(bugs))
+			for i, b := range bugs {
+				bugMaps[i] = b.State
+			}
+			bugWorktreeResult := health.CheckBugWorktree(bugMaps, worktrees)
+			mergeHealthResult(report, "bug_worktree", bugWorktreeResult)
+		}
 
 		// Check branch health
 		thresholds := git.BranchThresholds{
