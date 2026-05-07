@@ -3,9 +3,9 @@ content: "When decompose propose cannot parse acceptance criteria, its fallback 
 created: "2026-03-28T11:56:00Z"
 created_by: sambeau
 id: KE-01KMT4T59DB2N
-last_accessed_at: "2026-05-07T02:20:02Z"
+last_accessed_at: "2026-05-07T09:46:23Z"
 miss_count: 0
-recent_use_count: 314
+recent_use_count: 315
 scope: project
 status: confirmed
 tags:
