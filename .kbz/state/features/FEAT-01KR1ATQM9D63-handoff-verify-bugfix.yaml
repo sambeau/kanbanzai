@@ -1,0 +1,14 @@
+id: FEAT-01KR1ATQM9D63
+slug: handoff-verify-bugfix
+name: Handoff Verification - Bug Fix Type
+parent: B1-p51-exec
+status: proposed
+summary: Temporary bug_fix tier feature for P51 handoff pipeline verification. DELETE after verification.
+tags:
+  - test-fixture
+  - handoff-verification
+  - temporary
+created: "2026-05-07T13:42:56Z"
+created_by: sambeau
+display_id: B1-F6
+tier: bug_fix
