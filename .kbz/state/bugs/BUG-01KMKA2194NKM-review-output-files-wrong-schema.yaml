@@ -10,3 +10,4 @@ reported: "2026-03-25T20:13:00Z"
 observed: MCP tool schema for output_files is object type; should be array of strings
 expected: mcp.WithArray for output_files parameter in review_task_output tool declaration
 origin_feature: FEAT-01KMKA278DFNV
+summary: "Assessed during Batch 2 cleanup: the old review_task_output tool was merged into the finish tool. The current files_modified parameter correctly uses mcp.WithArray with mcp.WithStringItems() — schema is correct, not relevant anymore."
