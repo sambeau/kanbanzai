@@ -1,0 +1,6 @@
+id: TASK-01KR197N74AEA
+parent_feature: FEAT-01KR12RE98N93
+slug: bug-close-out-verification-placeholder
+name: Implement verifying to closed placeholder gate
+summary: "Add placeholder pass-through for verifying to closed gate. Log 'verifier not yet implemented'. Auto-detect P55 verifier role file for activation."
+status: queued

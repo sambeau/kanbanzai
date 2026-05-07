@@ -1,0 +1,6 @@
+id: TASK-01KR197N7E1TC
+parent_feature: FEAT-01KR12RE98N93
+slug: bug-close-out-verification-gate-integration
+name: Implement gate integration and report registration
+summary: "Parse verifier report. Allow transition on all-pass, block with itemised failures on fail. Register report as document. Handle timeout."
+status: queued

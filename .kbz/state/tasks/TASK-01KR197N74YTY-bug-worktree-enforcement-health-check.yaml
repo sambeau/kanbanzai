@@ -1,0 +1,6 @@
+id: TASK-01KR197N74YTY
+parent_feature: FEAT-01KR12RE939M7
+slug: bug-worktree-enforcement-health-check
+name: Add health check for bare in-progress bugs
+summary: Add bug_worktree health check category. Flag in-progress bugs without active worktrees with warning severity.
+status: queued

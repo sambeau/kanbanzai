@@ -1,0 +1,6 @@
+id: TASK-01KR197N7F61Y
+parent_feature: FEAT-01KR12RE99QPT
+slug: bug-spec-and-doc-infra-tier-change
+name: Change bug_fix Spec gate to auto
+summary: Change TierBugFix Spec from human to auto in DefaultFastTrackConfig. Update tests.
+status: queued
