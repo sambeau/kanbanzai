@@ -2,7 +2,7 @@ id: FEAT-01KR003J39A59
 slug: retro-commit-discipline
 name: Commit discipline for management actions
 parent: B53-retro-fixes-may-2026
-status: dev-planning
+status: developing
 summary: Add explicit commit step to kanbanzai-agents/SKILL.md for non-task workflows to prevent state drift between sessions.
 design: FEAT-01KR003J39A59/design-b53-f1-design-commit-discipline
 spec: FEAT-01KR003J39A59/spec-b53-f1-spec-commit-discipline
