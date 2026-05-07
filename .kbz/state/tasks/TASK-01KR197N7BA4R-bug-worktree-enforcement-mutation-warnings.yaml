@@ -3,8 +3,11 @@ parent_feature: FEAT-01KR12RE939M7
 slug: bug-worktree-enforcement-mutation-warnings
 name: Add repo-root mutation warnings
 summary: Warn on kanbanzai_edit_file/write_file without entity_id when active bug worktrees exist. Non-blocking. List first bug with count suffix for multiples.
-status: active
+status: done
+completed: "2026-05-07T14:07:44Z"
 claimed_at: "2026-05-07T13:34:47Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-07T13:34:47Z"
 dispatched_by: sambeau
+completion_summary: "Added repo-root mutation warnings: activeBugWorktreeWarning helper checks for in-progress bugs with active worktrees when write_file/edit_file are called without entity_id. Warning is non-blocking. Multiple bugs get count suffix. Added 6 new tests across both tool test files."
+verification: "go test ./internal/mcp/... ./internal/health/... passed (all 6 new tests pass, existing tests green). go build ./... passes."
