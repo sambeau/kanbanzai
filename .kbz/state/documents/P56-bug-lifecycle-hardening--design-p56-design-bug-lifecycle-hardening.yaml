@@ -1,0 +1,11 @@
+canonical_content_hash: 0534639b13b91d0ef0eff9db93220d6faf60f90ac064fe350852ebadcec9ddb0
+content_hash: c602fd96c05bf9e31d66dfc414d1f133f7cf90704a18b721c1a755d18473f291
+created: "2026-05-07T10:54:12Z"
+created_by: sambeau
+id: P56-bug-lifecycle-hardening/design-p56-design-bug-lifecycle-hardening
+owner: P56-bug-lifecycle-hardening
+path: work/P56-bug-lifecycle-hardening/P56-design-bug-lifecycle-hardening.md
+status: draft
+title: "Design: Bug Lifecycle Hardening"
+type: design
+updated: "2026-05-07T10:54:12Z"
