@@ -1,0 +1,11 @@
+canonical_content_hash: 3d8a2e0bc199ee974f86c3a402d13d591762c51f20f67c3e2a9bf2d560606902
+content_hash: 3d8a2e0bc199ee974f86c3a402d13d591762c51f20f67c3e2a9bf2d560606902
+created: "2026-05-07T11:19:25Z"
+created_by: sambeau
+id: FEAT-01KR12539CXH6/spec-orchestrator-role-hardening-spec
+owner: FEAT-01KR12539CXH6
+path: work/FEAT-01KR12539CXH6/orchestrator-role-hardening-spec.md
+status: draft
+title: "Specification: Orchestrator Role Hardening"
+type: spec
+updated: "2026-05-07T11:19:25Z"
