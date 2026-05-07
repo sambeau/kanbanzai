@@ -1,9 +1,9 @@
 id: P56-bug-lifecycle-hardening
 slug: bug-lifecycle-hardening
 name: Bug Lifecycle Hardening
-status: active
+status: done
 summary: "Make the bug workflow structurally equivalent to features: mandatory review gate, lifecycle enforcement, spec generation from bug reports, worktree isolation, and a shared definition of done."
 order: 0
 created: "2026-05-07T10:49:07Z"
 created_by: sambeau
-updated: "2026-05-07T19:29:14Z"
+updated: "2026-05-07T19:29:21Z"
