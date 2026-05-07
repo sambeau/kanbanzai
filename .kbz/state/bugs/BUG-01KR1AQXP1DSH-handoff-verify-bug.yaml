@@ -1,7 +1,7 @@
 id: BUG-01KR1AQXP1DSH
 slug: handoff-verify-bug
 name: Handoff Verification - Bug Fix Type
-status: reported
+status: triaged
 severity: low
 priority: medium
 type: implementation-defect
