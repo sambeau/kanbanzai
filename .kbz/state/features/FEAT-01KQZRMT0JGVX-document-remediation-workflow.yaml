@@ -2,7 +2,7 @@ id: FEAT-01KQZRMT0JGVX
 slug: document-remediation-workflow
 name: Document the review remediation workflow
 parent: B50-review-remediation-v1
-status: proposed
+status: cancelled
 summary: "Produce the document-driven v1: procedure, remediation dev-plan template, re-review report template, ownership model decision tree, and integration walkthrough."
 created: "2026-05-06T23:05:53Z"
 created_by: sambeau
