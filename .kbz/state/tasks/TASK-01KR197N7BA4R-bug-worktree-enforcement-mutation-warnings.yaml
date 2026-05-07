@@ -3,4 +3,8 @@ parent_feature: FEAT-01KR12RE939M7
 slug: bug-worktree-enforcement-mutation-warnings
 name: Add repo-root mutation warnings
 summary: Warn on kanbanzai_edit_file/write_file without entity_id when active bug worktrees exist. Non-blocking. List first bug with count suffix for multiples.
-status: ready
+status: active
+claimed_at: "2026-05-07T13:34:47Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-07T13:34:47Z"
+dispatched_by: sambeau

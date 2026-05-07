@@ -1,0 +1,12 @@
+id: BUG-01KR1AQXP1DSH
+slug: handoff-verify-bug
+name: Handoff Verification - Bug Fix Type
+status: reported
+severity: low
+priority: medium
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-05-07T13:41:24Z"
+observed: Test fixture for handoff verification
+expected: Test fixture for handoff verification
+tier: bug_fix
