@@ -2,7 +2,7 @@ id: FEAT-01KR1AS0QG90E
 slug: handoff-verify-retro
 name: Handoff Verification - Retro Fix Type
 parent: B1-p51-exec
-status: proposed
+status: designing
 summary: Temporary retro_fix for P51 handoff pipeline verification. DELETE after verification.
 tags:
   - test-fixture
