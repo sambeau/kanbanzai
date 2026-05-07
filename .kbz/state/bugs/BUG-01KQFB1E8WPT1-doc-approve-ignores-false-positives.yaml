@@ -1,7 +1,7 @@
 id: BUG-01KQFB1E8WPT1
 slug: doc-approve-ignores-false-positives
 name: doc approve ignores record_false_positive entries
-status: reported
+status: triaged
 severity: medium
 priority: medium
 type: implementation-defect

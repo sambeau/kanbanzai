@@ -1,7 +1,7 @@
 id: BUG-01KPVGMMP56GC
 slug: decompose-propose-req-traced-ac-format
 name: decompose propose rejects REQ-traced AC format
-status: reported
+status: triaged
 severity: medium
 priority: medium
 type: implementation-defect
