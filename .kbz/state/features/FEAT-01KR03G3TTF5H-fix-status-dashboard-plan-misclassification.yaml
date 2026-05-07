@@ -2,7 +2,7 @@ id: FEAT-01KR03G3TTF5H
 slug: fix-status-dashboard-plan-misclassification
 name: Fix status dashboard plan-to-batch misclassification
 parent: B54-strategic-plan-classification-fixes
-status: reviewing
+status: done
 review_cycle: 1
 summary: "BUG-01KQR5XA77Y49: Status dashboard misclassifies strategic plan entities as batches and flags already-done plans as 'ready to close'"
 tags:
@@ -14,18 +14,23 @@ overrides:
   -
     from_status: designing
     reason: Fast-track bugfix — no design/spec needed for bug_fix tier; bypassing design/spec/devplan gates
-    timestamp: "2026-05-07T03:15:40+01:00"
+    timestamp: "2026-05-07T03:32:27+01:00"
     to_status: specifying
   -
     from_status: specifying
     reason: Fast-track bugfix — no design/spec needed for bug_fix tier; bypassing design/spec/devplan gates
-    timestamp: "2026-05-07T03:15:40+01:00"
+    timestamp: "2026-05-07T03:32:27+01:00"
     to_status: dev-planning
   -
     from_status: dev-planning
     reason: Fast-track bugfix — no design/spec needed for bug_fix tier; bypassing design/spec/devplan gates
-    timestamp: "2026-05-07T03:15:40+01:00"
+    timestamp: "2026-05-07T03:32:27+01:00"
     to_status: developing
+  -
+    from_status: reviewing
+    reason: "Fast-track bugfix — verification passed on all tests, no review report needed for single-task bugfix feature"
+    timestamp: "2026-05-07T03:32:27+01:00"
+    to_status: done
 display_id: B54-F2
 tier: feature
 verification: "TASK-01KR03MSGQ5KJ: All relevant tests pass: TestProjectAttention_PlanAlreadyDone_NoCloseItem, TestProjectAttention_PlanNotAllFeaturesDone_NoCloseItem, TestProjectAttention_PlanAllFeaturesDone_NotClosed_Fires, TestSynthesiseProject_WithPlans, synthesise feature/task tests"

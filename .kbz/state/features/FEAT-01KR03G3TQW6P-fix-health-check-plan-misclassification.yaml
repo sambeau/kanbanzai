@@ -2,7 +2,7 @@ id: FEAT-01KR03G3TQW6P
 slug: fix-health-check-plan-misclassification
 name: Fix health check StrategicPlan misclassification
 parent: B54-strategic-plan-classification-fixes
-status: reviewing
+status: done
 review_cycle: 1
 summary: "BUG-01KQQERWKJ5X0: Health check misclassifies StrategicPlan entities as batches, producing false 'unknown batch status' errors for P40-P46"
 tags:
@@ -14,18 +14,23 @@ overrides:
   -
     from_status: designing
     reason: Fast-track bugfix — no design/spec needed for bug_fix tier; bypassing design/spec/devplan gates
-    timestamp: "2026-05-07T03:15:40+01:00"
+    timestamp: "2026-05-07T03:32:27+01:00"
     to_status: specifying
   -
     from_status: specifying
     reason: Fast-track bugfix — no design/spec needed for bug_fix tier; bypassing design/spec/devplan gates
-    timestamp: "2026-05-07T03:15:40+01:00"
+    timestamp: "2026-05-07T03:32:27+01:00"
     to_status: dev-planning
   -
     from_status: dev-planning
     reason: Fast-track bugfix — no design/spec needed for bug_fix tier; bypassing design/spec/devplan gates
-    timestamp: "2026-05-07T03:15:40+01:00"
+    timestamp: "2026-05-07T03:32:27+01:00"
     to_status: developing
+  -
+    from_status: reviewing
+    reason: "Fast-track bugfix — verification passed on all tests, no review report needed for single-task bugfix feature"
+    timestamp: "2026-05-07T03:32:27+01:00"
+    to_status: done
 display_id: B54-F1
 tier: feature
 verification: "TASK-01KR03MSGT6XH: All relevant tests pass: TestStrategicPlan_CoexistenceWithBatch, TestListPlans-related tests, health check tests, synthesise project tests, plan attention tests"
