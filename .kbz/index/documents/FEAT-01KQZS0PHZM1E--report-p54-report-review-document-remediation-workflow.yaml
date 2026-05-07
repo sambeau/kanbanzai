@@ -1,0 +1,288 @@
+document_id: FEAT-01KQZS0PHZM1E/report-p54-report-review-document-remediation-workflow
+document_path: work/P54-review-remediation-workflow/P54-report-review-document-remediation-workflow.md
+content_hash: 4055ab82b01cb6d33a1bf089dd17c0c3db742460e50bc71094da11085a2a58d5
+indexed_at: 2026-05-06T23:52:56.499852Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: Document the Review Remediation Workflow'
+      byte_offset: 0
+      byte_count: 7346
+      word_count: 874
+      content_hash: 4055ab82b01cb6d33a1bf089dd17c0c3db742460e50bc71094da11085a2a58d5
+      children:
+        - path: "1.1"
+          level: 2
+          title: Aggregate Verdict
+          byte_offset: 448
+          byte_count: 279
+          word_count: 32
+          content_hash: 5db73389ed678ee4135a8402f373af498bb34562b7629d1f8db311cc7f9607d3
+        - path: "1.2"
+          level: 2
+          title: Per-Dimension Verdicts
+          byte_offset: 727
+          byte_count: 495
+          word_count: 57
+          content_hash: 6c51600a40ceb777f541f47808c3cffd97eb1bbafbf5f5e0e2cd0a6b1568cde5
+        - path: "1.3"
+          level: 2
+          title: Review Unit Breakdown
+          byte_offset: 1222
+          byte_count: 635
+          word_count: 67
+          content_hash: 490073e08a98fa8c175c41204e380592ad52250bb2287d1054ea0ad32d086a38
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Files Reviewed
+              byte_offset: 1422
+              byte_count: 435
+              word_count: 44
+              content_hash: a5b9e7e9ae35d91181194a971b27c74738dbf6ee51d31bf2cba7666530388c8d
+        - path: "1.4"
+          level: 2
+          title: Blocking Findings
+          byte_offset: 1857
+          byte_count: 36
+          word_count: 5
+          content_hash: ffdeaf051530d167534a067de98f10adb5530b6d85390f156c90fc3831f5fd9c
+        - path: "1.5"
+          level: 2
+          title: Non-Blocking Findings
+          byte_offset: 1893
+          byte_count: 3594
+          word_count: 431
+          content_hash: 6a747a14ade251a18f3840ed9b321587dc5a574c94c41e26260a56ad114b470e
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'NF-1: Walkthrough omits AC-SPEC-05 from explicit verification summary (Conformance)'
+              byte_offset: 1919
+              byte_count: 537
+              word_count: 72
+              content_hash: 3c0e287d381f0d5e584166085904b9968809377a4cb608af374310f52f3586ac
+            - path: 1.5.2
+              level: 3
+              title: 'NF-2: Walkthrough ACs listed out of numeric order (Conformance)'
+              byte_offset: 2456
+              byte_count: 366
+              word_count: 43
+              content_hash: b23c60de013c94e731d51a569f9c26797fb93570a44b58d48c9dd8271f721fce
+            - path: 1.5.3
+              level: 3
+              title: 'NF-3: Walkthrough has 3 broken internal links (Quality)'
+              byte_offset: 2822
+              byte_count: 667
+              word_count: 64
+              content_hash: 04971420dcfea29c446b0333a1c6dfc80cbf305290e94206d759b71824ee4645
+            - path: 1.5.4
+              level: 3
+              title: 'NF-4: False claim about filename convention (Quality)'
+              byte_offset: 3489
+              byte_count: 459
+              word_count: 63
+              content_hash: 5a815afd0abcbc4a7ee89fa55b51456e9d56902b928d30c8fc254c815715535c
+            - path: 1.5.5
+              level: 3
+              title: 'NF-5: Phase 6 monitoring guidance too sparse (Quality)'
+              byte_offset: 3948
+              byte_count: 456
+              word_count: 57
+              content_hash: 1368e131977eebeb85f55308e0adcc931673db3a947649fbd56b17249c5b28e3
+            - path: 1.5.6
+              level: 3
+              title: 'NF-6: Guide "Entity-creation steps" misnamed (Quality)'
+              byte_offset: 4404
+              byte_count: 495
+              word_count: 56
+              content_hash: 0ea43e19eca7b286267eb80241e0d5f0c9fd2cf6708884fdeefd9b8309901e42
+            - path: 1.5.7
+              level: 3
+              title: 'NF-7: AC-SPEC-05 verification is aspirational (Quality)'
+              byte_offset: 4899
+              byte_count: 588
+              word_count: 73
+              content_hash: 3f60439f3573f3babdeaf6fea1c8d06ca1327b443ba37e2e6d512f40f2948af2
+        - path: "1.6"
+          level: 2
+          title: Criterion-by-Criterion Matrix
+          byte_offset: 5487
+          byte_count: 1487
+          word_count: 207
+          content_hash: e582b9a0b879cbe887c4b837aa80b0052f9658928a711431d8b01f473af8d281
+        - path: "1.7"
+          level: 2
+          title: Review Artifacts
+          byte_offset: 6974
+          byte_count: 372
+          word_count: 40
+          content_hash: 230fc6afab60a316814e5d0a715fa648763c5c84f3767e0050e936100aa4a713
+entity_refs:
+    - entity_id: FEAT-01KQZS0PHZM1E
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 258
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.5.5
+      byte_offset: 4153
+    - entity_id: P54-spec-review-remediation-workflow
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 323
+    - entity_id: P54-review-remediation-workflow
+      entity_type: plan
+      section_path: "1.3"
+      byte_offset: 1362
+    - entity_id: P54-report-review-remediation-procedure
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 1446
+    - entity_id: P54-template-remediation-dev-plan
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 1537
+    - entity_id: P54-template-re-review-report
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 1622
+    - entity_id: P54-guide-ownership-model
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 1699
+    - entity_id: P54-report-walkthrough
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 1776
+    - entity_id: P54-report-walkthrough
+      entity_type: plan
+      section_path: 1.5.1
+      byte_offset: 2025
+    - entity_id: P54-report-walkthrough
+      entity_type: plan
+      section_path: 1.5.2
+      byte_offset: 2542
+    - entity_id: P54-report-walkthrough
+      entity_type: plan
+      section_path: 1.5.3
+      byte_offset: 2900
+    - entity_id: P54-report
+      entity_type: plan
+      section_path: 1.5.3
+      byte_offset: 3002
+    - entity_id: P54-report-template-remediation-dev-plan
+      entity_type: plan
+      section_path: 1.5.3
+      byte_offset: 3096
+    - entity_id: P54-template-remediation-dev-plan
+      entity_type: plan
+      section_path: 1.5.3
+      byte_offset: 3155
+    - entity_id: P54-report-template-re-review-report
+      entity_type: plan
+      section_path: 1.5.3
+      byte_offset: 3226
+    - entity_id: P54-template-re-review-report
+      entity_type: plan
+      section_path: 1.5.3
+      byte_offset: 3281
+    - entity_id: P54-report-guide-ownership-model
+      entity_type: plan
+      section_path: 1.5.3
+      byte_offset: 3344
+    - entity_id: P54-guide-ownership-model
+      entity_type: plan
+      section_path: 1.5.3
+      byte_offset: 3395
+    - entity_id: P54-report-walkthrough
+      entity_type: plan
+      section_path: 1.5.4
+      byte_offset: 3565
+    - entity_id: P54-report
+      entity_type: plan
+      section_path: 1.5.4
+      byte_offset: 3690
+    - entity_id: P54-template
+      entity_type: plan
+      section_path: 1.5.4
+      byte_offset: 3764
+    - entity_id: P54-guide
+      entity_type: plan
+      section_path: 1.5.4
+      byte_offset: 3784
+    - entity_id: P54-report-review-remediation-procedure
+      entity_type: plan
+      section_path: 1.5.5
+      byte_offset: 4025
+    - entity_id: P54-guide-ownership-model
+      entity_type: plan
+      section_path: 1.5.6
+      byte_offset: 4481
+    - entity_id: P54-report-walkthrough
+      entity_type: plan
+      section_path: 1.5.7
+      byte_offset: 4977
+cross_doc_links:
+    - target_path: P54-report-template-remediation-dev-plan.md
+      link_text: Remediation Dev-Plan Template
+      section_path: 1.5.3
+    - target_path: P54-report-template-re-review-report.md
+      link_text: Re-Review Report Template
+      section_path: 1.5.3
+    - target_path: P54-report-guide-ownership-model.md
+      link_text: Ownership Model Guide
+      section_path: 1.5.3
+    - target_path: P54-report-review-remediation-procedure.md
+      link_text: P54-report-review-remediation-procedure.md
+      section_path: 1.3.1
+    - target_path: P54-template-remediation-dev-plan.md
+      link_text: P54-template-remediation-dev-plan.md
+      section_path: 1.3.1
+    - target_path: P54-template-re-review-report.md
+      link_text: P54-template-re-review-report.md
+      section_path: 1.3.1
+    - target_path: P54-guide-ownership-model.md
+      link_text: P54-guide-ownership-model.md
+      section_path: 1.3.1
+    - target_path: P54-report-walkthrough.md
+      link_text: P54-report-walkthrough.md
+      section_path: 1.3.1
+    - target_path: P54-report-walkthrough.md
+      link_text: P54-report-walkthrough.md
+      section_path: 1.5.1
+    - target_path: P54-report-walkthrough.md
+      link_text: P54-report-walkthrough.md
+      section_path: 1.5.2
+    - target_path: P54-report-walkthrough.md
+      link_text: P54-report-walkthrough.md
+      section_path: 1.5.3
+    - target_path: P54-template-remediation-dev-plan.md
+      link_text: P54-template-remediation-dev-plan.md
+      section_path: 1.5.3
+    - target_path: P54-template-re-review-report.md
+      link_text: P54-template-re-review-report.md
+      section_path: 1.5.3
+    - target_path: P54-guide-ownership-model.md
+      link_text: P54-guide-ownership-model.md
+      section_path: 1.5.3
+    - target_path: P54-report-walkthrough.md
+      link_text: P54-report-walkthrough.md
+      section_path: 1.5.4
+    - target_path: P54-report-*.md
+      link_text: P54-report-*.md
+      section_path: 1.5.4
+    - target_path: P54-report-review-remediation-procedure.md
+      link_text: P54-report-review-remediation-procedure.md
+      section_path: 1.5.5
+    - target_path: P54-guide-ownership-model.md
+      link_text: P54-guide-ownership-model.md
+      section_path: 1.5.6
+    - target_path: P54-report-walkthrough.md
+      link_text: P54-report-walkthrough.md
+      section_path: 1.5.7
+conventional_roles:
+    - section_path: 1.5.1
+      role: narrative
+      confidence: high
+classified: false

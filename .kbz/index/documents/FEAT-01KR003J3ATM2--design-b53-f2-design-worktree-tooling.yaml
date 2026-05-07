@@ -1,0 +1,89 @@
+document_id: FEAT-01KR003J3ATM2/design-b53-f2-design-worktree-tooling
+document_path: work/B53-retro-fixes-may-2026/B53-F2-design-worktree-tooling.md
+content_hash: 64ddb3f00f8d4f7784529ea5f02cbba1819c7c80ca5293ed7f0f20d458f9b266
+indexed_at: 2026-05-07T01:19:40.986301Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Worktree File-Writing Tooling'
+      byte_offset: 0
+      byte_count: 1485
+      word_count: 184
+      content_hash: 64ddb3f00f8d4f7784529ea5f02cbba1819c7c80ca5293ed7f0f20d458f9b266
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 218
+          byte_count: 300
+          word_count: 38
+          content_hash: 1ab3944036ebeca018da01a4fc742310f38ac829012a80206b016fb16c3370a3
+        - path: "1.2"
+          level: 2
+          title: Design
+          byte_offset: 518
+          byte_count: 780
+          word_count: 100
+          content_hash: 0a319145689219bcf21db8d87451c92080e1b1f6e89425dafbe5bc3595bc0940
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Change
+              byte_offset: 529
+              byte_count: 209
+              word_count: 21
+              content_hash: 9ec03ab88ef6c5e23bf9e44f09e69ad72fe46c9d81145e654a87e781ece41659
+            - path: 1.2.2
+              level: 3
+              title: Locations
+              byte_offset: 738
+              byte_count: 190
+              word_count: 24
+              content_hash: c3d984c7a10a46747d2657800632126849731f3a14757cbd984bbe9efdb01532
+            - path: 1.2.3
+              level: 3
+              title: What to change
+              byte_offset: 928
+              byte_count: 370
+              word_count: 53
+              content_hash: f2fd3edc4ab8a6453c0415b5e88fbf7a39555b86d77ec200522f89d1abda5ae3
+        - path: "1.3"
+          level: 2
+          title: Non-Goals
+          byte_offset: 1298
+          byte_count: 137
+          word_count: 21
+          content_hash: a13f99a1023556c8f5247b45729e02d5a22e3c7017e97b73f8bbe101629dac27
+        - path: "1.4"
+          level: 2
+          title: Dependencies
+          byte_offset: 1435
+          byte_count: 50
+          word_count: 6
+          content_hash: 7b19f9d9cb1b6c7e5ba21f3c65efcf6ec4a25fabfb863bcf8d28f998ce9f478f
+entity_refs:
+    - entity_id: FEAT-01KR003J3ATM2
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 54
+cross_doc_links:
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: 1.2.1
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.2.1
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: 1.2.2
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.2.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+classified: false

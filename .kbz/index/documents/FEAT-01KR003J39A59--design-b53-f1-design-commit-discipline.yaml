@@ -1,0 +1,83 @@
+document_id: FEAT-01KR003J39A59/design-b53-f1-design-commit-discipline
+document_path: work/B53-retro-fixes-may-2026/B53-F1-design-commit-discipline.md
+content_hash: d04e001efd3b7dd9945bee313304840b649274afa767f8081463a81c4e69bff0
+indexed_at: 2026-05-07T01:19:40.988083Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Commit Discipline for Management Actions'
+      byte_offset: 0
+      byte_count: 1168
+      word_count: 158
+      content_hash: d04e001efd3b7dd9945bee313304840b649274afa767f8081463a81c4e69bff0
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 185
+          byte_count: 304
+          word_count: 44
+          content_hash: 4cc8889d7c02b6359980fc27a5210b0a82cf331b1ed014f203b5ed7f70168734
+        - path: "1.2"
+          level: 2
+          title: Design
+          byte_offset: 489
+          byte_count: 524
+          word_count: 71
+          content_hash: e2724a559dd5118634f1190de0f30e73cd1638b2e22f64cdfdf5d31ef20b81bb
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Change
+              byte_offset: 500
+              byte_count: 144
+              word_count: 16
+              content_hash: b3edb206ea8fefe85b466d6d56799f8c5b8108c2cda90a869a2792e477e9f3ac
+            - path: 1.2.2
+              level: 3
+              title: Location
+              byte_offset: 644
+              byte_count: 145
+              word_count: 15
+              content_hash: 6032b32984b28ceae3eddb41e25c92c5dc37308a477cdde7a99b4c894160c9bd
+            - path: 1.2.3
+              level: 3
+              title: What to add
+              byte_offset: 789
+              byte_count: 224
+              word_count: 38
+              content_hash: 63a3717dcc318534ffda31a0671c4f706f4272c6389d6a202d5cc71d48caa14d
+        - path: "1.3"
+          level: 2
+          title: Non-Goals
+          byte_offset: 1013
+          byte_count: 105
+          word_count: 17
+          content_hash: 9c4b2bb64927ce8b9f04d32784c216914bf83b50caaa48e7c400d5a94f5f32ce
+        - path: "1.4"
+          level: 2
+          title: Dependencies
+          byte_offset: 1118
+          byte_count: 50
+          word_count: 6
+          content_hash: 7b19f9d9cb1b6c7e5ba21f3c65efcf6ec4a25fabfb863bcf8d28f998ce9f478f
+entity_refs:
+    - entity_id: FEAT-01KR003J39A59
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 65
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.2.1
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.2.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+classified: false

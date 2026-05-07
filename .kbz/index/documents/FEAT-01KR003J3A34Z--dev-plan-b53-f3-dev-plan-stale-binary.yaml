@@ -1,0 +1,80 @@
+document_id: FEAT-01KR003J3A34Z/dev-plan-b53-f3-dev-plan-stale-binary
+document_path: work/B53-retro-fixes-may-2026/B53-F3-dev-plan-stale-binary.md
+content_hash: dff02e038de178dd520dac01bd0b3283c21c0d4a4b9b28170985d29a9246e1fe
+indexed_at: 2026-05-07T01:24:56.538822Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Stale Binary Detection Discoverability'
+      byte_offset: 0
+      byte_count: 1261
+      word_count: 154
+      content_hash: dff02e038de178dd520dac01bd0b3283c21c0d4a4b9b28170985d29a9246e1fe
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 164
+          byte_count: 102
+          word_count: 13
+          content_hash: c411380b918c607f3dc6ef9ed775bdd13189137888f7c2be9c718838c208646a
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 266
+          byte_count: 592
+          word_count: 67
+          content_hash: 3b664e2cd034ef95c7dedf0b240c16bec1eb0df9867d9dc40b21bf3089160ff2
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'T1: Update getting-started pre-task checklist'
+              byte_offset: 285
+              byte_count: 274
+              word_count: 31
+              content_hash: e0e54acf3f89cbd223367d0baede96860c2335cc200e339ba768786ca2fd08a5
+            - path: 1.2.2
+              level: 3
+              title: 'T2: Update kanbanzai-agents verification guidance'
+              byte_offset: 559
+              byte_count: 299
+              word_count: 33
+              content_hash: 5039595f3d60858644392b274db6d45ca0bf673fe5d3d9f9571f660625cc1295
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 858
+          byte_count: 131
+          word_count: 21
+          content_hash: 44ca5766325aae77198fc2dd657f62eea0dcd79511d99ec8c95257cd05cbac08
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 989
+          byte_count: 68
+          word_count: 8
+          content_hash: c637bd9de026dbe80e9be7208ad4bd14adae0391d3a6f34c0eb2193a5b38f394
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 1057
+          byte_count: 204
+          word_count: 33
+          content_hash: 7e03db359e0d945a7b127b36360c32d120689ac9654dec845a566daf10c1ae94
+entity_refs:
+    - entity_id: FEAT-01KR003J3A34Z
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 65
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.2.1
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.2.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

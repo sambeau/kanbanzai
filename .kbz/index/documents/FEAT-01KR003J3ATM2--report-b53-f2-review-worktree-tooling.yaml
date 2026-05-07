@@ -1,0 +1,13 @@
+document_id: FEAT-01KR003J3ATM2/report-b53-f2-review-worktree-tooling
+document_path: work/B53-retro-fixes-may-2026/B53-F2-review-worktree-tooling.md
+content_hash: fca47df144342f6e27e1234571ca316af3624e2f3e0a24953cc7779713e31fa7
+indexed_at: 2026-05-07T01:32:12.546322Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: Documentation-Only Retro Fix'
+      byte_offset: 0
+      byte_count: 381
+      word_count: 45
+      content_hash: fca47df144342f6e27e1234571ca316af3624e2f3e0a24953cc7779713e31fa7
+classified: false

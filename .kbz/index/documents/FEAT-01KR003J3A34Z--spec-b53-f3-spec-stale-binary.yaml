@@ -1,0 +1,73 @@
+document_id: FEAT-01KR003J3A34Z/spec-b53-f3-spec-stale-binary
+document_path: work/B53-retro-fixes-may-2026/B53-F3-spec-stale-binary.md
+content_hash: 7583023596b52a197a5eb5e0afd2162feb254e6774a0ecc1b4c98fc53521af08
+indexed_at: 2026-05-07T01:23:31.710767Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Stale Binary Detection Discoverability'
+      byte_offset: 0
+      byte_count: 922
+      word_count: 97
+      content_hash: 7583023596b52a197a5eb5e0afd2162feb254e6774a0ecc1b4c98fc53521af08
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 175
+          byte_count: 96
+          word_count: 13
+          content_hash: 2f628de973445f10ba602353a758f50c816e4c221798717e0eeab66e579322ad
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 271
+          byte_count: 138
+          word_count: 9
+          content_hash: b46447a24cf68ad9bb17ac8255e83ced6da167a10c7cd112b78d48a6f467126a
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 409
+          byte_count: 265
+          word_count: 35
+          content_hash: 3c80fd9a67c571a3211e6b400fc8a8185d48d8932356988b77572d0b2b80c730
+        - path: "1.4"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 674
+          byte_count: 248
+          word_count: 28
+          content_hash: 168b9fafefb3187f1d3a05ee23726bf6102743047da1791b339e9bc17279a205
+entity_refs:
+    - entity_id: FEAT-01KR003J3A34Z
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 70
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: "1.2"
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: "1.2"
+    - target_path: kanbanzai-getting-started/SKILL.md
+      link_text: kanbanzai-getting-started/SKILL.md
+      section_path: "1.4"
+    - target_path: kanbanzai-agents/SKILL.md
+      link_text: kanbanzai-agents/SKILL.md
+      section_path: "1.4"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+classified: false

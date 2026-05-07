@@ -1,0 +1,103 @@
+document_id: P51-handoff-pipeline-unification/report-p51-report-handoff-verification
+document_path: work/P51-handoff-pipeline-unification/P51-report-handoff-verification.md
+content_hash: 5f21f82f2a0b1344ae6a67dab488fe4fe706f91d1fb471b04b3cd869f7ce577f
+indexed_at: 2026-05-07T00:34:20.985569Z
+sections:
+    - path: "1"
+      level: 1
+      title: P51 Handoff Pipeline Verification Report
+      byte_offset: 0
+      byte_count: 4744
+      word_count: 757
+      content_hash: 5f21f82f2a0b1344ae6a67dab488fe4fe706f91d1fb471b04b3cd869f7ce577f
+      children:
+        - path: "1.1"
+          level: 2
+          title: Success Criteria
+          byte_offset: 278
+          byte_count: 565
+          word_count: 69
+          content_hash: b389b1c8239bf354b71203a1450e158004e5a39fa83aa104ecdbb399ea0034ed
+        - path: "1.2"
+          level: 2
+          title: Coverage Matrix
+          byte_offset: 843
+          byte_count: 2077
+          word_count: 365
+          content_hash: b7820fc8fb9764796c1e396fe37d6cac4ba73008f8c23ff8e9f0009ccdf08a0d
+        - path: "1.3"
+          level: 2
+          title: Test Fixture Setup
+          byte_offset: 2920
+          byte_count: 882
+          word_count: 121
+          content_hash: 965b9bf825ceaf2123a977f845198c7c176a049c47d7df0ee75c20e6e1458e60
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Feature Type: feature (tier: feature)'
+              byte_offset: 2943
+              byte_count: 611
+              word_count: 75
+              content_hash: 50d23b8a71fd393124f5ee7dbb2efe95cd3178a9822ca756401ea07103d48bb7
+            - path: 1.3.2
+              level: 3
+              title: 'Feature Type: bug_fix'
+              byte_offset: 3554
+              byte_count: 132
+              word_count: 23
+              content_hash: 345fabe5531c5104797cae0a6448d4bd453d6f67ee9f6ac100b1b0d6e3825729
+            - path: 1.3.3
+              level: 3
+              title: 'Feature Type: retro_fix'
+              byte_offset: 3686
+              byte_count: 116
+              word_count: 19
+              content_hash: 9a5fe7d0b92c242d9ccde0c375069b150c29f2f6dcfa1fc2126b4492e730683d
+        - path: "1.4"
+          level: 2
+          title: Verification Procedure (per call)
+          byte_offset: 3802
+          byte_count: 522
+          word_count: 77
+          content_hash: 9488b117bf0c9dfdf9e038138e048fe3ac25fb940bfcc1e4cae4bdea551aa015
+        - path: "1.5"
+          level: 2
+          title: Results Log
+          byte_offset: 4324
+          byte_count: 207
+          word_count: 54
+          content_hash: 9d843ffd43ee59e025c310ab94537bb32df7ffc8256e99e3334e1cd2490419bb
+        - path: "1.6"
+          level: 2
+          title: Cleanup
+          byte_offset: 4531
+          byte_count: 213
+          word_count: 35
+          content_hash: bd1555f8e5b26f49763c1bea23966e401eee382f186f37f31ee0b548bb688a25
+entity_refs:
+    - entity_id: FEAT-01KQZS0PHZM1E
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 3008
+    - entity_id: FEAT-01KQS
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 3475
+    - entity_id: TASK-01KQZRNKWGE39
+      entity_type: task
+      section_path: 1.3.1
+      byte_offset: 3104
+    - entity_id: TASK-01KQZRP8DMGZG
+      entity_type: task
+      section_path: 1.3.1
+      byte_offset: 3135
+    - entity_id: TASK-01KQZRP8DQS3Z
+      entity_type: task
+      section_path: 1.3.1
+      byte_offset: 3166
+    - entity_id: TASK-01KQZRPJ7PXNJ
+      entity_type: task
+      section_path: 1.3.1
+      byte_offset: 3197
+classified: false

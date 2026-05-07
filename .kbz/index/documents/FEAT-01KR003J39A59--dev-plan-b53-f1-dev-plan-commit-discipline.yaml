@@ -1,0 +1,73 @@
+document_id: FEAT-01KR003J39A59/dev-plan-b53-f1-dev-plan-commit-discipline
+document_path: work/B53-retro-fixes-may-2026/B53-F1-dev-plan-commit-discipline.md
+content_hash: a5cefdd3e78af0efa8ca353941d75778150c7944486ad1fd12e5877d97637c0b
+indexed_at: 2026-05-07T01:24:56.538082Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Commit Discipline for Management Actions'
+      byte_offset: 0
+      byte_count: 1077
+      word_count: 136
+      content_hash: a5cefdd3e78af0efa8ca353941d75778150c7944486ad1fd12e5877d97637c0b
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 171
+          byte_count: 135
+          word_count: 13
+          content_hash: b35b84e42d788b85823fae36c752a51ad2c19773494c2c4b754315967cf90820
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 306
+          byte_count: 439
+          word_count: 60
+          content_hash: 2f7fe5855a1860cff3909bb6449b4084848b50a653edf843cedc0538e1f9c327
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'T1: Add management-action commit step to kanbanzai-agents skill'
+              byte_offset: 325
+              byte_count: 420
+              word_count: 57
+              content_hash: d0f26ca2b76a30d6f89b835ae10be8e920f0eaa8e85106641fefab2d5fdf5c56
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 745
+          byte_count: 51
+          word_count: 8
+          content_hash: 6a2860de6cc0a2bdcfbd416138fbdba21c6a43285092a4c36c616b98c97f0b10
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 796
+          byte_count: 68
+          word_count: 8
+          content_hash: c637bd9de026dbe80e9be7208ad4bd14adae0391d3a6f34c0eb2193a5b38f394
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 864
+          byte_count: 213
+          word_count: 34
+          content_hash: 91319d26ee335f755d4bca4bd229603cc2dd0b592e2ef65b05af3616f961fd34
+entity_refs:
+    - entity_id: FEAT-01KR003J39A59
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 67
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: "1.1"
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.2.1
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false
