@@ -1,11 +1,13 @@
+approved_at: "2026-05-07T14:45:03Z"
+approved_by: sambeau
 canonical_content_hash: 9c80e5e8e7b79c5e7e504e77ebb5cf0569dd54c3ed395af4ee85356cca5d936f
-content_hash: 9c80e5e8e7b79c5e7e504e77ebb5cf0569dd54c3ed395af4ee85356cca5d936f
+content_hash: 4411973b64fb093ee26a1a41c790b4aded197d1166973d061a5d3d4adf6053f6
 created: "2026-05-07T14:44:55Z"
 created_by: sambeau
 id: FEAT-01KR1D0000001/design-p58-f1-design-default-tool-hints
 owner: FEAT-01KR1D0000001
 path: work/P58-default-tool-hint-fallbacks/P58-F1-design-default-tool-hints.md
-status: draft
+status: approved
 title: "Design: Default Tool Hint Fallbacks"
 type: design
-updated: "2026-05-07T14:44:55Z"
+updated: "2026-05-07T14:45:03Z"
