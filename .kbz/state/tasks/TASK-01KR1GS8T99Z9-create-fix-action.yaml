@@ -3,7 +3,14 @@ parent_feature: FEAT-01KR1GJGJ9BZS
 slug: create-fix-action
 name: Add create_fix Action to retro MCP Tool
 summary: "Add the create_fix action to the retro tool with dual-mode, theme selection, parent plan auto-creation, idempotency, and full auto-mode pipeline."
-status: ready
+status: done
 depends_on:
   - TASK-01KR1GRAJMFSK
   - TASK-01KR1GS8T687B
+completed: "2026-05-07T16:04:54Z"
+claimed_at: "2026-05-07T15:41:06Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-07T15:41:06Z"
+dispatched_by: sambeau
+completion_summary: "Implemented create_fix action on retro MCP tool: added CreateFix() to RetroService with human-gated (single theme by index) and auto (top-N/severity threshold with intersection) modes. Auto mode generates+approves design/spec/dev-plan docs, creates tasks, advances lifecycle. Idempotency via signal-ID tag matching. Plan auto-creation. Added retroCreateFixAction handler in MCP tool. 18 new tests all passing."
+verification: "go test ./... -count=1 passes all packages (service and mcp), go build ./... succeeds"
