@@ -1,11 +1,13 @@
+approved_at: "2026-05-07T14:46:33Z"
+approved_by: sambeau
 canonical_content_hash: ff47569f8c96e494a525efdd9e4b3f38995bcb12a1ab43a45036e2b831d1d2bf
-content_hash: ff47569f8c96e494a525efdd9e4b3f38995bcb12a1ab43a45036e2b831d1d2bf
+content_hash: 164264dc5a2bd975146240a7e5b83295655c59f3b226043ef0eba0591ddae4ed
 created: "2026-05-07T14:45:59Z"
 created_by: sambeau
 id: FEAT-01KR1D0000001/dev-plan-p58-f1-dev-plan-default-tool-hints
 owner: FEAT-01KR1D0000001
 path: work/P58-default-tool-hint-fallbacks/P58-F1-dev-plan-default-tool-hints.md
-status: draft
+status: approved
 title: "Dev Plan: Default Tool Hint Fallbacks"
 type: dev-plan
-updated: "2026-05-07T14:45:59Z"
+updated: "2026-05-07T14:46:33Z"
