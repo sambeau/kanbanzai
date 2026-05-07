@@ -1,0 +1,11 @@
+canonical_content_hash: a02b7d2cf600c17796b870bbd4853ccc869ed46286c5ee4bf821b7fda38b7432
+content_hash: a02b7d2cf600c17796b870bbd4853ccc869ed46286c5ee4bf821b7fda38b7432
+created: "2026-05-07T14:54:52Z"
+created_by: sambeau
+id: FEAT-01KR1D0000001/report-p58-f1-review-default-tool-hints
+owner: FEAT-01KR1D0000001
+path: work/P58-default-tool-hint-fallbacks/P58-F1-review-default-tool-hints.md
+status: draft
+title: "Review Report: Default Tool Hint Fallbacks"
+type: report
+updated: "2026-05-07T14:54:52Z"
