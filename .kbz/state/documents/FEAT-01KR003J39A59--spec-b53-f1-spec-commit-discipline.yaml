@@ -1,3 +1,5 @@
+approved_at: "2026-05-07T01:23:43Z"
+approved_by: sambeau
 canonical_content_hash: 7e335d2c1a70527862925d6e4c8efb36f568e80a5adac61a642aea58329e6a2f
 content_hash: 7e335d2c1a70527862925d6e4c8efb36f568e80a5adac61a642aea58329e6a2f
 created: "2026-05-07T01:23:31Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KR003J39A59/spec-b53-f1-spec-commit-discipline
 owner: FEAT-01KR003J39A59
 path: work/B53-retro-fixes-may-2026/B53-F1-spec-commit-discipline.md
-status: draft
+status: approved
 title: "Spec: Commit Discipline for Management Actions"
 type: spec
-updated: "2026-05-07T01:23:31Z"
+updated: "2026-05-07T01:23:43Z"
