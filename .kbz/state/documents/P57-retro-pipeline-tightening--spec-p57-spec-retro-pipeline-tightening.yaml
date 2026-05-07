@@ -1,0 +1,11 @@
+canonical_content_hash: 85f908f2606a7ecb678faf2c7e4df609f83f579c80e9f209785e87ca720dec6b
+content_hash: a986bc7d6543a132b2b1d00849c7916a6722f543425c9fd7c61ba9847f21cdfc
+created: "2026-05-07T15:21:37Z"
+created_by: sambeau
+id: P57-retro-pipeline-tightening/spec-p57-spec-retro-pipeline-tightening
+owner: P57-retro-pipeline-tightening
+path: work/P57-retro-pipeline-tightening/P57-spec-retro-pipeline-tightening.md
+status: draft
+title: "Specification: Retrospective Pipeline Tightening"
+type: spec
+updated: "2026-05-07T15:21:37Z"
