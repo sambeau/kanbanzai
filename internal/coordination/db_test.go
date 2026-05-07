@@ -362,3 +362,120 @@ func TestAllocateID_Concurrent(t *testing.T) {
 		seen[id] = true
 	}
 }
+
+func TestSeedCounters_SeedsAboveExisting(t *testing.T) {
+	db := dbTest(t)
+	ctx := context.Background()
+
+	if err := db.Migrate(ctx); err != nil {
+		t.Fatalf("Migrate: %v", err)
+	}
+
+	// First allocation without seeding should start at 1.
+	id1, err := db.AllocateID(ctx, t.Name()+"-eddd9de7", "bug", "BUG-", "first")
+	if err != nil {
+		t.Fatalf("AllocateID: %v", err)
+	}
+	if id1 != "BUG-1-first" {
+		t.Errorf("expected BUG-1-first, got %q", id1)
+	}
+
+	// Seed counters for "bug" to start at 50.
+	if err := db.SeedCounters(ctx, t.Name()+"-eddd9de7", map[string]int{"bug": 50}); err != nil {
+		t.Fatalf("SeedCounters: %v", err)
+	}
+
+	// Next allocation should be at least 50 (seed value).
+	// Since counter was at 2 (from first alloc), seed bumps it to 50.
+	id2, err := db.AllocateID(ctx, t.Name()+"-eddd9de7", "bug", "BUG-", "second")
+	if err != nil {
+		t.Fatalf("AllocateID after seed: %v", err)
+	}
+	if id2 != "BUG-50-second" {
+		t.Errorf("expected BUG-50-second after seeding to 50, got %q", id2)
+	}
+
+	// Third allocation should continue from 51.
+	id3, err := db.AllocateID(ctx, t.Name()+"-eddd9de7", "bug", "BUG-", "third")
+	if err != nil {
+		t.Fatalf("AllocateID third: %v", err)
+	}
+	if id3 != "BUG-51-third" {
+		t.Errorf("expected BUG-51-third, got %q", id3)
+	}
+}
+
+func TestSeedCounters_NoopWhenBelowCurrent(t *testing.T) {
+	db := dbTest(t)
+	ctx := context.Background()
+
+	if err := db.Migrate(ctx); err != nil {
+		t.Fatalf("Migrate: %v", err)
+	}
+
+	// Allocate several IDs to advance counter past 5.
+	for i := 0; i < 10; i++ {
+		_, err := db.AllocateID(ctx, t.Name()+"-bbc5c8e5", "bug", "BUG-", fmt.Sprintf("pre%d", i))
+		if err != nil {
+			t.Fatalf("AllocateID pre%d: %v", i, err)
+		}
+	}
+
+	// Seed with a value lower than current counter — should be a no-op.
+	if err := db.SeedCounters(ctx, t.Name()+"-bbc5c8e5", map[string]int{"bug": 3}); err != nil {
+		t.Fatalf("SeedCounters: %v", err)
+	}
+
+	// Next allocation should be 11 (continuing from 10), not 3.
+	id, err := db.AllocateID(ctx, t.Name()+"-bbc5c8e5", "bug", "BUG-", "after-seed")
+	if err != nil {
+		t.Fatalf("AllocateID after low seed: %v", err)
+	}
+	if id != "BUG-11-after-seed" {
+		t.Errorf("expected BUG-11-after-seed (seed to 3 should be no-op), got %q", id)
+	}
+}
+
+func TestSeedCounters_MultipleEntityTypes(t *testing.T) {
+	db := dbTest(t)
+	ctx := context.Background()
+
+	if err := db.Migrate(ctx); err != nil {
+		t.Fatalf("Migrate: %v", err)
+	}
+
+	// Seed both bug and plan counters.
+	if err := db.SeedCounters(ctx, t.Name()+"-1ebf0e92", map[string]int{
+		"bug":    10,
+		"plan_P": 52,
+	}); err != nil {
+		t.Fatalf("SeedCounters: %v", err)
+	}
+
+	// Bug should start at 10.
+	bugID, err := db.AllocateID(ctx, t.Name()+"-1ebf0e92", "bug", "BUG-", "test-bug")
+	if err != nil {
+		t.Fatalf("AllocateID bug: %v", err)
+	}
+	if bugID != "BUG-10-test-bug" {
+		t.Errorf("bug: expected BUG-10-test-bug, got %q", bugID)
+	}
+
+	// Plan should start at 52.
+	planID, err := db.AllocateID(ctx, t.Name()+"-1ebf0e92", "plan_P", "P", "test-plan")
+	if err != nil {
+		t.Fatalf("AllocateID plan: %v", err)
+	}
+	if planID != "P52-test-plan" {
+		t.Errorf("plan: expected P52-test-plan, got %q", planID)
+	}
+
+	// A different entity type not in seed should still start at 1.
+	featID, err := db.AllocateID(ctx, t.Name()+"-1ebf0e92", "feature", "FEAT-", "test-feat")
+	if err != nil {
+		t.Fatalf("AllocateID feature: %v", err)
+	}
+	if featID != "FEAT-1-test-feat" {
+		t.Errorf("feature: expected FEAT-1-test-feat, got %q", featID)
+	}
+}

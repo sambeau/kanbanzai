@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 
@@ -158,6 +159,12 @@ func (s *EntityService) ensureCoordinationDB() *coordination.DB {
 		fmt.Fprintf(os.Stderr, "warning: coordination migration failed: %v\n", err)
 		db.Close()
 		return nil
+	}
+
+	if err := s.seedCoordinationCounters(db); err != nil {
+		fmt.Fprintf(os.Stderr, "warning: coordination seed failed: %v\n", err)
+		// Non-fatal: counters start at 1 by default, which is safe for
+		// projects with no existing sequential-numeric entities.
 	}
 
 	s.coordinationDB = db
@@ -1225,12 +1232,13 @@ func validateKindForType(entityType string) (validate.EntityKind, error) {
 
 func parseRecordIdentity(entityType, idPart string) (string, string, error) {
 	switch entityType {
-	case string(model.EntityKindPlan):
-		// Plan files use {id}.yaml with no slug suffix. The entire idPart is the ID.
-		if prefix, _, _ := model.ParsePlanID(idPart); prefix != "" {
-			return idPart, "", nil
+	case string(model.EntityKindPlan), string(model.EntityKindStrategicPlan):
+		// Plan/batch/strategic-plan files use {id}.yaml with no slug suffix.
+		// The entire idPart is the ID; extract the human-readable slug from ParsePlanID.
+		if prefix, _, slug := model.ParsePlanID(idPart); prefix != "" {
+			return idPart, slug, nil
 		}
-		return "", "", fmt.Errorf("invalid plan record filename %q", idPart)
+		return "", "", fmt.Errorf("invalid plan/batch record filename %q", idPart)
 
 	case string(model.EntityKindFeature), string(model.EntityKindBug),
 		string(model.EntityKindDecision), string(model.EntityKindTask),
@@ -1645,6 +1653,116 @@ func extractParentRefFromState(entityType string, state map[string]any) string {
 	default:
 		return ""
 	}
+}
+
+// seedCoordinationCounters scans existing file-based entities and primes the
+// coordination database counters so that the next allocated ID does not collide
+// with any existing sequential-numeric entity ID. It is called once during
+// ensureCoordinationDB (first connection). Failures are non-fatal.
+func (s *EntityService) seedCoordinationCounters(db *coordination.DB) error {
+	projectID := s.cfg.Coordination.ProjectID
+	if projectID == "" {
+		projectID = s.cfg.Name
+	}
+
+	counters := make(map[string]int)
+
+	// Seed bug counters from existing bugs that use sequential-numeric IDs
+	// (BUG-{num}-{slug} format). TSID-based bugs are skipped.
+	if maxBug, err := s.scanMaxCoordinationCounter("bug", "BUG-"); err == nil && maxBug > 0 {
+		counters["bug"] = maxBug + 1
+	}
+
+	// Seed plan counters from existing plan IDs ({P}{num}-{slug} format).
+	if maxPlan, err := s.scanMaxPlanBatchNumber("P"); err == nil && maxPlan > 0 {
+		counters["plan_P"] = maxPlan + 1
+	}
+
+	// Seed batch counters from existing batch IDs ({B}{num}-{slug} format).
+	if maxBatch, err := s.scanMaxPlanBatchNumber("B"); err == nil && maxBatch > 0 {
+		counters["batch_B"] = maxBatch + 1
+	}
+
+	if len(counters) == 0 {
+		return nil
+	}
+
+	return db.SeedCounters(context.Background(), projectID, counters)
+}
+
+// scanMaxCoordinationCounter scans entity files of the given type and returns
+// the highest numeric counter from IDs matching the coordination prefix format.
+// For example, for entityType="bug" and prefix="BUG-", it scans for
+// BUG-{num}-{slug} files and returns the max {num} found.
+func (s *EntityService) scanMaxCoordinationCounter(entityType, prefix string) (int, error) {
+	dir := filepath.Join(s.root, entityDirectory(entityType))
+	entries, err := listDirectory(dir)
+	if err != nil {
+		return 0, err
+	}
+
+	maxNum := 0
+	for _, entry := range entries {
+		if !strings.HasSuffix(entry, ".yaml") {
+			continue
+		}
+		name := strings.TrimSuffix(entry, ".yaml")
+		num := extractCoordinationCounter(name, prefix)
+		if num > maxNum {
+			maxNum = num
+		}
+	}
+	return maxNum, nil
+}
+
+// scanMaxPlanBatchNumber scans plan/batch directories for IDs matching
+// {prefix}{num}-{slug} format and returns the highest {num} found.
+func (s *EntityService) scanMaxPlanBatchNumber(prefix string) (int, error) {
+	// Plan/batch IDs always use the sequential format.
+	ids, err := s.listPlanIDs()
+	if err != nil {
+		return 0, err
+	}
+
+	maxNum := 0
+	for _, id := range ids {
+		p, numStr, _ := model.ParseBatchID(id)
+		if p != prefix {
+			continue
+		}
+		if num, err := strconv.Atoi(numStr); err == nil && num > maxNum {
+			maxNum = num
+		}
+	}
+	return maxNum, nil
+}
+
+// extractCoordinationCounter extracts the numeric counter from a coordination-
+// style ID of the form {prefix}{num}-{slug}. For example, given
+// "BUG-42-some-slug" and prefix "BUG-", returns 42. Returns 0 if the ID
+// does not match the expected format.
+func extractCoordinationCounter(id, prefix string) int {
+	if !strings.HasPrefix(id, prefix) {
+		return 0
+	}
+	rest := id[len(prefix):]
+	// Find where digits end
+	digitEnd := 0
+	for digitEnd < len(rest) && rest[digitEnd] >= '0' && rest[digitEnd] <= '9' {
+		digitEnd++
+	}
+	if digitEnd == 0 {
+		return 0
+	}
+	// Must be followed by a hyphen (separator before slug)
+	if digitEnd >= len(rest) || rest[digitEnd] != '-' {
+		return 0
+	}
+	num, err := strconv.Atoi(rest[:digitEnd])
+	if err != nil {
+		return 0
+	}
+	return num
 }
 
 // listDirectory returns the names of entries in a directory.
