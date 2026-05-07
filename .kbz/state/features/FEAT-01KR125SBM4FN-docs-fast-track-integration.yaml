@@ -2,8 +2,9 @@ id: FEAT-01KR125SBM4FN
 slug: docs-fast-track-integration
 name: Documentation and fast-track integration
 parent: B55-orchestrator-context-hygiene-impl
-status: proposed
+status: specifying
 summary: Update codebase-memory-mcp skills to note graph tools are for implementer/reviewer roles. Fast-track loads lightweight orchestrator role.
+spec: FEAT-01KR125SBM4FN/spec-docs-fast-track-integration-spec
 tags:
   - documentation
   - fast-track
