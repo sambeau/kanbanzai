@@ -1,0 +1,14 @@
+confidence: "0.5"
+content: "Tool hints in sub-agent prompts no longer require configuration. When MergedToolHints is empty or missing a role, stepResolveToolHint falls back to a hardcoded defaultToolHints map covering implementer-go, architect, and all four reviewer roles. Config still wins per-key. This means handoff prompts always include the Available Tools section with codebase-memory-mcp, kanbanzai_edit_file, search_graph, etc."
+created: "2026-05-07T14:50:42Z"
+created_by: unknown
+id: KE-01KR1EPST17EN
+learned_from: TASK-01KR1EFVWN5MT
+miss_count: 0
+scope: project
+status: contributed
+tier: 2
+topic: config-optional-for-tool-hints
+ttl_days: 90
+updated: "2026-05-07T14:50:42Z"
+use_count: 0

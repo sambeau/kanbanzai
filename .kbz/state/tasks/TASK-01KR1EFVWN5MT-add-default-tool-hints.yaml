@@ -3,4 +3,14 @@ parent_feature: FEAT-01KR1D0000001
 slug: add-default-tool-hints
 name: Add default tool hints to stepResolveToolHint
 summary: Add defaultToolHints map and fallback clause in stepResolveToolHint. ~50 lines in internal/context/pipeline.go.
-status: ready
+status: done
+files_planned:
+  - internal/context/pipeline.go
+  - internal/context/pipeline_tool_hints_test.go
+completed: "2026-05-07T14:50:42Z"
+claimed_at: "2026-05-07T14:47:13Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-07T14:47:13Z"
+dispatched_by: sambeau
+completion_summary: Added defaultToolHints map and fallback clause in stepResolveToolHint. Updated tests to expect fallback hints. All context and MCP tests pass.
+verification: "go test ./internal/context/... passed (all tests). go test ./internal/mcp/... passed (one pre-existing flaky test in isolation, all Handoff/Assembly/ToolHint tests green)."
