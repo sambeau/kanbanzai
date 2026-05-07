@@ -1,0 +1,6 @@
+id: TASK-01KR1EFVWN5MT
+parent_feature: FEAT-01KR1D0000001
+slug: add-default-tool-hints
+name: Add default tool hints to stepResolveToolHint
+summary: Add defaultToolHints map and fallback clause in stepResolveToolHint. ~50 lines in internal/context/pipeline.go.
+status: queued
