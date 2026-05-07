@@ -1,0 +1,6 @@
+id: TASK-01KR1AX1AXNY0
+parent_feature: FEAT-01KR1AS0QF3FF
+slug: feature-ready-task
+name: Feature Ready Task
+summary: Test task for handoff verification - ready status
+status: queued

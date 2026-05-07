@@ -2,7 +2,7 @@ id: FEAT-01KR1AS0QF3FF
 slug: handoff-verify-feature
 name: Handoff Verification - Feature Type
 parent: B1-p51-exec
-status: designing
+status: developing
 summary: Temporary entity for P51 handoff pipeline verification. DELETE after verification.
 tags:
   - test-fixture
@@ -10,5 +10,21 @@ tags:
   - temporary
 created: "2026-05-07T13:42:00Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: designing
+    reason: Test fixture for P51 handoff verification — bypassing document gates
+    timestamp: "2026-05-07T14:43:26+01:00"
+    to_status: specifying
+  -
+    from_status: specifying
+    reason: Test fixture for P51 handoff verification — bypassing document gates
+    timestamp: "2026-05-07T14:43:26+01:00"
+    to_status: dev-planning
+  -
+    from_status: dev-planning
+    reason: Test fixture for P51 handoff verification — bypassing document gates
+    timestamp: "2026-05-07T14:43:26+01:00"
+    to_status: developing
 display_id: B1-F5
 tier: feature
