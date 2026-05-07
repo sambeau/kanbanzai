@@ -56,33 +56,33 @@ func TestParseSKILLMD(t *testing.T) {
 			wantSubstr: "missing closing frontmatter delimiter",
 		},
 		{
-			name: "500-line file passes boundary",
+			name: "550-line file passes boundary",
 			input: func() string {
 				var b strings.Builder
 				b.WriteString("---\nname: my-skill\n---\n")
-				// 3 lines used so far, fill to 500
-				for i := 0; i < 497; i++ {
+				// 3 lines used so far, fill to 550
+				for i := 0; i < 547; i++ {
 					b.WriteString("line\n")
 				}
 				return b.String()
 			}(),
 			wantErrs:  0,
-			wantLines: 500,
+			wantLines: 550,
 			wantName:  "my-skill",
 		},
 		{
-			name: "501-line file returns error with line count",
+			name: "551-line file returns error with line count",
 			input: func() string {
 				var b strings.Builder
 				b.WriteString("---\nname: my-skill\n---\n")
-				for i := 0; i < 498; i++ {
+				for i := 0; i < 548; i++ {
 					b.WriteString("line\n")
 				}
 				return b.String()
 			}(),
 			wantErrs:   1,
-			wantSubstr: "501",
-			wantLines:  501,
+			wantSubstr: "551",
+			wantLines:  551,
 			wantName:   "my-skill", // still parses despite error
 		},
 		{
@@ -165,11 +165,11 @@ line 5
 			wantSubstr: "missing opening frontmatter delimiter",
 		},
 		{
-			name: "501-line file still parses frontmatter",
+			name: "551-line file still parses frontmatter",
 			input: func() string {
 				var b strings.Builder
 				b.WriteString("---\nname: parsed-despite-length\n---\n")
-				for i := 0; i < 498; i++ {
+				for i := 0; i < 548; i++ {
 					b.WriteString("x\n")
 				}
 				return b.String()
@@ -182,7 +182,7 @@ line 5
 			input: func() string {
 				var b strings.Builder
 				b.WriteString("---\nunknown: bad\n---\n")
-				for i := 0; i < 498; i++ {
+				for i := 0; i < 548; i++ {
 					b.WriteString("x\n")
 				}
 				return b.String()
@@ -250,8 +250,8 @@ line 5
 }
 
 func TestParseSKILLMD_MaxLinesConstant(t *testing.T) {
-	if maxLines != 500 {
-		t.Errorf("maxLines = %d, want 500 (FR-014)", maxLines)
+	if maxLines != 550 {
+		t.Errorf("maxLines = %d, want 550 (FR-014)", maxLines)
 	}
 }
 
@@ -329,35 +329,35 @@ func TestParseSKILLMD_LineCountExact(t *testing.T) {
 }
 
 func TestParseSKILLMD_ExactBoundary(t *testing.T) {
-	// Build a file with exactly 500 lines
+	// Build a file with exactly 550 lines
 	var b strings.Builder
 	b.WriteString("---\nname: boundary\n---\n")
-	for i := 4; i <= 500; i++ {
+	for i := 4; i <= 550; i++ {
 		fmt.Fprintf(&b, "line %d\n", i)
 	}
-	input500 := b.String()
+	input550 := b.String()
 
-	// Build a file with exactly 501 lines
+	// Build a file with exactly 551 lines
 	b.Reset()
 	b.WriteString("---\nname: boundary\n---\n")
-	for i := 4; i <= 501; i++ {
+	for i := 4; i <= 551; i++ {
 		fmt.Fprintf(&b, "line %d\n", i)
 	}
-	input501 := b.String()
+	input551 := b.String()
 
-	result500, errs500 := parseSKILLMD([]byte(input500))
-	if len(errs500) != 0 {
-		t.Errorf("500 lines: unexpected errors: %v", errs500)
+	result550, errs550 := parseSKILLMD([]byte(input550))
+	if len(errs550) != 0 {
+		t.Errorf("550 lines: unexpected errors: %v", errs550)
 	}
-	if result500.LineCount != 500 {
-		t.Errorf("500 lines: LineCount = %d", result500.LineCount)
+	if result550.LineCount != 550 {
+		t.Errorf("550 lines: LineCount = %d", result550.LineCount)
 	}
 
-	result501, errs501 := parseSKILLMD([]byte(input501))
-	if len(errs501) != 1 {
-		t.Errorf("501 lines: got %d errors, want 1", len(errs501))
+	result551, errs551 := parseSKILLMD([]byte(input551))
+	if len(errs551) != 1 {
+		t.Errorf("551 lines: got %d errors, want 1", len(errs551))
 	}
-	if result501.LineCount != 501 {
-		t.Errorf("501 lines: LineCount = %d", result501.LineCount)
+	if result551.LineCount != 551 {
+		t.Errorf("551 lines: LineCount = %d", result551.LineCount)
 	}
 }

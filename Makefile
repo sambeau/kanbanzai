@@ -1,4 +1,4 @@
-MODULE   := kanbanzai
+MODULE   := github.com/sambeau/kanbanzai
 PKG      := $(MODULE)/internal/buildinfo
 BINARY   := kbz
 

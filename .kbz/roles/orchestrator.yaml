@@ -63,8 +63,7 @@ anti_patterns:
   - name: "Pre-delegation Code Investigation"
     detect: "Orchestrator reads source files, traces call paths, or searches the
       code graph to understand implementation details before delegating"
-    because:
-      "Implementation understanding belongs to the sub-agent. The dev-plan,
+    because: "Implementation understanding belongs to the sub-agent. The dev-plan,
       spec, and handoff context give the sub-agent everything needed. Every
       code fragment the orchestrator loads competes with orchestration
       constraints and accelerates context rot — causing forgotten close-out

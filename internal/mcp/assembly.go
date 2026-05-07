@@ -112,6 +112,12 @@ type asmTrimmedEntry struct {
 	tokenEstimate int
 }
 
+// asmConstraintEntry is a typed constraint entry with metadata for consumers.
+type asmConstraintEntry struct {
+	Type    string `json:"type"`
+	Content string `json:"content"`
+}
+
 // assembledContext holds the result of the context assembly pipeline.
 // Both next (structured JSON) and handoff (Markdown prompt) consume this
 // intermediate representation.
@@ -122,7 +128,7 @@ type assembledContext struct {
 	siblingKnowledge     []asmKnowledgeEntry // from completed sibling tasks (P45 wisdom forwarding)
 	docPointers          []asmDocPointer
 	filesContext         []asmFileEntry
-	constraints          []string
+	constraints          []asmConstraintEntry
 	roleProfile          string
 	byteUsage            int
 	byteBudget           int
@@ -243,7 +249,10 @@ func assembleContext(input asmInput) assembledContext {
 
 	// Orchestrator role reminder (constraint pinning per P55).
 	if input.role == "orchestrator" {
-		actx.constraints = append(actx.constraints, kbzctx.OrchestratorRoleReminder)
+		actx.constraints = append(actx.constraints, asmConstraintEntry{
+			Type:    "role_reminder",
+			Content: kbzctx.OrchestratorRoleReminder,
+		})
 	}
 
 	// Tool hint resolution: resolve role-scoped hint via inheritance (FR-015, FR-016).
@@ -809,28 +818,32 @@ func asmExtractFiles(taskState map[string]any) []asmFileEntry {
 
 // flattenConventions converts the any-typed Conventions field to a []string.
 // Handles both []interface{} (flat list) and map[string]interface{} (named sub-keys).
-func flattenConventions(v any) []string {
+func flattenConventions(v any) []asmConstraintEntry {
 	if v == nil {
 		return nil
 	}
 	switch c := v.(type) {
 	case []interface{}:
-		out := make([]string, 0, len(c))
+		out := make([]asmConstraintEntry, 0, len(c))
 		for _, item := range c {
 			if s, ok := item.(string); ok {
-				out = append(out, s)
+				out = append(out, asmConstraintEntry{Type: "convention", Content: s})
 			}
 		}
 		return out
 	case []string:
-		return c
+		out := make([]asmConstraintEntry, 0, len(c))
+		for _, s := range c {
+			out = append(out, asmConstraintEntry{Type: "convention", Content: s})
+		}
+		return out
 	case map[string]interface{}:
-		var out []string
+		var out []asmConstraintEntry
 		for _, val := range c {
 			if items, ok := val.([]interface{}); ok {
 				for _, item := range items {
 					if s, ok := item.(string); ok {
-						out = append(out, s)
+						out = append(out, asmConstraintEntry{Type: "convention", Content: s})
 					}
 				}
 			}
@@ -851,7 +864,7 @@ func asmByteCount(actx assembledContext) int {
 		total += len(ke.content) + len(ke.topic) + 30
 	}
 	for _, c := range actx.constraints {
-		total += len(c) + 3
+		total += len(c.Content) + 3
 	}
 	for _, dp := range actx.docPointers {
 		total += len(dp.docPath) + len(dp.sectionPath) + len(dp.title) + 20

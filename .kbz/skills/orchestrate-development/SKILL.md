@@ -91,9 +91,9 @@ constraint_level: medium
 
 ### Pre-delegation Code Investigation
 
-- **Detect:** The orchestrator reads source files, traces call paths, or searches the code graph to "understand" implementation areas before dispatching sub-agents.
-- **BECAUSE:** Implementation understanding belongs to the sub-agent. The dev-plan, spec, and handoff context assembled by `handoff` give the sub-agent everything needed. Every code fragment the orchestrator loads competes with orchestration constraints and accelerates context rot — causing forgotten close-out steps, skipped reviews, and goal drift by end of cycle.
-- **Resolve:** Delegate immediately via `handoff`. Trust the pipeline. If the dev-plan is unclear about what to build, flag it — don't read the code to compensate. Sub-agents handle all code reading and writing.
+- **Detect:** The orchestrator reads source files, traces call paths, or searches the code graph to understand implementation before dispatching.
+- **BECAUSE:** Implementation understanding belongs to the sub-agent. Every code fragment the orchestrator loads competes with orchestration constraints and accelerates context rot — causing forgotten close-out steps, skipped reviews, and goal drift.
+- **Resolve:** Delegate via `handoff`. Trust the pipeline. If the dev-plan is unclear, flag it — don't read the code to compensate.
 
 ## Checklist
 
@@ -111,7 +111,6 @@ Copy this checklist and track your progress:
 
 ## Procedure
 
-### Phase 0: Cohort Setup _((batches with more than 3 features only)_
 ### Phase 0: Cohort Setup _(batches with more than 3 features only)_
 
 Skip this phase entirely if the batch has 3 or fewer features.
@@ -132,14 +131,12 @@ Skip this phase entirely if the batch has 3 or fewer features.
 ### Phase 1: Read the Dev-Plan
 
 > **Constraint ℋ — No Code Investigation:** Do not read source files, trace call
-> paths, or search the code graph to "understand" implementation areas before
-> dispatching. The sub-agent receives the dev-plan, spec sections, knowledge
-> entries, and file paths via `handoff` — this is sufficient context for
-> implementation. Every line of source code you read competes with orchestration
-> constraints and accelerates context rot. If the dev-plan is unclear about
-> what to build, flag it — don't read the code to compensate.
+> paths, or search the code graph before dispatching. The sub-agent receives
+> everything needed via `handoff`. Every line of implementation code you read
+> competes with orchestration constraints and accelerates context rot. If the
+> dev-plan is unclear, flag it — don't read the code to compensate.
 >
-> This is a **hard constraint (ℋ)** — non-negotiable. Violation blocks stage advance.
+> **Hard constraint (ℋ)** — violation blocks stage advance.
 
 1. Call `status` with the feature ID to get the current state of all tasks.
 1a. Call `knowledge(action: "list")` with feature-area tags and `status: "confirmed"` to surface project-level knowledge before dispatching any sub-agents. Review all returned entries. Note any that describe pitfalls, architectural constraints, or patterns relevant to this feature. Carry these entries forward: include them in each `handoff` tool call via the `instructions` parameter so sub-agents benefit from accumulated knowledge without having to rediscover it.
@@ -238,10 +235,8 @@ marked fast-track, replace the full 6-phase procedure with this lightweight 3-ph
 ### No-Stop Contract
 
 You are in fast-track mode. You will NOT stop for confirmation at any point.
-
-**Role:** Fast-track sessions use the `orchestrator` role with `grep` and `search_graph`
-removed from the tool list. The orchestrator delegates all code investigation to
-sub-agents — it does not search, trace, or read implementation source code directly.
+Use the `orchestrator` role (without `grep`/`search_graph`). Delegate all code
+investigation to sub-agents — do not search, trace, or read source code.
 
 The ONLY valid stop conditions are:
 - All work is done (all features transitioned, all branches merged)
@@ -322,22 +317,13 @@ Replaces Phase 4 (Monitor Progress), Phase 5 (Context Compaction), and Phase 6
    each feature can advance. Call `status()` and verify no non-terminal tasks remain.
 
 2. **Dispatch review sub-agents.** Before transitioning any feature out of
-   `developing`, dispatch at minimum one review sub-agent for each feature that
-   modified source code (not documentation-only changes):
-
-   - For `bug_fix` features with ≤5 files changed: dispatch one `reviewer-conformance`
-     sub-agent via `spawn_agent` with role `reviewer-conformance` and skill `review-code`.
-   - For `retro_fix` features with source changes: dispatch `reviewer-conformance` at
-     minimum.
-   - For features with >5 files changed or features not in the `bug_fix` or `retro_fix`
-     tier: read `orchestrate-review/SKILL.md` and follow Steps 3–6 (select specialist
-     reviewers adaptively, dispatch, collate findings, aggregate verdict).
-   - Documentation-only features (no source code modifications) are exempt from review
-     dispatch.
-
-   All review sub-agents are dispatched in clean contexts via `spawn_agent`.
-   **Do not transition any feature to `reviewing` or `done` until review findings**
-   **have been collated and no blocking findings remain.**
+   `developing`, dispatch at minimum one review sub-agent for each feature
+   that modified source code (documentation-only features exempt):
+   - `bug_fix` ≤5 files: one `reviewer-conformance` via `spawn_agent`
+   - `retro_fix` with source changes: `reviewer-conformance` minimum
+   - >5 files or other tiers: follow `orchestrate-review` Steps 3–6
+   All reviewers use clean contexts. **Do not transition until findings are**
+   **collated and no blocking findings remain.**
 
 3. **Transition features.** Call `entity(action: "transition", id: "FEAT-xxx", status: ...)`
    to advance each feature through to `done` or `reviewing` as appropriate. Follow the

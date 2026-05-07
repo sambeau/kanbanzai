@@ -16,7 +16,8 @@ type parsedSKILLMD struct {
 }
 
 // maxLines is the maximum number of lines in a SKILL.md file (FR-014).
-const maxLines = 500
+// Raised from 500 to 550 for skills with both full and fast-track procedures.
+const maxLines = 550
 
 // parseSKILLMD reads a SKILL.md file, splits frontmatter from body,
 // decodes frontmatter with strict YAML parsing, and enforces the 500-line limit.

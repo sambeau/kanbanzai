@@ -538,6 +538,10 @@ func (p *Pipeline) stepAssembleSections(state *PipelineState) {
 		if state.ToolGuidance != "" {
 			roleContent += "\n\n" + state.ToolGuidance
 		}
+		// Orchestrator role reminder (constraint pinning per P55).
+		if state.Input.Role == "orchestrator" {
+			roleContent += "\n\n" + OrchestratorRoleReminder
+		}
 		state.Sections = append(state.Sections, PipelineSection{
 			Position: PositionRoleIdentity,
 			Label:    "Role",
