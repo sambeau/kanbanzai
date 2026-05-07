@@ -3,9 +3,9 @@ content: "decompose(action: propose) cannot parse the `**AC-001 (REQ-001):**` ac
 created: "2026-04-22T21:12:44Z"
 created_by: sambeau
 id: KE-01KPVGKJ13QPH
-last_accessed_at: "2026-05-07T13:34:47Z"
+last_accessed_at: "2026-05-07T13:46:46Z"
 miss_count: 0
-recent_use_count: 317
+recent_use_count: 322
 scope: project
 status: confirmed
 tags:
