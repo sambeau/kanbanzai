@@ -1,0 +1,12 @@
+id: BUG-01KQZWF7HZZ2K
+slug: b50-b51-slug-validation-bug
+name: Cannot transition B50/B51 batches — slug validation bug
+status: reported
+severity: medium
+priority: medium
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-05-07T00:12:45Z"
+observed: "Both B50-review-remediation-v1 and B51-review-remediation-v1 fail all entity mutations with \"entity slug is required\". B50 is a stale duplicate of B51 — the actual work was completed under B51/FEAT-01KQZS0PHZM1E and merged to main. B50's feature and all 5 tasks have been cleaned up, but the batch itself cannot be transitioned to cancelled. Additionally, tasks in \"duplicate\" terminal state are still counted as non-terminal by the feature gate."
+expected: "entity(action: \"get/transition\", id: \"B50-review-remediation-v1\") should work. Tasks in \"duplicate\" status should be recognized as terminal by gate checks."
+tier: bug_fix
