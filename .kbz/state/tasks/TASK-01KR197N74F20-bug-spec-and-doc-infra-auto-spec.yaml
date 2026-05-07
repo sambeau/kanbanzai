@@ -3,8 +3,18 @@ parent_feature: FEAT-01KR12RE99QPT
 slug: bug-spec-and-doc-infra-auto-spec
 name: Auto-generate spec from bug observed/expected
 summary: "Auto-generate specification document from observed/expected on bug creation. Register as spec document owned by bug, auto-approved. Create work/bugs/slug/ directory. Handle idempotent re-registration."
-status: active
+status: done
+files_planned:
+  - internal/service/entities.go
+  - internal/service/bug_spec.go
+  - internal/service/documents.go
+  - internal/service/doc_validate.go
+  - internal/service/entities_test.go
+  - internal/mcp/entity_tool.go
+completed: "2026-05-07T13:58:27Z"
 claimed_at: "2026-05-07T13:33:49Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-07T13:33:49Z"
 dispatched_by: sambeau
+completion_summary: "Added auto-generated bug spec from observed/expected fields on CreateBug. Key changes: BugCreationHook on EntityService, GenerateBugSpec service function, spec auto-approve whitelist addition, work/bugs/ path validation exemption. 5 new tests pass, all existing tests pass (excluding pre-existing kbzinit failures)."
+verification: "Ran go test ./... (excluding kbzinit pre-existing failures) - all 31 packages pass including internal/service and internal/mcp. New tests cover: spec file generation (FR-101), document registration (FR-102), idempotency (FR-104), failure isolation (FR-106), and no-hook path."
