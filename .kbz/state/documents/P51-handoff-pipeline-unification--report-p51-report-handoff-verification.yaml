@@ -1,11 +1,13 @@
+approved_at: "2026-05-07T13:51:55Z"
+approved_by: sambeau
 canonical_content_hash: 5f21f82f2a0b1344ae6a67dab488fe4fe706f91d1fb471b04b3cd869f7ce577f
-content_hash: 5f21f82f2a0b1344ae6a67dab488fe4fe706f91d1fb471b04b3cd869f7ce577f
+content_hash: fb501b40c51f18c4eae5a5e7f69cd90c8f2a9ac5e44f12f2592521b673c705de
 created: "2026-05-07T00:34:20Z"
 created_by: sambeau
 id: P51-handoff-pipeline-unification/report-p51-report-handoff-verification
 owner: P51-handoff-pipeline-unification
 path: work/P51-handoff-pipeline-unification/P51-report-handoff-verification.md
-status: draft
+status: approved
 title: P51 Handoff Pipeline Verification Report
 type: report
-updated: "2026-05-07T00:34:20Z"
+updated: "2026-05-07T13:51:55Z"
