@@ -1,0 +1,7 @@
+id: WT-01KR0X7P5YDP4
+entity_id: BUG-01KPVGMMP56GC
+branch: bug/BUG-01KPVGMMP56GC-decompose-propose-req-traced-ac-format
+path: .worktrees/BUG-01KPVGMMP56GC-decompose-propose-req-traced-ac-format
+status: active
+created: "2026-05-07T09:45:21Z"
+created_by: sambeau

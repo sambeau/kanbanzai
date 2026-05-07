@@ -1,0 +1,7 @@
+id: WT-01KR0X7P5XKWN
+entity_id: BUG-01KQFB1E8WPT1
+branch: bug/BUG-01KQFB1E8WPT1-doc-approve-ignores-false-positives
+path: .worktrees/BUG-01KQFB1E8WPT1-doc-approve-ignores-false-positives
+status: active
+created: "2026-05-07T09:45:21Z"
+created_by: sambeau
