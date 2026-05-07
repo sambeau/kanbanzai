@@ -1,7 +1,7 @@
 id: B57-retro-pipeline-tightening-impl
 slug: retro-pipeline-tightening-impl
 name: Retrospective Pipeline Tightening implementation
-status: designing
+status: active
 summary: "Implement the seven components of P57: create_fix action, auto-generated design/spec templates, retro-adapted DoD, stage binding profile, document type fix, document trail, and implement-retro-fix skill."
 created: "2026-05-07T15:23:09Z"
 created_by: sambeau
