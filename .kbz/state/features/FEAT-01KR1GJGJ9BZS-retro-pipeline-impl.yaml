@@ -2,10 +2,21 @@ id: FEAT-01KR1GJGJ9BZS
 slug: retro-pipeline-impl
 name: Retro Pipeline Tightening Implementation
 parent: B57-retro-pipeline-tightening-impl
-status: designing
+status: dev-planning
 summary: "Implement all seven P57 components: retro create_fix action with dual-mode, auto-generated design and spec templates, retro-adapted DoD with signal-addressed verification, stage binding profile, document type fix, and implement-retro-fix skill."
 dev_plan: FEAT-01KR1GJGJ9BZS/dev-plan-p57-dev-plan-retro-pipeline-tightening
 created: "2026-05-07T15:23:18Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: designing
+    reason: "Feature design is covered by P57 plan-level design document (P57-design-retro-pipeline-tightening, approved). The feature implements the plan; no separate feature-level design needed."
+    timestamp: "2026-05-07T16:25:09+01:00"
+    to_status: specifying
+  -
+    from_status: specifying
+    reason: "Feature design is covered by P57 plan-level design document (P57-design-retro-pipeline-tightening, approved). The feature implements the plan; no separate feature-level design needed."
+    timestamp: "2026-05-07T16:25:09+01:00"
+    to_status: dev-planning
 display_id: B57-F1
 tier: feature
