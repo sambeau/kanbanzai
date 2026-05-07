@@ -551,7 +551,11 @@ func (s *RetroService) CreateFix(input CreateFixInput) (CreateFixResult, error) 
 	var features []CreateFixFeatureResult
 	for i, theme := range selected {
 		// Idempotency: skip if feature already exists for this theme's signals.
-		if existing, found := s.findExistingFixFeature(theme.Signals); found {
+		existing, found, idemErr := s.findExistingFixFeature(theme.Signals)
+		if idemErr != nil {
+			return CreateFixResult{}, fmt.Errorf("idempotency check for theme %q: %w", theme.Title, idemErr)
+		}
+		if found {
 			features = append(features, CreateFixFeatureResult{
 				FeatureID:  existing,
 				ThemeRank:  theme.Rank,
@@ -662,9 +666,9 @@ func extractTags(state map[string]any) []string {
 // findExistingFixFeature checks whether a feature already exists for the given
 // signal IDs by scanning existing features' tags. Returns the feature ID and
 // true if found.
-func (s *RetroService) findExistingFixFeature(signalIDs []string) (string, bool) {
+func (s *RetroService) findExistingFixFeature(signalIDs []string) (string, bool, error) {
 	if len(signalIDs) == 0 {
-		return "", false
+		return "", false, nil
 	}
 	sigSet := make(map[string]bool, len(signalIDs))
 	for _, id := range signalIDs {
@@ -673,18 +677,18 @@ func (s *RetroService) findExistingFixFeature(signalIDs []string) (string, bool)
 
 	features, err := s.entitySvc.List("feature")
 	if err != nil {
-		return "", false
+		return "", false, fmt.Errorf("list features for idempotency check: %w", err)
 	}
 
 	for _, f := range features {
 		tags := extractTags(f.State)
 		if hasRetroTag(tags) && sharesSignal(tags, sigSet) {
 			if id, ok := f.State["id"].(string); ok {
-				return id, true
+				return id, true, nil
 			}
 		}
 	}
-	return "", false
+	return "", false, nil
 }
 
 // hasRetroTag checks whether a tag slice contains the "retro" tag.
@@ -771,10 +775,14 @@ func (s *RetroService) createFixFeature(theme RetroTheme, planID, createdBy, mod
 	}
 
 	// 4d. Advance feature through lifecycle: proposed → designing → specifying → dev-planning → developing.
-	_ = s.advanceFeatureLifecycle(featResult.ID, featResult.Slug)
+	if err := s.advanceFeatureLifecycle(featResult.ID, featResult.Slug); err != nil {
+		return result, fmt.Errorf("advance lifecycle for %s: %w", featResult.ID, err)
+	}
 
 	// 4e. Create a task for the fix.
-	_ = s.createFixTask(featResult.ID, theme, createdBy)
+	if err := s.createFixTask(featResult.ID, theme, createdBy); err != nil {
+		return result, fmt.Errorf("create fix task for %s: %w", featResult.ID, err)
+	}
 
 	return result, nil
 }
@@ -845,6 +853,7 @@ func (s *RetroService) createFixTask(featureID string, theme RetroTheme, created
 
 	_, err := s.entitySvc.CreateTask(CreateTaskInput{
 		ParentFeature: featureID,
+		Name:          fmt.Sprintf("Fix - %s", sanitizeFeatureName(theme.Title)),
 		Slug:          taskSlug,
 		Summary:       summary,
 	})
