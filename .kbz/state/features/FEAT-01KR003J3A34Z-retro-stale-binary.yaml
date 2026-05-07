@@ -2,7 +2,7 @@ id: FEAT-01KR003J3A34Z
 slug: retro-stale-binary
 name: Stale binary detection discoverability
 parent: B53-retro-fixes-may-2026
-status: proposed
+status: designing
 summary: Make server_info tool usage proactive in workflow guides and pre-task checklists to prevent wasted verification from stale MCP binary.
 tags:
   - retro
