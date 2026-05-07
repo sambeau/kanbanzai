@@ -4,6 +4,7 @@ name: Prompt assembly gate for sub-agent dispatch
 parent: P44-model-routing-agent-launcher
 status: designing
 summary: "Design for enforcing minimum prompt quality standards at agent-launch time, ensuring roles, skills, tool hints, and codebase-memory-mcp are present in every sub-agent prompt."
+design: FEAT-01KR1CXN3WZN8/design-p44-f1-design-prompt-assembly-gate
 created: "2026-05-07T14:19:29Z"
 created_by: sambeau
 display_id: P44-F1

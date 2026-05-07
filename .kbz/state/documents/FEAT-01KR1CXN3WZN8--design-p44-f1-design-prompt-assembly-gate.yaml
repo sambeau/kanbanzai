@@ -1,0 +1,11 @@
+canonical_content_hash: 3ebe9e0719cfdeccb210f4f2726bb5ab0b7a5679d05a43429cf745505285f679
+content_hash: 8c5e850fa221cd5ff2c3ea3e84e4b5cbad8e4dfc9437f9a3ef00b30346841941
+created: "2026-05-07T14:23:48Z"
+created_by: sambeau
+id: FEAT-01KR1CXN3WZN8/design-p44-f1-design-prompt-assembly-gate
+owner: FEAT-01KR1CXN3WZN8
+path: work/P44-model-routing-agent-launcher/P44-F1-design-prompt-assembly-gate.md
+status: draft
+title: "Design: Prompt Assembly Gate for Sub-Agent Dispatch"
+type: design
+updated: "2026-05-07T14:23:48Z"
