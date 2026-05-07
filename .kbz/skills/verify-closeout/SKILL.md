@@ -181,6 +181,48 @@ Confirm all related entities are in terminal states.
 and decisions in terminal states.
 **Fail criterion:** Unresolved knowledge entries or non-terminal related entities.
 
+## Retro-Fix Variant
+
+When verifying a retro-fix feature (a feature created to address signals from a
+retrospective), the close-out criteria shift for Item 10. Items 1–9 remain
+identical to the standard DoD.
+
+### Applicability
+
+Apply this variant when the feature under verification has tags linking it to
+retrospective source signals. Detect this by calling `entity(action: "get",
+id: "<FEATURE-ID>")` and checking for signal ID tags (e.g., `SIG-...` or
+`retro:...` patterns). If the feature has no signal tags, use the standard
+DoD Item 10 instead.
+
+### Item 10 Replacement: Signals Addressed
+
+**Condition:** Every source retro signal linked to the fix feature is in a
+terminal resolution state — `confirmed`, `retired`, or `linked`. No source
+signal remains in `contributed` status.
+
+**Verification action:**
+1. Call `entity(action: "get", id: "<FEATURE-ID>")` and extract the feature's
+   tags. Identify all signal IDs referenced in the tags.
+2. For each signal ID, call `knowledge(action: "get", id: "<SIGNAL-ID>")`
+   and check the entry's status.
+3. Optionally, call `knowledge(action: "list", topic_filter: "<FEATURE-ID>")`
+   to surface any additional linked entries.
+
+**Pass criterion:** All source retro signal entries are in `confirmed`,
+`retired`, or `linked` status.
+**Fail criterion:** Any source retro signal entry is still in `contributed`
+status, or a referenced signal ID cannot be resolved.
+
+### Output Format (Retro-Fix)
+
+When the retro-fix variant applies, use the same output format but replace
+item 10 in the table:
+
+```
+| 10 | Signals addressed | pass / fail | <evidence> |
+```
+
 ## Output Format
 
 Produce exactly this structured output — no preamble, no conversation, no questions:

@@ -180,3 +180,35 @@ stage_bindings:
       problem, and collates all changelogs into a completion summary.
       All documents run through all five stages. Individual stages can
       also be triggered independently via their own skill triggers.
+
+  retro-fixing:
+    description: "Implementing a fix for a retrospective theme"
+    profile: true
+    tier: retro_fix
+    modes:
+      human-gated:
+        design_gate: human
+        spec_gate: auto
+        dev_plan_gate: auto
+        review_gate: conditional
+        max_review_cycles: 3
+        notes: >
+          Human picks which themes to fix and approves the design approach.
+          Spec is auto-generated from theme data. Review is conditional:
+          doc-only changes skip review, implementation changes trigger full
+          panel.
+      auto:
+        design_gate: auto
+        spec_gate: auto
+        dev_plan_gate: auto
+        review_gate: conditional
+        max_review_cycles: 3
+        notes: >
+          Human initiates the cycle and steps back. System auto-picks themes
+          by severity, auto-generates and auto-approves design and spec, then
+          decomposes, implements, reviews, and verifies without checkpoints.
+          Human reviews results after completion.
+    verifying:
+      roles: [verifier]
+      skills: [verify-closeout]
+      dod_variant: retro-fix
