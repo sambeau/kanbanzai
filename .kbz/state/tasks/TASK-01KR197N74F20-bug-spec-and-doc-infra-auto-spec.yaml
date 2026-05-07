@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR12RE99QPT
 slug: bug-spec-and-doc-infra-auto-spec
 name: Auto-generate spec from bug observed/expected
 summary: "Auto-generate specification document from observed/expected on bug creation. Register as spec document owned by bug, auto-approved. Create work/bugs/slug/ directory. Handle idempotent re-registration."
-status: queued
+status: ready
