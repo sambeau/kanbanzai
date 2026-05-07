@@ -368,7 +368,7 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 	// local write keeps the on-disk counter consistent for fallback scenarios.
 	planResult.State["next_feature_seq"] = seq + 1
 	planRecord := storage.EntityRecord{
-		Type:   string(model.EntityKindBatch),
+		Type:   planResult.Type,
 		ID:     planResult.ID,
 		Slug:   planResult.Slug,
 		Fields: planResult.State,

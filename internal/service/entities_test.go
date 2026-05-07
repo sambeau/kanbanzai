@@ -724,8 +724,9 @@ func writeTestPlan(t *testing.T, svc *EntityService, id string) {
 		"created_by": "test",
 		"updated":    "2026-03-19T12:00:00Z",
 	}
+	entityType := planEntityTypeFromID(id)
 	_, err := svc.store.Write(storage.EntityRecord{
-		Type:   string(model.EntityKindPlan),
+		Type:   entityType,
 		ID:     id,
 		Slug:   slug,
 		Fields: fields,

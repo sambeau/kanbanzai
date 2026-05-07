@@ -124,7 +124,7 @@ func (s *EntityService) AllocateFeatureDisplayIDInPlan(planID string) (string, e
 
 	planResult.State["next_feature_seq"] = seq + 1
 	planRecord := storage.EntityRecord{
-		Type:   string(model.EntityKindPlan),
+		Type:   planResult.Type,
 		ID:     planResult.ID,
 		Slug:   planResult.Slug,
 		Fields: planResult.State,
@@ -148,7 +148,7 @@ func (s *EntityService) GetPlan(id string) (ListResult, error) {
 	}
 
 	_, _, slug := model.ParsePlanID(id)
-	return s.loadPlan(id, slug)
+	return s.loadPlan(planEntityTypeFromID(id), id, slug)
 }
 
 // ListPlans returns all Plans, optionally filtered.
@@ -156,6 +156,10 @@ func (s *EntityService) ListPlans(filters PlanFilters) ([]ListResult, error) {
 	var results []ListResult
 	seen := make(map[string]bool)
 	for _, subdir := range []string{"plans", "batches"} {
+		// Map filesystem subdir to storage entity type:
+		//   plans/   → "plan"   (strategic plans and legacy plan files)
+		//   batches/ → "batch" (execution batches)
+		entityType := planSubdirEntityType(subdir)
 		dir := filepath.Join(s.root, subdir)
 		entries, err := listDirectory(dir)
 		if err != nil {
@@ -173,7 +177,7 @@ func (s *EntityService) ListPlans(filters PlanFilters) ([]ListResult, error) {
 				continue
 			}
 			seen[id] = true
-			result, err := s.loadPlan(id, slug)
+			result, err := s.loadPlan(entityType, id, slug)
 			if err != nil {
 				continue
 			}
@@ -184,6 +188,28 @@ func (s *EntityService) ListPlans(filters PlanFilters) ([]ListResult, error) {
 		}
 	}
 	return results, nil
+}
+
+// planSubdirEntityType maps a filesystem subdirectory name to the storage entity type
+// used to read plan files from that directory.
+func planSubdirEntityType(subdir string) string {
+	switch subdir {
+	case "batches":
+		return string(model.EntityKindBatch)
+	default:
+		return "plan"
+	}
+}
+
+// planEntityTypeFromID returns the storage entity type for a plan ID based on its prefix.
+// B-prefix IDs (batches) → "batch" (batches/ directory).
+// P-prefix IDs (strategic plans and legacy plans) → "plan" (plans/ directory).
+func planEntityTypeFromID(id string) string {
+	prefix, _, _ := model.ParsePlanID(id)
+	if strings.ToUpper(prefix) == "B" {
+		return string(model.EntityKindBatch)
+	}
+	return "plan"
 }
 
 // PlanFilters contains optional filters for listing Plans.
@@ -204,7 +230,7 @@ func (s *EntityService) UpdatePlanStatus(id, slug, newStatus string) (ListResult
 	}
 
 	// Load existing plan
-	result, err := s.loadPlan(id, slug)
+	result, err := s.loadPlan(planEntityTypeFromID(id), id, slug)
 	if err != nil {
 		return ListResult{}, err
 	}
@@ -244,8 +270,9 @@ func (s *EntityService) UpdatePlanStatus(id, slug, newStatus string) (ListResult
 	result.State["updated"] = s.now().Format(time.RFC3339)
 
 	// Write back
+	entityType := planEntityTypeFromID(id)
 	record := storage.EntityRecord{
-		Type:   string(model.EntityKindPlan),
+		Type:   entityType,
 		ID:     id,
 		Slug:   slug,
 		Fields: result.State,
@@ -278,7 +305,7 @@ func (s *EntityService) UpdatePlan(input UpdatePlanInput) (ListResult, error) {
 	}
 
 	// Load existing plan
-	result, err := s.loadPlan(input.ID, input.Slug)
+	result, err := s.loadPlan(planEntityTypeFromID(input.ID), input.ID, input.Slug)
 	if err != nil {
 		return ListResult{}, err
 	}
@@ -309,8 +336,9 @@ func (s *EntityService) UpdatePlan(input UpdatePlanInput) (ListResult, error) {
 	result.State["updated"] = s.now().Format(time.RFC3339)
 
 	// Write back
+	entityType := planEntityTypeFromID(input.ID)
 	record := storage.EntityRecord{
-		Type:   string(model.EntityKindPlan),
+		Type:   entityType,
 		ID:     input.ID,
 		Slug:   input.Slug,
 		Fields: result.State,
@@ -336,8 +364,9 @@ func (s *EntityService) UpdatePlan(input UpdatePlanInput) (ListResult, error) {
 // writePlan persists a new Plan entity.
 func (s *EntityService) writePlan(entity model.Plan) (CreateResult, error) {
 	fields := planFields(entity)
+	entityType := planEntityTypeFromID(entity.ID)
 	record := storage.EntityRecord{
-		Type:   string(model.EntityKindPlan),
+		Type:   entityType,
 		ID:     entity.ID,
 		Slug:   entity.Slug,
 		Fields: fields,
@@ -349,7 +378,7 @@ func (s *EntityService) writePlan(entity model.Plan) (CreateResult, error) {
 	}
 
 	return CreateResult{
-		Type:  string(model.EntityKindPlan),
+		Type:  entityType,
 		ID:    entity.ID,
 		Slug:  entity.Slug,
 		Path:  path,
@@ -358,17 +387,20 @@ func (s *EntityService) writePlan(entity model.Plan) (CreateResult, error) {
 }
 
 // loadPlan reads a Plan from storage.
-func (s *EntityService) loadPlan(id, slug string) (ListResult, error) {
-	record, err := s.store.Load(string(model.EntityKindPlan), id, slug)
+// entityType determines which directory the file is loaded from:
+//   - "plan" → plans/ (strategic plans and legacy plan files)
+//   - "batch" → batches/ (execution batches)
+func (s *EntityService) loadPlan(entityType, id, slug string) (ListResult, error) {
+	record, err := s.store.Load(entityType, id, slug)
 	if err != nil {
 		return ListResult{}, fmt.Errorf("load plan %s: %w", id, err)
 	}
 
 	return ListResult{
-		Type:  string(model.EntityKindPlan),
+		Type:  record.Type,
 		ID:    id,
 		Slug:  slug,
-		Path:  filepath.Join(s.root, "plans", id+".yaml"),
+		Path:  filepath.Join(s.root, entityDirectory(entityType), id+".yaml"),
 		State: record.Fields,
 	}, nil
 }
