@@ -3,4 +3,11 @@ parent_feature: FEAT-01KR12RE99QPT
 slug: bug-spec-and-doc-infra-canonical-paths
 name: Add canonical doc paths for bugs
 summary: "Extend CanonicalDocPath for bug entities: spec, dev-plan, report paths. Return error for unsupported types. Support both BUG-TSID and BUG-TSID-slug formats."
-status: ready
+status: done
+completed: "2026-05-07T18:46:33Z"
+claimed_at: "2026-05-07T18:25:22Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-07T18:25:22Z"
+dispatched_by: sambeau
+completion_summary: "Extended CanonicalDocPath for bug entities: spec→work/bugs/<slug>/spec.md, dev-plan→work/bugs/<slug>/fix-plan.md, report→work/reviews/review-<bug-id>-<slug>.md (FR-112). Added error for unsupported types like design (FR-113). Supports BUG-TSID and BUG-TSID-slug formats (FR-114). All existing tests pass."
+verification: "go test ./internal/service/ -run 'TestCanonicalDocPath_Bug' - all 4 tests pass; go test ./internal/... passes all service/mcp packages"

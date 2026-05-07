@@ -1,8 +1,0 @@
-id: WT-01KQZYHH53SMM
-entity_id: BUG-01KQZWYMNEMTX
-branch: bug/BUG-01KQZWYMNEMTX-coordination-db-no-seeding
-path: .worktrees/BUG-01KQZWYMNEMTX-coordination-db-no-seeding
-status: active
-created: "2026-05-07T00:48:58Z"
-created_by: sambeau
-graph_project: Users-samphillips-Dev-kanbanzai

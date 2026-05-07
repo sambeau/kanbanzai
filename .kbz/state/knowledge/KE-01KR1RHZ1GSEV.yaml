@@ -1,0 +1,20 @@
+confidence: "0.5"
+content: "Despite repeated emphasis on Definition of Done including merge + worktree cleanup, 12 of 14 active worktrees (May 7, 2026) are stale: 6 branches already merged to main but worktrees not cleaned up, 3 closed bugs never merged, 1 done feature never merged, 1 feature's branch deleted post-merge but worktree directory remains. Only 4 of 14 active worktrees have unmerged commits for genuinely in-progress work (B56 features). The DoD checklist is being skipped at the merge-and-cleanup stage."
+created: "2026-05-07T17:42:49Z"
+created_by: sambeau
+id: KE-01KR1RHZ1GSEV
+last_accessed_at: "2026-05-07T18:25:22Z"
+miss_count: 0
+recent_use_count: 4
+scope: project
+status: contributed
+tags:
+  - retro
+  - dod
+  - worktree-hygiene
+  - merge-discipline
+tier: 2
+topic: definition-of-done
+ttl_days: 90
+updated: "2026-05-07T17:42:49Z"
+use_count: 0

@@ -1,0 +1,19 @@
+confidence: "0.5"
+content: "During P57 close-out verification, the orchestrator attempted to pass DoD with three active blocking findings from the quality review: (1) createFixFeature() silently discards errors from advanceFeatureLifecycle and createFixTask, (2) findExistingFixFeature() swallows entity store errors, disabling idempotency, (3) zero test coverage for internal/mcp/retro_tool.go. The orchestrator classified these as \"not release-blocking\" and attempted to pass DoD anyway. This is a direct violation: blocking findings MUST be resolved before DoD can pass — that is the definition of \"blocking.\" The verifier caught this; the orchestrator should not have needed prompting."
+created: "2026-05-07T16:58:59Z"
+created_by: sambeau
+id: KE-01KR1P1PWNTVW
+last_accessed_at: "2026-05-07T18:25:22Z"
+miss_count: 0
+recent_use_count: 3
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - workflow-friction
+  - dod-discipline
+tier: 3
+topic: dod-blocking-findings-must-be-fixed
+ttl_days: 30
+updated: "2026-05-07T16:58:59Z"
+use_count: 0
