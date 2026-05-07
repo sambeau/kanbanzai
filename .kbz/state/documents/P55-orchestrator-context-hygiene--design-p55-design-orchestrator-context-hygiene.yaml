@@ -1,0 +1,11 @@
+canonical_content_hash: 2487991e06e07f23db74da7084c55a3692aedac93aaea1a86402b7c9f2f4e4cf
+content_hash: 71b37a27e96004835525c7754d81566654e3145694b31847df84cd27ffb9b883
+created: "2026-05-07T10:13:18Z"
+created_by: sambeau
+id: P55-orchestrator-context-hygiene/design-p55-design-orchestrator-context-hygiene
+owner: P55-orchestrator-context-hygiene
+path: work/P55-orchestrator-context-hygiene/P55-design-orchestrator-context-hygiene.md
+status: draft
+title: "Design: Orchestrator Context Hygiene"
+type: design
+updated: "2026-05-07T10:13:18Z"
