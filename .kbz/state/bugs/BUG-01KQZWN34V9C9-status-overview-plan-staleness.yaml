@@ -1,0 +1,12 @@
+id: BUG-01KQZWN34V9C9
+slug: status-overview-plan-staleness
+name: Status overview returns stale plan statuses
+status: reported
+severity: medium
+priority: medium
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-05-07T00:15:57Z"
+observed: "The project-wide status() call consistently returns stale statuses for four strategic plans that are actually done:\n\nP40: status() shows \"idea\", entity get shows \"done\"\nP42: status() shows \"shaping\", entity get shows \"done\"\nP46: status() shows \"shaping\", entity get shows \"done\"\nP48: status() shows \"idea\", entity get shows \"done\"\n\nThis causes: (1) attention section falsely reports all four as \"ready to close\", (2) health checker reports \"unknown batch status\" errors, (3) overview task counts may be inaccurate. Entity-level calls (both status(id) and entity get) return correct \"done\" status. Staleness isolated to project overview aggregation."
+expected: "status() overview should show P40/P42/P46/P48 as \"done\" with no \"ready to close\" attention items and no \"unknown batch status\" health errors for these plans."
+tier: bug_fix
