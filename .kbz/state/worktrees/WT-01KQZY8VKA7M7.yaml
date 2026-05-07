@@ -1,0 +1,8 @@
+id: WT-01KQZY8VKA7M7
+entity_id: BUG-01KQZWN34V9C9
+branch: bug/BUG-01KQZWN34V9C9-status-overview-plan-staleness
+path: .worktrees/BUG-01KQZWN34V9C9-status-overview-plan-staleness
+status: active
+created: "2026-05-07T00:44:13Z"
+created_by: sambeau
+graph_project: Users-samphillips-Dev-kanbanzai
