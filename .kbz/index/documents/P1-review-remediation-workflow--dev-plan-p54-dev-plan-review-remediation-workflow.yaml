@@ -1,0 +1,190 @@
+document_id: P1-review-remediation-workflow/dev-plan-p54-dev-plan-review-remediation-workflow
+document_path: work/P54-review-remediation-workflow/P54-dev-plan-review-remediation-workflow.md
+content_hash: cbb3664562f4d51637d0dacf6f347bb07311f780c211ec92dde7c77bd947f7e0
+indexed_at: 2026-05-06T23:04:00.594434Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Review Remediation Workflow (v1 — Document-Driven)'
+      byte_offset: 0
+      byte_count: 6741
+      word_count: 914
+      content_hash: cbb3664562f4d51637d0dacf6f347bb07311f780c211ec92dde7c77bd947f7e0
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 327
+          byte_count: 755
+          word_count: 96
+          content_hash: 69c508c59f3fc215e4d8647ad2f813ab9ded29e964c4fca8d609c02979d4cf9d
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1082
+          byte_count: 3133
+          word_count: 382
+          content_hash: 705e85e50693a50d49ec30e411e9c21dd0c5789b762de9be0f0d622f01ff8191
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Document the Remediation Workflow Procedure'
+              byte_offset: 1101
+              byte_count: 662
+              word_count: 79
+              content_hash: d9ef21673bf92d2c0b99d7a27af016583025269a401fe7014416f224ccc7168c
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: Define the Remediation Dev-Plan Template'
+              byte_offset: 1763
+              byte_count: 581
+              word_count: 70
+              content_hash: 6314082c5f48825a6947f746911745ac8ea59683020adc55e93738583bd2446d
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: Define the Re-Review Report Template'
+              byte_offset: 2344
+              byte_count: 551
+              word_count: 62
+              content_hash: 793d6a3518a1007d78da57218663e6276822dda37e78ed7372265a4d183bcbb8
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Document the Ownership Model Decision Tree'
+              byte_offset: 2895
+              byte_count: 542
+              word_count: 65
+              content_hash: 10187e80db57c74c5d71821aa9a14d7031e1986bd40ad92766bea457cdfe6a1c
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Integration Verification — Workflow Walkthrough'
+              byte_offset: 3437
+              byte_count: 778
+              word_count: 103
+              content_hash: e1f6d22566363aa90d79946fe336f77e0e2eb476cf70c87b80be34fc282aef7e
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 4215
+          byte_count: 299
+          word_count: 63
+          content_hash: 80617029295edc43d0ac6763204d465adbee336a12d4b4fc4578d21b66a8e3aa
+        - path: "1.4"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 4514
+          byte_count: 1281
+          word_count: 192
+          content_hash: 70ac9c71fa3eb36eae2d737151e4f2381eb5310033a03b67433b42ab2bdce39e
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Risk: P53 Not Yet Available for Scope Inspection'
+              byte_offset: 4534
+              byte_count: 399
+              word_count: 65
+              content_hash: 0ea07551855ef3583645ff3db63481f5b8cfb587ab5107f54ec06a8d5359a023
+            - path: 1.4.2
+              level: 3
+              title: 'Risk: No Real Failed Review Available for Walkthrough'
+              byte_offset: 4933
+              byte_count: 443
+              word_count: 68
+              content_hash: d6930fe56aa934d774b17a3780f8c670bbdf120e1fd8f86aea25f3a69397bd4f
+            - path: 1.4.3
+              level: 3
+              title: 'Risk: Workflow Procedure Too Abstract Without Tool Support'
+              byte_offset: 5376
+              byte_count: 419
+              word_count: 56
+              content_hash: 720a637bb2d04c635a950a78b763756ee492dfc6a4a921e27bd46cd388851a8c
+        - path: "1.5"
+          level: 2
+          title: Verification Approach
+          byte_offset: 5795
+          byte_count: 946
+          word_count: 150
+          content_hash: 5a8194fc052a43b6eddcdb250f0c55b3ee23a7a9b467d03f6ad300f41e2c59a3
+entity_refs:
+    - entity_id: P54-spec-review-remediation-workflow
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 434
+    - entity_id: P54-review-remediation-workflow
+      entity_type: plan
+      section_path: 1.2.1
+      byte_offset: 1598
+    - entity_id: P54-procedure-review-remediation
+      entity_type: plan
+      section_path: 1.2.1
+      byte_offset: 1630
+    - entity_id: P54-review-remediation-workflow
+      entity_type: plan
+      section_path: 1.2.2
+      byte_offset: 2148
+    - entity_id: P54-template-remediation-dev-plan
+      entity_type: plan
+      section_path: 1.2.2
+      byte_offset: 2180
+    - entity_id: P54-review-remediation-workflow
+      entity_type: plan
+      section_path: 1.2.3
+      byte_offset: 2710
+    - entity_id: P54-template-re-review-report
+      entity_type: plan
+      section_path: 1.2.3
+      byte_offset: 2742
+    - entity_id: P54-review-remediation-workflow
+      entity_type: plan
+      section_path: 1.2.4
+      byte_offset: 3255
+    - entity_id: P54-guide-ownership-model
+      entity_type: plan
+      section_path: 1.2.4
+      byte_offset: 3287
+    - entity_id: P54-review-remediation-workflow
+      entity_type: plan
+      section_path: 1.2.5
+      byte_offset: 3915
+    - entity_id: P54-report-walkthrough
+      entity_type: plan
+      section_path: 1.2.5
+      byte_offset: 3947
+cross_doc_links:
+    - target_path: P54-spec-review-remediation-workflow.md
+      link_text: '`P54-spec-review-remediation-workflow.md`'
+      section_path: "1.1"
+    - target_path: work/P54-review-remediation-workflow/P54-procedure-review-remediation.md
+      link_text: work/P54-review-remediation-workflow/P54-procedure-review-remediation.md
+      section_path: 1.2.1
+    - target_path: work/P54-review-remediation-workflow/P54-template-remediation-dev-plan.md
+      link_text: work/P54-review-remediation-workflow/P54-template-remediation-dev-plan.md
+      section_path: 1.2.2
+    - target_path: work/P54-review-remediation-workflow/P54-template-re-review-report.md
+      link_text: work/P54-review-remediation-workflow/P54-template-re-review-report.md
+      section_path: 1.2.3
+    - target_path: work/P54-review-remediation-workflow/P54-guide-ownership-model.md
+      link_text: work/P54-review-remediation-workflow/P54-guide-ownership-model.md
+      section_path: 1.2.4
+    - target_path: work/P54-review-remediation-workflow/P54-report-walkthrough.md
+      link_text: work/P54-review-remediation-workflow/P54-report-walkthrough.md
+      section_path: 1.2.5
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.4
+      role: decision
+      confidence: high
+    - section_path: "1.4"
+      role: risk
+      confidence: high
+    - section_path: 1.4.1
+      role: risk
+      confidence: high
+    - section_path: 1.4.2
+      role: risk
+      confidence: high
+    - section_path: 1.4.3
+      role: risk
+      confidence: high
+classified: false

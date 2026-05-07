@@ -142,6 +142,29 @@ func (db *DB) AllocateID(ctx context.Context, projectID, entityType, prefix, slu
 	return id, nil
 }
 
+// SeedCounters upserts the counters table so that the next ID allocated
+// for each entity type will be at least nextValue. Use this when enabling
+// coordination on an existing project to avoid ID collisions with
+// file-based entities. nextValues maps entity_type → next_value.
+func (db *DB) SeedCounters(ctx context.Context, projectID string, nextValues map[string]int) error {
+	for entityType, nextValue := range nextValues {
+		if nextValue < 2 {
+			continue // counters start at 2 (next_value - 1 = 1)
+		}
+		_, err := db.pool.Exec(ctx,
+			`INSERT INTO counters (project_id, entity_type, next_value)
+			 VALUES ($1, $2, $3)
+			 ON CONFLICT (project_id, entity_type)
+			 DO UPDATE SET next_value = GREATEST(counters.next_value, $3)`,
+			projectID, entityType, nextValue,
+		)
+		if err != nil {
+			return fmt.Errorf("coordination: seed counters for %q: %w", entityType, err)
+		}
+	}
+	return nil
+}
+
 // AllocateFeatureSeq atomically increments and returns the next sequence
 // number for features within a batch. The first call for a given
 // (project_id, batch_id) returns 1.

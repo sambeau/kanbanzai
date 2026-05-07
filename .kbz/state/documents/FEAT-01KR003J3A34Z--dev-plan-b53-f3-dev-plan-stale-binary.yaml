@@ -1,0 +1,13 @@
+approved_at: "2026-05-07T01:25:09Z"
+approved_by: sambeau
+canonical_content_hash: dff02e038de178dd520dac01bd0b3283c21c0d4a4b9b28170985d29a9246e1fe
+content_hash: dff02e038de178dd520dac01bd0b3283c21c0d4a4b9b28170985d29a9246e1fe
+created: "2026-05-07T01:24:56Z"
+created_by: sambeau
+id: FEAT-01KR003J3A34Z/dev-plan-b53-f3-dev-plan-stale-binary
+owner: FEAT-01KR003J3A34Z
+path: work/B53-retro-fixes-may-2026/B53-F3-dev-plan-stale-binary.md
+status: approved
+title: "Dev-Plan: Stale Binary Detection Discoverability"
+type: dev-plan
+updated: "2026-05-07T01:25:09Z"

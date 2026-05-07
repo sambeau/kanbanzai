@@ -1,0 +1,13 @@
+id: TASK-01KR00NZDF3C2
+parent_feature: FEAT-01KR003J39A59
+slug: commit-discipline-skill
+name: Add management-action commit step to kanbanzai-agents skill
+summary: Add commit discipline subsection to .agents/skills/kanbanzai-agents/SKILL.md covering non-task workflows.
+status: done
+completed: "2026-05-07T01:29:55Z"
+claimed_at: "2026-05-07T01:27:37Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-07T01:27:37Z"
+dispatched_by: sambeau
+completion_summary: "Added \"Committing State Outside Task Workflows\" section to kanbanzai-agents/SKILL.md. Documents the rule that state changes to .kbz/state/ and .kbz/index/ must be committed regardless of whether a task was claimed, with explicit git commands."
+verification: "Verified edit applied to worktree: commit 9d4d4dac on feature/FEAT-01KR003J39A59-retro-commit-discipline. AC-001: new section visible in skill file. AC-002: mentions .kbz/state/ and .kbz/index/. AC-003: existing task-claimed checklist unchanged."

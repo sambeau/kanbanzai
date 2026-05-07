@@ -2,9 +2,33 @@ id: FEAT-01KQZS0PHZM1E
 slug: document-remediation-workflow
 name: Document the review remediation workflow
 parent: B51-review-remediation-v1
-status: proposed
+status: done
+review_cycle: 1
 summary: "Produce the document-driven v1: procedure, remediation dev-plan template, re-review report template, ownership model decision tree, and integration walkthrough."
 created: "2026-05-06T23:12:23Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: designing
+    reason: "All three documents (design, spec, dev-plan) are approved. Design doc lives under PROJECT owner. Resuming in-flight batch B51."
+    timestamp: "2026-05-07T00:41:53+01:00"
+    to_status: specifying
+  -
+    from_status: specifying
+    reason: "All three documents (design, spec, dev-plan) are approved. Design doc lives under PROJECT owner. Resuming in-flight batch B51."
+    timestamp: "2026-05-07T00:41:53+01:00"
+    to_status: dev-planning
+  -
+    from_status: dev-planning
+    reason: "All three documents (design, spec, dev-plan) are approved. Design doc lives under PROJECT owner. Resuming in-flight batch B51."
+    timestamp: "2026-05-07T00:41:53+01:00"
+    to_status: developing
+  -
+    from_status: developing
+    reason: "Task TASK-01KQZS1JJPDZS is done (confirmed via entity get: status=\"done\", completed=2026-05-06T23:32:26Z, has completion_summary). Known cache staleness issue (\"Done-status-detritus\"). All 5 tasks are terminal."
+    timestamp: "2026-05-07T00:41:53+01:00"
+    to_status: reviewing
 display_id: B51-F1
 tier: feature
+verification: All 8 acceptance criteria verified by two specialist reviewers (conformance + quality). 7 non-blocking findings resolved in commit de8d715c. Walkthrough validates end-to-end workflow against P50 batch conformance review (10 blocking findings). Zero remaining findings. Review document registered at work/P54-review-remediation-workflow/P54-report-review-document-remediation-workflow.md.
+verification_status: passed

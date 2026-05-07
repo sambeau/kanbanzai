@@ -1,0 +1,15 @@
+id: FEAT-01KR003J3ATM2
+slug: retro-worktree-tooling
+name: Worktree file-writing tooling
+parent: B53-retro-fixes-may-2026
+status: reviewing
+summary: Fix worktree file-writing friction. Update implement-task/SKILL.md and copilot-instructions.md to prefer kanbanzai_edit_file/write_file with entity_id over terminal-based workarounds.
+design: FEAT-01KR003J3ATM2/design-b53-f2-design-worktree-tooling
+spec: FEAT-01KR003J3ATM2/spec-b53-f2-spec-worktree-tooling
+dev_plan: FEAT-01KR003J3ATM2/dev-plan-b53-f2-dev-plan-worktree-tooling
+tags:
+  - retro
+created: "2026-05-07T01:16:17Z"
+created_by: sambeau
+display_id: B53-F2
+tier: retro_fix

@@ -216,8 +216,8 @@ After all tasks reach a terminal state, the feature must be explicitly advanced 
 
 ## Fast-Track Profile
 
-When the feature's tier is `retro_fix` or the batch is explicitly marked fast-track,
-replace the full 6-phase procedure with this lightweight 3-phase flow.
+When the feature's tier is `retro_fix` or `bug_fix`, or the batch is explicitly
+marked fast-track, replace the full 6-phase procedure with this lightweight 3-phase flow.
 
 ### No-Stop Contract
 

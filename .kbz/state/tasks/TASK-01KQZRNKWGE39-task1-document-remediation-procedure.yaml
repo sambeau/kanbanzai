@@ -3,4 +3,4 @@ parent_feature: FEAT-01KQZRMT0JGVX
 slug: task1-document-remediation-procedure
 name: Task 1 - Document the Remediation Workflow Procedure
 summary: "Write the orchestrator-facing procedure for converting a failed review into a remediation dev-plan. Covers entry point, finding extraction, producing the remediation dev-plan, ownership model, task creation, execution, re-review report, and close-out."
-status: queued
+status: duplicate

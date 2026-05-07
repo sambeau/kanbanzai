@@ -37,8 +37,8 @@ limit documentation.
 ## Functional Requirements
 
 - **REQ-001:** The `orchestrate-development` SKILL.md must gain a `## Fast-Track Profile`
-  section that activates when the feature's tier is `retro_fix` or the batch is explicitly
-  marked fast-track.
+  section that activates when the feature's tier is `retro_fix` or `bug_fix`, or the
+  batch is explicitly marked fast-track.
 
 - **REQ-002:** The Fast-Track Profile section must contain a preamble declaring the
   **No-Stop Contract**: the orchestrator will NOT stop for confirmation at any point.

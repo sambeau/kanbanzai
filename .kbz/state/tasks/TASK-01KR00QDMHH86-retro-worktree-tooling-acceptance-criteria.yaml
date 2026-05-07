@@ -1,0 +1,13 @@
+id: TASK-01KR00QDMHH86
+parent_feature: FEAT-01KR003J3ATM2
+slug: retro-worktree-tooling-acceptance-criteria
+name: Implement Acceptance Criteria
+summary: Implement Acceptance Criteria (4 criteria)
+status: done
+completed: "2026-05-07T01:29:55Z"
+claimed_at: "2026-05-07T01:27:37Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-07T01:27:37Z"
+dispatched_by: sambeau
+completion_summary: "Added worktree file-writing critical rule to copilot-instructions.md: kanbanzai_edit_file and write_file accept entity_id for worktree targeting. Prefer these over terminal-based workarounds. implement-task/SKILL.md already had worktree guidance section — no changes needed there."
+verification: Verified copilot-instructions.md updated with worktree guidance (commit 1e5b485c). implement-task/SKILL.md already contains Worktree File Editing section with write_file/kanbanzai_edit_file guidance. AC-001 through AC-004 satisfied.

@@ -3,10 +3,10 @@ content: "FastTrackConfig.Enabled uses *bool (pointer to bool) to distinguish 'n
 created: "2026-05-04T14:58:13Z"
 created_by: unknown
 id: KE-01KQSQYCX4K93
-last_accessed_at: "2026-05-06T17:15:41Z"
+last_accessed_at: "2026-05-07T01:30:29Z"
 learned_from: TASK-01KQSP86204H4
 miss_count: 0
-recent_use_count: 47
+recent_use_count: 56
 scope: project
 status: contributed
 tier: 3

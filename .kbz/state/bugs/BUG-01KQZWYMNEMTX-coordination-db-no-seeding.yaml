@@ -1,0 +1,14 @@
+id: BUG-01KQZWYMNEMTX
+slug: coordination-db-no-seeding
+name: Coordination DB starts IDs at 1 — no seeding
+status: closed
+severity: high
+priority: high
+type: design-problem
+reported_by: sambeau
+reported: "2026-05-07T00:21:10Z"
+observed: "The allocate_id PL/pgSQL function always starts counters at 1 (INSERT next_value=2, RETURNING next_value-1=1). There is no seeding/priming step that reads current high-water marks from the file-based state store. This means enabling coordination on a project with existing entities (this project has P50 plans and B52 batches) would immediately create ID collisions on first use.\n\nThe counter logic:\n- INSERT INTO counters VALUES (project_id, entity_type, 2) — first row for a type\n- ON CONFLICT DO UPDATE SET next_value = next_value + 1 RETURNING next_value - 1\n- Returns: 2-1=1 on first call, 3-1=2 on second, etc.\n\nTests confirm: TestAllocateID_Format expects FEAT-1-my-feature, TestAllocateID_DifferentEntityTypes expects B1-first-batch and P1-first-plan. E2E test expects B1-coordination-batch and BUG-1-coordination-bug.\n\nThe coordination DB is wired into EntityService and used when Configuration.CoordinationEnabled() is true (i.e., coordination.database_url is set). Currently not enabled in this project, so no active collision — but enabling it without seeding would break."
+expected: "A seed/prime function that scans existing file-based entities, finds the highest numeric counter per entity type, and initializes the coordination database counters table accordingly. The seed should run as part of enabling coordination (or at least be documented as a required step before enabling)."
+tier: bug_fix
+verification: "Verified fix: SeedCounters correctly initializes counter high-water marks from file-based entities. Tests confirm: seeding above existing counter bumps correctly, seeding below is a no-op (GREATEST semantics), multiple entity types work independently, and unseeded types still start at 1. TSID-format IDs are correctly skipped by extractCoordinationCounter."
+verification_status: passed

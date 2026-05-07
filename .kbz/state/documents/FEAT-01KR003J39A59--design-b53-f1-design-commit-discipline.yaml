@@ -1,0 +1,13 @@
+approved_at: "2026-05-07T01:22:01Z"
+approved_by: sambeau
+canonical_content_hash: d04e001efd3b7dd9945bee313304840b649274afa767f8081463a81c4e69bff0
+content_hash: f081816bea930badb31ad382023dee0f6bc30b80a8869bf79188f5fc61dc01d7
+created: "2026-05-07T01:19:40Z"
+created_by: sambeau
+id: FEAT-01KR003J39A59/design-b53-f1-design-commit-discipline
+owner: FEAT-01KR003J39A59
+path: work/B53-retro-fixes-may-2026/B53-F1-design-commit-discipline.md
+status: approved
+title: "Design: Commit Discipline for Management Actions"
+type: design
+updated: "2026-05-07T01:22:01Z"

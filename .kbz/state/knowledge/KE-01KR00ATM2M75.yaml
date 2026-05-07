@@ -1,0 +1,20 @@
+confidence: "0.5"
+content: "Writing feature design/spec/dev-plan documents to the main repo work/ directory without an active worktree risks corruption and bypasses the entity-worktree binding. Always create a worktree via worktree(action: \"create\", entity_id: \"FEAT-...\") before writing any feature-owned files. The worktree isolates the feature's working directory and prevents accidental writes to main."
+created: "2026-05-07T01:20:15Z"
+created_by: sambeau
+id: KE-01KR00ATM2M75
+last_accessed_at: "2026-05-07T01:30:29Z"
+miss_count: 0
+recent_use_count: 4
+scope: project
+status: contributed
+tags:
+  - retro
+  - worktree
+  - file-writing
+  - corruption-risk
+tier: 3
+topic: worktree-file-writing-discipline
+ttl_days: 30
+updated: "2026-05-07T01:20:15Z"
+use_count: 0

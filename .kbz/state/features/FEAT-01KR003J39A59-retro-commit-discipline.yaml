@@ -1,0 +1,18 @@
+id: FEAT-01KR003J39A59
+slug: retro-commit-discipline
+name: Commit discipline for management actions
+parent: B53-retro-fixes-may-2026
+status: reviewing
+review_cycle: 1
+summary: Add explicit commit step to kanbanzai-agents/SKILL.md for non-task workflows to prevent state drift between sessions.
+design: FEAT-01KR003J39A59/design-b53-f1-design-commit-discipline
+spec: FEAT-01KR003J39A59/spec-b53-f1-spec-commit-discipline
+dev_plan: FEAT-01KR003J39A59/dev-plan-b53-f1-dev-plan-commit-discipline
+tags:
+  - retro
+created: "2026-05-07T01:16:17Z"
+created_by: sambeau
+display_id: B53-F1
+tier: retro_fix
+verification: "TASK-01KR00NZDF3C2: Verified edit applied to worktree: commit 9d4d4dac on feature/FEAT-01KR003J39A59-retro-commit-discipline. AC-001: new section visible in skill file. AC-002: mentions .kbz/state/ and .kbz/index/. AC-003: existing task-claimed checklist unchanged."
+verification_status: passed

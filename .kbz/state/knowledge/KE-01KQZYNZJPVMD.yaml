@@ -1,0 +1,19 @@
+confidence: "0.5"
+content: "Always create the worktree BEFORE editing any files. Editing on main first and then copying to the worktree risks collisions with other parallel agents. The correct sequence is: (1) create worktree, (2) apply edits in the worktree, (3) test and commit on the worktree branch. Never edit on main for entity-scoped work."
+created: "2026-05-07T00:51:23Z"
+created_by: sambeau
+id: KE-01KQZYNZJPVMD
+last_accessed_at: "2026-05-07T01:30:29Z"
+miss_count: 0
+recent_use_count: 4
+scope: project
+status: contributed
+tags:
+  - workflow
+  - worktree
+  - git-discipline
+tier: 2
+topic: worktree-before-edit
+ttl_days: 90
+updated: "2026-05-07T00:51:23Z"
+use_count: 0
