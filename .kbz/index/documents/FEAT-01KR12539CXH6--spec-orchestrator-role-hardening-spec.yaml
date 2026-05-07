@@ -1,0 +1,302 @@
+document_id: FEAT-01KR12539CXH6/spec-orchestrator-role-hardening-spec
+document_path: work/FEAT-01KR12539CXH6/orchestrator-role-hardening-spec.md
+content_hash: 3d8a2e0bc199ee974f86c3a402d13d591762c51f20f67c3e2a9bf2d560606902
+indexed_at: 2026-05-07T11:19:25.014138Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Orchestrator Role Hardening'
+      byte_offset: 360
+      byte_count: 10416
+      word_count: 1408
+      content_hash: f3c67275d2b07209096186f975b21bb03c631d5ff70461fe6e109add957810fd
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 406
+          byte_count: 1870
+          word_count: 221
+          content_hash: fd059d7ce84a957d11950d4462bf36aada94d90c45631063d8ac521c67a5ab56
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Problem
+              byte_offset: 804
+              byte_count: 396
+              word_count: 48
+              content_hash: 9c5c8729c9c98578f21d214a89e2aa47a319bd7363db4a2126284ac194e1488e
+            - path: 1.1.2
+              level: 3
+              title: Design References
+              byte_offset: 1200
+              byte_count: 689
+              word_count: 72
+              content_hash: f545fe2e948c7dedf15db8a25701bed875d87666d3e8ca95ec483e733f8bfe7d
+            - path: 1.1.3
+              level: 3
+              title: Related Specifications
+              byte_offset: 1889
+              byte_count: 387
+              word_count: 47
+              content_hash: 7624f58a39e13cd4e25a7a80b47665297d34d7d98f3eb1bbb3229c630183b2aa
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 2276
+          byte_count: 1056
+          word_count: 141
+          content_hash: c7a1afbb24844872c115060ffdc70b264095d3eadb66fb87b074ae0577e809a9
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In Scope
+              byte_offset: 2286
+              byte_count: 515
+              word_count: 66
+              content_hash: 5864ca985139d3dccfccbc07ed1d66289ef96f3524a8e645f1ae66f209024552
+            - path: 1.2.2
+              level: 3
+              title: Out of Scope
+              byte_offset: 2801
+              byte_count: 531
+              word_count: 73
+              content_hash: 3ce2b6a393faf68121a4ec99faf76cf9ed70516891eeb08663da18411c5f14ce
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 3332
+          byte_count: 3417
+          word_count: 464
+          content_hash: e966b6363ea6d94464836e7565ba3434b689a25bd3b5288a2137ed736071e568
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'REQ-001: Anti-Pattern Definition'
+              byte_offset: 3360
+              byte_count: 775
+              word_count: 99
+              content_hash: b3b575a7d7de1008299a9e5c7ed2f53b1d707702897a5bb0f6201429be133155
+            - path: 1.3.2
+              level: 3
+              title: 'REQ-002: Anti-Pattern Placement'
+              byte_offset: 4135
+              byte_count: 201
+              word_count: 25
+              content_hash: 32c5970493a82059b46e9d82668be3ea81cdbb2bd1ef4e965b11e6a4e5c31498
+            - path: 1.3.3
+              level: 3
+              title: 'REQ-003: Anti-Pattern in Skill'
+              byte_offset: 4336
+              byte_count: 343
+              word_count: 45
+              content_hash: 255495937d7d98544e769444f041117e9d3da852cb96ac1967826f00429c7e7c
+            - path: 1.3.4
+              level: 3
+              title: 'REQ-004: Tool Removal — grep'
+              byte_offset: 4679
+              byte_count: 117
+              word_count: 18
+              content_hash: 12140eb02e20e3318acacd588b52ce8036ba782efe73cb8e257bde210d6fd1ec
+            - path: 1.3.5
+              level: 3
+              title: 'REQ-005: Tool Removal — search_graph'
+              byte_offset: 4796
+              byte_count: 133
+              word_count: 18
+              content_hash: a8c912ce564f02acd60dcb2bc74244d87f56b405a3bb583c15f1b329baf67712
+            - path: 1.3.6
+              level: 3
+              title: 'REQ-006: Tool Retention — read_file'
+              byte_offset: 4929
+              byte_count: 147
+              word_count: 22
+              content_hash: 2a432845c6a16f86ef7088086740affc661a08d29031ff223d631c84422ebeaf
+            - path: 1.3.7
+              level: 3
+              title: 'REQ-007: Tool List Ordering'
+              byte_offset: 5076
+              byte_count: 213
+              word_count: 30
+              content_hash: 3841095ad2ecc78992d0b3e6ec499c8394e1846469768d3f5ddc58d9c2b2804f
+            - path: 1.3.8
+              level: 3
+              title: 'REQ-008: Hard Constraint Definition'
+              byte_offset: 5289
+              byte_count: 791
+              word_count: 116
+              content_hash: 36cae3fee9df0adada44ec9dae2cb624a71004c1d344942389d3e7c47f329a66
+            - path: 1.3.9
+              level: 3
+              title: 'REQ-009: Hard Constraint Placement'
+              byte_offset: 6080
+              byte_count: 367
+              word_count: 51
+              content_hash: 200c6794c575943c35c46d9dc51f7441aa289fb75491e55d66fb7fd67c415650
+            - path: 1.3.10
+              level: 3
+              title: 'REQ-010: YAML Validity'
+              byte_offset: 6447
+              byte_count: 136
+              word_count: 18
+              content_hash: c9e909072e8a538529df84fe5a6bfcd1d4242f62a82bfff5df0d86950efd235b
+            - path: 1.3.11
+              level: 3
+              title: 'REQ-011: Markdown Validity'
+              byte_offset: 6583
+              byte_count: 166
+              word_count: 19
+              content_hash: ec7930a8fca5436a428e6c8e2924f938bcf77d8d8331a277edb2c991ae00bef9
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 6749
+          byte_count: 1084
+          word_count: 148
+          content_hash: c7c02cef44f4db7776815889d8140e037f51f679a70d25ea4b1952825133158e
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'NFR-001: Format Consistency'
+              byte_offset: 6781
+              byte_count: 249
+              word_count: 35
+              content_hash: ebabbb313e5414b610c14556c5f48802cc12607570e51ab904d2ad7cf29ce593
+            - path: 1.4.2
+              level: 3
+              title: 'NFR-002: No Semantic Change to Existing Content'
+              byte_offset: 7030
+              byte_count: 347
+              word_count: 46
+              content_hash: 140e9303eb306f79556f2a537d9ccd2bb0e942131a5844fa249c8501f3e38e1b
+            - path: 1.4.3
+              level: 3
+              title: 'NFR-003: Diff Minimisation'
+              byte_offset: 7377
+              byte_count: 193
+              word_count: 29
+              content_hash: f91f06edbeaa8ccc51d531eb83ef8da91c00aeb9d2a7c47926be05f8617e1857
+            - path: 1.4.4
+              level: 3
+              title: 'NFR-004: Immutable Tool Behaviour'
+              byte_offset: 7570
+              byte_count: 263
+              word_count: 35
+              content_hash: 43d3069455894fefa1ed6bbf03768d9090e44319d6fabb48640688523ce249f9
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 7833
+          byte_count: 1558
+          word_count: 222
+          content_hash: ace6cafeb9e2936f51abdabb0db7fcf617d7799d1881e8abd4d4de2b3f93e227
+        - path: "1.6"
+          level: 2
+          title: Verification Plan
+          byte_offset: 9391
+          byte_count: 1385
+          word_count: 207
+          content_hash: 390a0de736654a80bce1bc71b16cbcdbe1c881278f9d1e34afc298f0a77a01b1
+entity_refs:
+    - entity_id: FEAT-01KR12539CXH6
+      entity_type: feature
+      section_path: ""
+      byte_offset: 232
+    - entity_id: FEAT-01KR125SBMBCT
+      entity_type: feature
+      section_path: 1.1.2
+      byte_offset: 1687
+    - entity_id: FEAT-01KR125SBM4JQ
+      entity_type: feature
+      section_path: 1.1.2
+      byte_offset: 1749
+    - entity_id: FEAT-01KR125SBMPQT
+      entity_type: feature
+      section_path: 1.1.2
+      byte_offset: 1807
+    - entity_id: FEAT-01KR125SBM4FN
+      entity_type: feature
+      section_path: 1.1.2
+      byte_offset: 1867
+    - entity_id: FEAT-01KR125SBMBCT
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 2871
+    - entity_id: FEAT-01KR125SBM4JQ
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 2921
+    - entity_id: FEAT-01KR125SBMPQT
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 2978
+    - entity_id: FEAT-01KR125SBM4FN
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 3038
+    - entity_id: P55-orchestrator-context-hygiene
+      entity_type: plan
+      section_path: ""
+      byte_offset: 277
+    - entity_id: P55-orchestrator-context-hygiene
+      entity_type: plan
+      section_path: 1.1.2
+      byte_offset: 1316
+    - entity_id: P52-fast-track-orchestration
+      entity_type: plan
+      section_path: 1.1.3
+      byte_offset: 1921
+cross_doc_links:
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.2.1
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.3
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.8
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.9
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.11
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.5"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.1
+      role: definition
+      confidence: high
+    - section_path: 1.3.8
+      role: constraint
+      confidence: high
+    - section_path: 1.3.9
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+classified: false

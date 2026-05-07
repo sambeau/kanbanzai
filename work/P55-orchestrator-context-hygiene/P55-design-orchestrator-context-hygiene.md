@@ -2,7 +2,7 @@
 |--------|--------------------------------|
 | Date   | 2026-05-07                     |
 | Author | architect                       |
-| Status | draft                          |
+| Status | approved |
 | Plan   | P55-orchestrator-context-hygiene |
 
 # Design: Orchestrator Context Hygiene
@@ -167,6 +167,27 @@ Minimal token cost (~15–20 tokens per response). Example:
 
 The fast-track profile (`orchestrate-development` fast-track section and P52 design) already has a no-stop contract and rules against implicit gates. This design adds: fast-track sessions should load a lightweight version of the orchestrator role that excludes `grep` and `search_graph` entirely, and the constraint pinning message should be included in every fast-track dispatch cycle.
 
+### Component 7: Close-Out Verification Sub-Agent
+
+**Problem:** The orchestrator is the worst agent to verify close-out. By the end of a cycle, its context is saturated with implementation fragments, its role constraints have drifted into the attention valley, and close-out steps (merge verification, branch deletion, knowledge curation) are exactly the steps it forgets. The Definition of Done lists ten conditions — the orchestrator cannot be trusted to verify them all from memory.
+
+**Solution:** Delegate close-out verification to a sub-agent with a clean context and a strict checklist. This follows the same pattern as review (specialist sub-agent, clean context, structured output) applied to the `verifying` stage.
+
+**New role: `verifier`** — identity: "Methodical close-out auditor." Tools: `entity`, `status`, `doc`, `knowledge`, `read_file`, `grep`. Vocabulary: checklist-driven, evidence-backed, binary verdict (pass/fail per item). Anti-patterns: assumption-without-evidence, skipping checklist items, accepting orchestrator assurances.
+
+**New skill: `verify-closeout`** — a strict 10-item checklist mapped to the Definition of Done. Each item has a concrete verification action (e.g., "run `git status --porcelain` and confirm no output," "run `git merge-base --is-ancestor` and confirm exit zero," "run `go test ./...` and confirm all pass"). Output is a structured pass/fail report per item with evidence.
+
+**Pipeline integration:**
+
+- The `verifying` stage dispatches the `verifier` sub-agent via `spawn_agent` with the `verify-closeout` skill.
+- The verifier receives: the feature ID, the Definition of Done checklist, and the current entity state.
+- The verifier runs each verification action independently — it does not trust the orchestrator's claims.
+- The verifier returns a structured report: each DoD item marked `pass` or `fail` with evidence.
+- The orchestrator's only job: read the report. If all pass, transition to `done`. If any fail, route to remediation.
+- This applies to both full-procedure and fast-track features. Fast-track means no human gates during *development* — verification is not a human gate, it's an automated checklist.
+
+**Why this works:** The verifier has no accumulated context. It sees only the checklist, the feature ID, and the verification tools. It cannot be talked into skipping steps because it doesn't converse — it checks and reports. This is the same architectural pattern that makes review sub-agents effective: clean context + structured procedure + binary output.
+
 ### What This Design Does NOT Do
 
 - **Does not change the `handoff` pipeline.** Sub-agents continue receiving the same assembled context.
@@ -174,6 +195,37 @@ The fast-track profile (`orchestrate-development` fast-track section and P52 des
 - **Does not require P44.** These mitigations work in the current architecture.
 - **Does not prevent the orchestrator from reading documents.** `read_file` remains for orchestration inputs (dev-plans, specs, skills, progress documents).
 - **Does not change task decomposition.** The orchestrator still reviews task breakdowns and identifies parallel-dispatchable tasks.
+- **Does not require the orchestrator to verify close-out itself.** Verification is delegated to a clean-context sub-agent — the orchestrator only reads the result.
+
+## Definition of Done
+
+Every feature — regardless of tier — must satisfy all ten conditions before reaching `done`. Fast-track means no human gates, not fewer steps. This list is the contract: if a condition cannot be verified, the feature is not done.
+
+1. **All tasks terminal** — every task under the feature is `done`, `not-planned`, or `duplicate`. No task remains in `ready`, `active`, `needs-review`, or `needs-rework`. No lifecycle stages were skipped.
+
+2. **All changes committed** — `git status` is clean. No uncommitted source files, test files, workflow state, or temporary artifacts. If a file is not committed and not tracked, it does not exist at close-out.
+
+3. **Temporary files removed** — any scratch scripts, repro files, debug output, or manual test fixtures used during development are deleted. Files required for the ongoing test suite to run are committed in appropriate locations (not left in the worktree root). The recommended pattern for Go is `t.TempDir()` for automated test isolation; for manual artifacts, the worktree itself is the sandbox — removal on close-out is sufficient.
+
+4. **Tests pass** — `go test ./...` passes on the feature branch before merge and on `main` after merge. Suitable new tests exist for the change: at minimum, every acceptance criterion has a corresponding test.
+
+5. **Code reviewed** — at minimum one review sub-agent with clean context has been dispatched (via `orchestrate-review`), findings collated, and no blocking findings remain. Non-blocking findings addressed in at least one round. A review document is registered at `work/reviews/review-{feature-id}-{slug}.md`.
+
+6. **Feature advanced through full lifecycle** — `developing → reviewing → merging → verifying → done`. Each transition is an explicit `entity(action: "transition")` call. No stage is skipped.
+
+7. **Merged and ancestry verified** — `merge(action: "execute")` succeeded and `git merge-base --is-ancestor <feature-branch> main` exits zero. The merge is confirmed in git, not just in entity state.
+
+8. **Branch deleted and verified absent** — `git branch | grep <feature-id>` returns nothing. The branch is gone. This prevents the "what has and hasn't landed" ambiguity that has caused repeated incidents.
+
+9. **Worktrees removed** — `worktree(action: "remove")` called. `git worktree list` confirms the worktree directory is gone. No orphaned worktree directories accumulate.
+
+10. **Knowledge curated and entities closed** — tier-2 knowledge entries contributed during the feature are confirmed, flagged, or retired. Related entities (bugs, decisions) are transitioned to terminal states. No loose ends remain.
+
+### Rationale for a Single Definition
+
+The fast-track profile and the full procedure share one definition of done. Fast-track differs only in *how* work is dispatched (no human gates, no stop-and-confirm, continuous polling), not in *what constitutes done*. Without an explicit, shared contract, the orchestrator treats "done" as a judgment call — and with accumulated implementation context, that judgment degrades. The list above replaces judgment with verification.
+
+**Enforcement:** The ten items are verified by a close-out verifier sub-agent (see Component 7) with a clean context and a strict checklist. The orchestrator does not self-verify — it delegates verification, reads the structured pass/fail report, and acts on the result. This ensures the DoD is not a memory exercise for a context-polluted orchestrator.
 
 ## Alternatives Considered
 
@@ -261,6 +313,14 @@ Rely solely on context compaction (U-shaped artefact, 60%/80% triggers) to manag
 
 **References:** `orchestrate-review` skill (Steps 3-6: select reviewer, dispatch, collate, aggregate verdict). Reviewer roles with `review-code` skill provide clean-context specialist review.
 
+### Decision 7: Delegate close-out verification to a clean-context sub-agent
+
+**Rationale:** The orchestrator is the worst agent to verify close-out — by end of cycle its context is saturated and it forgets steps. A `verifier` sub-agent with clean context, a strict `verify-closeout` checklist mapped to the Definition of Done, and no conversational interface eliminates judgment calls. The orchestrator reads the pass/fail report and acts — it does not self-verify.
+
+**Risk:** Adding a verification stage increases total cycle time by one sub-agent dispatch. **Mitigation:** The verifier runs in parallel with no other work — it's a single dispatch with a fixed checklist. Expected duration: 30-60 seconds for automated checks (git status, go test, merge ancestry).
+
+**References:** Same architectural pattern as review sub-agents (clean context + structured procedure + binary output). Definition of Done (10 items, each with concrete verification action).
+
 ## Dependencies
 
 - **P44-design-model-routing-agent-launcher** — The strategic architecture that makes these procedural mitigations unnecessary. This design is a bridge to P44, not a replacement.
@@ -269,6 +329,9 @@ Rely solely on context compaction (U-shaped artefact, 60%/80% triggers) to manag
 - **orchestrator.yaml** role file — Modified to add the anti-pattern and remove tools.
 - **orchestrate-development/SKILL.md** — Modified to add the hard constraint in Phase 1 and the fast-track review dispatch step.
 - **orchestrate-review/SKILL.md** — Referenced (not modified); provides the review sub-agent dispatch procedure.
+- **verifier.yaml** role file — New. Close-out auditor with checklist-driven identity and binary-verdict output.
+- **verify-closeout/SKILL.md** — New. Strict 10-item checklist mapped to the Definition of Done with concrete verification actions per item.
+- **orchestrate-development/SKILL.md** — Modified (verifying stage): dispatches verifier sub-agent before transitioning to `done`.
 
 ## Open Questions
 
@@ -278,4 +341,4 @@ Rely solely on context compaction (U-shaped artefact, 60%/80% triggers) to manag
 
 3. **How should `search_graph` restriction interact with codebase-memory-mcp skills?** The `.github/skills/codebase-memory-*/SKILL.md` files instruct agents to use graph tools. If the orchestrator role forbids graph tools, this instruction needs to be contextualised per-role. The skill files should note that graph tools are for implementer and reviewer roles, not orchestrator.
 
-4. **Should fast-track close-out follow the standard lifecycle?** Currently the fast-track profile transitions to `done` or `reviewing` "as appropriate" but the lifecycle sequencing is confused: the full procedure goes developing → reviewing → merging → verifying → done, with `orchestrate-review` handling reviews during `reviewing`. Fast-track collapses this into developing → done/reviewing with merge happening during close-out. If we add review sub-agent dispatch to fast-track close-out, the feature is still in `developing` when review happens — violating the lifecycle model where review happens during `reviewing`. Should fast-track transition to `reviewing`, run `orchestrate-review`, then proceed through merge/verify/done? Or should fast-track have its own abbreviated lifecycle that does not use `reviewing` at all? This needs to be resolved during implementation to avoid state-model inconsistency.
+4. **How should fast-track invoke `orchestrate-review` without the orchestrator performing review work?** The Definition of Done resolves the lifecycle question: fast-track follows the full `developing → reviewing → merging → verifying → done` sequence, same as the full procedure. The open question is mechanics: the `orchestrate-review` skill is designed as a separate orchestration session. Should fast-track close-out spawn a fresh orchestrator session for review? Should it invoke `orchestrate-review` procedure steps directly? Or should a new lightweight review-dispatch tool handle it? This is a procedural integration question to resolve during implementation, not a design-level ambiguity.

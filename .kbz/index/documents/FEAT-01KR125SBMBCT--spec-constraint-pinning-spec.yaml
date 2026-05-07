@@ -1,0 +1,221 @@
+document_id: FEAT-01KR125SBMBCT/spec-constraint-pinning-spec
+document_path: work/FEAT-01KR125SBMBCT/constraint-pinning-spec.md
+content_hash: 233d97f09962bf80115db472ce95dc30b804901adb7a9d6bfe63a442c2f7a48e
+indexed_at: 2026-05-07T11:23:34.713613Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Constraint Pinning in Pipeline'
+      byte_offset: 360
+      byte_count: 8542
+      word_count: 1238
+      content_hash: 4283bac8f216fd7e149d46532b2ec1fd6ee458ca3035b04ef4e8209dc584d829
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 409
+          byte_count: 1760
+          word_count: 223
+          content_hash: 2233bdf25f354599ea983c4fb507dae9e1a4b3764e39257a7edc457cc5b02ec7
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Problem
+              byte_offset: 906
+              byte_count: 382
+              word_count: 45
+              content_hash: e6932cbbe82493d15b509dc0626185fa0b62637272e5b809a050ac403a435eb1
+            - path: 1.1.2
+              level: 3
+              title: Design References
+              byte_offset: 1288
+              byte_count: 557
+              word_count: 66
+              content_hash: 629ab9f7ee3afc157dc9b9875c990af4198e2c64c391d152ab5dbb66077f5281
+            - path: 1.1.3
+              level: 3
+              title: Related Specifications
+              byte_offset: 1845
+              byte_count: 324
+              word_count: 40
+              content_hash: 989f343fdd7f75afa5a0b70667eb7a2fbb7ec463a6372bb7bfe8934b466828b3
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 2169
+          byte_count: 1047
+          word_count: 168
+          content_hash: 1ce2e585f20b11b32a4d95439d1e3060da7c40fe215d0da594992ba5ad958a0a
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In Scope
+              byte_offset: 2179
+              byte_count: 589
+              word_count: 97
+              content_hash: 5bc1c63b0bd2c2221177a89360b13f539761c957b8e37b06e56c76e3e5560987
+            - path: 1.2.2
+              level: 3
+              title: Out of Scope
+              byte_offset: 2768
+              byte_count: 448
+              word_count: 69
+              content_hash: 77f6db79d8747e820d351b2995f241799197ebfd05850cedf1916609b810ad1d
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 3216
+          byte_count: 2484
+          word_count: 357
+          content_hash: 2db2201cef4f8ee0d6dfeb9035476bb678b8f818026c053b7b2edcada251dd29
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'REQ-001: Role Reminder Constant'
+              byte_offset: 3244
+              byte_count: 426
+              word_count: 59
+              content_hash: f1556fb675d78c10efae785d67a8064a7e15387803a9ea2e01f7c8b1aca7289a
+            - path: 1.3.2
+              level: 3
+              title: 'REQ-002: Injection in next Claim Mode'
+              byte_offset: 3670
+              byte_count: 240
+              word_count: 38
+              content_hash: 27e1fbefb9fd724fc9d30649dc2b1038e3207b913627a6e2e9ac5875753e80ca
+            - path: 1.3.3
+              level: 3
+              title: 'REQ-003: Injection in handoff'
+              byte_offset: 3910
+              byte_count: 195
+              word_count: 30
+              content_hash: 4e2f74d40e574e7901df589e1bc8454c3617147f31f9adf7371d9600bae35d01
+            - path: 1.3.4
+              level: 3
+              title: 'REQ-004: Every Response'
+              byte_offset: 4105
+              byte_count: 299
+              word_count: 47
+              content_hash: a496291230cea9d60330f3e7d41697736ef827a18744e942ca571ddad5f1abfa
+            - path: 1.3.5
+              level: 3
+              title: 'REQ-005: Role-Specific Only'
+              byte_offset: 4404
+              byte_count: 391
+              word_count: 41
+              content_hash: 564cbe24715df192210f203349d53c676b6ddd56e7adcfa220e110a7bf8f4276
+            - path: 1.3.6
+              level: 3
+              title: 'REQ-006: Constraints Field Format'
+              byte_offset: 4795
+              byte_count: 288
+              word_count: 45
+              content_hash: 9d7ab97483431409e0af783bdf4030d45c03608fc7dfe353dc8cfdcf61ef51b4
+            - path: 1.3.7
+              level: 3
+              title: 'REQ-007: Backwards Compatibility'
+              byte_offset: 5083
+              byte_count: 260
+              word_count: 37
+              content_hash: 557825de61ecc3f84df4c6ac3a7fcbf2228b16bc240fd72478a204a179fbcd95
+            - path: 1.3.8
+              level: 3
+              title: 'REQ-008: Unit Test Coverage'
+              byte_offset: 5343
+              byte_count: 357
+              word_count: 57
+              content_hash: 218ab5814c1708621b4b42488ae2b2d287813896991a41be6d4fd591c4f59e05
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 5700
+          byte_count: 717
+          word_count: 102
+          content_hash: 83c5ef1b171603a6d510abb855c459b3f22e51da0ebecbc7439917c9a315db4a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'NFR-001: Token Budget'
+              byte_offset: 5732
+              byte_count: 248
+              word_count: 37
+              content_hash: 23ad774cfa5272ef60d2728ed9cc2b684afdb80147f4b39af7ff3e2063b94848
+            - path: 1.4.2
+              level: 3
+              title: 'NFR-002: Single Implementation Point'
+              byte_offset: 5980
+              byte_count: 255
+              word_count: 36
+              content_hash: 6f396a147291dc75e1019ffe26607cdc0e1918516af4e123e83488f57ceac19a
+            - path: 1.4.3
+              level: 3
+              title: 'NFR-003: No Stateful Tracking'
+              byte_offset: 6235
+              byte_count: 182
+              word_count: 26
+              content_hash: 6ea5692f93f865eb337e69d1ced4b2529b3d0120c6decd7a16ae2b490c7ccb8b
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 6417
+          byte_count: 1412
+          word_count: 217
+          content_hash: 0294f11a80581bd47817031d6c07126493db72bd2255115dbaf5d7e81eafa377
+        - path: "1.6"
+          level: 2
+          title: Verification Plan
+          byte_offset: 7829
+          byte_count: 1073
+          word_count: 165
+          content_hash: 42ae268a7f5aa5aec9647e68db3955b828b9b7ae3ea2308f5b4064e6ee810893
+entity_refs:
+    - entity_id: FEAT-01KR125SBMBCT
+      entity_type: feature
+      section_path: ""
+      byte_offset: 232
+    - entity_id: FEAT-01KR12539CXH6
+      entity_type: feature
+      section_path: 1.1.3
+      byte_offset: 1877
+    - entity_id: P55-orchestrator-context-hygiene
+      entity_type: plan
+      section_path: ""
+      byte_offset: 277
+    - entity_id: P55-orchestrator-context-hygiene
+      entity_type: plan
+      section_path: 1.1.2
+      byte_offset: 1394
+    - entity_id: P52-fast-track-orchestration
+      entity_type: plan
+      section_path: 1.1.3
+      byte_offset: 2070
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.6
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+classified: false

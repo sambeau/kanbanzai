@@ -1,0 +1,243 @@
+document_id: FEAT-01KR125SBM4JQ/spec-fast-track-review-dispatch-spec
+document_path: work/FEAT-01KR125SBM4JQ/fast-track-review-dispatch-spec.md
+content_hash: 71cbc19550a0bd693fe3225cd082b1f0e2a65fbf1b94c81538a3bb38203cb582
+indexed_at: 2026-05-07T11:30:16.474056Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Fast-Track Review Dispatch'
+      byte_offset: 360
+      byte_count: 7690
+      word_count: 1070
+      content_hash: 911b2862176c733730edb823166988e0e9019c9143d0e18fc428c05e39c227b6
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 405
+          byte_count: 1882
+          word_count: 252
+          content_hash: b1cb065496a398c87b45ca42c90183733c64512e10d4556a377aaa1ce9d33ea3
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Problem
+              byte_offset: 876
+              byte_count: 372
+              word_count: 57
+              content_hash: 530e9ee9e7ce243c79ad2952c42d40e7c57d4712cdd122daa4c1884060e633bd
+            - path: 1.1.2
+              level: 3
+              title: Design References
+              byte_offset: 1248
+              byte_count: 660
+              word_count: 86
+              content_hash: 2bab2e478a2f4112d6700d4e2c6c821406b382307cfe072d7ea6bbf431f563f2
+            - path: 1.1.3
+              level: 3
+              title: Related Specifications
+              byte_offset: 1908
+              byte_count: 379
+              word_count: 45
+              content_hash: c096f76782956c4d7223b17033e8522eb5982afb207a506ac8ae67c31062261b
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 2287
+          byte_count: 1019
+          word_count: 141
+          content_hash: a113cc353d221440a66a350db077950ab54b05c9202bea7c47e2e9c0c400e93b
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In Scope
+              byte_offset: 2297
+              byte_count: 665
+              word_count: 90
+              content_hash: 7a49b0fc75af5e9a318c228a453dcb93d794ae1dc8abbd116bc2bbb2b48a6b2c
+            - path: 1.2.2
+              level: 3
+              title: Out of Scope
+              byte_offset: 2962
+              byte_count: 344
+              word_count: 49
+              content_hash: 35928f104cceaf15c9ee49e50661ff80779e03582d480721efba61f596177580
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 3306
+          byte_count: 2218
+          word_count: 304
+          content_hash: 588679cc2811f4df33ce08ca65fbc67e864adadd56a77aff834b9f096ef509e9
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'REQ-001: Review Dispatch Step in Fast-Track Close-Out'
+              byte_offset: 3334
+              byte_count: 340
+              word_count: 47
+              content_hash: c278b01c754c5e365741acd43aa8f7baba6a69f4b289cb301998b105e3bca1c7
+            - path: 1.3.2
+              level: 3
+              title: 'REQ-002: Minimum Review Requirement'
+              byte_offset: 3674
+              byte_count: 223
+              word_count: 34
+              content_hash: 9140d212008adda8a341093a08a330a77ee8a8ff1a6f00ff90a2ef86a61ce1b4
+            - path: 1.3.3
+              level: 3
+              title: 'REQ-003: Bug Fix Default'
+              byte_offset: 3897
+              byte_count: 280
+              word_count: 38
+              content_hash: 70f431a559cdb56f62bc7a22774491ee995c7bd8ae6dfd483f8cc8bb686ccdf0
+            - path: 1.3.4
+              level: 3
+              title: 'REQ-004: Retro Fix Default'
+              byte_offset: 4177
+              byte_count: 167
+              word_count: 23
+              content_hash: b8db3daa41cc9b71ebacf67174c58c62d07b35798237bfa149502c30f06ac404
+            - path: 1.3.5
+              level: 3
+              title: 'REQ-005: Adaptive Reviewer Selection for Larger Changes'
+              byte_offset: 4344
+              byte_count: 351
+              word_count: 47
+              content_hash: 95cd952ddedac3784966eb88682ebb0b454881a4717e017da6d3e50e6f91c5d7
+            - path: 1.3.6
+              level: 3
+              title: 'REQ-006: Documentation-Only Exemption'
+              byte_offset: 4695
+              byte_count: 191
+              word_count: 24
+              content_hash: bc90f49f15c0962c224220ceefd290df2f6f48e60785237b43f17c3f2e8eaf41
+            - path: 1.3.7
+              level: 3
+              title: 'REQ-007: Transition Gate'
+              byte_offset: 4886
+              byte_count: 205
+              word_count: 31
+              content_hash: b0b4c2e7966fda6860b82ebd1b0490e19c42672682bd681233ecbdda67b10107
+            - path: 1.3.8
+              level: 3
+              title: 'REQ-008: Clean Context Requirement'
+              byte_offset: 5091
+              byte_count: 204
+              word_count: 25
+              content_hash: 160e6e12cd435bc15ead7ad000842fe4f938b653f47e38bfb21949b11bcd5548
+            - path: 1.3.9
+              level: 3
+              title: 'REQ-009: Format Consistency'
+              byte_offset: 5295
+              byte_count: 229
+              word_count: 32
+              content_hash: 09ae05aedff8c0893fe82bbe2875252a16539fb1f50a8fd00642169c3e048807
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 5524
+          byte_count: 484
+          word_count: 66
+          content_hash: 028ca9d39c6f373526d397e2bce35786e89d8ff8c0b78fca3fafca45bc080264
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'NFR-001: No Change to Full Procedure'
+              byte_offset: 5556
+              byte_count: 174
+              word_count: 24
+              content_hash: 846b1e41f6ad5388c65a38fbcba556d5cfdd179758ee5fa9e44f974dce0bbd16
+            - path: 1.4.2
+              level: 3
+              title: 'NFR-002: No Semantic Change to Existing Fast-Track Steps'
+              byte_offset: 5730
+              byte_count: 278
+              word_count: 39
+              content_hash: 1266b7d4f8fffa840e6c888bac11d2488ec8779ae1b15201dc2fdc6781cfc296
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 6008
+          byte_count: 1141
+          word_count: 162
+          content_hash: 82b93d131d4b041c97ac29f3d9a010add12a9e5f5af11f7a8bc90f29ff638c5c
+        - path: "1.6"
+          level: 2
+          title: Verification Plan
+          byte_offset: 7149
+          byte_count: 901
+          word_count: 140
+          content_hash: 849476bced37e33ff4283bc9f16542d9063a40ac63b3560aaf66bcd5283d8e83
+entity_refs:
+    - entity_id: FEAT-01KR125SBM4JQ
+      entity_type: feature
+      section_path: ""
+      byte_offset: 232
+    - entity_id: FEAT-01KR12539CXH6
+      entity_type: feature
+      section_path: 1.1.3
+      byte_offset: 1940
+    - entity_id: FEAT-01KR125SBMPQT
+      entity_type: feature
+      section_path: 1.1.3
+      byte_offset: 2089
+    - entity_id: P55-orchestrator-context-hygiene
+      entity_type: plan
+      section_path: ""
+      byte_offset: 277
+    - entity_id: P52-fast-track-orchestration
+      entity_type: plan
+      section_path: 1.1.3
+      byte_offset: 2200
+cross_doc_links:
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: 1.1.2
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.2.1
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.2.2
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.1
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: 1.3.5
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.5"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.2
+      role: requirement
+      confidence: high
+    - section_path: 1.3.8
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+classified: false

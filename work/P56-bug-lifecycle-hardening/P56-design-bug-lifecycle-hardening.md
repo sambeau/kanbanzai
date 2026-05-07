@@ -16,6 +16,7 @@ The bug workflow (`bug_fix` tier) lacks the structural integrity of the feature 
 ### Goals
 
 - Make `needs-review` a mandatory stop-state in the bug lifecycle — no bug can bypass review
+- Rename `verified` lifecycle stage to `verifying` — match the feature lifecycle convention; verification happens during the stage, not before entering it
 - Add lifecycle gate enforcement for bug transitions (equivalent to `CheckTransitionGate` for features)
 - Add `review_cycle` tracking for bugs so the `MaxCycles` tier setting is enforced
 - Auto-generate a specification document from the bug's `observed`/`expected` fields so reviewers have a spec to evaluate against
@@ -81,15 +82,60 @@ A `bug_fix` should differ from a `feature` only in scope, not in quality require
 - **P55 Definition of Done:** All 10 conditions apply to features. This design adapts them for bugs (8 conditions).
 - **P52 no-stop contract:** Fast-track means no human gates. This design preserves that — review is automated, not human-gated. The `bug_fix` tier's `Review: auto` gate mode means the system dispatches reviewers, not that review is skipped.
 
+## Definition of Done
+
+This design is structured around the definition of done. Every component exists to enforce one or more DoD conditions. The DoD is the contract; the components are the enforcement.
+
+Every bug — regardless of tier — must satisfy all eight conditions before reaching `closed`. Fast-track means no human gates, not fewer steps. If a condition cannot be verified, the bug is not closed.
+
+1. **Fix verified against expected behaviour** — every claim in the bug's `expected` field has been addressed. The `verification` field is populated with concrete confirmation (test output, reproduction steps, or manual verification notes).
+
+2. **All changes committed** — `git status` is clean. No uncommitted source files, test files, workflow state, or temporary artifacts.
+
+3. **Temporary files removed** — scratch scripts, repro files, debug output, or manual test fixtures used during the fix are deleted.
+
+4. **Tests pass** — `go test ./...` passes on the worktree branch before landing and on `main` after. New tests exist that reproduce the bug and verify the fix.
+
+5. **Code reviewed** — at minimum one review sub-agent with clean context has been dispatched (via `orchestrate-review`), findings collated, and no blocking findings remain. The reviewer evaluates the fix against the bug's auto-generated spec (the `expected` field). A review document is registered at `work/reviews/review-{bug-id}-{slug}.md`.
+
+6. **Bug advanced through full lifecycle** — `in-progress → needs-review → verifying → closed`. Each transition is an explicit `entity(action: "transition")` call. No stage is skipped. `needs-review` is a mandatory stop-state — the bug cannot advance past it without a review report. `verifying` is a mandatory stage — the bug cannot reach `closed` until the verifier sub-agent confirms all DoD items pass.
+
+7. **Changes landed on main** — the fix is on the `main` branch. For worktree-based fixes, `merge(action: "execute")` succeeded and ancestry is verified. For direct-to-main fixes (trivial one-liners), `git merge-base --is-ancestor HEAD main` confirms the change is reachable from main.
+
+8. **Worktree and branch cleaned up** — if a worktree was used, `worktree(action: "remove")` has been called and `git worktree list` confirms the directory is gone. The branch is deleted and `git branch | grep <bug-id>` returns nothing.
+
+### Rationale for a Single Definition
+
+The fast-track profile and the full procedure share one definition of done. A `bug_fix` is still a code change — it differs from a `feature` only in scope, not in quality requirements. Fast-track means no human gates, not fewer verification steps. The list above replaces judgment ("this is a small fix, it's probably fine") with verification.
+
+### DoD Enforcement Map
+
+| DoD | Enforced By | Mechanism |
+|---|---|---|
+| 1. Fix verified | Component B (spec), Component D (gate), Component G (verifier) | verification field populated; gate checks it; verifier confirms non-empty at close-out |
+| 2. Changes committed | Component D (gate), Component G (verifier) | Gate checks git status; verifier re-checks independently |
+| 3. Temp files removed | Component D (gate), Component G (verifier) | Gate scans for untracked files; verifier re-scans with clean context |
+| 4. Tests pass | Component D (gate), Component G (verifier) | Gate checks go test at needs-review to verifying; verifier re-runs at close-out |
+| 5. Code reviewed | Component A (stop-state), Component B (spec), Component C (review gate), Component G (verifier) | needs-review mandatory; gate requires review doc; verifier confirms doc registered |
+| 6. Full lifecycle | Component A (stop-state), Component D (gate), Component G (verifier) | bugStopStates prevents skip; gate checks each transition; verifier confirms path taken |
+| 7. Landed on main | Component D (gate), Component G (verifier) | Gate checks ancestry; verifier re-runs git merge-base |
+| 8. Worktree cleaned up | Component E (worktree enforcement), Component D (gate), Component G (verifier) | Health warning; gate checks cleanup; verifier runs git worktree list and git branch |
+
+Component D (gates) and Component G (verifier) are complementary, not redundant. Gates enforce preconditions at each transition — they block the wrong thing from happening. The verifier confirms completeness at close-out — it checks that everything is done. The gate at `verifying → closed` dispatches the verifier; the transition only proceeds if the report returns all-pass.
+
 ## Design
 
 ### Design Principle
 
 **A bug is a small feature.** Every structural guarantee the feature lifecycle provides — mandatory review, spec traceability, worktree isolation, gate enforcement — should apply to bugs. The only difference is scale: bugs have inline specs (no separate document), a shorter lifecycle (no design/spec/dev-plan stages), and lighter review (one reviewer, not a panel).
 
-### Component 1: Mandatory `needs-review` Stop-State
+The definition of done is the organizing principle. Each component below exists to enforce specific DoD conditions. No component exists for its own sake.
 
-Add `needs-review` to a new `bugStopStates` map (mirroring `advanceStopStates` for features). When a bug enters `needs-review`, it cannot transition further until review is complete.
+### Component A: Mandatory `needs-review` Stop-State
+
+**Enforces DoD 5 and 6.**
+
+Add `needs-review` to a new `bugStopStates` map (mirroring `advanceStopStates` for features). When a bug enters `needs-review`, the system blocks further transitions until a review report is registered (enforced by Component C's gate).
 
 ```go
 var bugStopStates = map[string]bool{
@@ -97,9 +143,13 @@ var bugStopStates = map[string]bool{
 }
 ```
 
-The gate enforcement (Component 3) ensures the bug cannot leave `needs-review` without a review report. This is the server-side complement to P55 Component 5: the orchestrator dispatches the reviewer; the server enforces that it happened.
+This is the server-side complement to P55 Component 5: the orchestrator dispatches the reviewer; the server enforces that it happened and that the bug cannot proceed without it.
 
-### Component 2: Auto-Generated Specification from Bug Report
+### Component B: Auto-Generated Specification from Bug Report
+
+**Enforces DoD 1 and 5.**
+
+DoD 5 requires a spec for the reviewer to evaluate against. DoD 1 requires the fix to address every claim in `expected`. The bug report already contains this information — it just needs to be structured as a registered document.
 
 When a bug is created, auto-generate a specification document from the `observed` and `expected` fields. Register it at `work/bugs/<slug>/spec.md` and auto-approve it (the bug report _is_ the spec).
 
@@ -118,28 +168,54 @@ The generated spec has a fixed structure:
 <bug.severity> | Priority: <bug.priority> | Type: <bug.type>
 ```
 
-This gives reviewers a concrete document to evaluate the fix against. The `Spec` gate mode for `bug_fix` changes from `human` to `auto` — the bug report is already human-authored via the `observed`/`expected` fields; the system generates and approves the spec automatically.
+The `Spec` gate mode for `bug_fix` changes from `human` to `auto` — the human already wrote the spec when they created the bug via the `observed`/`expected` fields. There is no additional human step to gate.
 
-### Component 3: Bug Lifecycle Gate Enforcement
+### Component C: Review Report Requirement
 
-Add `CheckBugTransitionGate` — a bug equivalent of `CheckTransitionGate` — that enforces:
+**Enforces DoD 5.**
 
-| Transition | Gate |
-|---|---|
-| `in-progress → needs-review` | A fix must be applied (worktree has commits beyond the base) |
-| `needs-review → verified` | A review report document must be registered and owned by the bug |
-| `needs-review → in-progress` | Review cycle cap not reached; increments `review_cycle` |
-| `verified → closed` | All changes landed on main; worktree and branch cleaned up |
+DoD 5 requires a review document registered at `work/reviews/review-{bug-id}-{slug}.md`. This component adds that as a server-enforced gate.
 
-Wire this into `entityTransitionAction` for `entityType == "bug"` (currently the code falls through with no gate checks for bugs).
+When a bug attempts to transition out of `needs-review` (whether to `verified` or back to `in-progress` for rework), the gate checks that at least one report document exists, is owned by the bug, and is registered. Without a review report, the transition is rejected.
 
-### Component 4: Review Cycle Tracking for Bugs
+The review report requirement also feeds DoD 4: the gate at `needs-review → verified` runs `go test ./...` and attaches the output to the transition result, so the reviewer and the system both see test status.
 
-Add a `review_cycle` counter to the bug entity model (mirroring `Feature.ReviewCycle`). Increment it on each `needs-review → in-progress` (rework) transition. When `review_cycle >= tier.MaxCycles`, block the transition and escalate to a human checkpoint. This makes the `bug_fix` tier's `MaxCycles: 2` setting enforceable.
+### Component D: Bug Lifecycle Gate Enforcement
 
-### Component 5: `fix_plan` Field
+**Enforces DoD 1, 2, 3, 4, 6, 7, 8.**
 
-Add a `fix_plan` field to `CreateBugInput` and the bug entity model. This is a Markdown string describing the intended fix approach. It serves as an inline dev-plan, avoiding the need for a separate document. The reviewer can check that the implementation matches the fix plan.
+Add `CheckBugTransitionGate` — a bug equivalent of `CheckTransitionGate` — wired into `entityTransitionAction` for `entityType == "bug"` (currently the code falls through with no gate checks for bugs). Each gate maps to specific DoD conditions:
+
+| Transition | Gate | DoD |
+|---|---|---|
+| `in-progress → needs-review` | Worktree has commits beyond base (a fix was applied) | 6 (lifecycle integrity) |
+| `needs-review → verifying` | Review report registered (Component C); `go test ./...` passes | 4, 5 |
+| `needs-review → in-progress` | Review cycle cap not reached; increments `review_cycle` | 6 (rework loop bounded) |
+| `verifying → closed` | Verifier sub-agent dispatched and returns all-pass on all 8 DoD items; gate blocks if any item fails | 1, 2, 3, 4, 5, 6, 7, 8 |
+
+The `verifying → closed` gate is the final checkpoint. Unlike other gates that check a single precondition, this gate dispatches the verifier sub-agent (Component G) and waits for its structured pass/fail report. If any DoD item fails, the bug stays in `verifying` with the failure details. The orchestrator never touches verification — the gate owns it. This ensures a bug cannot be `closed` without being verified as meeting every condition in the Definition of Done.
+
+**Review cycle tracking** (DoD 6): Add a `review_cycle` counter to the bug entity model (mirroring `Feature.ReviewCycle`). Increment on each `needs-review → in-progress` transition. When `review_cycle >= tier.MaxCycles`, block the rework transition and escalate to a human checkpoint. This makes the `bug_fix` tier's `MaxCycles: 2` setting enforceable.
+
+### Component E: Worktree Isolation and Cleanup
+
+**Enforces DoD 8. Supports DoD 2 and 7.**
+
+Three changes:
+
+1. **Health warning for bare `in-progress` bugs.** A health check flags any bug in `in-progress` status that has no active worktree. This catches the "three parallel fixes on main" scenario before it causes conflicts.
+
+2. **Warning on repo-root mutations during active bug work.** When `kanbanzai_edit_file` or `write_file` is called without an `entity_id` and there exists an `in-progress` bug with an active worktree, the tool returns a warning (not a hard error — Decision 5). This nudges agents toward worktree-scoped edits.
+
+3. **Cleanup verification at `verified → closed`.** The gate (Component D) checks that `worktree(action: "remove")` has been called and `git branch | grep <bug-id>` returns nothing. If a worktree was used, it must be gone before the bug can close.
+
+Auto-creation on `in-progress` transition is already implemented (`WorktreeTransitionHook.handleBugInProgress`). This component adds detection and enforcement around it.
+
+### Component F: `fix_plan` Field and Canonical Paths
+
+**Supports DoD 5 (gives reviewer context). Enables DoD 1 (documents intended fix approach).**
+
+Add a `fix_plan` field to `CreateBugInput` and the bug entity model. This is a Markdown string describing the intended fix approach — an inline dev-plan. The reviewer can check that the implementation matches the fix plan.
 
 ```go
 type CreateBugInput struct {
@@ -148,46 +224,56 @@ type CreateBugInput struct {
 }
 ```
 
-### Component 6: Canonical Document Paths for Bugs
-
 Add canonical path resolution for bug entities in `CanonicalDocPath`:
 
 ```
-work/bugs/<slug>/spec.md       → specification (auto-generated)
-work/bugs/<slug>/fix-plan.md   → dev-plan (from fix_plan field, if present)
-work/reviews/review-<bug-id>-<slug>.md → review report
+work/bugs/<slug>/spec.md                          → specification (auto-generated, Component B)
+work/bugs/<slug>/fix-plan.md                      → dev-plan (from fix_plan field, if present)
+work/reviews/review-<bug-id>-<slug>.md             → review report (Component C)
 ```
 
-This gives bugs the same document structure as features, just under `work/bugs/` instead of `work/<feature-slug>/`.
+This gives bugs the same document structure as features, just under `work/bugs/` instead of `work/<feature-slug>/`. The `fix_plan` is optional — a bug without one can still satisfy DoD 1 and 5 as long as the `expected` field is clear enough for the reviewer.
 
-### Component 7: Worktree Enforcement
+### Component G: Close-Out Verification Sub-Agent
 
-Two changes:
+**Enforces DoD 1–8 (comprehensive). Dispatched by the `verifying → closed` gate in Component D.**
 
-1. **Reject repo-root mutations for `in-progress` bugs with active worktrees.** When `kanbanzai_edit_file` or `write_file` is called without an `entity_id` and there exists an `in-progress` bug with an active worktree, warn or reject. This prevents the "three parallel fixes on main" scenario.
+A bug cannot be `closed` until it is verified as meeting the Definition of Done. The `verifying` stage exists for this purpose — it is the bug equivalent of the feature lifecycle's `verifying` stage. During this stage, the gate dispatches a verifier sub-agent with a clean context and a strict checklist. The transition to `closed` is blocked until the verifier returns all-pass.
 
-2. **Auto-create worktree on `in-progress` transition.** Already implemented (`WorktreeTransitionHook.handleBugInProgress`). This design adds a health check that flags `in-progress` bugs without worktrees.
+This component adopts P55 Component 7 (Close-Out Verification Sub-Agent) for the bug lifecycle, with one critical difference: **the gate dispatches the verifier, not the orchestrator.** The orchestrator transitions the bug to `verifying` and then has no further role in verification. The gate owns the verifier dispatch, waits for the report, and either allows `verifying → closed` (all-pass) or blocks it with specific failures.
 
-### Component 8: Adopt P55 Definition of Done
+**Why gate-dispatched:** You cannot close something that hasn't been verified as meeting the Definition of Done. If the orchestrator dispatches the verifier, the orchestrator could skip it — the same context-rot problem P55 was designed to prevent. Gate-dispatched means the verifier always runs, every time, for every bug. The orchestrator cannot bypass it.
 
-Adopt P55's definition of done, adapted for the bug lifecycle (8 conditions instead of 10 — bugs don't have tasks, and merge/ancestry are combined):
+**Bug adaptation of P55 Component 7:**
 
-1. **Fix verified against expected behaviour** — every claim in `expected` addressed; `verification` field populated
-2. **All changes committed** — `git status` clean
-3. **Temporary files removed** — scratch scripts, repro files, debug output deleted
-4. **Tests pass** — `go test ./...` passes on worktree and main; new tests reproduce the bug and verify the fix
-5. **Code reviewed** — at minimum one review sub-agent dispatched, no blocking findings, review doc registered at `work/reviews/review-{bug-id}-{slug}.md`
-6. **Bug advanced through full lifecycle** — `in-progress → needs-review → verified → closed`; no stage skipped; `needs-review` is a mandatory stop-state
-7. **Changes landed on main** — ancestry verified; worktree merged or direct-to-main confirmed
-8. **Worktree and branch cleaned up** — `worktree(action: "remove")` called; branch deleted
+- Uses the same `verifier` role and `verify-closeout` skill defined by P55, with a bug-adapted checklist (8 items instead of 10)
+- Dispatched by the `verifying → closed` gate in `CheckBugTransitionGate` (Component D)
+- Receives: the bug ID, the Definition of Done checklist (8 items), and the current entity state
+- Runs each verification action independently — does not trust entity state alone; re-runs commands
+- Returns a structured pass/fail report per DoD item with evidence
+- The gate reads the report: all-pass → allow transition to `closed`; any fail → block with failure details, bug stays in `verifying`
+
+**Bug-adapted verification checklist:**
+
+| DoD | Verification Action |
+|---|---|
+| 1. Fix verified | Confirm `verification` field is populated and non-empty |
+| 2. Changes committed | Run `git status --porcelain` and confirm no output |
+| 3. Temp files removed | Scan for untracked files outside `work/` and `docs/` |
+| 4. Tests pass | Run `go test ./...` on the worktree branch; confirm exit zero |
+| 5. Code reviewed | Confirm review document exists at `work/reviews/review-{bug-id}-{slug}.md` and is registered |
+| 6. Full lifecycle | Confirm bug status reached `verifying` via `needs-review` (no skipped stages) |
+| 7. Landed on main | Run `git merge-base --is-ancestor <branch> main`; confirm exit zero |
+| 8. Worktree cleaned up | Run `git worktree list`; confirm no entry for this bug; run `git branch | grep <bug-id>`; confirm no output |
+
+**Relationship to Component D:** The `verifying → closed` gate IS the verifier dispatch. Component D doesn't just check a precondition at this transition — it spawns a sub-agent, waits for the structured report, and uses it as the gate decision. This is the only gate that dispatches a sub-agent; all other gates are synchronous precondition checks.
 
 ### What This Design Does NOT Do
 
 - **Does not add task decomposition for bugs.** Bugs remain single-entity fixes. The `fix_plan` field provides enough structure for the reviewer without the overhead of task management.
 - **Does not add `advance` support for bugs.** The bug lifecycle is short (4 transitions from `in-progress` to `closed`). Manual stepping is acceptable.
 - **Does not change feature lifecycle behaviour.** The bug gate system is additive, not a refactor of existing feature gates.
-- **Does not require P44.** These are procedural and server-side enforcements that work in the current architecture.
-- **Does not change the `retro_fix` or `critical` tier configs.** Only `bug_fix` is in scope.
+
 
 ## Alternatives Considered
 
@@ -225,7 +311,7 @@ Replace the bug entity type with a feature flagged as `tier: bug_fix`. Bugs beco
 
 ### Decision 3: `bug_fix` Spec gate mode changes from `human` to `auto`
 
-**Rationale:** With auto-generated specs from bug reports (Component 2), the spec is always present and always accurate (it _is_ the bug report). There is no additional human step to gate. The human already wrote the spec when they created the bug. Changing to `auto` removes a gate that provided no additional safety while adding friction.
+**Rationale:** With auto-generated specs from bug reports (Component B), the spec is always present and always accurate (it _is_ the bug report). There is no additional human step to gate. The human already wrote the spec when they created the bug. Changing to `auto` removes a gate that provided no additional safety while adding friction.
 
 ### Decision 4: One reviewer for bugs, not a panel
 
@@ -235,42 +321,32 @@ Replace the bug entity type with a feature flagged as `tier: bug_fix`. Bugs beco
 
 **Rationale:** The worktree auto-creation hook already exists and works for most cases. Adding a hard block on repo-root mutations would break edge cases (e.g., config changes, document-only fixes). Start with a health check warning that flags `in-progress` bugs without worktrees, and a warning on repo-root writes when active bug worktrees exist. Escalate to a hard block after gathering data on false positives.
 
-### Decision 6: Adopt P55 Definition of Done verbatim where possible, adapt where necessary
+### Decision 6: The Definition of Done is the organizing principle of this design
 
-**Rationale:** P55 establishes that fast-track and full-procedure share one definition of done. This design applies the same principle: `bug_fix` and `feature` share one standard. The 8-condition bug DoD is a direct adaptation of P55's 10-condition feature DoD, with items merged only where the bug lifecycle genuinely differs (no tasks, no separate merge stage).
+**Rationale:** P55 establishes that fast-track and full-procedure share one definition of done. This design goes further: the DoD is not a section at the end — it is the architecture. Every component (A–G) exists to enforce specific DoD conditions. The DoD enforcement map (above) is the traceability matrix: if a component doesn't enforce a DoD item, it doesn't belong in this design. The 8-condition bug DoD is a direct adaptation of P55's 10-condition feature DoD, with items merged only where the bug lifecycle genuinely differs (no tasks, no separate merge stage).
+
+### Decision 7: Close-out verification is delegated to a clean-context sub-agent
+
+**Rationale:** The agent that fixed the bug is the worst agent to verify its own close-out. By the end of the fix, its context is saturated with implementation details and procedural close-out steps are exactly what it forgets. Delegating verification to a sub-agent with a clean context and a strict checklist — the same pattern P55 Component 7 applies to features — ensures all eight DoD items are verified by an agent that cannot be talked into skipping them.
+
+**References:** P55 Component 7 (Close-Out Verification Sub-Agent). P41 Finding 1 (context rot as behavioural degradation). P50 incident (forgotten close-out steps).
+
+### Decision 8: The verifier is gate-dispatched, not orchestrator-dispatched
+
+**Rationale:** You cannot close something that hasn't been verified as meeting the Definition of Done. If the orchestrator dispatches the verifier, the orchestrator could skip it — the same context-rot problem P55 was designed to prevent. The `verifying → closed` gate in Component D spawns the verifier, waits for the structured report, and blocks the transition unless all-pass. The orchestrator transitions the bug to `verifying` and has no further role in verification. The gate owns it.
 
 ## Dependencies
 
-- **P55-orchestrator-context-hygiene** — Component 5 (Fast-Track Review Dispatch) provides the orchestrator-side review mechanism. This design adds server-side enforcement. P55 should land first so the orchestrator knows how to dispatch reviewers before the server requires it.
+- **P55-orchestrator-context-hygiene** — Component 5 (Fast-Track Review Dispatch) provides the orchestrator-side review mechanism. Component 7 (Close-Out Verification Sub-Agent) defines the `verifier` role and `verify-closeout` skill that this design depends on for Component G. P55 should land first.
 - **P52-fast-track-orchestration** — The no-stop contract and fast-track behavioural profile that this design operates within.
-- **orchestrate-review/SKILL.md** — Referenced (not modified); provides the review sub-agent dispatch procedure that P55 Component 5 invokes.
-- **internal/validate/lifecycle.go** — Modified to add `bugStopStates` and bug gate enforcement.
+- **orchestrate-review/SKILL.md** — Referenced (not modified); provides the review sub-agent dispatch procedure.
+- **verify-closeout/SKILL.md** — New skill (defined by P55 Component 7); provides the bug-adapted verification checklist that Component G invokes.
+- **verifier.yaml** — New role (defined by P55 Component 7); identity, tools, and anti-patterns for the close-out verifier.
+- **internal/validate/lifecycle.go** — Modified to add `bugStopStates`, rename `BugStatusVerified` to `BugStatusVerifying`, and add bug gate enforcement.
 - **internal/service/prereq.go** — Modified to add `CheckBugTransitionGate`.
-- **internal/model/entities.go** — Modified to add `fix_plan` and `review_cycle` to bug model.
+- **internal/model/entities.go** — Modified to add `fix_plan` and `review_cycle` to bug model; rename `BugStatusVerified` to `BugStatusVerifying`.
 
-## Definition of Done
 
-Every bug — regardless of tier — must satisfy all eight conditions before reaching `closed`. Fast-track means no human gates, not fewer steps. This list is the contract: if a condition cannot be verified, the bug is not closed.
-
-1. **Fix verified against expected behaviour** — every claim in the bug's `expected` field has been addressed. The `verification` field is populated with concrete confirmation (test output, reproduction steps, or manual verification notes).
-
-2. **All changes committed** — `git status` is clean. No uncommitted source files, test files, workflow state, or temporary artifacts.
-
-3. **Temporary files removed** — scratch scripts, repro files, debug output, or manual test fixtures used during the fix are deleted.
-
-4. **Tests pass** — `go test ./...` passes on the worktree branch before landing and on `main` after. New tests exist that reproduce the bug and verify the fix.
-
-5. **Code reviewed** — at minimum one review sub-agent with clean context has been dispatched (via `orchestrate-review`), findings collated, and no blocking findings remain. The reviewer evaluates the fix against the bug's auto-generated spec (the `expected` field). A review document is registered at `work/reviews/review-{bug-id}-{slug}.md`.
-
-6. **Bug advanced through full lifecycle** — `in-progress → needs-review → verified → closed`. Each transition is an explicit `entity(action: "transition")` call. No stage is skipped. `needs-review` is a mandatory stop-state — the bug cannot advance past it without a review report.
-
-7. **Changes landed on main** — the fix is on the `main` branch. For worktree-based fixes, `merge(action: "execute")` succeeded and ancestry is verified. For direct-to-main fixes (trivial one-liners), `git merge-base --is-ancestor HEAD main` confirms the change is reachable from main.
-
-8. **Worktree and branch cleaned up** — if a worktree was used, `worktree(action: "remove")` has been called and `git worktree list` confirms the directory is gone. The branch is deleted and `git branch | grep <bug-id>` returns nothing.
-
-### Rationale for a Single Definition
-
-The fast-track profile and the full procedure share one definition of done. A `bug_fix` is still a code change — it differs from a `feature` only in scope, not in quality requirements. Fast-track means no human gates, not fewer verification steps. The list above replaces judgment ("this is a small fix, it's probably fine") with verification.
 
 ## Open Questions
 
@@ -280,6 +356,10 @@ The fast-track profile and the full procedure share one definition of done. A `b
 
 3. **How does `fix_plan` interact with the `DevPlan: auto` gate mode?** If `DevPlan` is `auto`, the system should auto-approve the `fix_plan` when present. But `fix_plan` is optional — what if it's empty? Does the gate pass vacuously, or does it require content?
 
-4. **Should bugs support the full `merging → verifying` sub-lifecycle?** This design allows direct-to-main for trivial fixes (DoD item 7). But for worktree-based fixes, should bugs go through `merging → verifying` like features do, or is `verified` sufficient as a single post-review state?
+4. **Should bugs support the full `merging → verifying` sub-lifecycle?** This design collapses merge and verify into the single `verifying` stage. For worktree-based fixes, the verifier's checklist includes ancestry confirmation (DoD 7). For direct-to-main fixes, ancestry is trivially satisfied. Is a separate `merging` stage warranted for bugs, or is the unified `verifying` stage sufficient given that bug fixes are typically single-commit changes?
 
 5. **Should `bug_fix` tier change be backported to existing bugs?** Existing bugs have no tier, no spec, no `fix_plan`. Should the system infer `bug_fix` tier and auto-generate specs for existing `in-progress` bugs, or only for newly created ones?
+
+6. **Should the verifier sub-agent run before or after the transition to `closed`?** RESOLVED (Decision 8). The verifier is gate-dispatched: the `verifying → closed` gate spawns the verifier, waits for the report, and blocks the transition unless all-pass. You cannot close something that hasn't been verified as meeting the Definition of Done.
+
+

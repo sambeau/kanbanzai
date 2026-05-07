@@ -1,0 +1,132 @@
+document_id: FEAT-01KR12RE970R8/spec-p56-f1-spec-bug-lifecycle-gate-enforcement
+document_path: work/P56-bug-lifecycle-hardening/P56-F1-spec-bug-lifecycle-gate-enforcement.md
+content_hash: 29b4ac792b2ad5c1e034125543a9b5db417c986a610630c5e424ec7caef3d7ec
+indexed_at: 2026-05-07T11:26:45.395327Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Bug Lifecycle Gate Enforcement'
+      byte_offset: 311
+      byte_count: 10079
+      word_count: 1363
+      content_hash: 406a435d1f06cf69275f7bafa5c4bfc9cf913a2ff22cb87ce947bc3124641c3b
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 360
+          byte_count: 1180
+          word_count: 136
+          content_hash: 31abd239804094b1e551391075b06913d30f660890770e32a2eceb5f79f735aa
+        - path: "1.2"
+          level: 2
+          title: Overview
+          byte_offset: 1540
+          byte_count: 408
+          word_count: 55
+          content_hash: 1e81bdf35739133ff9af5a04b685e6090701575885dafea51caa3f66b93e1855
+        - path: "1.3"
+          level: 2
+          title: Scope
+          byte_offset: 1948
+          byte_count: 640
+          word_count: 92
+          content_hash: 150cf5e817dea17fe6976446c763e42b53a8ea2848e2725b402626d0c7ad2baf
+        - path: "1.4"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2588
+          byte_count: 5610
+          word_count: 765
+          content_hash: 8d329aa5b91aed1de5f298529a3c715693f5118f0d0b602b2c99e4ea171118f5
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Pillar A — Lifecycle Stage Rename
+              byte_offset: 2616
+              byte_count: 1117
+              word_count: 132
+              content_hash: dab39e943f3c37d428b4b884005ffc31f77621e4dc249f29842fb6743d1af979
+            - path: 1.4.2
+              level: 3
+              title: Pillar B — Mandatory Stop-State
+              byte_offset: 3733
+              byte_count: 856
+              word_count: 114
+              content_hash: 5800c0db2e8d2a99fe15a305def9c7941ab29dc193a852c042fd7931a631acaf
+            - path: 1.4.3
+              level: 3
+              title: Pillar C — Lifecycle Gate Enforcement
+              byte_offset: 4589
+              byte_count: 2488
+              word_count: 355
+              content_hash: 60080be567183d95b152010b86c90df01843d4616186e557fb4bb5dd1a32ac9f
+            - path: 1.4.4
+              level: 3
+              title: Pillar D — Review Cycle Tracking
+              byte_offset: 7077
+              byte_count: 1121
+              word_count: 161
+              content_hash: af668b061831eb677906fbc915d3e07c7890033199998efd99804a07577007e3
+        - path: "1.5"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 8198
+          byte_count: 589
+          word_count: 80
+          content_hash: d91854b35a87c3c69edeff8e00ff9e34e18424c679ab1b170fded5304fa47585
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria (Cross-Cutting)
+          byte_offset: 8787
+          byte_count: 705
+          word_count: 105
+          content_hash: 725e2ecbfd95f5c623cb24d4f54b732aca7718d3da79107d2166e37d3497069f
+        - path: "1.7"
+          level: 2
+          title: Dependencies and Assumptions
+          byte_offset: 9492
+          byte_count: 898
+          word_count: 124
+          content_hash: dc4940551fb40d7e6a91272313b6930e9278f1eadb48334244811d0f5ce31a8b
+entity_refs:
+    - entity_id: FEAT-01KR12RE970R8
+      entity_type: feature
+      section_path: ""
+      byte_offset: 277
+    - entity_id: P56-bug-lifecycle-hardening
+      entity_type: plan
+      section_path: ""
+      byte_offset: 232
+    - entity_id: P56-design-bug-lifecycle-hardening
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 381
+    - entity_id: P56-bug-lifecycle-hardening
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 422
+    - entity_id: P55-design-orchestrator-context-hygiene
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 1027
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+    - section_path: "1.7"
+      role: assumption
+      confidence: high
+classified: false

@@ -1,0 +1,407 @@
+document_id: P56-bug-lifecycle-hardening/design-p56-design-bug-lifecycle-hardening
+document_path: work/P56-bug-lifecycle-hardening/P56-design-bug-lifecycle-hardening.md
+content_hash: c602fd96c05bf9e31d66dfc414d1f133f7cf90704a18b721c1a755d18473f291
+indexed_at: 2026-05-07T10:54:12.168442Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Bug Lifecycle Hardening'
+      byte_offset: 266
+      byte_count: 21058
+      word_count: 3022
+      content_hash: 83196d0be15f000d8fddbc04bd8cf0cd458d284961da6150518f64fcd115c083
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 301
+          byte_count: 521
+          word_count: 78
+          content_hash: 9445166012e4b448d6d5644b0a73925568aef619cbbd8f4f97913953fd62ac4a
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 822
+          byte_count: 1253
+          word_count: 188
+          content_hash: 6e03e38d52da2c3c41c8264c2dbc59ac10516ffede7245b44c9a88d5466bcd2f
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Goals
+              byte_offset: 846
+              byte_count: 756
+              word_count: 117
+              content_hash: 5e0c39e1ae4d631c5170135da5786f045a1744e09c585faf5273241233ee29b7
+            - path: 1.2.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 1602
+              byte_count: 473
+              word_count: 67
+              content_hash: b7eef341384aa3ddd4f4077b2f621644a810d0b88a6d002d332dfee3f00646c4
+        - path: "1.3"
+          level: 2
+          title: Problem and Motivation
+          byte_offset: 2075
+          byte_count: 2505
+          word_count: 364
+          content_hash: e44151cc5290a71341cbcc81a3e4d2ce4b5aa264cdd13d087c7d6c3c5aa5f906
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Problem
+              byte_offset: 2102
+              byte_count: 1081
+              word_count: 149
+              content_hash: bfce591ff5c12526e078d968d981b5c3c570bb14b05b73410588c192871697a2
+            - path: 1.3.2
+              level: 3
+              title: Evidence
+              byte_offset: 3183
+              byte_count: 727
+              word_count: 115
+              content_hash: 821460da224ca4132bc09c0bc18021ed75cbab8d9f55b550117583cfc99a6937
+            - path: 1.3.3
+              level: 3
+              title: Why This Matters Now
+              byte_offset: 3910
+              byte_count: 404
+              word_count: 56
+              content_hash: 793b3236973ed104031c3b1c6d0f99af61287411c97f4c80fb2e6404403e7837
+            - path: 1.3.4
+              level: 3
+              title: Motivation
+              byte_offset: 4314
+              byte_count: 266
+              word_count: 40
+              content_hash: ae5382403c7cadc9bb8db40eb3d9727e6fca5a8d669148cbdae80b67332794c0
+        - path: "1.4"
+          level: 2
+          title: Related Work
+          byte_offset: 4580
+          byte_count: 1262
+          word_count: 164
+          content_hash: 0b8a2e19ae951b44e4d4dcf008befdcc6c2ac127d91b7914f894ff533be5030b
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Prior Research
+              byte_offset: 4597
+              byte_count: 411
+              word_count: 48
+              content_hash: ce5c250982f6f55e7aa4c95ee10e5b3df7dab2a7ce4be4f635f272cc2481b8ff
+            - path: 1.4.2
+              level: 3
+              title: Prior Designs
+              byte_offset: 5008
+              byte_count: 307
+              word_count: 35
+              content_hash: c44889db5bd294782a841a3da402c9f3aa42a587cad72bfbc799fa36dc785fac
+            - path: 1.4.3
+              level: 3
+              title: Constraining Decisions
+              byte_offset: 5315
+              byte_count: 527
+              word_count: 78
+              content_hash: 22f906126e32ed5915959cfcb7761fff3f00052157fcc15d331838f8675426f9
+        - path: "1.5"
+          level: 2
+          title: Design
+          byte_offset: 5842
+          byte_count: 6057
+          word_count: 848
+          content_hash: 326b9984fdb24e0cd5a29e2561d3b344ddf9bec2ff4d548668070810dc258d31
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Design Principle
+              byte_offset: 5853
+              byte_count: 394
+              word_count: 56
+              content_hash: fb0d593c51449f27ddb6f5541ed0a9a96590a9cb420392d8d815fd4b6afe1fa8
+            - path: 1.5.2
+              level: 3
+              title: 'Component 1: Mandatory `needs-review` Stop-State'
+              byte_offset: 6247
+              byte_count: 574
+              word_count: 74
+              content_hash: 3151bb3b35824e0144204da40e231df3d851a660461e20dced80d24e4fecf385
+            - path: 1.5.3
+              level: 3
+              title: 'Component 2: Auto-Generated Specification from Bug Report'
+              byte_offset: 6821
+              byte_count: 783
+              word_count: 108
+              content_hash: 6b8d5e681eb4e0f8103818e73549e0a5d405f72424972e800c6a358e0c062dc9
+            - path: 1.5.4
+              level: 3
+              title: 'Component 3: Bug Lifecycle Gate Enforcement'
+              byte_offset: 7604
+              byte_count: 686
+              word_count: 107
+              content_hash: 49f57184700a43eb209e4c56235896bb101b191d049525cc25040f6d5df82140
+            - path: 1.5.5
+              level: 3
+              title: 'Component 4: Review Cycle Tracking for Bugs'
+              byte_offset: 8290
+              byte_count: 375
+              word_count: 50
+              content_hash: 959bedd20b328020ccaa35be05a6e82765a01c06805c16493ede73088e611da7
+            - path: 1.5.6
+              level: 3
+              title: 'Component 5: `fix_plan` Field'
+              byte_offset: 8665
+              byte_count: 437
+              word_count: 70
+              content_hash: a9607049aa5a7a48ce3efd65743a0bf957064ee8357914666c6d23cb93e7f65c
+            - path: 1.5.7
+              level: 3
+              title: 'Component 6: Canonical Document Paths for Bugs'
+              byte_offset: 9102
+              byte_count: 450
+              word_count: 50
+              content_hash: 00877fe910192f7f2b58412c731e784a0998f5c64cee41bcad8ea323ec28a9c3
+            - path: 1.5.8
+              level: 3
+              title: 'Component 7: Worktree Enforcement'
+              byte_offset: 9552
+              byte_count: 555
+              word_count: 69
+              content_hash: 3c20e6df5a5847b797b7f4ef6f48d7a45303284d7e8876b77850d8f32ff6510b
+            - path: 1.5.9
+              level: 3
+              title: 'Component 8: Adopt P55 Definition of Done'
+              byte_offset: 10107
+              byte_count: 1081
+              word_count: 153
+              content_hash: 9cf9cd70986e31046f32c49ead9033563218d65b72fb19409661b73777097fbd
+            - path: 1.5.10
+              level: 3
+              title: What This Design Does NOT Do
+              byte_offset: 11188
+              byte_count: 711
+              word_count: 109
+              content_hash: 4ac125cfed3b8b6988bc16a87f33393ab24d0d52389eb48a2726804c93d049d4
+        - path: "1.6"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 11899
+          byte_count: 1992
+          word_count: 295
+          content_hash: d9eec1949208c22e22e6107c4ff28f4a79c3f575b896c6327ab709aecd4b6a72
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Alternative A: Do Nothing — Bugs Stay as They Are'
+              byte_offset: 11927
+              byte_count: 308
+              word_count: 49
+              content_hash: 01a07a0ae289f74d623d7a970722fc4a57dcd88279fcdb1a837a1bd3b57e3428
+            - path: 1.6.2
+              level: 3
+              title: 'Alternative B: Full Feature Lifecycle for Bugs'
+              byte_offset: 12235
+              byte_count: 601
+              word_count: 88
+              content_hash: c3692d95b4a025fa1df42dcfa8b75776aa128708876c09c0fe697b1125c44568
+            - path: 1.6.3
+              level: 3
+              title: 'Alternative C: Skip the Bug Lifecycle Entirely — Fix on Main'
+              byte_offset: 12836
+              byte_count: 458
+              word_count: 72
+              content_hash: cd27583a1fc462888d28ca1ef588f366dfa7330c8f322b19e161c373195c983f
+            - path: 1.6.4
+              level: 3
+              title: 'Alternative D: Merge Bug Lifecycle into Feature Lifecycle'
+              byte_offset: 13294
+              byte_count: 597
+              word_count: 83
+              content_hash: 8ed2a88fe1496a0b63014187d2e605cf0e54c189422e82c32bc272ab92425706
+        - path: "1.7"
+          level: 2
+          title: Decisions
+          byte_offset: 13891
+          byte_count: 2679
+          word_count: 396
+          content_hash: 69a0648f58739b7ae03b76663f8efa286eac6597bc572fe16a03321ac79fec83
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 'Decision 1: Bugs get inline specs, not separate documents'
+              byte_offset: 13905
+              byte_count: 367
+              word_count: 51
+              content_hash: 5148ec445b51664c6791115c25149720565537fc9343086c8a3b6749544edf1d
+            - path: 1.7.2
+              level: 3
+              title: 'Decision 2: `needs-review` is a mandatory stop-state, not a gate-mode toggle'
+              byte_offset: 14272
+              byte_count: 465
+              word_count: 66
+              content_hash: 7b01bd436b2d85d6534cd4f339f10a05b5324563b4a95cc93733f25f8ee481c4
+            - path: 1.7.3
+              level: 3
+              title: 'Decision 3: `bug_fix` Spec gate mode changes from `human` to `auto`'
+              byte_offset: 14737
+              byte_count: 415
+              word_count: 67
+              content_hash: e4829700c730b3939feae8f14d2d1d2fb1e94835736dfcb5b5f7d2c364c16371
+            - path: 1.7.4
+              level: 3
+              title: 'Decision 4: One reviewer for bugs, not a panel'
+              byte_offset: 15152
+              byte_count: 456
+              word_count: 67
+              content_hash: 693c495a8ab5516c2c5deab3e3510c9ffd3f467409ce39e0291e63821b082c85
+            - path: 1.7.5
+              level: 3
+              title: 'Decision 5: Worktree enforcement is a health warning, not a hard block (initially)'
+              byte_offset: 15608
+              byte_count: 504
+              word_count: 76
+              content_hash: ae6db4ba80972670909faac3851abd1739e6aa7c42fd7d37814f45e66757af6b
+            - path: 1.7.6
+              level: 3
+              title: 'Decision 6: Adopt P55 Definition of Done verbatim where possible, adapt where necessary'
+              byte_offset: 16112
+              byte_count: 458
+              word_count: 67
+              content_hash: d8369cd9f250955964af92bc1f0c467b5bc09d5fc69f8fe9a0490a4a15d86fd4
+        - path: "1.8"
+          level: 2
+          title: Dependencies
+          byte_offset: 16570
+          byte_count: 846
+          word_count: 99
+          content_hash: dd1d8e09baaae0ca543c0d993eff6a789060fc462fe3c85adf0045f63f3a2f32
+        - path: "1.9"
+          level: 2
+          title: Definition of Done
+          byte_offset: 17416
+          byte_count: 2495
+          word_count: 372
+          content_hash: b54780123186329995deddb35a941aa69e8f637cbbeb0b8f17ebaa8ae0ed3120
+          children:
+            - path: 1.9.1
+              level: 3
+              title: Rationale for a Single Definition
+              byte_offset: 19525
+              byte_count: 386
+              word_count: 62
+              content_hash: 36512236534916cccdf6d388c1a7898d6cd7ac5ea8904a9261832d1fff50e480
+        - path: "1.10"
+          level: 2
+          title: Open Questions
+          byte_offset: 19911
+          byte_count: 1413
+          word_count: 213
+          content_hash: 5c2a454db770846ea875b725a20107761cf308a725d70cc102ca891cb7c1d21f
+entity_refs:
+    - entity_id: P56-bug-lifecycle-hardening
+      entity_type: plan
+      section_path: ""
+      byte_offset: 232
+    - entity_id: P55-design-orchestrator-context-hygiene
+      entity_type: plan
+      section_path: 1.4.1
+      byte_offset: 4621
+    - entity_id: P41-research-context-pollution-and-rot
+      entity_type: plan
+      section_path: 1.4.1
+      byte_offset: 4876
+    - entity_id: P52-design-fast-track-orchestration
+      entity_type: plan
+      section_path: 1.4.2
+      byte_offset: 5031
+    - entity_id: B17-workflow-and-tooling-3
+      entity_type: plan
+      section_path: 1.4.2
+      byte_offset: 5195
+    - entity_id: P55-orchestrator-context-hygiene
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 16591
+    - entity_id: P52-fast-track-orchestration
+      entity_type: plan
+      section_path: "1.8"
+      byte_offset: 16871
+cross_doc_links:
+    - target_path: work/bugs/<slug>/spec.md
+      link_text: work/bugs/<slug>/spec.md
+      section_path: 1.5.3
+    - target_path: work/bugs/<slug>/spec.md
+      link_text: |4
+        work/bugs/<slug>/spec.md       → specification (auto-generated)
+        work/bugs/<slug>/fix-plan.md   → dev-plan (from fix_plan field, if present)
+        work/reviews/review-<bug-id>-<slug>.md → review report
+      section_path: 1.5.7
+    - target_path: work/reviews/review-{bug-id}-{slug}.md
+      link_text: work/reviews/review-{bug-id}-{slug}.md
+      section_path: 1.5.9
+    - target_path: work/reviews/review-{bug-id}-{slug}.md
+      link_text: work/reviews/review-{bug-id}-{slug}.md
+      section_path: "1.9"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: 1.4.3
+      role: decision
+      confidence: high
+    - section_path: 1.5.9
+      role: definition
+      confidence: high
+    - section_path: "1.6"
+      role: alternative
+      confidence: high
+    - section_path: 1.6.1
+      role: alternative
+      confidence: high
+    - section_path: 1.6.2
+      role: alternative
+      confidence: high
+    - section_path: 1.6.3
+      role: alternative
+      confidence: high
+    - section_path: 1.6.4
+      role: alternative
+      confidence: high
+    - section_path: "1.7"
+      role: decision
+      confidence: high
+    - section_path: 1.7.1
+      role: decision
+      confidence: high
+    - section_path: 1.7.2
+      role: decision
+      confidence: high
+    - section_path: 1.7.3
+      role: decision
+      confidence: high
+    - section_path: 1.7.4
+      role: decision
+      confidence: high
+    - section_path: 1.7.5
+      role: decision
+      confidence: high
+    - section_path: 1.7.6
+      role: decision
+      confidence: high
+    - section_path: "1.9"
+      role: definition
+      confidence: high
+    - section_path: 1.9.1
+      role: definition
+      confidence: high
+    - section_path: "1.10"
+      role: question
+      confidence: high
+classified: false
