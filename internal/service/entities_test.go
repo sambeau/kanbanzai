@@ -745,6 +745,13 @@ func newTestEntityService(root string, now string) *EntityService {
 
 // writeTestPlan creates a Plan entity directly on disk via the store,
 // bypassing CreatePlan (which requires global config).
+func planEntityTypeFromID(id string) string {
+	if len(id) > 0 && id[0] == 'B' {
+		return "batch"
+	}
+	return "plan"
+}
+
 func writeTestPlan(t *testing.T, svc *EntityService, id string) {
 	t.Helper()
 	_, _, slug := model.ParsePlanID(id)

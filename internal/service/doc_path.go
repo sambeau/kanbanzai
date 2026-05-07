@@ -33,6 +33,12 @@ var docTypeAbbreviations = map[string]string{
 //
 //	work/{plan-slug}/{plan-id}-{type-abbrev}-{topic-slug}.md
 //
+// For bug entities, paths follow a different convention (FR-112):
+//
+//	specification → work/bugs/<slug>/spec.md
+//	dev-plan → work/bugs/<slug>/fix-plan.md
+//	report → work/reviews/review-<bug-id>-<slug>.md
+//
 // REQ-001: returns a canonical path for any supported doc type + parent combo.
 // REQ-002: uses abbreviated type forms (spec, dev-plan, etc.).
 // REQ-003: resolves batches and features upward to their owning plan.
@@ -42,6 +48,11 @@ func (s *EntityService) CanonicalDocPath(docType string, parentEntityID string) 
 
 	if parentEntityID == "" {
 		return "", fmt.Errorf("cannot determine path: no parent entity provided. Specify a parent plan, batch, or feature ID")
+	}
+
+	// FR-112/FR-114: Bug entities have their own path conventions.
+	if isBugID(parentEntityID) {
+		return s.canonicalBugDocPath(docType, parentEntityID)
 	}
 
 	// Resolve to the owning plan.
@@ -62,6 +73,49 @@ func (s *EntityService) CanonicalDocPath(docType string, parentEntityID string) 
 	}
 
 	return fmt.Sprintf("work/%s/%s-%s-%s.md", planSlug, planID, abbrev, planSlug), nil
+}
+
+// canonicalBugDocPath returns the canonical path for a bug entity document (FR-112).
+func (s *EntityService) canonicalBugDocPath(docType, bugID string) (string, error) {
+	// Resolve the bug to get its slug.
+	_, slug, err := s.resolveBugSlug(bugID)
+	if err != nil {
+		return "", err
+	}
+
+	switch docType {
+	case "specification", "spec":
+		return fmt.Sprintf("work/bugs/%s/spec.md", slug), nil
+	case "dev-plan":
+		return fmt.Sprintf("work/bugs/%s/fix-plan.md", slug), nil
+	case "report":
+		// FR-112: report path uses bug ID in the filename.
+		return fmt.Sprintf("work/reviews/review-%s-%s.md", bugID, slug), nil
+	default:
+		// FR-113: unsupported doc types for bugs return an error.
+		return "", fmt.Errorf("unsupported document type %q for bug entity — valid types are: specification, dev-plan, report", docType)
+	}
+}
+
+// resolveBugSlug resolves a bug ID to its slug. Supports both BUG-TSID and
+// BUG-TSID-slug ID formats (FR-114).
+func (s *EntityService) resolveBugSlug(bugID string) (string, string, error) {
+	// Try exact lookup first (with slug).
+	if bugRecord, err := s.store.Load("bug", bugID, ""); err == nil {
+		return bugRecord.ID, bugRecord.Slug, nil
+	}
+
+	// Try prefix resolution (BUG-TSID without slug).
+	resolvedID, resolvedSlug, err := s.ResolvePrefix("bug", bugID)
+	if err != nil {
+		return "", "", fmt.Errorf("parent entity %s not found", bugID)
+	}
+	return resolvedID, resolvedSlug, nil
+}
+
+// isBugID reports whether entityID looks like a bug ID (BUG-...).
+func isBugID(entityID string) bool {
+	return strings.HasPrefix(strings.ToUpper(entityID), "BUG-")
 }
 
 // resolveToPlan resolves an entity ID upward to its owning plan ID and slug.

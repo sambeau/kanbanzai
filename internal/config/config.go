@@ -319,7 +319,7 @@ func DefaultFastTrackConfig() FastTrackConfig {
 			},
 			TierBugFix: {
 				Design:    string(GateModeHuman),
-				Spec:      string(GateModeHuman),
+				Spec:      string(GateModeAuto),
 				DevPlan:   string(GateModeAuto),
 				Review:    string(GateModeAuto),
 				MaxCycles: 2,

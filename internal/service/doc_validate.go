@@ -48,6 +48,10 @@ func validateDocumentFilename(path string) error {
 	if strings.HasPrefix(path, "docs/") {
 		return nil
 	}
+	// work/bugs/ files have no filename rules (auto-generated bug specs).
+	if strings.HasPrefix(path, "work/bugs/") {
+		return nil
+	}
 
 	dir := filepath.ToSlash(filepath.Dir(path))
 	filename := filepath.Base(path)
@@ -92,6 +96,10 @@ func validateDocumentFolder(path string) error {
 	}
 	// docs/ files are exempt from folder validation (REQ-010).
 	if strings.HasPrefix(path, "docs/") {
+		return nil
+	}
+	// work/bugs/ files are exempt from folder validation (bug specs are auto-generated).
+	if strings.HasPrefix(path, "work/bugs/") {
 		return nil
 	}
 

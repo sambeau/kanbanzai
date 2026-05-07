@@ -36,6 +36,14 @@ func EntityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 }
 
 func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store, requiresHumanReview func() bool) server.ServerTool {
+	// FR-101: Wire the bug creation hook for auto-generating specs.
+	// The hook fires after bug persistence, so the bug ID/slug are available (FR-105).
+	if docSvc != nil {
+		entitySvc.SetBugCreationHook(func(result service.CreateResult, bug model.Bug) []string {
+			return service.GenerateBugSpec(".", bug, docSvc)
+		})
+	}
+
 	tool := mcp.NewTool("entity",
 		mcp.WithTitleAnnotation("Entity Manager"),
 		mcp.WithDescription(
@@ -193,6 +201,10 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 	out := map[string]any{"entity": entityOut}
 	if len(advisory) > 0 {
 		out["duplicate_advisory"] = advisory
+	}
+	// FR-106: Propagate non-fatal warnings (e.g. spec generation failure).
+	if len(result.Warnings) > 0 {
+		out["warnings"] = result.Warnings
 	}
 	if _, err := entityCommitFunc(".", fmt.Sprintf("workflow(%s): create %s", result.ID, result.Type)); err != nil {
 		log.Printf("WARNING: commit after create %s failed: %v", result.ID, err)

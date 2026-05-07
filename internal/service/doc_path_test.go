@@ -39,6 +39,7 @@ func setupCanonicalDocPathTest(t *testing.T) *EntityService {
 
 	writeFeature(t, svc, "FEAT-01KQTNYN00HZA", "doc-path-tool", "B49-execution")
 	writeFeature(t, svc, "FEAT-01ABCDEF12345", "direct-feature", "P50-retro-may-2026")
+	writeBug(t, svc, "BUG-01KR12RE970R8", "test-bug")
 
 	return svc
 }
@@ -65,6 +66,66 @@ func writeBatch(t *testing.T, svc *EntityService, id, slug, parent string) {
 	}
 }
 
+// TestCanonicalDocPath_BugSpec verifies FR-112: bug spec path.
+func TestCanonicalDocPath_BugSpec(t *testing.T) {
+	t.Parallel()
+	svc := setupCanonicalDocPathTest(t)
+
+	got, err := svc.CanonicalDocPath("specification", "BUG-01KR12RE970R8")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	want := "work/bugs/test-bug/spec.md"
+	if got != want {
+		t.Errorf("CanonicalDocPath(specification, BUG-...) = %q, want %q", got, want)
+	}
+}
+
+// TestCanonicalDocPath_BugDevPlan verifies FR-112: bug dev-plan path.
+func TestCanonicalDocPath_BugDevPlan(t *testing.T) {
+	t.Parallel()
+	svc := setupCanonicalDocPathTest(t)
+
+	got, err := svc.CanonicalDocPath("dev-plan", "BUG-01KR12RE970R8")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	want := "work/bugs/test-bug/fix-plan.md"
+	if got != want {
+		t.Errorf("CanonicalDocPath(dev-plan, BUG-...) = %q, want %q", got, want)
+	}
+}
+
+// TestCanonicalDocPath_BugReport verifies FR-112: bug report path.
+func TestCanonicalDocPath_BugReport(t *testing.T) {
+	t.Parallel()
+	svc := setupCanonicalDocPathTest(t)
+
+	got, err := svc.CanonicalDocPath("report", "BUG-01KR12RE970R8")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	want := "work/reviews/review-BUG-01KR12RE970R8-test-bug.md"
+	if got != want {
+		t.Errorf("CanonicalDocPath(report, BUG-...) = %q, want %q", got, want)
+	}
+}
+
+// TestCanonicalDocPath_BugUnsupportedType verifies FR-113: unsupported doc types
+// for bug entities return an error.
+func TestCanonicalDocPath_BugUnsupportedType(t *testing.T) {
+	t.Parallel()
+	svc := setupCanonicalDocPathTest(t)
+
+	_, err := svc.CanonicalDocPath("design", "BUG-01KR12RE970R8")
+	if err == nil {
+		t.Fatal("expected error for unsupported type design with bug, got nil")
+	}
+	if !strings.Contains(err.Error(), "unsupported") {
+		t.Errorf("error = %q, want message containing 'unsupported'", err.Error())
+	}
+}
+
 func writeFeature(t *testing.T, svc *EntityService, id, slug, parent string) {
 	t.Helper()
 	_, err := svc.store.Write(storage.EntityRecord{
@@ -81,6 +142,24 @@ func writeFeature(t *testing.T, svc *EntityService, id, slug, parent string) {
 	})
 	if err != nil {
 		t.Fatalf("write feature %s: %v", id, err)
+	}
+}
+
+func writeBug(t *testing.T, svc *EntityService, id, slug string) {
+	t.Helper()
+	_, err := svc.store.Write(storage.EntityRecord{
+		Type: "bug",
+		ID:   id,
+		Slug: slug,
+		Fields: map[string]any{
+			"id":     id,
+			"slug":   slug,
+			"name":   "Test " + id,
+			"status": "reported",
+		},
+	})
+	if err != nil {
+		t.Fatalf("write bug %s: %v", id, err)
 	}
 }
 

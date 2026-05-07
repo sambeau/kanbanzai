@@ -378,6 +378,7 @@ func (s *DocumentService) SubmitDocument(input SubmitDocumentInput) (DocumentRes
 	// Auto-approve: if requested and type is whitelisted, approve immediately (FR-B02–FR-B05).
 	if input.AutoApprove {
 		autoApproveWhitelist := map[model.DocumentType]bool{
+			model.DocumentTypeSpec:     true,
 			model.DocumentTypeDevPlan:  true,
 			model.DocumentTypeResearch: true,
 			model.DocumentTypeReport:   true,

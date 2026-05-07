@@ -448,13 +448,13 @@ func TestFastTrack_TierMatrix_FeatureTierAutoSpecAndDevPlan(t *testing.T) {
 	}
 }
 
-func TestFastTrack_TierMatrix_BugFixTierHumanSpec(t *testing.T) {
+func TestFastTrack_TierMatrix_BugFixTierAutoSpec(t *testing.T) {
 	t.Parallel()
 	cfg := config.DefaultConfig()
 	tierCfg := cfg.FastTrack.Tiers[config.TierBugFix]
 
-	if tierCfg.Spec != config.GateModeHuman {
-		t.Errorf("bug_fix tier spec gate = %q, want %q", tierCfg.Spec, config.GateModeHuman)
+	if tierCfg.Spec != config.GateModeAuto {
+		t.Errorf("bug_fix tier spec gate = %q, want %q", tierCfg.Spec, config.GateModeAuto)
 	}
 	if tierCfg.DevPlan != config.GateModeAuto {
 		t.Errorf("bug_fix tier dev-plan gate = %q, want %q", tierCfg.DevPlan, config.GateModeAuto)
