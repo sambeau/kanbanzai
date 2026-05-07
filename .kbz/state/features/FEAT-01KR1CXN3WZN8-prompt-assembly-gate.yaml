@@ -2,7 +2,7 @@ id: FEAT-01KR1CXN3WZN8
 slug: prompt-assembly-gate
 name: Prompt assembly gate for sub-agent dispatch
 parent: P44-model-routing-agent-launcher
-status: proposed
+status: designing
 summary: "Design for enforcing minimum prompt quality standards at agent-launch time, ensuring roles, skills, tool hints, and codebase-memory-mcp are present in every sub-agent prompt."
 created: "2026-05-07T14:19:29Z"
 created_by: sambeau
