@@ -8,11 +8,13 @@
 | Feature | FEAT-01KR3MEJGGMT5 — Generated role and skill registry surfaces |
 | Design | `work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md` |
 
-## Problem Statement
+## Overview
 
 This specification implements the B3 Unify portion of the design described in `work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md` (`P59-roles-skills-remediation/design-p59-design-roles-skills-remediation`). It covers generated role and skill registry sections for the top-level instruction surfaces that currently drift independently.
 
 The problem is that `CLAUDE.md`, `.github/copilot-instructions.md`, and `README.md` each describe roles, skills, and stage bindings in separate hand-maintained text. When those copies drift, agents receive conflicting or incomplete guidance. This specification makes `.kbz/stage-bindings.yaml` plus `.kbz/roles/*.yaml` the single source of truth for the registry and requires derived surfaces to be checkable in CI.
+
+## Scope
 
 In scope:
 
@@ -36,9 +38,7 @@ Related work checked:
 - `.kbz/stage-bindings.yaml` is the canonical map of stage to role and skill.
 - `.kbz/roles/*.yaml` provides role identity and inheritance metadata used by generated registry surfaces.
 
-## Requirements
-
-### Functional Requirements
+## Functional Requirements
 
 - **REQ-001:** The registry generator must derive stage names, stage descriptions, bound roles, bound skills, human-gate flags, document types, and prerequisites from `.kbz/stage-bindings.yaml`.
 - **REQ-002:** The registry generator must derive role identity and inheritance metadata from `.kbz/roles/*.yaml`.
@@ -52,7 +52,7 @@ Related work checked:
 - **REQ-010:** The generator must fail with a clear error if a generated region marker is missing, duplicated, or nested incorrectly in an in-scope file.
 - **REQ-011:** The generator must leave `AGENTS.md` narrative content hand-authored in this round and must not rewrite it.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 - **REQ-NF-001:** Running sync mode twice on an unchanged repository must produce no diff on the second run.
 - **REQ-NF-002:** Check mode must complete in under 2 seconds on the repository's current role and skill corpus in local execution.

@@ -1,0 +1,161 @@
+document_id: FEAT-01KR3MDSZKAFG/spec-b59-f1-spec-high-violation-mcp-rule-invariants
+document_path: work/B59-enforce-high-violation-rules-mcp-invariants/B59-F1-spec-high-violation-mcp-rule-invariants.md
+content_hash: 90af96683598d6d34d7e49e9f977ac12840c8d680c26c29fb65773f853a3f98c
+indexed_at: 2026-05-08T11:19:54.193095Z
+sections:
+    - path: "1"
+      level: 2
+      title: Problem Statement
+      byte_offset: 422
+      byte_count: 2379
+      word_count: 281
+      content_hash: 4edcf0d0bd5400852b56ca873bf5235e2928dc6b2e61f0e5a581877ae2ea7347
+    - path: "2"
+      level: 2
+      title: Requirements
+      byte_offset: 2801
+      byte_count: 3189
+      word_count: 443
+      content_hash: e9715b98a11ef7ccde4175b5eeec90ba886e7acad6ae7aeb5b735aaebe88ad1d
+      children:
+        - path: "2.1"
+          level: 3
+          title: Functional Requirements
+          byte_offset: 2818
+          byte_count: 2367
+          word_count: 326
+          content_hash: 1bb79210d45005e03e2ad2f59ce0017be49c2f580af5fdd74214ed57d150897c
+        - path: "2.2"
+          level: 3
+          title: Non-Functional Requirements
+          byte_offset: 5185
+          byte_count: 805
+          word_count: 115
+          content_hash: 0e88b2b3ab126d1414b38b8ddcef779242171f7a31ff07a7deb634dff044d525
+    - path: "3"
+      level: 2
+      title: Constraints
+      byte_offset: 5990
+      byte_count: 1033
+      word_count: 152
+      content_hash: 6dde85566080b7cfd702664f47a83f90d6c435ee7771b82416b474b079ae346d
+    - path: "4"
+      level: 2
+      title: Acceptance Criteria
+      byte_offset: 7023
+      byte_count: 2277
+      word_count: 331
+      content_hash: 05b8a74326488767b837a1a686f76fddb6df6826cdac18f2e5597e2be67801e6
+    - path: "5"
+      level: 2
+      title: Verification Plan
+      byte_offset: 9300
+      byte_count: 1438
+      word_count: 226
+      content_hash: 7b4ce79f4b08bf9d21f72f18e866cc6f631a6e4d8ad27ee3dea07a0237d0f385
+entity_refs:
+    - entity_id: FEAT-01KR3MDSZKAFG
+      entity_type: feature
+      section_path: ""
+      byte_offset: 273
+    - entity_id: P59-roles-skills-remediation
+      entity_type: plan
+      section_path: ""
+      byte_offset: 350
+    - entity_id: P59-design-roles-skills-remediation
+      entity_type: plan
+      section_path: ""
+      byte_offset: 379
+    - entity_id: P59-roles-skills-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 530
+    - entity_id: P59-design-roles-skills-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 559
+    - entity_id: P44-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 2165
+    - entity_id: F1-design-prompt-assembly-gate
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 2202
+    - entity_id: P44-design-feature-execution-pipeline
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 2426
+    - entity_id: P56-bug-lifecycle-hardening
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 2588
+    - entity_id: F1-spec-bug-lifecycle-gate-enforcement
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 2620
+cross_doc_links:
+    - target_path: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      link_text: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      section_path: ""
+    - target_path: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      link_text: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      section_path: "1"
+    - target_path: work/P44-model-routing-agent-launcher/P44-F1-design-prompt-assembly-gate.md
+      link_text: work/P44-model-routing-agent-launcher/P44-F1-design-prompt-assembly-gate.md
+      section_path: "1"
+    - target_path: work/P44-model-routing-agent-launcher/P44-design-feature-execution-pipeline.md
+      link_text: work/P44-model-routing-agent-launcher/P44-design-feature-execution-pipeline.md
+      section_path: "1"
+    - target_path: work/P56-bug-lifecycle-hardening/P56-F1-spec-bug-lifecycle-gate-enforcement.md
+      link_text: work/P56-bug-lifecycle-hardening/P56-F1-spec-bug-lifecycle-gate-enforcement.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "2"
+      role: requirement
+      confidence: high
+    - section_path: "2.1"
+      role: requirement
+      confidence: high
+    - section_path: "2.2"
+      role: requirement
+      confidence: high
+    - section_path: "3"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: requirement
+      confidence: high
+classified: true
+classified_at: 2026-05-08T11:20:54.819252Z
+classified_by: GPT-5.5
+classifier_version: "2026-05-08"
+classifications:
+    - section_path: "1"
+      role: rationale
+      confidence: high
+      summary: Problem, scope, exclusions, and related work for high-violation MCP rule invariants.
+      concepts_intro:
+        - MCP Rule Invariant
+        - Handoff-Only Dispatch
+        - Workflow-State Commit Gate
+    - section_path: "2"
+      role: requirement
+      confidence: high
+      summary: Functional and non-functional requirements for invariant catalogues, refusals, role/tool exposure, and warning surfaces.
+      concepts_used:
+        - MCP Rule Invariant
+        - Handoff-Only Dispatch
+        - Workflow-State Commit Gate
+    - section_path: "3"
+      role: constraint
+      confidence: high
+      summary: Ownership boundaries for P59, P44, and P56 plus override and enforceability constraints.
+    - section_path: "4"
+      role: requirement
+      confidence: high
+      summary: Acceptance criteria for invariant catalogue, refusals, dispatch restrictions, warning rendering, and prose de-duplication.
+    - section_path: "5"
+      role: requirement
+      confidence: high
+      summary: Verification methods for invariant boundary tests, rendered warnings, and refusal payload limits.

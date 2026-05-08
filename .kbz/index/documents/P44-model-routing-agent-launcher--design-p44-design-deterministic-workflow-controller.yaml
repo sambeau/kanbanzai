@@ -1,0 +1,653 @@
+document_id: P44-model-routing-agent-launcher/design-p44-design-deterministic-workflow-controller
+document_path: work/P44-model-routing-agent-launcher/P44-design-deterministic-workflow-controller.md
+content_hash: cec9a7771f6a8a77072b815860b98fce976db35f0d167d99be77796dac2bb358
+indexed_at: 2026-05-08T11:12:26.230252Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Deterministic Workflow Controller for Kanbanzai'
+      byte_offset: 0
+      byte_count: 45083
+      word_count: 5995
+      content_hash: cec9a7771f6a8a77072b815860b98fce976db35f0d167d99be77796dac2bb358
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 700
+          byte_count: 1403
+          word_count: 194
+          content_hash: c6a6cc01ba7be90be4eaf3ed55f3950a8f71ee48bfe9370cb237532a4117a409
+        - path: "1.2"
+          level: 2
+          title: 2. Goals and Non-Goals
+          byte_offset: 2103
+          byte_count: 2983
+          word_count: 417
+          content_hash: 11d81692d53eab370892aa0a5e63d49a3b2cd895845d4599b64417dc7daf96df
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 Goals
+              byte_offset: 2130
+              byte_count: 1759
+              word_count: 240
+              content_hash: 3d33af7d392cef671cde4d3cf25382daced3e1ebfa4ed992c1801e476a5807a2
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Non-Goals (this design)
+              byte_offset: 3889
+              byte_count: 1197
+              word_count: 172
+              content_hash: 867ab1eb7918b4a7a5f7a33fddd26dbd370c65974951d67e1511eced0e07bbe8
+        - path: "1.3"
+          level: 2
+          title: 3. Problem and Motivation
+          byte_offset: 5086
+          byte_count: 2199
+          word_count: 333
+          content_hash: de37d5e35218789119535ec5d8e5845c65b231afab0bc9dc0eb9aa3841fe089d
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 The category error
+              byte_offset: 5116
+              byte_count: 318
+              word_count: 45
+              content_hash: b03f3eb2720c8a53d3fa05b15472f6f70e972a6abd60d1e8037441cace26a8f5
+            - path: 1.3.2
+              level: 3
+              title: 3.2 The decisive defect
+              byte_offset: 5434
+              byte_count: 357
+              word_count: 52
+              content_hash: aa809434da02d8b3db7ff437b82e86e6c6a8c0285dff5c0306ee890d2f58ee28
+            - path: 1.3.3
+              level: 3
+              title: 3.3 What the research report changed
+              byte_offset: 5791
+              byte_count: 1494
+              word_count: 231
+              content_hash: c0e34b9d02377a3d585c096546535c16e53402e61f9f1e48d471a0d13273f3e6
+        - path: "1.4"
+          level: 2
+          title: 4. Architecture
+          byte_offset: 7285
+          byte_count: 6395
+          word_count: 555
+          content_hash: d29bf6bf67bec00e21a43faa9aa420901a543f7f02174300f32ce7960d423b9e
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Target shape
+              byte_offset: 7305
+              byte_count: 2411
+              word_count: 140
+              content_hash: 6c544b84c6b8d015436ac49a0e0476677e93139ba279af681aea5a23765e9304
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Component inventory
+              byte_offset: 9716
+              byte_count: 1412
+              word_count: 201
+              content_hash: a61c6d6dfcb12ebad92727a19c50dbc26169c27e159606515bbf5d462f5949fa
+            - path: 1.4.3
+              level: 3
+              title: '4.3 Data flow: a feature from `developing` to `done`'
+              byte_offset: 11128
+              byte_count: 2552
+              word_count: 211
+              content_hash: 8b8cfcf1692e5a27617e171874ce17ead654017295bd858fa140a02d8857962b
+        - path: "1.5"
+          level: 2
+          title: 5. Component Designs
+          byte_offset: 13680
+          byte_count: 14970
+          word_count: 2020
+          content_hash: 5455eab3d65c3842b39b0e5736b2d5fe3d7071abedee8d274f331e2c0e20cab3
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Dispatch lock-down (Phase 1)
+              byte_offset: 13705
+              byte_count: 1942
+              word_count: 287
+              content_hash: 2d1074d599ae854004c22e40d362b1c656b8818fc3158345d5851526fde5bf55
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Stage controllers (Phase 2)
+              byte_offset: 15647
+              byte_count: 2753
+              word_count: 359
+              content_hash: c5e00a38c5937cd42f68c391ae3dbd399fbe5aa4b2e3e9e302d33353f260eb80
+              children:
+                - path: 1.5.2.1
+                  level: 4
+                  title: 5.2.1 Controller surface
+                  byte_offset: 15831
+                  byte_count: 1016
+                  word_count: 124
+                  content_hash: 49b807accc2d5f22eb9967f49593c7591b97712044a4e9eac5f13a5e6c3d0a6b
+                - path: 1.5.2.2
+                  level: 4
+                  title: 5.2.2 Developing controller
+                  byte_offset: 16847
+                  byte_count: 390
+                  word_count: 50
+                  content_hash: fbad7dd2b3c96c44060cb9cf4ac96299cf6c73748c95fd2593e3c56f98e6135f
+                - path: 1.5.2.3
+                  level: 4
+                  title: 5.2.3 Reviewing controller
+                  byte_offset: 17237
+                  byte_count: 257
+                  word_count: 36
+                  content_hash: f01137d4fbb9430af5bc10be56d44cb378283d31f3523d43a11e05ec027487d2
+                - path: 1.5.2.4
+                  level: 4
+                  title: 5.2.4 Verifying controller
+                  byte_offset: 17494
+                  byte_count: 100
+                  word_count: 13
+                  content_hash: 16873fcc51fd3568ac22bc50bdf32cc88fcedab4544d6b8558f58ff51228b18b
+                - path: 1.5.2.5
+                  level: 4
+                  title: 5.2.5 Sync vs async (resolved)
+                  byte_offset: 17594
+                  byte_count: 806
+                  word_count: 107
+                  content_hash: 46279833fafe4fd95d7489cf5850c9a683d3e06ab2723adbf53e4ffc1272e4c0
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Two-layered verifier (Phase 2)
+              byte_offset: 18400
+              byte_count: 3237
+              word_count: 437
+              content_hash: c5e106e5dda69c8ab9b6033e98c333144990f132b62eb61b15968dcef4672e2c
+              children:
+                - path: 1.5.3.1
+                  level: 4
+                  title: 5.3.1 Deterministic layer
+                  byte_offset: 18716
+                  byte_count: 1478
+                  word_count: 194
+                  content_hash: 3fe8ac2f21ac701f9f5113f4279e3e24bb63390a21889fc34f356443ac9f3782
+                - path: 1.5.3.2
+                  level: 4
+                  title: 5.3.2 LLM verifier sub-agent (second layer)
+                  byte_offset: 20194
+                  byte_count: 1443
+                  word_count: 199
+                  content_hash: 89fc1babcd4b8d5c15cecde8790c0de4a9aff2d60bb0fd37f22abf72a8500d45
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Policy engine (Phase 2)
+              byte_offset: 21637
+              byte_count: 2031
+              word_count: 270
+              content_hash: 967f8daf99f59a41080f05d1b7d483d403696bdddc23577a045f6376460b2fdd
+              children:
+                - path: 1.5.4.1
+                  level: 4
+                  title: 5.4.1 Policy domains
+                  byte_offset: 21838
+                  byte_count: 812
+                  word_count: 117
+                  content_hash: 541ededb413ea6526a8e903652564bbba855f6addba95a30a6131d9a726b46a0
+                - path: 1.5.4.2
+                  level: 4
+                  title: 5.4.2 API sketch
+                  byte_offset: 22650
+                  byte_count: 444
+                  word_count: 51
+                  content_hash: 3bea39689a97bbafdc005c6eb31fbbb7f7915ded2c75c5fa315ccae7f5751e33
+                - path: 1.5.4.3
+                  level: 4
+                  title: 5.4.3 Implementation strategy
+                  byte_offset: 23094
+                  byte_count: 574
+                  word_count: 82
+                  content_hash: aff1a3d36fd1e0d877561a360396e2fe58fe5311771ac63a28978383d6c079d7
+            - path: 1.5.5
+              level: 3
+              title: 5.5 Structured audit log (Phase 2)
+              byte_offset: 23668
+              byte_count: 1206
+              word_count: 144
+              content_hash: db6f81b01890b2c3a00eb3be21d0c94d6218f807c26c685d5b9b625cf9da251e
+            - path: 1.5.6
+              level: 3
+              title: 5.6 Evaluation harness (Phase 1)
+              byte_offset: 24874
+              byte_count: 1903
+              word_count: 279
+              content_hash: 53c769ae380487afe080120b7cacb44f9bac90c69923dba38194ed756cd246db
+              children:
+                - path: 1.5.6.1
+                  level: 4
+                  title: 5.6.1 Golden-task harness
+                  byte_offset: 25132
+                  byte_count: 694
+                  word_count: 92
+                  content_hash: e6a5c96ab5db99ab8c3d711af87fec9b7b6216aadf9c3caf0a94ca86c69ed7cc
+                - path: 1.5.6.2
+                  level: 4
+                  title: 5.6.2 End-to-end controller harness (Phase 2)
+                  byte_offset: 25826
+                  byte_count: 343
+                  word_count: 52
+                  content_hash: 0b29480500af63d7e0ad868b98d1df632c7e35edca4ed26a54016a37532b278e
+                - path: 1.5.6.3
+                  level: 4
+                  title: 5.6.3 Bypass-attempt suite (Phase 1)
+                  byte_offset: 26169
+                  byte_count: 301
+                  word_count: 48
+                  content_hash: 45f2fde175fadc3918a63d30ac0d5c6763d78ac1a868f129305bc1135f0c15d2
+                - path: 1.5.6.4
+                  level: 4
+                  title: 5.6.4 Drift detection (Phase 2+)
+                  byte_offset: 26470
+                  byte_count: 307
+                  word_count: 47
+                  content_hash: 98e59dedc496db4392bb0f4e42f40748363cd9f58d3f539215905c8862128268
+            - path: 1.5.7
+              level: 3
+              title: 5.7 Provider abstraction (Phase 1, single provider)
+              byte_offset: 26777
+              byte_count: 1103
+              word_count: 136
+              content_hash: 52114f2618f7f68335277484f3cce54297ffe12f9dd2bbd8aa1feaf281d75fae
+            - path: 1.5.8
+              level: 3
+              title: 5.8 Orchestrator skill retirement (Phase 2)
+              byte_offset: 27880
+              byte_count: 770
+              word_count: 104
+              content_hash: 576dc7a6a6d8a5aca82753c2b952d36d5cc2ccd121de4e3b980db14f8b6d7b64
+        - path: "1.6"
+          level: 2
+          title: 6. Decisions
+          byte_offset: 28650
+          byte_count: 3696
+          word_count: 539
+          content_hash: fd5cd980ee0f3d7da6686f44e5b16709d17ef252bba64abba5493d00ac158b6b
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Decision 1: `dispatch_task` is the only Phase 1 path to a sub-agent; `spawn_agent` is removed from the orchestrator''s tool list'
+              byte_offset: 28667
+              byte_count: 279
+              word_count: 41
+              content_hash: 432f3452644f34ffd9abbe6bf882b3f77442b8f59f6530d4081077a5ecdb781a
+            - path: 1.6.2
+              level: 3
+              title: 'Decision 2: Stage controllers run as bounded async workflows on a minimal in-tree durable-execution layer'
+              byte_offset: 28946
+              byte_count: 351
+              word_count: 49
+              content_hash: 8a334f192dd0123053f1d9911234618d9b3bb917ffb69180ac22c448fb4caf57
+            - path: 1.6.3
+              level: 3
+              title: 'Decision 3: The Definition of Done is two-layered — deterministic Go checks first, LLM verifier second'
+              byte_offset: 29297
+              byte_count: 352
+              word_count: 51
+              content_hash: 2f5d3a89d85b60f3ae78e0bbdce7a559b49cd545e3887a6be552a49881850e49
+            - path: 1.6.4
+              level: 3
+              title: 'Decision 4: The evaluation harness ships in Phase 1, not Phase 2'
+              byte_offset: 29649
+              byte_count: 277
+              word_count: 42
+              content_hash: 3d18b315009b130e090b4483ab20258b7659b94d54a6f8c2035819e2668d8034
+            - path: 1.6.5
+              level: 3
+              title: 'Decision 5: Policy is consolidated into `internal/policy`'
+              byte_offset: 29926
+              byte_count: 344
+              word_count: 47
+              content_hash: a959f2ca82ebef5d40356d8791776f4f816bc77beceb289143b92ce6ad96e805
+            - path: 1.6.6
+              level: 3
+              title: 'Decision 6: The structured audit log (`internal/audit`) is the system of record for every consequential action'
+              byte_offset: 30270
+              byte_count: 283
+              word_count: 40
+              content_hash: ee734a11fd5e4a7217b56ca5421f9872a6ce2a488fd1513987a021925925cb83
+            - path: 1.6.7
+              level: 3
+              title: 'Decision 7: Multi-provider routing is deferred to Phase 3'
+              byte_offset: 30553
+              byte_count: 401
+              word_count: 63
+              content_hash: dc964a53ab1296ea09045e26d567a88183ebc33d99a0098ff91bc1cbff607f63
+            - path: 1.6.8
+              level: 3
+              title: 'Decision 8: Migration is per-entity feature-flagged'
+              byte_offset: 30954
+              byte_count: 383
+              word_count: 51
+              content_hash: 7edc3ad7aebe1c9b0c9dcc91d413d3ff7b56c9c229186a36de494efbab8473bb
+            - path: 1.6.9
+              level: 3
+              title: 'Decision 9: The orchestrator skill is retired in scope (~80% removed) in Phase 2, not Phase 1'
+              byte_offset: 31337
+              byte_count: 286
+              word_count: 42
+              content_hash: 112452dd71efb799e7e430f7f4eb2273172594ebab9b91a665b86186a0867955
+            - path: 1.6.10
+              level: 3
+              title: 'Decision 10: U-shaped compaction is deferred to Phase 3'
+              byte_offset: 31623
+              byte_count: 363
+              word_count: 53
+              content_hash: 07ac8069e7ca470d15106f47152ee68838990e8a6e312722199e36895325af0e
+            - path: 1.6.11
+              level: 3
+              title: 'Decision 11: `next(id)` continues to return `handoff_prompt` in Phase 1, removed in Phase 2'
+              byte_offset: 31986
+              byte_count: 360
+              word_count: 57
+              content_hash: cf2854ac1e3ac30c04c36e9c242f40033e12cdc7aa46f0d5d3d16cca4e16decd
+        - path: "1.7"
+          level: 2
+          title: 7. Phasing
+          byte_offset: 32346
+          byte_count: 3892
+          word_count: 575
+          content_hash: b57fab2d2d0a5773c631ddeb61d7f9a1d59444f3aec77b71d26e0af0f7c8df1b
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Phase 1 — Lock the bypass and make the pipeline visible (2–4 weeks)
+              byte_offset: 32361
+              byte_count: 1358
+              word_count: 212
+              content_hash: 40e359c89d550d44d59d87c4c5d4dfc2405f3e814f65da5a1cf72dbafef13a30
+            - path: 1.7.2
+              level: 3
+              title: Phase 2 — Move dispatch into the server (1–3 months)
+              byte_offset: 33719
+              byte_count: 1792
+              word_count: 253
+              content_hash: 25166acd799cae60a3431c3f82ee7128bfd6966cc971e513719be9ff7c00b3cc
+            - path: 1.7.3
+              level: 3
+              title: Phase 3 — Optimisations (3–9 months)
+              byte_offset: 35511
+              byte_count: 727
+              word_count: 107
+              content_hash: 8658826635bbef14f73c47128ac13414b4e4d4636a18987e82235e7a1a3692c0
+        - path: "1.8"
+          level: 2
+          title: 8. Migration Strategy
+          byte_offset: 36238
+          byte_count: 1325
+          word_count: 192
+          content_hash: 38944c0afae218460ac7d6d3d098061e2bd771d86e0b281c864970e3d08be15b
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Per-entity feature flag
+              byte_offset: 36264
+              byte_count: 615
+              word_count: 85
+              content_hash: d8fa2406ab523e3a632ee0e980106287187a046deee27da561e8fa18d50ba7f0
+            - path: 1.8.2
+              level: 3
+              title: 8.2 Coexistence rules
+              byte_offset: 36879
+              byte_count: 386
+              word_count: 57
+              content_hash: fd845ac135d381297d97de3f4d6a25fb9b309cc626e547ff50df6a8c7832b0a7
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Rollback plan
+              byte_offset: 37265
+              byte_count: 298
+              word_count: 46
+              content_hash: 63c12b3a9fa2c070db06b7445a48b4acab6a5e32ba878844c8bd7d0d8d3b00e7
+        - path: "1.9"
+          level: 2
+          title: 9. Alternatives Considered
+          byte_offset: 37563
+          byte_count: 1906
+          word_count: 285
+          content_hash: c173d2ab8ad5deb4d37746b70534d4acf99aee07218e95170d888dfe8092e059
+          children:
+            - path: 1.9.1
+              level: 3
+              title: 9.1 Keep multi-provider routing as Phase 1 (original P44 scope)
+              byte_offset: 37594
+              byte_count: 296
+              word_count: 42
+              content_hash: ddf5e690e69b97447d244ffb9598ea23abdec72bd1b19bf61127dbd78e8b0a7c
+            - path: 1.9.2
+              level: 3
+              title: 9.2 Adopt Temporal or Restate as the durable-execution layer in Phase 1
+              byte_offset: 37890
+              byte_count: 269
+              word_count: 42
+              content_hash: f968e3887c2105308474dcef129613c74684917d9a4cb6479960a42b1189f447
+            - path: 1.9.3
+              level: 3
+              title: 9.3 Single-layer LLM verifier (the previous P44 design)
+              byte_offset: 38159
+              byte_count: 277
+              word_count: 40
+              content_hash: e0218436abae1438d2c37fd46caa610b286e82b5b63dc3b4c9fb04057fb3cc74
+            - path: 1.9.4
+              level: 3
+              title: 9.4 Big-bang controller migration (no feature flag)
+              byte_offset: 38436
+              byte_count: 158
+              word_count: 21
+              content_hash: 27eab27711ad8991413952f5ca06a31186b891cadff9234281176b2249598e93
+            - path: 1.9.5
+              level: 3
+              title: 9.5 Build a "prompter sub-agent" that composes prompts on the orchestrator's behalf
+              byte_offset: 38594
+              byte_count: 252
+              word_count: 37
+              content_hash: 6fb5976a64768749239ed2dd81afef048903fcfce4020bb7f159443e30123f0d
+            - path: 1.9.6
+              level: 3
+              title: 9.6 Keep `spawn_agent` in the orchestrator's tool list with a strong policy rule against bare prompts
+              byte_offset: 38846
+              byte_count: 300
+              word_count: 44
+              content_hash: 7c8856df455af7a9dd77d6365bddbd48351caa9cff67c9512a602b258ab8d876
+            - path: 1.9.7
+              level: 3
+              title: 9.7 Embed policy in YAML rather than code
+              byte_offset: 39146
+              byte_count: 323
+              word_count: 55
+              content_hash: 72049261694fa50ec217f5fe144aa19422e6834f97689b13bece3c55778a1474
+        - path: "1.10"
+          level: 2
+          title: 10. Risks and Mitigations
+          byte_offset: 39469
+          byte_count: 2105
+          word_count: 336
+          content_hash: 2ee48c901f9f885f53bf2830fd42bc2a7d3aca3603c985c223fb312a0b062e71
+        - path: "1.11"
+          level: 2
+          title: 11. Dependencies
+          byte_offset: 41574
+          byte_count: 931
+          word_count: 150
+          content_hash: 65993f86c86f9fca87617df860914e3682f3b9c28706c1817128730c50091a25
+        - path: "1.12"
+          level: 2
+          title: 12. Open Questions
+          byte_offset: 42505
+          byte_count: 1621
+          word_count: 244
+          content_hash: e2494291100073f1893d6d6db4bde794ded16430da2a3246068f7f87e38ea63a
+        - path: "1.13"
+          level: 2
+          title: 13. Cross-References
+          byte_offset: 44126
+          byte_count: 957
+          word_count: 87
+          content_hash: da10cde8da18e4b624c3f3eb3d716f9a05cce7688e2dbf0e1f01a2688d5aeb69
+entity_refs:
+    - entity_id: FEAT-123
+      entity_type: feature
+      section_path: 1.4.3
+      byte_offset: 11240
+    - entity_id: FEAT-123
+      entity_type: feature
+      section_path: 1.5.3.2
+      byte_offset: 20884
+    - entity_id: FEAT-123
+      entity_type: feature
+      section_path: 1.5.5
+      byte_offset: 23907
+    - entity_id: P44-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 204
+    - entity_id: P44-design-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 256
+    - entity_id: P44-design-feature-execution-pipeline
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 348
+    - entity_id: F1-design-prompt-assembly-gate
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 461
+    - entity_id: P44-research-orchestrator-architecture
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 637
+    - entity_id: P44-design-feature-execution-pipeline
+      entity_type: plan
+      section_path: 1.5.2.2
+      byte_offset: 16921
+    - entity_id: P44-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1.13"
+      byte_offset: 44180
+    - entity_id: P44-research-orchestrator-architecture
+      entity_type: plan
+      section_path: "1.13"
+      byte_offset: 44213
+    - entity_id: F1-design-prompt-assembly-gate
+      entity_type: plan
+      section_path: "1.13"
+      byte_offset: 44393
+    - entity_id: P44-design-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1.13"
+      byte_offset: 44485
+    - entity_id: P44-design-feature-execution-pipeline
+      entity_type: plan
+      section_path: "1.13"
+      byte_offset: 44662
+cross_doc_links:
+    - target_path: P44-design-model-routing-agent-launcher.md
+      link_text: P44-design-model-routing-agent-launcher.md
+      section_path: "1"
+    - target_path: P44-design-feature-execution-pipeline.md
+      link_text: P44-design-feature-execution-pipeline.md
+      section_path: "1"
+    - target_path: P44-F1-design-prompt-assembly-gate.md
+      link_text: P44-F1-design-prompt-assembly-gate.md
+      section_path: "1"
+    - target_path: P44-research-orchestrator-architecture.md
+      link_text: P44-research-orchestrator-architecture.md
+      section_path: "1"
+    - target_path: orchestrate-development.md
+      link_text: orchestrate-development.md
+      section_path: 1.3.1
+    - target_path: P44-design-feature-execution-pipeline.md
+      link_text: P44-design-feature-execution-pipeline.md
+      section_path: 1.5.2.2
+    - target_path: skills/*/SKILL.md
+      link_text: skills/*/SKILL.md
+      section_path: 1.5.4
+    - target_path: orchestrate-development.md
+      link_text: orchestrate-development.md
+      section_path: 1.5.8
+    - target_path: orchestrate-development.md
+      link_text: orchestrate-development.md
+      section_path: 1.7.2
+    - target_path: .kbz/skills/*/SKILL.md
+      link_text: .kbz/skills/*/SKILL.md
+      section_path: "1.11"
+    - target_path: work/P44-model-routing-agent-launcher/P44-research-orchestrator-architecture.md
+      link_text: work/P44-model-routing-agent-launcher/P44-research-orchestrator-architecture.md
+      section_path: "1.13"
+    - target_path: work/P44-model-routing-agent-launcher/P44-F1-design-prompt-assembly-gate.md
+      link_text: work/P44-model-routing-agent-launcher/P44-F1-design-prompt-assembly-gate.md
+      section_path: "1.13"
+    - target_path: work/P44-model-routing-agent-launcher/P44-design-model-routing-agent-launcher.md
+      link_text: work/P44-model-routing-agent-launcher/P44-design-model-routing-agent-launcher.md
+      section_path: "1.13"
+    - target_path: work/P44-model-routing-agent-launcher/P44-design-feature-execution-pipeline.md
+      link_text: work/P44-model-routing-agent-launcher/P44-design-feature-execution-pipeline.md
+      section_path: "1.13"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: decision
+      confidence: high
+    - section_path: 1.6.1
+      role: decision
+      confidence: high
+    - section_path: 1.6.2
+      role: decision
+      confidence: high
+    - section_path: 1.6.3
+      role: decision
+      confidence: high
+    - section_path: 1.6.4
+      role: decision
+      confidence: high
+    - section_path: 1.6.5
+      role: decision
+      confidence: high
+    - section_path: 1.6.6
+      role: decision
+      confidence: high
+    - section_path: 1.6.7
+      role: decision
+      confidence: high
+    - section_path: 1.6.8
+      role: decision
+      confidence: high
+    - section_path: 1.6.9
+      role: decision
+      confidence: high
+    - section_path: 1.6.10
+      role: decision
+      confidence: high
+    - section_path: 1.6.11
+      role: decision
+      confidence: high
+    - section_path: "1.9"
+      role: alternative
+      confidence: high
+    - section_path: 1.9.1
+      role: constraint
+      confidence: high
+    - section_path: "1.10"
+      role: risk
+      confidence: high
+    - section_path: "1.12"
+      role: question
+      confidence: high
+classified: false

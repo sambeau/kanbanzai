@@ -1,4 +1,4 @@
-updated_at: 2026-05-06T23:43:41.469391Z
+updated_at: 2026-05-08T11:20:57.889162Z
 concepts:
     - name: voluntary-step-architecture
       aliases:
@@ -3126,3 +3126,63 @@ concepts:
     - name: feat-01kqj7cjgqr7y
       used_in:
         - FEAT-01KQJ7CJGQR7Y/dev-plan-b43-f1-dev-plan-composite-tools#1.1
+    - name: constraint-card-renderer
+      introduced_in:
+        - FEAT-01KR3MDJ7AV37/spec-b58-f1-spec-constraint-card-stage-binding-hydration#1
+      used_in:
+        - FEAT-01KR3MDJ7AV37/spec-b58-f1-spec-constraint-card-stage-binding-hydration#2
+    - name: stage-binding-hydration
+      introduced_in:
+        - FEAT-01KR3MDJ7AV37/spec-b58-f1-spec-constraint-card-stage-binding-hydration#1
+      used_in:
+        - FEAT-01KR3MDJ7AV37/spec-b58-f1-spec-constraint-card-stage-binding-hydration#2
+    - name: task-context-response
+      introduced_in:
+        - FEAT-01KR3MDJ7AV37/spec-b58-f1-spec-constraint-card-stage-binding-hydration#1
+      used_in:
+        - FEAT-01KR3MDJ7AV37/spec-b58-f1-spec-constraint-card-stage-binding-hydration#2
+    - name: mcp-rule-invariant
+      introduced_in:
+        - FEAT-01KR3MDSZKAFG/spec-b59-f1-spec-high-violation-mcp-rule-invariants#1
+      used_in:
+        - FEAT-01KR3MDSZKAFG/spec-b59-f1-spec-high-violation-mcp-rule-invariants#2
+    - name: handoff-only-dispatch
+      introduced_in:
+        - FEAT-01KR3MDSZKAFG/spec-b59-f1-spec-high-violation-mcp-rule-invariants#1
+      used_in:
+        - FEAT-01KR3MDSZKAFG/spec-b59-f1-spec-high-violation-mcp-rule-invariants#2
+    - name: workflow-state-commit-gate
+      introduced_in:
+        - FEAT-01KR3MDSZKAFG/spec-b59-f1-spec-high-violation-mcp-rule-invariants#1
+      used_in:
+        - FEAT-01KR3MDSZKAFG/spec-b59-f1-spec-high-violation-mcp-rule-invariants#2
+    - name: instruction-corpus-cleanup
+      introduced_in:
+        - FEAT-01KR3MES5ZJ11/spec-b61-f1-spec-instruction-corpus-cleanup#1
+      used_in:
+        - FEAT-01KR3MES5ZJ11/spec-b61-f1-spec-instruction-corpus-cleanup#2
+    - name: no-stash-rule
+      introduced_in:
+        - FEAT-01KR3MES5ZJ11/spec-b61-f1-spec-instruction-corpus-cleanup#1
+      used_in:
+        - FEAT-01KR3MES5ZJ11/spec-b61-f1-spec-instruction-corpus-cleanup#2
+    - name: skill-corpus-size
+      introduced_in:
+        - FEAT-01KR3MES5ZJ11/spec-b61-f1-spec-instruction-corpus-cleanup#1
+      used_in:
+        - FEAT-01KR3MES5ZJ11/spec-b61-f1-spec-instruction-corpus-cleanup#2
+    - name: runtime-discovery-surface
+      introduced_in:
+        - FEAT-01KR3MEYRQ9RG/spec-b62-f1-spec-runtime-discovery-surfaces#1
+      used_in:
+        - FEAT-01KR3MEYRQ9RG/spec-b62-f1-spec-runtime-discovery-surfaces#2
+    - name: anthropic-skill-wrapper
+      introduced_in:
+        - FEAT-01KR3MEYRQ9RG/spec-b62-f1-spec-runtime-discovery-surfaces#1
+      used_in:
+        - FEAT-01KR3MEYRQ9RG/spec-b62-f1-spec-runtime-discovery-surfaces#2
+    - name: tool-description-rule-text
+      introduced_in:
+        - FEAT-01KR3MEYRQ9RG/spec-b62-f1-spec-runtime-discovery-surfaces#1
+      used_in:
+        - FEAT-01KR3MEYRQ9RG/spec-b62-f1-spec-runtime-discovery-surfaces#2

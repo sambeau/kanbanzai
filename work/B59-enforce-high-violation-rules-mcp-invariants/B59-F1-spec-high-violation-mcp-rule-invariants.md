@@ -8,11 +8,13 @@
 | Feature | FEAT-01KR3MDSZKAFG — High-violation MCP rule invariants |
 | Design | `work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md` |
 
-## Problem Statement
+## Overview
 
 This specification implements the B2 Enforce portion of the design described in `work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md` (`P59-roles-skills-remediation/design-p59-design-roles-skills-remediation`). It defines the prompt-layer and tool-contract requirements for moving the highest-violation workflow rules out of advisory prose and into MCP tool semantics.
 
 The problem is that agents repeatedly violate rules that are currently written as markdown guidance: manual sub-agent prompt composition, working under unregistered entities, starting tasks with orphaned workflow state, shell-reading workflow state, and skipping artefact gates. This specification makes those rules visible as tool contracts and stable refusal behaviours while preserving the P44 and P56 ownership boundaries for implementation work.
+
+## Scope
 
 In scope:
 
@@ -36,9 +38,7 @@ Related work checked:
 - `work/P44-model-routing-agent-launcher/P44-design-feature-execution-pipeline.md` moves execution dispatch into server-managed stages. P59's invariant catalog must not weaken that architecture.
 - `work/P56-bug-lifecycle-hardening/P56-F1-spec-bug-lifecycle-gate-enforcement.md` defines bug gate enforcement. This specification limits itself to prompt-layer alignment and tool-description consistency for bug gates.
 
-## Requirements
-
-### Functional Requirements
+## Functional Requirements
 
 - **REQ-001:** The system must define a stable invariant catalog containing exactly these high-violation rules for this feature: handoff-only dispatch, registered-entity requirement, commit-orphaned-workflow-state-before-task requirement, no shell reads of `.kbz/state/`, and artefact gate enforcement.
 - **REQ-002:** Each invariant must have a stable error code or warning code that tests and callers can assert. The codes must be documented in the corresponding role, skill, or tool-description reference text.
@@ -53,7 +53,7 @@ Related work checked:
 - **REQ-011:** Refusal responses must include the invariant code, the refused operation, a short reason, and the next valid action the agent should take.
 - **REQ-012:** Tests must cover each invariant at the tool boundary or, for the shell-read warning, at the response-description boundary.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 - **REQ-NF-001:** Refusal messages must be deterministic for the same failed invariant and input class so tests can assert exact code and reason fields.
 - **REQ-NF-002:** Refusal messages must be concise: no refusal body may exceed 1,200 bytes.

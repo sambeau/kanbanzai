@@ -1,0 +1,190 @@
+document_id: FEAT-01KR3MEJGGMT5/spec-b60-f1-spec-generated-role-skill-registry-surfaces
+document_path: work/B60-unify-role-skill-registries/B60-F1-spec-generated-role-skill-registry-surfaces.md
+content_hash: d9b7de24c04b6d708fe455bf534c8a0598988a1aae6d6b9c05ea84240fcf7a87
+indexed_at: 2026-05-08T11:19:54.192858Z
+sections:
+    - path: "1"
+      level: 2
+      title: Problem Statement
+      byte_offset: 415
+      byte_count: 1830
+      word_count: 225
+      content_hash: a0b76ee14843b7d8200faa498a9e40c6c881e397bb210b4ed906a797a542740b
+    - path: "2"
+      level: 2
+      title: Requirements
+      byte_offset: 2245
+      byte_count: 2506
+      word_count: 354
+      content_hash: e230408b0cdffe4031f24841563c3094fe6268767ebf1b40cd83471af7817c21
+      children:
+        - path: "2.1"
+          level: 3
+          title: Functional Requirements
+          byte_offset: 2262
+          byte_count: 1766
+          word_count: 246
+          content_hash: 8ad1cb2e6b43092a615f709c3976884cf278abc515421f4203e0b6f89b4b9a51
+        - path: "2.2"
+          level: 3
+          title: Non-Functional Requirements
+          byte_offset: 4028
+          byte_count: 723
+          word_count: 106
+          content_hash: 8344ee2c232a00e97008a542f9a62100ae1698fc0b4a714ac5255b11c9f93825
+    - path: "3"
+      level: 2
+      title: Constraints
+      byte_offset: 4751
+      byte_count: 737
+      word_count: 102
+      content_hash: 034a82aec834e5bd63961c969fc35cc165e1de3c6edc57eb68ed1ac13a65ea5e
+    - path: "4"
+      level: 2
+      title: Acceptance Criteria
+      byte_offset: 5488
+      byte_count: 1821
+      word_count: 273
+      content_hash: 316f22d0044c3c976f977d00a48792306bc58078a80b306dcda6444bfd744ea2
+    - path: "5"
+      level: 2
+      title: Verification Plan
+      byte_offset: 7309
+      byte_count: 1392
+      word_count: 230
+      content_hash: da418e448a907e09f4412cc2cf7239dcb30ceb356806c656a23d61a97ade873e
+entity_refs:
+    - entity_id: FEAT-01KR3MEJGGMT5
+      entity_type: feature
+      section_path: ""
+      byte_offset: 258
+    - entity_id: P59-roles-skills-remediation
+      entity_type: plan
+      section_path: ""
+      byte_offset: 343
+    - entity_id: P59-design-roles-skills-remediation
+      entity_type: plan
+      section_path: ""
+      byte_offset: 372
+    - entity_id: P59-roles-skills-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 521
+    - entity_id: P59-design-roles-skills-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 550
+    - entity_id: P59-report-roles-skills-audit
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 1961
+cross_doc_links:
+    - target_path: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      link_text: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      section_path: ""
+    - target_path: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      link_text: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      section_path: "1"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "1"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1"
+    - target_path: README.md
+      link_text: README.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1"
+    - target_path: work/P59-roles-skills-remediation/P59-report-roles-skills-audit.md
+      link_text: work/P59-roles-skills-remediation/P59-report-roles-skills-audit.md
+      section_path: "1"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "2.1"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "2.1"
+    - target_path: README.md
+      link_text: README.md
+      section_path: "2.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "2.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "3"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "3"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "3"
+    - target_path: README.md
+      link_text: README.md
+      section_path: "3"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "4"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "5"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "5"
+    - target_path: README.md
+      link_text: README.md
+      section_path: "5"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "5"
+conventional_roles:
+    - section_path: "2"
+      role: requirement
+      confidence: high
+    - section_path: "2.1"
+      role: requirement
+      confidence: high
+    - section_path: "2.2"
+      role: requirement
+      confidence: high
+    - section_path: "3"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: requirement
+      confidence: high
+classified: true
+classified_at: 2026-05-08T11:20:54.849285Z
+classified_by: GPT-5.5
+classifier_version: "2026-05-08"
+classifications:
+    - section_path: "1"
+      role: rationale
+      confidence: high
+      summary: Problem, scope, exclusions, and related work for generated role and skill registry surfaces.
+      concepts_intro:
+        - Registry Generator
+        - Generated Registry Region
+        - Registry Check Mode
+    - section_path: "2"
+      role: requirement
+      confidence: high
+      summary: Functional and non-functional requirements for source extraction, generated regions, sync mode, check mode, and CI guard.
+      concepts_used:
+        - Registry Generator
+        - Generated Registry Region
+        - Registry Check Mode
+    - section_path: "3"
+      role: constraint
+      confidence: high
+      summary: Canonical source, preservation, AGENTS.md deferral, and deterministic output constraints.
+    - section_path: "4"
+      role: requirement
+      confidence: high
+      summary: Acceptance criteria for extraction, generated markers, preservation, stale checks, CI, and idempotency.
+    - section_path: "5"
+      role: requirement
+      confidence: high
+      summary: Verification methods for generator extraction, marker handling, stale detection, CI, and idempotency.

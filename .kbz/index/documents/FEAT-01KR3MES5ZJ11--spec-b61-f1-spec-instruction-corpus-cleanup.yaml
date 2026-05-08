@@ -1,0 +1,205 @@
+document_id: FEAT-01KR3MES5ZJ11/spec-b61-f1-spec-instruction-corpus-cleanup
+document_path: work/B61-tidy-contradictions-stray-files-corpus-size/B61-F1-spec-instruction-corpus-cleanup.md
+content_hash: a95089faee3eeb6f981bbd8fd9a924bf8b327f079b0e8d9fda85550ef3279fe4
+indexed_at: 2026-05-08T11:19:54.193217Z
+sections:
+    - path: "1"
+      level: 2
+      title: Problem Statement
+      byte_offset: 415
+      byte_count: 2058
+      word_count: 262
+      content_hash: 7a5035146bcb13f49ae31e236b4f6da6539002bb10176d0804d58403b616991d
+    - path: "2"
+      level: 2
+      title: Requirements
+      byte_offset: 2473
+      byte_count: 2713
+      word_count: 390
+      content_hash: 4eb6874ea4fa2f1be010c1afbbce7f866f7ae5dfa0b100bf1d8a5201547be429
+      children:
+        - path: "2.1"
+          level: 3
+          title: Functional Requirements
+          byte_offset: 2490
+          byte_count: 1977
+          word_count: 287
+          content_hash: c8946aa3a0bd4f3bb97b9ecbf8ca6f6689f06a098c0bbc845699c49f8b7cd0a4
+        - path: "2.2"
+          level: 3
+          title: Non-Functional Requirements
+          byte_offset: 4467
+          byte_count: 719
+          word_count: 101
+          content_hash: 3871480ab53d38fae463a3fcef189a7e2e68107eb01770802831350beba1ec3b
+    - path: "3"
+      level: 2
+      title: Constraints
+      byte_offset: 5186
+      byte_count: 772
+      word_count: 107
+      content_hash: 3226143ab4055b55059ce63a22b35aafa2d3a36f12a9f826277f672d4d37365d
+    - path: "4"
+      level: 2
+      title: Acceptance Criteria
+      byte_offset: 5958
+      byte_count: 2054
+      word_count: 278
+      content_hash: dd464426431fc17c1ff4b90d1b1d906a5c14f8534cf95b6708076bb9c4d79377
+    - path: "5"
+      level: 2
+      title: Verification Plan
+      byte_offset: 8012
+      byte_count: 1472
+      word_count: 215
+      content_hash: 763a95cdb312235c7ab4895eeac7acfbc5debd871c42f5b51cb31f019fc2e4c1
+entity_refs:
+    - entity_id: FEAT-01KR3MES5ZJ11
+      entity_type: feature
+      section_path: ""
+      byte_offset: 274
+    - entity_id: P59-roles-skills-remediation
+      entity_type: plan
+      section_path: ""
+      byte_offset: 343
+    - entity_id: P59-design-roles-skills-remediation
+      entity_type: plan
+      section_path: ""
+      byte_offset: 372
+    - entity_id: P59-roles-skills-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 520
+    - entity_id: P59-design-roles-skills-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 549
+    - entity_id: P59-report-roles-skills-audit
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 2083
+cross_doc_links:
+    - target_path: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      link_text: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      section_path: ""
+    - target_path: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      link_text: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      section_path: "1"
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: "1"
+    - target_path: work/P59-roles-skills-remediation/P59-report-roles-skills-audit.md
+      link_text: work/P59-roles-skills-remediation/P59-report-roles-skills-audit.md
+      section_path: "1"
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1"
+    - target_path: .kbz/skills/SKILL.md
+      link_text: .kbz/skills/SKILL.md
+      section_path: "2.1"
+    - target_path: README.md
+      link_text: README.md
+      section_path: "2.1"
+    - target_path: .kbz/skills/*/SKILL.md
+      link_text: .kbz/skills/*/SKILL.md
+      section_path: "2.1"
+    - target_path: .agents/skills/SKILL.md
+      link_text: .agents/skills/SKILL.md
+      section_path: "2.1"
+    - target_path: .agents/skills/*/SKILL.md
+      link_text: .agents/skills/*/SKILL.md
+      section_path: "2.1"
+    - target_path: references/examples-<skill>.md
+      link_text: references/examples-<skill>.md
+      section_path: "2.1"
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: "3"
+    - target_path: .kbz/skills/SKILL.md
+      link_text: .kbz/skills/SKILL.md
+      section_path: "4"
+    - target_path: .kbz/skills/README.md
+      link_text: .kbz/skills/README.md
+      section_path: "4"
+    - target_path: .agents/skills/SKILL.md
+      link_text: .agents/skills/SKILL.md
+      section_path: "4"
+    - target_path: .agents/skills/README.md
+      link_text: .agents/skills/README.md
+      section_path: "4"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "4"
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: "4"
+    - target_path: .kbz/skills/SKILL.md
+      link_text: .kbz/skills/SKILL.md
+      section_path: "5"
+    - target_path: .kbz/skills/README.md
+      link_text: .kbz/skills/README.md
+      section_path: "5"
+    - target_path: .agents/skills/SKILL.md
+      link_text: .agents/skills/SKILL.md
+      section_path: "5"
+    - target_path: .agents/skills/README.md
+      link_text: .agents/skills/README.md
+      section_path: "5"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "5"
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: "5"
+conventional_roles:
+    - section_path: "2"
+      role: requirement
+      confidence: high
+    - section_path: "2.1"
+      role: requirement
+      confidence: high
+    - section_path: "2.2"
+      role: requirement
+      confidence: high
+    - section_path: "3"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: requirement
+      confidence: high
+classified: true
+classified_at: 2026-05-08T11:20:54.851409Z
+classified_by: GPT-5.5
+classifier_version: "2026-05-08"
+classifications:
+    - section_path: "1"
+      role: rationale
+      confidence: high
+      summary: Problem, scope, exclusions, and related work for instruction corpus cleanup.
+      concepts_intro:
+        - Instruction Corpus Cleanup
+        - No-Stash Rule
+        - Skill Corpus Size
+    - section_path: "2"
+      role: requirement
+      confidence: high
+      summary: Functional and non-functional requirements for stray file removal, no-stash alignment, line-count reductions, example relocation, and tool-list cleanup.
+      concepts_used:
+        - Instruction Corpus Cleanup
+        - No-Stash Rule
+        - Skill Corpus Size
+    - section_path: "3"
+      role: constraint
+      confidence: high
+      summary: Rule preservation, dual-write, generated-surface independence, and directory-index constraints.
+    - section_path: "4"
+      role: requirement
+      confidence: high
+      summary: Acceptance criteria for file cleanup, no-stash alignment, line counts, moved examples, duplicate anti-patterns, and tool availability.
+    - section_path: "5"
+      role: requirement
+      confidence: high
+      summary: Verification methods for inspection, search, corpus-size scripts, and role-tool review.

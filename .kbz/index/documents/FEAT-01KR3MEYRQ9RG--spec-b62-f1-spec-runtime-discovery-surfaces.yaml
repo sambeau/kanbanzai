@@ -1,0 +1,196 @@
+document_id: FEAT-01KR3MEYRQ9RG/spec-b62-f1-spec-runtime-discovery-surfaces
+document_path: work/B62-discover-runtime-instruction-surfaces/B62-F1-spec-runtime-discovery-surfaces.md
+content_hash: 46f5fd69845c50e8fa5442217ae83dcc981155c1f4f1d5619bff2cb0ada5d75c
+indexed_at: 2026-05-08T11:19:54.820137Z
+sections:
+    - path: "1"
+      level: 2
+      title: Problem Statement
+      byte_offset: 405
+      byte_count: 2412
+      word_count: 259
+      content_hash: b299bc87acc3a805118d3a94fca1b2cd40e86fd1fe3ca0e0cfd2067a23f8f4bd
+    - path: "2"
+      level: 2
+      title: Requirements
+      byte_offset: 2817
+      byte_count: 2816
+      word_count: 381
+      content_hash: b2a067e12f492736823af42ef02c00027b4027b04928e379af5ed1437a98b57d
+      children:
+        - path: "2.1"
+          level: 3
+          title: Functional Requirements
+          byte_offset: 2834
+          byte_count: 2164
+          word_count: 291
+          content_hash: 8d8b539f96aafb5155c0fa5ca4968fa9f8a4554191f00bc5168368412c9d4e48
+        - path: "2.2"
+          level: 3
+          title: Non-Functional Requirements
+          byte_offset: 4998
+          byte_count: 635
+          word_count: 88
+          content_hash: 1e3095c6f3ff03eba0e78c569eccdc11ecbcbb22a34b099a42337fe5444e6816
+    - path: "3"
+      level: 2
+      title: Constraints
+      byte_offset: 5633
+      byte_count: 630
+      word_count: 88
+      content_hash: ada3dced1834e96662845e1823c4989365556e327980f27686319b52c51fb55e
+    - path: "4"
+      level: 2
+      title: Acceptance Criteria
+      byte_offset: 6263
+      byte_count: 1869
+      word_count: 265
+      content_hash: 2c1cd9629bf25e9328c80c6811633b66ae79b54fb3116596dd8542fbeaba0155
+    - path: "5"
+      level: 2
+      title: Verification Plan
+      byte_offset: 8132
+      byte_count: 1291
+      word_count: 200
+      content_hash: da0cf66a9cee04f6a8e8934a25faf9cc906c21b94d91559464c630aeb98fbef5
+entity_refs:
+    - entity_id: FEAT-01KR3MEYRQ9RG
+      entity_type: feature
+      section_path: ""
+      byte_offset: 264
+    - entity_id: P59-roles-skills-remediation
+      entity_type: plan
+      section_path: ""
+      byte_offset: 333
+    - entity_id: P59-design-roles-skills-remediation
+      entity_type: plan
+      section_path: ""
+      byte_offset: 362
+    - entity_id: P59-roles-skills-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 514
+    - entity_id: P59-design-roles-skills-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 543
+    - entity_id: P59-report-roles-skills-audit
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 2358
+    - entity_id: P44-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 2504
+    - entity_id: F1-design-prompt-assembly-gate
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 2541
+    - entity_id: B59-aligned
+      entity_type: plan
+      section_path: "5"
+      byte_offset: 8853
+cross_doc_links:
+    - target_path: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      link_text: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      section_path: ""
+    - target_path: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      link_text: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      section_path: "1"
+    - target_path: OPENAI.md
+      link_text: OPENAI.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1"
+    - target_path: .claude/skills/<skill>/SKILL.md
+      link_text: .claude/skills/<skill>/SKILL.md
+      section_path: "1"
+    - target_path: refs/sub-agents.md
+      link_text: refs/sub-agents.md
+      section_path: "1"
+    - target_path: work/P59-roles-skills-remediation/P59-report-roles-skills-audit.md
+      link_text: work/P59-roles-skills-remediation/P59-report-roles-skills-audit.md
+      section_path: "1"
+    - target_path: work/P44-model-routing-agent-launcher/P44-F1-design-prompt-assembly-gate.md
+      link_text: work/P44-model-routing-agent-launcher/P44-F1-design-prompt-assembly-gate.md
+      section_path: "1"
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: "1"
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: "1"
+    - target_path: OPENAI.md
+      link_text: OPENAI.md
+      section_path: "2.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "2.1"
+    - target_path: refs/sub-agents.md
+      link_text: refs/sub-agents.md
+      section_path: "2.1"
+    - target_path: OPENAI.md
+      link_text: OPENAI.md
+      section_path: "2.2"
+    - target_path: OPENAI.md
+      link_text: OPENAI.md
+      section_path: "3"
+    - target_path: OPENAI.md
+      link_text: OPENAI.md
+      section_path: "4"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "4"
+    - target_path: OPENAI.md
+      link_text: OPENAI.md
+      section_path: "5"
+conventional_roles:
+    - section_path: "2"
+      role: requirement
+      confidence: high
+    - section_path: "2.1"
+      role: requirement
+      confidence: high
+    - section_path: "2.2"
+      role: requirement
+      confidence: high
+    - section_path: "3"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: requirement
+      confidence: high
+classified: true
+classified_at: 2026-05-08T11:20:57.884146Z
+classified_by: GPT-5.5
+classifier_version: "2026-05-08"
+classifications:
+    - section_path: "1"
+      role: rationale
+      confidence: high
+      summary: Problem, scope, exclusions, and related work for runtime discovery surfaces.
+      concepts_intro:
+        - Runtime Discovery Surface
+        - Anthropic Skill Wrapper
+        - Tool-Description Rule Text
+    - section_path: "2"
+      role: requirement
+      confidence: high
+      summary: Functional and non-functional requirements for Claude wrappers, OPENAI redirect, tool-description text, DeepSeek host docs, optional Cursor shim, and wrapper checks.
+      concepts_used:
+        - Runtime Discovery Surface
+        - Anthropic Skill Wrapper
+        - Tool-Description Rule Text
+    - section_path: "3"
+      role: constraint
+      confidence: high
+      summary: Canonical-source, generated-copy, concise-description, redirect, and DeepSeek completion constraints.
+    - section_path: "4"
+      role: requirement
+      confidence: high
+      summary: Acceptance criteria for wrappers, redirect, tool descriptions, DeepSeek documentation, optional Cursor support, and line limits.
+    - section_path: "5"
+      role: requirement
+      confidence: high
+      summary: Verification methods for discovery wrappers, symlink checks, redirect inspection, tool-description inspection, and DeepSeek documentation review.

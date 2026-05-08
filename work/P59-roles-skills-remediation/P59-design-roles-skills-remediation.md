@@ -1,7 +1,7 @@
 | Field  | Value                                                          |
 |--------|----------------------------------------------------------------|
 | Date   | 2026-05-08                                                     |
-| Status | Draft                                                          |
+| Status | approved |
 | Author | sambeau (architect role, write-design skill)                   |
 | Plan   | P59 — Roles & Skills Discoverability and Enforcement Remediation |
 | Source | `work/P59-roles-skills-remediation/P59-report-roles-skills-audit.md` |
@@ -453,6 +453,14 @@ stage-bindings.yaml ─┐
 - **Consequences.** B2 carries an explicit dependency on the relevant P44
   features and ships when those features ship. The dev-plan (next stage)
   must enumerate the P44 entities.
+
+## Related Work
+
+- `work/P59-roles-skills-remediation/P59-report-roles-skills-audit.md` — source audit that identifies the distribution, discoverability, drift, and enforcement failures this plan remediates.
+- `work/P44-model-routing-agent-launcher/P44-F1-design-prompt-assembly-gate.md` — related design for non-bypassable prompt assembly and `dispatch_task`; P59 must not duplicate P44's provider-dispatch implementation.
+- `work/P44-model-routing-agent-launcher/P44-design-feature-execution-pipeline.md` — related design for server-managed execution stages; P59's handoff-only and dispatch-rule work must preserve the P44 ownership boundary.
+- `work/P56-bug-lifecycle-hardening/P56-F1-spec-bug-lifecycle-gate-enforcement.md` — related specification for bug gate enforcement; P59 may align prompt-layer guidance and tool descriptions but must not reimplement P56's bug transition gates.
+- `.kbz/stage-bindings.yaml`, `.kbz/roles/*.yaml`, `.kbz/skills/*/SKILL.md`, and `.agents/skills/kanbanzai-*/SKILL.md` — canonical role, skill, and workflow inputs that the P59 specs reference and constrain.
 
 ## Dependencies
 

@@ -1,0 +1,157 @@
+document_id: FEAT-01KR3MDJ7AV37/spec-b58-f1-spec-constraint-card-stage-binding-hydration
+document_path: work/B58-inject-constraint-card-stage-binding-hydration/B58-F1-spec-constraint-card-stage-binding-hydration.md
+content_hash: 88f6beacd36c5fb1019948c57b3ecbd1ea0e2ae816b1f978756677bf729826eb
+indexed_at: 2026-05-08T11:19:54.192037Z
+sections:
+    - path: "1"
+      level: 2
+      title: Problem Statement
+      byte_offset: 435
+      byte_count: 2084
+      word_count: 252
+      content_hash: 91e0a3f92003b75f145247cc438b0a6ae6969e2574d0e6e18032652d12679e28
+    - path: "2"
+      level: 2
+      title: Requirements
+      byte_offset: 2519
+      byte_count: 2916
+      word_count: 431
+      content_hash: 044c077033d0c3c676cd7a4b2e8317e1b34efc41d4b97cc074674833ab744847
+      children:
+        - path: "2.1"
+          level: 3
+          title: Functional Requirements
+          byte_offset: 2536
+          byte_count: 2158
+          word_count: 314
+          content_hash: 51897ae48da119ab63cf2b388ced117b9e8dd08a434fb2e98a1f068edcb67cb8
+        - path: "2.2"
+          level: 3
+          title: Non-Functional Requirements
+          byte_offset: 4694
+          byte_count: 741
+          word_count: 115
+          content_hash: 5304f81bd3cf6cbfcec3ca50e8e313d0e5f9b2e262f84d9726c035c3a242d550
+    - path: "3"
+      level: 2
+      title: Constraints
+      byte_offset: 5435
+      byte_count: 851
+      word_count: 131
+      content_hash: dd5bca7fb3bf07a9eb01523862b5d262e33fe0762686ea52f007e437420cf56d
+    - path: "4"
+      level: 2
+      title: Acceptance Criteria
+      byte_offset: 6286
+      byte_count: 2066
+      word_count: 301
+      content_hash: 657f7c9b2992828c6df1a051394f519efd2f9dd39db27bde70cf6043e4a2d042
+    - path: "5"
+      level: 2
+      title: Verification Plan
+      byte_offset: 8352
+      byte_count: 1406
+      word_count: 234
+      content_hash: e491ee978f095c8293d27d77c29910befa4081d081dd5a8aee5b6c7b74ce868c
+entity_refs:
+    - entity_id: FEAT-01KR3MDJ7AV37
+      entity_type: feature
+      section_path: ""
+      byte_offset: 277
+    - entity_id: P59-roles-skills-remediation
+      entity_type: plan
+      section_path: ""
+      byte_offset: 363
+    - entity_id: P59-design-roles-skills-remediation
+      entity_type: plan
+      section_path: ""
+      byte_offset: 392
+    - entity_id: P59-roles-skills-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 542
+    - entity_id: P59-design-roles-skills-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 571
+    - entity_id: P44-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 1979
+    - entity_id: F1-design-prompt-assembly-gate
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 2016
+    - entity_id: P44-design-feature-execution-pipeline
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 2234
+    - entity_id: P59-report-roles-skills-audit
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 2421
+cross_doc_links:
+    - target_path: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      link_text: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      section_path: ""
+    - target_path: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      link_text: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      section_path: "1"
+    - target_path: work/P44-model-routing-agent-launcher/P44-F1-design-prompt-assembly-gate.md
+      link_text: work/P44-model-routing-agent-launcher/P44-F1-design-prompt-assembly-gate.md
+      section_path: "1"
+    - target_path: work/P44-model-routing-agent-launcher/P44-design-feature-execution-pipeline.md
+      link_text: work/P44-model-routing-agent-launcher/P44-design-feature-execution-pipeline.md
+      section_path: "1"
+    - target_path: work/P59-roles-skills-remediation/P59-report-roles-skills-audit.md
+      link_text: work/P59-roles-skills-remediation/P59-report-roles-skills-audit.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "2"
+      role: requirement
+      confidence: high
+    - section_path: "2.1"
+      role: requirement
+      confidence: high
+    - section_path: "2.2"
+      role: requirement
+      confidence: high
+    - section_path: "3"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: requirement
+      confidence: high
+classified: true
+classified_at: 2026-05-08T11:20:54.782354Z
+classified_by: GPT-5.5
+classifier_version: "2026-05-08"
+classifications:
+    - section_path: "1"
+      role: rationale
+      confidence: high
+      summary: Problem, scope, exclusions, and related work for constraint card and stage-binding hydration.
+      concepts_intro:
+        - Constraint Card Renderer
+        - Stage-Binding Hydration
+        - Task Context Response
+    - section_path: "2"
+      role: requirement
+      confidence: high
+      summary: Functional and non-functional requirements for generated constraint cards and hydrated stage-binding payloads.
+      concepts_used:
+        - Constraint Card Renderer
+        - Stage-Binding Hydration
+        - Task Context Response
+    - section_path: "3"
+      role: constraint
+      confidence: high
+      summary: Design constraints on canonical inputs, injection scope, additive payloads, and P44 boundary.
+    - section_path: "4"
+      role: requirement
+      confidence: high
+      summary: Acceptance criteria mapping requirements to observable card rendering and response behaviours.
+    - section_path: "5"
+      role: requirement
+      confidence: high
+      summary: Verification methods for renderer, response injection, fallback, regression, and budget checks.
