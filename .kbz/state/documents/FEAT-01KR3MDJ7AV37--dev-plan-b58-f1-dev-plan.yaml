@@ -1,11 +1,13 @@
+approved_at: "2026-05-08T11:54:05Z"
+approved_by: sambeau
 canonical_content_hash: 639d4f68ed7813e05cf69faf6a38dc11e50525dcb94a793e51e5df9ef7bbf21c
-content_hash: 4490b311b63e8ce54450b692960946539a0f01eec59e341e535a3c32cf5889a7
+content_hash: 01e438fb73f65dc723d102351ed0c7600b3283ae3c32bde8f9e7b205dacfe06a
 created: "2026-05-08T11:51:39Z"
 created_by: sambeau
 id: FEAT-01KR3MDJ7AV37/dev-plan-b58-f1-dev-plan
 owner: FEAT-01KR3MDJ7AV37
 path: work/B58-inject-constraint-card-stage-binding-hydration/plan/B58-F1-dev-plan.md
-status: draft
+status: approved
 title: "B58-F1 Dev-Plan: Constraint Card and Stage-Binding Hydration"
 type: dev-plan
-updated: "2026-05-08T11:51:39Z"
+updated: "2026-05-08T11:54:05Z"
