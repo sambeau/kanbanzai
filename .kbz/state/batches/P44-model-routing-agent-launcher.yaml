@@ -3,7 +3,7 @@ slug: model-routing-agent-launcher
 name: Model routing and agent launcher
 status: shaping
 summary: "Feasibility design for a model provider abstraction that lets Kanbanzai launch agents directly through AI provider APIs. Includes category-based routing, thinking-level control, provider fallback chains, and token tracking. Unlocks auto-compaction and true Ralph Loop. Start with design only — do not build until P42 and P43 are stable."
-design: P44-model-routing-agent-launcher/design-p44-design-feature-execution-pipeline
+design: P44-model-routing-agent-launcher/design-p44-design-deterministic-workflow-controller
 tags:
   - model-routing
   - agent-launcher
@@ -12,7 +12,7 @@ tags:
   - capability-unlock
 created: "2026-05-03T12:24:52Z"
 created_by: sambeau
-updated: "2026-05-07T16:06:53Z"
+updated: "2026-05-08T11:12:26Z"
 next_feature_seq: 2
 order: 0
 parent: P41-opencode-ecosystem-features
