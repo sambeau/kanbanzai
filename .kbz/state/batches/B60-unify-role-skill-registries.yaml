@@ -6,5 +6,5 @@ summary: "Collapse duplicated role and skill registry tables into a generated si
 created: "2026-05-08T11:08:28Z"
 created_by: sambeau
 updated: "2026-05-08T11:08:28Z"
-next_feature_seq: 1
+next_feature_seq: 2
 parent: P59-roles-skills-remediation
