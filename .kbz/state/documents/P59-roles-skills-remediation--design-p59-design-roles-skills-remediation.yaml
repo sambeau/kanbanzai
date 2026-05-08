@@ -1,13 +1,13 @@
 approved_at: "2026-05-08T11:07:21Z"
 approved_by: sambeau
-canonical_content_hash: a689f72b28dabfbdf30c418f23d4e5951cfa8eac4af96006ec5581f4cd984a54
-content_hash: 9c25a5e80760756c7266a14eab21f8cf63e387e21ae4225035a78fd011552748
+canonical_content_hash: 31a06ce742bfdc579c37f5750f2c19c253f7f196807ed677cc73f1a365122d86
+content_hash: f9bfbd10b494ff8576b6f563ace2863878f63af3d9c31a85caac214e03e5e04f
 created: "2026-05-08T10:57:04Z"
 created_by: sambeau
 id: P59-roles-skills-remediation/design-p59-design-roles-skills-remediation
 owner: P59-roles-skills-remediation
 path: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
-status: approved
+status: draft
 title: "P59 Design: Roles & Skills Discoverability and Enforcement Remediation"
 type: design
-updated: "2026-05-08T11:07:21Z"
+updated: "2026-05-08T11:12:35Z"
