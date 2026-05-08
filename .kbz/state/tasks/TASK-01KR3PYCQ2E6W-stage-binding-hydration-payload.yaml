@@ -3,4 +3,5 @@ parent_feature: FEAT-01KR3MDJ7AV37
 slug: stage-binding-hydration-payload
 name: Stage-Binding Hydration Payload extractor
 summary: "Define BindingPayload struct in internal/card that serialises key stage binding fields: role names, skill names, effort budget text, human gate flag, prerequisites (documents, tasks), and sub-agent profile (roles, skills, topology). Implement HydrateBinding(stage string, b *binding.StageBinding) BindingPayload. Fields absent in a given binding are omitted rather than zeroed. Deliverables: internal/card/hydration.go, internal/card/hydration_test.go. Covers: REQ-006, AC-005."
-status: queued
+status: ready
+estimate: "2"
