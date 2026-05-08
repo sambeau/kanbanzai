@@ -3,5 +3,9 @@ parent_feature: FEAT-01KR3MDSZKAFG
 slug: b59-f1-t6-invariant-boundary-tests
 name: Invariant boundary tests
 summary: "Write internal/mcp/invariant_boundary_test.go with six test cases: INV-002 refusal from next and handoff, INV-003 refusal with stubbed dirty file list, INV-004 warning in context map and rendered prompt, and refusal byte-size assertions (<=1200 bytes per AC-011)."
-status: ready
+status: active
 estimate: "5"
+claimed_at: "2026-05-08T16:57:50Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-08T16:57:50Z"
+dispatched_by: sambeau
