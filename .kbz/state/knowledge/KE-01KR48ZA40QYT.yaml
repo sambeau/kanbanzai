@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "wrapWithRecovery in internal/mcp/handler.go is the canonical panic recovery wrapper for MCP handlers. It is applied as the outermost layer in wrapAllTools (server.go) wrapping hook.Wrap. Recovery converts panic to ActionError with code 'internal_panic'. ActionError (sideeffect.go) produces the standard 2.0 JSON error shape used across all MCP tools."
+created: "2026-05-08T17:08:13Z"
+created_by: unknown
+id: KE-01KR48ZA40QYT
+learned_from: TASK-01KR47D68REWB
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - mcp
+  - resilience
+  - panic-recovery
+tier: 3
+topic: wrap-with-recovery-mcp-pattern
+ttl_days: 30
+updated: "2026-05-08T17:08:13Z"
+use_count: 0

@@ -3,8 +3,15 @@ parent_feature: FEAT-01KR46PKHPVWS
 slug: failure-resilience-req-004-wrapwithrecovery-pattern
 name: Extract wrapWithRecovery and wire via wrapAllTools
 summary: "REQ-004+005: Extract `wrapWithRecovery` helper in handler.go. Wire via `wrapAllTools` in actionlog/hook.go to wrap all MCP handlers with panic recovery."
-status: active
+status: done
+files_planned:
+  - internal/mcp/handler.go
+  - internal/mcp/handler_test.go
+  - internal/mcp/server.go
+completed: "2026-05-08T17:08:13Z"
 claimed_at: "2026-05-08T16:50:02Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T16:50:02Z"
 dispatched_by: sambeau
+completion_summary: "Created internal/mcp/handler.go with wrapWithRecovery helper (REQ-005). Updated wrapAllTools in server.go to apply wrapWithRecovery as outermost layer around every MCP handler (REQ-004). Added handler_test.go with 3 tests covering panic→internal_panic conversion, normal pass-through, and tool-name inclusion in diagnostic message."
+verification: "go test ./internal/mcp/ -run TestWrapWithRecovery -v: all 3 tests pass. go build ./internal/mcp/...: succeeds. Full package test suite cannot run due to parallel in-progress changes from other agents (REQ-001 EntityService.Get signature, REQ-003 Pipeline.Run signature) — these are pre-existing compilation issues caused by concurrent WIP, not by this task's changes."

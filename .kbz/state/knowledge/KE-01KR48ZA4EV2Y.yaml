@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[moderate] workflow-friction: Parallel agents working in the same worktree left uncommitted changes that broke the full test suite compilation (EntityService.Get and Pipeline.Run signature changes without all call-sites updated). Tests for my specific task passed, but the package-level test run reported build failure. Suggestion: When a task changes a widely-used interface signature, it should update all call sites in the same commit rather than leaving them for later. Otherwise parallel agents face unexplained build failures."
+created: "2026-05-08T17:08:13Z"
+created_by: unknown
+id: KE-01KR48ZA4EV2Y
+learned_from: TASK-01KR47D68REWB
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - workflow-friction
+tier: 3
+topic: retro-task-01kr47d68rewb-2
+ttl_days: 30
+updated: "2026-05-08T17:08:13Z"
+use_count: 0
