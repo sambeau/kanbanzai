@@ -1,11 +1,13 @@
+approved_at: "2026-05-08T11:46:29Z"
+approved_by: sambeau
 canonical_content_hash: ecaf7db714cff55191cd8c966877d231bad6a0d826ec21b3b0c4296dcf54f33e
-content_hash: ecaf7db714cff55191cd8c966877d231bad6a0d826ec21b3b0c4296dcf54f33e
+content_hash: c9cb672ea0f711fdb96495f4b8b1815a54eafc5842edcfa52203d56fb69286dc
 created: "2026-05-08T11:19:54Z"
 created_by: sambeau
 id: FEAT-01KR3MDJ7AV37/spec-b58-f1-spec-constraint-card-stage-binding-hydration
 owner: FEAT-01KR3MDJ7AV37
 path: work/B58-inject-constraint-card-stage-binding-hydration/B58-F1-spec-constraint-card-stage-binding-hydration.md
-status: draft
+status: approved
 title: "B58-F1 Specification: Constraint Card and Stage-Binding Hydration"
 type: spec
-updated: "2026-05-08T11:22:16Z"
+updated: "2026-05-08T11:46:29Z"
