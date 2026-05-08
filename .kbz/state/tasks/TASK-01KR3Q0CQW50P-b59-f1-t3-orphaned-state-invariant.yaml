@@ -3,9 +3,16 @@ parent_feature: FEAT-01KR3MDSZKAFG
 slug: b59-f1-t3-orphaned-state-invariant
 name: Enforce orphaned-workflow-state invariant in next task-claim
 summary: "Add pre-claim dirty-state check to nextClaimMode using a new internal/git/dirty.go helper (CheckKbzDirty). If .kbz/state/, .kbz/index/, or .kbz/context/ are dirty, refuse with INV-003 refusal + file list. Check is skipped on reclaim paths."
-status: active
+status: done
 estimate: "3"
+files_planned:
+  - internal/git/dirty.go
+  - internal/git/dirty_test.go
+  - internal/mcp/next_tool.go
+completed: "2026-05-08T16:56:25Z"
 claimed_at: "2026-05-08T16:40:25Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T16:40:25Z"
 dispatched_by: sambeau
+completion_summary: "Delivered internal/git/dirty.go with CheckKbzDirty function, dirty_test.go with 8 passing tests, and wired checkKbzDirtyFunc into next_tool.go nextClaimMode for the INV-003 pre-claim orphaned-state check. The worktree already had T2's and T4's commits covering the next_tool.go wiring and dirty.go creation — my implementation was identical to the already-committed code, confirming correctness. All TestCheckKbzDirty tests pass (8/8). All TestNext* tests pass."
+verification: "go test ./internal/git/... -run TestCheckKbzDirty: 8/8 PASS. go test ./internal/mcp/... -run TestNext|TestNextClaimMode|TestNextContextToMap: all PASS. go build ./internal/git/... ./internal/mcp/...: clean."

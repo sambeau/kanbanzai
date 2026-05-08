@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[moderate] workflow-friction: T2 and T4 both preemptively added T3 deliverables to their own commits (next_tool.go wiring and dirty.go respectively), leaving T3 with nothing to commit. The disjoint-files coordination note in the task context partially anticipated this but didn't fully prevent it."
+created: "2026-05-08T16:56:25Z"
+created_by: unknown
+id: KE-01KR489PXDGPN
+learned_from: TASK-01KR3Q0CQW50P
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - workflow-friction
+tier: 3
+topic: retro-task-01kr3q0cqw50p-2
+ttl_days: 30
+updated: "2026-05-08T16:56:25Z"
+use_count: 0
