@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[moderate] workflow-friction: Shared worktree had unstaged changes from multiple parallel agents (REQ-001 in particular had partial entitySvc.Get changes causing service compile errors). Had to filter error output to confirm context package was clean. git stash/pop during pull-rebase also mixed in other agents' work. Suggestion: When multiple agents share a worktree, each should commit their files before the next agent starts. A worktree-per-task model would eliminate this noise entirely."
+created: "2026-05-08T17:10:19Z"
+created_by: unknown
+id: KE-01KR4935N6VPH
+learned_from: TASK-01KR47D68QYS6
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - workflow-friction
+tier: 3
+topic: retro-task-01kr47d68qys6-2
+ttl_days: 30
+updated: "2026-05-08T17:10:19Z"
+use_count: 0
