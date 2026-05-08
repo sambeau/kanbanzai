@@ -73,7 +73,9 @@ func nextTool(
 				"context yourself. Call BEFORE handoff when delegating to sub-agents, or before starting "+
 				"work directly. For dashboard views and progress metrics, use status instead. "+
 				"When id is provided, the task transitions ready → active (claim). "+
-				"When id is omitted, no state changes occur (read-only queue inspection).",
+				"When id is omitted, no state changes occur (read-only queue inspection). "+
+				"Claim before work begins — do not start implementing without a claimed task. "+
+				"Orchestrators must dispatch via handoff(task_id), not direct spawn_agent (INV-001).",
 		),
 		mcp.WithString("id", mcp.Description(
 			"Task ID (TASK-... or T-...), Feature ID (FEAT-...), or Plan ID to claim. "+

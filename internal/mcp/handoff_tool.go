@@ -67,7 +67,9 @@ func handoffTool(
 				"the sub-agent. Read-only: does not modify task status or claim the task. "+
 				"For structured JSON context instead of a rendered Markdown prompt, use next(id) which "+
 				"returns machine-readable data. Do NOT use to claim tasks — use next for that. "+
-				"Accepts tasks in active, ready, or needs-rework status.",
+				"Accepts tasks in active, ready, or needs-rework status. "+
+				"Use INSTEAD OF calling spawn_agent directly — this is the only safe dispatch path; "+
+				"direct spawn_agent bypasses context assembly and stage gate enforcement (INV-001).",
 		),
 		mcp.WithString("task_id",
 			mcp.Required(),
