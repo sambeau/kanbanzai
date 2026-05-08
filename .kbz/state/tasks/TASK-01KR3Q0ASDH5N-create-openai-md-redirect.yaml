@@ -1,0 +1,6 @@
+id: TASK-01KR3Q0ASDH5N
+parent_feature: FEAT-01KR3MEYRQ9RG
+slug: create-openai-md-redirect
+name: Create OPENAI.md redirect to AGENTS.md
+summary: "T3 — Create OPENAI.md at the repository root as a short redirect to AGENTS.md. The file must not duplicate the full instruction corpus, must be no more than 20 lines, and must include a one-sentence explanation of why it exists (GPT-class hosts probe for OPENAI.md by convention). Covers REQ-006, REQ-NF-002. Acceptance: file exists at repo root, wc -l <= 20, contains reference to AGENTS.md, no duplicated corpus."
+status: queued
