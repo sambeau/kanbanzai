@@ -1,0 +1,6 @@
+id: TASK-01KR3Q0ANRJ6K
+parent_feature: FEAT-01KR3MDSZKAFG
+slug: b59-f1-t2-registered-entity-invariant
+name: Enforce registered-entity invariant in next and handoff
+summary: "Update next_tool.go and handoff_tool.go to emit INV-002 structured refusal (code, operation, reason, next_action) when an entity ID is not found in the store. Replace existing ad-hoc not_found error strings with invariants.Format calls."
+status: queued
