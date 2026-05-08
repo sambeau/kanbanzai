@@ -3,8 +3,14 @@ parent_feature: FEAT-01KR3MES5ZJ11
 slug: instruction-corpus-cleanup-align-top-level-instruction-files-on-the-no-stash-rule
 name: Align top-level instruction files on the no-stash rule
 summary: Align top-level instruction files on the no-stash rule
-status: active
+status: done
+files_planned:
+  - .github/copilot-instructions.md
+  - CLAUDE.md
+completed: "2026-05-08T16:20:44Z"
 claimed_at: "2026-05-08T11:56:58Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T11:56:58Z"
 dispatched_by: sambeau
+completion_summary: "Replaced \"Commit or stash previous work first\" with the canonical no-stash rule in both .github/copilot-instructions.md and CLAUDE.md. Verified AGENTS.md already uses correct \"do not stash\" language. No top-level instruction file now permits git stash as a valid workflow action."
+verification: "Ran grep -n 'stash' across all three top-level instruction files. copilot-instructions.md line 132 and CLAUDE.md line 54 now say 'do not use git stash'; AGENTS.md already had correct 'do not stash' language throughout. No remaining 'commit or stash' permissive alternative."
