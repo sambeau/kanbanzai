@@ -3,8 +3,14 @@ parent_feature: FEAT-01KR3MES5ZJ11
 slug: instruction-corpus-cleanup-replace-stray-skill-md-files-with-directory-indexes
 name: Replace stray SKILL.md files with directory indexes
 summary: Replace stray SKILL.md files with directory indexes
-status: active
+status: done
+files_planned:
+  - .kbz/skills/README.md
+  - .agents/skills/README.md
+completed: "2026-05-08T16:23:56Z"
 claimed_at: "2026-05-08T11:56:58Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T11:56:58Z"
 dispatched_by: sambeau
+completion_summary: "Removed .kbz/skills/SKILL.md and .agents/skills/SKILL.md (both were stray copies of the prompt-engineering skill at the wrong directory level). Created .kbz/skills/README.md and .agents/skills/README.md as plain directory indexes listing real */SKILL.md subdirectories. Neither README uses name:, triggers:, or ## Procedure headings. Satisfies AC-001 (REQ-001) and AC-002 (REQ-002)."
+verification: "Confirmed: .kbz/skills/SKILL.md and .agents/skills/SKILL.md deleted via git rm. README files present with correct content (directory table, no skill front-matter). Committed as 65dce9f5 on feature/FEAT-01KR3MES5ZJ11-instruction-corpus-cleanup. -914 lines removed."
