@@ -1,0 +1,14 @@
+confidence: "0.5"
+content: "[minor] worked-well: kanbanzai_edit_file with entity_id scoped the edit cleanly to the worktree on first attempt. The edit was a pure comment-only change (no logic) so no test failures were possible from the change itself."
+created: "2026-05-08T17:01:26Z"
+created_by: unknown
+id: KE-01KR48JXCTZYW
+learned_from: TASK-01KR47B9MT83W
+miss_count: 0
+scope: project
+status: contributed
+tier: 3
+topic: retro-task-01kr47b9mt83w
+ttl_days: 30
+updated: "2026-05-08T17:01:26Z"
+use_count: 0

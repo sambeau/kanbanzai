@@ -3,8 +3,13 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-req-001-internal-mcp-handoff-tool-go-hea
 name: "`internal/mcp/handoff_tool.go` header comment must"
 summary: "REQ-001: `internal/mcp/handoff_tool.go` header comment must accurately describe the pipeline-3.0 behaviour (unconditional pipeline, no legacy fallback)."
-status: active
+status: done
+files_planned:
+  - internal/mcp/handoff_tool.go
+completed: "2026-05-08T17:01:26Z"
 claimed_at: "2026-05-08T16:50:09Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T16:50:09Z"
 dispatched_by: sambeau
+completion_summary: "Updated handoff_tool.go header comment to accurately describe pipeline-3.0 behaviour. Replaced imprecise step-function references (stepValidateLifecycle, stepLookupBinding) with behavioural description: pipeline assembles role profile, skill procedure, knowledge entries, and tool hints into an attention-curve-ordered prompt. No mention of deprecated fallback. Build and internal/mcp tests pass."
+verification: go build ./... passes; go test ./internal/mcp/... passes (ok 10.704s); header comment verified by inspection against AC-001 criteria.
