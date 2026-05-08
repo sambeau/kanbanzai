@@ -3,10 +3,16 @@ parent_feature: FEAT-01KR46PKHPVSH
 slug: config-safety-req-002-the-binding-loader-must-inspect
 name: "The binding loader must inspect `schema_version` first and"
 summary: "REQ-002: The binding loader must inspect `schema_version` first and dispatch to the appropriate decoder. Unsupported versions must produce a clear, structured error."
-status: active
+status: done
 depends_on:
   - TASK-01KR47D686PWJ
+files_planned:
+  - internal/binding/loader.go
+  - internal/binding/loader_test.go
+completed: "2026-05-08T17:38:52Z"
 claimed_at: "2026-05-08T17:19:15Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T17:19:15Z"
 dispatched_by: sambeau
+completion_summary: "Implemented REQ-002: binding loader inspects schema_version first and dispatches to appropriate decoder. Added BindingSupportedSchemaVersion=2 constant, ErrUnsupportedSchemaVersion sentinel error. LoadBindingFile now extracts and validates schema_version in Phase 1 before structural checks. Unsupported versions (>2) return structured error. Backward compatible with files lacking schema_version."
+verification: "All binding tests pass (16 LoadBindingFile cases, TestErrUnsupportedSchemaVersion). Verified: AC-002 (valid v2 decodes), AC-003 (version 99 returns structured error wrapping ErrUnsupportedSchemaVersion with version and supported version in message), AC-004 (unknown field rejected by KnownFields). Backward compat: files without schema_version or with version 0 load normally. All callers (mcp, gate) compile successfully."

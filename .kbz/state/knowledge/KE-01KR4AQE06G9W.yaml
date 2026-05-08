@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[moderate] tool-friction: write_file with entity_id resolves paths relative to worktree root (which is the repo root). Using a project-prefixed path like 'kanbanzai/internal/binding/loader.go' creates a nested kanbanzai/ subdirectory. The correct path is just 'internal/binding/loader.go'. Suggestion: Add a note to AGENTS.md or the implement-task skill clarifying that entity_id-scoped paths are relative to the repo root, not prefixed by the project name."
+created: "2026-05-08T17:38:52Z"
+created_by: unknown
+id: KE-01KR4AQE06G9W
+learned_from: TASK-01KR47D688P0S
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - tool-friction
+tier: 3
+topic: retro-task-01kr47d688p0s
+ttl_days: 30
+updated: "2026-05-08T17:38:52Z"
+use_count: 0
