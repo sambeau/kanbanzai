@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[minor] worked-well: write_file with entity_id scoped writes directly to the worktree with no friction — all three files landed cleanly on first attempt."
+created: "2026-05-08T17:04:13Z"
+created_by: unknown
+id: KE-01KR48R007PWE
+learned_from: TASK-01KR3PX9J6DW5
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - worked-well
+tier: 3
+topic: retro-task-01kr3px9j6dw5
+ttl_days: 30
+updated: "2026-05-08T17:04:13Z"
+use_count: 0
