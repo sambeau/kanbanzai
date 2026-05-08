@@ -3,8 +3,14 @@ parent_feature: FEAT-01KR3MES5ZJ11
 slug: instruction-corpus-cleanup-de-duplicate-anti-pattern-prose-between-skills-and-roles
 name: De-duplicate anti-pattern prose between skills and roles
 summary: De-duplicate anti-pattern prose between skills and roles
-status: active
+status: done
+files_planned:
+  - .kbz/skills/orchestrate-development/SKILL.md
+  - .kbz/skills/review-code/SKILL.md
+completed: "2026-05-08T16:27:31Z"
 claimed_at: "2026-05-08T11:56:58Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T11:56:58Z"
 dispatched_by: sambeau
+completion_summary: "De-duplicated anti-pattern prose between skills and roles. (1) orchestrate-development/SKILL.md \"Pre-delegation Code Investigation\" duplicates orchestrator.yaml — removed, replaced with one-line cross-reference. (2) review-code/SKILL.md had 4 anti-patterns duplicating reviewer.yaml (Rubber-Stamp, Severity Inflation, Dimension Bleed, Prose Commentary) — removed, replaced with blockquote reference. \"Missing Spec Anchor\" was unique and kept. Net: -114 lines across 2 files."
+verification: "grep confirmed: Pre-delegation Code Investigation prose absent from orchestrate-development/SKILL.md (replaced by cross-reference to orchestrator.yaml); 4 duplicated section headers absent from review-code/SKILL.md (replaced by blockquote reference to reviewer.yaml); Missing Spec Anchor retained. Committed to worktree branch."

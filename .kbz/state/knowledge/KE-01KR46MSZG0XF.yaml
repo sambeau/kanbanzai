@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[minor] worked-well: Systematic comparison of skill anti-pattern sections against role YAML anti_patterns was straightforward. The Detect/Because/Resolve structure made near-verbatim comparison fast and unambiguous."
+created: "2026-05-08T16:27:31Z"
+created_by: unknown
+id: KE-01KR46MSZG0XF
+learned_from: TASK-01KR3PZCRM6GW
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - worked-well
+tier: 3
+topic: retro-task-01kr3pzcrm6gw
+ttl_days: 30
+updated: "2026-05-08T16:27:31Z"
+use_count: 0
