@@ -1,0 +1,11 @@
+canonical_content_hash: 7d3b05b7e0865023e2fe83d9c85960f1f1aaab8908223b800d81eddc254d580f
+content_hash: 7d3b05b7e0865023e2fe83d9c85960f1f1aaab8908223b800d81eddc254d580f
+created: "2026-05-08T16:36:32Z"
+created_by: sambeau
+id: FEAT-01KR46PKHSWQF/dev-plan-p61-dev-plan-perf-hygiene
+owner: FEAT-01KR46PKHSWQF
+path: work/P61-handoff-resilience-binding-hardening/P61-dev-plan-perf-hygiene.md
+status: draft
+title: "Dev-Plan: Performance Hygiene (Track C)"
+type: dev-plan
+updated: "2026-05-08T16:36:32Z"

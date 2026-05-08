@@ -5,6 +5,7 @@ parent: B63-p61-impl
 status: dev-planning
 summary: "Update handoff documentation to match implementation: fix handoff_tool.go header, assembly.go header, AGENTS.md, and copilot-instructions.md. Open planning discussion for missing capabilities."
 spec: FEAT-01KR46PKHMG4J/spec-p61-spec-doc-reconciliation
+dev_plan: FEAT-01KR46PKHMG4J/dev-plan-p61-dev-plan-doc-reconciliation
 created: "2026-05-08T16:28:30Z"
 created_by: sambeau
 display_id: B63-F1

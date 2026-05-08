@@ -5,6 +5,7 @@ parent: B63-p61-impl
 status: dev-planning
 summary: Propagate context.Context through pipeline and git helpers (T2) and apply panic-recovery pattern to all MCP handlers (T4). Add per-tool timeout budgets and extract wrapWithRecovery helper.
 spec: FEAT-01KR46PKHPVWS/spec-p61-spec-failure-resilience
+dev_plan: FEAT-01KR46PKHPVWS/dev-plan-p61-dev-plan-failure-resilience
 created: "2026-05-08T16:28:30Z"
 created_by: sambeau
 display_id: B63-F2

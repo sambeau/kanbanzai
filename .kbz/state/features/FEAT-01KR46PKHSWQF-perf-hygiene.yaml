@@ -5,6 +5,7 @@ parent: B63-p61-impl
 status: dev-planning
 summary: Knowledge entry cache with generation token (T3) and de-duplicate entitySvc.Get in handoff handler (T7). Generation-based cache invalidation for KnowledgeService.Surface.
 spec: FEAT-01KR46PKHSWQF/spec-p61-spec-perf-hygiene
+dev_plan: FEAT-01KR46PKHSWQF/dev-plan-p61-dev-plan-perf-hygiene
 created: "2026-05-08T16:28:30Z"
 created_by: sambeau
 display_id: B63-F3
