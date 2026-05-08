@@ -3,9 +3,17 @@ parent_feature: FEAT-01KR3MDJ7AV37
 slug: inject-card-into-handoff
 name: Inject constraint card and stage binding into handoff
 summary: "Prepend the rendered constraint card to the prompt string assembled by kbzctx.RenderPrompt(result) in internal/mcp/handoff_tool.go. Resolve role and binding for the renderer directly in the handoff handler (using binding registry + role store) after pipeline.Run() — do not modify pipeline internals. Also add stage_binding as a new top-level field in the handoff JSON response. All existing fields (task_id, display_id, entity_ref, prompt, context_metadata) must remain. Update HandoffTools signature and server.go wiring if new dependencies are needed. Deliverables: modified handoff_tool.go, updated server.go wiring if needed, internal/mcp/handoff_tool_constraint_test.go. Covers: REQ-005, REQ-010, AC-004, AC-009 (partial)."
-status: active
+status: done
 estimate: "3"
+files_planned:
+  - internal/mcp/handoff_tool.go
+  - internal/mcp/handoff_tool_constraint_test.go
+  - internal/mcp/handoff_tool_test.go
+  - internal/mcp/integration_test.go
+completed: "2026-05-08T17:38:45Z"
 claimed_at: "2026-05-08T17:21:11Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T17:21:11Z"
 dispatched_by: sambeau
+completion_summary: "Injected constraint card and stage-binding hydration into handoff responses. Updated HandoffTools/handoffTool signatures to accept bf, roleStore, constraintReg. After pipeline.Run(), resolved role and binding directly in the handler — no pipeline internals changed. Prepended rendered card to prompt string. Added stage_binding top-level field. All existing fields preserved. Created handoff_tool_constraint_test.go with 8 tests. All 37 handoff tests and full MCP suite pass."
+verification: All 8 new constraint card tests pass. All 29 existing handoff tests pass. Full MCP test suite passes (22.5s). Card package tests pass. Compilation succeeds.
