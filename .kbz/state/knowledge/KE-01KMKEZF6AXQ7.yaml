@@ -3,10 +3,10 @@ content: "Entity lifecycle state machines are enforced by internal/validate/life
 created: "2026-03-25T21:38:58Z"
 created_by: sambeau
 id: KE-01KMKEZF6AXQ7
-last_accessed_at: "2026-05-08T16:48:58Z"
+last_accessed_at: "2026-05-08T16:49:01Z"
 learned_from: P1-phase-4-orchestration
 miss_count: 0
-recent_use_count: 402
+recent_use_count: 405
 scope: project
 status: confirmed
 tags:
