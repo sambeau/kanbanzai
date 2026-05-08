@@ -1,11 +1,13 @@
+approved_at: "2026-05-08T11:46:30Z"
+approved_by: sambeau
 canonical_content_hash: 3f0f4b91e825487934a082f5a0a1c4c129bf1a5161fb635ef2d9230ac7887632
-content_hash: 3f0f4b91e825487934a082f5a0a1c4c129bf1a5161fb635ef2d9230ac7887632
+content_hash: b04e4e2f8d087a0c575469cbe11b9ca98a91f6e33759b80cd4edae56ff759d0f
 created: "2026-05-08T11:19:54Z"
 created_by: sambeau
 id: FEAT-01KR3MDSZKAFG/spec-b59-f1-spec-high-violation-mcp-rule-invariants
 owner: FEAT-01KR3MDSZKAFG
 path: work/B59-enforce-high-violation-rules-mcp-invariants/B59-F1-spec-high-violation-mcp-rule-invariants.md
-status: draft
+status: approved
 title: "B59-F1 Specification: High-Violation MCP Rule Invariants"
 type: spec
-updated: "2026-05-08T11:22:52Z"
+updated: "2026-05-08T11:46:30Z"
