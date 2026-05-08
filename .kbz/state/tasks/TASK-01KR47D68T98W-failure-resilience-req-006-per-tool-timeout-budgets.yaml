@@ -3,10 +3,13 @@ parent_feature: FEAT-01KR46PKHPVWS
 slug: failure-resilience-req-006-per-tool-timeout-budgets
 name: Add per-tool 5s timeout budgets at handler boundary
 summary: "REQ-006: Per-tool timeout budgets must be enforced at the MCP handler boundary using `context.WithTimeout` with a 5-second default budget."
-status: active
+status: done
 depends_on:
   - TASK-01KR47D68REWB
+completed: "2026-05-08T17:28:19Z"
 claimed_at: "2026-05-08T17:19:20Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T17:19:20Z"
 dispatched_by: sambeau
+completion_summary: "Added wrapWithTimeout(5s, handler) helper in internal/mcp/handler.go and wired it into wrapAllTools in server.go. The wrapping order is: wrapWithRecovery → wrapWithTimeout → hook.Wrap. Tests cover within-budget pass-through and deadline-exceeded propagation."
+verification: "gofmt confirms both handler.go and handler_test.go parse correctly. Full package tests can't run due to pre-existing entity_tool.go syntax errors from parallel work in the shared worktree."
