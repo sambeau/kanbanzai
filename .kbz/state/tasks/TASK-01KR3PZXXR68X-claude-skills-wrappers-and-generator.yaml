@@ -3,8 +3,20 @@ parent_feature: FEAT-01KR3MEYRQ9RG
 slug: claude-skills-wrappers-and-generator
 name: Create .claude/skills/ wrappers and generator
 summary: "T1 — Author a generator script that produces Anthropic-format SKILL.md wrappers under .claude/skills/<skill>/SKILL.md for the seven required skills (orchestrate-development, implement-task, kanbanzai-getting-started, kanbanzai-workflow, write-spec, write-design, review-code). Each wrapper needs YAML frontmatter (name, single-line description), a canonical-path pointer, and max 80 lines. Files must be regular copies (not symlinks). Deliverables: seven wrapper files plus an executable generator script. Covers REQ-001 through REQ-004, REQ-NF-001, REQ-NF-004, REQ-NF-005."
-status: active
+status: done
+files_planned:
+  - .claude/skills/orchestrate-development/SKILL.md
+  - .claude/skills/implement-task/SKILL.md
+  - .claude/skills/kanbanzai-getting-started/SKILL.md
+  - .claude/skills/kanbanzai-workflow/SKILL.md
+  - .claude/skills/write-spec/SKILL.md
+  - .claude/skills/write-design/SKILL.md
+  - .claude/skills/review-code/SKILL.md
+  - scripts/gen-claude-skills.sh
+completed: "2026-05-08T16:23:36Z"
 claimed_at: "2026-05-08T11:56:59Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T11:56:59Z"
 dispatched_by: sambeau
+completion_summary: "Created seven Anthropic-format .claude/skills/<skill>/SKILL.md wrappers plus an executable generator script at scripts/gen-claude-skills.sh. Each wrapper is 14 lines (well under 80), has valid YAML frontmatter with name and single-line description, a canonical-path pointer comment, and a usage trigger sentence. All files are regular files (not symlinks). Generator tested and regenerates identical output. Committed as feat(TASK-01KR3PZXXR68X) on the feature branch."
+verification: "wc -l: all 7 wrappers are 14 lines. test ! -L: no symlinks. Frontmatter inspected: each has name + single-line description. generator bash scripts/gen-claude-skills.sh: exits 0, writes all 7 files. git shows mode 100755 for the script."
