@@ -1,0 +1,11 @@
+canonical_content_hash: 771add33e09a45fa5f3461039f4f721d359195fd5cebf2d79f01beb305f83ac0
+content_hash: 771add33e09a45fa5f3461039f4f721d359195fd5cebf2d79f01beb305f83ac0
+created: "2026-05-08T16:34:37Z"
+created_by: sambeau
+id: FEAT-01KR46PKHPVWS/spec-p61-spec-failure-resilience
+owner: FEAT-01KR46PKHPVWS
+path: work/P61-handoff-resilience-binding-hardening/P61-spec-failure-resilience.md
+status: draft
+title: "Specification: Failure-Mode Resilience (Track B)"
+type: spec
+updated: "2026-05-08T16:34:37Z"

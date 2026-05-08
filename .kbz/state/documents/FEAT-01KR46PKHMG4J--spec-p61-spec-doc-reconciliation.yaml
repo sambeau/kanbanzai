@@ -1,0 +1,11 @@
+canonical_content_hash: abb83e61b76c07a31ecb14ae9453392d3e501475271e7ad0d9fa480cfea18f15
+content_hash: abb83e61b76c07a31ecb14ae9453392d3e501475271e7ad0d9fa480cfea18f15
+created: "2026-05-08T16:34:37Z"
+created_by: sambeau
+id: FEAT-01KR46PKHMG4J/spec-p61-spec-doc-reconciliation
+owner: FEAT-01KR46PKHMG4J
+path: work/P61-handoff-resilience-binding-hardening/P61-spec-doc-reconciliation.md
+status: draft
+title: "Specification: Documentation Reconciliation (Track D)"
+type: spec
+updated: "2026-05-08T16:34:37Z"

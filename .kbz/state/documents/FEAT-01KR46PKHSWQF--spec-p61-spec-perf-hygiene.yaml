@@ -1,0 +1,11 @@
+canonical_content_hash: 29efe5ec28c0f4c7723beccc60c721c2e72d4f6b9cbe20531d4e4727c7e49dbf
+content_hash: 29efe5ec28c0f4c7723beccc60c721c2e72d4f6b9cbe20531d4e4727c7e49dbf
+created: "2026-05-08T16:34:37Z"
+created_by: sambeau
+id: FEAT-01KR46PKHSWQF/spec-p61-spec-perf-hygiene
+owner: FEAT-01KR46PKHSWQF
+path: work/P61-handoff-resilience-binding-hardening/P61-spec-perf-hygiene.md
+status: draft
+title: "Specification: Performance Hygiene (Track C)"
+type: spec
+updated: "2026-05-08T16:34:37Z"
