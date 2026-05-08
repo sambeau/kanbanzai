@@ -3,10 +3,13 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-req-003-agents-md-handoff-section-must-m-tests
 name: "Test `AGENTS.md` handoff section must match current"
 summary: "Write tests covering: REQ-003: `AGENTS.md` handoff section must match current implementation — remove claims of spec sections, conflict annotations, and graph traversal that do not exist."
-status: active
+status: done
 depends_on:
   - TASK-01KR47B9N2R91
+completed: "2026-05-08T17:39:21Z"
 claimed_at: "2026-05-08T17:19:26Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T17:19:26Z"
 dispatched_by: sambeau
+completion_summary: "Added TestAgentsMD_HandoffSection_NoFalseClaims to internal/kbzinit/agents_md_test.go. The test verifies AC-003: (1) no unqualified spec section claims for handoff, (2) no conflict annotation claims, (3) no graph traversal claims, (4) context packet definition correctly distinguishes handoff from next, (5) Code Graph section denies graph_project for handoff. Test passes on corrected AGENTS.md and catches all 5 false claims in pre-fix version."
+verification: "go test ./internal/kbzinit/ -run \"HandoffSection|NoFalseHandoff\" passes. Verified detection by running against e49fa858^ AGENTS.md — caught all 5 false claims. go build ./... passes."
