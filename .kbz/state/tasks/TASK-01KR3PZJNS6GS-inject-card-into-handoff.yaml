@@ -3,7 +3,7 @@ parent_feature: FEAT-01KR3MDJ7AV37
 slug: inject-card-into-handoff
 name: Inject constraint card and stage binding into handoff
 summary: "Prepend the rendered constraint card to the prompt string assembled by kbzctx.RenderPrompt(result) in internal/mcp/handoff_tool.go. Resolve role and binding for the renderer directly in the handoff handler (using binding registry + role store) after pipeline.Run() — do not modify pipeline internals. Also add stage_binding as a new top-level field in the handoff JSON response. All existing fields (task_id, display_id, entity_ref, prompt, context_metadata) must remain. Update HandoffTools signature and server.go wiring if new dependencies are needed. Deliverables: modified handoff_tool.go, updated server.go wiring if needed, internal/mcp/handoff_tool_constraint_test.go. Covers: REQ-005, REQ-010, AC-004, AC-009 (partial)."
-status: active
+status: ready
 estimate: "3"
 claimed_at: "2026-05-08T16:57:38Z"
 dispatched_to: unspecified

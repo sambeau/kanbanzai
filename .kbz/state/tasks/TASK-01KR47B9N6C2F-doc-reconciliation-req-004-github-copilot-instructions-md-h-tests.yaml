@@ -3,6 +3,10 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-req-004-github-copilot-instructions-md-h-tests
 name: "Test `.github/copilot-instructions.md` handoff section must"
 summary: "Write tests covering: REQ-004: `.github/copilot-instructions.md` handoff section must match current implementation — remove or qualify design-intent capabilities not yet built."
-status: ready
+status: active
 depends_on:
   - TASK-01KR47B9N5RBR
+claimed_at: "2026-05-08T17:19:22Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-08T17:19:22Z"
+dispatched_by: sambeau
