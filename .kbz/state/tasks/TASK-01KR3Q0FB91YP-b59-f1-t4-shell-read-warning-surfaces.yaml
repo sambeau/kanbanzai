@@ -4,3 +4,4 @@ slug: b59-f1-t4-shell-read-warning-surfaces
 name: Add shell-read warning to task-context assembly surfaces
 summary: Inject workflow_state_warning field into nextContextToMap (assembly.go) and add a rendered Invariants section to RenderPrompt containing INV-004 text. Update next and handoff tool description strings with a one-sentence INV-004 reference.
 status: ready
+estimate: "2"

@@ -4,3 +4,4 @@ slug: b59-f1-t6-invariant-boundary-tests
 name: Invariant boundary tests
 summary: "Write internal/mcp/invariant_boundary_test.go with six test cases: INV-002 refusal from next and handoff, INV-003 refusal with stubbed dirty file list, INV-004 warning in context map and rendered prompt, and refusal byte-size assertions (<=1200 bytes per AC-011)."
 status: ready
+estimate: "5"
