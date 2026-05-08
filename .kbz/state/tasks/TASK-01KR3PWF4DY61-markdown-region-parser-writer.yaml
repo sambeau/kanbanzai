@@ -3,8 +3,14 @@ parent_feature: FEAT-01KR3MEJGGMT5
 slug: markdown-region-parser-writer
 name: Markdown region parser and writer
 summary: "Implement the region parser and writer in internal/registry/region.go. Locates named generated regions in a Markdown file using <!-- registry-gen:begin:REGION-NAME source=... --> / <!-- registry-gen:end:REGION-NAME --> markers, replaces inner content, and detects structural errors. Writer preserves all bytes before opening marker and after closing marker byte-for-byte. Parser must return a clear error (with file path and marker name) for: missing begin/end marker, duplicated marker, nested regions. Check mode returns (stale bool, region string, file string). Running sync twice on unchanged input must produce identical bytes. Deliverables: internal/registry/region.go, internal/registry/region_test.go. Tests cover: normal replace, byte-for-byte prose preservation, missing marker, duplicated marker, nested marker, idempotency. Spec requirements: REQ-003, REQ-004, REQ-005, REQ-006, REQ-010, REQ-NF-001. Verifies AC-002, AC-003, AC-007, AC-009."
-status: active
+status: done
+files_planned:
+  - internal/registry/region.go
+  - internal/registry/region_test.go
+completed: "2026-05-08T16:25:03Z"
 claimed_at: "2026-05-08T11:56:57Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T11:56:57Z"
 dispatched_by: sambeau
+completion_summary: "Implemented Markdown region parser and writer in internal/registry/region.go. ParseRegions locates named generated regions using <!-- registry-gen:begin:NAME source=... --> / <!-- registry-gen:end:NAME --> markers with full error detection. SyncRegion replaces content between markers preserving surrounding bytes byte-for-byte. CheckRegion returns (stale, region, file, error). All 16 region tests pass alongside T1's 8 extractor tests (24 total)."
+verification: "go test ./internal/registry/ -v -count=1 → 24/24 tests pass including TestSyncRegion_PreservesSurroundingProse (byte-for-byte preservation), TestSyncRegion_Idempotency, TestParseRegions_MissingEndMarker, TestParseRegions_MissingBeginMarker, TestParseRegions_DuplicatedMarker, TestParseRegions_NestedMarker."
