@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[minor] worked-well: write_file with entity_id correctly scoped writes to the worktree on first attempt — no shell escaping friction."
+created: "2026-05-08T16:49:28Z"
+created_by: unknown
+id: KE-01KR47X0CXKAR
+learned_from: TASK-01KR3PYR0BR41
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - worked-well
+tier: 3
+topic: retro-task-01kr3pyr0br41
+ttl_days: 30
+updated: "2026-05-08T16:49:28Z"
+use_count: 0

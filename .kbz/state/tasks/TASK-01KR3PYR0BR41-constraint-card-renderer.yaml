@@ -3,9 +3,15 @@ parent_feature: FEAT-01KR3MDJ7AV37
 slug: constraint-card-renderer
 name: Constraint Card Renderer
 summary: "Implement a renderer in internal/card that produces a compact markdown card from typed inputs: *context.ResolvedRole, *binding.StageBinding (plus stage name), and []ConstraintEntry (pre-selected). Card must include: role identity, resolved stage, bound skill names, top operational constraints, and tool-routing reminder. Validate inputs — fail with actionable error naming missing field (REQ-007). For unknown stage, emit UNKNOWN STAGE warning + manual-load instruction (REQ-008). Enforce max 25 non-empty lines and max 2500 bytes. Must not read SKILL.md files. Deliverables: internal/card/renderer.go, internal/card/renderer_test.go. Covers: REQ-002, REQ-003, REQ-007, REQ-008, REQ-NF-001, REQ-NF-002, REQ-NF-005, AC-001, AC-002, AC-006, AC-007."
-status: active
+status: done
 estimate: "5"
+files_planned:
+  - internal/card/renderer.go
+  - internal/card/renderer_test.go
+completed: "2026-05-08T16:49:28Z"
 claimed_at: "2026-05-08T16:40:13Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T16:40:13Z"
 dispatched_by: sambeau
+completion_summary: "Implemented constraint card renderer: Render(role, stage, b, entries) (string, error). Validates inputs (REQ-007: nil role or empty identity → named error). Nil binding → UNKNOWN STAGE warning + manual-load instruction (REQ-008). Card includes role ID+identity, stage, skills, constraints, tool-routing reminder. Enforces ≤25 non-empty lines and ≤2500 bytes. 18 tests in renderer_test.go covering all required ACs."
+verification: go test ./internal/card/... — 37 tests pass (19 existing + 18 new). go build ./... clean.
