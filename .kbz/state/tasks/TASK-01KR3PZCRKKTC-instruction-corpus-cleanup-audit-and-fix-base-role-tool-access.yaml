@@ -3,8 +3,13 @@ parent_feature: FEAT-01KR3MES5ZJ11
 slug: instruction-corpus-cleanup-audit-and-fix-base-role-tool-access
 name: Audit and fix base role tool access
 summary: Audit and fix base role tool access
-status: active
+status: done
+files_planned:
+  - .kbz/roles/base.yaml
+completed: "2026-05-08T16:25:00Z"
 claimed_at: "2026-05-08T11:56:58Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T11:56:58Z"
 dispatched_by: sambeau
+completion_summary: "Removed grep and search_graph from .kbz/roles/base.yaml. All roles needing code-search tools already list them explicitly. orchestrator (anti-pattern prohibits code graph search) and spec-validator (document-only) don't need additions. doc-copyeditor and doc-stylist already have grep explicitly and don't need search_graph. No stage-bound role lost a required tool."
+verification: "Grep-verified: grep and search_graph absent from base.yaml tools list after change. Cross-checked all 19 role files — 15 roles carry search_graph explicitly, others carry grep explicitly where needed. Committed to feature branch as fdd284f0."
