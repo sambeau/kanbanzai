@@ -1,11 +1,13 @@
+approved_at: "2026-05-08T11:52:16Z"
+approved_by: sambeau
 canonical_content_hash: d957dbd90c16e049e67e5f9ec4adbcf9e46f40aaefea2f852ef8b077c7d1fd37
-content_hash: dbc37e2d8e7669aba9354908315c09550331338cd4c670a153eea8d59aa814f9
+content_hash: e3add1739a7f4450d219096347c7ab1beee127639b4e74616c8d53250bb9b0df
 created: "2026-05-08T11:51:55Z"
 created_by: sambeau
 id: FEAT-01KR3MDSZKAFG/dev-plan-b59-f1-dev-plan
 owner: FEAT-01KR3MDSZKAFG
 path: work/B59-enforce-high-violation-rules-mcp-invariants/plan/B59-F1-dev-plan.md
-status: draft
+status: approved
 title: "B59-F1 Dev-Plan: High-Violation MCP Rule Invariants"
 type: dev-plan
-updated: "2026-05-08T11:51:55Z"
+updated: "2026-05-08T11:52:16Z"
