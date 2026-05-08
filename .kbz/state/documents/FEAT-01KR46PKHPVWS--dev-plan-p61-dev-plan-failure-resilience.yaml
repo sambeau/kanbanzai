@@ -1,11 +1,13 @@
+approved_at: "2026-05-08T16:37:44Z"
+approved_by: sambeau
 canonical_content_hash: 6ae43ebd76789dd87137a3c25409864f7030dcf44d8808c97e2078c074017759
-content_hash: 6ae43ebd76789dd87137a3c25409864f7030dcf44d8808c97e2078c074017759
+content_hash: b748fa9888717848b69d4fc5017d7dc3c1f7a0510ac184eb6d985bfaa184f7b0
 created: "2026-05-08T16:36:32Z"
 created_by: sambeau
 id: FEAT-01KR46PKHPVWS/dev-plan-p61-dev-plan-failure-resilience
 owner: FEAT-01KR46PKHPVWS
 path: work/P61-handoff-resilience-binding-hardening/P61-dev-plan-failure-resilience.md
-status: draft
+status: approved
 title: "Dev-Plan: Failure-Mode Resilience (Track B)"
 type: dev-plan
-updated: "2026-05-08T16:36:32Z"
+updated: "2026-05-08T16:37:44Z"

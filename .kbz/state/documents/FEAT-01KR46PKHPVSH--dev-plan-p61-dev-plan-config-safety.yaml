@@ -1,11 +1,13 @@
+approved_at: "2026-05-08T16:37:44Z"
+approved_by: sambeau
 canonical_content_hash: b230e95a6deac3db7606f1ef77d8e104e70a3e445bc1ce9c1706e4849218234e
-content_hash: b230e95a6deac3db7606f1ef77d8e104e70a3e445bc1ce9c1706e4849218234e
+content_hash: 18a337953edcd5058753bf285774fdd9aebb8ebcfc844236c9130e580fbec677
 created: "2026-05-08T16:36:32Z"
 created_by: sambeau
 id: FEAT-01KR46PKHPVSH/dev-plan-p61-dev-plan-config-safety
 owner: FEAT-01KR46PKHPVSH
 path: work/P61-handoff-resilience-binding-hardening/P61-dev-plan-config-safety.md
-status: draft
+status: approved
 title: "Dev-Plan: Configuration Safety (Track A)"
 type: dev-plan
-updated: "2026-05-08T16:36:32Z"
+updated: "2026-05-08T16:37:44Z"

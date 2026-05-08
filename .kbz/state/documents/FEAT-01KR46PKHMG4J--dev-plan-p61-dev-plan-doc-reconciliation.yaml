@@ -1,11 +1,13 @@
+approved_at: "2026-05-08T16:37:44Z"
+approved_by: sambeau
 canonical_content_hash: 679c047fd2f8004f4833bbae71a004554541071af2b51150e546b3dcacb253f0
-content_hash: 679c047fd2f8004f4833bbae71a004554541071af2b51150e546b3dcacb253f0
+content_hash: be5b1d47ffbb46b80fb7b7fef2c28690f5d318afa43540e808c921c08a3d976c
 created: "2026-05-08T16:36:32Z"
 created_by: sambeau
 id: FEAT-01KR46PKHMG4J/dev-plan-p61-dev-plan-doc-reconciliation
 owner: FEAT-01KR46PKHMG4J
 path: work/P61-handoff-resilience-binding-hardening/P61-dev-plan-doc-reconciliation.md
-status: draft
+status: approved
 title: "Dev-Plan: Documentation Reconciliation (Track D)"
 type: dev-plan
-updated: "2026-05-08T16:36:32Z"
+updated: "2026-05-08T16:37:44Z"
