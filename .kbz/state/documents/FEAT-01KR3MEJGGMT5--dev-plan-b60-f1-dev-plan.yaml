@@ -1,11 +1,13 @@
+approved_at: "2026-05-08T11:52:52Z"
+approved_by: sambeau
 canonical_content_hash: 4c82a2b37128b2b8a16c1e000f718eaf08b87fdfb70724a33daf170cf02f7241
-content_hash: 7d52afa7000d8a1e453e706b1c7fa7104e0ec6c2eb83200bcbae139b8fd1dd6e
+content_hash: 02650d13cc523956ee8e7a6c78221a4ba36f2f2976db537109a3f6a7c2dfb9c6
 created: "2026-05-08T11:50:48Z"
 created_by: sambeau
 id: FEAT-01KR3MEJGGMT5/dev-plan-b60-f1-dev-plan
 owner: FEAT-01KR3MEJGGMT5
 path: work/B60-unify-role-skill-registries/plan/B60-F1-dev-plan.md
-status: draft
+status: approved
 title: "B60-F1 Dev-Plan: Generated Role and Skill Registry Surfaces"
 type: dev-plan
-updated: "2026-05-08T11:50:48Z"
+updated: "2026-05-08T11:52:52Z"
