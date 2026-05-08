@@ -1,0 +1,6 @@
+id: TASK-01KR3PZWD77W3
+parent_feature: FEAT-01KR3MDJ7AV37
+slug: golden-tests-validation-regression
+name: Golden tests validation suite and regression tests
+summary: "Build the full test suite: (1) Golden tests — render the constraint card for developing, specifying, dev-planning, and reviewing using fixture inputs; store in internal/card/testdata/golden/ and assert exact match. (2) Size enforcement — iterate all role YAML files and stage bindings, render each, assert max 25 non-empty lines and max 2500 bytes. (3) Determinism — render same inputs 100 times, assert identical output. (4) Latency benchmark — assert p95 less than 10ms under go test -bench. (5) next and handoff regression — assert all prior field names still present. (6) Unknown-stage test — assert UNKNOWN STAGE text present. (7) Missing-role validation — assert error names missing field. Deliverables: internal/card/golden_test.go, internal/card/testdata/golden/, internal/card/renderer_bench_test.go, internal/mcp/next_tool_regression_test.go, internal/mcp/handoff_tool_regression_test.go. Covers: REQ-009, AC-006, AC-007, AC-008, AC-009, AC-010, REQ-NF-003, REQ-NF-004."
+status: queued
