@@ -57,45 +57,7 @@ func MaxReviewCyclesForTier(tier string) int {
 	return DefaultBugMaxReviewCycles
 }
 
-// CheckBugTransitionGate checks the gate prerequisite for a specific (from, to)
-// bug lifecycle transition. It returns a satisfied GateResult for ungated
-// transitions and an unsatisfied GateResult when prerequisites are not met.
-//
-// Gate checks:
-//   - needs-review→needs-rework: review cycle cap check
-//   - verified→closed: verifier sub-agent dispatch (placeholder until P55 Component 7)
-//   - All other transitions: ungated
-func CheckBugTransitionGate(from, to string, bug *model.Bug, docSvc *DocumentService, entitySvc *EntityService) GateResult {
-	transition := from + "→" + to
-	switch transition {
-	case string(model.BugStatusNeedsReview) + "→" + string(model.BugStatusNeedsRework):
-		return checkBugReviewCycleCap(bug)
-
-	case string(model.BugStatusVerified) + "→" + string(model.BugStatusClosed):
-		return checkBugCloseOutVerification(bug, docSvc, entitySvc)
-
-	default:
-		// All other bug transitions are ungated.
-		return GateResult{Satisfied: true}
-	}
-}
-
-// checkBugReviewCycleCap checks whether the bug has exceeded its review
-// iteration cap. When ReviewCycle >= MaxCycles, the gate blocks with
-// ReviewCapReached=true.
-func checkBugReviewCycleCap(bug *model.Bug) GateResult {
-	maxCycles := MaxReviewCyclesForTier(bug.Tier)
-	if bug.ReviewCycle >= maxCycles {
-		return GateResult{
-			Satisfied:        false,
-			Reason:           fmt.Sprintf("Review iteration cap reached (%d/%d). Human decision required: accept with known issues, rework with revised scope, or close as not-planned.", bug.ReviewCycle, maxCycles),
-			ReviewCapReached: true,
-		}
-	}
-	return GateResult{Satisfied: true}
-}
-
-// checkBugCloseOutVerification handles the verified→closed gate.
+// checkBugCloseOutVerification handles the verifying→closed gate.
 //
 // FR-413: Until P55 Component 7 is implemented (the verifier role file exists),
 // the gate is a pass-through placeholder that logs "verifier not yet implemented".
@@ -126,7 +88,7 @@ func checkBugCloseOutVerification(bug *model.Bug, docSvc *DocumentService, entit
 			return GateResult{
 				Satisfied:        false,
 				Reason:           fmt.Sprintf("verifier sub-agent timed out after %v — re-dispatch or investigate", VerifierTimeout),
-				VerifierTimedOut: true,
+				
 			}
 		}
 		// Verifier still running — keep signalling NeedsVerifier without
@@ -153,10 +115,10 @@ func dispatchBugVerifier(bug *model.Bug, _ *DocumentService, _ *EntityService) G
 	prompt := buildVerifierPrompt(bug)
 
 	return GateResult{
-		Satisfied:        false,
-		Reason:           "verifier dispatch required",
-		VerifierPrompt:   prompt,
-		NeedsVerifier:    true,
+		Satisfied:      false,
+		Reason:         "verifier dispatch required",
+		VerifierPrompt: prompt,
+		NeedsVerifier:  true,
 	}
 }
 
@@ -190,7 +152,7 @@ Produce the structured JSON report at the end. Do not converse or ask questions.
 
 Produce exactly this JSON, wrapped in a markdown code block:
 
-` + "```json" + `
+`+"```json"+`
 {
   "bug_id": "%s",
   "checked_at": "<RFC 3339 timestamp>",
@@ -205,7 +167,7 @@ Produce exactly this JSON, wrapped in a markdown code block:
     ...
   ]
 }
-` + "```" + `
+`+"```"+`
 
 ## Instructions
 
@@ -228,9 +190,9 @@ Produce exactly this JSON, wrapped in a markdown code block:
 // VerifierReport is the structured JSON report returned by the verifier sub-agent.
 // See FR-405 for the schema.
 type VerifierReport struct {
-	BugID     string              `json:"bug_id"`
-	CheckedAt string              `json:"checked_at"`
-	Verdict   string              `json:"verdict"` // "pass" or "fail"
+	BugID     string               `json:"bug_id"`
+	CheckedAt string               `json:"checked_at"`
+	Verdict   string               `json:"verdict"` // "pass" or "fail"
 	Items     []VerifierReportItem `json:"items"`
 }
 

@@ -434,9 +434,8 @@ func CheckBugTransitionGate(from, to string, bug *model.Bug, docSvc *DocumentSer
 		return checkBugReviewCap(bug, entitySvc)
 
 	case string(model.BugStatusVerifying) + "→" + string(model.BugStatusClosed):
-		// FR-009: verifying→closed is a pass-through placeholder until F4.
-		log.Printf("[bug-gate] verifying→closed: verifier not yet implemented — see F4")
-		return GateResult{Stage: to, Satisfied: true, Reason: "verifier not yet implemented — see F4"}
+		// FR-009: verifying→closed dispatches the verifier sub-agent (F4).
+		return checkBugCloseOutVerification(bug, docSvc, entitySvc)
 
 	default:
 		// All other bug transitions (pre-in-progress, backward, unknown) are ungated.

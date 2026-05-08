@@ -36,14 +36,6 @@ func EntityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 }
 
 func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store, requiresHumanReview func() bool) server.ServerTool {
-	// FR-101: Wire the bug creation hook for auto-generating specs.
-	// The hook fires after bug persistence, so the bug ID/slug are available (FR-105).
-	if docSvc != nil {
-		entitySvc.SetBugCreationHook(func(result service.CreateResult, bug model.Bug) []string {
-			return service.GenerateBugSpec(".", bug, docSvc)
-		})
-	}
-
 	tool := mcp.NewTool("entity",
 		mcp.WithTitleAnnotation("Entity Manager"),
 		mcp.WithDescription(
