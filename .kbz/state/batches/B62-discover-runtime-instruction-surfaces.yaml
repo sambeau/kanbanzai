@@ -1,7 +1,7 @@
 id: B62-discover-runtime-instruction-surfaces
 slug: discover-runtime-instruction-surfaces
 name: Discover runtime instruction surfaces
-status: proposed
+status: designing
 summary: "Add runtime-facing discovery surfaces for Claude, GPT-class hosts, DeepSeek, and optional Cursor support, while keeping canonical skills and instructions generated or redirected."
 created: "2026-05-08T11:08:42Z"
 created_by: sambeau
