@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[minor] spec-ambiguity: REQ-004 spec Problem Statement claimed copilot-instructions.md had handoff false claims, but the file has never contained any handoff mentions. The spec was inaccurate. A 1-hour task was scheduled based on a false premise. Suggestion: Before writing task specs referencing existing documentation claims, verify those claims actually exist in the target file. A quick grep before spec writing would have avoided scheduling a 1-hour task that required 0 code changes."
+created: "2026-05-08T17:50:07Z"
+created_by: unknown
+id: KE-01KR4BC16XAEE
+learned_from: TASK-01KR47B9NKK6B
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - spec-ambiguity
+tier: 3
+topic: retro-task-01kr47b9nkk6b
+ttl_days: 30
+updated: "2026-05-08T17:50:07Z"
+use_count: 0

@@ -3,6 +3,10 @@ parent_feature: FEAT-01KR46PKHPVSH
 slug: config-safety-req-005-older-binaries-without-schema-ve
 name: Older binaries refusing v2 files
 summary: "REQ-005: Older binaries (without schema_version support) that encounter a v2 file must refuse with a clear message."
-status: ready
+status: active
 depends_on:
   - TASK-01KR47D688P0S
+claimed_at: "2026-05-08T17:49:27Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-08T17:49:27Z"
+dispatched_by: sambeau
