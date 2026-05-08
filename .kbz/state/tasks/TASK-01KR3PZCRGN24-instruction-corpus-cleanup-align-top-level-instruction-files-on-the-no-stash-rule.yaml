@@ -1,0 +1,6 @@
+id: TASK-01KR3PZCRGN24
+parent_feature: FEAT-01KR3MES5ZJ11
+slug: instruction-corpus-cleanup-align-top-level-instruction-files-on-the-no-stash-rule
+name: Align top-level instruction files on the no-stash rule
+summary: Align top-level instruction files on the no-stash rule
+status: queued

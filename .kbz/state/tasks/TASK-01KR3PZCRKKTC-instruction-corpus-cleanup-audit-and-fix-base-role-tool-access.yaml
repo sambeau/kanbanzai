@@ -1,0 +1,6 @@
+id: TASK-01KR3PZCRKKTC
+parent_feature: FEAT-01KR3MES5ZJ11
+slug: instruction-corpus-cleanup-audit-and-fix-base-role-tool-access
+name: Audit and fix base role tool access
+summary: Audit and fix base role tool access
+status: queued
