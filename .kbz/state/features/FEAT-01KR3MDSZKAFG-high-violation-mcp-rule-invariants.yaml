@@ -5,6 +5,7 @@ parent: B59-enforce-high-violation-rules-mcp-invariants
 status: specifying
 summary: "Translate the five highest-violation workflow rules into prompt-layer tool invariants, stable refusal contracts, and prose de-duplication boundaries coordinated with P44 and P56."
 design: P59-roles-skills-remediation/design-p59-design-roles-skills-remediation
+spec: FEAT-01KR3MDSZKAFG/spec-b59-f1-spec-high-violation-mcp-rule-invariants
 created: "2026-05-08T11:09:07Z"
 created_by: sambeau
 display_id: B59-F1

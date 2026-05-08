@@ -1,0 +1,11 @@
+canonical_content_hash: a95089faee3eeb6f981bbd8fd9a924bf8b327f079b0e8d9fda85550ef3279fe4
+content_hash: a95089faee3eeb6f981bbd8fd9a924bf8b327f079b0e8d9fda85550ef3279fe4
+created: "2026-05-08T11:19:54Z"
+created_by: sambeau
+id: FEAT-01KR3MES5ZJ11/spec-b61-f1-spec-instruction-corpus-cleanup
+owner: FEAT-01KR3MES5ZJ11
+path: work/B61-tidy-contradictions-stray-files-corpus-size/B61-F1-spec-instruction-corpus-cleanup.md
+status: draft
+title: "B61-F1 Specification: Instruction Corpus Cleanup"
+type: spec
+updated: "2026-05-08T11:19:54Z"

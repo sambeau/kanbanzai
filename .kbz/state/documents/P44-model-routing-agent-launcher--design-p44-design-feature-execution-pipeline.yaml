@@ -7,7 +7,8 @@ created_by: sambeau
 id: P44-model-routing-agent-launcher/design-p44-design-feature-execution-pipeline
 owner: P44-model-routing-agent-launcher
 path: work/P44-model-routing-agent-launcher/P44-design-feature-execution-pipeline.md
-status: approved
+status: superseded
+superseded_by: P44-model-routing-agent-launcher/design-p44-design-deterministic-workflow-controller
 title: "Design: Feature Execution Pipeline"
 type: design
-updated: "2026-05-08T11:12:37Z"
+updated: "2026-05-08T11:12:41Z"
