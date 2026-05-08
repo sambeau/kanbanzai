@@ -1,0 +1,11 @@
+canonical_content_hash: 87a16eca533e86fe841f906eb518c9bd11dccf8f806e2938b2a969d4ae762a17
+content_hash: 90ade38bd4de96ffc93fa6e0635c4330eece3972de3670d36a68e5159da0e9c5
+created: "2026-05-08T16:12:45Z"
+created_by: sambeau
+id: P61-handoff-resilience-binding-hardening/report-p61-report-handoff-investigation
+owner: P61-handoff-resilience-binding-hardening
+path: work/P61-handoff-resilience-binding-hardening/P61-report-handoff-investigation.md
+status: draft
+title: "P61 Report — Handoff Tool Failure: Root Cause Analysis &amp; Remediation"
+type: report
+updated: "2026-05-08T16:12:45Z"
