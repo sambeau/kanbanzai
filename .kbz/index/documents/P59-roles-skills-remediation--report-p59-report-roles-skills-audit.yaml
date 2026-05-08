@@ -1,0 +1,383 @@
+document_id: P59-roles-skills-remediation/report-p59-report-roles-skills-audit
+document_path: work/P59-roles-skills-remediation/P59-report-roles-skills-audit.md
+content_hash: ccf7189399b411e700ca31ebc8ecc86b604c40f89d3d453ad1518a349c475032
+indexed_at: 2026-05-08T10:48:26.152923Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Report: State of Kanbanzai''s Roles & Skills'
+      byte_offset: 0
+      byte_count: 28022
+      word_count: 4010
+      content_hash: ccf7189399b411e700ca31ebc8ecc86b604c40f89d3d453ad1518a349c475032
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Executive Summary
+          byte_offset: 501
+          byte_count: 2339
+          word_count: 353
+          content_hash: 01a43b33a2b56aba1a414ba170594f67e1bffa3579414dd6b8c519c659ea5167
+        - path: "1.2"
+          level: 2
+          title: 2. Have the skills and roles drifted away from best practice?
+          byte_offset: 2840
+          byte_count: 4137
+          word_count: 593
+          content_hash: 122bf82c886a3e6a3dc5df0acbd74d71bbd30e0bdb5f601c50b9ef5e78781934
+        - path: "1.3"
+          level: 2
+          title: 3. Can AI agents actually find them? (The discoverability problem)
+          byte_offset: 6977
+          byte_count: 5918
+          word_count: 840
+          content_hash: 0169db581a70d6509917294ca828f8fcc809972ed119ba6b26b275336a773d78
+          children:
+            - path: 1.3.1
+              level: 3
+              title: What agents actually find when they "look"
+              byte_offset: 8355
+              byte_count: 1202
+              word_count: 131
+              content_hash: 0900d359585001f4c41c19a95a79d283f9ea095fb07a62e0eeb4e4242f951303
+            - path: 1.3.2
+              level: 3
+              title: Specific failure modes by runtime
+              byte_offset: 9557
+              byte_count: 2289
+              word_count: 338
+              content_hash: 0a105eb7c2beae1a9ed7e9b9e8ef61bc1fb00b977c59bcddde744b1082f3d5bd
+            - path: 1.3.3
+              level: 3
+              title: Volume defeats the U-curve
+              byte_offset: 11846
+              byte_count: 1049
+              word_count: 168
+              content_hash: ee97c83c2c30ff3f4dada8cef283202dbc2314fe9d46220a049b6732117bf4da
+        - path: "1.4"
+          level: 2
+          title: 4. Are AGENTS.md, CLAUDE.md, and non-`.kbz` skills helping or hurting?
+          byte_offset: 12895
+          byte_count: 2859
+          word_count: 397
+          content_hash: 534ce45f57a427c09cfbbfeda45525bf295f31c35da17ec4b01d71b462eab96e
+          children:
+            - path: 1.4.1
+              level: 3
+              title: '`AGENTS.md` — strong but overloaded'
+              byte_offset: 12970
+              byte_count: 556
+              word_count: 82
+              content_hash: 1f78e191be48c55e269f702a3445934da7aca8150622a979a57a01dab6d838c3
+            - path: 1.4.2
+              level: 3
+              title: '`CLAUDE.md` — too thin and creates a two-track system'
+              byte_offset: 13526
+              byte_count: 839
+              word_count: 129
+              content_hash: 8a13516dce83e103aff8cf006ad9262723a2313eb4e33b204d20a4cd49849712
+            - path: 1.4.3
+              level: 3
+              title: '`.github/copilot-instructions.md` — well-structured but a third copy'
+              byte_offset: 14365
+              byte_count: 352
+              word_count: 51
+              content_hash: 5e5f2447602ad5161f7e581c0f1f36839135b4d601a338fa4ae7555ef4bf5c78
+            - path: 1.4.4
+              level: 3
+              title: '`.agents/skills/kanbanzai-*` (system skills) — overlapping with `.kbz/skills/`'
+              byte_offset: 14717
+              byte_count: 622
+              word_count: 72
+              content_hash: cb306bde95bfaff79d7799fa93123a383fc7ff6e6119e2ec2ae3390ec692eb74
+            - path: 1.4.5
+              level: 3
+              title: '`.github/skills/codebase-memory-*` — well-scoped, mostly fine'
+              byte_offset: 15339
+              byte_count: 415
+              word_count: 52
+              content_hash: 3c8abda3aa831859e40d69e80210c0914e8bf89f7f7ac749478be30404d36cf3
+        - path: "1.5"
+          level: 2
+          title: 5. Does DeepSeek have reasons to ignore the skills?
+          byte_offset: 15754
+          byte_count: 3062
+          word_count: 443
+          content_hash: 6036c1328185a68d0837dff9cb27616f003a42253e9d4573844adffc101cd7e0
+        - path: "1.6"
+          level: 2
+          title: 6. How to make rules more likely to be obeyed
+          byte_offset: 18816
+          byte_count: 4703
+          word_count: 682
+          content_hash: 8fe000f9fa8478cc5fab589732e1c06289e6f8d303ea7022a40cb3e03a39c981
+          children:
+            - path: 1.6.1
+              level: 3
+              title: A. Move the most-violated rules into MCP tool behaviour, not skill markdown
+              byte_offset: 18950
+              byte_count: 1101
+              word_count: 161
+              content_hash: f7ded35d229d2a25d0250e87c987965f1a07f945ec01906eba9fca9934a0f664
+            - path: 1.6.2
+              level: 3
+              title: B. Inject a one-screen "Operational Constraints" card into every `next` and `handoff` response
+              byte_offset: 20051
+              byte_count: 568
+              word_count: 89
+              content_hash: 3f3813001503cbbd6117e74e65b63e13330eb192a3a6302284c52d3de48d6cf7
+            - path: 1.6.3
+              level: 3
+              title: C. Adopt Anthropic's Skills mechanism for Claude
+              byte_offset: 20619
+              byte_count: 518
+              word_count: 72
+              content_hash: e5200adef605eead14dfae611154ff0c734553deeb86d74e9b3d691576f58ed2
+            - path: 1.6.4
+              level: 3
+              title: D. Cut the corpus
+              byte_offset: 21137
+              byte_count: 667
+              word_count: 93
+              content_hash: 78b7ece9c9f8b927d0bff38bc9d70a53e95d1b4d43b47d705cfb160d1b6f4c69
+            - path: 1.6.5
+              level: 3
+              title: E. Fix the multi-file drift
+              byte_offset: 21804
+              byte_count: 583
+              word_count: 70
+              content_hash: 5dc33dc48cd9293751546a0bbd3f3511b22c1d4e4ecbd0f3f8709aefdc3c998e
+            - path: 1.6.6
+              level: 3
+              title: F. Add an `OPENAI.md` (or rely on `AGENTS.md` consistently)
+              byte_offset: 22387
+              byte_count: 281
+              word_count: 39
+              content_hash: 52c06150cb9156e8751bbd2874e9f8ea81f18e86522a2105be34d61eaad5680c
+            - path: 1.6.7
+              level: 3
+              title: G. Bake stage-bindings into MCP responses
+              byte_offset: 22668
+              byte_count: 399
+              word_count: 63
+              content_hash: 005abb8d797608fb20d5a91905cc7530292cdc6d3d52a9f1d19980a7809e4b21
+            - path: 1.6.8
+              level: 3
+              title: H. Push DeepSeek-specific tweaks
+              byte_offset: 23067
+              byte_count: 452
+              word_count: 69
+              content_hash: ddcb04c7f13dc333ef5f5477c0180e134f632d5210718df8c0944efe39334eae
+        - path: "1.7"
+          level: 2
+          title: 7. Concrete improvement suggestions
+          byte_offset: 23519
+          byte_count: 2515
+          word_count: 360
+          content_hash: a031397c15edfd1b867e1dfec7a1f1c4afbdddc2cabcabd57f4bb120f0e7bf21
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Must
+              byte_offset: 23593
+              byte_count: 927
+              word_count: 128
+              content_hash: 8820d5155d57dd266d64cb8b7a7798c8dca43750bcf328b216d777005a33dce9
+            - path: 1.7.2
+              level: 3
+              title: Should
+              byte_offset: 24520
+              byte_count: 810
+              word_count: 116
+              content_hash: 4b3557cf7e482ffc40440c393b980cf71e18bb48df3c5f38388d38c7cc166e69
+            - path: 1.7.3
+              level: 3
+              title: Could
+              byte_offset: 25330
+              byte_count: 704
+              word_count: 104
+              content_hash: 901b2f1a98261fcfad1145f93bc40ac3a85ccdc015adb40759f7d9a7f311e911
+        - path: "1.8"
+          level: 2
+          title: 8. Bottom Line for the Lead Architect
+          byte_offset: 26034
+          byte_count: 1988
+          word_count: 305
+          content_hash: 7bf904def131038c3ae16ace6848af33afe2a9a97caf1e79d16de5a7e2d142b5
+cross_doc_links:
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "1"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1"
+    - target_path: refs/prompt-engineering-guide.md
+      link_text: refs/prompt-engineering-guide.md
+      section_path: "1"
+    - target_path: research-agent-{orchestration,skills}-research.md
+      link_text: research-agent-{orchestration,skills}-research.md
+      section_path: "1"
+    - target_path: research-ai-agent-best-practices-research.md
+      link_text: research-ai-agent-best-practices-research.md
+      section_path: "1"
+    - target_path: research-orchestration-landscape-2025.md
+      link_text: research-orchestration-landscape-2025.md
+      section_path: "1"
+    - target_path: OPENAI.md
+      link_text: OPENAI.md
+      section_path: "1.1"
+    - target_path: refs/prompt-engineering-guide.md
+      link_text: refs/prompt-engineering-guide.md
+      section_path: "1.2"
+    - target_path: CONVENTIONS.md
+      link_text: CONVENTIONS.md
+      section_path: "1.2"
+    - target_path: .kbz/skills/SKILL.md
+      link_text: .kbz/skills/SKILL.md
+      section_path: "1.2"
+    - target_path: .agents/skills/SKILL.md
+      link_text: .agents/skills/SKILL.md
+      section_path: "1.2"
+    - target_path: .kbz/skills/prompt-engineering/SKILL.md
+      link_text: .kbz/skills/prompt-engineering/SKILL.md
+      section_path: "1.2"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "1.2"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "1.3"
+    - target_path: ~/.claude/CLAUDE.md
+      link_text: ~/.claude/CLAUDE.md
+      section_path: "1.3"
+    - target_path: ~/.claude/skills/*/SKILL.md
+      link_text: ~/.claude/skills/*/SKILL.md
+      section_path: "1.3"
+    - target_path: <repo>/.claude/skills/*/SKILL.md
+      link_text: <repo>/.claude/skills/*/SKILL.md
+      section_path: "1.3"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.3"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.3"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.3.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.2
+    - target_path: refs/*.md
+      link_text: refs/*.md
+      section_path: 1.3.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.1
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.4.1
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.4.1
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.4.2
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.2
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.4.3
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.4.3
+    - target_path: README.md
+      link_text: README.md
+      section_path: 1.4.3
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: 1.4.5
+    - target_path: refs/knowledge-graph.md
+      link_text: refs/knowledge-graph.md
+      section_path: 1.4.5
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "1.5"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.5"
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.6.4
+    - target_path: references/examples-*.md
+      link_text: references/examples-*.md
+      section_path: 1.6.4
+    - target_path: .kbz/skills/CONVENTIONS.md
+      link_text: .kbz/skills/CONVENTIONS.md
+      section_path: 1.6.4
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.6.5
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.6.5
+    - target_path: OPENAI.md
+      link_text: OPENAI.md
+      section_path: 1.6.6
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.6.6
+    - target_path: .openai/instructions.md
+      link_text: .openai/instructions.md
+      section_path: 1.6.6
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.6.8
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.7.1
+    - target_path: .kbz/skills/SKILL.md
+      link_text: .kbz/skills/SKILL.md
+      section_path: 1.7.1
+    - target_path: .agents/skills/SKILL.md
+      link_text: .agents/skills/SKILL.md
+      section_path: 1.7.1
+    - target_path: README.md
+      link_text: README.md
+      section_path: 1.7.1
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.7.1
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.7.1
+    - target_path: OPENAI.md
+      link_text: OPENAI.md
+      section_path: 1.7.3
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 1.7.3
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.7.3
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "1.8"
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: "1.8"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.4.5
+      role: constraint
+      confidence: high
+    - section_path: 1.6.2
+      role: constraint
+      confidence: high
+classified: false

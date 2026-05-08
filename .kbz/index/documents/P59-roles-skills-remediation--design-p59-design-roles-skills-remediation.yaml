@@ -1,0 +1,402 @@
+document_id: P59-roles-skills-remediation/design-p59-design-roles-skills-remediation
+document_path: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+content_hash: a2a2d1dcca1abbafe46e9556377172f0afabf241a6bc53d5a15c4455ed3dec26
+indexed_at: 2026-05-08T10:57:04.539864Z
+sections:
+    - path: "1"
+      level: 2
+      title: Overview
+      byte_offset: 543
+      byte_count: 1371
+      word_count: 198
+      content_hash: d6403feff8b66207e4047dd3a24b5a09ce02ed4a1d1b16f156ddac2003dcd5b3
+    - path: "2"
+      level: 2
+      title: Goals and Non-Goals
+      byte_offset: 1914
+      byte_count: 2433
+      word_count: 356
+      content_hash: 091ff2c00de6394624f4e3d4ef04df3dd00678d92623f920b897374ae0725f32
+      children:
+        - path: "2.1"
+          level: 3
+          title: Goals
+          byte_offset: 1938
+          byte_count: 1409
+          word_count: 201
+          content_hash: eaa669a8d0f9f78afd6fee1de99a18ef8ada60be4b3354ea737f9feda409494a
+        - path: "2.2"
+          level: 3
+          title: Non-Goals
+          byte_offset: 3347
+          byte_count: 1000
+          word_count: 151
+          content_hash: 2b4217e48f20211850893b8f6bb749f20cb766186f4a67b50e6af7bf15ba8cec
+    - path: "3"
+      level: 2
+      title: Problem and Motivation
+      byte_offset: 4347
+      byte_count: 2083
+      word_count: 305
+      content_hash: cc51d2f8b055fde4ab01294d69e83e6234dee2f0bf20ff58f358f579cf59d8c9
+    - path: "4"
+      level: 2
+      title: Design
+      byte_offset: 6430
+      byte_count: 10273
+      word_count: 1430
+      content_hash: ef2d9dd65988bf5940ee24a5816d0d8e232d8cc7f6964d17ecf012cc72424347
+      children:
+        - path: "4.1"
+          level: 3
+          title: Components and responsibilities
+          byte_offset: 7131
+          byte_count: 7946
+          word_count: 1133
+          content_hash: 434144ae03c128c0c1828a47b9ce00052caed376ff8851e69203dcedae610cc0
+          children:
+            - path: 4.1.1
+              level: 4
+              title: 'B1 — Inject: constraint card and stage-binding hydration'
+              byte_offset: 7168
+              byte_count: 1721
+              word_count: 264
+              content_hash: 4fa87f2c6b71f2965fe0daacc26f7590d746e9d20057b27e8812a53b870719f3
+            - path: 4.1.2
+              level: 4
+              title: 'B2 — Enforce: rules as MCP tool invariants'
+              byte_offset: 8889
+              byte_count: 1904
+              word_count: 296
+              content_hash: fe0f7e6a074ec7c65682f30cf832e83e583609dbd2a43a1d8d5f6f706072eb84
+            - path: 4.1.3
+              level: 4
+              title: 'B3 — Unify: single source of truth, derived registries, CI guard'
+              byte_offset: 10793
+              byte_count: 1474
+              word_count: 207
+              content_hash: 0193a810d6f4456005a9dc6929f774a6edeb537bdd756b3c82e5fdf17e5f4d3d
+            - path: 4.1.4
+              level: 4
+              title: 'B4 — Tidy: contradictions, stray files, corpus cut'
+              byte_offset: 12267
+              byte_count: 1344
+              word_count: 185
+              content_hash: 9174f01fe827b9afa0887b3056df61eead642d2570ea10147d45578dbf3f7a06
+            - path: 4.1.5
+              level: 4
+              title: 'B5 — Discover: surfaces the runtimes actually look for'
+              byte_offset: 13611
+              byte_count: 1466
+              word_count: 177
+              content_hash: 2b49671d865b9b26466f0d92769963296c16168f659343916243ee8ff9dc7c85
+        - path: "4.2"
+          level: 3
+          title: Data flows
+          byte_offset: 15077
+          byte_count: 711
+          word_count: 49
+          content_hash: 73257fe5ebe40c584b392ac28327448783f6fba36c2402dcf196c9585e44e9e7
+        - path: "4.3"
+          level: 3
+          title: Why this addresses the audit findings
+          byte_offset: 15788
+          byte_count: 915
+          word_count: 146
+          content_hash: c2b4528c18d2c8a4bc39102694ef1adad088b697b656fd128dd57c8cce8207f3
+    - path: "5"
+      level: 2
+      title: Alternatives Considered
+      byte_offset: 16703
+      byte_count: 2619
+      word_count: 370
+      content_hash: 8c984758b1ae320ee8a1051098e98b3be8aa77223b93cecd918a9fa0bcc70dc2
+      children:
+        - path: "5.1"
+          level: 3
+          title: A1. Do nothing (status quo)
+          byte_offset: 16731
+          byte_count: 341
+          word_count: 45
+          content_hash: 1153c4ae26ea0c43a9856e83f5c8f1311a8e2defa134d52a34c3b5106c3ebcfa
+        - path: "5.2"
+          level: 3
+          title: A2. Single mega-prompt (collapse all roles/skills into one file)
+          byte_offset: 17072
+          byte_count: 401
+          word_count: 57
+          content_hash: 7826e1839ccb4fb65327264cbeec1dd98c04151c1f9a43ab21129110e059c57f
+        - path: "5.3"
+          level: 3
+          title: A3. Move everything into MCP tool semantics
+          byte_offset: 17473
+          byte_count: 499
+          word_count: 69
+          content_hash: acb0036d554feb8e4ba58c82bd5cea5ef68b5fa8dd214f3aeeb25ad0d94c7b2c
+        - path: "5.4"
+          level: 3
+          title: A4. Replace the YAML/SKILL.md format with Anthropic Skills natively
+          byte_offset: 17972
+          byte_count: 478
+          word_count: 68
+          content_hash: 3e97b0845b32bb1e1f76c50072c70d3d522d5c278ecc0cf1558bb95f5c99b894
+        - path: "5.5"
+          level: 3
+          title: A5. Push rules into the system prompt only (no tool-description changes)
+          byte_offset: 18450
+          byte_count: 368
+          word_count: 52
+          content_hash: 5c6dc9b63d005b76319b7296a43ac237204c637cd9778c84122c037a1615f6b9
+        - path: "5.6"
+          level: 3
+          title: A6. Generate `AGENTS.md` from the canonical source (along with the others)
+          byte_offset: 18818
+          byte_count: 504
+          word_count: 76
+          content_hash: 05e30577b4a1ca9937dc8911e75493cf38dcb60482923cba537038a6ebdf6af5
+    - path: "6"
+      level: 2
+      title: Decisions
+      byte_offset: 19322
+      byte_count: 5314
+      word_count: 717
+      content_hash: c368607cd231a6cd656590535e4bec99e33b24f4dc886d222bb5011274849e9d
+      children:
+        - path: "6.1"
+          level: 3
+          title: D1. The `stash` contradiction is resolved by forbidding stashing.
+          byte_offset: 19336
+          byte_count: 676
+          word_count: 94
+          content_hash: b01b56218bba44bf12ee224b4f15d60c7036517e2549c2eb28e432b0c4740c1d
+        - path: "6.2"
+          level: 3
+          title: D2. The constraint card is generated, not hand-written.
+          byte_offset: 20012
+          byte_count: 507
+          word_count: 73
+          content_hash: 2a694cb6a127f8db6e2633c3a27af206234f3aa2a52c80a732647511feec4dcf
+        - path: "6.3"
+          level: 3
+          title: D3. `.claude/skills/` entries are **copies**, not symlinks.
+          byte_offset: 20519
+          byte_count: 740
+          word_count: 93
+          content_hash: 698d4d7e9f2c92db0c6db73a8d28ca3fb4580ee80601583f912069f6fe058401
+        - path: "6.4"
+          level: 3
+          title: D4. Tool-description rule injection is mandatory; system-prompt-only is not enough.
+          byte_offset: 21259
+          byte_count: 589
+          word_count: 81
+          content_hash: 0aa0e696ed0b23a219329447deab6bff7076573db91627182efc203838ebddf8
+        - path: "6.5"
+          level: 3
+          title: D5. `spawn_agent` is removed from the orchestrator's tools list; a `dispatch_task` wrapper enforces handoff-only dispatch.
+          byte_offset: 21848
+          byte_count: 837
+          word_count: 107
+          content_hash: 1b49a51ca8d89dbb0d22725cb8bf851e6ad8e71cf13c535eecbb3b8296088f43
+        - path: "6.6"
+          level: 3
+          title: D6. The corpus cut targets ≈50% reduction without losing rules.
+          byte_offset: 22685
+          byte_count: 633
+          word_count: 88
+          content_hash: 5d75af5b4b6f8c714c8165779c597a567ee2785242f1f42e50a9b671beac4b61
+        - path: "6.7"
+          level: 3
+          title: D7. The generator covers `CLAUDE.md`, `.github/copilot-instructions.md`, and `README.md` in this round; `AGENTS.md` is deferred.
+          byte_offset: 23318
+          byte_count: 649
+          word_count: 83
+          content_hash: cab0b39839ab221d4b45c04b58c9550cac130c849daa8ec686519fda483e31fe
+        - path: "6.8"
+          level: 3
+          title: D8. P59 owns the *prompt-layer* changes for handoff-only dispatch and gate enforcement; P44 owns the *tool-implementation* changes.
+          byte_offset: 23967
+          byte_count: 669
+          word_count: 96
+          content_hash: 97cf691797a984a084b37b96b5f1c5f6c7917337c03ec9b9e1de50caa9643964
+    - path: "7"
+      level: 2
+      title: Dependencies
+      byte_offset: 24636
+      byte_count: 2580
+      word_count: 364
+      content_hash: 45e34ca52c01967393d736e44e65fd1652cd451481643cf1e92bf39b945b4309
+      children:
+        - path: "7.1"
+          level: 3
+          title: Internal
+          byte_offset: 24653
+          byte_count: 697
+          word_count: 94
+          content_hash: d8fb4aac34e3f66a537477b670b1f6f9da0125a372f1322fe69458e434f6b517
+        - path: "7.2"
+          level: 3
+          title: External
+          byte_offset: 25350
+          byte_count: 606
+          word_count: 82
+          content_hash: 3950e4351a9d0343438d594fbd816240e42b5eaa7e16f3dc0db1076c4a84501d
+        - path: "7.3"
+          level: 3
+          title: Sequencing
+          byte_offset: 25956
+          byte_count: 400
+          word_count: 59
+          content_hash: b92e6021a0559c3a2f90b0d83bd6dbd762650770cf2e6ba992456473dfee45c4
+        - path: "7.4"
+          level: 3
+          title: Risks (high-level; full risk analysis belongs in the spec)
+          byte_offset: 26356
+          byte_count: 860
+          word_count: 127
+          content_hash: 43b5a29d5077baa85ac6c1d9c38f83e8a9cc787c1c9d56e81027afe769f2dfba
+    - path: "8"
+      level: 2
+      title: Open Questions
+      byte_offset: 27216
+      byte_count: 798
+      word_count: 123
+      content_hash: 73c212e15e3dc9e46d89db1a0f50bcfd6df2e6b6d27ec2ab3ac4ab6ef6763fea
+entity_refs:
+    - entity_id: P59-roles-skills-remediation
+      entity_type: plan
+      section_path: ""
+      byte_offset: 477
+    - entity_id: P59-report-roles-skills-audit
+      entity_type: plan
+      section_path: ""
+      byte_offset: 506
+    - entity_id: P56-tracked
+      entity_type: plan
+      section_path: 4.1.2
+      byte_offset: 10199
+cross_doc_links:
+    - target_path: work/P59-roles-skills-remediation/P59-report-roles-skills-audit.md
+      link_text: work/P59-roles-skills-remediation/P59-report-roles-skills-audit.md
+      section_path: ""
+    - target_path: OPENAI.md
+      link_text: OPENAI.md
+      section_path: "1"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "2.1"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "2.1"
+    - target_path: OPENAI.md
+      link_text: OPENAI.md
+      section_path: "2.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "3"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "3"
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: "3"
+    - target_path: .kbz/skills/SKILL.md
+      link_text: .kbz/skills/SKILL.md
+      section_path: "3"
+    - target_path: .agents/skills/SKILL.md
+      link_text: .agents/skills/SKILL.md
+      section_path: "3"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 4.1.2
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 4.1.3
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 4.1.3
+    - target_path: README.md
+      link_text: README.md
+      section_path: 4.1.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 4.1.3
+    - target_path: .kbz/skills/SKILL.md
+      link_text: .kbz/skills/SKILL.md
+      section_path: 4.1.4
+    - target_path: .agents/skills/SKILL.md
+      link_text: .agents/skills/SKILL.md
+      section_path: 4.1.4
+    - target_path: README.md
+      link_text: README.md
+      section_path: 4.1.4
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: 4.1.4
+    - target_path: OPENAI.md
+      link_text: OPENAI.md
+      section_path: 4.1.5
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 4.1.5
+    - target_path: refs/sub-agents.md
+      link_text: refs/sub-agents.md
+      section_path: 4.1.5
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "5.6"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "6.1"
+    - target_path: .claude/skills/<skill>/SKILL.md
+      link_text: .claude/skills/<skill>/SKILL.md
+      section_path: "6.3"
+    - target_path: references/examples-*.md
+      link_text: references/examples-*.md
+      section_path: "6.6"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "6.7"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "6.7"
+    - target_path: README.md
+      link_text: README.md
+      section_path: "6.7"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "6.7"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "7.2"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "7.4"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "2"
+      role: constraint
+      confidence: high
+    - section_path: "2.2"
+      role: constraint
+      confidence: high
+    - section_path: 4.1.1
+      role: constraint
+      confidence: high
+    - section_path: "5"
+      role: alternative
+      confidence: high
+    - section_path: "6"
+      role: decision
+      confidence: high
+    - section_path: "6.2"
+      role: constraint
+      confidence: high
+    - section_path: "7.4"
+      role: risk
+      confidence: high
+    - section_path: "8"
+      role: question
+      confidence: high
+classified: false
