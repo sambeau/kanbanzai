@@ -1,7 +1,7 @@
 id: P61-handoff-resilience-binding-hardening
 slug: handoff-resilience-binding-hardening
 name: Handoff resilience and binding hardening
-status: idea
+status: shaping
 summary: "Substantial remediation following the handoff panic incident: introduce schema-versioned stage-bindings, propagate context.Context through pipeline and git helpers, cache knowledge entry loads, add panic recovery + structured error contracts to all MCP handlers, surface binding-load failures via health(), and reconcile handoff documentation with implementation."
 order: 0
 tags:
@@ -13,4 +13,4 @@ tags:
   - context-propagation
 created: "2026-05-08T16:09:05Z"
 created_by: architect-investigation
-updated: "2026-05-08T16:09:05Z"
+updated: "2026-05-08T16:21:43Z"
