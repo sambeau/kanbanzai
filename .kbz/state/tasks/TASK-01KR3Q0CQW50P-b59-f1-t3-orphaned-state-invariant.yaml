@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR3MDSZKAFG
 slug: b59-f1-t3-orphaned-state-invariant
 name: Enforce orphaned-workflow-state invariant in next task-claim
 summary: "Add pre-claim dirty-state check to nextClaimMode using a new internal/git/dirty.go helper (CheckKbzDirty). If .kbz/state/, .kbz/index/, or .kbz/context/ are dirty, refuse with INV-003 refusal + file list. Check is skipped on reclaim paths."
-status: queued
+status: ready

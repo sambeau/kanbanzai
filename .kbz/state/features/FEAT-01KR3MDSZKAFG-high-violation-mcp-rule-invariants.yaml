@@ -2,7 +2,7 @@ id: FEAT-01KR3MDSZKAFG
 slug: high-violation-mcp-rule-invariants
 name: High-violation MCP rule invariants
 parent: B59-enforce-high-violation-rules-mcp-invariants
-status: dev-planning
+status: developing
 summary: "Translate the five highest-violation workflow rules into prompt-layer tool invariants, stable refusal contracts, and prose de-duplication boundaries coordinated with P44 and P56."
 design: P59-roles-skills-remediation/design-p59-design-roles-skills-remediation
 spec: FEAT-01KR3MDSZKAFG/spec-b59-f1-spec-high-violation-mcp-rule-invariants
