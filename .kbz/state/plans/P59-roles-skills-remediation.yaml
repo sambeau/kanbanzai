@@ -1,9 +1,9 @@
 id: P59-roles-skills-remediation
 slug: roles-skills-remediation
 name: "Roles & Skills Discoverability and Enforcement Remediation"
-status: idea
+status: shaping
 summary: "Remediate the role and skill corpus distribution problem: improve discoverability across Claude/GPT/DeepSeek, eliminate file-level drift and contradictions, and move the most-violated rules from advisory prose into MCP tool semantics. Companion to P44 (architectural enforcement) at the rules-and-prompts layer."
 order: 0
 created: "2026-05-08T10:27:35Z"
 created_by: sambeau
-updated: "2026-05-08T10:27:35Z"
+updated: "2026-05-08T11:25:30Z"

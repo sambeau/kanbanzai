@@ -1,5 +1,5 @@
-canonical_content_hash: d9b7de24c04b6d708fe455bf534c8a0598988a1aae6d6b9c05ea84240fcf7a87
-content_hash: d9b7de24c04b6d708fe455bf534c8a0598988a1aae6d6b9c05ea84240fcf7a87
+canonical_content_hash: 732ff15c2b246e1533f4f11f58a4f8e01c2266aecb4135ebc2a61fea11b29ab9
+content_hash: 732ff15c2b246e1533f4f11f58a4f8e01c2266aecb4135ebc2a61fea11b29ab9
 created: "2026-05-08T11:19:54Z"
 created_by: sambeau
 id: FEAT-01KR3MEJGGMT5/spec-b60-f1-spec-generated-role-skill-registry-surfaces
@@ -8,4 +8,4 @@ path: work/B60-unify-role-skill-registries/B60-F1-spec-generated-role-skill-regi
 status: draft
 title: "B60-F1 Specification: Generated Role and Skill Registry Surfaces"
 type: spec
-updated: "2026-05-08T11:19:54Z"
+updated: "2026-05-08T11:22:52Z"

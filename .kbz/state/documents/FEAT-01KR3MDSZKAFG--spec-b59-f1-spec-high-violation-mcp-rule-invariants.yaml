@@ -1,5 +1,5 @@
-canonical_content_hash: 90af96683598d6d34d7e49e9f977ac12840c8d680c26c29fb65773f853a3f98c
-content_hash: 90af96683598d6d34d7e49e9f977ac12840c8d680c26c29fb65773f853a3f98c
+canonical_content_hash: 3f0f4b91e825487934a082f5a0a1c4c129bf1a5161fb635ef2d9230ac7887632
+content_hash: 3f0f4b91e825487934a082f5a0a1c4c129bf1a5161fb635ef2d9230ac7887632
 created: "2026-05-08T11:19:54Z"
 created_by: sambeau
 id: FEAT-01KR3MDSZKAFG/spec-b59-f1-spec-high-violation-mcp-rule-invariants
@@ -8,4 +8,4 @@ path: work/B59-enforce-high-violation-rules-mcp-invariants/B59-F1-spec-high-viol
 status: draft
 title: "B59-F1 Specification: High-Violation MCP Rule Invariants"
 type: spec
-updated: "2026-05-08T11:19:54Z"
+updated: "2026-05-08T11:22:52Z"

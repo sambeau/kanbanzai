@@ -1,5 +1,5 @@
-canonical_content_hash: a95089faee3eeb6f981bbd8fd9a924bf8b327f079b0e8d9fda85550ef3279fe4
-content_hash: a95089faee3eeb6f981bbd8fd9a924bf8b327f079b0e8d9fda85550ef3279fe4
+canonical_content_hash: 202af6ceb1d3066c4d480ebadd52053ce10c4b389d42c72c4bcedd8d0313071c
+content_hash: 202af6ceb1d3066c4d480ebadd52053ce10c4b389d42c72c4bcedd8d0313071c
 created: "2026-05-08T11:19:54Z"
 created_by: sambeau
 id: FEAT-01KR3MES5ZJ11/spec-b61-f1-spec-instruction-corpus-cleanup
@@ -8,4 +8,4 @@ path: work/B61-tidy-contradictions-stray-files-corpus-size/B61-F1-spec-instructi
 status: draft
 title: "B61-F1 Specification: Instruction Corpus Cleanup"
 type: spec
-updated: "2026-05-08T11:19:54Z"
+updated: "2026-05-08T11:22:54Z"
