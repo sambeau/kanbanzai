@@ -6,6 +6,7 @@ status: dev-planning
 summary: Generate registry sections from stage bindings and role metadata for top-level instruction surfaces and enforce drift checks in CI.
 design: P59-roles-skills-remediation/design-p59-design-roles-skills-remediation
 spec: FEAT-01KR3MEJGGMT5/spec-b60-f1-spec-generated-role-skill-registry-surfaces
+dev_plan: FEAT-01KR3MEJGGMT5/dev-plan-b60-f1-dev-plan
 created: "2026-05-08T11:09:33Z"
 created_by: sambeau
 display_id: B60-F1
