@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "invariant_boundary_test.go pattern: stub checkKbzDirtyFunc at package level for INV-003 tests; INV-002 from next returns json.RawMessage (parse as top-level error object); INV-003 from next returns nil,error so WithSideEffects wraps it as internal_error with the INV-003 JSON in the message field — use strings.Contains on raw text rather than parsing the nested JSON; INV-004 in handoff lives in resp[\"prompt\"] not resp[\"context\"]. Handoff success is always JSON with a prompt field."
+created: "2026-05-08T17:04:28Z"
+created_by: unknown
+id: KE-01KR48REEW908
+learned_from: TASK-01KR3Q16BFSES
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - testing
+  - invariants
+  - mcp
+tier: 3
+topic: inv-boundary-test-patterns
+ttl_days: 30
+updated: "2026-05-08T17:04:28Z"
+use_count: 0

@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[minor] worked-well: write_file with entity_id scoped the new file directly to the worktree without any path issues."
+created: "2026-05-08T17:04:28Z"
+created_by: unknown
+id: KE-01KR48REF5HDH
+learned_from: TASK-01KR3Q16BFSES
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - worked-well
+tier: 3
+topic: retro-task-01kr3q16bfses-2
+ttl_days: 30
+updated: "2026-05-08T17:04:28Z"
+use_count: 0

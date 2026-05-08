@@ -3,9 +3,14 @@ parent_feature: FEAT-01KR3MDSZKAFG
 slug: b59-f1-t6-invariant-boundary-tests
 name: Invariant boundary tests
 summary: "Write internal/mcp/invariant_boundary_test.go with six test cases: INV-002 refusal from next and handoff, INV-003 refusal with stubbed dirty file list, INV-004 warning in context map and rendered prompt, and refusal byte-size assertions (<=1200 bytes per AC-011)."
-status: active
+status: done
 estimate: "5"
+files_planned:
+  - internal/mcp/invariant_boundary_test.go
+completed: "2026-05-08T17:04:28Z"
 claimed_at: "2026-05-08T16:57:50Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T16:57:50Z"
 dispatched_by: sambeau
+completion_summary: "Wrote internal/mcp/invariant_boundary_test.go with six test cases covering INV-002, INV-003, INV-004, and AC-011 refusal byte-size. Five tests execute and pass; TestInvariant_INV002_Handoff_UnregisteredTask is skipped pending P44 dispatch_task per dev-plan note. Full internal/mcp package (11s) and related packages all green."
+verification: "go test ./internal/mcp/ -run TestInvariant_ -v: 5 PASS, 1 SKIP. go test ./internal/mcp/ full suite: ok (11.361s). go test ./internal/invariants/ ./internal/git/ ./internal/context/: all ok."
