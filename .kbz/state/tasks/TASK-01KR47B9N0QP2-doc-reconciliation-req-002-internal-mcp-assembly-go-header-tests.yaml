@@ -1,0 +1,8 @@
+id: TASK-01KR47B9N0QP2
+parent_feature: FEAT-01KR46PKHMG4J
+slug: doc-reconciliation-req-002-internal-mcp-assembly-go-header-tests
+name: "Test `internal/mcp/assembly.go` header comment must clarify"
+summary: "Write tests covering: REQ-002: `internal/mcp/assembly.go` header comment must clarify it is `next`-only after legacy-removal commits."
+status: queued
+depends_on:
+  - TASK-01KR47B9MZCE4

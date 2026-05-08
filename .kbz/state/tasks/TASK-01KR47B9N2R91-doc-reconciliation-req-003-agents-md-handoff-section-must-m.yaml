@@ -1,0 +1,6 @@
+id: TASK-01KR47B9N2R91
+parent_feature: FEAT-01KR46PKHMG4J
+slug: doc-reconciliation-req-003-agents-md-handoff-section-must-m
+name: "`AGENTS.md` handoff section must match current"
+summary: "REQ-003: `AGENTS.md` handoff section must match current implementation — remove claims of spec sections, conflict annotations, and graph traversal that do not exist."
+status: queued

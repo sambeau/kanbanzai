@@ -1,0 +1,6 @@
+id: TASK-01KR47B9MT83W
+parent_feature: FEAT-01KR46PKHMG4J
+slug: doc-reconciliation-req-001-internal-mcp-handoff-tool-go-hea
+name: "`internal/mcp/handoff_tool.go` header comment must"
+summary: "REQ-001: `internal/mcp/handoff_tool.go` header comment must accurately describe the pipeline-3.0 behaviour (unconditional pipeline, no legacy fallback)."
+status: queued

@@ -1,0 +1,6 @@
+id: TASK-01KR47B9N5RBR
+parent_feature: FEAT-01KR46PKHMG4J
+slug: doc-reconciliation-req-004-github-copilot-instructions-md-h
+name: "`.github/copilot-instructions.md` handoff section must"
+summary: "REQ-004: `.github/copilot-instructions.md` handoff section must match current implementation — remove or qualify design-intent capabilities not yet built."
+status: queued

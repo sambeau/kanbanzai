@@ -1,0 +1,6 @@
+id: TASK-01KR47B9NPD1H
+parent_feature: FEAT-01KR46PKHMG4J
+slug: doc-reconciliation-ac-005-given-the-completion-of-documenta
+name: "Given the completion of documentation updates, when a"
+summary: "AC-005: Given the completion of documentation updates, when a project maintainer reviews the capability gap, then a decision record or planning issue exists documenting the gap and proposing next steps."
+status: queued
