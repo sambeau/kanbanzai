@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR3MES5ZJ11
 slug: instruction-corpus-cleanup-replace-stray-skill-md-files-with-directory-indexes
 name: Replace stray SKILL.md files with directory indexes
 summary: Replace stray SKILL.md files with directory indexes
-status: queued
+status: ready

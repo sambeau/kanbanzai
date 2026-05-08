@@ -3,7 +3,7 @@ parent_feature: FEAT-01KR3MES5ZJ11
 slug: instruction-corpus-cleanup-measure-corpus-size-and-verify-invariants
 name: Measure corpus size and verify invariants
 summary: Measure corpus size and verify invariants
-status: queued
+status: ready
 depends_on:
   - TASK-01KR3PZCRF7BD
   - TASK-01KR3PZCRGN24
