@@ -67,3 +67,4 @@ dist/
 .kbz/index/docint.db
 .kbz/index/docint.db-wal
 .kbz/index/docint.db-shm
+/kbz
