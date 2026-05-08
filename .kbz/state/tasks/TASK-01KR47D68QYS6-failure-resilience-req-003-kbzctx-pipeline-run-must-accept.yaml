@@ -1,0 +1,6 @@
+id: TASK-01KR47D68QYS6
+parent_feature: FEAT-01KR46PKHPVWS
+slug: failure-resilience-req-003-kbzctx-pipeline-run-must-accept
+name: Thread context.Context through Pipeline.Run
+summary: "REQ-003: `kbzctx.Pipeline.Run` must accept and propagate `context.Context` to `KnowledgeSurfacer.Surface` and `RoleResolver.Resolve`."
+status: queued

@@ -1,0 +1,8 @@
+id: TASK-01KR47D68BC71
+parent_feature: FEAT-01KR46PKHPVSH
+slug: config-safety-req-003-a-kbz-migrate-stage-bindings-com
+name: "A `kbz migrate stage-bindings` command must add the"
+summary: "REQ-003: A `kbz migrate stage-bindings` command must add the `schema_version: 2` key idempotently without altering other content."
+status: queued
+depends_on:
+  - TASK-01KR47D688P0S

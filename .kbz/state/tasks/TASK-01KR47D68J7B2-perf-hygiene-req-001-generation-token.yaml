@@ -1,0 +1,6 @@
+id: TASK-01KR47D68J7B2
+parent_feature: FEAT-01KR46PKHSWQF
+slug: perf-hygiene-req-001-generation-token
+name: Add Generation() method to KnowledgeService
+summary: "REQ-001: `KnowledgeService` must expose a `Generation() (string, error)` method derived from directory mtime and file count (no full scan)."
+status: queued

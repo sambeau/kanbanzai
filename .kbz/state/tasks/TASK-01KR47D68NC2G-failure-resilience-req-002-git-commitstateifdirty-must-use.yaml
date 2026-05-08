@@ -1,0 +1,6 @@
+id: TASK-01KR47D68NC2G
+parent_feature: FEAT-01KR46PKHPVWS
+slug: failure-resilience-req-002-git-commitstateifdirty-must-use
+name: Switch git.CommitStateIfDirty to exec.CommandContext
+summary: "REQ-002: `git.CommitStateIfDirty` must use `exec.CommandContext` for cancellable git operations."
+status: queued
