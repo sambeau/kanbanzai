@@ -3,9 +3,16 @@ parent_feature: FEAT-01KR3MDSZKAFG
 slug: b59-f1-t2-registered-entity-invariant
 name: Enforce registered-entity invariant in next and handoff
 summary: "Update next_tool.go and handoff_tool.go to emit INV-002 structured refusal (code, operation, reason, next_action) when an entity ID is not found in the store. Replace existing ad-hoc not_found error strings with invariants.Format calls."
-status: active
+status: done
 estimate: "2"
+files_planned:
+  - internal/mcp/next_tool.go
+  - internal/mcp/handoff_tool.go
+  - internal/mcp/handoff_tool_test.go
+completed: "2026-05-08T16:52:25Z"
 claimed_at: "2026-05-08T16:40:19Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T16:40:19Z"
 dispatched_by: sambeau
+completion_summary: "Updated next_tool.go and handoff_tool.go to emit INV-002 structured refusals when entity ID not found. In nextClaimMode, replaced fmt.Errorf not-found string with json.RawMessage(invariants.Format(RefusalResponse{Code: INV002, ...})). In handoff handler, replaced handoffErrorJSON(\"not_found\", ...) with mcp.NewToolResultText(invariants.Format(RefusalResponse{Code: INV002, ...})). Updated TestHandoff_TaskNotFound to assert all four INV-002 fields."
+verification: "go build ./internal/mcp/ passes. go test ./internal/invariants/ ./internal/mcp/ -run TestHandoff|TestNext|TestInvariant: all 73 tests pass. The two other failures (TestKnowledgeFilters_LearnedFromFilter, TestSiblingKnowledge_OneCompletedSibling) are pre-existing SQLite contention flakes that pass when run in isolation."

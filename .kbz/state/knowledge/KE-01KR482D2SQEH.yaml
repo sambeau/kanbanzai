@@ -1,0 +1,14 @@
+confidence: "0.5"
+content: "In nextClaimMode, returning json.RawMessage(invariants.Format(...)) from (any, error) correctly emits the INV-002 JSON as the tool response body. Since there are no side effects in the not-found path, buildResult takes the fast path and json.Marshal on json.RawMessage passes the bytes through unchanged."
+created: "2026-05-08T16:52:25Z"
+created_by: unknown
+id: KE-01KR482D2SQEH
+learned_from: TASK-01KR3Q0ANRJ6K
+miss_count: 0
+scope: project
+status: contributed
+tier: 3
+topic: inv002-refusal-in-next-tool
+ttl_days: 30
+updated: "2026-05-08T16:52:25Z"
+use_count: 0
