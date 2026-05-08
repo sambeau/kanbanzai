@@ -3,9 +3,16 @@ parent_feature: FEAT-01KR3MDJ7AV37
 slug: constraint-registry-model-loader
 name: Constraint Registry model loader and initial YAML
 summary: "Define the ConstraintEntry type (ID, rule statement, role applicability list, stage applicability list) and the ConstraintRegistry loader in a new internal/card package. Create .kbz/constraints.yaml with constraint entries for developing, specifying, dev-planning, and reviewing stages. Include registry validation (loud error on missing required field) and deterministic sorted ordering. Deliverables: internal/card/constraint_registry.go, .kbz/constraints.yaml, internal/card/constraint_registry_test.go. Covers: REQ-001, REQ-NF-004, AC-001 (partial)."
-status: active
+status: done
 estimate: "3"
+files_planned:
+  - internal/card/constraint_registry.go
+  - internal/card/constraint_registry_test.go
+  - .kbz/constraints.yaml
+completed: "2026-05-08T16:22:17Z"
 claimed_at: "2026-05-08T11:56:57Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T11:56:57Z"
 dispatched_by: sambeau
+completion_summary: "Defined ConstraintEntry (id, rule, applies_to) and ConstraintRegistry in new internal/card package. Created .kbz/constraints.yaml with 18 entries for developing (7), dev-planning (5), reviewing (4), specifying (4). Loader validates required fields with loud errors naming missing field; sorts by ID for determinism. Select(role, stage) filters by exact match. 14 tests all pass."
+verification: "go test ./internal/card/... -v — 14/14 pass: load valid/empty/invalid YAML, file-not-found, 4 missing-field errors, Select filtering, multi-role, no-match, determinism (20 iters), production YAML coverage."
