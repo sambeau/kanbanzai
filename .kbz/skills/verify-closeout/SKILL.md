@@ -91,16 +91,18 @@ Also check the worktree root for common temp file patterns (`*.tmp`, `debug_*`,
 locations are acceptable.
 **Fail criterion:** Untracked temporary files present in the worktree.
 
-### Item 4: Tests Pass
+### Item 4: Builds and Tests Pass
 
-**Condition:** `go test ./...` passes on the feature branch and on main after merge.
+**Condition:** `go build ./...` and `go test ./...` both pass on the feature branch.
 Suitable new tests exist for the change.
 
-**Verification action:** Run `go test ./...` in the repository root. Record the
-exit code and any failure output.
+**Verification action:** Run `go build ./...` in the repository root, then run
+`go test ./...`. Record the exit codes and any failure output from both.
 
-**Pass criterion:** `go test ./...` exits zero with no failures.
-**Fail criterion:** Any test failure or non-zero exit code.
+**Pass criterion:** Both `go build ./...` and `go test ./...` exit zero with
+no failures.
+**Fail criterion:** Any build error, test failure, or non-zero exit code from
+either command.
 
 ### Item 5: Code Reviewed
 
@@ -238,7 +240,7 @@ Produce exactly this structured output — no preamble, no conversation, no ques
 | 1 | All tasks terminal | pass / fail | <evidence> |
 | 2 | All changes committed | pass / fail | <evidence> |
 | 3 | Temporary files removed | pass / fail | <evidence> |
-| 4 | Tests pass | pass / fail | <evidence> |
+| 4 | Builds and tests pass | pass / fail | <evidence> |
 | 5 | Code reviewed | pass / fail | <evidence> |
 | 6 | Full lifecycle advanced | pass / fail | <evidence> |
 | 7 | Merge ancestry verified | pass / fail | <evidence> |
