@@ -13,7 +13,7 @@ LDFLAGS  := -X '$(PKG).Version=$(VERSION)' \
             -X '$(PKG).BuildTime=$(BUILD_TIME)' \
             -X '$(PKG).Dirty=$(DIRTY)'
 
-.PHONY: build install clean test
+.PHONY: build install clean test claude-skills-check
 
 build:
 	go build -ldflags "$(LDFLAGS)" -o $(BINARY) ./cmd/kbz
@@ -27,3 +27,6 @@ clean:
 
 test:
 	go test -race ./...
+
+claude-skills-check:
+	go test -v -run TestClaudeSkills ./internal/claudeskills/
