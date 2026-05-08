@@ -3,10 +3,15 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-req-005-a-planning-discussion-issue-or-d-tests
 name: Test A planning discussion issue or decision record must be
 summary: "Write tests covering: REQ-005: A planning discussion issue or decision record must be created flagging the capability gap (spec sections, conflict annotations, graph traversal) for separate feature planning."
-status: active
+status: done
 depends_on:
   - TASK-01KR47B9N87EN
+files_planned:
+  - internal/service/entities_test.go
+completed: "2026-05-08T17:47:28Z"
 claimed_at: "2026-05-08T17:19:16Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T17:19:16Z"
 dispatched_by: sambeau
+completion_summary: "Added 3 tests for REQ-005 decision record verification: (1) entity creation/retrieval via EntityService API with all 3 capability gaps verified, (2) decision document existence and content verification across worktree/main repo, (3) on-disk entity YAML field validation. Decision entity DEC-01KR484HRQ97X and document both confirmed."
+verification: "Tests 1+2 pass in worktree and main repo. Test 3 passes on main (entity in .kbz/), skips gracefully in worktree (entity only in main .kbz/). Pre-existing bug_gate_test.go compilation errors excluded from verification scope."
