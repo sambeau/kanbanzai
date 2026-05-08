@@ -1,0 +1,6 @@
+id: TASK-01KR3PY208N1W
+parent_feature: FEAT-01KR3MDJ7AV37
+slug: constraint-registry-model-loader
+name: Constraint Registry model loader and initial YAML
+summary: "Define the ConstraintEntry type (ID, rule statement, role applicability list, stage applicability list) and the ConstraintRegistry loader in a new internal/card package. Create .kbz/constraints.yaml with constraint entries for developing, specifying, dev-planning, and reviewing stages. Include registry validation (loud error on missing required field) and deterministic sorted ordering. Deliverables: internal/card/constraint_registry.go, .kbz/constraints.yaml, internal/card/constraint_registry_test.go. Covers: REQ-001, REQ-NF-004, AC-001 (partial)."
+status: queued
