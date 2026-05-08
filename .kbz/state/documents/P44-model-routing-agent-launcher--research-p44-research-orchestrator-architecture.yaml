@@ -1,0 +1,13 @@
+approved_at: "2026-05-08T11:07:53Z"
+approved_by: sambeau
+canonical_content_hash: 06f3b008c7ebe61578eeb957b47cc99f36b270cdc62239cdea9b955af9d75115
+content_hash: e4bc1ff6b08b2e1c5407f0133e6d5ce4817db5bef428f5376a8da8aa44299f50
+created: "2026-05-08T11:07:53Z"
+created_by: sambeau
+id: P44-model-routing-agent-launcher/research-p44-research-orchestrator-architecture
+owner: P44-model-routing-agent-launcher
+path: work/P44-model-routing-agent-launcher/P44-research-orchestrator-architecture.md
+status: approved
+title: "Research: Orchestrator Architecture for Kanbanzai"
+type: research
+updated: "2026-05-08T11:07:53Z"
