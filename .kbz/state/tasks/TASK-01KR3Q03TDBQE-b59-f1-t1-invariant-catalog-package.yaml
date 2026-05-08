@@ -1,0 +1,6 @@
+id: TASK-01KR3Q03TDBQE
+parent_feature: FEAT-01KR3MDSZKAFG
+slug: b59-f1-t1-invariant-catalog-package
+name: Define the invariant catalog package
+summary: "Create internal/invariants/catalog.go with five invariant codes (INV-001–INV-005), RefusalResponse struct, and Format function producing canonical JSON refusal shape. Add catalog_test.go covering round-trip JSON and byte-length upper-bound assertions."
+status: queued
