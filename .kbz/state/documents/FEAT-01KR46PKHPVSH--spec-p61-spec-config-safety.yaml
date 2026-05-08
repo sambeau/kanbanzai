@@ -1,11 +1,13 @@
+approved_at: "2026-05-08T16:34:48Z"
+approved_by: sambeau
 canonical_content_hash: 908542ebb640aa0b9e03e9b380afe57f501c6c3f634b969f68b2579ef5c0a5e3
-content_hash: 908542ebb640aa0b9e03e9b380afe57f501c6c3f634b969f68b2579ef5c0a5e3
+content_hash: 4db246492d9b2d2e71581eff1e999873bda0789f6f958c08e90ca7f654beb913
 created: "2026-05-08T16:34:37Z"
 created_by: sambeau
 id: FEAT-01KR46PKHPVSH/spec-p61-spec-config-safety
 owner: FEAT-01KR46PKHPVSH
 path: work/P61-handoff-resilience-binding-hardening/P61-spec-config-safety.md
-status: draft
+status: approved
 title: "Specification: Configuration Safety (Track A)"
 type: spec
-updated: "2026-05-08T16:34:37Z"
+updated: "2026-05-08T16:34:48Z"

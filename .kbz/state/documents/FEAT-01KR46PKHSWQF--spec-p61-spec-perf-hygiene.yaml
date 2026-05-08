@@ -1,11 +1,13 @@
+approved_at: "2026-05-08T16:34:48Z"
+approved_by: sambeau
 canonical_content_hash: 29efe5ec28c0f4c7723beccc60c721c2e72d4f6b9cbe20531d4e4727c7e49dbf
-content_hash: 29efe5ec28c0f4c7723beccc60c721c2e72d4f6b9cbe20531d4e4727c7e49dbf
+content_hash: 1d17584e6da137ca603cf435684dc201d4cdf1d53007adc5f7a77d3a24f257d4
 created: "2026-05-08T16:34:37Z"
 created_by: sambeau
 id: FEAT-01KR46PKHSWQF/spec-p61-spec-perf-hygiene
 owner: FEAT-01KR46PKHSWQF
 path: work/P61-handoff-resilience-binding-hardening/P61-spec-perf-hygiene.md
-status: draft
+status: approved
 title: "Specification: Performance Hygiene (Track C)"
 type: spec
-updated: "2026-05-08T16:34:37Z"
+updated: "2026-05-08T16:34:48Z"
