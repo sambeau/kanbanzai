@@ -1,7 +1,7 @@
 id: B58-inject-constraint-card-stage-binding-hydration
 slug: inject-constraint-card-stage-binding-hydration
 name: Inject constraint card and stage-binding hydration
-status: proposed
+status: designing
 summary: "Add generated constraint-card rendering and inline stage-binding context into task and handoff context responses so agents cannot miss role identity, skill bindings, and top operational constraints."
 created: "2026-05-08T11:08:13Z"
 created_by: sambeau
