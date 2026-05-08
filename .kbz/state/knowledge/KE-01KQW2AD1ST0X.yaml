@@ -3,9 +3,9 @@ content: "FIXED: The doc-intel access tracking no longer dirties the working tre
 created: "2026-05-05T12:38:01Z"
 created_by: sambeau
 id: KE-01KQW2AD1ST0X
-last_accessed_at: "2026-05-08T16:52:24Z"
+last_accessed_at: "2026-05-08T16:56:55Z"
 miss_count: 0
-recent_use_count: 147
+recent_use_count: 150
 scope: project
 status: contributed
 tags:
