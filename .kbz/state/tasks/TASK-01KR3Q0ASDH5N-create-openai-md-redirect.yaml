@@ -3,8 +3,13 @@ parent_feature: FEAT-01KR3MEYRQ9RG
 slug: create-openai-md-redirect
 name: Create OPENAI.md redirect to AGENTS.md
 summary: "T3 — Create OPENAI.md at the repository root as a short redirect to AGENTS.md. The file must not duplicate the full instruction corpus, must be no more than 20 lines, and must include a one-sentence explanation of why it exists (GPT-class hosts probe for OPENAI.md by convention). Covers REQ-006, REQ-NF-002. Acceptance: file exists at repo root, wc -l <= 20, contains reference to AGENTS.md, no duplicated corpus."
-status: active
+status: done
+files_planned:
+  - OPENAI.md
+completed: "2026-05-08T16:19:50Z"
 claimed_at: "2026-05-08T11:56:59Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T11:56:59Z"
 dispatched_by: sambeau
+completion_summary: "Created OPENAI.md at the worktree root (13 lines, well under the 20-line limit). The file contains a one-sentence blockquote explaining why it exists (GPT-class host probe convention), a reference to AGENTS.md as the canonical instruction corpus, and a brief summary of what AGENTS.md covers. No content from AGENTS.md is duplicated."
+verification: wc -l OPENAI.md → 13 (≤ 20 ✓). grep AGENTS.md → present ✓. File does not duplicate AGENTS.md corpus (visual inspection ✓). Committed as f238a70e on feature/FEAT-01KR3MEYRQ9RG-runtime-discovery-surfaces.
