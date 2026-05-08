@@ -1,0 +1,9 @@
+id: P60-whole-project-remediation-cycle
+slug: whole-project-remediation-cycle
+name: Whole Project Remediation Cycle
+status: idea
+summary: "Remediation cycle seeded from the 2026-05-08 whole-project formal Kanbanzai review. Scope includes restoring test/release gate confidence, syncing embedded workflow assets, hardening filesystem boundaries, and reducing structural hotspots."
+order: 0
+created: "2026-05-08T11:48:18Z"
+created_by: GPT-5.5
+updated: "2026-05-08T11:48:18Z"
