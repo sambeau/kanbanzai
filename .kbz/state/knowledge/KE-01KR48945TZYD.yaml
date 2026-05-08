@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[minor] workflow-friction: Untracked T3 files (dirty.go, dirty_test.go) were already staged without being committed, causing them to be bundled into my T4 commit. No harm done but unexpected."
+created: "2026-05-08T16:56:06Z"
+created_by: unknown
+id: KE-01KR48945TZYD
+learned_from: TASK-01KR3Q0FB91YP
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - workflow-friction
+tier: 3
+topic: retro-task-01kr3q0fb91yp-2
+ttl_days: 30
+updated: "2026-05-08T16:56:06Z"
+use_count: 0

@@ -3,9 +3,16 @@ parent_feature: FEAT-01KR3MDSZKAFG
 slug: b59-f1-t4-shell-read-warning-surfaces
 name: Add shell-read warning to task-context assembly surfaces
 summary: Inject workflow_state_warning field into nextContextToMap (assembly.go) and add a rendered Invariants section to RenderPrompt containing INV-004 text. Update next and handoff tool description strings with a one-sentence INV-004 reference.
-status: active
+status: done
 estimate: "2"
+files_planned:
+  - internal/context/pipeline.go
+  - internal/mcp/next_tool.go
+  - internal/mcp/handoff_tool.go
+completed: "2026-05-08T16:56:06Z"
 claimed_at: "2026-05-08T16:40:31Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T16:40:31Z"
 dispatched_by: sambeau
+completion_summary: "Injected workflow_state_warning into nextContextToMap (INV-004 text, always present). Added inv004Section constant and ## Invariants section unconditionally into RenderPrompt in pipeline.go. Updated next and handoff tool descriptions with one-sentence INV-004 reference. next_tool.go/handoff_tool.go changes were already committed by T2 agent; pipeline.go was the remaining deliverable."
+verification: "go build ./... clean; go test ./internal/context/... and ./internal/invariants/... pass; TestRenderPrompt, TestNextContextToMap_* all pass; pre-existing TestSiblingKnowledge flaky failures confirmed pre-existing without my changes"
