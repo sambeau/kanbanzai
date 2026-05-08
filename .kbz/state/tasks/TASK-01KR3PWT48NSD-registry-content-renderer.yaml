@@ -3,8 +3,16 @@ parent_feature: FEAT-01KR3MEJGGMT5
 slug: registry-content-renderer
 name: Registry content renderer
 summary: "Implement internal/registry/render.go. Accepts a RegistryModel and returns the generated Markdown string for two regions: (1) roles-and-skills — table with columns Stage | Description | Roles | Skills | Gate | Doc Type, derived from stage-bindings entries with source path reference; (2) role-index — table with columns Role | Identity | Inherits | Source, sorted lexicographically by role ID. Each region opens with a human-readable header and a warning comment identifying canonical sources. Must not include full skill procedures, examples, or anti-pattern bodies. Output is deterministic: same input always produces identical bytes. Deliverables: internal/registry/render.go, internal/registry/render_test.go (golden-file/snapshot tests, determinism assertions, no-procedure-body assertion). Spec requirements: REQ-001, REQ-002, REQ-004, REQ-009, REQ-NF-003, REQ-NF-004. Verifies AC-001, AC-002, AC-006, AC-011."
-status: active
+status: done
+files_planned:
+  - internal/registry/render.go
+  - internal/registry/render_test.go
+  - internal/registry/testdata/golden/roles-and-skills.golden
+  - internal/registry/testdata/golden/role-index.golden
+completed: "2026-05-08T16:50:52Z"
 claimed_at: "2026-05-08T16:40:51Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T16:40:51Z"
 dispatched_by: sambeau
+completion_summary: "Implemented internal/registry/render.go with RolesAndSkillsContent and RoleIndexContent. Both accept *RegistryModel and return deterministic Markdown for generated regions. render_test.go has 15 tests: golden-file snapshots, determinism (5 runs), no-procedure-body assertions, ordering, and formatting checks. All 39 tests pass (24 pre-existing + 15 new)."
+verification: "go test ./internal/registry/... -v -count=1: 39 tests pass, 0 failures"
