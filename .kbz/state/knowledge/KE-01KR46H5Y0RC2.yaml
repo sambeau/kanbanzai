@@ -1,0 +1,20 @@
+confidence: "0.5"
+content: "DeepSeek (api.deepseek.com) is a model provider, not a coding-agent platform. It provides an OpenAI/Anthropic-compatible inference API. AGENTS.md is NOT injected automatically — the API has no filesystem awareness. Tool descriptions are NOT injected automatically — the API supports function calling but has no native MCP support; tool schemas must be passed explicitly via the `tools` parameter. When DeepSeek is used as a backend model via a third-party client (e.g., OpenCode), that client's injection behaviour applies, not DeepSeek's. Documented in refs/sub-agents.md under 'Host-specific loading behaviour'."
+created: "2026-05-08T16:25:32Z"
+created_by: unknown
+id: KE-01KR46H5Y0RC2
+learned_from: TASK-01KR3Q0FHXC05
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - deepseek
+  - host-behaviour
+  - agents-md
+  - mcp
+  - runtime-surfaces
+tier: 3
+topic: deepseek-host-loading-behaviour
+ttl_days: 30
+updated: "2026-05-08T16:25:32Z"
+use_count: 0

@@ -3,8 +3,13 @@ parent_feature: FEAT-01KR3MEYRQ9RG
 slug: document-deepseek-host-loading
 name: Document DeepSeek host loading behaviour
 summary: "T5 — Research DeepSeek-hosted client behaviour and update refs/sub-agents.md with a DeepSeek section. Section must state: (a) host/platform, (b) whether AGENTS.md is injected automatically, (c) whether tool descriptions are injected, (d) required manual configuration. Per REQ-010: if behaviour is unverifiable, explicitly state unknown and do not mark this task complete until the DeepSeek section is reviewed. Covers REQ-009, REQ-010. Acceptance: section exists naming host, all four fields addressed, unknown fields stated as-such."
-status: active
+status: done
+files_planned:
+  - refs/sub-agents.md
+completed: "2026-05-08T16:25:32Z"
 claimed_at: "2026-05-08T11:56:59Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T11:56:59Z"
 dispatched_by: sambeau
+completion_summary: "Added DeepSeek host-specific section to refs/sub-agents.md. Section addresses all four C4 fields: (a) host = api.deepseek.com (OpenAI/Anthropic-compatible API, model provider only); (b) AGENTS.md injection = No; (c) tool-description injection = No for raw API, Unknown for client wrappers per REQ-010; (d) manual config = include AGENTS.md in system prompt, MCP-to-OpenAI bridge, client config. Per REQ-010, client-specific injection behaviour is marked \"Unknown — see REQ-010\"."
+verification: "Content verified via git show HEAD -- refs/sub-agents.md. All four C4 schema fields present in the DeepSeek section. Unknown fields use the literal string 'Unknown — see REQ-010' as required by the spec."
