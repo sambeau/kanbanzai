@@ -3,8 +3,17 @@ parent_feature: FEAT-01KR46PKHSWQF
 slug: perf-hygiene-req-001-generation-token
 name: Add Generation() method to KnowledgeService
 summary: "REQ-001: `KnowledgeService` must expose a `Generation() (string, error)` method derived from directory mtime and file count (no full scan)."
-status: active
+status: done
+files_planned:
+  - internal/service/knowledge.go
+  - internal/service/knowledge_generation_test.go
+  - internal/service/prereq.go
+  - internal/service/bug_gate.go
+  - internal/service/bug_gate_test.go
+completed: "2026-05-08T17:08:33Z"
 claimed_at: "2026-05-08T16:52:24Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T16:52:24Z"
 dispatched_by: sambeau
+completion_summary: "Added KnowledgeService.Generation() (string, error) — returns mtime/count token for knowledge directory. Returns \"0/0\" when dir absent. Added 5 tests covering all AC-001 scenarios. Fixed pre-existing bug_gate_test.go compilation errors (BugStatusVerified→BugStatusVerifying, missing VerifierTimedOut field on GateResult)."
+verification: "go test ./internal/service/ -run TestKnowledgeService_Generation: 5/5 PASS"
