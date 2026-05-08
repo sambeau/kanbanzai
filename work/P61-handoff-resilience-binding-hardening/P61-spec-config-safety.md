@@ -1,7 +1,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-08T16:29:10Z           |
-| Status | Draft                          |
+| Status | approved |
 | Author | spec-author                    |
 
 ## Problem Statement

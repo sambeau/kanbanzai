@@ -1,0 +1,85 @@
+document_id: FEAT-01KR46PKHSWQF/spec-p61-spec-perf-hygiene
+document_path: work/P61-handoff-resilience-binding-hardening/P61-spec-perf-hygiene.md
+content_hash: 29efe5ec28c0f4c7723beccc60c721c2e72d4f6b9cbe20531d4e4727c7e49dbf
+indexed_at: 2026-05-08T16:34:37.927712Z
+sections:
+    - path: "1"
+      level: 2
+      title: Problem Statement
+      byte_offset: 221
+      byte_count: 735
+      word_count: 80
+      content_hash: d285ba4a398d69fea48f7c43735fd15b07c6c76e3285d55f7552feba461c34fa
+    - path: "2"
+      level: 2
+      title: Requirements
+      byte_offset: 956
+      byte_count: 948
+      word_count: 128
+      content_hash: 50c358208c3dbaf0463b8f9dca19c48b1fededf980b96fa0d5b3897477fb6fdb
+      children:
+        - path: "2.1"
+          level: 3
+          title: Functional Requirements
+          byte_offset: 973
+          byte_count: 577
+          word_count: 74
+          content_hash: 692b60b8cfd60e45e7b74ff45ac1de356e7f2ec55330c3c0ae0e4949610ae211
+        - path: "2.2"
+          level: 3
+          title: Non-Functional Requirements
+          byte_offset: 1550
+          byte_count: 354
+          word_count: 52
+          content_hash: d2d70ab38d328626d4eb0147020a3e71cc840af239b390b8d64f9ade3a59f10c
+    - path: "3"
+      level: 2
+      title: Constraints
+      byte_offset: 1904
+      byte_count: 309
+      word_count: 48
+      content_hash: 3b90ef99b424ed881e85f919946fd50a75c06e6141f14eacc03ad30855339a66
+    - path: "4"
+      level: 2
+      title: Acceptance Criteria
+      byte_offset: 2213
+      byte_count: 1082
+      word_count: 161
+      content_hash: f367f63d5d499d8225d468a9719fda80da532a0842d6c374fc12099eb50647d8
+    - path: "5"
+      level: 2
+      title: Verification Plan
+      byte_offset: 3295
+      byte_count: 614
+      word_count: 100
+      content_hash: b5241fd291dbfcf76731fc38237b1f6e69cf367730ec0f3840c6c55ea8c6dc79
+entity_refs:
+    - entity_id: P61-handoff-resilience-binding-hardening
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 314
+    - entity_id: P61-design-handoff-resilience
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 355
+cross_doc_links:
+    - target_path: work/P61-handoff-resilience-binding-hardening/P61-design-handoff-resilience.md
+      link_text: work/P61-handoff-resilience-binding-hardening/P61-design-handoff-resilience.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "2"
+      role: requirement
+      confidence: high
+    - section_path: "2.1"
+      role: requirement
+      confidence: high
+    - section_path: "2.2"
+      role: requirement
+      confidence: high
+    - section_path: "3"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: requirement
+      confidence: high
+classified: false

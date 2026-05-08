@@ -1,8 +1,12 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-08T16:29:10Z           |
-| Status | Draft                          |
+| Status | approved |
 | Author | architect                      |
+
+## Overview
+
+Track C of P61: add generation-token-based cache to KnowledgeService.Surface and de-duplicate redundant entitySvc.Get call in handoff handler.
 
 ## Scope
 
@@ -29,6 +33,21 @@ Critical path: T1 → T2 → T4 (~5h). T3 parallel with T1+T2.
 |------|-----------|--------|------------|
 | Cache returns stale data after external modification | Low | Medium | Generation token from mtime; external changes trigger reload |
 | Generation() mtime granularity insufficient | Low | Low | Include file count in token for additional precision |
+
+## Interface Contracts
+
+- `KnowledgeService.Generation() (string, error)` — new O(1) method
+- `KnowledgeSurfacer.Surface()` — internal caching added; public API unchanged
+- Handoff handler — internal de-duplication; MCP response contract unchanged
+
+## Traceability Matrix
+
+| Task | REQ | AC |
+|------|-----|----|
+| T1 | REQ-001 | AC-001 |
+| T2 | REQ-002, REQ-003 | AC-002, AC-003, AC-004 |
+| T3 | REQ-004 | AC-005 |
+| T4 | REQ-NF-001, REQ-NF-002, REQ-NF-003 | AC-006, AC-007 |
 
 ## Verification Approach
 

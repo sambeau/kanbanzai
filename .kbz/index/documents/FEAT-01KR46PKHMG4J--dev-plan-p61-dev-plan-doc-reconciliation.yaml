@@ -1,0 +1,60 @@
+document_id: FEAT-01KR46PKHMG4J/dev-plan-p61-dev-plan-doc-reconciliation
+document_path: work/P61-handoff-resilience-binding-hardening/P61-dev-plan-doc-reconciliation.md
+content_hash: 679c047fd2f8004f4833bbae71a004554541071af2b51150e546b3dcacb253f0
+indexed_at: 2026-05-08T16:36:32.3097Z
+sections:
+    - path: "1"
+      level: 2
+      title: Scope
+      byte_offset: 221
+      byte_count: 199
+      word_count: 19
+      content_hash: cb8e3fa2ee0c51fa32608939eba4c9604b66698b1b9ab615ace7549497724169
+    - path: "2"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 420
+      byte_count: 545
+      word_count: 85
+      content_hash: 810589045d83ed9d9726cd2dd06ea2f10cff0933c9f842b517d4792b0c3c701d
+    - path: "3"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 965
+      byte_count: 154
+      word_count: 25
+      content_hash: abd5de5bdb4050c912e5a1f50f57b4f349ed44ad38a3d6295d433fe2c73ccda6
+    - path: "4"
+      level: 2
+      title: Risk Assessment
+      byte_offset: 1119
+      byte_count: 315
+      word_count: 51
+      content_hash: c9861b3d5990f1b2605cc442a37c2d83c45543825e2ccb2b1f787269a00bf7ee
+    - path: "5"
+      level: 2
+      title: Verification Approach
+      byte_offset: 1434
+      byte_count: 150
+      word_count: 20
+      content_hash: 6314f5064e2236e7fb725c8e7afa0cdd0d801e30c79b785000581a15e9e04497
+entity_refs:
+    - entity_id: FEAT-01KR46PKHMG4J
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 275
+cross_doc_links:
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "2"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "2"
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: risk
+      confidence: high
+classified: false

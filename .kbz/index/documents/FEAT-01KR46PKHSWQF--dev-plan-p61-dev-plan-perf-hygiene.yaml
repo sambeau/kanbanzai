@@ -1,0 +1,53 @@
+document_id: FEAT-01KR46PKHSWQF/dev-plan-p61-dev-plan-perf-hygiene
+document_path: work/P61-handoff-resilience-binding-hardening/P61-dev-plan-perf-hygiene.md
+content_hash: 7d3b05b7e0865023e2fe83d9c85960f1f1aaab8908223b800d81eddc254d580f
+indexed_at: 2026-05-08T16:36:32.310075Z
+sections:
+    - path: "1"
+      level: 2
+      title: Scope
+      byte_offset: 221
+      byte_count: 198
+      word_count: 21
+      content_hash: f1d87e93f48932e9233b9ac24f86390b7a9a9f69c0fcfdb4291d7635e7df5d18
+    - path: "2"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 419
+      byte_count: 497
+      word_count: 78
+      content_hash: 2d4b1314c68231a421947f82e1f47b96a58e6d452c429fc79dde47a8c5ad1b3c
+    - path: "3"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 916
+      byte_count: 168
+      word_count: 28
+      content_hash: 8022666a502524cfda1dd8d5b89bdc6921206f082c4adcf21cce9850bb33ca97
+    - path: "4"
+      level: 2
+      title: Risk Assessment
+      byte_offset: 1084
+      byte_count: 359
+      word_count: 54
+      content_hash: 9fdb8d9965f5851aeb3a5d9919231a86e4cd7ae82346987a91c3c1a856e31a92
+    - path: "5"
+      level: 2
+      title: Verification Approach
+      byte_offset: 1443
+      byte_count: 179
+      word_count: 29
+      content_hash: 07fa023603160c5d6e2b27e651762e9b36aa5085b351d3f0e8c089f36fe8b757
+entity_refs:
+    - entity_id: FEAT-01KR46PKHSWQF
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 275
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: risk
+      confidence: high
+classified: false

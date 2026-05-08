@@ -1,0 +1,53 @@
+document_id: FEAT-01KR46PKHPVSH/dev-plan-p61-dev-plan-config-safety
+document_path: work/P61-handoff-resilience-binding-hardening/P61-dev-plan-config-safety.md
+content_hash: b230e95a6deac3db7606f1ef77d8e104e70a3e445bc1ce9c1706e4849218234e
+indexed_at: 2026-05-08T16:36:32.310083Z
+sections:
+    - path: "1"
+      level: 2
+      title: Scope
+      byte_offset: 221
+      byte_count: 201
+      word_count: 19
+      content_hash: 5323e33db232b104a8c8522bdcf11311e1beb474183558709a5f5bd130d94a43
+    - path: "2"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 422
+      byte_count: 619
+      word_count: 100
+      content_hash: 7e290b53d48d8fe76f3e7c3e85a5ddc97f8f1b7258a6740a8cef33e233d64ede
+    - path: "3"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 1041
+      byte_count: 179
+      word_count: 33
+      content_hash: dcaeae3783e47a8b50a8c268ffc4161b600233e3a17c4376d9bf6b622cccf5b1
+    - path: "4"
+      level: 2
+      title: Risk Assessment
+      byte_offset: 1220
+      byte_count: 427
+      word_count: 71
+      content_hash: f5a4d5d7f70d2d495a36fa5d23d1df7f06ea9d3e39175021fa795fbd3aa60c3a
+    - path: "5"
+      level: 2
+      title: Verification Approach
+      byte_offset: 1647
+      byte_count: 139
+      word_count: 20
+      content_hash: c1e17b775d680a05e853befa878221a0db9cb5be278f4dbd4b59fb566cd5d34a
+entity_refs:
+    - entity_id: FEAT-01KR46PKHPVSH
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 275
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: risk
+      confidence: high
+classified: false

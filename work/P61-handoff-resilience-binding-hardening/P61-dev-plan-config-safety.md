@@ -1,8 +1,12 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-08T16:29:10Z           |
-| Status | Draft                          |
+| Status | approved |
 | Author | architect                      |
+
+## Overview
+
+Track A of P61: introduce schema_version: 2 to stage-bindings.yaml with version-dispatch decoder, kbz migrate command, and health() binding_loadable check.
 
 ## Scope
 
@@ -31,6 +35,22 @@ Critical path: T1 → T2 → T4 → T5 (~8.5h)
 | T1 signature changes break callers | Medium | Medium | Run full test suite after T1; isolate in feature branch |
 | v1→v2 migration corrupts existing config | Low | High | T2 must have dry-run mode; T4 verifies round-trip |
 | health() overhead unacceptable | Low | Low | LoadBindingFile is cheap; cache if needed |
+
+## Interface Contracts
+
+- `LoadBindingFile(path) (*BindingFile, []error)` — signature unchanged, internal dispatch added
+- `health()` — adds `binding_loadable` check; existing checks unchanged
+- `kbz migrate stage-bindings` — new CLI subcommand, idempotent
+
+## Traceability Matrix
+
+| Task | REQ | AC |
+|------|-----|----|
+| T1 | REQ-001, REQ-002 | AC-001, AC-002, AC-003, AC-004 |
+| T2 | REQ-003 | AC-005, AC-006 |
+| T3 | REQ-004 | AC-007, AC-008 |
+| T4 | REQ-001 | AC-001 |
+| T5 | REQ-005, REQ-NF-001, REQ-NF-002 | AC-009 |
 
 ## Verification Approach
 
