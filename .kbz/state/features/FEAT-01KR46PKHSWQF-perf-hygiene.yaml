@@ -10,3 +10,5 @@ created: "2026-05-08T16:28:30Z"
 created_by: sambeau
 display_id: B63-F3
 tier: feature
+verification: "TASK-01KR47D68J7B2: go test ./internal/service/ -run TestKnowledgeService_Generation: 5/5 PASS\nTASK-01KR47D68NMXZ: go test ./internal/context/: 15/15 PASS, including 5 new cache tests (CacheHit, CacheMiss, CacheInvalidatesAfterContribute, NilGenReader, ConcurrentSafety). No race conditions detected."
+verification_status: passed

@@ -3,10 +3,15 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-req-001-internal-mcp-handoff-tool-go-hea-tests
 name: "Test `internal/mcp/handoff_tool.go` header comment must"
 summary: "Write tests covering: REQ-001: `internal/mcp/handoff_tool.go` header comment must accurately describe the pipeline-3.0 behaviour (unconditional pipeline, no legacy fallback)."
-status: active
+status: done
 depends_on:
   - TASK-01KR47B9MT83W
+files_planned:
+  - internal/mcp/handoff_tool_test.go
+completed: "2026-05-08T17:28:12Z"
 claimed_at: "2026-05-08T17:19:24Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T17:19:24Z"
 dispatched_by: sambeau
+completion_summary: "Added 2 tests covering REQ-001 (header comment accuracy for handoff_tool.go):\n1. TestHandoff_HeaderComment_AssemblyPathIsPipeline3_0 — verifies assembly_path is exactly \"pipeline-3.0\"\n2. TestHandoff_HeaderComment_NilPipelineReturnsError — verifies nil pipeline returns pipeline_unavailable error (no legacy fallback)\nAll 32 handoff tests pass."
+verification: "go test ./internal/mcp/ -run 'TestHandoff' -count=1 - all 32 tests pass. Header claims verified: (1) assembly_path == \"pipeline-3.0\" confirmed, (2) nil pipeline returns pipeline_unavailable error confirmed (no legacy fallback), (3) accepted statuses, terminal status errors, read-only behavior all have existing test coverage."

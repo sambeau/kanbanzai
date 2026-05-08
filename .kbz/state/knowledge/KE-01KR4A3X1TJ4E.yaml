@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[minor] worked-well: kanbanzai_edit_file with entity_id applied the edit correctly on first attempt — both new tests landed cleanly"
+created: "2026-05-08T17:28:12Z"
+created_by: unknown
+id: KE-01KR4A3X1TJ4E
+learned_from: TASK-01KR47B9MXX4Q
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - worked-well
+tier: 3
+topic: retro-task-01kr47b9mxx4q
+ttl_days: 30
+updated: "2026-05-08T17:28:12Z"
+use_count: 0
