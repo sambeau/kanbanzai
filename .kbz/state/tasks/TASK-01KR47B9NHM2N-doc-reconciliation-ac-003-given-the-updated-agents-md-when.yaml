@@ -3,8 +3,11 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-ac-003-given-the-updated-agents-md-when
 name: "Given the updated `AGENTS.md`, when a reader searches for"
 summary: "AC-003: Given the updated `AGENTS.md`, when a reader searches for \"handoff\", then no claims of spec sections, conflict annotations, or graph traversal appear without qualification."
-status: active
+status: done
+completed: "2026-05-08T17:52:22Z"
 claimed_at: "2026-05-08T17:49:30Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T17:49:30Z"
 dispatched_by: sambeau
+completion_summary: "AC-003: Verified TestAgentsMD_HandoffSection_NoFalseClaims exists and passes. AGENTS.md handoff mentions are correctly qualified (context packet definition attributes spec sections to next, graph context line mentions both handoff/next). Test covers 5 assertions: no unqualified spec section claims, no conflict annotation claims, no graph traversal claims, accurate context packet definition, no graph capability claims for handoff."
+verification: "Ran go test ./internal/kbzinit/ -run \"TestAgentsMD_HandoffSection_NoFalseClaims|TestProjectCopilotInstructions_NoFalseHandoffClaims\" — both pass."

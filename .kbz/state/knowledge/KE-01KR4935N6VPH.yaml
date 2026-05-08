@@ -3,10 +3,10 @@ content: "[moderate] workflow-friction: Shared worktree had unstaged changes fro
 created: "2026-05-08T17:10:19Z"
 created_by: unknown
 id: KE-01KR4935N6VPH
-last_accessed_at: "2026-05-08T17:50:54Z"
+last_accessed_at: "2026-05-08T17:51:41Z"
 learned_from: TASK-01KR47D68QYS6
 miss_count: 0
-recent_use_count: 36
+recent_use_count: 38
 scope: project
 status: contributed
 tags:

@@ -3,6 +3,10 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-ac-001-given-the-updated-handoff-tool-go-tests
 name: "Test Given the updated `handoff_tool.go`, when a reader"
 summary: "Write tests covering: AC-001: Given the updated `handoff_tool.go`, when a reader inspects the header comment, then it accurately describes pipeline-3.0 behaviour with no mention of deprecated fallback."
-status: ready
+status: active
 depends_on:
   - TASK-01KR47B9NBJQ3
+claimed_at: "2026-05-08T17:51:23Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-08T17:51:23Z"
+dispatched_by: sambeau
