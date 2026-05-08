@@ -3,10 +3,13 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-req-004-github-copilot-instructions-md-h-tests
 name: "Test `.github/copilot-instructions.md` handoff section must"
 summary: "Write tests covering: REQ-004: `.github/copilot-instructions.md` handoff section must match current implementation — remove or qualify design-intent capabilities not yet built."
-status: active
+status: done
 depends_on:
   - TASK-01KR47B9N5RBR
+completed: "2026-05-08T17:33:28Z"
 claimed_at: "2026-05-08T17:19:22Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T17:19:22Z"
 dispatched_by: sambeau
+completion_summary: "Added TestProjectCopilotInstructions_NoFalseHandoffClaims to internal/kbzinit/agents_md_test.go. The test verifies AC-004: the project's .github/copilot-instructions.md contains no false claims about handoff capabilities (spec sections, conflict annotations, graph traversal). Since the file has zero handoff mentions, AC-004 is trivially satisfied — the test guards against regression. Uses runtime.Caller to locate the repo root. Verified: test passes, go build ./... passes."
+verification: "go test -run TestProjectCopilotInstructions_NoFalseHandoffClaims -v ./internal/kbzinit/ → PASS (0.00s). go build ./... → PASS. Confirmed copilot-instructions.md has zero \"handoff\" mentions (grep -c returns 0)."
