@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[moderate] tool-friction: kanbanzai_edit_file reported edits_applied:1 for both loader_test.go edits but neither persisted to disk. write_file worked on first attempt. Suggestion: Use write_file (with entity_id) as the primary tool for worktree file writes; treat kanbanzai_edit_file as unreliable for test files — always verify with grep after edits."
+created: "2026-05-08T17:03:44Z"
+created_by: unknown
+id: KE-01KR48Q446EWE
+learned_from: TASK-01KR47D686PWJ
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - tool-friction
+tier: 3
+topic: retro-task-01kr47d686pwj
+ttl_days: 30
+updated: "2026-05-08T17:03:44Z"
+use_count: 0
