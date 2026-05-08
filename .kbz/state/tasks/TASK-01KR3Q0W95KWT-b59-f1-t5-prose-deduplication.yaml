@@ -1,0 +1,6 @@
+id: TASK-01KR3Q0W95KWT
+parent_feature: FEAT-01KR3MDSZKAFG
+slug: b59-f1-t5-prose-deduplication
+name: Prose de-duplication in orchestrator role and skill
+summary: "Replace long-form duplicated invariant prose in .kbz/roles/orchestrator.yaml and .kbz/skills/orchestrate-development/SKILL.md with invariant-code cross-references. Remove spawn_agent from orchestrator tools list. Ensure artefact gate text is mandatory (INV-005), not advisory."
+status: queued
