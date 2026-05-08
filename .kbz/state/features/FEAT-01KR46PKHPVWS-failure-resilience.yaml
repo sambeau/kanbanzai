@@ -2,7 +2,7 @@ id: FEAT-01KR46PKHPVWS
 slug: failure-resilience
 name: Failure-mode resilience (Track B)
 parent: B63-p61-impl
-status: dev-planning
+status: developing
 summary: Propagate context.Context through pipeline and git helpers (T2) and apply panic-recovery pattern to all MCP handlers (T4). Add per-tool timeout budgets and extract wrapWithRecovery helper.
 spec: FEAT-01KR46PKHPVWS/spec-p61-spec-failure-resilience
 dev_plan: FEAT-01KR46PKHPVWS/dev-plan-p61-dev-plan-failure-resilience

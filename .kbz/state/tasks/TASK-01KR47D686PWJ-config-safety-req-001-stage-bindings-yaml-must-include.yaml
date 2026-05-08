@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR46PKHPVSH
 slug: config-safety-req-001-stage-bindings-yaml-must-include
 name: "`stage-bindings.yaml` must include a `schema_version` field"
 summary: "REQ-001: `stage-bindings.yaml` must include a `schema_version` field (integer) at the top level. The current file is version 2."
-status: queued
+status: ready

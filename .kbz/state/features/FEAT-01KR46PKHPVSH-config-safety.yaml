@@ -2,7 +2,7 @@ id: FEAT-01KR46PKHPVSH
 slug: config-safety
 name: Configuration safety (Track A)
 parent: B63-p61-impl
-status: dev-planning
+status: developing
 summary: "Schema-versioned stage-bindings.yaml (T1) and health() binding_loadable check (T5). Introduce schema_version: 2, version-dispatch decoder, kbz migrate command, and surface binding-load failures via health dashboard."
 spec: FEAT-01KR46PKHPVSH/spec-p61-spec-config-safety
 dev_plan: FEAT-01KR46PKHPVSH/dev-plan-p61-dev-plan-config-safety

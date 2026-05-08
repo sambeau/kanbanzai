@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR46PKHPVWS
 slug: failure-resilience-req-001-service-entityservice-get-must-a
 name: Add context.Context to EntityService.Get and call sites
 summary: "REQ-001: `service.EntityService.Get` must accept `context.Context` as its first parameter. Update ~30 call sites."
-status: queued
+status: ready

@@ -3,6 +3,6 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-req-005-a-planning-discussion-issue-or-d-tests
 name: Test A planning discussion issue or decision record must be
 summary: "Write tests covering: REQ-005: A planning discussion issue or decision record must be created flagging the capability gap (spec sections, conflict annotations, graph traversal) for separate feature planning."
-status: queued
+status: ready
 depends_on:
   - TASK-01KR47B9N87EN

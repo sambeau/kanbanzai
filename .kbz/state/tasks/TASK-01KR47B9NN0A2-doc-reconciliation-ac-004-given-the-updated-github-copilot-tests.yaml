@@ -3,6 +3,6 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-ac-004-given-the-updated-github-copilot-tests
 name: "Test Given the updated `.github/copilot-instructions.md`,"
 summary: "Write tests covering: AC-004: Given the updated `.github/copilot-instructions.md`, when a reader searches for \"handoff\", then no claims of spec sections, conflict annotations, or graph traversal appear without qualification."
-status: queued
+status: ready
 depends_on:
   - TASK-01KR47B9NKK6B

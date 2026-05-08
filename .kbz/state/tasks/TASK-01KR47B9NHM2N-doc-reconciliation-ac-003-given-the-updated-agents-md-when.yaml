@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-ac-003-given-the-updated-agents-md-when
 name: "Given the updated `AGENTS.md`, when a reader searches for"
 summary: "AC-003: Given the updated `AGENTS.md`, when a reader searches for \"handoff\", then no claims of spec sections, conflict annotations, or graph traversal appear without qualification."
-status: queued
+status: ready
