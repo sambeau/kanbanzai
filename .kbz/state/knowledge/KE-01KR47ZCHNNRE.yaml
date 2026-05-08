@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[minor] worked-well: Reconstructing the exact before-baseline from git show at the parent commit gave precise per-file line counts, making the before/after table fully verifiable rather than relying on the approximate P59 audit figure."
+created: "2026-05-08T16:50:46Z"
+created_by: unknown
+id: KE-01KR47ZCHNNRE
+learned_from: TASK-01KR3PZCRNGQJ
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - worked-well
+tier: 3
+topic: retro-task-01kr3pzcrngqj
+ttl_days: 30
+updated: "2026-05-08T16:50:46Z"
+use_count: 0

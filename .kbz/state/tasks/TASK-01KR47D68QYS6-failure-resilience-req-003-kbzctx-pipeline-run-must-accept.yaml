@@ -3,4 +3,8 @@ parent_feature: FEAT-01KR46PKHPVWS
 slug: failure-resilience-req-003-kbzctx-pipeline-run-must-accept
 name: Thread context.Context through Pipeline.Run
 summary: "REQ-003: `kbzctx.Pipeline.Run` must accept and propagate `context.Context` to `KnowledgeSurfacer.Surface` and `RoleResolver.Resolve`."
-status: ready
+status: active
+claimed_at: "2026-05-08T16:50:02Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-08T16:50:02Z"
+dispatched_by: sambeau
