@@ -1,0 +1,6 @@
+id: TASK-01KR3PVZZ72EP
+parent_feature: FEAT-01KR3MEJGGMT5
+slug: registry-extraction-model
+name: Registry extraction model — extractor and model
+summary: "Create internal/registry/ with the data model and extractor. The extractor reads .kbz/stage-bindings.yaml and all .kbz/roles/*.yaml files from a given root path and returns a RegistryModel struct containing an ordered list of StageEntry and a map of RoleEntry. Stage ordering must preserve declaration order from stage-bindings.yaml (yaml.Node walk, not map decode) to satisfy determinism requirement. Role entries are sorted lexicographically by filename. Error messages must name the file that caused any parse failure. Deliverables: internal/registry/model.go, internal/registry/extractor.go, internal/registry/extractor_test.go. Tests cover: normal load, missing roles dir, malformed YAML, empty corpus, and deterministic ordering. Spec requirements: REQ-001, REQ-002, REQ-NF-003, REQ-NF-005. Verifies AC-001."
+status: queued
