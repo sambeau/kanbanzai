@@ -3,8 +3,13 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-req-005-a-planning-discussion-issue-or-d
 name: A planning discussion issue or decision record must be
 summary: "REQ-005: A planning discussion issue or decision record must be created flagging the capability gap (spec sections, conflict annotations, graph traversal) for separate feature planning."
-status: active
+status: done
+files_planned:
+  - work/P61-handoff-resilience-binding-hardening/P61-report-handoff-capability-gap.md
+completed: "2026-05-08T17:03:35Z"
 claimed_at: "2026-05-08T16:50:30Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T16:50:30Z"
 dispatched_by: sambeau
+completion_summary: "Created decision record DEC-01KR484HRQ97X flagging the three handoff capability gaps confirmed by P61 Track D inspection: (1) spec section injection, (2) conflict annotation, (3) graph traversal — all documented as design intent but unimplemented. Also authored human-readable decision document P61-report-handoff-capability-gap.md (committed in the feature branch, registers after merge to main). Decision entity and document both document the gap and propose next steps per AC-005."
+verification: "Decision entity DEC-01KR484HRQ97X verified via entity(action: get) — correct name, rationale, summary covering all three gaps. Document P61-report-handoff-capability-gap.md confirmed committed on feature branch via git ls-files and git show."
