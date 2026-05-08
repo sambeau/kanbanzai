@@ -1,11 +1,13 @@
+approved_at: "2026-05-08T11:46:30Z"
+approved_by: sambeau
 canonical_content_hash: fd45ad7c721045addbe1f55ca5d062ff5caf4b524dc93ad74362b19547903068
-content_hash: fd45ad7c721045addbe1f55ca5d062ff5caf4b524dc93ad74362b19547903068
+content_hash: 9e3f8dddd4aa707fcb074361e3e989f24ae8d8c9b618976035476d963e6dc9a4
 created: "2026-05-08T11:19:54Z"
 created_by: sambeau
 id: FEAT-01KR3MEYRQ9RG/spec-b62-f1-spec-runtime-discovery-surfaces
 owner: FEAT-01KR3MEYRQ9RG
 path: work/B62-discover-runtime-instruction-surfaces/B62-F1-spec-runtime-discovery-surfaces.md
-status: draft
+status: approved
 title: "B62-F1 Specification: Runtime Discovery Surfaces"
 type: spec
-updated: "2026-05-08T11:22:54Z"
+updated: "2026-05-08T11:46:30Z"
