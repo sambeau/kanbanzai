@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR3MEJGGMT5
 slug: marker-placement-initial-sync-ci-target
 name: "Marker placement, initial sync, and CI target"
 summary: "Integration task: (1) Insert registry-gen:begin/end marker pairs into CLAUDE.md, .github/copilot-instructions.md, and README.md at the existing role/skill registry table locations; source= attribute names canonical source files. (2) Run kbz docs sync to populate generated regions; verify second run produces no diff (AC-009). (3) Add registry-check target to Makefile: runs go run ./cmd/kbz docs check. (4) Create .github/workflows/ci.yml (only release.yml currently exists) with a registry-check job that runs make registry-check on PRs and pushes to main. (5) Visually verify generated tables contain every configured stage and bound role with correct source paths (AC-006). Deliverables: updated CLAUDE.md, .github/copilot-instructions.md, README.md with markers and initial generated content; updated Makefile; .github/workflows/ci.yml. Spec requirements: REQ-003, REQ-007, REQ-008. Verifies AC-002, AC-005, AC-006, AC-008, AC-009."
-status: queued
+status: ready

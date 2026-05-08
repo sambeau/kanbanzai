@@ -2,7 +2,7 @@ id: FEAT-01KR3MEJGGMT5
 slug: generated-role-skill-registry-surfaces
 name: Generated role and skill registry surfaces
 parent: B60-unify-role-skill-registries
-status: dev-planning
+status: developing
 summary: Generate registry sections from stage bindings and role metadata for top-level instruction surfaces and enforce drift checks in CI.
 design: P59-roles-skills-remediation/design-p59-design-roles-skills-remediation
 spec: FEAT-01KR3MEJGGMT5/spec-b60-f1-spec-generated-role-skill-registry-surfaces

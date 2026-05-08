@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR3MEJGGMT5
 slug: kbz-docs-cli-command
 name: kbz docs CLI command — sync and check subcommands
 summary: "Add the kbz docs subcommand in cmd/kbz/docs_cmd.go with two actions: (1) kbz docs sync [--root path] — runs extractor, renders all regions, writes updated content into CLAUDE.md, .github/copilot-instructions.md, README.md, exits 0 on success; (2) kbz docs check [--root path] — runs extractor, renders all regions, compares with on-disk content without writing, exits non-zero and reports stale file(s), must complete under 2 seconds. Target files are hardcoded; AGENTS.md is explicitly excluded with a guard log line. Register under the docs case in cmd/kbz/main.go. Deliverables: cmd/kbz/docs_cmd.go, cmd/kbz/docs_cmd_test.go. Integration tests: sync on tmp-dir fixture produces expected output; check exits non-zero on stale; check exits 0 on current; AGENTS.md not modified; timing assertion. Spec requirements: REQ-003, REQ-005, REQ-006, REQ-007, REQ-011, REQ-NF-002, REQ-NF-005. Verifies AC-003, AC-004, AC-005, AC-008, AC-010."
-status: queued
+status: ready

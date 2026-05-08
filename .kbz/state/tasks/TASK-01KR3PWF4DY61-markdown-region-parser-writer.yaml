@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR3MEJGGMT5
 slug: markdown-region-parser-writer
 name: Markdown region parser and writer
 summary: "Implement the region parser and writer in internal/registry/region.go. Locates named generated regions in a Markdown file using <!-- registry-gen:begin:REGION-NAME source=... --> / <!-- registry-gen:end:REGION-NAME --> markers, replaces inner content, and detects structural errors. Writer preserves all bytes before opening marker and after closing marker byte-for-byte. Parser must return a clear error (with file path and marker name) for: missing begin/end marker, duplicated marker, nested regions. Check mode returns (stale bool, region string, file string). Running sync twice on unchanged input must produce identical bytes. Deliverables: internal/registry/region.go, internal/registry/region_test.go. Tests cover: normal replace, byte-for-byte prose preservation, missing marker, duplicated marker, nested marker, idempotency. Spec requirements: REQ-003, REQ-004, REQ-005, REQ-006, REQ-010, REQ-NF-001. Verifies AC-002, AC-003, AC-007, AC-009."
-status: queued
+status: ready
