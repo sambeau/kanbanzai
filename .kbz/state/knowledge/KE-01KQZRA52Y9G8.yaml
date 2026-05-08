@@ -3,10 +3,10 @@ content: "Large failing test suites must be turned into durable workflow entitie
 created: "2026-05-06T23:00:04Z"
 created_by: GPT-5.5
 id: KE-01KQZRA52Y9G8
-last_accessed_at: "2026-05-08T16:12:08Z"
+last_accessed_at: "2026-05-08T16:12:50Z"
 learned_from: user-retro-2026-05-06-failures-not-workflow-entities
 miss_count: 0
-recent_use_count: 77
+recent_use_count: 79
 scope: project
 status: contributed
 tags:
