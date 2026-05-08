@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR3MEYRQ9RG
 slug: cursor-rules-shim-optional
 name: Create Cursor rules shim (optional)
 summary: "T6 (optional) — Implement only if T1 through T5 are complete and capacity remains. Create .cursor/rules/kanbanzai.mdc as a redirect-style rule pointing at AGENTS.md. Must not duplicate canonical rule prose. Covers REQ-011. Acceptance: file exists at .cursor/rules/kanbanzai.mdc, references AGENTS.md, contains no duplicated workflow corpus."
-status: queued
+status: ready

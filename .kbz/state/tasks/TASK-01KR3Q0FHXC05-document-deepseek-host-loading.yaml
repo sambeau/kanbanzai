@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR3MEYRQ9RG
 slug: document-deepseek-host-loading
 name: Document DeepSeek host loading behaviour
 summary: "T5 — Research DeepSeek-hosted client behaviour and update refs/sub-agents.md with a DeepSeek section. Section must state: (a) host/platform, (b) whether AGENTS.md is injected automatically, (c) whether tool descriptions are injected, (d) required manual configuration. Per REQ-010: if behaviour is unverifiable, explicitly state unknown and do not mark this task complete until the DeepSeek section is reviewed. Covers REQ-009, REQ-010. Acceptance: section exists naming host, all four fields addressed, unknown fields stated as-such."
-status: queued
+status: ready

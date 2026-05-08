@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR3MEYRQ9RG
 slug: tool-description-p59-rule-text
 name: Add P59 rule text to Kanbanzai tool descriptions
 summary: "T4 — Edit description strings in next_tool.go, handoff_tool.go, entity_tool.go, worktree_tool.go, and pr_tool.go to embed concise P59 rule text (max 3 lines per tool). Rules: next gets handoff-dispatch constraint; handoff gets spawn_agent-bypass warning; entity gets existence-check requirement; worktree gets one-worktree-per-entity and no-commit-to-main rule; pr gets entity-aware enforcement note. Note: spawn_agent and dispatch_task are not live Kanbanzai MCP tools. Covers REQ-007, REQ-008, REQ-NF-003. Use TODO(P59-B2) comment if invariant codes not yet defined."
-status: queued
+status: ready
