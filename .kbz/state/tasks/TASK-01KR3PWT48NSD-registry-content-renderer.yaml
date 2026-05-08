@@ -1,0 +1,6 @@
+id: TASK-01KR3PWT48NSD
+parent_feature: FEAT-01KR3MEJGGMT5
+slug: registry-content-renderer
+name: Registry content renderer
+summary: "Implement internal/registry/render.go. Accepts a RegistryModel and returns the generated Markdown string for two regions: (1) roles-and-skills — table with columns Stage | Description | Roles | Skills | Gate | Doc Type, derived from stage-bindings entries with source path reference; (2) role-index — table with columns Role | Identity | Inherits | Source, sorted lexicographically by role ID. Each region opens with a human-readable header and a warning comment identifying canonical sources. Must not include full skill procedures, examples, or anti-pattern bodies. Output is deterministic: same input always produces identical bytes. Deliverables: internal/registry/render.go, internal/registry/render_test.go (golden-file/snapshot tests, determinism assertions, no-procedure-body assertion). Spec requirements: REQ-001, REQ-002, REQ-004, REQ-009, REQ-NF-003, REQ-NF-004. Verifies AC-001, AC-002, AC-006, AC-011."
+status: queued
