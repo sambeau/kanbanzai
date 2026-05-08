@@ -1,0 +1,157 @@
+document_id: FEAT-01KR3MDSZKAFG/dev-plan-b59-f1-dev-plan
+document_path: work/B59-enforce-high-violation-rules-mcp-invariants/plan/B59-F1-dev-plan.md
+content_hash: dbc37e2d8e7669aba9354908315c09550331338cd4c670a153eea8d59aa814f9
+indexed_at: 2026-05-08T11:51:55.970702Z
+sections:
+    - path: "1"
+      level: 2
+      title: Overview
+      byte_offset: 254
+      byte_count: 1666
+      word_count: 227
+      content_hash: c1292930645e54777dcc85eda2a8c8fccf9b37553beb879c65bc7268811547eb
+    - path: "2"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 1920
+      byte_count: 6730
+      word_count: 839
+      content_hash: 3c6b025cd79bb3410c3b927810b55447792e5e31c84d7ad51aa52f1ab147d928
+      children:
+        - path: "2.1"
+          level: 3
+          title: 'Task 1: Define the invariant catalog package'
+          byte_offset: 1939
+          byte_count: 875
+          word_count: 99
+          content_hash: 746ddc259600852be4eac4e8d54ff3cd5a27c9e8bcbca5adeab7f8049c151694
+        - path: "2.2"
+          level: 3
+          title: 'Task 2: Enforce registered-entity invariant in `next` and `handoff`'
+          byte_offset: 2814
+          byte_count: 995
+          word_count: 129
+          content_hash: 946154ff2e0630f8a5d795a8e07b323367cc4a09d0935b31ce6e632a8e3d0ea5
+        - path: "2.3"
+          level: 3
+          title: 'Task 3: Enforce orphaned-workflow-state invariant in `next` task-claim'
+          byte_offset: 3809
+          byte_count: 1051
+          word_count: 142
+          content_hash: da5de7d80da41e2fdc2e2e6361d9bed34ec05ab1244044bda7191ef9d89ddbaa
+        - path: "2.4"
+          level: 3
+          title: 'Task 4: Add shell-read warning to task-context assembly surfaces'
+          byte_offset: 4860
+          byte_count: 1040
+          word_count: 133
+          content_hash: b634e210bd226521298562ea9e1774ead7e2195980951499f1b9caeecc75b392
+        - path: "2.5"
+          level: 3
+          title: 'Task 5: Prose de-duplication in orchestrator role and orchestration skill'
+          byte_offset: 5900
+          byte_count: 1374
+          word_count: 171
+          content_hash: 69699d3ce509ae5dce2f6d2da898d344fee151e2f4d214e775ee72a31e563603
+        - path: "2.6"
+          level: 3
+          title: 'Task 6: Invariant boundary tests'
+          byte_offset: 7274
+          byte_count: 1376
+          word_count: 162
+          content_hash: 88b7fe59801e137ee8b13ce585ad10eeac285d0a9ebe8d97445c5e94610852e8
+    - path: "3"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 8650
+      byte_count: 1056
+      word_count: 163
+      content_hash: 4434dee09611502a37d8c79491576c9a3833e6986e4616b2442adbf3c066b61e
+    - path: "4"
+      level: 2
+      title: Interface Contracts
+      byte_offset: 9706
+      byte_count: 3165
+      word_count: 434
+      content_hash: cff91f1428face0b4fba2b78e4172e764fc843cf2dd15d2248cff61b09d4f6f9
+      children:
+        - path: "4.1"
+          level: 3
+          title: '`internal/invariants` package (new)'
+          byte_offset: 9730
+          byte_count: 1136
+          word_count: 158
+          content_hash: 2d05e444c9a883dea5ce6f4f77565ee3d5506e4876e307f03623c4f34865467b
+        - path: "4.2"
+          level: 3
+          title: '`internal/git.CheckKbzDirty` (new function in `dirty.go`)'
+          byte_offset: 10866
+          byte_count: 645
+          word_count: 91
+          content_hash: c3bb68f2cc0a7c3a10c814f225eae4c774cd860eaef6a03ed30c1d4f4f571370
+        - path: "4.3"
+          level: 3
+          title: Context map field `workflow_state_warning` (additive)
+          byte_offset: 11511
+          byte_count: 477
+          word_count: 58
+          content_hash: d980ecb0822deddd554dab86947b2092a66d67acddb68006e1f3482cb8ddf559
+        - path: "4.4"
+          level: 3
+          title: Rendered prompt invariants section (additive)
+          byte_offset: 11988
+          byte_count: 590
+          word_count: 81
+          content_hash: 2984e14418cc85c2ac223fd5b7e6ce5839aea4a0a2110e3fce5ce62f90c2c9dc
+        - path: "4.5"
+          level: 3
+          title: Ownership boundaries preserved
+          byte_offset: 12578
+          byte_count: 293
+          word_count: 43
+          content_hash: 81b00ce1d065bae1d2dc663e4a6c45a2e2bc74ebd5595186f57673601ac84a70
+    - path: "5"
+      level: 2
+      title: Traceability Matrix
+      byte_offset: 12871
+      byte_count: 1313
+      word_count: 215
+      content_hash: a9a8a7639e7d65a8950b0cc4ba9cc8441343a1113a97dda6ffa132a57d7deafb
+entity_refs:
+    - entity_id: FEAT-01KR3MDSZKAFG
+      entity_type: feature
+      section_path: ""
+      byte_offset: 126
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: "4.1"
+      byte_offset: 10708
+    - entity_id: B59-enforce-high-violation-rules-mcp-invariants
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 322
+    - entity_id: F1-spec-high-violation-mcp-rule-invariants
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 374
+cross_doc_links:
+    - target_path: work/B59-enforce-high-violation-rules-mcp-invariants/B59-F1-spec-high-violation-mcp-rule-invariants.md
+      link_text: work/B59-enforce-high-violation-rules-mcp-invariants/B59-F1-spec-high-violation-mcp-rule-invariants.md
+      section_path: "1"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "2.5"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "2.5"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "2.4"
+      role: narrative
+      confidence: high
+    - section_path: "4.3"
+      role: narrative
+      confidence: high
+classified: false

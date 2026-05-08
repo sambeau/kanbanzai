@@ -3,9 +3,9 @@ content: "BUG entity status should be surfaced in the status() project overview 
 created: "2026-05-07T02:09:59Z"
 created_by: sambeau
 id: KE-01KR035WXSWBY
-last_accessed_at: "2026-05-08T16:12:55Z"
+last_accessed_at: "2026-05-08T16:15:05Z"
 miss_count: 0
-recent_use_count: 83
+recent_use_count: 86
 scope: project
 status: contributed
 tags:

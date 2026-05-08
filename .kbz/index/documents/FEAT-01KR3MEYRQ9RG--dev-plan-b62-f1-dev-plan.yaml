@@ -1,0 +1,290 @@
+document_id: FEAT-01KR3MEYRQ9RG/dev-plan-b62-f1-dev-plan
+document_path: work/B62-discover-runtime-instruction-surfaces/plan/B62-F1-dev-plan.md
+content_hash: a3b056b5a23811399cb3f4580adc4102c9f478939f596dff79eb62fba9789ed8
+indexed_at: 2026-05-08T11:53:08.593967Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'B62-F1 Dev-Plan: Runtime Discovery Surfaces'
+      byte_offset: 0
+      byte_count: 18691
+      word_count: 2556
+      content_hash: a3b056b5a23811399cb3f4580adc4102c9f478939f596dff79eb62fba9789ed8
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 669
+          byte_count: 1265
+          word_count: 165
+          content_hash: 3431afeb4073361a6c1e0537d29b5f5e97de0b2c8dccc34baec306a1f7912daf
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1934
+          byte_count: 8932
+          word_count: 1170
+          content_hash: e7116124bfa339f4a50ba5bdb25341be1cbca01bb1d7bece9da04292b5b01be0
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'T1: Create `.claude/skills/` wrapper files and generator script'
+              byte_offset: 1953
+              byte_count: 2158
+              word_count: 226
+              content_hash: d2b5c96113251170fac6a020cb962ad63fb090734e0e632af5462e0dee8cee26
+            - path: 1.2.2
+              level: 3
+              title: 'T2: Implement wrapper drift check CI target'
+              byte_offset: 4111
+              byte_count: 1336
+              word_count: 203
+              content_hash: df5f2142f16c40bc3ac081b22f1a5999e4c44b47de4c1e1859fa3f18c93134af
+            - path: 1.2.3
+              level: 3
+              title: 'T3: Create `OPENAI.md` redirect'
+              byte_offset: 5447
+              byte_count: 794
+              word_count: 116
+              content_hash: 84813b6e4ee91588706cd457ec32e418e08ba249bc1f34abe267059fd0104e60
+            - path: 1.2.4
+              level: 3
+              title: 'T4: Add P59 rule text to Kanbanzai tool descriptions'
+              byte_offset: 6241
+              byte_count: 2495
+              word_count: 345
+              content_hash: 65d187fdfbd93abb12068595966e52103fab1c24b109fe3abc983f1cc0fc9c59
+            - path: 1.2.5
+              level: 3
+              title: 'T5: Document DeepSeek host loading behaviour'
+              byte_offset: 8736
+              byte_count: 1311
+              word_count: 170
+              content_hash: c8f585e643c15789d098993d7dbe9a8b03227d5689c496264c1d527b9522c251
+            - path: 1.2.6
+              level: 3
+              title: 'T6: Create Cursor rules shim (optional)'
+              byte_offset: 10047
+              byte_count: 819
+              word_count: 107
+              content_hash: 2be7e98b46af07b228886153f9dff79abcd0faa255b31c2446ebb381cc2bc893
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 10866
+          byte_count: 729
+          word_count: 103
+          content_hash: 04bf0db56e263bdd5955d3cad1a0c1483908b10148d3fd5326a08f5b98ed4d73
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 11595
+          byte_count: 2731
+          word_count: 412
+          content_hash: b2e123137db676aae35c50659461f6ca1c342c8678b8465312be24afef25ca6a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'C1: Wrapper file format'
+              byte_offset: 11619
+              byte_count: 951
+              word_count: 132
+              content_hash: ad832efd8c9d28d7093b5ee4636dfdd39e6cb55cfa7369e7b689ec10a2b1ce38
+            - path: 1.4.2
+              level: 3
+              title: 'C2: Drift-check input/output contract'
+              byte_offset: 12570
+              byte_count: 457
+              word_count: 68
+              content_hash: 33521f9bd9a686a82dc7abe46a4cab170fd8752228cb99ed0b36ca65021b5763
+            - path: 1.4.3
+              level: 3
+              title: 'C3: Tool description text budget'
+              byte_offset: 13027
+              byte_count: 589
+              word_count: 96
+              content_hash: f323816adad1ba7bbdcdc424c514bbbad3d4bdcd608bfc82a41087782c0bcf39
+            - path: 1.4.4
+              level: 3
+              title: 'C4: DeepSeek documentation schema'
+              byte_offset: 13616
+              byte_count: 710
+              word_count: 113
+              content_hash: f26576fbd5989aceb902a996c9f5ff0417e0b26150658528fde0fe9ce36d12fb
+        - path: "1.5"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 14326
+          byte_count: 2464
+          word_count: 347
+          content_hash: 04df44f56863fb6c33593b3bda0876c9c7c04ef8d29a00453d11aa0d807808b3
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'Risk: Canonical skill frontmatter is absent or malformed'
+              byte_offset: 14346
+              byte_count: 764
+              word_count: 100
+              content_hash: f03e2603f57e171e12d7c97e45ebe6b114ae78c7e2b27c8459d3cc428f07f5d5
+            - path: 1.5.2
+              level: 3
+              title: 'Risk: DeepSeek host loading behaviour is unverifiable'
+              byte_offset: 15110
+              byte_count: 571
+              word_count: 78
+              content_hash: 9e5b338cdf8c8bff7cbc0e8ea67c7df9a2e6524d89c3aafc0af1b1b773ca551f
+            - path: 1.5.3
+              level: 3
+              title: 'Risk: B59 invariant codes are not yet published when T4 is implemented'
+              byte_offset: 15681
+              byte_count: 594
+              word_count: 93
+              content_hash: 212abad28fe9bae1f11c3b8084d8bb0476a5a34f46ac4a39d6796a21c34db19c
+            - path: 1.5.4
+              level: 3
+              title: 'Risk: `.claude/skills/` directory conflicts with future Anthropic Skills format changes'
+              byte_offset: 16275
+              byte_count: 515
+              word_count: 73
+              content_hash: 8ec3320c2e207e7b99db0ce6d7012c1ffcf8375e30420e0d078ec88d79f53406
+        - path: "1.6"
+          level: 2
+          title: Verification Approach
+          byte_offset: 16790
+          byte_count: 1901
+          word_count: 299
+          content_hash: 01b284ad0bb36e72a7926d90d33bacdcae77400b585504818cdb30fc968bd2bd
+entity_refs:
+    - entity_id: FEAT-01KR3MEYRQ9RG
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 439
+    - entity_id: FEAT-01KR3MEYRQ9RG
+      entity_type: feature
+      section_path: "1.1"
+      byte_offset: 820
+    - entity_id: B62-discover-runtime-instruction-surfaces
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 734
+    - entity_id: F1-spec-runtime-discovery-surfaces
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 780
+cross_doc_links:
+    - target_path: work/B62-discover-runtime-instruction-surfaces/B62-F1-spec-runtime-discovery-surfaces.md
+      link_text: work/B62-discover-runtime-instruction-surfaces/B62-F1-spec-runtime-discovery-surfaces.md
+      section_path: "1.1"
+    - target_path: OPENAI.md
+      link_text: OPENAI.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.1"
+    - target_path: refs/sub-agents.md
+      link_text: refs/sub-agents.md
+      section_path: "1.1"
+    - target_path: SKILL.md
+      link_text: SKILL.md
+      section_path: 1.2.1
+    - target_path: .claude/skills/<skill>/SKILL.md
+      link_text: .claude/skills/<skill>/SKILL.md
+      section_path: 1.2.1
+    - target_path: .claude/skills/orchestrate-development/SKILL.md
+      link_text: .claude/skills/orchestrate-development/SKILL.md
+      section_path: 1.2.1
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.2.1
+    - target_path: .claude/skills/implement-task/SKILL.md
+      link_text: .claude/skills/implement-task/SKILL.md
+      section_path: 1.2.1
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: 1.2.1
+    - target_path: .claude/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .claude/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.2.1
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.2.1
+    - target_path: .claude/skills/kanbanzai-workflow/SKILL.md
+      link_text: .claude/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.2.1
+    - target_path: .agents/skills/kanbanzai-workflow/SKILL.md
+      link_text: .agents/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.2.1
+    - target_path: .claude/skills/write-spec/SKILL.md
+      link_text: .claude/skills/write-spec/SKILL.md
+      section_path: 1.2.1
+    - target_path: .kbz/skills/write-spec/SKILL.md
+      link_text: .kbz/skills/write-spec/SKILL.md
+      section_path: 1.2.1
+    - target_path: .claude/skills/write-design/SKILL.md
+      link_text: .claude/skills/write-design/SKILL.md
+      section_path: 1.2.1
+    - target_path: .kbz/skills/write-design/SKILL.md
+      link_text: .kbz/skills/write-design/SKILL.md
+      section_path: 1.2.1
+    - target_path: .claude/skills/review-code/SKILL.md
+      link_text: .claude/skills/review-code/SKILL.md
+      section_path: 1.2.1
+    - target_path: .kbz/skills/review-code/SKILL.md
+      link_text: .kbz/skills/review-code/SKILL.md
+      section_path: 1.2.1
+    - target_path: OPENAI.md
+      link_text: OPENAI.md
+      section_path: 1.2.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.3
+    - target_path: /OPENAI.md
+      link_text: /OPENAI.md
+      section_path: 1.2.3
+    - target_path: refs/sub-agents.md
+      link_text: refs/sub-agents.md
+      section_path: 1.2.5
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.5
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.6
+    - target_path: .claude/skills/<skill>/SKILL.md
+      link_text: .claude/skills/<skill>/SKILL.md
+      section_path: 1.4.1
+    - target_path: .claude/skills/*/SKILL.md
+      link_text: .claude/skills/*/SKILL.md
+      section_path: 1.4.2
+    - target_path: refs/sub-agents.md
+      link_text: refs/sub-agents.md
+      section_path: 1.4.4
+    - target_path: SKILL.md
+      link_text: " SKILL.md files use custom frontmatter\n  but it is not uniformly structured; agent skills under "
+      section_path: 1.5.1
+    - target_path: OPENAI.md
+      link_text: OPENAI.md
+      section_path: "1.6"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: risk
+      confidence: high
+    - section_path: 1.5.1
+      role: risk
+      confidence: high
+    - section_path: 1.5.2
+      role: risk
+      confidence: high
+    - section_path: 1.5.3
+      role: risk
+      confidence: high
+    - section_path: 1.5.4
+      role: risk
+      confidence: high
+classified: false

@@ -1,0 +1,176 @@
+document_id: FEAT-01KR3MDJ7AV37/dev-plan-b58-f1-dev-plan
+document_path: work/B58-inject-constraint-card-stage-binding-hydration/plan/B58-F1-dev-plan.md
+content_hash: 4490b311b63e8ce54450b692960946539a0f01eec59e341e535a3c32cf5889a7
+indexed_at: 2026-05-08T11:51:39.237742Z
+sections:
+    - path: "1"
+      level: 2
+      title: Scope
+      byte_offset: 391
+      byte_count: 1648
+      word_count: 206
+      content_hash: 0ba4f3340305e17534ab46f61a8f9498dc9c9ef9b6b411bf8e43880da11bba27
+    - path: "2"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 2039
+      byte_count: 8775
+      word_count: 1090
+      content_hash: 8dbfa66242b9683c48087ec5d3d6b8438b1505ab8df13cf87df715f397581686
+      children:
+        - path: "2.1"
+          level: 3
+          title: 'Task 1: Constraint Registry — type model, loader, and initial YAML'
+          byte_offset: 2058
+          byte_count: 1353
+          word_count: 158
+          content_hash: d1f17fe57713851bf1e2b0e436e2db5d791ca28be81ba21f4230a4d8eedb68c7
+        - path: "2.2"
+          level: 3
+          title: 'Task 2: Constraint Card Renderer'
+          byte_offset: 3411
+          byte_count: 1351
+          word_count: 172
+          content_hash: a5f229cec7f3f8e8e755ffd5354cb529baed1dc5f1ac9455944914c656b57a19
+        - path: "2.3"
+          level: 3
+          title: 'Task 3: Stage-Binding Hydration Payload'
+          byte_offset: 4762
+          byte_count: 1012
+          word_count: 122
+          content_hash: b9764c6a742d4051ea7219bbad649ecdc003ae91ec32eaa807e6f10a5ef1da1b
+        - path: "2.4"
+          level: 3
+          title: 'Task 4: Inject Constraint Card and Stage-Binding Payload into `next` Responses'
+          byte_offset: 5774
+          byte_count: 1629
+          word_count: 208
+          content_hash: 078aa21f185c72de2359841bd63ac3318bcefa1bc9cbba877d7334d9131c7dcc
+        - path: "2.5"
+          level: 3
+          title: 'Task 5: Inject Constraint Card and Stage-Binding Payload into `handoff` Responses'
+          byte_offset: 7403
+          byte_count: 1290
+          word_count: 160
+          content_hash: 76064673014dafbb0957139f13a0db0480d0f3d26a8fe845ef444af2f7330f4a
+        - path: "2.6"
+          level: 3
+          title: 'Task 6: Golden Tests, Validation Suite, and Regression Tests'
+          byte_offset: 8693
+          byte_count: 2121
+          word_count: 267
+          content_hash: 98212c2d725adcfde03456b0dc3577cece90c19d1f3993a0f6fe3f555dbb74fe
+    - path: "3"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 10814
+      byte_count: 646
+      word_count: 138
+      content_hash: 5661e694db47b3c2eb303e0d40bf2c1993237dfddd317e21bc6094650db27306
+    - path: "4"
+      level: 2
+      title: Risk Assessment
+      byte_offset: 11460
+      byte_count: 2139
+      word_count: 318
+      content_hash: 5b2ad76d8e12b260e7f2b9e8f33f2399062dc8f6ef3a22cda42c360845a990d3
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Risk: `PipelineResult` does not expose resolved role or binding'
+          byte_offset: 11480
+          byte_count: 692
+          word_count: 99
+          content_hash: b9443771abb597edb81bcfb141bd1d67a63bee9ec3dc86a162cd0578cec1269a
+        - path: "4.2"
+          level: 3
+          title: 'Risk: `nextClaimMode` assembly path does not surface resolved role for renderer'
+          byte_offset: 12172
+          byte_count: 487
+          word_count: 76
+          content_hash: 864aa2a985f7e318042c2cdd9bd7ba9f24682a6e8962c1420e9ee184b8bddd32
+        - path: "4.3"
+          level: 3
+          title: 'Risk: Constraint YAML entries don''t align with role/stage pairs in tests'
+          byte_offset: 12659
+          byte_count: 490
+          word_count: 76
+          content_hash: fd3e9effe96fcb129ed7d4892e51d52dfe91a319e80197b033576025fc27943b
+        - path: "4.4"
+          level: 3
+          title: 'Risk: Byte or line budget exceeded by verbose constraint entries'
+          byte_offset: 13149
+          byte_count: 450
+          word_count: 64
+          content_hash: 46a54196f4f88fc0b34ee439a46f3091f0b3967b9288f6e01e8ea9ffd3ae9ea4
+    - path: "5"
+      level: 2
+      title: Verification Approach
+      byte_offset: 13599
+      byte_count: 1843
+      word_count: 293
+      content_hash: 603f7ab1b373d091fc44e27b9dfdaf40bcbf14fcbcb1c01d5358d51760c6b3ef
+entity_refs:
+    - entity_id: FEAT-01KR3MDJ7AV37
+      entity_type: feature
+      section_path: ""
+      byte_offset: 126
+    - entity_id: FEAT-01KR3MDJ7AV37
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 582
+    - entity_id: B58-inject-constraint-card-stage-binding-hydration
+      entity_type: plan
+      section_path: ""
+      byte_offset: 206
+    - entity_id: F1-spec-constraint-card-stage-binding-hydration
+      entity_type: plan
+      section_path: ""
+      byte_offset: 331
+    - entity_id: B58-inject-constraint-card-stage-binding-hydration
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 474
+    - entity_id: F1-spec-constraint-card-stage-binding-hydration
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 529
+cross_doc_links:
+    - target_path: work/B58-inject-constraint-card-stage-binding-hydration/B58-F1-spec-constraint-card-stage-binding-hydration.md
+      link_text: work/B58-inject-constraint-card-stage-binding-hydration/B58-F1-spec-constraint-card-stage-binding-hydration.md
+      section_path: ""
+    - target_path: work/B58-inject-constraint-card-stage-binding-hydration/B58-F1-spec-constraint-card-stage-binding-hydration.md
+      link_text: work/B58-inject-constraint-card-stage-binding-hydration/B58-F1-spec-constraint-card-stage-binding-hydration.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "2.1"
+      role: constraint
+      confidence: high
+    - section_path: "2.2"
+      role: constraint
+      confidence: high
+    - section_path: "2.4"
+      role: constraint
+      confidence: high
+    - section_path: "2.5"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: risk
+      confidence: high
+    - section_path: "4.1"
+      role: risk
+      confidence: high
+    - section_path: "4.2"
+      role: risk
+      confidence: high
+    - section_path: "4.3"
+      role: constraint
+      confidence: high
+    - section_path: "4.4"
+      role: constraint
+      confidence: high
+classified: false

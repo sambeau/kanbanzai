@@ -1,0 +1,123 @@
+document_id: P61-handoff-resilience-binding-hardening/report-p61-report-handoff-investigation
+document_path: work/P61-handoff-resilience-binding-hardening/P61-report-handoff-investigation.md
+content_hash: 90ade38bd4de96ffc93fa6e0635c4330eece3972de3670d36a68e5159da0e9c5
+indexed_at: 2026-05-08T16:12:45.897149Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P61 Report — `handoff` Tool Failure: Root Cause Analysis & Remediation'
+      byte_offset: 0
+      byte_count: 14012
+      word_count: 1937
+      content_hash: 90ade38bd4de96ffc93fa6e0635c4330eece3972de3670d36a68e5159da0e9c5
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Root Cause Finding
+          byte_offset: 283
+          byte_count: 4623
+          word_count: 598
+          content_hash: 3866e156c94d452d60c9aad4c9a7c62379e61c1be8eac96c1b5df8735a937860
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Hypotheses ruled out (with justification)
+              byte_offset: 3444
+              byte_count: 1462
+              word_count: 208
+              content_hash: 0d3928cf37ca7fec550032eca9bd43423472229c98061315d28e6d867c0aaf72
+        - path: "1.2"
+          level: 2
+          title: 2. Current Implementation Analysis
+          byte_offset: 4906
+          byte_count: 4112
+          word_count: 613
+          content_hash: b1968e99b85a710debb9750b5541ba8564dae35990ba9e78b02130e5b21b9be9
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Call graph for `handoff(task_id=X)`
+              byte_offset: 4945
+              byte_count: 2112
+              word_count: 325
+              content_hash: 38b171ba8b379f33f9daa19a06a135083df2fe7c94f563d2c7c9ad2e5e592cac
+            - path: 1.2.2
+              level: 3
+              title: Architectural mistakes that *do* exist (independent of the panic)
+              byte_offset: 7057
+              byte_count: 1961
+              word_count: 283
+              content_hash: d80ffcbc9fd751eaafb470e21d1bf601d62d8d7e76f73f77a6ae615112eade6d
+        - path: "1.3"
+          level: 2
+          title: 3. Solution Options
+          byte_offset: 9018
+          byte_count: 2681
+          word_count: 368
+          content_hash: a561c9be3868c636d02e715e220ee27c0ff7e7e4f503b0a0f0fbedbe6405c90a
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Tier 1 — Restore service (LANDED)
+              byte_offset: 9042
+              byte_count: 562
+              word_count: 71
+              content_hash: f6a2591b3a6d563b7726169764e5cbf7de1ec09f5dc1d312c8efd317c530ac4c
+            - path: 1.3.2
+              level: 3
+              title: Tier 2 — Strengthen the contract (THIS PLAN)
+              byte_offset: 9604
+              byte_count: 1621
+              word_count: 219
+              content_hash: e71122cb2f412a9655c4d8cd254923cdb997f12f39f7f3599d16b1bb75dab4b2
+            - path: 1.3.3
+              level: 3
+              title: Tier 3 — Strategic / not warranted now
+              byte_offset: 11225
+              byte_count: 474
+              word_count: 74
+              content_hash: 6978c0dcbbe73da6da6aeac2f93b3c5690d218fc3f96fc98e2c718cbe7719f40
+        - path: "1.4"
+          level: 2
+          title: 4. Recommended Solution
+          byte_offset: 11699
+          byte_count: 684
+          word_count: 95
+          content_hash: cd8ae88d9db4fb56988eda0cdbc847b59fd70c540ba6eccc7a8b94e4bf49c6b4
+        - path: "1.5"
+          level: 2
+          title: 5. Interim Mitigation (no longer needed — fix landed)
+          byte_offset: 12383
+          byte_count: 287
+          word_count: 39
+          content_hash: c02185de2d5c3e4215e9bea57ba7fb7526021580afdd27e4e2ed6d59afba5983
+        - path: "1.6"
+          level: 2
+          title: 6. Meta-finding (for engineering leadership)
+          byte_offset: 12670
+          byte_count: 1342
+          word_count: 192
+          content_hash: d5a1bc386a164b1cefcd37b85d1a8dbed8f709e55ed355f2ed86758b5996c75b
+entity_refs:
+    - entity_id: BUG-01KR45KJWB2KY
+      entity_type: bug
+      section_path: "1"
+      byte_offset: 161
+    - entity_id: P61-design-handoff-resilience
+      entity_type: plan
+      section_path: "1.4"
+      byte_offset: 11880
+cross_doc_links:
+    - target_path: .kbz/skills/*/SKILL.md
+      link_text: .kbz/skills/*/SKILL.md
+      section_path: 1.1.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.2
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.3.2
+    - target_path: P61-design-handoff-resilience.md
+      link_text: P61-design-handoff-resilience.md
+      section_path: "1.4"
+classified: false

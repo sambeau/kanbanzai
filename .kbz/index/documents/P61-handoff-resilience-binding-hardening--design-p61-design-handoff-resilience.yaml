@@ -1,0 +1,144 @@
+document_id: P61-handoff-resilience-binding-hardening/design-p61-design-handoff-resilience
+document_path: work/P61-handoff-resilience-binding-hardening/P61-design-handoff-resilience.md
+content_hash: a58bea65a54e6cfc6ad30c1d3416a940acf19ee2d3bad867908aa53053ce1aa0
+indexed_at: 2026-05-08T16:12:46.58708Z
+sections:
+    - path: "1"
+      level: 1
+      title: P61 Design — Handoff Resilience and Binding Hardening
+      byte_offset: 0
+      byte_count: 10857
+      word_count: 1500
+      content_hash: a58bea65a54e6cfc6ad30c1d3416a940acf19ee2d3bad867908aa53053ce1aa0
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 248
+          byte_count: 613
+          word_count: 88
+          content_hash: 3fa390d55451a8da3b5f26fd9fe78b838cb3db2a456eaeed402c3a4af7266de4
+        - path: "1.2"
+          level: 2
+          title: Goals
+          byte_offset: 861
+          byte_count: 937
+          word_count: 134
+          content_hash: 363c5e3e97ef81f18526bdfaeef4c44dfaf02549e13282aa96133b299d20d384
+        - path: "1.3"
+          level: 2
+          title: Non-Goals
+          byte_offset: 1798
+          byte_count: 530
+          word_count: 77
+          content_hash: 325f133f9c3296be16c2dbbd372b2099f4b5a7c5f8649fbbc2623c1003a00b37
+        - path: "1.4"
+          level: 2
+          title: Design
+          byte_offset: 2328
+          byte_count: 5034
+          word_count: 647
+          content_hash: e2a39bef536ef4dfae25a14815217f5a37e6e570ccaec35039b72fd1ac4c6e12
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Track A — Configuration safety (T1, T5)
+              byte_offset: 2339
+              byte_count: 1564
+              word_count: 193
+              content_hash: 1366a6270e3afd9b85700ddcf924d6fc69cff86ba9d61645c07c72865a87acf8
+            - path: 1.4.2
+              level: 3
+              title: Track B — Failure-mode resilience (T2, T4)
+              byte_offset: 3903
+              byte_count: 1588
+              word_count: 198
+              content_hash: b96bd638785c920fc6c4e8cfe69df7dc9fec1ffb55d13919a3b6bcc0e85183a7
+            - path: 1.4.3
+              level: 3
+              title: Track C — Performance hygiene (T3, T7)
+              byte_offset: 5491
+              byte_count: 814
+              word_count: 105
+              content_hash: 0c27682202ba276b58e93c1eb01fec6d83e5a4ca8a026ed859affeca4648abd8
+            - path: 1.4.4
+              level: 3
+              title: Track D — Documentation reconciliation (T6)
+              byte_offset: 6305
+              byte_count: 1057
+              word_count: 149
+              content_hash: 117d5ea7a98183b0294717aaefca6bb6a396fc36ad0284210b68f20c6ffa612c
+        - path: "1.5"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 7362
+          byte_count: 980
+          word_count: 140
+          content_hash: 8a3a0565044ce5c71e7c6a16cc4835c41d967176feecffe01d7c5d62f3492866
+        - path: "1.6"
+          level: 2
+          title: Dependencies
+          byte_offset: 8342
+          byte_count: 467
+          word_count: 72
+          content_hash: 50db92025c8af40bfa5f136cf98b9e834c7cbea353d00c6fb2314ddfbc20a88b
+        - path: "1.7"
+          level: 2
+          title: Verification
+          byte_offset: 8809
+          byte_count: 1001
+          word_count: 134
+          content_hash: b8582656b9271e2f7f26b47232476c6dd2226d1a4809858fef9366999fa483a6
+        - path: "1.8"
+          level: 2
+          title: Implementation Effort
+          byte_offset: 9810
+          byte_count: 370
+          word_count: 75
+          content_hash: fb126a68d475cc5cae935161911d992a7caed0bb4e8097a15e3a7907f9813123
+        - path: "1.9"
+          level: 2
+          title: Open Questions
+          byte_offset: 10180
+          byte_count: 677
+          word_count: 107
+          content_hash: c5827ad16226d598d9a8f6a926054cd420fb68abac2b5662d850c3e3b93e7ea6
+entity_refs:
+    - entity_id: BUG-01KR45KJWB2KY
+      entity_type: bug
+      section_path: "1"
+      byte_offset: 128
+    - entity_id: P61-report-handoff-investigation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 162
+cross_doc_links:
+    - target_path: P61-report-handoff-investigation.md
+      link_text: P61-report-handoff-investigation.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.4
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: 1.4.4
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.7"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1.7"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: alternative
+      confidence: high
+    - section_path: "1.9"
+      role: question
+      confidence: high
+classified: false

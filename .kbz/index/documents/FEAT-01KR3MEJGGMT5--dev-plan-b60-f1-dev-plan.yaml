@@ -1,0 +1,178 @@
+document_id: FEAT-01KR3MEJGGMT5/dev-plan-b60-f1-dev-plan
+document_path: work/B60-unify-role-skill-registries/plan/B60-F1-dev-plan.md
+content_hash: 7d52afa7000d8a1e453e706b1c7fa7104e0ec6c2eb83200bcbae139b8fd1dd6e
+indexed_at: 2026-05-08T11:50:48.160819Z
+sections:
+    - path: "1"
+      level: 2
+      title: Scope
+      byte_offset: 247
+      byte_count: 772
+      word_count: 89
+      content_hash: 4e64df86edd3b38afe620acc61bfbe21c4ab916af99b3446786b9b8bcf7230de
+    - path: "2"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 1019
+      byte_count: 7667
+      word_count: 996
+      content_hash: 5c37a9772ed2c7efe0a84ae4443a50f6570abee89ba5125a6ef25b60c1e59e03
+      children:
+        - path: "2.1"
+          level: 3
+          title: 'Task 1: Registry extraction model (`internal/registry` — extractor + model)'
+          byte_offset: 1038
+          byte_count: 1343
+          word_count: 165
+          content_hash: 63e8dc8ccfdc222a6b48acd4fd882ebbf763a0a58ca3e2b2413c8c384fccf41f
+        - path: "2.2"
+          level: 3
+          title: 'Task 2: Markdown region parser and writer (`internal/registry/region.go`)'
+          byte_offset: 2381
+          byte_count: 1639
+          word_count: 209
+          content_hash: ae2f3cdeee7ce0d55360e225edacd45429e3d5898b30587d0aa4ae87af22bcb6
+        - path: "2.3"
+          level: 3
+          title: 'Task 3: Registry content renderer (`internal/registry/render.go`)'
+          byte_offset: 4020
+          byte_count: 1486
+          word_count: 192
+          content_hash: e1054e6952f97b5e6693a8b6a94c39ec164f01730e2a3af1d3a160f8b0ae8823
+        - path: "2.4"
+          level: 3
+          title: 'Task 4: `kbz docs` CLI command (`cmd/kbz/docs_cmd.go`)'
+          byte_offset: 5506
+          byte_count: 1606
+          word_count: 222
+          content_hash: a8600007aa76aef7f0a1a594247a6240a5a3cfaed8b3d49a4461d44bd20df8f8
+        - path: "2.5"
+          level: 3
+          title: 'Task 5: Marker placement, initial generated sync, CI target'
+          byte_offset: 7112
+          byte_count: 1574
+          word_count: 205
+          content_hash: f6e29892050cb13dbb65ac6e69a663f7b227473c7d06482151e9bbb76769fdfc
+    - path: "3"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 8686
+      byte_count: 855
+      word_count: 153
+      content_hash: bb060ffe3bb4c5a946a4d12bb54c5eddd4ea3b53ff6c05d8a233224a568fe7ab
+    - path: "4"
+      level: 2
+      title: Risk Assessment
+      byte_offset: 9541
+      byte_count: 2359
+      word_count: 338
+      content_hash: 5eaa058b3ad53bf29f9807ea61d58913074e0bcfd4d93c9705b16198497a673c
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Risk: Stage-bindings YAML ordering is non-deterministic across Go map iteration'
+          byte_offset: 9561
+          byte_count: 705
+          word_count: 97
+          content_hash: 12eb7c092bbecc70524203207697f176d1fb9ab3ff26dfa79b98d473b0255325
+        - path: "4.2"
+          level: 3
+          title: 'Risk: Existing instruction files have inconsistent or absent locations for marker insertion'
+          byte_offset: 10266
+          byte_count: 641
+          word_count: 88
+          content_hash: 6265767e6902c5c5376d5cf455b20a977d82aa4bbdca511a42c46f561006285e
+        - path: "4.3"
+          level: 3
+          title: 'Risk: No CI workflow file exists for general PRs'
+          byte_offset: 10907
+          byte_count: 505
+          word_count: 72
+          content_hash: 14a8f2628d766eb5f5f6d1362c4c7f1677d53f9cdfdeca1443638e6028068475
+        - path: "4.4"
+          level: 3
+          title: 'Risk: check-mode timing requirement (under 2 seconds) fails in slow CI environments'
+          byte_offset: 11412
+          byte_count: 488
+          word_count: 78
+          content_hash: 6aba67fe1946d26beb91d71cb154d235112cfb4199c395287494ce88a2720b9d
+    - path: "5"
+      level: 2
+      title: Verification Approach
+      byte_offset: 11900
+      byte_count: 1205
+      word_count: 190
+      content_hash: 31d1cc71523d3ec74c103dd5333ae4229dde7949b996c69b645ad4770cb26cea
+entity_refs:
+    - entity_id: FEAT-01KR3MEJGGMT5
+      entity_type: feature
+      section_path: ""
+      byte_offset: 126
+    - entity_id: B60-unify-role-skill-registries
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 312
+    - entity_id: F1-spec-generated-role-skill-registry-surfaces
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 348
+cross_doc_links:
+    - target_path: work/B60-unify-role-skill-registries/B60-F1-spec-generated-role-skill-registry-surfaces.md
+      link_text: work/B60-unify-role-skill-registries/B60-F1-spec-generated-role-skill-registry-surfaces.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "1"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "1"
+    - target_path: README.md
+      link_text: README.md
+      section_path: "1"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "2.4"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "2.4"
+    - target_path: README.md
+      link_text: README.md
+      section_path: "2.4"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "2.4"
+    - target_path: CLAUDE.md
+      link_text: CLAUDE.md
+      section_path: "2.5"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "2.5"
+    - target_path: README.md
+      link_text: README.md
+      section_path: "2.5"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "5"
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: risk
+      confidence: high
+    - section_path: "4.1"
+      role: risk
+      confidence: high
+    - section_path: "4.2"
+      role: risk
+      confidence: high
+    - section_path: "4.3"
+      role: risk
+      confidence: high
+    - section_path: "4.4"
+      role: requirement
+      confidence: high
+classified: false

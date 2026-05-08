@@ -3,10 +3,10 @@ content: "The fast-track pipeline failed again on 2026-05-06: it hit a gate wher
 created: "2026-05-06T19:45:39Z"
 created_by: sambeau
 id: KE-01KQZD64ZGZTR
-last_accessed_at: "2026-05-08T16:12:55Z"
+last_accessed_at: "2026-05-08T16:15:05Z"
 learned_from: P52-fast-track-orchestration
 miss_count: 0
-recent_use_count: 91
+recent_use_count: 94
 scope: project
 status: contributed
 tags:

@@ -1,0 +1,533 @@
+document_id: P60-whole-project-remediation-cycle/report-p60-report-whole-project-formal-review
+document_path: work/P60-whole-project-remediation-cycle/P60-report-whole-project-formal-review.md
+content_hash: e3542abcd9be26cbcf73939a8074c5d1069ebf1bc59a1b3a6c390bf6bb22be44
+indexed_at: 2026-05-08T11:50:49.449557Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Whole-Project Formal Review: Kanbanzai'
+      byte_offset: 0
+      byte_count: 24451
+      word_count: 3029
+      content_hash: e3542abcd9be26cbcf73939a8074c5d1069ebf1bc59a1b3a6c390bf6bb22be44
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overall Verdict
+          byte_offset: 291
+          byte_count: 219
+          word_count: 31
+          content_hash: da81b3582147514066e59edd6dd9cbba45dd45e08b76be04810223496c1f3ce4
+        - path: "1.2"
+          level: 2
+          title: Repository State Note
+          byte_offset: 510
+          byte_count: 500
+          word_count: 65
+          content_hash: 247e7d62f49c3a52fde6586e593fe5ab01f9c9bf596969935229322c194b6f09
+        - path: "1.3"
+          level: 2
+          title: Executive Summary
+          byte_offset: 1010
+          byte_count: 1327
+          word_count: 170
+          content_hash: 08244e094574a81c2f59f5c3b153055b9ccc161b158605cd07aba37818448fc8
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Release Blockers
+              byte_offset: 1032
+              byte_count: 1305
+              word_count: 167
+              content_hash: 5dd979f085fe65d501a32af7b087118d41ff760401306626470bb060eaacb424
+        - path: "1.4"
+          level: 2
+          title: Checks Run
+          byte_offset: 2337
+          byte_count: 798
+          word_count: 123
+          content_hash: 25c8e7a89ac2346862cd674ca5bb40a3bd5de494318fb7145cbfe307cf67b342
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Repository and Workflow Checks
+              byte_offset: 2352
+              byte_count: 235
+              word_count: 32
+              content_hash: e69bd5c6e3811cd5a97500885c01a113dc855b12c94b7f82a9f1fb249bc4beb6
+            - path: 1.4.2
+              level: 3
+              title: Static and Test Checks
+              byte_offset: 2587
+              byte_count: 224
+              word_count: 38
+              content_hash: 90955ea21395b0b0a2d732567b1bd3a28570ed3fea54d7bf1379458858a9aef8
+            - path: 1.4.3
+              level: 3
+              title: Graph and Structural Checks
+              byte_offset: 2811
+              byte_count: 324
+              word_count: 50
+              content_hash: faea8af7c9f1f614c46c2d1f6fa821ae930024e989b3c802e543215c972ed6a7
+        - path: "1.5"
+          level: 2
+          title: Finding Summary
+          byte_offset: 3135
+          byte_count: 574
+          word_count: 83
+          content_hash: 046e9e7ed994612f1f0aebe688f1c803202bcc642201cadd7e3f2bea0fbebcbe
+        - path: "1.6"
+          level: 2
+          title: Critical Findings
+          byte_offset: 3709
+          byte_count: 4911
+          word_count: 535
+          content_hash: 895bed3529beaf22ca2a6b0953d00cfd5b5cc7814f55df35e0fdb8a881e08502
+          children:
+            - path: 1.6.1
+              level: 3
+              title: C1 — The project test suite does not currently compile or pass
+              byte_offset: 3731
+              byte_count: 1383
+              word_count: 149
+              content_hash: 1810b0a8b9feec7a651badb5337f09e05bf97801283584410f5dd0b83a4a24d4
+            - path: 1.6.2
+              level: 3
+              title: C2 — `HealthCheckCleanGate` is registered as a blocking merge gate but always passes
+              byte_offset: 5114
+              byte_count: 1009
+              word_count: 131
+              content_hash: 6933fa1d1c0e584f85281ab3b3e2c79082fe5bf716ef10b98a4c4052a3991fae
+            - path: 1.6.3
+              level: 3
+              title: C3 — `kanbanzai init` task-skill idempotency is broken by missing managed markers
+              byte_offset: 6123
+              byte_count: 1217
+              word_count: 141
+              content_hash: b60734fa42cfd6003846bdcdc48ff2ae5745801846d08729ae4abda09c90d34a
+            - path: 1.6.4
+              level: 3
+              title: C4 — Embedded workflow skill seeds have drifted from `.agents` source files
+              byte_offset: 7340
+              byte_count: 1280
+              word_count: 111
+              content_hash: a4b977904821a83dd0465c8d5ae7d806f43bec957ae0ca897692bd3e7573cacf
+        - path: "1.7"
+          level: 2
+          title: Major Findings
+          byte_offset: 8620
+          byte_count: 8795
+          word_count: 1052
+          content_hash: 0c88e7d15ab2902bee5c646bb50a358643029f3a4dbbf048a02b90bdaaa547a9
+          children:
+            - path: 1.7.1
+              level: 3
+              title: M1 — Document/report path handling can escape intended repository boundaries
+              byte_offset: 8639
+              byte_count: 968
+              word_count: 116
+              content_hash: 731ae83f91674a07bfe5612384d0408fb260f0546fda21460505caac4db4dd5a
+            - path: 1.7.2
+              level: 3
+              title: M2 — MCP file tools use lexical containment checks that are symlink-unsafe
+              byte_offset: 9607
+              byte_count: 976
+              word_count: 123
+              content_hash: 8c40f0f914528126546382f5b1bbfefcb03ec99070603e270c0ddda83290b17d
+            - path: 1.7.3
+              level: 3
+              title: M3 — `kbz move` and `kbz delete` can bypass the `work/` guard with traversal paths
+              byte_offset: 10583
+              byte_count: 795
+              word_count: 109
+              content_hash: aa421c0501cd34d0ebbc52f6ff407a4af71cd5b078ea6fcc55ffb8b469e1b4ba
+            - path: 1.7.4
+              level: 3
+              title: M4 — Project stage bindings and embedded init stage bindings appear to have drifted
+              byte_offset: 11378
+              byte_count: 1138
+              word_count: 140
+              content_hash: 10bea10f096a685406147ea3225e5f851682a2cc580db0412922d9f31f29ae05
+            - path: 1.7.5
+              level: 3
+              title: M5 — `AGENTS.md` dual-write rule is incomplete relative to enforced tests
+              byte_offset: 12516
+              byte_count: 904
+              word_count: 91
+              content_hash: 08c06be8aaffdff6953807b73d254f4047e73e9dd8c58e44ab65133d40601a39
+            - path: 1.7.6
+              level: 3
+              title: M6 — `newServerWithConfig` is a high fan-out bootstrap hotspot
+              byte_offset: 13420
+              byte_count: 790
+              word_count: 84
+              content_hash: 6772b7da4d816141e23be69773caa06912729b9973f0c68705706cf14e5b6e37
+            - path: 1.7.7
+              level: 3
+              title: M7 — `entityTransitionAction` is a lifecycle monolith
+              byte_offset: 14210
+              byte_count: 694
+              word_count: 77
+              content_hash: d959849f7d2a454a00775b63bbcc0f71429f26037a668aecb5f60530dcc61d81
+            - path: 1.7.8
+              level: 3
+              title: M8 — `executeMerge` couples too many high-risk phases
+              byte_offset: 14904
+              byte_count: 776
+              word_count: 93
+              content_hash: 9a30ca70619c26bd23ee2c1b1f8f84a73408c8720a4d2f2de639e739efb72ce1
+            - path: 1.7.9
+              level: 3
+              title: M9 — Background access-tracking goroutines leak into test cleanup
+              byte_offset: 15680
+              byte_count: 811
+              word_count: 97
+              content_hash: 0304a4cfe23f7303689a847e2cef1ac9a57246f4c89fad9f21ba8d6aefbcb318
+            - path: 1.7.10
+              level: 3
+              title: M10 — Managed marker/version metadata is inconsistent
+              byte_offset: 16491
+              byte_count: 924
+              word_count: 119
+              content_hash: 21e40155025a57bf4875d68048752d09689afca5641c8c149b9128fa46917eb1
+        - path: "1.8"
+          level: 2
+          title: Minor Findings
+          byte_offset: 17415
+          byte_count: 2482
+          word_count: 315
+          content_hash: 2465296c186acabc70ae7813d3773434cb26afbf2e47be116b18d7777a630a3d
+          children:
+            - path: 1.8.1
+              level: 3
+              title: m1 — `staticcheck` is not installed
+              byte_offset: 17434
+              byte_count: 375
+              word_count: 51
+              content_hash: eed61ad2c9351c2db41d4463547dbb6e3e9f7d1309a1d5088020a210a3cd1d93
+            - path: 1.8.2
+              level: 3
+              title: m2 — GitHub HTTP client has no default timeout
+              byte_offset: 17809
+              byte_count: 405
+              word_count: 49
+              content_hash: 88629621547fa12437d58acbf4a1da7f1671ea31ecdfcef80fcdd611273ed30f
+            - path: 1.8.3
+              level: 3
+              title: m3 — Action log rotation ignores flush/close errors
+              byte_offset: 18214
+              byte_count: 363
+              word_count: 46
+              content_hash: 0eb88e6558c7022a5ad165c4fe5b193229ce077f55440d176c202890444cb75e
+            - path: 1.8.4
+              level: 3
+              title: m4 — Marker detection scans whole files despite comments claiming stricter placement
+              byte_offset: 18577
+              byte_count: 566
+              word_count: 76
+              content_hash: 91623ca15599bbec369473269e78306f80be2e46ba64a9fa89c20970808c15c4
+            - path: 1.8.5
+              level: 3
+              title: m5 — `AGENTS.md` contains stale or contradictory `.kbz/` documentation
+              byte_offset: 19143
+              byte_count: 754
+              word_count: 90
+              content_hash: 0e597dcbd12261dac0dce7a7814627e96dfe49ebb5c1c895b37168c406690d97
+        - path: "1.9"
+          level: 2
+          title: Structural Quality Notes
+          byte_offset: 19897
+          byte_count: 1110
+          word_count: 154
+          content_hash: ca05017d8eaf43219d669a8dece1ee5433271a7bf9ba6b0012565d9544943279
+        - path: "1.10"
+          level: 2
+          title: Security Review Summary
+          byte_offset: 21007
+          byte_count: 665
+          word_count: 88
+          content_hash: af7a53d06174ba3c89c9840f63a7cf5312e376f22f4a0dc83e15ec7c13321408
+        - path: "1.11"
+          level: 2
+          title: Testing Review Summary
+          byte_offset: 21672
+          byte_count: 783
+          word_count: 107
+          content_hash: 100e80fa34bdd988f24a117aa77baf56c018280660dc2162a58e69e7fe37bd45
+        - path: "1.12"
+          level: 2
+          title: Recommended Remediation Plan
+          byte_offset: 22455
+          byte_count: 1425
+          word_count: 191
+          content_hash: 294e27a0f709d7d848ec508ed4789b95e5e77858c21a59998a5bb775db4fbb9f
+          children:
+            - path: 1.12.1
+              level: 3
+              title: Phase 1 — Restore release gate confidence
+              byte_offset: 22488
+              byte_count: 298
+              word_count: 42
+              content_hash: 6c345d7d9ae9bae92564bc8cc1a79ffc3e45f6b045a91c10812b6f9775ebc74a
+            - path: 1.12.2
+              level: 3
+              title: Phase 2 — Fix workflow safety gaps
+              byte_offset: 22786
+              byte_count: 286
+              word_count: 34
+              content_hash: 241a36f7f9d9cd7fbfd4740523cffde158a177e9e081f6289f73d7a82bdafdf5
+            - path: 1.12.3
+              level: 3
+              title: Phase 3 — Harden path boundaries
+              byte_offset: 23072
+              byte_count: 264
+              word_count: 41
+              content_hash: cf31a6b6a4514f0061fb07de0bf6b57b43762985e24a67e4626338c7693eb29c
+            - path: 1.12.4
+              level: 3
+              title: Phase 4 — Reduce structural hotspots
+              byte_offset: 23336
+              byte_count: 240
+              word_count: 29
+              content_hash: ea618ee7b1b17d6b2840af0198d491f010c1b99051f48ba962785562d699574c
+            - path: 1.12.5
+              level: 3
+              title: Phase 5 — Improve test isolation and operational reliability
+              byte_offset: 23576
+              byte_count: 304
+              word_count: 41
+              content_hash: d507c4a90631033789c51218442b6ba60c0706953a29030cd6bc80292187c1ac
+        - path: "1.13"
+          level: 2
+          title: Final Verdict
+          byte_offset: 23880
+          byte_count: 571
+          word_count: 81
+          content_hash: c2356b3b49899cb4fdd968aab6de977e2377c783e0df6b92f61af41f4a094372
+entity_refs:
+    - entity_id: P60-whole-project-remediation-cycle
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 207
+cross_doc_links:
+    - target_path: .kbz/skills/verify-closeout/SKILL.md
+      link_text: .kbz/skills/verify-closeout/SKILL.md
+      section_path: "1.2"
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.3.1
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.3.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.1
+    - target_path: internal/kbzinit/skills/task-execution/orchestrate-development/SKILL.md
+      link_text: internal/kbzinit/skills/task-execution/orchestrate-development/SKILL.md
+      section_path: 1.6.3
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.6.3
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: 1.6.4
+    - target_path: internal/kbzinit/skills/agents/SKILL.md
+      link_text: internal/kbzinit/skills/agents/SKILL.md
+      section_path: 1.6.4
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.6.4
+    - target_path: internal/kbzinit/skills/getting-started/SKILL.md
+      link_text: internal/kbzinit/skills/getting-started/SKILL.md
+      section_path: 1.6.4
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.6.4
+    - target_path: .kbz/skills/<name>/SKILL.md
+      link_text: .kbz/skills/<name>/SKILL.md
+      section_path: 1.6.4
+    - target_path: internal/kbzinit/skills/task-execution/<name>/SKILL.md
+      link_text: internal/kbzinit/skills/task-execution/<name>/SKILL.md
+      section_path: 1.6.4
+    - target_path: work/../README.md
+      link_text: work/../README.md
+      section_path: 1.7.3
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.7.5
+    - target_path: .kbz/skills/<name>/SKILL.md
+      link_text: .kbz/skills/<name>/SKILL.md
+      section_path: 1.7.5
+    - target_path: internal/kbzinit/skills/task-execution/<name>/SKILL.md
+      link_text: internal/kbzinit/skills/task-execution/<name>/SKILL.md
+      section_path: 1.7.5
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.8.5
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.12.2
+conventional_roles:
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+    - section_path: 1.7.8
+      role: risk
+      confidence: high
+    - section_path: 1.7.9
+      role: narrative
+      confidence: high
+    - section_path: "1.10"
+      role: narrative
+      confidence: high
+    - section_path: "1.11"
+      role: narrative
+      confidence: high
+classified: true
+classified_at: 2026-05-08T11:51:45.50418Z
+classified_by: GPT-5.5
+classifier_version: "2026-05-08"
+classifications:
+    - section_path: "1.1"
+      role: decision
+      confidence: high
+      summary: 'Overall audit verdict: has_critical_findings and not release-ready.'
+    - section_path: "1.2"
+      role: assumption
+      confidence: medium
+      summary: Repository state context noting pre-existing and later observed dirty-tree changes.
+    - section_path: "1.3"
+      role: narrative
+      confidence: high
+      summary: Executive summary of release blockers and systemic remediation themes.
+      concepts_intro:
+        - name: whole-project remediation cycle
+          aliases:
+            - P60 remediation cycle
+            - Kanbanzai remediation cycle
+        - release gate confidence
+        - workflow asset drift
+        - path containment
+    - section_path: 1.3.1
+      role: risk
+      confidence: high
+      summary: 'Release blockers: test failures, placeholder merge gate, init idempotency breakage, embedded asset drift, and filesystem boundary weaknesses.'
+    - section_path: "1.4"
+      role: narrative
+      confidence: high
+      summary: Audit checks and tooling used.
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+      summary: Severity-count summary of audit findings.
+    - section_path: "1.6"
+      role: risk
+      confidence: high
+      summary: Critical findings that block release confidence.
+    - section_path: 1.6.1
+      role: risk
+      confidence: high
+      summary: The Go test suite does not compile or pass due bug lifecycle API/test drift.
+    - section_path: 1.6.2
+      role: risk
+      confidence: high
+      summary: HealthCheckCleanGate is a blocking merge gate that always passes.
+    - section_path: 1.6.3
+      role: risk
+      confidence: high
+      summary: kanbanzai init task-skill idempotency is broken by missing managed markers.
+    - section_path: 1.6.4
+      role: risk
+      confidence: high
+      summary: Embedded workflow skill seeds have drifted from .agents source files.
+    - section_path: "1.7"
+      role: risk
+      confidence: high
+      summary: Major findings covering security, workflow conformance, structural hotspots, and test isolation.
+    - section_path: 1.7.1
+      role: risk
+      confidence: high
+      summary: Document/report path handling may escape repository boundaries.
+    - section_path: 1.7.2
+      role: risk
+      confidence: high
+      summary: MCP file tools use symlink-unsafe lexical containment checks.
+    - section_path: 1.7.3
+      role: risk
+      confidence: high
+      summary: kbz move/delete work guard is traversal-bypassable.
+    - section_path: 1.7.4
+      role: risk
+      confidence: medium
+      summary: Project and embedded init stage bindings appear to have drifted.
+    - section_path: 1.7.5
+      role: risk
+      confidence: high
+      summary: AGENTS.md dual-write rule conflicts with tests enforcing task-skill embedding.
+    - section_path: 1.7.6
+      role: risk
+      confidence: medium
+      summary: newServerWithConfig is a high fan-out bootstrap hotspot.
+    - section_path: 1.7.7
+      role: risk
+      confidence: medium
+      summary: entityTransitionAction is a lifecycle monolith.
+    - section_path: 1.7.8
+      role: risk
+      confidence: medium
+      summary: executeMerge couples too many high-risk workflow phases.
+    - section_path: 1.7.9
+      role: risk
+      confidence: medium
+      summary: Background access-tracking goroutines can leak into test cleanup.
+    - section_path: 1.7.10
+      role: risk
+      confidence: medium
+      summary: Managed marker/version metadata is inconsistent.
+    - section_path: "1.8"
+      role: risk
+      confidence: medium
+      summary: Minor findings and low-severity quality gaps.
+    - section_path: "1.9"
+      role: narrative
+      confidence: high
+      summary: Structural quality hotspot summary from graph analysis.
+    - section_path: "1.10"
+      role: risk
+      confidence: high
+      summary: Security review summary emphasizing path containment and timeout risks.
+    - section_path: "1.11"
+      role: risk
+      confidence: high
+      summary: Testing review summary emphasizing compile failures, init drift, and race/test isolation risk.
+    - section_path: "1.12"
+      role: requirement
+      confidence: high
+      summary: Recommended remediation phases for P60.
+    - section_path: 1.12.1
+      role: requirement
+      confidence: high
+      summary: Restore release gate confidence by fixing tests, init idempotency, embedded skill drift, and static analysis.
+    - section_path: 1.12.2
+      role: requirement
+      confidence: high
+      summary: Fix workflow safety gaps including HealthCheckCleanGate, stage-binding assets, and AGENTS.md guidance.
+    - section_path: 1.12.3
+      role: requirement
+      confidence: high
+      summary: Harden path boundaries with canonical and symlink-aware containment.
+    - section_path: 1.12.4
+      role: requirement
+      confidence: medium
+      summary: Reduce structural hotspots in server bootstrap, transition, merge, and context assembly.
+    - section_path: 1.12.5
+      role: requirement
+      confidence: medium
+      summary: Improve test isolation and operational reliability.
+    - section_path: "1.13"
+      role: decision
+      confidence: high
+      summary: Final verdict prioritizes restoring release gates before broader remediation.

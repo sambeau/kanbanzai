@@ -1,0 +1,230 @@
+document_id: FEAT-01KR3MES5ZJ11/dev-plan-b61-f1-dev-plan
+document_path: work/B61-tidy-contradictions-stray-files-corpus-size/plan/B61-F1-dev-plan.md
+content_hash: 05d823e89e4bdd9cc035a99d64a5c7fbf695a52bcc7f99daa17b1c658eeea57c
+indexed_at: 2026-05-08T11:52:48.233841Z
+sections:
+    - path: "1"
+      level: 2
+      title: Scope
+      byte_offset: 355
+      byte_count: 526
+      word_count: 61
+      content_hash: 48e05df0214d28983ce805afb8af9625a703f7dc1ffae721c8cafefdfe2bb935
+    - path: "2"
+      level: 2
+      title: Task Breakdown
+      byte_offset: 881
+      byte_count: 7432
+      word_count: 932
+      content_hash: 5758c06829024a621efed5a771bd078fd10eb538873f3e85aabc0055c3080cab
+      children:
+        - path: "2.1"
+          level: 3
+          title: 'Task 1: Replace stray SKILL.md files with directory indexes'
+          byte_offset: 900
+          byte_count: 789
+          word_count: 93
+          content_hash: af13908c20c3250050d7a1a84a7506a7de8277b2d6f8ffde25a34a0589e65ecb
+        - path: "2.2"
+          level: 3
+          title: 'Task 2: Align top-level instruction files on the no-stash rule'
+          byte_offset: 1689
+          byte_count: 878
+          word_count: 118
+          content_hash: 3ca13a40992f763e38e27168fcc98d25a145a332e7633678c8faba7c95b0afa6
+        - path: "2.3"
+          level: 3
+          title: 'Task 3: Reduce over-budget skills and relocate long examples'
+          byte_offset: 2567
+          byte_count: 1758
+          word_count: 211
+          content_hash: e85ccebd7b40c4d1cacaa60d2ee12b5f60a12740d097505dd840a39156cb3c88
+        - path: "2.4"
+          level: 3
+          title: 'Task 4: Audit and fix base role tool access'
+          byte_offset: 4325
+          byte_count: 1464
+          word_count: 188
+          content_hash: 01452a304602490ba7a26167d8dc336e3b126018d4fa978cc29fc28108dbe1bc
+        - path: "2.5"
+          level: 3
+          title: 'Task 5: De-duplicate anti-pattern prose between skills and roles'
+          byte_offset: 5789
+          byte_count: 1170
+          word_count: 146
+          content_hash: 58e0f3c9ab5b8f5510f1e069a12f4fdd379e9f84d32fda479843071aa75b2763
+        - path: "2.6"
+          level: 3
+          title: 'Task 6: Measure corpus size and verify invariants'
+          byte_offset: 6959
+          byte_count: 1354
+          word_count: 173
+          content_hash: d41837c5800b3428cb2c28d18f26ef927b3a0b83725461dfba90b37fae31c1bb
+    - path: "3"
+      level: 2
+      title: Dependency Graph
+      byte_offset: 8313
+      byte_count: 640
+      word_count: 94
+      content_hash: ea6f4836855a44f3b5c7cc1310f49f8142beeb40055c32c9f498ee78127f1254
+    - path: "4"
+      level: 2
+      title: Risk Assessment
+      byte_offset: 8953
+      byte_count: 2088
+      word_count: 293
+      content_hash: 7566d308f580f6d09953e2d1554e088efda30870ace52d66ecde0beb3675703d
+      children:
+        - path: "4.1"
+          level: 3
+          title: 'Risk: Dual-write miss for kanbanzai-agents'
+          byte_offset: 8973
+          byte_count: 472
+          word_count: 59
+          content_hash: 48626445cd31f5f9a11da95cfc1263d8d5b91ab2dc336401c2332f193cb541bc
+        - path: "4.2"
+          level: 3
+          title: 'Risk: Base role tool removal breaks a stage-bound role'
+          byte_offset: 9445
+          byte_count: 620
+          word_count: 89
+          content_hash: b039b69975aa9f4e0de24396170ae28777cf1b2ee6af1d852650bebf29c1e84c
+        - path: "4.3"
+          level: 3
+          title: 'Risk: Examples move breaks link or leaves orphaned reference'
+          byte_offset: 10065
+          byte_count: 376
+          word_count: 52
+          content_hash: fec6b2b306fbbca77ccd008e6e952752a270823334182815a50cd5746ea01b78
+        - path: "4.4"
+          level: 3
+          title: 'Risk: Corpus total exceeds 6,500 lines after cleanup'
+          byte_offset: 10441
+          byte_count: 600
+          word_count: 90
+          content_hash: 51af2be84862a8e3060c7cfe359b8c59086e137c6988624bcc6dbbfee736a70a
+    - path: "5"
+      level: 2
+      title: Verification Approach
+      byte_offset: 11041
+      byte_count: 1265
+      word_count: 192
+      content_hash: f878b3088464eac305e89c7f932d021fcdf839854d9b8a416954a92439390b47
+entity_refs:
+    - entity_id: FEAT-01KR3MES5ZJ11
+      entity_type: feature
+      section_path: ""
+      byte_offset: 126
+    - entity_id: B61-tidy-contradictions-stray-files-corpus-size
+      entity_type: plan
+      section_path: ""
+      byte_offset: 261
+    - entity_id: F1-spec-instruction-corpus-cleanup
+      entity_type: plan
+      section_path: ""
+      byte_offset: 313
+    - entity_id: B61-tidy-contradictions-stray-files-corpus-size
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 420
+    - entity_id: F1-spec-instruction-corpus-cleanup
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 472
+    - entity_id: P59-roles-skills-remediation
+      entity_type: plan
+      section_path: "2.6"
+      byte_offset: 7188
+    - entity_id: P59-report-roles-skills-audit
+      entity_type: plan
+      section_path: "2.6"
+      byte_offset: 7217
+    - entity_id: B61-tidy-contradictions-stray-files-corpus-size
+      entity_type: plan
+      section_path: "2.6"
+      byte_offset: 7875
+    - entity_id: F1-corpus-report
+      entity_type: plan
+      section_path: "2.6"
+      byte_offset: 7927
+cross_doc_links:
+    - target_path: work/B61-tidy-contradictions-stray-files-corpus-size/B61-F1-spec-instruction-corpus-cleanup.md
+      link_text: work/B61-tidy-contradictions-stray-files-corpus-size/B61-F1-spec-instruction-corpus-cleanup.md
+      section_path: ""
+    - target_path: work/B61-tidy-contradictions-stray-files-corpus-size/B61-F1-spec-instruction-corpus-cleanup.md
+      link_text: work/B61-tidy-contradictions-stray-files-corpus-size/B61-F1-spec-instruction-corpus-cleanup.md
+      section_path: "1"
+    - target_path: .kbz/skills/SKILL.md
+      link_text: .kbz/skills/SKILL.md
+      section_path: "2.1"
+    - target_path: .agents/skills/SKILL.md
+      link_text: .agents/skills/SKILL.md
+      section_path: "2.1"
+    - target_path: .kbz/skills/README.md
+      link_text: .kbz/skills/README.md
+      section_path: "2.1"
+    - target_path: .agents/skills/README.md
+      link_text: .agents/skills/README.md
+      section_path: "2.1"
+    - target_path: '*/SKILL.md'
+      link_text: '*/SKILL.md'
+      section_path: "2.1"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "2.2"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "2.2"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "2.3"
+    - target_path: .kbz/skills/orchestrate-development/references/examples-orchestrate-development.md
+      link_text: .kbz/skills/orchestrate-development/references/examples-orchestrate-development.md
+      section_path: "2.3"
+    - target_path: .agents/skills/kanbanzai-agents/SKILL.md
+      link_text: .agents/skills/kanbanzai-agents/SKILL.md
+      section_path: "2.3"
+    - target_path: internal/kbzinit/skills/agents/SKILL.md
+      link_text: internal/kbzinit/skills/agents/SKILL.md
+      section_path: "2.3"
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: "2.3"
+    - target_path: kanbanzai-agents/SKILL.md
+      link_text: kanbanzai-agents/SKILL.md
+      section_path: "2.3"
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: "2.5"
+    - target_path: work/B61-tidy-contradictions-stray-files-corpus-size/B61-F1-corpus-report.md
+      link_text: work/B61-tidy-contradictions-stray-files-corpus-size/B61-F1-corpus-report.md
+      section_path: "2.6"
+    - target_path: internal/kbzinit/skills/agents/SKILL.md
+      link_text: internal/kbzinit/skills/agents/SKILL.md
+      section_path: "4.1"
+    - target_path: .agents/skills/SKILL.md
+      link_text: .agents/skills/SKILL.md
+      section_path: "5"
+conventional_roles:
+    - section_path: "1"
+      role: constraint
+      confidence: high
+    - section_path: "2.3"
+      role: example
+      confidence: high
+    - section_path: "4"
+      role: risk
+      confidence: high
+    - section_path: "4.1"
+      role: risk
+      confidence: high
+    - section_path: "4.2"
+      role: risk
+      confidence: high
+    - section_path: "4.3"
+      role: example
+      confidence: high
+    - section_path: "4.4"
+      role: risk
+      confidence: high
+classified: false
