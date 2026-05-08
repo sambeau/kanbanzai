@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: ".github/copilot-instructions.md has never contained any handoff capability claims (spec sections, conflict annotations, graph traversal). AC-004 of FEAT-01KR46PKHMG4J was trivially satisfied — no changes needed. The false claims from the P61 investigation report came from AGENTS.md (lines 40 and 253, fixed by parallel agent in e49fa858) and the mcp.WithDescription string in handoff_tool.go (still says 'assembling spec sections' but is out of scope — changing it would be a Go source code change beyond header comments, which is explicitly prohibited by the spec constraints)."
+created: "2026-05-08T17:07:06Z"
+created_by: unknown
+id: KE-01KR48X8WGZDE
+learned_from: TASK-01KR47B9N5RBR
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - documentation
+  - handoff
+  - p61
+tier: 3
+topic: doc-reconciliation-copilot-instructions-handoff
+ttl_days: 30
+updated: "2026-05-08T17:07:06Z"
+use_count: 0

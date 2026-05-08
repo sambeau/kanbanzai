@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[minor] spec-ambiguity: REQ-004 spec Problem Statement said 'AGENTS.md and .github/copilot-instructions.md handoff sections describe design-intent capabilities not yet built' but copilot-instructions.md has never had any handoff mentions. The spec was inaccurate about this file. The 1-hour effort estimate was based on a false premise. The AC-004 criterion was already satisfied without any implementation work. Suggestion: Before writing task specs that reference existing documentation claims, verify those claims actually exist in the target file. A quick grep before spec writing would have avoided scheduling a 1-hour task that required 0 code changes."
+created: "2026-05-08T17:07:06Z"
+created_by: unknown
+id: KE-01KR48X8WN639
+learned_from: TASK-01KR47B9N5RBR
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - spec-ambiguity
+tier: 3
+topic: retro-task-01kr47b9n5rbr
+ttl_days: 30
+updated: "2026-05-08T17:07:06Z"
+use_count: 0

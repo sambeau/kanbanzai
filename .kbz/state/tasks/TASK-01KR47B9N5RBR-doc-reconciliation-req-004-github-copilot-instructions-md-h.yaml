@@ -3,8 +3,11 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-req-004-github-copilot-instructions-md-h
 name: "`.github/copilot-instructions.md` handoff section must"
 summary: "REQ-004: `.github/copilot-instructions.md` handoff section must match current implementation — remove or qualify design-intent capabilities not yet built."
-status: active
+status: done
+completed: "2026-05-08T17:07:06Z"
 claimed_at: "2026-05-08T16:50:26Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T16:50:26Z"
 dispatched_by: sambeau
+completion_summary: "AC-004 verified by inspection: .github/copilot-instructions.md contains zero handoff mentions (grep exit code 1, grep -c returns 0). The file has never contained claims about spec sections, conflict annotations, or graph traversal in handoff — the AC is trivially satisfied without any changes. go build ./... passes. File is identical to main (no changes made or needed)."
+verification: "grep -c 'handoff' .github/copilot-instructions.md → 0 (no matches). grep for spec sections, conflict annotations, graph traversal all return 0. go build ./... passes. The file satisfies AC-004 without modification."
