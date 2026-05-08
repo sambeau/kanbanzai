@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "BindingLoadableHealthChecker (internal/mcp/health_binding.go) wraps binding.LoadBindingFile and converts any load errors into validate.ValidationWarning with EntityType 'binding_loadable'. Empty path also warns. Registered via HealthTool in server.go using the same bindingPath already defined there."
+created: "2026-05-08T17:05:08Z"
+created_by: unknown
+id: KE-01KR48SNN791M
+learned_from: TASK-01KR47D68CR1J
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - health
+  - binding
+  - config-safety
+tier: 3
+topic: health-binding-loadable-checker
+ttl_days: 30
+updated: "2026-05-08T17:05:08Z"
+use_count: 0

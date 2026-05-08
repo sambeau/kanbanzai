@@ -3,6 +3,13 @@ parent_feature: FEAT-01KR46PKHPVSH
 slug: config-safety-req-004-health-must-include-a-binding-lo
 name: "`health()` must include a `binding_loadable` check"
 summary: "REQ-004: `health()` must include a `binding_loadable` check that calls `LoadBindingFile` and reports errors as warnings."
-status: ready
+status: done
 depends_on:
   - TASK-01KR47D688P0S
+files_planned:
+  - internal/mcp/health_binding.go
+  - internal/mcp/health_binding_test.go
+  - internal/mcp/server.go
+completed: "2026-05-08T17:05:08Z"
+completion_summary: Added BindingLoadableHealthChecker in internal/mcp/health_binding.go that calls LoadBindingFile and reports load errors as binding_loadable warnings. Registered in server.go HealthTool call. Tests cover AC-007 (malformed binding → warning) and AC-008 (valid binding → no warnings).
+verification: All 4 BindingLoadableHealthChecker tests pass. Full internal/mcp package tests pass. internal/binding package tests pass. Code builds cleanly.
