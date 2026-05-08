@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "REQ-003 test (TestAgentsMD_HandoffSection_NoFalseClaims) was added to internal/kbzinit/agents_md_test.go alongside a REQ-004 test written by a parallel agent. The first edit was lost when the parallel agent's write overwrote the file. Re-added test using runtime.Caller(0) pattern for repo root resolution (matches REQ-004 pattern). Shared worktrees without per-task isolation cause edit collisions."
+created: "2026-05-08T17:39:41Z"
+created_by: sambeau
+id: KE-01KR4ARY1NNF8
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - workflow-friction
+  - shared-worktree
+  - doc-reconciliation
+tier: 3
+topic: task-01kr47b9n3zky-shared-worktree-overwrite
+ttl_days: 30
+updated: "2026-05-08T17:39:41Z"
+use_count: 0
