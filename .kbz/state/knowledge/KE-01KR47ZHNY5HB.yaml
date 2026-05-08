@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "internal/claudeskills.CheckAll(skillsDir string) []string checks all .claude/skills/ wrappers against ExpectedWrappers metadata (matching gen-claude-skills.sh). Returns stale/missing paths. Makefile target 'claude-skills-check' runs go test -run TestClaudeSkills ./internal/claudeskills/. Three tests cover: real-dir validation, fixture-stale→reported, fixture-clean→empty."
+created: "2026-05-08T16:50:52Z"
+created_by: unknown
+id: KE-01KR47ZHNY5HB
+learned_from: TASK-01KR3Q0TB4VS7
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - testing
+  - ci
+  - claude-skills
+tier: 3
+topic: claude-skills-drift-check
+ttl_days: 30
+updated: "2026-05-08T16:50:52Z"
+use_count: 0

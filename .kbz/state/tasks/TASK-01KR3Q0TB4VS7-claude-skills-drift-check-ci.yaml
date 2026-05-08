@@ -3,8 +3,15 @@ parent_feature: FEAT-01KR3MEYRQ9RG
 slug: claude-skills-drift-check-ci
 name: Implement wrapper drift check CI target
 summary: "T2 — Implement a check mode (shell script or Go test) that detects when a .claude/skills/ wrapper has drifted from expected format or canonical skill metadata. Check must exit non-zero and print offending wrapper path(s) when stale content detected; exit 0 when all current. Requires: Makefile target or CI hook, and a fixture-based integration test (stale wrapper -> non-zero exit with path). Depends on T1 (TASK-01KR3PZXXR68X) for wrapper format contract. Covers REQ-005, REQ-012."
-status: active
+status: done
+files_planned:
+  - internal/claudeskills/check.go
+  - internal/claudeskills/check_test.go
+  - Makefile
+completed: "2026-05-08T16:50:52Z"
 claimed_at: "2026-05-08T16:41:03Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T16:41:03Z"
 dispatched_by: sambeau
+completion_summary: "Implemented wrapper drift check in new internal/claudeskills package. CheckAll(skillsDir) validates each .claude/skills/ wrapper against expected content (matching gen-claude-skills.sh metadata). Three tests: real-dir validation, fixture stale→non-zero, fixture clean→zero. Added 'claude-skills-check' Makefile target. All new tests pass."
+verification: "go test -v -run TestClaudeSkills ./internal/claudeskills/ — all three tests PASS. make claude-skills-check exits 0. Full suite pre-existing failures (internal/mcp, internal/service) unchanged."
