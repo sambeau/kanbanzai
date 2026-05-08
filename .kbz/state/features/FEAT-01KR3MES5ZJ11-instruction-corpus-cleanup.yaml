@@ -6,6 +6,7 @@ status: dev-planning
 summary: "Remove contradictory and stray instruction artefacts, de-duplicate repeated skill content, relocate long examples, and keep necessary role tool access explicit."
 design: P59-roles-skills-remediation/design-p59-design-roles-skills-remediation
 spec: FEAT-01KR3MES5ZJ11/spec-b61-f1-spec-instruction-corpus-cleanup
+dev_plan: FEAT-01KR3MES5ZJ11/dev-plan-b61-f1-dev-plan
 created: "2026-05-08T11:09:39Z"
 created_by: sambeau
 display_id: B61-F1

@@ -1,0 +1,11 @@
+canonical_content_hash: f07b0fbb587c2783317e461720869ab85cb8344f34544805b7d2ee18c93c8064
+content_hash: 05d823e89e4bdd9cc035a99d64a5c7fbf695a52bcc7f99daa17b1c658eeea57c
+created: "2026-05-08T11:52:48Z"
+created_by: sambeau
+id: FEAT-01KR3MES5ZJ11/dev-plan-b61-f1-dev-plan
+owner: FEAT-01KR3MES5ZJ11
+path: work/B61-tidy-contradictions-stray-files-corpus-size/plan/B61-F1-dev-plan.md
+status: draft
+title: "B61-F1 Dev-Plan: Instruction Corpus Cleanup"
+type: dev-plan
+updated: "2026-05-08T11:52:48Z"
