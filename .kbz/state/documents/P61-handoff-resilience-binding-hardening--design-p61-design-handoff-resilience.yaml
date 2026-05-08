@@ -1,11 +1,13 @@
+approved_at: "2026-05-08T16:21:29Z"
+approved_by: sambeau
 canonical_content_hash: 359d979561eb1263d2e2793d1bb20953ae594ced8df919013f9852c05fa6dd9e
-content_hash: a58bea65a54e6cfc6ad30c1d3416a940acf19ee2d3bad867908aa53053ce1aa0
+content_hash: 0338ddba19a88dfa434d2939b9a5574c00710b5dd5a5344e547d7414212f6f09
 created: "2026-05-08T16:12:46Z"
 created_by: sambeau
 id: P61-handoff-resilience-binding-hardening/design-p61-design-handoff-resilience
 owner: P61-handoff-resilience-binding-hardening
 path: work/P61-handoff-resilience-binding-hardening/P61-design-handoff-resilience.md
-status: draft
+status: approved
 title: P61 Design — Handoff Resilience and Binding Hardening
 type: design
-updated: "2026-05-08T16:12:46Z"
+updated: "2026-05-08T16:21:29Z"
