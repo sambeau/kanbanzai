@@ -1,0 +1,8 @@
+id: DEC-01KR484HRQ97X
+slug: handoff-capability-gap-spec-sections-conflict-graph
+name: Handoff capability gap — spec sections conflict graph
+summary: "The handoff tool documentation previously claimed three capabilities that are not implemented: (1) spec section injection into the context packet, (2) conflict annotation of tasks based on domain analysis, (3) graph traversal to surface related code nodes. These claims have been removed from AGENTS.md and .github/copilot-instructions.md as part of P61 Track D. This decision record flags the gap for separate feature planning under a future plan."
+rationale: "During P61 Track D documentation reconciliation, three capability gaps were confirmed by inspection of internal/mcp/handoff_tool.go and internal/mcp/assembly.go: (1) Spec section injection — handoff does not pull approved spec documents or inject their sections into the assembled prompt; (2) Conflict annotation — handoff does not call conflict_domain_check and does not annotate the context packet with per-task conflict risk; (3) Graph traversal — handoff does not execute graph queries to find related code nodes or include them in the context packet. All three capabilities are documented as design intent in P61-design-handoff-resilience.md (Track D open question 3) but are explicitly out of scope for P61, which addresses resilience not capability addition. Each capability should be evaluated and planned as a separate feature under a future plan targeting handoff context quality improvement."
+decided_by: sambeau
+date: "2026-05-08T16:53:36Z"
+status: proposed
