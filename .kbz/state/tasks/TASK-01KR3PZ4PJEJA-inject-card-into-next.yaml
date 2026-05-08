@@ -3,9 +3,9 @@ parent_feature: FEAT-01KR3MDJ7AV37
 slug: inject-card-into-next
 name: Inject constraint card and stage binding into next responses
 summary: "Wire the renderer and hydrator into nextClaimMode in internal/mcp/next_tool.go. Call the renderer with the resolved role (via roleStore) and stage binding (via binding registry using featureStage), and HydrateBinding for the payload. Add two new top-level fields to the result map: constraint_card (rendered markdown string) and stage_binding (hydrated payload). Position constraint_card before context in the JSON. If renderer fails, return error — no silent empty card. Update NextTools signature and server.go wiring if new dependencies are needed. All existing fields (task, context, reclaimed) must remain unchanged. Deliverables: modified next_tool.go, updated server.go wiring if needed, internal/mcp/next_tool_constraint_test.go. Covers: REQ-004, REQ-010, AC-003, AC-009 (partial)."
-status: ready
+status: active
 estimate: "3"
-claimed_at: "2026-05-08T16:57:27Z"
+claimed_at: "2026-05-08T17:21:10Z"
 dispatched_to: unspecified
-dispatched_at: "2026-05-08T16:57:27Z"
+dispatched_at: "2026-05-08T17:21:10Z"
 dispatched_by: sambeau

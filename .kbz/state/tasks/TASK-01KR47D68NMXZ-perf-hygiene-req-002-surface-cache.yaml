@@ -3,10 +3,13 @@ parent_feature: FEAT-01KR46PKHSWQF
 slug: perf-hygiene-req-002-surface-cache
 name: Add generation-keyed cache to KnowledgeSurfacer.Surface()
 summary: "REQ-002+003: `KnowledgeSurfacer.Surface()` must cache loaded entries keyed by generation token; reload on generation mismatch. Cache must invalidate after contribute."
-status: active
+status: done
 depends_on:
   - TASK-01KR47D68J7B2
+completed: "2026-05-08T17:26:22Z"
 claimed_at: "2026-05-08T17:08:39Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T17:08:39Z"
 dispatched_by: sambeau
+completion_summary: "Added generation-keyed cache to KnowledgeSurfacer.Surface(): GenReader type, resolveEntries() with mutex-protected cache, cache hit on matching generation, reload on mismatch. Nil genReader disables caching. Wired knowledgeSvc.Generation as genReader in server.go. 5 new cache tests (AC-002 through AC-004, nil genReader, concurrent safety). All 15 context tests pass."
+verification: "go test ./internal/context/: 15/15 PASS, including 5 new cache tests (CacheHit, CacheMiss, CacheInvalidatesAfterContribute, NilGenReader, ConcurrentSafety). No race conditions detected."
