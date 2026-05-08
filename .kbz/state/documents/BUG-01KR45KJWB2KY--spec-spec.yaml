@@ -1,0 +1,13 @@
+approved_at: "2026-05-08T16:09:23Z"
+approved_by: architect-investigation
+canonical_content_hash: 0be96aaf0ddea342fa05d00bf01baa64f66f40a7ed36f650b8c4e2108161b6d8
+content_hash: 0be96aaf0ddea342fa05d00bf01baa64f66f40a7ed36f650b8c4e2108161b6d8
+created: "2026-05-08T16:09:23Z"
+created_by: architect-investigation
+id: BUG-01KR45KJWB2KY/spec-spec
+owner: BUG-01KR45KJWB2KY
+path: work/bugs/handoff-nil-pipeline-panic/spec.md
+status: approved
+title: "Bug Specification: Handoff panics with nil pipeline on bindings load failure"
+type: spec
+updated: "2026-05-08T16:09:23Z"
