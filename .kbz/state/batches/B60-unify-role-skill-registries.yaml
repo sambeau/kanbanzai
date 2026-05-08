@@ -1,0 +1,10 @@
+id: B60-unify-role-skill-registries
+slug: unify-role-skill-registries
+name: Unify role and skill registries
+status: proposed
+summary: "Collapse duplicated role and skill registry tables into a generated single source of truth with CI drift detection for CLAUDE.md, Copilot instructions, and README surfaces."
+created: "2026-05-08T11:08:28Z"
+created_by: sambeau
+updated: "2026-05-08T11:08:28Z"
+next_feature_seq: 1
+parent: P59-roles-skills-remediation
