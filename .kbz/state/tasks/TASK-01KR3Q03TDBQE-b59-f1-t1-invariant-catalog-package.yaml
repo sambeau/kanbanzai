@@ -3,9 +3,15 @@ parent_feature: FEAT-01KR3MDSZKAFG
 slug: b59-f1-t1-invariant-catalog-package
 name: Define the invariant catalog package
 summary: "Create internal/invariants/catalog.go with five invariant codes (INV-001–INV-005), RefusalResponse struct, and Format function producing canonical JSON refusal shape. Add catalog_test.go covering round-trip JSON and byte-length upper-bound assertions."
-status: active
+status: done
 estimate: "3"
+files_planned:
+  - internal/invariants/catalog.go
+  - internal/invariants/catalog_test.go
+completed: "2026-05-08T16:14:11Z"
 claimed_at: "2026-05-08T11:56:57Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T11:56:57Z"
 dispatched_by: sambeau
+completion_summary: "Created internal/invariants/catalog.go with five invariant codes (INV001–INV005 = \"INV-001\"–\"INV-005\"), RefusalResponse struct (Code, Operation, Reason, NextAction), and Format function serialising to {\"error\":{...}} JSON. Created catalog_test.go with TestFormat_RoundTrip (five subtests, one per invariant), TestFormat_ByteLengthUpperBound (verifies ≤ 1200 bytes at 400-byte reason limit), and TestInvariantCodes. All tests pass."
+verification: "go test ./internal/invariants/... -v — 3 test functions (7 subtests total), all PASS. Byte-length test confirmed ≤ 1200 bytes even with 400-byte reason + 200-byte next_action fields."
