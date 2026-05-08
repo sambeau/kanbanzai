@@ -3,7 +3,7 @@
 | Field  | Value                                                          |
 |--------|----------------------------------------------------------------|
 | Date   | 2026-05-08T11:48:08Z                                           |
-| Status | Draft                                                          |
+| Status | approved |
 | Author | architect                                                      |
 | Feature | FEAT-01KR3MEYRQ9RG — Runtime Discovery Surfaces               |
 | Batch  | B62 — Discover runtime instruction surfaces                    |

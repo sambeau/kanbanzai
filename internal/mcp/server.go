@@ -133,7 +133,8 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	}
 
 	bindingPath := filepath.Join(core.InstanceRootDir, "stage-bindings.yaml")
-	if bf, errs := binding.LoadBindingFile(bindingPath); bf != nil && len(errs) == 0 {
+	bf, bindingErrs := binding.LoadBindingFile(bindingPath)
+	if bf != nil && len(bindingErrs) == 0 {
 		capTracker = knowledge.NewCapTracker(cacheDir)
 		entryLoader := func() ([]map[string]any, error) {
 			records, err := knowledgeSvc.List(service.KnowledgeFilters{})
@@ -161,6 +162,19 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 			StalenessWindowDays: cfg.Freshness.StalenessWindowDays,
 		}
 		log.Printf("[server] 3.0 context assembly pipeline loaded with %d stage bindings", len(bf.StageBindings))
+	} else {
+		// Loudly surface why the pipeline is disabled. Without this branch a
+		// silent skip leaves handoff calling pipeline.Run on a nil receiver,
+		// which panics in (*Pipeline).stepLookupBinding and looks like a
+		// client-side timeout (BUG: handoff-nil-pipeline-panic).
+		log.Printf("[server] WARNING: 3.0 context assembly pipeline DISABLED — handoff will return pipeline_unavailable errors")
+		log.Printf("[server] WARNING: stage-bindings file: %s", bindingPath)
+		if len(bindingErrs) == 0 {
+			log.Printf("[server] WARNING: LoadBindingFile returned nil with no error — file missing or unreadable?")
+		}
+		for _, e := range bindingErrs {
+			log.Printf("[server] WARNING: stage-bindings load error: %v", e)
+		}
 	}
 
 	mcpServer := server.NewMCPServer(

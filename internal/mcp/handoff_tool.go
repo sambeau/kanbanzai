@@ -81,7 +81,28 @@ func handoffTool(
 		),
 	)
 
-	handler := func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+	handler := func(ctx context.Context, req mcp.CallToolRequest) (toolResult *mcp.CallToolResult, retErr error) {
+		// Convert any panic in this handler into a structured tool error so the
+		// MCP client receives a JSON-RPC reply instead of perceiving a timeout.
+		// The mcp-go framework already recovers panics at the worker level, but
+		// without writing a response — see BUG: handoff-nil-pipeline-panic.
+		defer func() {
+			if r := recover(); r != nil {
+				log.Printf("[handoff] PANIC recovered: %v", r)
+				toolResult = mcp.NewToolResultText(handoffErrorJSON("internal_panic", fmt.Sprintf(
+					"Cannot generate handoff prompt: internal panic: %v.\n\nTo resolve:\n  Report this as a bug with the task ID and the server stderr log.", r)))
+				retErr = nil
+			}
+		}()
+
+		// Pre-flight: pipeline must be wired. When the stage-bindings file fails
+		// to load, server.go leaves pipeline nil; without this guard the call
+		// to pipeline.Run below dereferences a nil receiver and panics.
+		if pipeline == nil {
+			return mcp.NewToolResultText(handoffErrorJSON("pipeline_unavailable",
+				"Cannot generate handoff prompt: 3.0 context assembly pipeline is not available.\n\nTo resolve:\n  Check the server stderr for '[server] WARNING: stage-bindings load error' lines and fix .kbz/stage-bindings.yaml. Restart the MCP server after fixing.")), nil
+		}
+
 		taskID, err := req.RequireString("task_id")
 		if err != nil {
 			return mcp.NewToolResultError("Cannot generate handoff prompt: task_id is required.\n\nTo resolve:\n  Provide a task_id parameter (e.g. TASK-xxx) for the task to hand off."), nil

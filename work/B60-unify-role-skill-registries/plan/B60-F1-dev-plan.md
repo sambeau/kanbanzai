@@ -1,7 +1,7 @@
 | Field  | Value |
 |--------|-------|
 | Date   | 2026-05-08T11:49:05Z |
-| Status | Draft |
+| Status | approved |
 | Author | architect |
 | Feature | FEAT-01KR3MEJGGMT5 — Generated Role and Skill Registry Surfaces |
 | Batch | B60 — Unify role and skill registries |

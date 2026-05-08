@@ -1,7 +1,7 @@
 | Field  | Value |
 |--------|-------|
 | Date   | 2026-05-08T11:50:54Z |
-| Status | Draft |
+| Status | approved |
 | Author | architect |
 | Feature | FEAT-01KR3MES5ZJ11 — Instruction corpus cleanup |
 | Batch | B61 — Tidy contradictions stray files and corpus size |

@@ -1,7 +1,7 @@
 | Field  | Value |
 |--------|-------|
 | Date   | 2026-05-08T11:06:29Z |
-| Status | Draft |
+| Status | approved |
 | Author | spec-author |
 | Plan | P59 — Roles & Skills Discoverability and Enforcement Remediation |
 | Batch | B61 — Tidy contradictions stray files and corpus size |

@@ -1,7 +1,7 @@
 | Field  | Value |
 |--------|-------|
 | Date   | 2026-05-08T11:48:16Z |
-| Status | Draft |
+| Status | approved |
 | Author | architect |
 | Feature | FEAT-01KR3MDSZKAFG — High-violation MCP rule invariants |
 | Batch | B59 — Enforce high-violation rules as MCP invariants |

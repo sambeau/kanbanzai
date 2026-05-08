@@ -22,6 +22,34 @@ type StageBinding struct {
 	MaxReviewCycles     *int                 `yaml:"max_review_cycles,omitempty"`
 	SubAgents           *SubAgents           `yaml:"sub_agents,omitempty"`
 	DocumentTemplate    *DocumentTemplate    `yaml:"document_template,omitempty"`
+
+	// Profile, Tier, Modes, and Verifying support stages that opt into the
+	// gated-mode profile schema (e.g. retro-fixing). They are decoded but not
+	// yet consumed by the pipeline; full schema work is tracked separately.
+	Profile   *bool                 `yaml:"profile,omitempty"`
+	Tier      string                `yaml:"tier,omitempty"`
+	Modes     map[string]*StageMode `yaml:"modes,omitempty"`
+	Verifying *VerifyingBlock       `yaml:"verifying,omitempty"`
+}
+
+// StageMode declares the gate configuration for a single mode of a profiled
+// stage (see StageBinding.Modes). All gate fields are optional strings such
+// as "human", "auto", or "conditional".
+type StageMode struct {
+	DesignGate      string `yaml:"design_gate,omitempty"`
+	SpecGate        string `yaml:"spec_gate,omitempty"`
+	DevPlanGate     string `yaml:"dev_plan_gate,omitempty"`
+	ReviewGate      string `yaml:"review_gate,omitempty"`
+	MaxReviewCycles *int   `yaml:"max_review_cycles,omitempty"`
+	Notes           string `yaml:"notes,omitempty"`
+}
+
+// VerifyingBlock declares the verifier role/skill bound to a profiled stage's
+// post-implementation verification step.
+type VerifyingBlock struct {
+	Roles      []string `yaml:"roles,omitempty"`
+	Skills     []string `yaml:"skills,omitempty"`
+	DoDVariant string   `yaml:"dod_variant,omitempty"`
 }
 
 type Prerequisites struct {

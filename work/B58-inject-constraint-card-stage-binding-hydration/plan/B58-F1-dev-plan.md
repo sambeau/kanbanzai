@@ -1,7 +1,7 @@
 | Field  | Value |
 |--------|-------|
 | Date   | 2026-05-08T11:49:22Z |
-| Status | Draft |
+| Status | approved |
 | Author | architect |
 | Feature | FEAT-01KR3MDJ7AV37 — Constraint card and stage-binding hydration |
 | Batch  | B58-inject-constraint-card-stage-binding-hydration |

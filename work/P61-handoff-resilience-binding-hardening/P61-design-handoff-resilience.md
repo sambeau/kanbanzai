@@ -13,7 +13,9 @@ The Tier 1 stop-gap landed on `main` restored handoff service in 587 ms after a 
 
 The investigation uncovered seven concrete weaknesses (T1–T7 in the report). This design groups them into three coherent tracks plus a documentation reconciliation track, sequenced for safe incremental delivery.
 
-## Goals
+## Goals and Non-Goals
+
+### Goals
 
 1. **Make any future configuration error visible immediately, not silently.** The next operator who breaks `stage-bindings.yaml` should see the failure in the first MCP session, not several hours later via a mysterious "timeout".
 2. **Make panics in MCP handlers impossible to misdiagnose as timeouts.** Every handler must convert recovered panics into structured JSON-RPC errors with diagnostic context.
@@ -21,7 +23,7 @@ The investigation uncovered seven concrete weaknesses (T1–T7 in the report). T
 4. **Honor MCP request deadlines server-side.** Long-running git or filesystem work must be cancellable; future timeout vectors must be observable, not silent.
 5. **Reconcile documentation with implementation.** The current docs describe handoff capabilities that do not exist; either the docs change or the capabilities are added — but the gap must close.
 
-## Non-Goals
+### Non-Goals
 
 - **Re-platform the storage engine.** The investigation found no scaling problem. SQLite/FTS5 migration is a post-2027 concern.
 - **Re-introduce the legacy assembly path.** The pipeline-3.0 unification was the right architectural call; the bug was in failure handling, not in the unification itself.
