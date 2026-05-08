@@ -3,8 +3,18 @@ parent_feature: FEAT-01KR3MES5ZJ11
 slug: instruction-corpus-cleanup-reduce-over-budget-skills-and-relocate-long-examples
 name: Reduce over-budget skills and relocate long examples
 summary: Reduce over-budget skills and relocate long examples
-status: active
+status: done
+files_planned:
+  - .kbz/skills/orchestrate-development/SKILL.md
+  - .kbz/skills/orchestrate-development/references/examples-orchestrate-development.md
+  - .agents/skills/kanbanzai-agents/SKILL.md
+  - .agents/skills/kanbanzai-agents/references/entity-naming-examples.md
+  - internal/kbzinit/skills/agents/SKILL.md
+  - internal/kbzinit/skills/agents/references/entity-naming-examples.md
+completed: "2026-05-08T16:38:53Z"
 claimed_at: "2026-05-08T11:56:58Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T11:56:58Z"
 dispatched_by: sambeau
+completion_summary: "Moved ## Examples sections from 11 skill files to references/ files. orchestrate-development: 520→451 lines. kanbanzai-agents: 501→482 lines (dual-write applied). 9 additional skills also trimmed. Zero Examples sections > 60 lines remain. All required sections preserved. Committed as c2919841."
+verification: "wc -l: orchestrate-development=451, kanbanzai-agents=482, embedded=458. Survey: no Examples sections > 60 lines. Required sections verified present in all modified files."
