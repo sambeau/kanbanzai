@@ -1,0 +1,11 @@
+canonical_content_hash: 647436556ab85caf455a16a0114a90be3c72f84749d1927e317e9a6fde279fd0
+content_hash: a3b056b5a23811399cb3f4580adc4102c9f478939f596dff79eb62fba9789ed8
+created: "2026-05-08T11:53:08Z"
+created_by: sambeau
+id: FEAT-01KR3MEYRQ9RG/dev-plan-b62-f1-dev-plan
+owner: FEAT-01KR3MEYRQ9RG
+path: work/B62-discover-runtime-instruction-surfaces/plan/B62-F1-dev-plan.md
+status: draft
+title: "B62-F1 Dev-Plan: Runtime Discovery Surfaces"
+type: dev-plan
+updated: "2026-05-08T11:53:08Z"
