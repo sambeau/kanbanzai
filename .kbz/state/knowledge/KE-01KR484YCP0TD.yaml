@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[minor] worked-well: kanbanzai_edit_file with entity_id scoped all writes directly to the worktree with zero shell escaping issues."
+created: "2026-05-08T16:53:49Z"
+created_by: unknown
+id: KE-01KR484YCP0TD
+learned_from: TASK-01KR3Q0W95KWT
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - worked-well
+tier: 3
+topic: retro-task-01kr3q0w95kwt
+ttl_days: 30
+updated: "2026-05-08T16:53:49Z"
+use_count: 0

@@ -3,9 +3,17 @@ parent_feature: FEAT-01KR3MDSZKAFG
 slug: b59-f1-t5-prose-deduplication
 name: Prose de-duplication in orchestrator role and skill
 summary: "Replace long-form duplicated invariant prose in .kbz/roles/orchestrator.yaml and .kbz/skills/orchestrate-development/SKILL.md with invariant-code cross-references. Remove spawn_agent from orchestrator tools list. Ensure artefact gate text is mandatory (INV-005), not advisory."
-status: active
+status: done
 estimate: "2"
+files_planned:
+  - .kbz/roles/orchestrator.yaml
+  - .kbz/skills/orchestrate-development/SKILL.md
+  - internal/kbzinit/roles/orchestrator.yaml
+  - internal/kbzinit/skills/task-execution/orchestrate-development/SKILL.md
+completed: "2026-05-08T16:53:49Z"
 claimed_at: "2026-05-08T16:40:39Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T16:40:39Z"
 dispatched_by: sambeau
+completion_summary: Replaced duplicated invariant prose with invariant-code cross-references in orchestrator.yaml and SKILL.md (+ kbzinit mirrors). (a) INV-001 vocab entry + tools comment for spawn_agent exclusion; (b) Manual Prompt Composition replaced with INV-001 one-paragraph reference; (c) Phase 1 constraint block compressed with INV-004 cross-reference; (d) INV-005 mandatory gate language added to Phase 6 step 2.
+verification: All four edits confirmed via grep. go test ./internal/invariants/... passes (5 round-trip tests + byte-length + code constants). Mirror files confirmed identical to .kbz/ sources via diff.
