@@ -3,10 +3,13 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-ac-001-given-the-updated-handoff-tool-go-tests
 name: "Test Given the updated `handoff_tool.go`, when a reader"
 summary: "Write tests covering: AC-001: Given the updated `handoff_tool.go`, when a reader inspects the header comment, then it accurately describes pipeline-3.0 behaviour with no mention of deprecated fallback."
-status: active
+status: done
 depends_on:
   - TASK-01KR47B9NBJQ3
+completed: "2026-05-08T17:58:13Z"
 claimed_at: "2026-05-08T17:51:23Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T17:51:23Z"
 dispatched_by: sambeau
+completion_summary: "Added 2 header comment content inspection tests: TestHandoff_HeaderComment_DescribesPipeline3_0 (verifies 'pipeline-3.0 path unconditionally' in header) and TestHandoff_HeaderComment_NoDeprecatedFallback (verifies no legacy/fallback/deprecated/2.0 references). All 4 header comment tests pass."
+verification: "All 4 TestHandoff_HeaderComment tests pass: AssemblyPathIsPipeline3_0, DescribesPipeline3_0, NoDeprecatedFallback, NilPipelineReturnsError. No diagnostics."
