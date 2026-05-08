@@ -1,0 +1,6 @@
+id: TASK-01KR3PZXXR68X
+parent_feature: FEAT-01KR3MEYRQ9RG
+slug: claude-skills-wrappers-and-generator
+name: Create .claude/skills/ wrappers and generator
+summary: "T1 — Author a generator script that produces Anthropic-format SKILL.md wrappers under .claude/skills/<skill>/SKILL.md for the seven required skills (orchestrate-development, implement-task, kanbanzai-getting-started, kanbanzai-workflow, write-spec, write-design, review-code). Each wrapper needs YAML frontmatter (name, single-line description), a canonical-path pointer, and max 80 lines. Files must be regular copies (not symlinks). Deliverables: seven wrapper files plus an executable generator script. Covers REQ-001 through REQ-004, REQ-NF-001, REQ-NF-004, REQ-NF-005."
+status: queued
