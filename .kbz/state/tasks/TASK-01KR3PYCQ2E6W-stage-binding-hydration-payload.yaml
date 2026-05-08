@@ -3,9 +3,15 @@ parent_feature: FEAT-01KR3MDJ7AV37
 slug: stage-binding-hydration-payload
 name: Stage-Binding Hydration Payload extractor
 summary: "Define BindingPayload struct in internal/card that serialises key stage binding fields: role names, skill names, effort budget text, human gate flag, prerequisites (documents, tasks), and sub-agent profile (roles, skills, topology). Implement HydrateBinding(stage string, b *binding.StageBinding) BindingPayload. Fields absent in a given binding are omitted rather than zeroed. Deliverables: internal/card/hydration.go, internal/card/hydration_test.go. Covers: REQ-006, AC-005."
-status: active
+status: done
 estimate: "2"
+files_planned:
+  - internal/card/hydration.go
+  - internal/card/hydration_test.go
+completed: "2026-05-08T16:25:19Z"
 claimed_at: "2026-05-08T11:56:57Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T11:56:57Z"
 dispatched_by: sambeau
+completion_summary: "Defined BindingPayload struct and HydrateBinding in internal/card/hydration.go. Serialises stage-binding fields (roles, skills, human_gate, effort_budget, prerequisites, sub_agent_profile) with omitempty JSON tags. Nil binding handled gracefully. Empty prereqs omitted rather than serialised as empty objects. 5 unit tests in hydration_test.go — all passing alongside T1's 14 registry tests (19/19 total)."
+verification: go test ./internal/card/... -v — 19/19 tests pass.
