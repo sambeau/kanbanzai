@@ -2,7 +2,8 @@ id: FEAT-01KR46PKHSWQF
 slug: perf-hygiene
 name: Performance hygiene (Track C)
 parent: B63-p61-impl
-status: developing
+status: reviewing
+review_cycle: 1
 summary: Knowledge entry cache with generation token (T3) and de-duplicate entitySvc.Get in handoff handler (T7). Generation-based cache invalidation for KnowledgeService.Surface.
 spec: FEAT-01KR46PKHSWQF/spec-p61-spec-perf-hygiene
 dev_plan: FEAT-01KR46PKHSWQF/dev-plan-p61-dev-plan-perf-hygiene
