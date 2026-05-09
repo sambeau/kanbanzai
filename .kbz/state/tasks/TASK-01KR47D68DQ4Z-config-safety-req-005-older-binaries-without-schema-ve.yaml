@@ -3,10 +3,13 @@ parent_feature: FEAT-01KR46PKHPVSH
 slug: config-safety-req-005-older-binaries-without-schema-ve
 name: Older binaries refusing v2 files
 summary: "REQ-005: Older binaries (without schema_version support) that encounter a v2 file must refuse with a clear message."
-status: active
+status: done
 depends_on:
   - TASK-01KR47D688P0S
+completed: "2026-05-09T10:42:51Z"
 claimed_at: "2026-05-08T17:49:27Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T17:49:27Z"
 dispatched_by: sambeau
+completion_summary: "REQ-005: Added ErrBindingVersionMismatch sentinel error and DecodeBindingFileLegacy function to internal/binding/loader.go. The legacy function simulates an older binary that lacks schema_version dispatch — it does strict YAML decode and checks bf.SchemaVersion > 0, producing a clear error with remediation steps. Tests cover all AC-009 scenarios: v1 file loads fine, v2 file rejected with clear message, errors.Is support, and strict decode still rejects unknown fields."
+verification: "go test ./internal/binding/... -count=1 — all 68 tests pass including 4 new REQ-005 tests (TestDecodeBindingFileLegacy, TestDecodeBindingFileLegacy_errorsIs, TestDecodeBindingFileLegacy_v1WithUnknownField). git pull --rebase origin main — clean rebase, no conflicts."

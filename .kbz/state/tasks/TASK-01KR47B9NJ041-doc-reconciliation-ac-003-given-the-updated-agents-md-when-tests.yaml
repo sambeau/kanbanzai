@@ -3,6 +3,10 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-ac-003-given-the-updated-agents-md-when-tests
 name: "Test Given the updated `AGENTS.md`, when a reader searches"
 summary: "Write tests covering: AC-003: Given the updated `AGENTS.md`, when a reader searches for \"handoff\", then no claims of spec sections, conflict annotations, or graph traversal appear without qualification."
-status: ready
+status: active
 depends_on:
   - TASK-01KR47B9NHM2N
+claimed_at: "2026-05-09T10:41:35Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-09T10:41:35Z"
+dispatched_by: sambeau

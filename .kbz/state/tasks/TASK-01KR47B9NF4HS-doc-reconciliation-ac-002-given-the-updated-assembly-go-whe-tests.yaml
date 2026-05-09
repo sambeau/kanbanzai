@@ -3,6 +3,10 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-ac-002-given-the-updated-assembly-go-whe-tests
 name: "Test Given the updated `assembly.go`, when a reader"
 summary: "Write tests covering: AC-002: Given the updated `assembly.go`, when a reader inspects the header comment, then it states the file is `next`-only and does not claim shared use with handoff."
-status: ready
+status: active
 depends_on:
   - TASK-01KR47B9NEDQE
+claimed_at: "2026-05-09T10:41:32Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-09T10:41:32Z"
+dispatched_by: sambeau
