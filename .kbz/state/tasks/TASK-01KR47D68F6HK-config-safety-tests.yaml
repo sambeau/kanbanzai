@@ -3,12 +3,18 @@ parent_feature: FEAT-01KR46PKHPVSH
 slug: config-safety-tests
 name: "Tests for schema versioning, migration, and health"
 summary: Write tests covering all 9 acceptance criteria for config-safety.
-status: active
+status: done
 depends_on:
   - TASK-01KR47D68BC71
   - TASK-01KR47D68CR1J
   - TASK-01KR47D68DQ4Z
+files_planned:
+  - internal/binding/loader_test.go
+  - cmd/kbz/migrate_cmd_test.go
+completed: "2026-05-09T11:12:45Z"
 claimed_at: "2026-05-09T11:03:26Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-09T11:03:26Z"
 dispatched_by: sambeau
+completion_summary: "Added AC-001, AC-005, AC-006 labeled tests to complete coverage of all 9 config-safety acceptance criteria. All 9 ACs now have explicitly named tests passing."
+verification: "All 9 AC tests individually verified passing: AC-001 (SchemaVersion present), AC-002 (valid v2 decode), AC-003 (unsupported version error), AC-004 (strict field rejection), AC-005 (migrate adds schema_version + preserves content), AC-006 (migrate idempotent), AC-007 (health malformed warning), AC-008 (health valid ok), AC-009 (legacy binary rejection). Full test suites pass for internal/binding, cmd/kbz, internal/mcp."
