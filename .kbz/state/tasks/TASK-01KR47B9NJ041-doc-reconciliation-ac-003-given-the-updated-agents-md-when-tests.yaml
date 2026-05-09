@@ -3,10 +3,13 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-ac-003-given-the-updated-agents-md-when-tests
 name: "Test Given the updated `AGENTS.md`, when a reader searches"
 summary: "Write tests covering: AC-003: Given the updated `AGENTS.md`, when a reader searches for \"handoff\", then no claims of spec sections, conflict annotations, or graph traversal appear without qualification."
-status: active
+status: done
 depends_on:
   - TASK-01KR47B9NHM2N
+completed: "2026-05-09T10:44:57Z"
 claimed_at: "2026-05-09T10:41:35Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-09T10:41:35Z"
 dispatched_by: sambeau
+completion_summary: "AC-003 test (TestAgentsMD_HandoffSection_NoFalseClaims) already exists, was committed in d06e1382 by the REQ-003 test task, and passes. It comprehensively covers AC-003: scans all handoff lines in AGENTS.md, verifies no unqualified spec section claims, no conflict annotation claims, no graph traversal claims, accurate context packet definition, and no graph capability claims for handoff. Five assertions total — all pass."
+verification: go test ./internal/kbzinit/ -run TestAgentsMD_HandoffSection_NoFalseClaims -v → PASS (0.00s). Full suite has 3 pre-existing failures in unrelated tests (orchestrate-development SKILL.md managed marker).
