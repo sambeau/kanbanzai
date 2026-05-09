@@ -3,10 +3,17 @@ parent_feature: FEAT-01KR46PKHPVSH
 slug: config-safety-req-003-a-kbz-migrate-stage-bindings-com
 name: "A `kbz migrate stage-bindings` command must add the"
 summary: "REQ-003: A `kbz migrate stage-bindings` command must add the `schema_version: 2` key idempotently without altering other content."
-status: active
+status: done
 depends_on:
   - TASK-01KR47D688P0S
+files_planned:
+  - cmd/kbz/migrate_cmd.go
+  - cmd/kbz/migrate_cmd_test.go
+  - cmd/kbz/main.go
+completed: "2026-05-09T10:46:10Z"
 claimed_at: "2026-05-08T17:49:20Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T17:49:20Z"
 dispatched_by: sambeau
+completion_summary: "Implemented REQ-003: kbz migrate stage-bindings command that adds schema_version: 2 idempotently without altering other content. Wired into main.go's run() switch and usage text. 9 tests cover help output, missing file, already-migrated detection, fresh migration, idempotency, and helper functions."
+verification: "go build succeeds, go test ./cmd/kbz/... passes (all 9 new tests + existing), command tested manually: migration works, idempotency verified (second run reports 'already has schema_version'), help text correct, missing file error clear"
