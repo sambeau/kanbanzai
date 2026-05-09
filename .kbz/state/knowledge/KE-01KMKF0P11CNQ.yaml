@@ -3,10 +3,10 @@ content: "Conflict detection (conflict_domain_check) analyzes file overlap and a
 created: "2026-03-25T21:39:38Z"
 created_by: sambeau
 id: KE-01KMKF0P11CNQ
-last_accessed_at: "2026-05-08T17:51:41Z"
+last_accessed_at: "2026-05-09T10:40:32Z"
 learned_from: P1-phase-4-orchestration
 miss_count: 0
-recent_use_count: 483
+recent_use_count: 484
 scope: project
 status: confirmed
 tags:
