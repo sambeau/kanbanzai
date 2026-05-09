@@ -38,10 +38,11 @@ func EntityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store, requiresHumanReview func() bool) server.ServerTool {
 	tool := mcp.NewTool("entity",
 		mcp.WithTitleAnnotation("Entity Manager"),
-		mcp.WithDescription(
-			"The primary tool for managing workflow entities (batches, features, tasks, bugs, decisions) — "+
-				"use this whenever you need to create, query, modify, or advance entities through their lifecycle. "+
-				"Actions: create, get, list, update, transition.",
+		mcp.WithDescription(		"The primary tool for managing workflow entities (batches, features, tasks, bugs, decisions) — "+
+			"use this whenever you need to create, query, modify, or advance entities through their lifecycle. "+
+			"Actions: create, get, list, update, transition. "+
+			"Verify entity existence before working on it — do not create worktrees, write files, "+
+			"or open PRs against unregistered entity names (INV-002).",
 		),
 		mcp.WithString("action", mcp.Required(), mcp.Description("Action: create, get, list, update, transition")),
 		mcp.WithString("type", mcp.Description("Entity type: batch, feature, task, bug, decision, strategic-plan")),

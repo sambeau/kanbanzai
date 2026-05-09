@@ -42,15 +42,15 @@ func prTool(
 		mcp.WithIdempotentHintAnnotation(false),
 		mcp.WithOpenWorldHintAnnotation(true),
 		mcp.WithTitleAnnotation("Pull Request Manager"),
-		mcp.WithDescription(
-			"Use when you need a GitHub pull request for a feature or bug entity — pr is entity-aware "+
-				"and automatically derives the branch, title, and description from the entity's metadata "+
-				"and worktree. Use INSTEAD OF the raw GitHub create_pull_request tool, which requires "+
-				"manual branch lookup and body composition. "+
-				"Call AFTER creating a worktree and committing changes, BEFORE merge(action: \"check\"). "+
-				"Actions: create (open a new PR), status (get CI/review status), update (refresh description "+
-				"and labels). For all actions: entity_id (FEAT-... or BUG-...) is required. "+
-				"Requires a GitHub token in .kbz/local.yaml.",
+		mcp.WithDescription(		"Use when you need a GitHub pull request for a feature or bug entity — pr is entity-aware "+
+			"and automatically derives the branch, title, and description from the entity's metadata "+
+			"and worktree. Use INSTEAD OF the raw GitHub create_pull_request tool, which requires "+
+			"manual branch lookup and body composition. "+
+			"Call AFTER creating a worktree and committing changes, BEFORE merge(action: \"check\"). "+
+			"Actions: create (open a new PR), status (get CI/review status), update (refresh description "+
+			"and labels). For all actions: entity_id (FEAT-... or BUG-...) is required. "+
+			"Requires a GitHub token in .kbz/local.yaml. "+
+			"pr enforces the branch/title conventions required by stage gate merge checks (INV-005).",
 		),
 		mcp.WithString("action",
 			mcp.Required(),

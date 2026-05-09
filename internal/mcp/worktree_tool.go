@@ -44,7 +44,10 @@ func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOp
 				"dry_run: true lists orphaned records; dry_run: false removes them. "+
 				"Do NOT invoke `git worktree remove` (directories don't exist). "+
 				"On timeout, fall back: (1) `git worktree add <path> -b <branch>` via terminal; "+
-				"(2) worktree(action: update, entity_id: ...) to register the record manually.",
+				"(2) worktree(action: update, entity_id: ...) to register the record manually. "+
+				// TODO(P59-B2): align with invariant code
+				"One worktree per entity. Do not commit directly to main — "+
+				"all implementation work must be isolated in an entity worktree.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),
