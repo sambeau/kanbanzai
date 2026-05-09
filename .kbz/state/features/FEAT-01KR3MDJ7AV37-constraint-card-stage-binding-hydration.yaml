@@ -2,7 +2,7 @@ id: FEAT-01KR3MDJ7AV37
 slug: constraint-card-stage-binding-hydration
 name: Constraint card and stage-binding hydration
 parent: B58-inject-constraint-card-stage-binding-hydration
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Generate and prepend a compact constraint card plus stage-binding payload to task-context MCP responses from canonical role, constraint, and stage-binding inputs."
 design: P59-roles-skills-remediation/design-p59-design-roles-skills-remediation

@@ -2,7 +2,7 @@ id: FEAT-01KR3MEYRQ9RG
 slug: runtime-discovery-surfaces
 name: Runtime discovery surfaces
 parent: B62-discover-runtime-instruction-surfaces
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Provide runtime-discoverable wrappers, redirects, and tool-description rules for Claude, GPT-class hosts, DeepSeek, and optional Cursor integration."
 design: P59-roles-skills-remediation/design-p59-design-roles-skills-remediation

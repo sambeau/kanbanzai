@@ -1,10 +1,10 @@
 id: B59-enforce-high-violation-rules-mcp-invariants
 slug: enforce-high-violation-rules-mcp-invariants
 name: Enforce high-violation rules as MCP invariants
-status: active
+status: done
 summary: "Specify and coordinate prompt-layer changes for the five highest-violation workflow rules, including stable refusals, tool routing, and P44/P56 enforcement boundaries."
 created: "2026-05-08T11:08:20Z"
 created_by: sambeau
-updated: "2026-05-08T11:08:20Z"
+updated: "2026-05-09T11:10:02Z"
 next_feature_seq: 2
 parent: P59-roles-skills-remediation
