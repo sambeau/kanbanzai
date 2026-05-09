@@ -3,10 +3,15 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-ac-002-given-the-updated-assembly-go-whe-tests
 name: "Test Given the updated `assembly.go`, when a reader"
 summary: "Write tests covering: AC-002: Given the updated `assembly.go`, when a reader inspects the header comment, then it states the file is `next`-only and does not claim shared use with handoff."
-status: active
+status: done
 depends_on:
   - TASK-01KR47B9NEDQE
+files_planned:
+  - internal/mcp/assembly_test.go
+completed: "2026-05-09T10:49:38Z"
 claimed_at: "2026-05-09T10:41:32Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-09T10:41:32Z"
 dispatched_by: sambeau
+completion_summary: "Added 3 AC-002 header comment content inspection tests to assembly_test.go: TestAssemblyHeader_NextOnlyScopedToHeader, TestAssemblyHeader_NoSharedClaimInHeader, TestAssemblyHeader_NoteSectionExplainsLegacyRemoval. All 6 header tests pass (3 REQ-002 + 3 AC-002). Scoped checks to the package header comment (before package declaration) for precision, following the AC-001 test pattern."
+verification: Ran go test ./internal/mcp/ -run TestAssemblyHeader -v -count=1 — all 6 tests pass. go build ./internal/mcp/ passes.
