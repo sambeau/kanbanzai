@@ -135,6 +135,7 @@ type DocumentTemplate struct {
 
 // BindingFile is the top-level structure of stage-bindings.yaml.
 type BindingFile struct {
+	SchemaVersion int                      `yaml:"schema_version"`
 	StageBindings map[string]*StageBinding `yaml:"stage_bindings"`
 }
 

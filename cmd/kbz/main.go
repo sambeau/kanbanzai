@@ -197,6 +197,8 @@ func run(args []string, deps dependencies) error {
 		return runInstallRecord(args[1:], deps)
 	case "rebuild-index":
 		return runRebuildIndex(args[1:], deps)
+	case "migrate":
+		return runMigrate(args[1:], deps)
 
 	default:
 		return fmt.Errorf("unknown command %q\n\n%s", args[0], usageText)
@@ -386,6 +388,7 @@ Utility commands:
   cache rebuild              Rebuild the local derived cache
   import <path> [flags]      Batch import document records
   install-record write       Write binary install record
+  migrate stage-bindings     Add schema_version: 2 to stage-bindings.yaml
 
 Other:
   serve                      Start the MCP server (stdio transport)

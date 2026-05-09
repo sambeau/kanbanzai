@@ -317,6 +317,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 			GateSourceHealthChecker(registryCache),
 			CheckpointOverrideHealthChecker(entitySvc),
 			ToolHintsHealthChecker(mergedToolHints),
+			BindingLoadableHealthChecker(bindingPath),
 		)...)
 	}
 

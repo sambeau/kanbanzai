@@ -1,6 +1,7 @@
 package binding
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
@@ -16,7 +17,8 @@ func writeYAML(t *testing.T, dir, content string) string {
 	return path
 }
 
-const validMinimalYAML = `stage_bindings:
+const validMinimalYAML = `schema_version: 2
+stage_bindings:
   designing:
     description: "Design stage"
     orchestration: single-agent
@@ -25,7 +27,8 @@ const validMinimalYAML = `stage_bindings:
     human_gate: false
 `
 
-const validMultiStageYAML = `stage_bindings:
+const validMultiStageYAML = `schema_version: 2
+stage_bindings:
   designing:
     description: "Design stage"
     orchestration: single-agent
@@ -48,6 +51,16 @@ const validMultiStageYAML = `stage_bindings:
       roles: [backend]
       skills: [coding]
       topology: parallel
+`
+
+// v1MinimalYAML is a v1 fixture without schema_version, used for legacy decode tests.
+const v1MinimalYAML = `stage_bindings:
+  designing:
+    description: "Design stage"
+    orchestration: single-agent
+    roles: [designer]
+    skills: [design-skill]
+    human_gate: false
 `
 
 func TestLoadBindingFile(t *testing.T) {
@@ -77,14 +90,16 @@ func TestLoadBindingFile(t *testing.T) {
 		},
 		{
 			name: "missing stage_bindings key",
-			yaml: `something_else:
+			yaml: `schema_version: 2
+something_else:
   foo: bar
 `,
 			wantErrors: []string{"missing required 'stage_bindings' key"},
 		},
 		{
 			name: "stage_bindings is a sequence not mapping",
-			yaml: `stage_bindings:
+			yaml: `schema_version: 2
+stage_bindings:
   - designing
   - reviewing
 `,
@@ -92,7 +107,8 @@ func TestLoadBindingFile(t *testing.T) {
 		},
 		{
 			name: "duplicate stage key detected",
-			yaml: `stage_bindings:
+			yaml: `schema_version: 2
+stage_bindings:
   designing:
     description: "First"
     orchestration: single-agent
@@ -108,7 +124,8 @@ func TestLoadBindingFile(t *testing.T) {
 		},
 		{
 			name: "unknown top-level key rejected",
-			yaml: `stage_bindings:
+			yaml: `schema_version: 2
+stage_bindings:
   designing:
     description: "Design stage"
     orchestration: single-agent
@@ -120,14 +137,16 @@ extra_key: true
 		},
 		{
 			name: "empty stage_bindings mapping loads with zero bindings",
-			yaml: `stage_bindings: {}
+			yaml: `schema_version: 2
+stage_bindings: {}
 `,
 			wantOK:     true,
 			wantStages: nil,
 		},
 		{
-			name: "unknown field within a binding entry rejected",
-			yaml: `stage_bindings:
+			name: "unknown field within a binding entry rejected (AC-004)",
+			yaml: `schema_version: 2
+stage_bindings:
   designing:
     description: "Design stage"
     orchestration: single-agent
@@ -136,6 +155,84 @@ extra_key: true
     totally_bogus_field: true
 `,
 			wantErrors: []string{"decoding binding file"},
+		},
+		// REQ-002 tests
+		{
+			name: "AC-002: valid v2 file decodes successfully",
+			yaml: `schema_version: 2
+stage_bindings:
+  designing:
+    description: "Design stage"
+    orchestration: single-agent
+    roles: [designer]
+    skills: [design-skill]
+    human_gate: false
+`,
+			wantOK:     true,
+			wantStages: []string{"designing"},
+		},
+		{
+			name: "AC-003: unsupported schema_version 99 returns structured error",
+			yaml: `schema_version: 99
+stage_bindings:
+  designing:
+    description: "Design stage"
+    orchestration: single-agent
+    roles: [designer]
+    skills: [design-skill]
+`,
+			wantErrors: []string{"unsupported schema_version", "99", "2"},
+		},
+		{
+			name: "schema_version with future version 3 is unsupported",
+			yaml: `schema_version: 3
+stage_bindings:
+  designing:
+    description: "Design stage"
+    orchestration: single-agent
+    roles: [designer]
+    skills: [design-skill]
+`,
+			wantErrors: []string{"unsupported schema_version", "3", "2"},
+		},
+		{
+			name: "schema_version present but not integer",
+			yaml: `schema_version: "two"
+stage_bindings:
+  designing:
+    description: "Design stage"
+    orchestration: single-agent
+    roles: [designer]
+    skills: [design-skill]
+`,
+			wantErrors: []string{"schema_version must be an integer"},
+		},
+		{
+			name:       "file without schema_version still loads (backward compat)",
+			yaml: `stage_bindings:
+  designing:
+    description: "Design stage"
+    orchestration: single-agent
+    roles: [designer]
+    skills: [design-skill]
+    human_gate: false
+`,
+			wantOK:     true,
+			wantStages: []string{"designing"},
+		},
+		{
+			name:       "schema_version 0 loads as backward compat",
+			yaml: `schema_version: 0
+stage_bindings:
+  designing:
+    description: "Design stage"
+    orchestration: single-agent
+    roles: [designer]
+    skills: [design-skill]
+    human_gate: false
+`,
+			wantOK:     true,
+			wantStages: []string{"designing"},
 		},
 	}
 
@@ -197,7 +294,8 @@ extra_key: true
 }
 
 func TestLoadBindingFile_valid_bindings_have_correct_fields(t *testing.T) {
-	yaml := `stage_bindings:
+	yaml := `schema_version: 2
+stage_bindings:
   designing:
     description: "Design stage"
     orchestration: single-agent
@@ -234,5 +332,144 @@ func TestLoadBindingFile_valid_bindings_have_correct_fields(t *testing.T) {
 	}
 	if sb.Notes != "some notes" {
 		t.Errorf("notes = %q, want %q", sb.Notes, "some notes")
+	}
+	if bf.SchemaVersion != 2 {
+		t.Errorf("SchemaVersion = %d, want 2", bf.SchemaVersion)
+	}
+}
+
+func TestErrUnsupportedSchemaVersion(t *testing.T) {
+	// AC-003: verify that the returned error wraps ErrUnsupportedSchemaVersion
+	// so callers can use errors.Is to detect unsupported version errors.
+	yaml := `schema_version: 99
+stage_bindings:
+  designing:
+    description: "Design stage"
+    orchestration: single-agent
+    roles: [designer]
+    skills: [design-skill]
+`
+	path := writeYAML(t, t.TempDir(), yaml)
+	_, errs := LoadBindingFile(path)
+	if len(errs) != 1 {
+		t.Fatalf("expected exactly 1 error, got %d", len(errs))
+	}
+	if !errors.Is(errs[0], ErrUnsupportedSchemaVersion) {
+		t.Errorf("error does not wrap ErrUnsupportedSchemaVersion: %v", errs[0])
+	}
+	if !strings.Contains(errs[0].Error(), "unsupported schema_version") {
+		t.Errorf("error does not contain 'unsupported schema_version': %v", errs[0])
+	}
+	if !strings.Contains(errs[0].Error(), "99") {
+		t.Errorf("error does not contain version '99': %v", errs[0])
+	}
+}
+
+// TestLoadBindingFile_AC001_SchemaVersionPresent tests AC-001 (REQ-001):
+// Given stage-bindings.yaml, when inspected via LoadBindingFile, then
+// schema_version: 2 is present at the top level.
+func TestLoadBindingFile_AC001_SchemaVersionPresent(t *testing.T) {
+	yaml := `schema_version: 2
+stage_bindings:
+  designing:
+    description: "Design stage"
+    orchestration: single-agent
+    roles: [designer]
+    skills: [design-skill]
+    human_gate: false
+`
+	path := writeYAML(t, t.TempDir(), yaml)
+	bf, errs := LoadBindingFile(path)
+	if len(errs) != 0 {
+		t.Fatalf("unexpected errors: %v", errs)
+	}
+	if bf.SchemaVersion != 2 {
+		t.Errorf("SchemaVersion = %d, want 2", bf.SchemaVersion)
+	}
+}
+
+// TestDecodeBindingFileLegacy tests AC-009 (REQ-005): older binaries without
+// schema_version support must refuse v2 files with a clear message.
+func TestDecodeBindingFileLegacy(t *testing.T) {
+	tests := []struct {
+		name       string
+		yaml       string
+		wantOK     bool
+		wantErrors []string
+	}{
+		{
+			name:   "v1 file (no schema_version) loads fine",
+			yaml:   v1MinimalYAML,
+			wantOK: true,
+		},
+		{
+			name:       "v2 file rejected with clear version-mismatch error",
+			yaml:       validMinimalYAML,
+			wantErrors: []string{"binding version mismatch", "schema_version 2", "upgrade"},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			bf, err := DecodeBindingFileLegacy([]byte(tt.yaml))
+
+			if tt.wantOK {
+				if err != nil {
+					t.Errorf("expected no error, got: %v", err)
+					return
+				}
+				if bf == nil {
+					t.Fatal("expected non-nil BindingFile")
+				}
+				return
+			}
+
+			if err == nil {
+				t.Fatal("expected error, got nil")
+			}
+			if bf != nil {
+				t.Error("expected nil BindingFile on error")
+			}
+
+			errStr := err.Error()
+			for _, want := range tt.wantErrors {
+				if !strings.Contains(errStr, want) {
+					t.Errorf("expected error containing %q, got: %s", want, errStr)
+				}
+			}
+		})
+	}
+}
+
+// TestDecodeBindingFileLegacy_errorsIs tests that DecodeBindingFileLegacy errors
+// wrap ErrBindingVersionMismatch for programmatic detection.
+func TestDecodeBindingFileLegacy_errorsIs(t *testing.T) {
+	_, err := DecodeBindingFileLegacy([]byte(validMinimalYAML))
+	if err == nil {
+		t.Fatal("expected error for v2 file, got nil")
+	}
+	if !errors.Is(err, ErrBindingVersionMismatch) {
+		t.Errorf("error does not wrap ErrBindingVersionMismatch: %v", err)
+	}
+}
+
+// TestDecodeBindingFileLegacy_v1WithUnknownField ensures the legacy decoder
+// still rejects unknown fields via strict YAML decoding, preserving the
+// pre-REQ-002 typo detection behavior.
+func TestDecodeBindingFileLegacy_v1WithUnknownField(t *testing.T) {
+	yaml := `stage_bindings:
+  designing:
+    description: "Design stage"
+    orchestration: single-agent
+    roles: [designer]
+    skills: [design-skill]
+    totally_bogus: true
+`
+	_, err := DecodeBindingFileLegacy([]byte(yaml))
+	if err == nil {
+		t.Fatal("expected error for unknown field, got nil")
+	}
+	if !strings.Contains(err.Error(), "decoding binding file") {
+		t.Errorf("expected 'decoding binding file' in error, got: %s", err)
 	}
 }
