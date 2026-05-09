@@ -156,7 +156,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 			Roles:               &kbzctx.RoleStoreAdapter{Store: roleStore},
 			Skills:              &kbzctx.SkillStoreAdapter{Store: skillStore},
 			Bindings:            &kbzctx.BindingFileAdapter{File: bf},
-			Knowledge:           kbzctx.NewSurfacer(entryLoader, capTracker, nil),
+			Knowledge:           kbzctx.NewSurfacer(entryLoader, capTracker, nil, knowledgeSvc.Generation),
 			MergedToolHints:     mergedToolHints,
 			ToolHintRoleStore:   roleStore,
 			WindowSize:          windowSize,

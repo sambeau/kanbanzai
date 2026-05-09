@@ -2,7 +2,10 @@ package service
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"os"
+	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -67,6 +70,35 @@ func NewKnowledgeService(root string) *KnowledgeService {
 		store: storage.NewKnowledgeStore(root),
 		now:   func() time.Time { return time.Now().UTC() },
 	}
+}
+
+// Generation returns an O(1) token representing the current state of the
+// knowledge directory, derived from its modification time and YAML file count.
+// The token changes whenever a new entry is added or removed.
+// Returns "0/0" when the directory does not exist yet.
+func (s *KnowledgeService) Generation() (string, error) {
+	dir := filepath.Join(s.root, storage.KnowledgeDir)
+	info, err := os.Stat(dir)
+	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return "0/0", nil
+		}
+		return "", fmt.Errorf("stat knowledge directory: %w", err)
+	}
+
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		return "", fmt.Errorf("read knowledge directory: %w", err)
+	}
+
+	count := 0
+	for _, e := range entries {
+		if !e.IsDir() && strings.HasSuffix(e.Name(), ".yaml") {
+			count++
+		}
+	}
+
+	return fmt.Sprintf("%d/%d", info.ModTime().UnixNano(), count), nil
 }
 
 // Contribute creates a new knowledge entry after deduplication checks.

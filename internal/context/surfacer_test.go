@@ -50,7 +50,7 @@ func TestSurfacer_FullPipeline(t *testing.T) {
 		makeTestEntry("KE-003", "yaml-tags", "Always add yaml struct tags BECAUSE the serializer requires them", "internal/storage/", "confirmed", 0.7, []string{"go"}, 10),
 	}
 
-	s := NewSurfacer(staticLoader(entries), nil, fixedNow)
+	s := NewSurfacer(staticLoader(entries), nil, fixedNow, nil)
 	result, err := s.Surface(SurfaceInput{
 		FilePaths: []string{"internal/service/handler.go"},
 		RoleTags:  []string{"go"},
@@ -78,7 +78,7 @@ func TestSurfacer_ZeroMatches(t *testing.T) {
 		makeTestEntry("KE-001", "topic-a", "content a", "internal/storage/", "confirmed", 0.9, nil, 1),
 	}
 
-	s := NewSurfacer(staticLoader(entries), nil, fixedNow)
+	s := NewSurfacer(staticLoader(entries), nil, fixedNow, nil)
 	result, err := s.Surface(SurfaceInput{
 		FilePaths: []string{"cmd/main.go"},
 		RoleTags:  []string{"frontend"},
@@ -94,7 +94,7 @@ func TestSurfacer_ZeroMatches(t *testing.T) {
 func TestSurfacer_EmptyKnowledgeBase(t *testing.T) {
 	t.Parallel()
 
-	s := NewSurfacer(staticLoader(nil), nil, fixedNow)
+	s := NewSurfacer(staticLoader(nil), nil, fixedNow, nil)
 	result, err := s.Surface(SurfaceInput{
 		FilePaths: []string{"internal/service/handler.go"},
 	})
@@ -112,7 +112,7 @@ func TestSurfacer_LoaderError(t *testing.T) {
 	loader := func() ([]map[string]any, error) {
 		return nil, &testError{"knowledge base unavailable"}
 	}
-	s := NewSurfacer(loader, nil, fixedNow)
+	s := NewSurfacer(loader, nil, fixedNow, nil)
 	result, err := s.Surface(SurfaceInput{
 		FilePaths: []string{"internal/service/handler.go"},
 	})
@@ -140,7 +140,7 @@ func TestSurfacer_CapAt10(t *testing.T) {
 		))
 	}
 
-	s := NewSurfacer(staticLoader(entries), nil, fixedNow)
+	s := NewSurfacer(staticLoader(entries), nil, fixedNow, nil)
 	result, err := s.Surface(SurfaceInput{})
 	if err != nil {
 		t.Fatalf("Surface() error = %v", err)
@@ -159,7 +159,7 @@ func TestSurfacer_Deterministic(t *testing.T) {
 		makeTestEntry("KE-003", "topic-c", "content c", "project", "confirmed", 0.7, nil, 3),
 	}
 
-	s := NewSurfacer(staticLoader(entries), nil, fixedNow)
+	s := NewSurfacer(staticLoader(entries), nil, fixedNow, nil)
 	input := SurfaceInput{FilePaths: []string{"internal/service/handler.go"}}
 
 	result1, _ := s.Surface(input)
@@ -194,7 +194,7 @@ func TestSurfacer_CapTrackerIntegration(t *testing.T) {
 		))
 	}
 
-	s := NewSurfacer(staticLoader(entries), tracker, fixedNow)
+	s := NewSurfacer(staticLoader(entries), tracker, fixedNow, nil)
 	input := SurfaceInput{FilePaths: []string{"internal/service/handler.go"}}
 
 	// 3 consecutive cap-hit assemblies.
@@ -218,7 +218,7 @@ func TestSurfacer_OutputContainsExpectedFields(t *testing.T) {
 		makeTestEntry("KE-042", "yaml-marshal", "Always validate YAML output BECAUSE silent corruption is costly", "project", "confirmed", 0.85, nil, 2),
 	}
 
-	s := NewSurfacer(staticLoader(entries), nil, fixedNow)
+	s := NewSurfacer(staticLoader(entries), nil, fixedNow, nil)
 	result, err := s.Surface(SurfaceInput{})
 	if err != nil {
 		t.Fatalf("Surface() error = %v", err)
@@ -251,7 +251,7 @@ func TestSurfacer_HighestScoreLast(t *testing.T) {
 		makeTestEntry("KE-003", "mid-conf", "content c", "project", "confirmed", 0.6, nil, 10),
 	}
 
-	s := NewSurfacer(staticLoader(entries), nil, fixedNow)
+	s := NewSurfacer(staticLoader(entries), nil, fixedNow, nil)
 	result, err := s.Surface(SurfaceInput{})
 	if err != nil {
 		t.Fatalf("Surface() error = %v", err)

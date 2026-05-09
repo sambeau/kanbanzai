@@ -89,11 +89,11 @@ func TestCheckBugTransitionGate_VerifiedToClosed_Placeholder(t *testing.T) {
 	bug := &model.Bug{
 		ID:     "BUG-01TEST0004",
 		Slug:   "test-bug",
-		Status: model.BugStatusVerified,
+		Status: model.BugStatusVerifying,
 	}
 
 	result := CheckBugTransitionGate(
-		string(model.BugStatusVerified),
+		string(model.BugStatusVerifying),
 		string(model.BugStatusClosed),
 		bug, nil, nil,
 	)
@@ -129,11 +129,11 @@ func TestCheckBugTransitionGate_VerifiedToClosed_VerifierExists(t *testing.T) {
 	bug := &model.Bug{
 		ID:     "BUG-01TEST0005",
 		Slug:   "test-bug",
-		Status: model.BugStatusVerified,
+		Status: model.BugStatusVerifying,
 	}
 
 	result := CheckBugTransitionGate(
-		string(model.BugStatusVerified),
+		string(model.BugStatusVerifying),
 		string(model.BugStatusClosed),
 		bug, nil, nil,
 	)
@@ -181,7 +181,7 @@ func TestCheckBugTransitionGate_VerifiedToClosed_VerifierTimeout(t *testing.T) {
 	bug := &model.Bug{
 		ID:     "BUG-01TEST0401",
 		Slug:   "timeout-bug",
-		Status: model.BugStatusVerified,
+		Status: model.BugStatusVerifying,
 	}
 
 	// Clean up any previous dispatch record for this bug.
@@ -189,7 +189,7 @@ func TestCheckBugTransitionGate_VerifiedToClosed_VerifierTimeout(t *testing.T) {
 
 	// First call: should dispatch the verifier.
 	result1 := CheckBugTransitionGate(
-		string(model.BugStatusVerified),
+		string(model.BugStatusVerifying),
 		string(model.BugStatusClosed),
 		bug, nil, nil,
 	)
@@ -208,7 +208,7 @@ func TestCheckBugTransitionGate_VerifiedToClosed_VerifierTimeout(t *testing.T) {
 
 	// Second call: should detect timeout.
 	result2 := CheckBugTransitionGate(
-		string(model.BugStatusVerified),
+		string(model.BugStatusVerifying),
 		string(model.BugStatusClosed),
 		bug, nil, nil,
 	)
@@ -247,7 +247,7 @@ func TestCheckBugTransitionGate_VerifiedToClosed_VerifierStillRunning(t *testing
 	bug := &model.Bug{
 		ID:     "BUG-01TEST0402",
 		Slug:   "running-bug",
-		Status: model.BugStatusVerified,
+		Status: model.BugStatusVerifying,
 	}
 
 	// Clean up and set a recent dispatch time (not timed out).
@@ -256,7 +256,7 @@ func TestCheckBugTransitionGate_VerifiedToClosed_VerifierStillRunning(t *testing
 
 	// Should return NeedsVerifier=true (still running), not timed out.
 	result := CheckBugTransitionGate(
-		string(model.BugStatusVerified),
+		string(model.BugStatusVerifying),
 		string(model.BugStatusClosed),
 		bug, nil, nil,
 	)

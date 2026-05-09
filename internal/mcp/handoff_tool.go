@@ -165,28 +165,34 @@ func handoffTool(
 			log.Printf("[handoff] pre-dispatch state commit created for task %s", taskID)
 		}
 
-		// Inject re-review guidance when the parent feature is in a focused
-		// re-review cycle (review_cycle >= 2 while in reviewing status — FR-008).
+		// Resolve the parent feature once (REQ-004/AC-005: single Get call).
 		parentFeature, _ := task.State["parent_feature"].(string)
+		var parentFeat service.GetResult
 		if parentFeature != "" {
 			if feat, featErr := entitySvc.Get("feature", parentFeature, ""); featErr == nil {
-				fstatus, _ := feat.State["status"].(string)
-				frc, _ := feat.State["review_cycle"].(int)
-				if fstatus == "reviewing" && frc >= 2 {
-					guidance := fmt.Sprintf(
-						"## Re-Review Guidance (Cycle %d of %d)\n\n"+
-							"This is a **focused re-review** (cycle %d). Narrow your scope:\n"+
-							"- Review only rework tasks created since the previous review and the changes they made.\n"+
-							"- Check that each finding from the previous review has been addressed.\n"+
-							"- Read rework task descriptions to understand what was supposed to change.\n"+
-							"- Do NOT re-review unchanged implementation from earlier cycles.",
-						frc, service.DefaultMaxReviewCycles, frc,
-					)
-					if instructions != "" {
-						instructions = guidance + "\n\n" + instructions
-					} else {
-						instructions = guidance
-					}
+				parentFeat = feat
+			}
+		}
+
+		// Inject re-review guidance when the parent feature is in a focused
+		// re-review cycle (review_cycle >= 2 while in reviewing status — FR-008).
+		if parentFeat.State != nil {
+			fstatus, _ := parentFeat.State["status"].(string)
+			frc, _ := parentFeat.State["review_cycle"].(int)
+			if fstatus == "reviewing" && frc >= 2 {
+				guidance := fmt.Sprintf(
+					"## Re-Review Guidance (Cycle %d of %d)\n\n"+
+						"This is a **focused re-review** (cycle %d). Narrow your scope:\n"+
+						"- Review only rework tasks created since the previous review and the changes they made.\n"+
+						"- Check that each finding from the previous review has been addressed.\n"+
+						"- Read rework task descriptions to understand what was supposed to change.\n"+
+						"- Do NOT re-review unchanged implementation from earlier cycles.",
+					frc, service.DefaultMaxReviewCycles, frc,
+				)
+				if instructions != "" {
+					instructions = guidance + "\n\n" + instructions
+				} else {
+					instructions = guidance
 				}
 			}
 		}
@@ -203,10 +209,8 @@ func handoffTool(
 			Instructions: instructions,
 		}
 
-		if parentFeature != "" {
-			if feat, featErr := entitySvc.Get("feature", parentFeature, ""); featErr == nil {
-				input.FeatureState = feat.State
-			}
+		if parentFeat.State != nil {
+			input.FeatureState = parentFeat.State
 		}
 
 		result, runErr := pipeline.Run(input)

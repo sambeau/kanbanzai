@@ -4,10 +4,16 @@
 // injected loader function, matches by file path / tag / "always" criteria,
 // scores with recency-weighted confidence, caps at 10, and returns entries
 // ordered ascending by score (highest last, exploiting recency bias).
+//
+// Caching: when a GenReader is provided, Surface() caches the last loaded
+// entry set keyed by generation token. On each call it compares the current
+// generation with the cached one; on mismatch it reloads via EntryLoader and
+// updates the cache. This satisfies REQ-002 and REQ-003 (AC-002 through AC-004).
 package context
 
 import (
 	"log"
+	"sync"
 	"time"
 
 	"github.com/sambeau/kanbanzai/internal/knowledge"
@@ -18,18 +24,29 @@ const defaultMaxSurfacedEntries = 10
 // EntryLoader loads all non-retired knowledge entries as raw field maps.
 type EntryLoader func() ([]map[string]any, error)
 
+// GenReader returns an O(1) generation token for the knowledge store.
+// When it returns an error, caching is skipped for that call.
+// May be nil, in which case entries are always reloaded (no caching).
+type GenReader func() (string, error)
+
 // Surfacer implements the KnowledgeSurfacer interface using the matching engine,
 // recency-weighted scoring, and cap logic from internal/knowledge.
 type Surfacer struct {
 	loadEntries EntryLoader
 	capTracker  *knowledge.CapTracker
 	now         func() time.Time
+	genReader   GenReader
+
+	mu             sync.Mutex
+	cachedGen      string
+	cachedEntries  []map[string]any
 }
 
 // NewSurfacer creates a production KnowledgeSurfacer.
 // capTracker may be nil (cap tracking is skipped).
 // now may be nil (defaults to time.Now).
-func NewSurfacer(loader EntryLoader, capTracker *knowledge.CapTracker, now func() time.Time) *Surfacer {
+// genReader may be nil (caching disabled — entries reloaded on every call).
+func NewSurfacer(loader EntryLoader, capTracker *knowledge.CapTracker, now func() time.Time, genReader GenReader) *Surfacer {
 	if now == nil {
 		now = time.Now
 	}
@@ -37,12 +54,13 @@ func NewSurfacer(loader EntryLoader, capTracker *knowledge.CapTracker, now func(
 		loadEntries: loader,
 		capTracker:  capTracker,
 		now:         now,
+		genReader:   genReader,
 	}
 }
 
 // Surface implements KnowledgeSurfacer.Surface.
 func (s *Surfacer) Surface(input SurfaceInput) ([]SurfacedEntry, error) {
-	entries, err := s.loadEntries()
+	entries, err := s.resolveEntries()
 	if err != nil {
 		// Graceful degradation (NFR-004): return empty result on load failure.
 		return nil, nil
@@ -83,6 +101,39 @@ func (s *Surfacer) Surface(input SurfaceInput) ([]SurfacedEntry, error) {
 		}
 	}
 	return result, nil
+}
+
+// resolveEntries returns the current entry set, using the cache when the
+// generation token matches. Falls back to a fresh load on any error.
+func (s *Surfacer) resolveEntries() ([]map[string]any, error) {
+	if s.genReader == nil {
+		// No generation reader — always reload (caching disabled).
+		return s.loadEntries()
+	}
+
+	gen, err := s.genReader()
+	if err != nil {
+		// Generation read failed — load fresh without updating cache.
+		return s.loadEntries()
+	}
+
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	if gen != "" && gen == s.cachedGen {
+		// Cache hit: generation token unchanged.
+		return s.cachedEntries, nil
+	}
+
+	// Cache miss: reload and store.
+	entries, err := s.loadEntries()
+	if err != nil {
+		return nil, err
+	}
+
+	s.cachedGen = gen
+	s.cachedEntries = entries
+	return entries, nil
 }
 
 // recordCap delegates to the cap tracker if available.

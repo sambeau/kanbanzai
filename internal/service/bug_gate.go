@@ -88,7 +88,7 @@ func checkBugCloseOutVerification(bug *model.Bug, docSvc *DocumentService, entit
 			return GateResult{
 				Satisfied:        false,
 				Reason:           fmt.Sprintf("verifier sub-agent timed out after %v — re-dispatch or investigate", VerifierTimeout),
-				
+				VerifierTimedOut: true,
 			}
 		}
 		// Verifier still running — keep signalling NeedsVerifier without
