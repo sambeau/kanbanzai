@@ -11,3 +11,5 @@ created: "2026-05-08T11:09:00Z"
 created_by: sambeau
 display_id: B58-F1
 tier: feature
+verification: "TASK-01KR3PY208N1W: go test ./internal/card/... -v — 14/14 pass: load valid/empty/invalid YAML, file-not-found, 4 missing-field errors, Select filtering, multi-role, no-match, determinism (20 iters), production YAML coverage.\nTASK-01KR3PYCQ2E6W: go test ./internal/card/... -v — 19/19 tests pass.\nTASK-01KR3PYR0BR41: go test ./internal/card/... — 37 tests pass (19 existing + 18 new). go build ./... clean.\nTASK-01KR3PZ4PJEJA: go test ./internal/mcp/ -run TestNext -count=1 passes. All 8 new constraint tests pass, all existing next tests unchanged. Verified constraint_card content, stage_binding structure, JSON ordering, error propagation, and existing field integrity.\nTASK-01KR3PZJNS6GS: All 8 new constraint card tests pass. All 29 existing handoff tests pass. Full MCP test suite passes (22.5s). Card package tests pass. Compilation succeeds.\nTASK-01KR3PZWD77W3: go test ./internal/card/... PASS. go test ./internal/mcp/... all new regression tests PASS. go test -bench=BenchmarkRender shows ~1.3µs/op."
+verification_status: passed
