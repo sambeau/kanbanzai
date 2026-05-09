@@ -37,7 +37,7 @@ Examples:
 | **role** | A YAML file in `.kbz/roles/` defining agent identity, vocabulary, anti-patterns, and tool constraints |
 | **skill** | A `SKILL.md` file defining the procedure, checklist, and evaluation criteria for a specific task type |
 | **lifecycle gate** | A prerequisite check that must pass before a feature can advance to the next workflow stage |
-| **context packet** | The assembled bundle of role instructions, spec sections, knowledge entries, and file paths delivered to an agent via `next` or `handoff` |
+| **context packet** | The assembled bundle of role instructions, knowledge entries, vocabulary, anti-patterns, and skill procedure delivered to an agent via `handoff`; `next` additionally includes spec sections, file paths, and graph project reference |
 | **Plan** | A strategic planning container for multi-batch initiatives, with `P{n}-slug` IDs (e.g., `P1-core-platform`). Owns batches and can own design documents. |
 | **Batch** | An operational work container for a group of related features, with `B{n}-slug` IDs (e.g., `B1-data-model`). Owns features and their documents. |
 | **entity hierarchy** | Plan → Batch → Feature → Task. Plans contain batches; batches contain features; features break down into tasks. |
@@ -250,7 +250,7 @@ codebase_memory:
   graph_project: Users-samphillips-Dev-kanbanzai
 ```
 
-This value is used automatically by `worktree(action: "create")` as the default `graph_project`, so sub-agents receive Code Graph context in every `handoff`/`next` call without the orchestrator needing to pass the parameter explicitly.
+This value is used automatically by `worktree(action: "create")` as the default `graph_project`, so sub-agents receive Code Graph context via `next` without the orchestrator needing to pass the parameter explicitly. (`handoff` renders a Markdown prompt and does not include graph project metadata.)
 
 ## Delegating to Sub-Agents
 

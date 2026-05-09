@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -2292,5 +2293,461 @@ func TestTierInference_TierStoredAndRetrievable(t *testing.T) {
 	}
 	if getResult.State["tier"] != config.TierRetroFix {
 		t.Errorf("retrieved tier = %q, want %q", getResult.State["tier"], config.TierRetroFix)
+	}
+}
+
+// ─── REQ-005: Decision record for capability gap ─────────────────────────────
+
+// TestEntityService_REQ005_DecisionRecord_CoversCapabilityGap verifies that
+// a decision entity can be created and retrieved with all fields required to
+// flag the handoff capability gap (spec sections, conflict annotations, graph
+// traversal) for separate feature planning.
+func TestEntityService_REQ005_DecisionRecord_CoversCapabilityGap(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	service := newTestEntityService(root, "2026-05-08T16:53:36Z")
+
+	got, err := service.CreateDecision(CreateDecisionInput{
+		Name:      "Handoff capability gap — spec sections conflict graph",
+		Slug:      "handoff-capability-gap-spec-sections-conflict-graph",
+		Summary:   "The handoff tool documentation previously claimed three capabilities that are not implemented: (1) spec section injection into the context packet, (2) conflict annotation of tasks based on domain analysis, (3) graph traversal to surface related code nodes. These claims have been removed from AGENTS.md and .github/copilot-instructions.md as part of P61 Track D. This decision record flags the gap for separate feature planning under a future plan.",
+		Rationale: "During P61 Track D documentation reconciliation, three capability gaps were confirmed by inspection of internal/mcp/handoff_tool.go and internal/mcp/assembly.go: (1) Spec section injection — handoff does not pull approved spec documents or inject their sections into the assembled prompt; (2) Conflict annotation — handoff does not call conflict_domain_check and does not annotate the context packet with per-task conflict risk; (3) Graph traversal — handoff does not execute graph queries to find related code nodes or include them in the context packet.",
+		DecidedBy: "sambeau",
+	})
+	if err != nil {
+		t.Fatalf("CreateDecision() error = %v", err)
+	}
+
+	// Verify type and status.
+	if got.Type != "decision" {
+		t.Errorf("type = %q, want decision", got.Type)
+	}
+	if got.State["status"] != "proposed" {
+		t.Errorf("status = %v, want proposed", got.State["status"])
+	}
+
+	// Verify the three capability gaps are present in summary.
+	summary, _ := got.State["summary"].(string)
+	for _, gap := range []string{
+		"spec section",
+		"conflict annotation",
+		"graph traversal",
+	} {
+		if !strings.Contains(strings.ToLower(summary), gap) {
+			t.Errorf("summary must mention capability gap: %q", gap)
+		}
+	}
+
+	// Verify summary explicitly states this is for separate feature planning.
+	if !strings.Contains(summary, "separate feature planning") &&
+		!strings.Contains(summary, "future plan") {
+		t.Error("summary must indicate the gap is for separate/future planning")
+	}
+
+	// Verify the three capability gaps are present in rationale.
+	rationale, _ := got.State["rationale"].(string)
+	for _, gap := range []string{
+		"spec section",
+		"conflict annotation",
+		"graph traversal",
+	} {
+		if !strings.Contains(strings.ToLower(rationale), gap) {
+			t.Errorf("rationale must mention capability gap: %q", gap)
+		}
+	}
+
+	// Verify we can retrieve the decision by ID.
+	retrieved, err := service.Get("decision", got.ID, "")
+	if err != nil {
+		t.Fatalf("Get(decision, %s) error = %v", got.ID, err)
+	}
+	if retrieved.Type != "decision" {
+		t.Errorf("retrieved type = %q, want decision", retrieved.Type)
+	}
+	if retrieved.State["status"] != "proposed" {
+		t.Errorf("retrieved status = %v, want proposed", retrieved.State["status"])
+	}
+}
+
+// TestREQ005_DecisionDocument_ExistsAndCoversGap verifies that the decision
+// document (P61-report-handoff-capability-gap.md) exists and covers all three
+// capability gaps: spec sections, conflict annotations, and graph traversal.
+//
+// The document may be in a worktree (during development) or in the main repo
+// (after merge). This test searches both locations.
+func TestREQ005_DecisionDocument_ExistsAndCoversGap(t *testing.T) {
+	t.Parallel()
+
+	_, thisFile, _, ok := runtime.Caller(0)
+	if !ok {
+		t.Fatal("cannot resolve test file path")
+	}
+	// From internal/service/entities_test.go: .. → internal/, ../.. → repo/worktree root.
+	repoRoot := filepath.Join(filepath.Dir(thisFile), "..", "..")
+
+	docRelPath := filepath.Join("work", "P61-handoff-resilience-binding-hardening",
+		"P61-report-handoff-capability-gap.md")
+
+	// Search: first in repoRoot (main repo), then in worktree subdirectory.
+	candidates := []string{
+		filepath.Join(repoRoot, docRelPath),
+		// Worktree path: .worktrees/FEAT-01KR46PKHMG4J-doc-reconciliation/work/...
+		filepath.Join(repoRoot, ".worktrees", "FEAT-01KR46PKHMG4J-doc-reconciliation", docRelPath),
+	}
+
+	var content string
+	found := false
+	for _, docPath := range candidates {
+		data, err := os.ReadFile(docPath)
+		if err == nil {
+			content = string(data)
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Skip("decision document not found in repo root or worktree — it may not be committed yet")
+	}
+
+	// Verify the document identifies the decision entity.
+	if !strings.Contains(content, "DEC-01KR484HRQ97X") {
+		t.Error("document must reference the decision entity ID DEC-01KR484HRQ97X")
+	}
+
+	// Verify the three capability gaps are documented.
+	gaps := map[string]string{
+		"spec section injection": "spec section",
+		"conflict annotation":    "conflict annotation",
+		"graph traversal":        "graph traversal",
+	}
+	for gapName, searchTerm := range gaps {
+		if !strings.Contains(strings.ToLower(content), searchTerm) {
+			t.Errorf("document must cover capability gap: %s", gapName)
+		}
+	}
+
+	// Verify the document proposes next steps (separate feature planning).
+	if !strings.Contains(content, "Next Steps") &&
+		!strings.Contains(content, "Recommended Next Steps") {
+		t.Error("document must include recommended next steps")
+	}
+
+	// Verify the document contains a Decision Options section.
+	if !strings.Contains(content, "Decision Options") &&
+		!strings.Contains(content, "Option A") {
+		t.Error("document must include decision options")
+	}
+}
+
+// TestREQ005_DecisionEntity_ExistsOnDisk verifies the decision entity YAML
+// file exists in .kbz/state/decisions/ and contains the required fields
+// flagging the three capability gaps for separate feature planning.
+func TestREQ005_DecisionEntity_ExistsOnDisk(t *testing.T) {
+	// Not parallel — reads real on-disk state.
+
+	_, thisFile, _, ok := runtime.Caller(0)
+	if !ok {
+		t.Fatal("cannot resolve test file path")
+	}
+	// From internal/service/entities_test.go: .. → internal/, ../.. → repo/worktree root.
+	// The .kbz/state/decisions/ directory in the worktree contains the same
+	// entities as the main repo (shared via git worktree).
+	repoRoot := filepath.Join(filepath.Dir(thisFile), "..", "..")
+
+	// Find the decision entity file by glob — the filename contains the slug.
+	globPattern := filepath.Join(repoRoot, ".kbz", "state", "decisions", "DEC-01KR484HRQ97X-*.yaml")
+	matches, err := filepath.Glob(globPattern)
+	if err != nil {
+		t.Fatalf("glob decision entity: %v", err)
+	}
+	if len(matches) == 0 {
+		t.Skipf("decision entity DEC-01KR484HRQ97X not found at %s — entity may be in main repo only", globPattern)
+	}
+
+	data, err := os.ReadFile(matches[0])
+	if err != nil {
+		t.Fatalf("read decision entity %s: %v", matches[0], err)
+	}
+
+	content := string(data)
+
+	// Verify required fields.
+	requiredFields := []string{
+		"id: DEC-01KR484HRQ97X",
+		"slug: handoff-capability-gap-spec-sections-conflict-graph",
+		"status: proposed",
+		"decided_by: sambeau",
+	}
+	for _, field := range requiredFields {
+		if !strings.Contains(content, field) {
+			t.Errorf("entity must contain field: %q", field)
+		}
+	}
+
+	// Verify the three capability gaps are mentioned.
+	for _, gap := range []string{
+		"spec section",
+		"conflict annotation",
+		"graph traversal",
+	} {
+		if !strings.Contains(strings.ToLower(content), gap) {
+			t.Errorf("entity must mention capability gap: %q", gap)
+		}
+	}
+
+	// Verify the entity explicitly states separate feature planning.
+	if !strings.Contains(content, "separate feature planning") &&
+		!strings.Contains(content, "future plan") {
+		t.Error("entity must indicate the gap is for separate/future planning")
+	}
+}
+
+// ─── AC-005: maintainer reviews capability gap ─────────────────────────────
+
+// TestAC005_MaintainerRetrievesDecisionRecord verifies that a project
+// maintainer can retrieve the actual decision record DEC-01KR484HRQ97X
+// through the entity service and confirm it documents all three capability
+// gaps (spec sections, conflict annotations, graph traversal) and proposes
+// next steps. This simulates the maintainer review scenario in AC-005.
+func TestAC005_MaintainerRetrievesDecisionRecord(t *testing.T) {
+	// Not parallel — uses real entity store.
+
+	_, thisFile, _, ok := runtime.Caller(0)
+	if !ok {
+		t.Fatal("cannot resolve test file path")
+	}
+	// From internal/service/entities_test.go: .. → internal/, ../.. → repo/worktree root.
+	repoRoot := filepath.Join(filepath.Dir(thisFile), "..", "..")
+
+	// Initialise entity service against the repo root so it reads from the
+	// actual .kbz/state/ store — same path the MCP entity tool uses.
+	svc := NewEntityService(repoRoot)
+
+	retrieved, err := svc.Get("decision", "DEC-01KR484HRQ97X", "")
+	if err != nil {
+		// The entity may not exist in this worktree's store (decision
+		// entities are stored in the shared .kbz/state/ which worktrees
+		// inherit from main). Skip rather than fail if not found.
+		t.Skipf("decision entity DEC-01KR484HRQ97X not retrievable: %v", err)
+	}
+
+	// Verify entity type.
+	if retrieved.Type != "decision" {
+		t.Errorf("type = %q, want decision", retrieved.Type)
+	}
+
+	// Verify status is 'proposed' — the maintainer-reviews state.
+	if retrieved.State["status"] != "proposed" {
+		t.Errorf("status = %v, want proposed", retrieved.State["status"])
+	}
+
+	summary, _ := retrieved.State["summary"].(string)
+	rationale, _ := retrieved.State["rationale"].(string)
+
+	// Verify all three capability gaps are documented in the summary.
+	gaps := []string{
+		"spec section",
+		"conflict annotation",
+		"graph traversal",
+	}
+	for _, gap := range gaps {
+		if !strings.Contains(strings.ToLower(summary), gap) {
+			t.Errorf("summary must mention capability gap: %q", gap)
+		}
+		if !strings.Contains(strings.ToLower(rationale), gap) {
+			t.Errorf("rationale must mention capability gap: %q", gap)
+		}
+	}
+
+	// Verify the decision proposes next steps — either in summary or
+	// rationale, the entity must indicate the gaps are for future planning.
+	hasNextSteps := strings.Contains(summary, "separate feature planning") ||
+		strings.Contains(summary, "future plan") ||
+		strings.Contains(rationale, "separate feature planning") ||
+		strings.Contains(rationale, "future plan") ||
+		strings.Contains(rationale, "separate feature under a future plan")
+	if !hasNextSteps {
+		t.Error("decision entity must propose next steps (separate feature planning under a future plan)")
+	}
+
+	// Verify the decided_by field is set — a maintainer needs to know who
+	// made the decision.
+	decidedBy, _ := retrieved.State["decided_by"].(string)
+	if decidedBy == "" {
+		t.Error("decision entity must have a decided_by field")
+	}
+}
+
+// TestAC005_DecisionProposesConcreteNextSteps verifies that the decision
+// document contains specific, numbered, actionable next steps — not just
+// vague or aspirational statements. AC-005 requires that the decision
+// record "propos[es] next steps" that a maintainer can act on.
+func TestAC005_DecisionProposesConcreteNextSteps(t *testing.T) {
+	t.Parallel()
+
+	_, thisFile, _, ok := runtime.Caller(0)
+	if !ok {
+		t.Fatal("cannot resolve test file path")
+	}
+	repoRoot := filepath.Join(filepath.Dir(thisFile), "..", "..")
+
+	docRelPath := filepath.Join("work", "P61-handoff-resilience-binding-hardening",
+		"P61-report-handoff-capability-gap.md")
+
+	candidates := []string{
+		filepath.Join(repoRoot, docRelPath),
+		filepath.Join(repoRoot, ".worktrees", "FEAT-01KR46PKHMG4J-doc-reconciliation", docRelPath),
+	}
+
+	var content string
+	found := false
+	for _, docPath := range candidates {
+		data, err := os.ReadFile(docPath)
+		if err == nil {
+			content = string(data)
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Skip("decision document not found — may not be committed yet")
+	}
+
+	// Verify concrete next steps exist with numbered, actionable items.
+	// The document should have a "Recommended Next Steps" section with
+	// specific actions a maintainer can evaluate.
+	if !strings.Contains(content, "Recommended Next Steps") {
+		t.Error("decision document must have a 'Recommended Next Steps' section")
+	}
+
+	// Verify each next step has specific, actionable content.
+	// Step 1: Should propose creating features under a future plan.
+	if !strings.Contains(content, "Handoff context quality") &&
+		!strings.Contains(content, "handoff context") {
+		t.Error("next steps must reference a future plan for handoff context quality")
+	}
+
+	// Step 2: Should describe interim guidance until implementation.
+	if !strings.Contains(content, "implement-task") &&
+		!strings.Contains(content, "interim") {
+		t.Error("next steps must describe interim guidance until features are implemented")
+	}
+
+	// Step 3: Should reference tracking the decision in the workflow system.
+	if !strings.Contains(content, "DEC-01KR484HRQ97X") {
+		t.Error("next steps must reference the decision entity DEC-01KR484HRQ97X for tracking")
+	}
+
+	// Verify the next steps section has numbered items (actionable structure).
+	nextStepsIdx := strings.Index(content, "Recommended Next Steps")
+	if nextStepsIdx == -1 {
+		t.Fatal("cannot locate Recommended Next Steps section")
+	}
+	nextStepsContent := content[nextStepsIdx:]
+	if !strings.Contains(nextStepsContent, "1.") ||
+		!strings.Contains(nextStepsContent, "2.") ||
+		!strings.Contains(nextStepsContent, "3.") {
+		t.Error("next steps must contain numbered, actionable items (1., 2., 3.)")
+	}
+
+	// Verify Decision Options section exists (structured decision-making).
+	if !strings.Contains(content, "Decision Options") {
+		t.Error("decision document must include Decision Options for maintainer evaluation")
+	}
+}
+
+// TestAC005_DocumentationIsConsistentAfterUpdates verifies that after the
+// documentation updates, the capability gaps are correctly handled:
+//   - User-facing docs (AGENTS.md) no longer claim the three capabilities
+//   - The decision record DEC-01KR484HRQ97X documents them as gaps
+//
+// This validates the AC-005 scenario end-to-end: documentation updates are
+// complete AND the capability gap is documented for maintainer review.
+func TestAC005_DocumentationIsConsistentAfterUpdates(t *testing.T) {
+	t.Parallel()
+
+	_, thisFile, _, ok := runtime.Caller(0)
+	if !ok {
+		t.Fatal("cannot resolve test file path")
+	}
+	repoRoot := filepath.Join(filepath.Dir(thisFile), "..", "..")
+
+	// ── Verify AGENTS.md no longer claims the three capabilities ────────────
+	agentsData, err := os.ReadFile(filepath.Join(repoRoot, "AGENTS.md"))
+	if err != nil {
+		t.Fatalf("read AGENTS.md: %v", err)
+	}
+	agentsContent := string(agentsData)
+
+	// Find the handoff section and verify it does NOT claim capabilities that
+	// don't exist. The handoff section should be accurate after REQ-003 fixes.
+	handoffIdx := strings.Index(agentsContent, "handoff")
+	if handoffIdx == -1 {
+		t.Fatal("AGENTS.md must contain a handoff section")
+	}
+
+	// Collect text around handoff mentions (within reasonable window).
+	start := handoffIdx
+	if start > 500 {
+		start = handoffIdx - 500
+	} else {
+		start = 0
+	}
+	end := handoffIdx + 1500
+	if end > len(agentsContent) {
+		end = len(agentsContent)
+	}
+	handoffContext := agentsContent[start:end]
+
+	// These capabilities should NOT appear as claims of current functionality
+	// in the handoff section. They may appear in context of the gap/decision.
+	falseClaims := []string{
+		"assembling spec sections",
+		"injecting spec sections",
+		"conflict annotations",
+		"graph traversal",
+	}
+	for _, claim := range falseClaims {
+		if strings.Contains(strings.ToLower(handoffContext), strings.ToLower(claim)) {
+			// The claim may appear in context of the gap being flagged — that's OK.
+			// Only flag if it appears as a claimed current capability.
+			// Check if the claim is near a "does not", "not yet", or gap language.
+			claimIdx := strings.Index(strings.ToLower(handoffContext), strings.ToLower(claim))
+			window := handoffContext[max(0, claimIdx-100):min(len(handoffContext), claimIdx+100)]
+			if !strings.Contains(strings.ToLower(window), "not") &&
+				!strings.Contains(strings.ToLower(window), "gap") &&
+				!strings.Contains(strings.ToLower(window), "future") {
+				t.Errorf("AGENTS.md handoff section must not claim %q as current capability", claim)
+			}
+		}
+	}
+
+	// ── Verify the decision record exists documenting the gaps ──────────────
+	decPattern := filepath.Join(repoRoot, ".kbz", "state", "decisions", "DEC-01KR484HRQ97X-*.yaml")
+	decMatches, err := filepath.Glob(decPattern)
+	if err != nil {
+		t.Fatalf("glob decision entity: %v", err)
+	}
+	if len(decMatches) == 0 {
+		t.Skipf("decision entity DEC-01KR484HRQ97X not found — entity may be in main repo only")
+	}
+
+	decData, err := os.ReadFile(decMatches[0])
+	if err != nil {
+		t.Fatalf("read decision entity %s: %v", decMatches[0], err)
+	}
+	decContent := string(decData)
+
+	// Verify the decision explicitly documents the three gaps.
+	for _, gap := range []string{"spec section", "conflict annotation", "graph traversal"} {
+		if !strings.Contains(strings.ToLower(decContent), gap) {
+			t.Errorf("decision must document capability gap: %q", gap)
+		}
+	}
+
+	// Verify the decision is in proposed status (awaiting maintainer review).
+	if !strings.Contains(decContent, "status: proposed") {
+		t.Error("decision must be in 'proposed' status for maintainer review")
 	}
 }

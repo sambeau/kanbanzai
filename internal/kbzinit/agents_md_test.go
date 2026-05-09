@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 )
@@ -655,4 +656,159 @@ func FuzzReadMarkdownManagedVersion(f *testing.F) {
 		v, managed, err := readMarkdownManagedVersion(data)
 		_ = fmt.Sprintf("v=%d managed=%v err=%v", v, managed, err)
 	})
+}
+
+// ---- REQ-003 (doc-reconciliation): AGENTS.md handoff section accuracy ----
+
+// TestAgentsMD_HandoffSection_NoFalseClaims verifies AC-003:
+// AGENTS.md handoff mentions must not claim spec sections, conflict annotations,
+// or graph traversal capabilities that do not exist. The implementation removed
+// two false claims (context packet definition and Code Graph section).
+func TestAgentsMD_HandoffSection_NoFalseClaims(t *testing.T) {
+	_, thisFile, _, ok := runtime.Caller(0)
+	if !ok {
+		t.Fatal("cannot resolve test file path")
+	}
+	repoRoot := filepath.Join(filepath.Dir(thisFile), "..", "..")
+
+	content, err := os.ReadFile(filepath.Join(repoRoot, "AGENTS.md"))
+	if err != nil {
+		t.Fatalf("read AGENTS.md: %v", err)
+	}
+	text := string(content)
+
+	// Collect lines mentioning "handoff" for context-aware assertions.
+	lines := strings.Split(text, "\n")
+	var handoffLines []string
+	for i, line := range lines {
+		if strings.Contains(strings.ToLower(line), "handoff") {
+			handoffLines = append(handoffLines, fmt.Sprintf("L%d: %s", i+1, line))
+		}
+	}
+
+	if len(handoffLines) == 0 {
+		t.Fatal("no handoff mentions found in AGENTS.md — file may be truncated or in wrong format")
+	}
+
+	// 1. No unqualified claim that handoff provides spec sections.
+	//    Valid: "next additionally includes spec sections" attributes to next, not handoff.
+	for _, hl := range handoffLines {
+		lower := strings.ToLower(hl)
+		if strings.Contains(lower, "spec section") || strings.Contains(lower, "spec sections") {
+			if !strings.Contains(lower, "next") {
+				t.Errorf("handoff mention claims spec sections without attributing them to next: %s", hl)
+			}
+		}
+	}
+
+	// 2. No claim that handoff provides conflict annotations.
+	for _, hl := range handoffLines {
+		if strings.Contains(strings.ToLower(hl), "conflict annotation") {
+			t.Errorf("handoff mention claims conflict annotations (not implemented): %s", hl)
+		}
+	}
+
+	// 3. No claim that handoff provides graph traversal.
+	for _, hl := range handoffLines {
+		if strings.Contains(strings.ToLower(hl), "graph traversal") {
+			t.Errorf("handoff mention claims graph traversal (not implemented): %s", hl)
+		}
+	}
+
+	// 4. Context packet definition must accurately distinguish handoff from next.
+	//    Handoff: role instructions, knowledge, vocabulary, anti-patterns, skill procedure.
+	//    Next additionally: spec sections, file paths, graph project reference.
+	foundContextPacket := false
+	for _, hl := range handoffLines {
+		lower := strings.ToLower(hl)
+		if strings.Contains(lower, "context packet") {
+			foundContextPacket = true
+			for _, want := range []string{
+				"role instruction",
+				"knowledge",
+				"vocabulary",
+				"anti-pattern",
+				"skill procedure",
+			} {
+				if !strings.Contains(lower, want) {
+					t.Errorf("context packet definition missing %q: %s", want, hl)
+				}
+			}
+			if !strings.Contains(lower, "next") || !strings.Contains(lower, "spec section") {
+				t.Errorf("context packet definition missing 'next' qualifier for spec sections: %s", hl)
+			}
+		}
+	}
+	if !foundContextPacket {
+		t.Error("context packet definition with handoff description not found")
+	}
+
+	// 5. No handoff line may claim handoff receives graph/graph_project capabilities.
+	for _, hl := range handoffLines {
+		lower := strings.ToLower(hl)
+		plain := strings.ReplaceAll(lower, "`", "")
+		if !strings.Contains(plain, "graph") && !strings.Contains(plain, "graph_project") {
+			continue
+		}
+		// Old false claim: "every handoff/next call"
+		if strings.Contains(plain, "every handoff") {
+			t.Errorf("handoff line claims graph context for handoff: %s", hl)
+		}
+		// If the line discusses handoff's relation to graph, it must be a denial.
+		graphAboutHandoff := strings.Contains(plain, "handoff") &&
+			(strings.Contains(plain, "handoff renders") ||
+				strings.Contains(plain, "handoff does") ||
+				strings.Contains(plain, "every handoff") ||
+				!strings.Contains(plain, "next"))
+		if graphAboutHandoff && !strings.Contains(plain, "does not") {
+			t.Errorf("handoff mention appears to claim graph capability for handoff: %s", hl)
+		}
+	}
+}
+
+// ---- REQ-004 (doc-reconciliation): project copilot-instructions.md verification ----
+
+// TestProjectCopilotInstructions_NoFalseHandoffClaims verifies AC-004:
+// The project's own .github/copilot-instructions.md contains no false claims
+// about handoff capabilities (spec sections, conflict annotations, graph traversal).
+func TestProjectCopilotInstructions_NoFalseHandoffClaims(t *testing.T) {
+	_, thisFile, _, ok := runtime.Caller(0)
+	if !ok {
+		t.Fatal("cannot resolve test file path")
+	}
+	repoRoot := filepath.Join(filepath.Dir(thisFile), "..", "..")
+
+	content, err := os.ReadFile(filepath.Join(repoRoot, ".github", "copilot-instructions.md"))
+	if err != nil {
+		t.Fatalf("read project .github/copilot-instructions.md: %v", err)
+	}
+
+	text := string(content)
+
+	// AC-004: copilot-instructions.md must not claim handoff provides
+	// spec sections, conflict annotations, or graph traversal.
+	// The file has zero handoff mentions, so AC-004 is trivially satisfied.
+	// This test guards against regression.
+
+	// Verify no false capability claims exist anywhere in the file.
+	lower := strings.ToLower(text)
+
+	// If handoff is mentioned, verify it's not accompanied by false capability claims.
+	if strings.Contains(lower, "handoff") {
+		if strings.Contains(lower, "spec section") {
+			t.Error("copilot-instructions.md claims handoff provides spec sections (not implemented)")
+		}
+		if strings.Contains(lower, "conflict annotation") {
+			t.Error("copilot-instructions.md claims handoff provides conflict annotations (not implemented)")
+		}
+		if strings.Contains(lower, "graph traversal") {
+			t.Error("copilot-instructions.md claims handoff provides graph traversal (not implemented)")
+		}
+	}
+
+	// Verify the file is the hand-maintained project version (not generated).
+	// The project file starts with a kanbanzai-project comment marker.
+	if !strings.Contains(text, "kanbanzai-project") {
+		t.Error("project .github/copilot-instructions.md missing kanbanzai-project marker")
+	}
 }

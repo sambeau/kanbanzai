@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/sambeau/kanbanzai/internal/service"
@@ -778,5 +779,172 @@ func TestAsmExtractCriteria_ListItemBoldIdent_Normalised(t *testing.T) {
 	}
 	if got[1] != want1 {
 		t.Errorf("criteria[1] = %q, want %q", got[1], want1)
+	}
+}
+
+// ─── REQ-002: assembly.go header comment — next-only ────────────────────────
+
+// TestAssemblyHeader_NextOnly verifies the assembly.go header comment
+// states the file is next-only (AC-002 / REQ-002).
+func TestAssemblyHeader_NextOnly(t *testing.T) {
+	t.Parallel()
+
+	data, err := os.ReadFile("assembly.go")
+	if err != nil {
+		t.Fatalf("ReadFile assembly.go: %v", err)
+	}
+	content := string(data)
+
+	// Must state it's next-only.
+	if !strings.Contains(content, "next-only") {
+		t.Error("assembly.go header must state it is next-only")
+	}
+}
+
+// TestAssemblyHeader_NoSharedClaim verifies the assembly.go header comment
+// no longer claims shared use by both next and handoff (AC-002 / REQ-002).
+func TestAssemblyHeader_NoSharedClaim(t *testing.T) {
+	t.Parallel()
+
+	data, err := os.ReadFile("assembly.go")
+	if err != nil {
+		t.Fatalf("ReadFile assembly.go: %v", err)
+	}
+	content := string(data)
+
+	// Must NOT claim shared use.
+	forbidden := []string{
+		"shared by next (Track F) and",
+		"Both next and handoff call assembleContext",
+	}
+	for _, phrase := range forbidden {
+		if strings.Contains(content, phrase) {
+			t.Errorf("assembly.go header must not contain: %q", phrase)
+		}
+	}
+}
+
+// TestAssemblyHeader_LegacyRemovalNote verifies the assembly.go header
+// contains the legacy-removal note explaining the change (AC-002 / REQ-002).
+func TestAssemblyHeader_LegacyRemovalNote(t *testing.T) {
+	t.Parallel()
+
+	data, err := os.ReadFile("assembly.go")
+	if err != nil {
+		t.Fatalf("ReadFile assembly.go: %v", err)
+	}
+	content := string(data)
+
+	// Must mention the legacy-removal context.
+	if !strings.Contains(content, "legacy-removal") {
+		t.Error("assembly.go header must reference legacy-removal commits")
+	}
+	if !strings.Contains(content, "handoff uses the pipeline-3.0") {
+		t.Error("assembly.go header must state handoff uses pipeline-3.0 directly")
+	}
+}
+
+// ─── AC-002: header comment content inspection ──────────────────────────────
+
+// TestAssemblyHeader_NextOnlyScopedToHeader verifies the header comment
+// (before the package declaration) states the file is used exclusively by
+// next and uses "next-only" terminology. This is more precise than the
+// REQ-002 test because it confirms the claim is in the package header
+// comment, not just anywhere in the file.
+func TestAssemblyHeader_NextOnlyScopedToHeader(t *testing.T) {
+	t.Parallel()
+
+	data, err := os.ReadFile("assembly.go")
+	if err != nil {
+		t.Fatalf("ReadFile assembly.go: %v", err)
+	}
+	content := string(data)
+
+	// Extract the header comment (before package declaration).
+	pkgIdx := strings.Index(content, "\npackage mcp")
+	if pkgIdx == -1 {
+		t.Fatal("cannot find package declaration in assembly.go")
+	}
+	header := content[:pkgIdx]
+
+	// Must state it's next-only in the header.
+	if !strings.Contains(header, "next-only") {
+		t.Error("assembly.go header comment must state 'next-only' before the package declaration")
+	}
+
+	// Must state the file is used exclusively by next.
+	if !strings.Contains(header, "used exclusively by next") {
+		t.Error("assembly.go header comment must state 'used exclusively by next'")
+	}
+}
+
+// TestAssemblyHeader_NoSharedClaimInHeader verifies the header comment
+// does not claim shared use with handoff. This scopes the check to the
+// package header comment specifically, catching shared-claim language
+// that might appear in the header.
+func TestAssemblyHeader_NoSharedClaimInHeader(t *testing.T) {
+	t.Parallel()
+
+	data, err := os.ReadFile("assembly.go")
+	if err != nil {
+		t.Fatalf("ReadFile assembly.go: %v", err)
+	}
+	content := string(data)
+
+	pkgIdx := strings.Index(content, "\npackage mcp")
+	if pkgIdx == -1 {
+		t.Fatal("cannot find package declaration in assembly.go")
+	}
+	header := content[:pkgIdx]
+
+	// Must NOT claim shared use in the header comment.
+	forbidden := []string{
+		"shared by next (Track F) and handoff (Track G)",
+		"Both next and handoff call assembleContext",
+		"shared by next and handoff",
+	}
+	for _, phrase := range forbidden {
+		if strings.Contains(header, phrase) {
+			t.Errorf("assembly.go header comment must not contain: %q", phrase)
+		}
+	}
+
+	// Must NOT reference handoff as a caller of assembleContext in the header.
+	if strings.Contains(header, "handoff") && !strings.Contains(header, "no longer calls assembleContext") {
+		t.Error("assembly.go header comment references handoff but does not clarify it no longer calls assembleContext")
+	}
+}
+
+// TestAssemblyHeader_NoteSectionExplainsLegacyRemoval verifies the header
+// contains a note section that explains the legacy-removal context and
+// clearly states this file is now next-only.
+func TestAssemblyHeader_NoteSectionExplainsLegacyRemoval(t *testing.T) {
+	t.Parallel()
+
+	data, err := os.ReadFile("assembly.go")
+	if err != nil {
+		t.Fatalf("ReadFile assembly.go: %v", err)
+	}
+	content := string(data)
+
+	pkgIdx := strings.Index(content, "\npackage mcp")
+	if pkgIdx == -1 {
+		t.Fatal("cannot find package declaration in assembly.go")
+	}
+	header := content[:pkgIdx]
+
+	// Must have a Note: section.
+	if !strings.Contains(header, "Note:") {
+		t.Error("assembly.go header must contain a 'Note:' section explaining the change")
+	}
+
+	// The Note must explain the legacy-removal context.
+	if !strings.Contains(header, "previously claimed") {
+		t.Error("assembly.go header Note must mention that it previously claimed shared use")
+	}
+
+	// The Note must confirm this file is next-only.
+	if !strings.Contains(header, "This file is next-only") {
+		t.Error("assembly.go header Note must state 'This file is next-only'")
 	}
 }

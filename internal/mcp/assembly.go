@@ -1,14 +1,14 @@
-// Package mcp assembly.go — shared context assembly pipeline for next and handoff.
+// Package mcp assembly.go — context assembly pipeline for next (next-only).
 //
-// This file contains the types and functions shared by next (Track F) and
-// handoff (Track G) for assembling task context. The pipeline gathers spec
-// sections from document intelligence, acceptance criteria from spec content,
-// knowledge entries from the knowledge store, file paths from the task, and
-// role conventions from context profiles.
+// This file contains the types and functions used exclusively by next for
+// assembling task context. The pipeline gathers spec sections from document
+// intelligence, acceptance criteria from spec content, knowledge entries from
+// the knowledge store, file paths from the task, and role conventions from
+// context profiles.
 //
-// Both next and handoff call assembleContext with the same inputs. The
-// difference is output format: next serialises the result to structured
-// JSON/YAML; handoff renders it as a Markdown prompt.
+// Note: this file previously claimed shared use by both next and handoff.
+// After legacy-removal commits, handoff uses the pipeline-3.0 directly and
+// no longer calls assembleContext. This file is next-only.
 //
 // See specification §11.5 and implementation plan §3.4.
 package mcp

@@ -1065,3 +1065,131 @@ func TestHandoff_ProposedFeature_StageValidationError(t *testing.T) {
 		t.Error("expected non-empty error message")
 	}
 }
+
+// ─── REQ-001: header comment accuracy ────────────────────────────────────────
+
+// TestHandoff_HeaderComment_AssemblyPathIsPipeline3_0 verifies the header
+// comment claim: "Context assembly uses the 3.0 pipeline unconditionally."
+// The assembly_path must be exactly "pipeline-3.0" for every successful handoff.
+func TestHandoff_HeaderComment_AssemblyPathIsPipeline3_0(t *testing.T) {
+	t.Parallel()
+	entitySvc := setupHandoffTest(t)
+	taskID, taskSlug := createHandoffScenario(t, entitySvc, "hdr-asmpath")
+	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
+
+	resp := callHandoffJSON(t, entitySvc, testHandoffPipeline(), map[string]any{
+		"task_id": taskID,
+	})
+
+	meta, ok := resp["context_metadata"].(map[string]any)
+	if !ok {
+		t.Fatalf("context_metadata missing or wrong type: %T", resp["context_metadata"])
+	}
+
+	path, ok := meta["assembly_path"].(string)
+	if !ok {
+		t.Fatalf("assembly_path missing or not a string: %T", meta["assembly_path"])
+	}
+	if path != "pipeline-3.0" {
+		t.Errorf("assembly_path = %q, want \"pipeline-3.0\" — header claims unconditional 3.0 pipeline", path)
+	}
+}
+
+// ─── AC-001: header comment content inspection ──────────────────────────────
+
+// TestHandoff_HeaderComment_DescribesPipeline3_0 verifies the header comment
+// accurately describes pipeline-3.0 behaviour: it must mention "3.0" and
+// state that context assembly uses the pipeline unconditionally.
+func TestHandoff_HeaderComment_DescribesPipeline3_0(t *testing.T) {
+	t.Parallel()
+
+	data, err := os.ReadFile("handoff_tool.go")
+	if err != nil {
+		t.Fatalf("ReadFile handoff_tool.go: %v", err)
+	}
+	content := string(data)
+
+	// Must reference Kanbanzai 3.0.
+	if !strings.Contains(content, "3.0") {
+		t.Error("handoff_tool.go header must reference Kanbanzai 3.0")
+	}
+
+	// Must state the pipeline is used unconditionally.
+	if !strings.Contains(content, "pipeline-3.0 path unconditionally") {
+		t.Error("handoff_tool.go header must state 'pipeline-3.0 path unconditionally'")
+	}
+
+	// Must be a header comment (package-level doc), not a func-level comment.
+	// Verify it appears before the package declaration.
+	pkgIdx := strings.Index(content, "\npackage mcp")
+	if pkgIdx == -1 {
+		t.Fatal("cannot find package declaration in handoff_tool.go")
+	}
+	header := content[:pkgIdx]
+	if !strings.Contains(header, "pipeline-3.0 path unconditionally") {
+		t.Error("pipeline-3.0 claim must be in the package header comment, before the package declaration")
+	}
+}
+
+// TestHandoff_HeaderComment_NoDeprecatedFallback verifies the header comment
+// has no mention of deprecated fallback: no "legacy", "fallback", "2.0", or
+// "deprecated" references in the context-assembly description.
+func TestHandoff_HeaderComment_NoDeprecatedFallback(t *testing.T) {
+	t.Parallel()
+
+	data, err := os.ReadFile("handoff_tool.go")
+	if err != nil {
+		t.Fatalf("ReadFile handoff_tool.go: %v", err)
+	}
+	content := string(data)
+
+	// Extract just the header comment (before package declaration).
+	pkgIdx := strings.Index(content, "\npackage mcp")
+	if pkgIdx == -1 {
+		t.Fatal("cannot find package declaration in handoff_tool.go")
+	}
+	header := content[:pkgIdx]
+
+	// Must NOT mention deprecated fallback mechanisms.
+	forbidden := []string{
+		"legacy",
+		"fallback",
+		"deprecated",
+		"2.0 pipeline",
+		"pipeline-2.0",
+	}
+	for _, phrase := range forbidden {
+		if strings.Contains(strings.ToLower(header), strings.ToLower(phrase)) {
+			t.Errorf("handoff_tool.go header must not contain: %q", phrase)
+		}
+	}
+}
+
+// TestHandoff_HeaderComment_NilPipelineReturnsError verifies the header
+// comment claim: "Context assembly uses the 3.0 pipeline unconditionally"
+// means there is no legacy fallback. When pipeline is nil, the handler
+// returns a pipeline_unavailable error rather than a prompt.
+func TestHandoff_HeaderComment_NilPipelineReturnsError(t *testing.T) {
+	t.Parallel()
+	entitySvc := setupHandoffTest(t)
+	taskID, taskSlug := createHandoffScenario(t, entitySvc, "hdr-nilpipe")
+	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
+
+	// Call with nil pipeline — this must fail with pipeline_unavailable, not
+	// fall back to any legacy code path.
+	resp := callHandoffJSON(t, entitySvc, nil, map[string]any{
+		"task_id": taskID,
+	})
+
+	errObj, ok := resp["error"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected error for nil pipeline, got: %v", resp)
+	}
+	if code, _ := errObj["code"].(string); code != "pipeline_unavailable" {
+		t.Errorf("error code = %q, want \"pipeline_unavailable\" — header claims unconditional 3.0 pipeline (no legacy fallback)", code)
+	}
+	// No prompt should be present.
+	if _, hasPrompt := resp["prompt"]; hasPrompt {
+		t.Error("prompt present in nil-pipeline response — should be error-only")
+	}
+}

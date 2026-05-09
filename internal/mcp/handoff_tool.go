@@ -4,9 +4,10 @@
 // needs-rework) task. The prompt is designed for direct use in
 // spawn_agent(message=...). The tool is read-only: it does not modify task status.
 //
-// Context assembly uses the 3.0 pipeline unconditionally. The pipeline's own
-// validation steps (stepValidateLifecycle, stepLookupBinding) handle errors
-// for missing parent features and missing stage bindings.
+// Context assembly uses the pipeline-3.0 path unconditionally. The pipeline
+// assembles role profile, skill procedure, knowledge entries, and tool hints into
+// an attention-curve-ordered prompt. Errors (missing parent feature, unresolvable
+// stage binding) are returned as structured JSON with resolution instructions.
 //
 // Accepted statuses: active, ready, needs-rework.
 // Terminal statuses (done, not-planned, duplicate) return an error.
