@@ -1,10 +1,10 @@
 id: B61-tidy-contradictions-stray-files-corpus-size
 slug: tidy-contradictions-stray-files-corpus-size
 name: Tidy contradictions stray files and corpus size
-status: active
+status: done
 summary: "Resolve live instruction contradictions, remove stray skill files, reduce duplicated skill text, and bring the corpus under its target size without deleting rules."
 created: "2026-05-08T11:08:34Z"
 created_by: sambeau
-updated: "2026-05-08T11:08:34Z"
+updated: "2026-05-09T11:12:12Z"
 next_feature_seq: 2
 parent: P59-roles-skills-remediation

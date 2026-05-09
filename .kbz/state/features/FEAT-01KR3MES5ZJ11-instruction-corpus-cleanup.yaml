@@ -2,7 +2,7 @@ id: FEAT-01KR3MES5ZJ11
 slug: instruction-corpus-cleanup
 name: Instruction corpus cleanup
 parent: B61-tidy-contradictions-stray-files-corpus-size
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Remove contradictory and stray instruction artefacts, de-duplicate repeated skill content, relocate long examples, and keep necessary role tool access explicit."
 design: P59-roles-skills-remediation/design-p59-design-roles-skills-remediation
