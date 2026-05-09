@@ -1,4 +1,5 @@
 version: "2"
+schema_version: "1.0.0"
 prefixes:
   - prefix: P
     name: Plan
