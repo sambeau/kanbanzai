@@ -91,6 +91,8 @@ func nextTool(
 				"work directly. For dashboard views and progress metrics, use status instead. "+
 				"When id is provided, the task transitions ready → active (claim). "+
 				"When id is omitted, no state changes occur (read-only queue inspection). "+
+				"Claim before work begins — do not start implementing without a claimed task. "+
+				"Orchestrators must dispatch via handoff(task_id), not direct spawn_agent (INV-001). "+
 				"INV-004: do not shell-read .kbz/state/, .kbz/index/, or .kbz/context/ — use MCP workflow tools (entity, doc, status, knowledge) instead.",
 		),
 		mcp.WithString("id", mcp.Description(

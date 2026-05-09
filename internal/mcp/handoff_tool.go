@@ -80,6 +80,8 @@ func handoffTool(
 				"For structured JSON context instead of a rendered Markdown prompt, use next(id) which "+
 				"returns machine-readable data. Do NOT use to claim tasks — use next for that. "+
 				"Accepts tasks in active, ready, or needs-rework status. "+
+				"Use INSTEAD OF calling spawn_agent directly — this is the only safe dispatch path; "+
+				"direct spawn_agent bypasses context assembly and stage gate enforcement (INV-001). "+
 				"INV-004: do not shell-read .kbz/state/, .kbz/index/, or .kbz/context/ — use MCP workflow tools (entity, doc, status, knowledge) instead.",
 		),
 		mcp.WithString("task_id",
@@ -127,9 +129,9 @@ func handoffTool(
 		task, err := entitySvc.Get("task", taskID, "")
 		if err != nil {
 			return mcp.NewToolResultText(invariants.Format(invariants.RefusalResponse{
-				Code:      invariants.INV002,
-				Operation: "handoff task-lookup",
-				Reason:    fmt.Sprintf("Task %s is not registered in Kanbanzai workflow state.", taskID),
+				Code:       invariants.INV002,
+				Operation:  "handoff task-lookup",
+				Reason:     fmt.Sprintf("Task %s is not registered in Kanbanzai workflow state.", taskID),
 				NextAction: fmt.Sprintf(`Verify the task ID with entity(action: "get", id: %q) or list tasks with entity(action: "list", type: "task").`, taskID),
 			})), nil
 		}

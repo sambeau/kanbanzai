@@ -13,7 +13,7 @@ LDFLAGS  := -X '$(PKG).Version=$(VERSION)' \
             -X '$(PKG).BuildTime=$(BUILD_TIME)' \
             -X '$(PKG).Dirty=$(DIRTY)'
 
-.PHONY: build install clean test registry-check registry-sync
+.PHONY: build install clean test registry-check registry-sync claude-skills-check
 
 build:
 	go build -ldflags "$(LDFLAGS)" -o $(BINARY) ./cmd/kbz
@@ -33,3 +33,6 @@ registry-check:
 
 registry-sync:
 	go run ./cmd/kbz docs sync
+
+claude-skills-check:
+	go test -v -run TestClaudeSkills ./internal/claudeskills/
