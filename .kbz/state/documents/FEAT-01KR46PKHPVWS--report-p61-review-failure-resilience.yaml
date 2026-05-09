@@ -1,0 +1,11 @@
+canonical_content_hash: e32ea12546637744a9f5473b3feacde5098d2c2f69ba5f62cdfd4c07be6e149d
+content_hash: 88c74afa45d2ed36de2cf2d81a41302bfdb1bb66d0da551ce4ed9ec8757a89e4
+created: "2026-05-09T12:15:45Z"
+created_by: sambeau
+id: FEAT-01KR46PKHPVWS/report-p61-review-failure-resilience
+owner: FEAT-01KR46PKHPVWS
+path: work/P61-handoff-resilience-binding-hardening/P61-review-failure-resilience.md
+status: draft
+title: "Review Report: Failure-mode resilience — PASS"
+type: report
+updated: "2026-05-09T12:15:45Z"

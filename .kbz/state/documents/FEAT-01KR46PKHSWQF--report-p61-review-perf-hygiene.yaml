@@ -1,0 +1,11 @@
+canonical_content_hash: 12b6f87c9b71edfdca531c1c65b6099f3367fe108389a4db53b3764f3770f4e7
+content_hash: aa5f3a06940624ce0d417264c41bde8718defeabeec9c2041538e86345b30424
+created: "2026-05-09T12:15:45Z"
+created_by: sambeau
+id: FEAT-01KR46PKHSWQF/report-p61-review-perf-hygiene
+owner: FEAT-01KR46PKHSWQF
+path: work/P61-handoff-resilience-binding-hardening/P61-review-perf-hygiene.md
+status: draft
+title: "Review Report: Performance hygiene — PASS"
+type: report
+updated: "2026-05-09T12:15:45Z"

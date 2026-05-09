@@ -1,0 +1,11 @@
+canonical_content_hash: e79d7b9e39d4520a82c73cec9283f1f696ecf21bc8067e8f6cc6e04d553856d5
+content_hash: c6c682034be25e975631f8cd1855b15e442467e131e514ca67790245330f613a
+created: "2026-05-09T12:15:45Z"
+created_by: sambeau
+id: FEAT-01KR46PKHPVSH/report-p61-review-config-safety
+owner: FEAT-01KR46PKHPVSH
+path: work/P61-handoff-resilience-binding-hardening/P61-review-config-safety.md
+status: draft
+title: "Review Report: Configuration safety — PASS"
+type: report
+updated: "2026-05-09T12:15:45Z"
