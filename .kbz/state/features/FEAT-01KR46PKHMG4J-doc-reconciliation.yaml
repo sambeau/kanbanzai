@@ -2,7 +2,7 @@ id: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation
 name: Documentation reconciliation (Track D)
 parent: B63-p61-impl
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Update handoff documentation to match implementation: fix handoff_tool.go header, assembly.go header, AGENTS.md, and copilot-instructions.md. Open planning discussion for missing capabilities."
 spec: FEAT-01KR46PKHMG4J/spec-p61-spec-doc-reconciliation
