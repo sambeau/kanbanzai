@@ -1,0 +1,11 @@
+---
+**Role:** spec-author — Specification author
+**Stage:** specifying
+**Skills:** write-spec
+**Constraints:**
+- Every acceptance criterion must reference at least one functional requirement.
+- Acceptance criteria must be verifiable by automated test or manual procedure.
+- Approved design document must exist before writing the spec.
+- Include all five required template sections: Overview, Scope, FRs, NFRs, ACs.
+**Tool routing:** Sub-agent prompts must come from `handoff`, not manual composition.
+---

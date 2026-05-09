@@ -214,7 +214,7 @@ func callHandoff(
 	args map[string]any,
 ) string {
 	t.Helper()
-	tool := handoffTool(entitySvc, pipeline)
+	tool := handoffTool(entitySvc, pipeline, nil, nil, nil)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {

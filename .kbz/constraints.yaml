@@ -1,0 +1,134 @@
+# Constraint registry for the constraint card renderer.
+# Each entry has a stable id, a concise rule statement, and explicit
+# applicability metadata (roles and stages). Entries are sorted by id on load.
+#
+# Rules must be concise actionable statements — no anti-pattern bodies,
+# extended examples, or full skill procedures (REQ-NF-005).
+constraints:
+  # ── developing stage ────────────────────────────────────────────────────────
+
+  - id: C-DEV-001
+    rule: "Use `kanbanzai_edit_file` or `write_file` with entity_id for all writes inside a worktree. Never use raw shell writes (cat, heredoc, python -c)."
+    applies_to:
+      roles: [implementer-go, implementer]
+      stages: [developing]
+
+  - id: C-DEV-002
+    rule: "Check `git status` before starting. Commit or stash prior work first. Always edit inside the feature worktree branch, never on main."
+    applies_to:
+      roles: [implementer-go, implementer]
+      stages: [developing]
+
+  - id: C-DEV-003
+    rule: "Run `go test ./...` after implementation. File a BUG entity for any failure; do not classify failures as pre-existing and proceed."
+    applies_to:
+      roles: [implementer-go, implementer]
+      stages: [developing]
+
+  - id: C-DEV-004
+    rule: "Commit `.kbz/state/` changes alongside code. Use commit format `feat(TASK-ID): description`. Keep first line under 72 characters."
+    applies_to:
+      roles: [implementer-go, implementer, orchestrator]
+      stages: [developing]
+
+  - id: C-DEV-005
+    rule: "Do not add features, refactor surrounding code, or add docstrings beyond what the task explicitly requests."
+    applies_to:
+      roles: [implementer-go, implementer]
+      stages: [developing]
+
+  - id: C-DEV-ORC-001
+    rule: "Read the stage binding, role file, and skill file before dispatching any sub-agent task. Do not rely on prior-session context."
+    applies_to:
+      roles: [orchestrator]
+      stages: [developing]
+
+  - id: C-DEV-ORC-002
+    rule: "Verify entity existence with status(id) before starting work. If the entity does not exist, stop and ask the human."
+    applies_to:
+      roles: [orchestrator]
+      stages: [developing]
+
+  # ── dev-planning stage ───────────────────────────────────────────────────────
+
+  - id: C-PLAN-001
+    rule: "Decompose into 8–15 tasks. Fewer than 5 signals insufficient breakdown; more than 20 signals the feature is too large."
+    applies_to:
+      roles: [architect]
+      stages: [dev-planning]
+
+  - id: C-PLAN-002
+    rule: "Each task must be independently testable and deliver a coherent unit of value with clear deliverables."
+    applies_to:
+      roles: [architect]
+      stages: [dev-planning]
+
+  - id: C-PLAN-003
+    rule: "Every task must have a story-point estimate on the Modified Fibonacci scale (0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100)."
+    applies_to:
+      roles: [architect]
+      stages: [dev-planning]
+
+  - id: C-PLAN-004
+    rule: "Include a dependency graph and identify parallel execution waves. Every task must declare its depends_on list explicitly."
+    applies_to:
+      roles: [architect]
+      stages: [dev-planning]
+
+  - id: C-PLAN-005
+    rule: "The approved specification must exist before writing the dev-plan. Confirm with doc(action: list, status: approved) before proceeding."
+    applies_to:
+      roles: [architect]
+      stages: [dev-planning]
+
+  # ── reviewing stage ──────────────────────────────────────────────────────────
+
+  - id: C-REV-001
+    rule: "Check each acceptance criterion individually; do not aggregate. A single unverified AC blocks the review."
+    applies_to:
+      roles: [reviewer-conformance, reviewer-quality, reviewer-security, reviewer-testing, orchestrator]
+      stages: [reviewing]
+
+  - id: C-REV-002
+    rule: "Blocking findings must be resolved before DoD passes. Do not use override without written justification naming the specific risk accepted."
+    applies_to:
+      roles: [reviewer-conformance, reviewer-quality, reviewer-security, reviewer-testing, orchestrator]
+      stages: [reviewing]
+
+  - id: C-REV-003
+    rule: "Test coverage must be present for every acceptance criterion. Missing tests for an AC are a blocking finding."
+    applies_to:
+      roles: [reviewer-testing, reviewer-quality]
+      stages: [reviewing]
+
+  - id: C-REV-004
+    rule: "Do not classify failing tests as pre-existing and proceed. Every test failure requires a BUG entity before the review can pass."
+    applies_to:
+      roles: [reviewer-testing, orchestrator]
+      stages: [reviewing]
+
+  # ── specifying stage ─────────────────────────────────────────────────────────
+
+  - id: C-SPEC-001
+    rule: "Every acceptance criterion must reference at least one functional requirement (e.g. `AC-001 (REQ-001):`). Traceability is mandatory."
+    applies_to:
+      roles: [spec-author]
+      stages: [specifying]
+
+  - id: C-SPEC-002
+    rule: "Acceptance criteria must be verifiable by automated test or a documented manual procedure. Vague criteria are not acceptable."
+    applies_to:
+      roles: [spec-author]
+      stages: [specifying]
+
+  - id: C-SPEC-003
+    rule: "The approved design document must exist before writing the spec. Gate on design approval status before beginning."
+    applies_to:
+      roles: [spec-author]
+      stages: [specifying]
+
+  - id: C-SPEC-004
+    rule: "Include all five required template sections: Overview, Scope, Functional Requirements, Non-Functional Requirements, Acceptance Criteria."
+    applies_to:
+      roles: [spec-author]
+      stages: [specifying]

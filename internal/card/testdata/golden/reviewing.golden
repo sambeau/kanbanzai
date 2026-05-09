@@ -1,0 +1,9 @@
+---
+**Role:** reviewer-conformance — Conformance reviewer
+**Stage:** reviewing
+**Skills:** review-code
+**Constraints:**
+- Check each acceptance criterion individually; do not aggregate.
+- Blocking findings must be resolved before DoD passes.
+**Tool routing:** Sub-agent prompts must come from `handoff`, not manual composition.
+---

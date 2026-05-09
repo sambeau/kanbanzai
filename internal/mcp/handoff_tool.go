@@ -23,6 +23,8 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"github.com/sambeau/kanbanzai/internal/binding"
+	"github.com/sambeau/kanbanzai/internal/card"
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
 	"github.com/sambeau/kanbanzai/internal/git"
 	"github.com/sambeau/kanbanzai/internal/id"
@@ -42,16 +44,25 @@ var commitStateFunc = func(repoRoot string) (bool, error) {
 // HandoffTools returns the `handoff` MCP tool registered in the core group.
 //
 // The pipeline parameter provides the 3.0 context assembly pipeline.
+// bf, roleStore, and constraintReg are used to render the constraint card and
+// hydrate the stage-binding payload. All three are nil-safe: when any is nil,
+// the card is skipped and stage_binding carries only the stage name.
 func HandoffTools(
 	entitySvc *service.EntityService,
 	pipeline *kbzctx.Pipeline,
+	bf *binding.BindingFile,
+	roleStore *kbzctx.RoleStore,
+	constraintReg *card.ConstraintRegistry,
 ) []server.ServerTool {
-	return []server.ServerTool{handoffTool(entitySvc, pipeline)}
+	return []server.ServerTool{handoffTool(entitySvc, pipeline, bf, roleStore, constraintReg)}
 }
 
 func handoffTool(
 	entitySvc *service.EntityService,
 	pipeline *kbzctx.Pipeline,
+	bf *binding.BindingFile,
+	roleStore *kbzctx.RoleStore,
+	constraintReg *card.ConstraintRegistry,
 ) server.ServerTool {
 	tool := mcp.NewTool("handoff",
 		mcp.WithReadOnlyHintAnnotation(true),
@@ -197,8 +208,53 @@ func handoffTool(
 					task.ID, runErr))), nil
 		}
 
-		// Render the prompt and build the response.
+		// Render the prompt from the pipeline result.
 		prompt := kbzctx.RenderPrompt(result)
+
+		// ── Constraint card and stage-binding hydration ───────────────────────
+		// Resolved independently from pipeline internals (T5 design: handler-level
+		// resolution only — pipeline state is not exposed in PipelineResult).
+		featureStage := ""
+		if input.FeatureState != nil {
+			featureStage, _ = input.FeatureState["status"].(string)
+		}
+
+		var stageBinding *binding.StageBinding
+		if bf != nil && featureStage != "" {
+			stageBinding = bf.StageBindings[featureStage]
+		}
+
+		// Determine roleID mirroring pipeline's stepResolveRole priority:
+		// caller override > binding's first role.
+		roleID := role
+		if roleID == "" && stageBinding != nil && len(stageBinding.Roles) > 0 {
+			roleID = stageBinding.Roles[0]
+		}
+
+		var resolvedRole *kbzctx.ResolvedRole
+		if roleStore != nil && roleID != "" {
+			resolvedRole, _ = kbzctx.ResolveRole(roleStore, roleID)
+		}
+
+		// Hydrate stage-binding payload for the response (REQ-006, AC-005).
+		stageBindingPayload := card.HydrateBinding(featureStage, stageBinding)
+
+		// Prepend constraint card to prompt when a role is resolvable (REQ-005,
+		// AC-004). Skip silently when no role is available — that is not a data
+		// error. Fail loudly only if the renderer encounters bad role data (REQ-007).
+		if resolvedRole != nil {
+			var entries []card.ConstraintEntry
+			if constraintReg != nil {
+				entries = constraintReg.Select(roleID, featureStage)
+			}
+			rendered, renderErr := card.Render(resolvedRole, featureStage, stageBinding, entries)
+			if renderErr != nil {
+				return mcp.NewToolResultText(handoffErrorJSON("card_render_error",
+					fmt.Sprintf("Cannot render constraint card for task %s: %v.\n\nTo resolve:\n  Ensure role %q has an 'identity' field in its YAML file.",
+						task.ID, renderErr, roleID))), nil
+			}
+			prompt = rendered + prompt
+		}
 
 		displayID := id.FormatFullDisplay(task.ID)
 		slug, _ := task.State["slug"].(string)
@@ -210,10 +266,11 @@ func handoffTool(
 		}
 
 		resp := map[string]any{
-			"task_id":    task.ID,
-			"display_id": displayID,
-			"entity_ref": id.FormatEntityRef(displayID, slug, label),
-			"prompt":     prompt,
+			"task_id":       task.ID,
+			"display_id":    displayID,
+			"entity_ref":    id.FormatEntityRef(displayID, slug, label),
+			"prompt":        prompt,
+			"stage_binding": stageBindingPayload,
 			"context_metadata": map[string]any{
 				"assembly_path":     "pipeline-3.0",
 				"sections":          sectionLabels,

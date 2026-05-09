@@ -23,6 +23,8 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
+	"github.com/sambeau/kanbanzai/internal/binding"
+	"github.com/sambeau/kanbanzai/internal/card"
 	"github.com/sambeau/kanbanzai/internal/config"
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
 	idpkg "github.com/sambeau/kanbanzai/internal/id"
@@ -43,8 +45,10 @@ func NextTools(
 	mergedToolHints map[string]string,
 	roleStore *kbzctx.RoleStore,
 	worktreeStore *worktree.Store,
+	bf *binding.BindingFile,
+	constraintReg *card.ConstraintRegistry,
 ) []server.ServerTool {
-	return []server.ServerTool{nextTool(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, mergedToolHints, roleStore, worktreeStore)}
+	return []server.ServerTool{nextTool(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, mergedToolHints, roleStore, worktreeStore, bf, constraintReg)}
 }
 
 func nextTool(
@@ -57,6 +61,8 @@ func nextTool(
 	mergedToolHints map[string]string,
 	roleStore *kbzctx.RoleStore,
 	worktreeStore *worktree.Store,
+	bf *binding.BindingFile,
+	constraintReg *card.ConstraintRegistry,
 ) server.ServerTool {
 	tool := mcp.NewTool("next",
 		mcp.WithReadOnlyHintAnnotation(false),
@@ -100,7 +106,7 @@ func nextTool(
 		if id == "" {
 			return nextQueueMode(ctx, role, conflictCheck, entitySvc)
 		}
-		return nextClaimMode(ctx, id, role, entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, mergedToolHints, roleStore, worktreeStore)
+		return nextClaimMode(ctx, id, role, entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, mergedToolHints, roleStore, worktreeStore, bf, constraintReg)
 	})
 
 	return server.ServerTool{Tool: tool, Handler: handler}
@@ -189,6 +195,8 @@ func nextClaimMode(
 	mergedToolHints map[string]string,
 	roleStore *kbzctx.RoleStore,
 	worktreeStore *worktree.Store,
+	bf *binding.BindingFile,
+	constraintReg *card.ConstraintRegistry,
 ) (any, error) {
 	// Resolve the input ID to a specific task ID.
 	taskID, err := nextResolveTaskID(id, entitySvc)
@@ -309,13 +317,52 @@ func nextClaimMode(
 		worktreeStore:   worktreeStore,
 	})
 
+	// Resolve stage binding for the feature's current stage.
+	var stageBinding *binding.StageBinding
+	if bf != nil && featureStage != "" {
+		stageBinding = bf.StageBindings[featureStage]
+	}
+
+	// Resolve the role for card rendering, falling back to the binding's first role
+	// when no explicit role is provided (mirrors pipeline stepResolveRole fallback).
+	roleID := role
+	if roleID == "" && stageBinding != nil && len(stageBinding.Roles) > 0 {
+		roleID = stageBinding.Roles[0]
+	}
+
+	var resolvedRole *kbzctx.ResolvedRole
+	if roleStore != nil && roleID != "" {
+		resolvedRole, _ = kbzctx.ResolveRole(roleStore, roleID)
+	}
+
+	// Hydrate the stage-binding payload (REQ-006) — independent of role.
+	stageBindingPayload := card.HydrateBinding(featureStage, stageBinding)
+
 	result := map[string]any{
-		"task":    taskOut,
-		"context": nextContextToMap(actx),
+		"stage_binding": stageBindingPayload,
+		"task":          taskOut,
+		"context":       nextContextToMap(actx),
 	}
 	if isReclaim {
 		result["reclaimed"] = true
 	}
+
+	// Render the constraint card only when a role is resolvable (REQ-007:
+	// fail loudly if the renderer encounters bad data, but do not attempt
+	// rendering when no role is available — that is not a data error).
+	if resolvedRole != nil {
+		// Select constraints for this role and stage.
+		var constraintEntries []card.ConstraintEntry
+		if constraintReg != nil {
+			constraintEntries = constraintReg.Select(roleID, featureStage)
+		}
+		constraintCard, err := card.Render(resolvedRole, featureStage, stageBinding, constraintEntries)
+		if err != nil {
+			return nil, fmt.Errorf("next: constraint card: %w", err)
+		}
+		result["constraint_card"] = constraintCard
+	}
+
 	return result, nil
 }
 

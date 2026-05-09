@@ -11,6 +11,7 @@ import (
 
 	"github.com/sambeau/kanbanzai/internal/binding"
 	"github.com/sambeau/kanbanzai/internal/cache"
+	"github.com/sambeau/kanbanzai/internal/card"
 	"github.com/sambeau/kanbanzai/internal/checkpoint"
 	"github.com/sambeau/kanbanzai/internal/config"
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
@@ -241,9 +242,14 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 		// Track E: finish — completion + inline knowledge + lenient lifecycle
 		mcpServer.AddTools(FinishTools(entitySvc, dispatchSvc)...)
 		// Track F: next — work queue inspection and task claiming
-		mcpServer.AddTools(NextTools(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, mergedToolHints, roleStore, worktreeStore)...)
+		constraintPath := filepath.Join(core.InstanceRootDir, "constraints.yaml")
+		constraintReg, constraintErr := card.LoadConstraintRegistry(constraintPath)
+		if constraintErr != nil {
+			log.Printf("[server] WARNING: constraint registry disabled: %v", constraintErr)
+		}
+		mcpServer.AddTools(NextTools(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, mergedToolHints, roleStore, worktreeStore, bf, constraintReg)...)
 		// Track G: handoff — sub-agent prompt generation (3.0 pipeline)
-		mcpServer.AddTools(HandoffTools(entitySvc, pipeline)...)
+		mcpServer.AddTools(HandoffTools(entitySvc, pipeline, bf, roleStore, constraintReg)...)
 		// Track H: entity — consolidated entity CRUD
 		mcpServer.AddTools(EntityTool(entitySvc, docRecordSvc, gateRouter, checkpointStore, cfg.Merge.RequiresHumanReview)...)
 		// Track I: doc — consolidated document operations
