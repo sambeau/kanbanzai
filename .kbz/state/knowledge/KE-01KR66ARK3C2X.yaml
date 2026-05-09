@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[moderate] tool-friction: Pre-existing compilation errors in bug_gate_test.go (BugStatusVerified undefined, VerifierTimedOut missing) prevent running the full service package test suite. Suggestion: Fix bug_gate_test.go to match current model constants (BugStatusVerifying not BugStatusVerified)."
+created: "2026-05-09T11:00:31Z"
+created_by: unknown
+id: KE-01KR66ARK3C2X
+learned_from: TASK-01KR47B9NQ05R
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - tool-friction
+tier: 3
+topic: retro-task-01kr47b9nq05r
+ttl_days: 30
+updated: "2026-05-09T11:00:31Z"
+use_count: 0
