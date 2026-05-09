@@ -1,3 +1,5 @@
+approved_at: "2026-05-09T11:12:02Z"
+approved_by: sambeau
 canonical_content_hash: c956a2a54619bab0eff4e69e9007bf410057d3f0e170cd0eb0fb77f8802c50ff
 content_hash: c956a2a54619bab0eff4e69e9007bf410057d3f0e170cd0eb0fb77f8802c50ff
 created: "2026-05-09T11:11:52Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KR3MES5ZJ11/report-report-b61-review
 owner: FEAT-01KR3MES5ZJ11
 path: work/_project/report-b61-review.md
-status: draft
+status: approved
 title: "B61 Review: Conformance Review — PASS (AC-009 exception)"
 type: report
-updated: "2026-05-09T11:11:52Z"
+updated: "2026-05-09T11:12:02Z"
