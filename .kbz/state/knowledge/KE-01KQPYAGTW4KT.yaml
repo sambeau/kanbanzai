@@ -3,9 +3,9 @@ content: "Recurring issue: at session start, .kbz/ state files are frequently fo
 created: "2026-05-03T12:51:58Z"
 created_by: sambeau
 id: KE-01KQPYAGTW4KT
-last_accessed_at: "2026-05-09T11:03:26Z"
+last_accessed_at: "2026-05-09T11:37:48Z"
 miss_count: 0
-recent_use_count: 291
+recent_use_count: 293
 scope: project
 status: contributed
 tags:
