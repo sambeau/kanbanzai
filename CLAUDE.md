@@ -72,7 +72,7 @@ Read `AGENTS.md` first — it has project-specific conventions, structure, and b
 
 ## Critical Rules
 
-- **Check `git status` before every task.** Commit or stash previous work first.
+- **Check `git status` before every task.** Commit previous work first; do not use `git stash` (stashing hides state from parallel agents and is silently lost across worktree switches).
 - **Use MCP tools, not raw file reads** for `.kbz/state/` queries — use `entity`, `doc`, `status`, `knowledge`.
 - **`.kbz/state/` files are versioned project state** — commit them alongside code. Never stash, discard, or `.gitignore` them.
 - **Follow commit format:** `type(scope): description` (see `kanbanzai-agents` skill).
