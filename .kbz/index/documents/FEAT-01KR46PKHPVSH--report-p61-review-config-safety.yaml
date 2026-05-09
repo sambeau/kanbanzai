@@ -1,0 +1,18 @@
+document_id: FEAT-01KR46PKHPVSH/report-p61-review-config-safety
+document_path: work/P61-handoff-resilience-binding-hardening/P61-review-config-safety.md
+content_hash: c6c682034be25e975631f8cd1855b15e442467e131e514ca67790245330f613a
+indexed_at: 2026-05-09T12:15:45.244571Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Configuration safety (Track A)'
+      byte_offset: 0
+      byte_count: 145
+      word_count: 18
+      content_hash: c6c682034be25e975631f8cd1855b15e442467e131e514ca67790245330f613a
+entity_refs:
+    - entity_id: FEAT-01KR46PKHPVSH
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 62
+classified: false

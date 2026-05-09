@@ -1,0 +1,18 @@
+document_id: FEAT-01KR46PKHSWQF/report-p61-review-perf-hygiene
+document_path: work/P61-handoff-resilience-binding-hardening/P61-review-perf-hygiene.md
+content_hash: aa5f3a06940624ce0d417264c41bde8718defeabeec9c2041538e86345b30424
+indexed_at: 2026-05-09T12:15:45.244571Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Performance hygiene (Track C)'
+      byte_offset: 0
+      byte_count: 146
+      word_count: 18
+      content_hash: aa5f3a06940624ce0d417264c41bde8718defeabeec9c2041538e86345b30424
+entity_refs:
+    - entity_id: FEAT-01KR46PKHSWQF
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 61
+classified: false

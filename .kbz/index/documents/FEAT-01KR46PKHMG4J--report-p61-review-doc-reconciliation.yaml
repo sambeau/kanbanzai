@@ -1,0 +1,18 @@
+document_id: FEAT-01KR46PKHMG4J/report-p61-review-doc-reconciliation
+document_path: work/P61-handoff-resilience-binding-hardening/P61-review-doc-reconciliation.md
+content_hash: 896625e280a66fb2b41208af095a74263427b591d4d3bcfeb05938865fe51852
+indexed_at: 2026-05-09T12:15:45.244571Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Documentation reconciliation (Track D)'
+      byte_offset: 0
+      byte_count: 151
+      word_count: 17
+      content_hash: 896625e280a66fb2b41208af095a74263427b591d4d3bcfeb05938865fe51852
+entity_refs:
+    - entity_id: FEAT-01KR46PKHMG4J
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 70
+classified: false

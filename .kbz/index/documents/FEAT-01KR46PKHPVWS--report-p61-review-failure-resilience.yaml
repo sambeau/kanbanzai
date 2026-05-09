@@ -1,0 +1,18 @@
+document_id: FEAT-01KR46PKHPVWS/report-p61-review-failure-resilience
+document_path: work/P61-handoff-resilience-binding-hardening/P61-review-failure-resilience.md
+content_hash: 88c74afa45d2ed36de2cf2d81a41302bfdb1bb66d0da551ce4ed9ec8757a89e4
+indexed_at: 2026-05-09T12:15:45.244571Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Failure-mode resilience (Track B)'
+      byte_offset: 0
+      byte_count: 155
+      word_count: 18
+      content_hash: 88c74afa45d2ed36de2cf2d81a41302bfdb1bb66d0da551ce4ed9ec8757a89e4
+entity_refs:
+    - entity_id: FEAT-01KR46PKHPVWS
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 65
+classified: false
