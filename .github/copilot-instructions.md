@@ -44,24 +44,34 @@ Roles define *who you are* — identity, vocabulary, anti-patterns, and tool con
 Each role is a YAML file. Roles use inheritance (e.g. `reviewer-security` inherits from
 `reviewer`). Always read the role specified by the stage binding before starting work.
 
-| Role | File | Stage |
-|------|------|-------|
-| `architect` | `.kbz/roles/architect.yaml` | designing, dev-planning |
-| `spec-author` | `.kbz/roles/spec-author.yaml` | specifying |
-| `implementer-go` | `.kbz/roles/implementer-go.yaml` | developing (sub-agent) |
-| `orchestrator` | `.kbz/roles/orchestrator.yaml` | developing, reviewing |
-| `reviewer` | `.kbz/roles/reviewer.yaml` | reviewing (base) |
-| `reviewer-conformance` | `.kbz/roles/reviewer-conformance.yaml` | reviewing, batch-reviewing |
-| `reviewer-quality` | `.kbz/roles/reviewer-quality.yaml` | reviewing |
-| `reviewer-security` | `.kbz/roles/reviewer-security.yaml` | reviewing |
-| `reviewer-testing` | `.kbz/roles/reviewer-testing.yaml` | reviewing |
-| `researcher` | `.kbz/roles/researcher.yaml` | researching |
-| `documenter` | `.kbz/roles/documenter.yaml` | documenting (writing) |
-| `doc-pipeline-orchestrator` | `.kbz/roles/doc-pipeline-orchestrator.yaml` | doc-publishing |
-| `doc-editor` | `.kbz/roles/doc-editor.yaml` | doc-publishing (sub-agent) |
-| `doc-checker` | `.kbz/roles/doc-checker.yaml` | doc-publishing (sub-agent) |
-| `doc-stylist` | `.kbz/roles/doc-stylist.yaml` | doc-publishing (sub-agent) |
-| `doc-copyeditor` | `.kbz/roles/doc-copyeditor.yaml` | doc-publishing (sub-agent) |
+<!-- registry-gen:begin:role-index source=.kbz/roles/*.yaml -->
+> **Generated** — canonical source: `.kbz/roles/*.yaml`. Do not hand-edit this section; run `make registry-sync` to update.
+
+| Role | Identity | Inherits | Source |
+|------|----------|----------|--------|
+| `architect` | Senior software architect | `base` | `.kbz/roles/architect.yaml` |
+| `base` | Software development agent | — | `.kbz/roles/base.yaml` |
+| `doc-checker` | Technical fact-checker | `base` | `.kbz/roles/doc-checker.yaml` |
+| `doc-copyeditor` | Senior copy editor | `base` | `.kbz/roles/doc-copyeditor.yaml` |
+| `doc-editor` | Developmental editor | `base` | `.kbz/roles/doc-editor.yaml` |
+| `doc-pipeline-orchestrator` | AI content editor | `base` | `.kbz/roles/doc-pipeline-orchestrator.yaml` |
+| `doc-stylist` | AI prose editor | `base` | `.kbz/roles/doc-stylist.yaml` |
+| `documenter` | Senior technical writer | `base` | `.kbz/roles/documenter.yaml` |
+| `implementer` | Senior software engineer | `base` | `.kbz/roles/implementer.yaml` |
+| `implementer-go` | Senior Go engineer | `implementer` | `.kbz/roles/implementer-go.yaml` |
+| `orchestrator` | Senior engineering manager coordinating an agent team | `base` | `.kbz/roles/orchestrator.yaml` |
+| `plan-validator` | Senior implementation plan auditor. Verify that dev-plans are complete, well-decomposed, and fully traceable to their parent specification. Do not evaluate whether task ordering is *optimal* — only whether it is *valid* and *complete*. | `base` | `.kbz/roles/plan-validator.yaml` |
+| `researcher` | Senior technical analyst | `base` | `.kbz/roles/researcher.yaml` |
+| `review-gate-validator` | Senior review quality auditor. Verify that a completed review is thorough, evidence-backed, and suitable for auto-approval. Do not re-review the code — audit the review process itself. | `reviewer` | `.kbz/roles/review-gate-validator.yaml` |
+| `reviewer` | Senior code reviewer | `base` | `.kbz/roles/reviewer.yaml` |
+| `reviewer-conformance` | Senior requirements verification engineer | `reviewer` | `.kbz/roles/reviewer-conformance.yaml` |
+| `reviewer-quality` | Senior software quality engineer | `reviewer` | `.kbz/roles/reviewer-quality.yaml` |
+| `reviewer-security` | Senior application security engineer | `reviewer` | `.kbz/roles/reviewer-security.yaml` |
+| `reviewer-testing` | Senior test engineer | `reviewer` | `.kbz/roles/reviewer-testing.yaml` |
+| `spec-author` | Senior requirements engineer | `base` | `.kbz/roles/spec-author.yaml` |
+| `spec-validator` | Senior requirements quality auditor. Verify that specifications are complete, testable, and traceable to their parent design. Do not evaluate whether requirements are *correct* — only whether they are *well-formed* and *complete*. | `base` | `.kbz/roles/spec-validator.yaml` |
+| `verifier` | Methodical close-out auditor | `base` | `.kbz/roles/verifier.yaml` |
+<!-- registry-gen:end:role-index -->
 
 ### Skills (`.kbz/skills/`)
 
@@ -69,26 +79,24 @@ Skills define *what you're doing right now* — the procedure, vocabulary, anti-
 checklist for a specific task type. Each skill is a `SKILL.md` file in its own directory.
 Always read the skill specified by the stage binding before starting work.
 
-| Skill | Path | Stage |
-|-------|------|-------|
-| **write-design** | `.kbz/skills/write-design/SKILL.md` | designing |
-| **write-spec** | `.kbz/skills/write-spec/SKILL.md` | specifying |
-| **write-dev-plan** | `.kbz/skills/write-dev-plan/SKILL.md` | dev-planning |
-| **decompose-feature** | `.kbz/skills/decompose-feature/SKILL.md` | dev-planning |
-| **orchestrate-development** | `.kbz/skills/orchestrate-development/SKILL.md` | developing |
-| **implement-task** | `.kbz/skills/implement-task/SKILL.md` | developing (sub-agent) |
-| **review-code** | `.kbz/skills/review-code/SKILL.md` | reviewing |
-| **orchestrate-review** | `.kbz/skills/orchestrate-review/SKILL.md` | reviewing |
-| **review-plan** | `.kbz/skills/review-plan/SKILL.md` | batch-reviewing |
-| **write-research** | `.kbz/skills/write-research/SKILL.md` | researching |
-| **update-docs** | `.kbz/skills/update-docs/SKILL.md` | documenting |
-| **orchestrate-doc-pipeline** | `.kbz/skills/orchestrate-doc-pipeline/SKILL.md` | doc-publishing |
-| **write-docs** | `.kbz/skills/write-docs/SKILL.md` | doc-publishing (write stage) |
-| **edit-docs** | `.kbz/skills/edit-docs/SKILL.md` | doc-publishing (edit stage) |
-| **check-docs** | `.kbz/skills/check-docs/SKILL.md` | doc-publishing (check stage) |
-| **style-docs** | `.kbz/skills/style-docs/SKILL.md` | doc-publishing (style stage) |
-| **copyedit-docs** | `.kbz/skills/copyedit-docs/SKILL.md` | doc-publishing (copyedit stage) |
-| **audit-codebase** | `.kbz/skills/audit-codebase/SKILL.md` | auditing (on-demand) |
+<!-- registry-gen:begin:roles-and-skills source=.kbz/stage-bindings.yaml -->
+> **Generated** — canonical source: `.kbz/stage-bindings.yaml`. Do not hand-edit this section; run `make registry-sync` to update.
+
+| Stage | Description | Roles | Skills | Gate | Doc Type |
+|-------|-------------|-------|--------|------|----------|
+| designing | Creating or revising a design document | `architect` | [write-design](.kbz/skills/write-design/SKILL.md) | auto | design |
+| specifying | Writing a formal specification with acceptance criteria | `spec-author` | [write-spec](.kbz/skills/write-spec/SKILL.md) | human | specification |
+| dev-planning | Breaking a spec into an implementation plan and tasks | `architect` | [write-dev-plan](.kbz/skills/write-dev-plan/SKILL.md), [decompose-feature](.kbz/skills/decompose-feature/SKILL.md) | human | dev-plan |
+| developing | Implementing tasks from the dev plan | `orchestrator` | [orchestrate-development](.kbz/skills/orchestrate-development/SKILL.md) | auto | — |
+| reviewing | Evaluating implementation against the specification | `orchestrator` | [orchestrate-review](.kbz/skills/orchestrate-review/SKILL.md) | human | report |
+| merging | Merging the feature branch into main after review approval | `orchestrator` | [orchestrate-review](.kbz/skills/orchestrate-review/SKILL.md) | auto | — |
+| verifying | Delegating close-out verification of the Definition of Done to a clean-context verifier sub-agent | `orchestrator` | [orchestrate-review](.kbz/skills/orchestrate-review/SKILL.md) | auto | — |
+| batch-reviewing | Reviewing a completed batch for aggregate delivery | `reviewer-conformance` | [review-plan](.kbz/skills/review-plan/SKILL.md) | human | report |
+| researching | Producing a research report or analysis | `researcher` | [write-research](.kbz/skills/write-research/SKILL.md) | auto | research |
+| documenting | Updating project documentation for currency | `documenter` | [update-docs](.kbz/skills/update-docs/SKILL.md) | auto | — |
+| doc-publishing | Running a document through the five-stage editorial pipeline | `doc-pipeline-orchestrator` | [orchestrate-doc-pipeline](.kbz/skills/orchestrate-doc-pipeline/SKILL.md) | auto | — |
+| retro-fixing | Implementing a fix for a retrospective theme | — | — | auto | — |
+<!-- registry-gen:end:roles-and-skills -->
 
 ### How to use the system
 

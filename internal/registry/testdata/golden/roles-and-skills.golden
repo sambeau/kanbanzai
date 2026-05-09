@@ -1,0 +1,7 @@
+> **Generated** — canonical source: `.kbz/stage-bindings.yaml`. Do not hand-edit this section; run `make registry-sync` to update.
+
+| Stage | Description | Roles | Skills | Gate | Doc Type |
+|-------|-------------|-------|--------|------|----------|
+| designing | Creating or revising a design document | `architect` | [write-design](.kbz/skills/write-design/SKILL.md) | auto | design |
+| specifying | Writing a formal specification | `spec-author` | [write-spec](.kbz/skills/write-spec/SKILL.md) | human | specification |
+| reviewing | Evaluating implementation | `orchestrator`, `reviewer-conformance` | [orchestrate-review](.kbz/skills/orchestrate-review/SKILL.md), [review-code](.kbz/skills/review-code/SKILL.md) | human | report |

@@ -13,7 +13,7 @@ LDFLAGS  := -X '$(PKG).Version=$(VERSION)' \
             -X '$(PKG).BuildTime=$(BUILD_TIME)' \
             -X '$(PKG).Dirty=$(DIRTY)'
 
-.PHONY: build install clean test
+.PHONY: build install clean test registry-check registry-sync
 
 build:
 	go build -ldflags "$(LDFLAGS)" -o $(BINARY) ./cmd/kbz
@@ -27,3 +27,9 @@ clean:
 
 test:
 	go test -race ./...
+
+registry-check:
+	go run ./cmd/kbz docs check
+
+registry-sync:
+	go run ./cmd/kbz docs sync

@@ -8,9 +8,9 @@ Kanbanzai manages the process of creating software using a ***design-first***, *
 
 You play the role of product/design manager, the AI Agent plays the role of the rest of the team: senior designer, development manager, developers, testers, etc. Your main role is to create designs that get turned into clear specs; the AI's role is to take the specs and accurately turn them into software.
 
-You communicate with it using chat and markdown documents: proposals, design, specification, implementation plan, review etc. These documents act as the project's main source of persistent memory for the team. The AI dev manager also tracks the process of all plans, features and tasks using the tools in the MCP server. Like Jira or any other project management software there are approval steps (‘gates’) and state management (designing, waiting for approval, … done).
+You communicate with it using chat and markdown documents: proposals, design, specification, implementation plan, review etc. These documents act as the project's main source of persistent memory for the team. The AI dev manager also tracks the process of all plans, features and tasks using the tools in the MCP server. Like Jira or any other project management software there are approval steps ('gates') and state management (designing, waiting for approval, … done).
 
-However, you don’t have to deal with the tool: you are the manager. The AI deals with the tool as they are the dev team. You simply write proposals, discuss them, collaborate on creating a design and once you are happy, the AI Agent takes over creating a spec, a development plan and then orchestrates its development using a team of sub-agents. As the work progresses through the system, the AI project manager uses the tool to keep the project state up-to-date.
+However, you don't have to deal with the tool: you are the manager. The AI deals with the tool as they are the dev team. You simply write proposals, discuss them, collaborate on creating a design and once you are happy, the AI Agent takes over creating a spec, a development plan and then orchestrates its development using a team of sub-agents. As the work progresses through the system, the AI project manager uses the tool to keep the project state up-to-date.
 
 The orchestration, roles and skills are built upon the latest academic research, first introduced to me by JD Forsythe in his incredibly useful [10 CLAUDE CODE PRINCIPLES: What the Research Actually Says](https://jdforsythe.github.io/10-principles/) research.
 
@@ -157,6 +157,65 @@ Kanbanzai stores all state in a `.kbz/` directory at your project root, committe
 ```
 
 Every file is plain YAML. You can read it, search it with grep, and review it in a pull request like any other file in your repository.
+
+## Stages and roles
+
+This table maps every workflow stage to its bound roles, skills, and gate type.
+It is generated from `.kbz/stage-bindings.yaml` — the single source of truth.
+
+<!-- registry-gen:begin:roles-and-skills source=.kbz/stage-bindings.yaml -->
+> **Generated** — canonical source: `.kbz/stage-bindings.yaml`. Do not hand-edit this section; run `make registry-sync` to update.
+
+| Stage | Description | Roles | Skills | Gate | Doc Type |
+|-------|-------------|-------|--------|------|----------|
+| designing | Creating or revising a design document | `architect` | [write-design](.kbz/skills/write-design/SKILL.md) | auto | design |
+| specifying | Writing a formal specification with acceptance criteria | `spec-author` | [write-spec](.kbz/skills/write-spec/SKILL.md) | human | specification |
+| dev-planning | Breaking a spec into an implementation plan and tasks | `architect` | [write-dev-plan](.kbz/skills/write-dev-plan/SKILL.md), [decompose-feature](.kbz/skills/decompose-feature/SKILL.md) | human | dev-plan |
+| developing | Implementing tasks from the dev plan | `orchestrator` | [orchestrate-development](.kbz/skills/orchestrate-development/SKILL.md) | auto | — |
+| reviewing | Evaluating implementation against the specification | `orchestrator` | [orchestrate-review](.kbz/skills/orchestrate-review/SKILL.md) | human | report |
+| merging | Merging the feature branch into main after review approval | `orchestrator` | [orchestrate-review](.kbz/skills/orchestrate-review/SKILL.md) | auto | — |
+| verifying | Delegating close-out verification of the Definition of Done to a clean-context verifier sub-agent | `orchestrator` | [orchestrate-review](.kbz/skills/orchestrate-review/SKILL.md) | auto | — |
+| batch-reviewing | Reviewing a completed batch for aggregate delivery | `reviewer-conformance` | [review-plan](.kbz/skills/review-plan/SKILL.md) | human | report |
+| researching | Producing a research report or analysis | `researcher` | [write-research](.kbz/skills/write-research/SKILL.md) | auto | research |
+| documenting | Updating project documentation for currency | `documenter` | [update-docs](.kbz/skills/update-docs/SKILL.md) | auto | — |
+| doc-publishing | Running a document through the five-stage editorial pipeline | `doc-pipeline-orchestrator` | [orchestrate-doc-pipeline](.kbz/skills/orchestrate-doc-pipeline/SKILL.md) | auto | — |
+| retro-fixing | Implementing a fix for a retrospective theme | — | — | auto | — |
+<!-- registry-gen:end:roles-and-skills -->
+
+### Role index
+
+Each role defines identity, vocabulary, and anti-patterns for a specific workflow
+stage. Roles can inherit from a parent role (e.g. `reviewer-security` inherits from
+`reviewer`).
+
+<!-- registry-gen:begin:role-index source=.kbz/roles/*.yaml -->
+> **Generated** — canonical source: `.kbz/roles/*.yaml`. Do not hand-edit this section; run `make registry-sync` to update.
+
+| Role | Identity | Inherits | Source |
+|------|----------|----------|--------|
+| `architect` | Senior software architect | `base` | `.kbz/roles/architect.yaml` |
+| `base` | Software development agent | — | `.kbz/roles/base.yaml` |
+| `doc-checker` | Technical fact-checker | `base` | `.kbz/roles/doc-checker.yaml` |
+| `doc-copyeditor` | Senior copy editor | `base` | `.kbz/roles/doc-copyeditor.yaml` |
+| `doc-editor` | Developmental editor | `base` | `.kbz/roles/doc-editor.yaml` |
+| `doc-pipeline-orchestrator` | AI content editor | `base` | `.kbz/roles/doc-pipeline-orchestrator.yaml` |
+| `doc-stylist` | AI prose editor | `base` | `.kbz/roles/doc-stylist.yaml` |
+| `documenter` | Senior technical writer | `base` | `.kbz/roles/documenter.yaml` |
+| `implementer` | Senior software engineer | `base` | `.kbz/roles/implementer.yaml` |
+| `implementer-go` | Senior Go engineer | `implementer` | `.kbz/roles/implementer-go.yaml` |
+| `orchestrator` | Senior engineering manager coordinating an agent team | `base` | `.kbz/roles/orchestrator.yaml` |
+| `plan-validator` | Senior implementation plan auditor. Verify that dev-plans are complete, well-decomposed, and fully traceable to their parent specification. Do not evaluate whether task ordering is *optimal* — only whether it is *valid* and *complete*. | `base` | `.kbz/roles/plan-validator.yaml` |
+| `researcher` | Senior technical analyst | `base` | `.kbz/roles/researcher.yaml` |
+| `review-gate-validator` | Senior review quality auditor. Verify that a completed review is thorough, evidence-backed, and suitable for auto-approval. Do not re-review the code — audit the review process itself. | `reviewer` | `.kbz/roles/review-gate-validator.yaml` |
+| `reviewer` | Senior code reviewer | `base` | `.kbz/roles/reviewer.yaml` |
+| `reviewer-conformance` | Senior requirements verification engineer | `reviewer` | `.kbz/roles/reviewer-conformance.yaml` |
+| `reviewer-quality` | Senior software quality engineer | `reviewer` | `.kbz/roles/reviewer-quality.yaml` |
+| `reviewer-security` | Senior application security engineer | `reviewer` | `.kbz/roles/reviewer-security.yaml` |
+| `reviewer-testing` | Senior test engineer | `reviewer` | `.kbz/roles/reviewer-testing.yaml` |
+| `spec-author` | Senior requirements engineer | `base` | `.kbz/roles/spec-author.yaml` |
+| `spec-validator` | Senior requirements quality auditor. Verify that specifications are complete, testable, and traceable to their parent design. Do not evaluate whether requirements are *correct* — only whether they are *well-formed* and *complete*. | `base` | `.kbz/roles/spec-validator.yaml` |
+| `verifier` | Methodical close-out auditor | `base` | `.kbz/roles/verifier.yaml` |
+<!-- registry-gen:end:role-index -->
 
 ## Further reading
 

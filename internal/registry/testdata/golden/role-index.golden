@@ -1,0 +1,7 @@
+> **Generated** — canonical source: `.kbz/roles/*.yaml`. Do not hand-edit this section; run `make registry-sync` to update.
+
+| Role | Identity | Inherits | Source |
+|------|----------|----------|--------|
+| `architect` | Senior software architect | — | `.kbz/roles/architect.yaml` |
+| `orchestrator` | Orchestrating agent | — | `.kbz/roles/orchestrator.yaml` |
+| `spec-author` | Senior requirements engineer | `base` | `.kbz/roles/spec-author.yaml` |
