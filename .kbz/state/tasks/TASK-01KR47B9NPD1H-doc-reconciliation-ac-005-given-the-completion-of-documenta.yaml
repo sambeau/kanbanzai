@@ -3,8 +3,11 @@ parent_feature: FEAT-01KR46PKHMG4J
 slug: doc-reconciliation-ac-005-given-the-completion-of-documenta
 name: "Given the completion of documentation updates, when a"
 summary: "AC-005: Given the completion of documentation updates, when a project maintainer reviews the capability gap, then a decision record or planning issue exists documenting the gap and proposing next steps."
-status: active
+status: done
+completed: "2026-05-09T10:43:06Z"
 claimed_at: "2026-05-09T10:41:30Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-09T10:41:30Z"
 dispatched_by: sambeau
+completion_summary: "Verified DEC-01KR484HRQ97X exists and satisfies AC-005. The decision record documents all three capability gaps (spec sections, conflict annotation, graph traversal) and proposes next steps (evaluate each as separate features under a future plan). Report P61-report-handoff-investigation.md provides supporting context. AC-005 PASSES."
+verification: "Inspected decision record entity via entity(action: get) and report document via doc(action: content). Confirmed DEC-01KR484HRQ97X documents the three capability gaps and proposes next steps per AC-005 criteria."
