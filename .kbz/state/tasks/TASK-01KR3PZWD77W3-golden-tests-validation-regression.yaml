@@ -3,9 +3,22 @@ parent_feature: FEAT-01KR3MDJ7AV37
 slug: golden-tests-validation-regression
 name: Golden tests validation suite and regression tests
 summary: "Build the full test suite: (1) Golden tests — render the constraint card for developing, specifying, dev-planning, and reviewing using fixture inputs; store in internal/card/testdata/golden/ and assert exact match. (2) Size enforcement — iterate all role YAML files and stage bindings, render each, assert max 25 non-empty lines and max 2500 bytes. (3) Determinism — render same inputs 100 times, assert identical output. (4) Latency benchmark — assert p95 less than 10ms under go test -bench. (5) next and handoff regression — assert all prior field names still present. (6) Unknown-stage test — assert UNKNOWN STAGE text present. (7) Missing-role validation — assert error names missing field. Deliverables: internal/card/golden_test.go, internal/card/testdata/golden/, internal/card/renderer_bench_test.go, internal/mcp/next_tool_regression_test.go, internal/mcp/handoff_tool_regression_test.go. Covers: REQ-009, AC-006, AC-007, AC-008, AC-009, AC-010, REQ-NF-003, REQ-NF-004."
-status: active
+status: done
 estimate: "5"
+files_planned:
+  - internal/mcp/next_tool_regression_test.go
+  - internal/mcp/handoff_tool_regression_test.go
+  - internal/card/golden_test.go
+  - internal/card/renderer_bench_test.go
+  - internal/card/testdata/golden/developing.golden
+  - internal/card/testdata/golden/specifying.golden
+  - internal/card/testdata/golden/dev-planning.golden
+  - internal/card/testdata/golden/reviewing.golden
+  - internal/card/testdata/golden/unknown-stage.golden
+completed: "2026-05-09T10:59:02Z"
 claimed_at: "2026-05-09T10:41:07Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-09T10:41:07Z"
 dispatched_by: sambeau
+completion_summary: "Created next_tool_regression_test.go and handoff_tool_regression_test.go with field-name regression guards. Verified all existing card package tests pass (golden tests, size enforcement, determinism, latency benchmark, unknown-stage, missing-role validation). Benchmark shows ~1.3µs per render, p95 latency 0.0056ms well under 10ms threshold."
+verification: go test ./internal/card/... PASS. go test ./internal/mcp/... all new regression tests PASS. go test -bench=BenchmarkRender shows ~1.3µs/op.
