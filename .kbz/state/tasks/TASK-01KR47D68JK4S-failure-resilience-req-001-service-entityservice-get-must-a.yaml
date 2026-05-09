@@ -3,8 +3,24 @@ parent_feature: FEAT-01KR46PKHPVWS
 slug: failure-resilience-req-001-service-entityservice-get-must-a
 name: Add context.Context to EntityService.Get and call sites
 summary: "REQ-001: `service.EntityService.Get` must accept `context.Context` as its first parameter. Update ~30 call sites."
-status: active
+status: done
+files_planned:
+  - internal/service/entities.go
+  - cmd/kbz/main.go
+  - internal/mcp/assembly_validate.go
+  - internal/service/entities_cache_read_test.go
+  - cmd/kbz/entity_cmd.go
+  - cmd/kbz/incident_cmd.go
+  - cmd/kbz/workflow_cmd.go
+  - internal/mcp/entity_tool.go
+  - internal/mcp/status_tool.go
+  - internal/mcp/next_tool.go
+  - internal/mcp/merge_tool.go
+  - internal/mcp/server.go
+completed: "2026-05-09T11:02:29Z"
 claimed_at: "2026-05-08T16:49:55Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-08T16:49:55Z"
 dispatched_by: sambeau
+completion_summary: "Added context.Context as first parameter to EntityService.Get, checking ctx.Err() at entry (AC-001). Updated all call sites (~80 files): MCP handlers pass ctx directly, service-layer callers use context.Background(). Updated entityService/EntityGetter interfaces and mockEntityGetter. Added TestGet_CancelledContext_ReturnsError. Pre-existing bug_gate_test.go failures confirmed unrelated via git stash."
+verification: go build ./... passes cleanly. cmd/kbz and internal/mcp test suites pass. TestGet_CancelledContext_ReturnsError confirms AC-001.

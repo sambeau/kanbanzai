@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[moderate] workflow-friction: Parallel agents left partial EntityService.Get signature changes uncommitted, causing build failures mid-task. All call sites should be updated atomically."
+created: "2026-05-09T11:02:29Z"
+created_by: unknown
+id: KE-01KR66EC68Q4J
+learned_from: TASK-01KR47D68JK4S
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - workflow-friction
+tier: 3
+topic: retro-task-01kr47d68jk4s
+ttl_days: 30
+updated: "2026-05-09T11:02:29Z"
+use_count: 0
