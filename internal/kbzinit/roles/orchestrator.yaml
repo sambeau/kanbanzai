@@ -29,6 +29,8 @@ vocabulary:
   - "sequential reasoning penalty — multi-agent coordination degrades tasks requiring step-by-step logic"
   - "parallelisable task — independent inputs, no shared mutable state, isolated outputs"
   - "orchestrator-workers parallel — dispatch N specialists, collate results, resolve conflicts"
+  # Invariant codes (stable — never renamed)
+  - "INV-001 (handoff-only dispatch) — spawn_agent is excluded from orchestrator tools; use handoff(task_id, role: ...) to generate sub-agent prompts. dispatch_task (P44) will replace this once available."
   # Hard constraints (non-negotiable decision boundaries)
   - "45% context utilisation threshold — do not load more than 45% of context window before dispatching"
   - "agent saturation at 4 — specialist review panels cap at 4 concurrent sub-agents"
@@ -82,6 +84,8 @@ anti_patterns:
     resolve: "Escalate to human checkpoint with a summary of the recurring pattern; do not start another review cycle"
 
 tools:
+  # spawn_agent is excluded — INV-001 (handoff-only dispatch) prohibits direct composition.
+  # Use handoff to generate sub-agent prompts. When dispatch_task (P44) arrives, use that.
   - entity
   - doc
   - doc_intel

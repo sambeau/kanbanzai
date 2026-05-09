@@ -85,9 +85,7 @@ constraint_level: medium
 
 ### Manual Prompt Composition
 
-- **Detect:** The orchestrator writes implementation prompts by hand instead of using `handoff(task_id: "TASK-xxx", role: "implementer-go")`
-- **BECAUSE:** Manual composition silently omits graph project context, knowledge entries, and spec sections that the handoff tool automatically assembles. The sub-agent starts without critical context, producing lower-quality outputs or failures.
-- **Resolve:** Always use `handoff` to generate sub-agent prompts. Reserve manual composition for exceptional cases where handoff does not apply.
+→ **INV-001 — Handoff-only dispatch.** Always use `handoff(task_id: "TASK-xxx", role: "implementer-go")` to generate sub-agent prompts. Manual composition violates INV-001: it silently omits graph project context, knowledge entries, and spec sections assembled by the pipeline. When P44's `dispatch_task` is available, use that instead.
 
 ### Pre-delegation Code Investigation
 
@@ -130,11 +128,11 @@ Skip this phase entirely if the batch has 3 or fewer features.
 
 ### Phase 1: Read the Dev-Plan
 
-> **Constraint ℋ — No Code Investigation:** Do not read source files, trace call
-> paths, or search the code graph before dispatching. The sub-agent receives
-> everything needed via `handoff`. Every line of implementation code you read
-> competes with orchestration constraints and accelerates context rot. If the
-> dev-plan is unclear, flag it — don't read the code to compensate.
+> **INV-004 · No Code Investigation (ℋ):** Do not read source files, trace call
+> paths, search the code graph, or shell-read `.kbz/state/` before dispatching. The
+> sub-agent receives everything needed via `handoff`; if the dev-plan is unclear, flag
+> it — do not read code or workflow state to compensate. See INV-004 and the
+> orchestrator role's Pre-delegation Code Investigation anti-pattern.
 >
 > **Hard constraint (ℋ)** — violation blocks stage advance.
 
@@ -200,7 +198,7 @@ After all tasks reach a terminal state, the feature must be explicitly advanced 
 
 1. **Verify all tasks are terminal.** Call `status(id: "FEAT-xxx")` and confirm all tasks show `done`, `not-planned`, or `duplicate`. If the attention item `"FEAT-xxx has N/N tasks done — ready to advance to reviewing"` is visible, all tasks are terminal.
 
-2. **Transition the feature.** Call `entity(action: "transition", id: "FEAT-xxx", status: "reviewing")`.
+2. **Transition the feature.** Call `entity(action: "transition", id: "FEAT-xxx", status: "reviewing")`. **INV-005** — Stage-transition gates are mandatory; the `entity` tool enforces all prerequisites (tasks terminal, required artefacts approved). Do not use `override: true` unless `override_reason` is provided and the prerequisite is genuinely inapplicable.
 
 3. **Merge and delete the branch.** This step is mandatory regardless of how work was committed.
    - **If a worktree exists:** call `pr(action: "create", entity_id: "FEAT-xxx")` (if `require_github_pr: true`), then `merge(action: "check", entity_id: "FEAT-xxx")`, then `merge(action: "execute", entity_id: "FEAT-xxx")`. The `merge execute` tool deletes the branch automatically (`delete_branch` defaults to `true`) — verify it did so.

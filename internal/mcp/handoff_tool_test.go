@@ -764,8 +764,8 @@ func TestHandoff_QueuedStatusReturnsError(t *testing.T) {
 	}
 }
 
-// TestHandoff_TaskNotFound verifies that a non-existent task ID returns a
-// not_found error.
+// TestHandoff_TaskNotFound verifies that a non-existent task ID returns an
+// INV-002 structured refusal.
 func TestHandoff_TaskNotFound(t *testing.T) {
 	t.Parallel()
 	entitySvc := setupHandoffTest(t)
@@ -778,8 +778,17 @@ func TestHandoff_TaskNotFound(t *testing.T) {
 	if !ok {
 		t.Fatalf("expected error for unknown task ID, got: %v", resp)
 	}
-	if code, _ := errObj["code"].(string); code != "not_found" {
-		t.Errorf("error code = %q, want \"not_found\"", code)
+	if code, _ := errObj["code"].(string); code != "INV-002" {
+		t.Errorf("error code = %q, want \"INV-002\"", code)
+	}
+	if op, _ := errObj["operation"].(string); op != "handoff task-lookup" {
+		t.Errorf("error operation = %q, want \"handoff task-lookup\"", op)
+	}
+	if _, ok := errObj["reason"]; !ok {
+		t.Errorf("expected reason field in error")
+	}
+	if _, ok := errObj["next_action"]; !ok {
+		t.Errorf("expected next_action field in error")
 	}
 }
 

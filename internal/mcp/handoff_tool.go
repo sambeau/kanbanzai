@@ -28,6 +28,7 @@ import (
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
 	"github.com/sambeau/kanbanzai/internal/git"
 	"github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/invariants"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/validate"
@@ -78,7 +79,8 @@ func handoffTool(
 				"the sub-agent. Read-only: does not modify task status or claim the task. "+
 				"For structured JSON context instead of a rendered Markdown prompt, use next(id) which "+
 				"returns machine-readable data. Do NOT use to claim tasks — use next for that. "+
-				"Accepts tasks in active, ready, or needs-rework status.",
+				"Accepts tasks in active, ready, or needs-rework status. "+
+				"INV-004: do not shell-read .kbz/state/, .kbz/index/, or .kbz/context/ — use MCP workflow tools (entity, doc, status, knowledge) instead.",
 		),
 		mcp.WithString("task_id",
 			mcp.Required(),
@@ -124,8 +126,12 @@ func handoffTool(
 		// Load the task.
 		task, err := entitySvc.Get("task", taskID, "")
 		if err != nil {
-			return mcp.NewToolResultText(handoffErrorJSON("not_found",
-				fmt.Sprintf("Cannot generate handoff for task %s: task not found.\n\nTo resolve:\n  Verify the task ID exists with entity(action: \"get\", id: %q) or list tasks with entity(action: \"list\", type: \"task\").", taskID, taskID))), nil
+			return mcp.NewToolResultText(invariants.Format(invariants.RefusalResponse{
+				Code:      invariants.INV002,
+				Operation: "handoff task-lookup",
+				Reason:    fmt.Sprintf("Task %s is not registered in Kanbanzai workflow state.", taskID),
+				NextAction: fmt.Sprintf(`Verify the task ID with entity(action: "get", id: %q) or list tasks with entity(action: "list", type: "task").`, taskID),
+			})), nil
 		}
 
 		// Validate status.

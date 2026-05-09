@@ -957,6 +957,14 @@ func renderAntiPatterns(entries []AntiPatternEntry) string {
 	return sb.String()
 }
 
+// inv004Section is the Invariants section unconditionally injected into every
+// rendered handoff prompt (REQ-007, AC-005).
+const inv004Section = "## Invariants\n\n" +
+	"The following workflow invariants apply to this task session:\n\n" +
+	"- **INV-004** — Do not read `.kbz/state/`, `.kbz/index/`, or `.kbz/context/` directly\n" +
+	"  via terminal or shell tools. Use MCP workflow tools (`entity`, `doc`, `status`,\n" +
+	"  `knowledge`) instead."
+
 // RenderPrompt renders the pipeline result as a single Markdown prompt string.
 // This is the output format consumed by the handoff tool.
 func RenderPrompt(result *PipelineResult) string {
@@ -965,6 +973,9 @@ func RenderPrompt(result *PipelineResult) string {
 		sb.WriteString(s.Content)
 		sb.WriteString("\n\n")
 	}
+	// Inject INV-004 invariants section unconditionally (REQ-007, AC-005).
+	sb.WriteString(inv004Section)
+	sb.WriteString("\n\n")
 	if result.TokenWarning != "" {
 		fmt.Fprintf(&sb, "---\n⚠️ %s\n\n", result.TokenWarning)
 	}

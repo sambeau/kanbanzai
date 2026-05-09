@@ -15,6 +15,7 @@ package mcp
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"sort"
 	"strings"
@@ -27,12 +28,22 @@ import (
 	"github.com/sambeau/kanbanzai/internal/card"
 	"github.com/sambeau/kanbanzai/internal/config"
 	kbzctx "github.com/sambeau/kanbanzai/internal/context"
+	"github.com/sambeau/kanbanzai/internal/git"
 	idpkg "github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/invariants"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/stage"
 	"github.com/sambeau/kanbanzai/internal/worktree"
 )
+
+// checkKbzDirtyFunc is the function called by nextClaimMode to detect orphaned
+// workflow state before claiming a task. It is a package-level variable so
+// tests can inject a stub without requiring a real git repository (same
+// pattern as commitStateFunc in handoff_tool.go).
+var checkKbzDirtyFunc = func(repoRoot string) ([]string, error) {
+	return git.CheckKbzDirty(repoRoot)
+}
 
 // NextTools returns the `next` MCP tool registered in the core group.
 func NextTools(
@@ -79,7 +90,8 @@ func nextTool(
 				"context yourself. Call BEFORE handoff when delegating to sub-agents, or before starting "+
 				"work directly. For dashboard views and progress metrics, use status instead. "+
 				"When id is provided, the task transitions ready → active (claim). "+
-				"When id is omitted, no state changes occur (read-only queue inspection).",
+				"When id is omitted, no state changes occur (read-only queue inspection). "+
+				"INV-004: do not shell-read .kbz/state/, .kbz/index/, or .kbz/context/ — use MCP workflow tools (entity, doc, status, knowledge) instead.",
 		),
 		mcp.WithString("id", mcp.Description(
 			"Task ID (TASK-... or T-...), Feature ID (FEAT-...), or Plan ID to claim. "+
@@ -207,7 +219,13 @@ func nextClaimMode(
 	// Load the task to check its current status.
 	task, err := entitySvc.Get("task", taskID, "")
 	if err != nil {
-		return nil, fmt.Errorf("Cannot claim task %s: task not found.\n\nTo resolve:\n  Verify the task ID with entity(action: \"list\", type: \"task\") or inspect the queue with next()", taskID)
+		refusal := invariants.Format(invariants.RefusalResponse{
+			Code:       invariants.INV002,
+			Operation:  "next task-claim",
+			Reason:     fmt.Sprintf("Task %s is not registered in Kanbanzai workflow state.", taskID),
+			NextAction: `Create the entity with entity(action: "create") or verify the ID with entity(action: "list", type: "task").`,
+		})
+		return json.RawMessage(refusal), nil
 	}
 
 	isReclaim := false
@@ -223,6 +241,22 @@ func nextClaimMode(
 			"Cannot claim task %s: status is %q, but only \"ready\" tasks can be claimed.\n\nTo resolve:\n  Check task details with status(id: %q) and ensure prerequisites are met",
 			taskID, status, taskID,
 		)
+	}
+
+	// Pre-claim dirty-state check (INV-003): refuse if .kbz/ workflow-state
+	// files are orphaned (modified/untracked) in the working tree.
+	// Skipped on reclaim paths for parity with the existing reclaim behaviour.
+	if !isReclaim {
+		dirtyFiles, dirtyErr := checkKbzDirtyFunc(".")
+		if dirtyErr == nil && len(dirtyFiles) > 0 {
+			reason := "Orphaned workflow state detected. Dirty files under .kbz/: " + strings.Join(dirtyFiles, ", ")
+			return nil, fmt.Errorf("%s", invariants.Format(invariants.RefusalResponse{
+				Code:       invariants.INV003,
+				Operation:  "next task-claim",
+				Reason:     reason,
+				NextAction: "Commit or stash the listed files, then retry next",
+			}))
+		}
 	}
 
 	// Stage-aware lifecycle validation — skipped on reclaim (FR-003, FR-004).
@@ -480,6 +514,8 @@ func nextContextToMap(actx assembledContext) map[string]any {
 	}
 	// Graph project — always present (empty string when no worktree).
 	out["graph_project"] = actx.graphProject
+	// Workflow state warning — always present (INV-004, REQ-007).
+	out["workflow_state_warning"] = "INV-004: Do not read .kbz/state/, .kbz/index/, or .kbz/context/ via terminal or shell tools. Use MCP workflow tools (entity, doc, status, knowledge) instead."
 	// Worktree path — omitted when no active worktree (FR-006, FR-007).
 	if actx.worktreePath != "" {
 		out["worktree_path"] = actx.worktreePath
