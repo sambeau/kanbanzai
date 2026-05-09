@@ -1,6 +1,7 @@
 package context
 
 import (
+	"context"
 	"fmt"
 	"strings"
 	"testing"
@@ -16,7 +17,10 @@ type mockRoleResolver struct {
 	err   error
 }
 
-func (m *mockRoleResolver) Resolve(id string) (*ResolvedRole, error) {
+func (m *mockRoleResolver) Resolve(ctx context.Context, id string) (*ResolvedRole, error) {
+	if ctx.Err() != nil {
+		return nil, ctx.Err()
+	}
 	if m.err != nil {
 		return nil, m.err
 	}
@@ -64,7 +68,7 @@ type mockKnowledgeSurfacer struct {
 	err     error
 }
 
-func (m *mockKnowledgeSurfacer) Surface(_ SurfaceInput) ([]SurfacedEntry, error) {
+func (m *mockKnowledgeSurfacer) Surface(_ context.Context, _ SurfaceInput) ([]SurfacedEntry, error) {
 	return m.entries, m.err
 }
 
@@ -399,7 +403,7 @@ func TestStepResolveRole_Success(t *testing.T) {
 	state := &PipelineState{
 		Binding: testBinding(),
 	}
-	if err := p.stepResolveRole(state); err != nil {
+	if err := p.stepResolveRole(context.Background(), state); err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 	if state.Role == nil {
@@ -433,7 +437,7 @@ func TestStepResolveRole_CallerOverride(t *testing.T) {
 		Input:   PipelineInput{Role: "custom-role"},
 		Binding: testBinding(),
 	}
-	if err := p.stepResolveRole(state); err != nil {
+	if err := p.stepResolveRole(context.Background(), state); err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 	if state.Role.ID != "custom-role" {
@@ -447,7 +451,7 @@ func TestStepResolveRole_MissingRole(t *testing.T) {
 	b := testBinding()
 	b.Roles = []string{"nonexistent-role"}
 	state := &PipelineState{Binding: b}
-	err := p.stepResolveRole(state)
+	err := p.stepResolveRole(context.Background(), state)
 	if err == nil {
 		t.Fatal("expected error for missing role")
 	}
@@ -465,7 +469,7 @@ func TestStepResolveRole_NoRoleSpecified(t *testing.T) {
 	b := testBinding()
 	b.Roles = nil
 	state := &PipelineState{Binding: b}
-	err := p.stepResolveRole(state)
+	err := p.stepResolveRole(context.Background(), state)
 	if err == nil {
 		t.Fatal("expected error when no role is specified")
 	}
@@ -738,7 +742,7 @@ func TestStepResolveRole_SubAgentsDefault(t *testing.T) {
 		Input:   PipelineInput{Role: ""},
 		Binding: b,
 	}
-	if err := p.stepResolveRole(state); err != nil {
+	if err := p.stepResolveRole(context.Background(), state); err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 	if state.Role == nil {
@@ -826,7 +830,7 @@ func TestStepResolveRole_SubAgentsDefaultWithExplicitRole(t *testing.T) {
 		Input:   PipelineInput{Role: "implementer-go"},
 		Binding: b,
 	}
-	if err := p.stepResolveRole(state); err != nil {
+	if err := p.stepResolveRole(context.Background(), state); err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 	if state.Role == nil {
@@ -860,7 +864,7 @@ func TestStepResolveRole_CallerRoleNoPrefixMatch(t *testing.T) {
 		Input:   PipelineInput{Role: "reviewer"},
 		Binding: b,
 	}
-	if err := p.stepResolveRole(state); err != nil {
+	if err := p.stepResolveRole(context.Background(), state); err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 	if state.Role == nil {
@@ -889,7 +893,7 @@ func TestStepResolveRole_NoSubAgentsFallback(t *testing.T) {
 		Input:   PipelineInput{Role: ""},
 		Binding: b,
 	}
-	if err := p.stepResolveRole(state); err != nil {
+	if err := p.stepResolveRole(context.Background(), state); err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 	if state.Role == nil {
@@ -981,7 +985,7 @@ func TestStepSurfaceKnowledge_WithEntries(t *testing.T) {
 		Skill:     testSkill(),
 		Inclusion: InclusionStrategy{IncludeKnowledge: true},
 	}
-	p.stepSurfaceKnowledge(state)
+	p.stepSurfaceKnowledge(context.Background(), state)
 
 	if len(state.Knowledge) != 2 {
 		t.Errorf("knowledge entries = %d, want 2", len(state.Knowledge))
@@ -994,7 +998,7 @@ func TestStepSurfaceKnowledge_NilSurfacer(t *testing.T) {
 	state := &PipelineState{
 		Inclusion: InclusionStrategy{IncludeKnowledge: true},
 	}
-	p.stepSurfaceKnowledge(state)
+	p.stepSurfaceKnowledge(context.Background(), state)
 	if len(state.Knowledge) != 0 {
 		t.Error("knowledge should be empty with nil surfacer")
 	}
@@ -1011,7 +1015,7 @@ func TestStepSurfaceKnowledge_ExcludedByInclusion(t *testing.T) {
 	state := &PipelineState{
 		Inclusion: InclusionStrategy{IncludeKnowledge: false},
 	}
-	p.stepSurfaceKnowledge(state)
+	p.stepSurfaceKnowledge(context.Background(), state)
 	if len(state.Knowledge) != 0 {
 		t.Error("knowledge should be empty when IncludeKnowledge is false")
 	}
@@ -1028,7 +1032,7 @@ func TestStepSurfaceKnowledge_ErrorIsSwallowed(t *testing.T) {
 		},
 		Inclusion: InclusionStrategy{IncludeKnowledge: true},
 	}
-	p.stepSurfaceKnowledge(state)
+	p.stepSurfaceKnowledge(context.Background(), state)
 	if len(state.Knowledge) != 0 {
 		t.Error("knowledge should be empty when surfacer returns error")
 	}
@@ -1174,7 +1178,7 @@ func TestPipelineRun_FullSuccess(t *testing.T) {
 	p := testPipeline()
 	input := testInput()
 
-	result, err := p.Run(input)
+	result, err := p.Run(context.Background(), input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -1209,7 +1213,7 @@ func TestPipelineRun_SectionLabels(t *testing.T) {
 	p := testPipeline()
 	input := testInput()
 
-	result, err := p.Run(input)
+	result, err := p.Run(context.Background(), input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -1232,11 +1236,11 @@ func TestPipelineRun_Deterministic(t *testing.T) {
 	p := testPipeline()
 	input := testInput()
 
-	result1, err := p.Run(input)
+	result1, err := p.Run(context.Background(), input)
 	if err != nil {
 		t.Fatalf("run 1 error: %v", err)
 	}
-	result2, err := p.Run(input)
+	result2, err := p.Run(context.Background(), input)
 	if err != nil {
 		t.Fatalf("run 2 error: %v", err)
 	}
@@ -1255,7 +1259,7 @@ func TestPipelineRun_InvalidFeatureStatus(t *testing.T) {
 	input := testInput()
 	input.FeatureState["status"] = "draft"
 
-	_, err := p.Run(input)
+	_, err := p.Run(context.Background(), input)
 	if err == nil {
 		t.Fatal("expected error for invalid feature status")
 	}
@@ -1270,12 +1274,32 @@ func TestPipelineRun_NoBindingForStage(t *testing.T) {
 	input := testInput()
 	input.FeatureState["status"] = "designing"
 
-	_, err := p.Run(input)
+	_, err := p.Run(context.Background(), input)
 	if err == nil {
 		t.Fatal("expected error for missing binding")
 	}
 	if !strings.Contains(err.Error(), "step 2") {
 		t.Errorf("error should identify step 2: %v", err)
+	}
+}
+
+// TestPipelineRun_CancelledContext verifies AC-003: a cancelled context is
+// propagated to RoleResolver.Resolve and causes Pipeline.Run to return an error.
+func TestPipelineRun_CancelledContext(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	input := testInput()
+
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel() // cancel immediately
+
+	_, err := p.Run(ctx, input)
+	if err == nil {
+		t.Fatal("expected error for cancelled context, got nil")
+	}
+	// pipelineError uses %v (not %w), so errors.Is won't unwrap; check via string.
+	if !strings.Contains(err.Error(), context.Canceled.Error()) {
+		t.Errorf("expected context.Canceled in error, got: %v", err)
 	}
 }
 
@@ -1289,7 +1313,7 @@ func TestPipelineRun_WithKnowledge(t *testing.T) {
 	}
 	input := testInput()
 
-	result, err := p.Run(input)
+	result, err := p.Run(context.Background(), input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -1318,7 +1342,7 @@ func TestPipelineRun_NoKnowledgeSection_WhenEmpty(t *testing.T) {
 	p.Knowledge = &NoOpSurfacer{}
 	input := testInput()
 
-	result, err := p.Run(input)
+	result, err := p.Run(context.Background(), input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -1336,7 +1360,7 @@ func TestPipelineRun_WithInstructions(t *testing.T) {
 	input := testInput()
 	input.Instructions = "Focus only on the auth middleware"
 
-	result, err := p.Run(input)
+	result, err := p.Run(context.Background(), input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -1365,7 +1389,7 @@ func TestPipelineRun_CallerRoleOverridesBinding(t *testing.T) {
 	input := testInput()
 	input.Role = "custom-reviewer"
 
-	result, err := p.Run(input)
+	result, err := p.Run(context.Background(), input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -1383,7 +1407,7 @@ func TestVocabMergeOrder_RoleBeforeSkill(t *testing.T) {
 	p := testPipeline()
 	input := testInput()
 
-	result, err := p.Run(input)
+	result, err := p.Run(context.Background(), input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -1419,7 +1443,7 @@ func TestAntiPatternMergeOrder_RoleBeforeSkill(t *testing.T) {
 	p := testPipeline()
 	input := testInput()
 
-	result, err := p.Run(input)
+	result, err := p.Run(context.Background(), input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -1457,7 +1481,7 @@ func TestLayerAssignment(t *testing.T) {
 	p := testPipeline()
 	input := testInput()
 
-	result, err := p.Run(input)
+	result, err := p.Run(context.Background(), input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -1635,7 +1659,7 @@ func TestWindowTokens_ValidationRejectsLowValue(t *testing.T) {
 func TestNoOpSurfacer(t *testing.T) {
 	t.Parallel()
 	s := NoOpSurfacer{}
-	entries, err := s.Surface(SurfaceInput{TaskID: "TASK-001"})
+	entries, err := s.Surface(context.Background(), SurfaceInput{TaskID: "TASK-001"})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -1819,7 +1843,7 @@ func TestPipeline_Freshness_StaleRole(t *testing.T) {
 	}
 
 	p := newFreshnessPipeline(role, sk, 30)
-	result, err := p.Run(freshnessInput())
+	result, err := p.Run(context.Background(), freshnessInput())
 	if err != nil {
 		t.Fatalf("Run() error = %v", err)
 	}
@@ -1859,7 +1883,7 @@ func TestPipeline_Freshness_NeverVerifiedSkill(t *testing.T) {
 	}
 
 	p := newFreshnessPipeline(role, sk, 30)
-	result, err := p.Run(freshnessInput())
+	result, err := p.Run(context.Background(), freshnessInput())
 	if err != nil {
 		t.Fatalf("Run() error = %v", err)
 	}
@@ -1898,7 +1922,7 @@ func TestPipeline_Freshness_AllFresh_NoWarnings(t *testing.T) {
 	}
 
 	p := newFreshnessPipeline(role, sk, 30)
-	result, err := p.Run(freshnessInput())
+	result, err := p.Run(context.Background(), freshnessInput())
 	if err != nil {
 		t.Fatalf("Run() error = %v", err)
 	}
@@ -1925,7 +1949,7 @@ func TestPipeline_Freshness_BothStale(t *testing.T) {
 	}
 
 	p := newFreshnessPipeline(role, sk, 30)
-	result, err := p.Run(freshnessInput())
+	result, err := p.Run(context.Background(), freshnessInput())
 	if err != nil {
 		t.Fatalf("Run() error = %v", err)
 	}
@@ -1953,7 +1977,7 @@ func TestPipeline_Freshness_StaleRoleFreshSkill(t *testing.T) {
 	}
 
 	p := newFreshnessPipeline(role, sk, 30)
-	result, err := p.Run(freshnessInput())
+	result, err := p.Run(context.Background(), freshnessInput())
 	if err != nil {
 		t.Fatalf("Run() error = %v", err)
 	}
@@ -1987,14 +2011,14 @@ func TestPipeline_Freshness_ContentUnchangedByStaleness(t *testing.T) {
 
 	// Run with fresh role.
 	freshP := newFreshnessPipeline(makeRole("2099-01-01T00:00:00Z"), sk, 30)
-	freshResult, err := freshP.Run(freshnessInput())
+	freshResult, err := freshP.Run(context.Background(), freshnessInput())
 	if err != nil {
 		t.Fatalf("fresh Run() error = %v", err)
 	}
 
 	// Run with stale role.
 	staleP := newFreshnessPipeline(makeRole("2020-01-01T00:00:00Z"), sk, 30)
-	staleResult, err := staleP.Run(freshnessInput())
+	staleResult, err := staleP.Run(context.Background(), freshnessInput())
 	if err != nil {
 		t.Fatalf("stale Run() error = %v", err)
 	}

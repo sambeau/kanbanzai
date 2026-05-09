@@ -1,6 +1,7 @@
 package mcp
 
 import (
+	"context"
 	"bytes"
 	"log"
 	"os"
@@ -135,7 +136,7 @@ func TestEntityService_NoCacheRegression_Get(t *testing.T) {
 	planID := createEntityTestPlan(t, svc, "no-cache-get-plan")
 	featID := createEntityTestFeature(t, svc, planID, "no-cache-get-feat")
 
-	got, err := svc.Get("feature", featID, "")
+	got, err := svc.Get(context.Background(), "feature", featID, "")
 	if err != nil {
 		t.Fatalf("Get(feature, %s) with no cache: %v", featID, err)
 	}

@@ -25,8 +25,8 @@ import (
 // mergeCommitFunc is the function called after merge execute to commit
 // the worktree state update. Package-level variable for test injection.
 // Production value delegates to git.CommitStateWithMessage (FR-A09).
-var mergeCommitFunc = func(repoRoot, message string) (bool, error) {
-	return git.CommitStateWithMessage(repoRoot, message)
+var mergeCommitFunc = func(ctx context.Context, repoRoot, message string) (bool, error) {
+	return git.CommitStateWithMessage(ctx, repoRoot, message)
 }
 
 // getPRStatusFunc retrieves PR status for a branch. Package-level variable for test injection.
@@ -230,7 +230,7 @@ func checkMergeReadiness(
 		}, nil
 	}
 
-	entity, err := entitySvc.Get(entityType, entityID, "")
+	entity, err := entitySvc.Get(ctx, entityType, entityID, "")
 	if err != nil {
 		return nil, fmt.Errorf("Cannot check merge readiness for %s: failed to retrieve entity: %w.\n\nTo resolve:\n  Verify the entity ID exists: entity(action: \"get\", id: \"%s\")", entityID, err, entityID)
 	}
@@ -336,7 +336,7 @@ func executeMerge(
 		}, nil
 	}
 
-	entity, err := entitySvc.Get(entityType, entityID, "")
+	entity, err := entitySvc.Get(context.Background(), entityType, entityID, "")
 	if err != nil {
 		return nil, fmt.Errorf("Cannot execute merge for %s: failed to retrieve entity: %w.\n\nTo resolve:\n  Verify the entity ID exists: entity(action: \"get\", id: \"%s\")", entityID, err, entityID)
 	}
@@ -571,7 +571,7 @@ func executeMerge(
 	// Auto-commit the worktree record update after merge and branch cleanup (FR-A09).
 	// Best-effort: commit failure is logged but does not prevent the merge result.
 	mergeStateMsg := fmt.Sprintf("workflow(%s): mark worktree merged", entityID)
-	if _, commitErr := mergeCommitFunc(repoPath, mergeStateMsg); commitErr != nil {
+	if _, commitErr := mergeCommitFunc(context.Background(), repoPath, mergeStateMsg); commitErr != nil {
 		log.Printf("[merge] WARNING: auto-commit after merge of %s failed: %v", entityID, commitErr)
 	}
 

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"path/filepath"
 	"testing"
 
@@ -324,7 +325,7 @@ func TestGet_NilCache_NoPanic(t *testing.T) {
 		t.Fatalf("CreateFeature() error = %v", err)
 	}
 
-	got, err := svc.Get(feat.Type, feat.ID, feat.Slug)
+	got, err := svc.Get(context.Background(), feat.Type, feat.ID, feat.Slug)
 	if err != nil {
 		t.Fatalf("Get() error = %v", err)
 	}

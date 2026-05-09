@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"strings"
@@ -147,7 +148,7 @@ func (h *WorktreeTransitionHook) handleTaskActivation(taskID string, taskState m
 	}
 
 	// Load the parent feature to get its slug for branch naming
-	feature, err := h.entitySvc.Get("feature", parentFeature, "")
+	feature, err := h.entitySvc.Get(context.Background(), "feature", parentFeature, "")
 	if err != nil {
 		return &WorktreeResult{
 			Warning: fmt.Sprintf("could not load parent feature %s for task %s: %v", parentFeature, taskID, err),

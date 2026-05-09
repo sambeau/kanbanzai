@@ -125,7 +125,7 @@ func worktreeCreateAction(store *worktree.Store, entitySvc *service.EntityServic
 					entityID, canonical))
 		}
 
-		entity, err := entitySvc.Get(entityType, entityID, "")
+		entity, err := entitySvc.Get(ctx, entityType, entityID, "")
 		if err != nil {
 			if errors.Is(err, service.ErrNotFound) {
 				return inlineErr("entity_not_found", fmt.Sprintf("Cannot create worktree for %s: entity not found.\n\nTo resolve:\n  Verify the entity ID exists: entity(action: \"get\", id: \"%s\")", entityID, entityID))

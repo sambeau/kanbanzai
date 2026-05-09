@@ -380,7 +380,7 @@ func benchP99(times []time.Duration) time.Duration {
 func BenchmarkDocTool_Register_50Sections(b *testing.B) {
 	// Disable auto-commit noise so timings reflect only register-handler work.
 	orig := docCommitPathsFunc
-	docCommitPathsFunc = func(_, _ string, _ ...string) (bool, error) { return false, nil }
+	docCommitPathsFunc = func(_ context.Context, _, _ string, _ ...string) (bool, error) { return false, nil }
 	defer func() { docCommitPathsFunc = orig }()
 
 	content := makeFiftySectionContent()

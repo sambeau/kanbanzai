@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/sambeau/kanbanzai/internal/model"
@@ -101,7 +102,7 @@ func (s *EntityService) CheckAllFeaturesTerminal(planID string) (allTerminal boo
 // FeatureParentPlan returns the plan ID for a feature, or "" if the feature
 // does not exist or has no parent plan. Best-effort: errors are suppressed.
 func (s *EntityService) FeatureParentPlan(featureID string) string {
-	feat, err := s.Get("feature", featureID, "")
+	feat, err := s.Get(context.Background(), "feature", featureID, "")
 	if err != nil {
 		return ""
 	}
@@ -131,7 +132,7 @@ func isFeatureEffectivelyTerminal(status string) bool {
 // not met, and (false, err) when a non-blocking error occurred. Callers MUST
 // surface errors as warnings without failing the primary operation (REQ-012).
 func (s *EntityService) MaybeAutoAdvanceFeature(featureID string) (bool, error) {
-	feat, err := s.Get("feature", featureID, "")
+	feat, err := s.Get(context.Background(), "feature", featureID, "")
 	if err != nil {
 		return false, fmt.Errorf("auto-advance: load feature %s: %w", featureID, err)
 	}

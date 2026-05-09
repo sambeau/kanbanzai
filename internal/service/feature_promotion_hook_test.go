@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"testing"
 )
 
@@ -19,7 +20,7 @@ func TestFeaturePromotionHook_FiresOnDeveloping(t *testing.T) {
 		t.Errorf("OnStatusTransition() returned %v, want nil", result)
 	}
 
-	res, err := svc.Get("task", taskID, taskSlug)
+	res, err := svc.Get(context.Background(), "task", taskID, taskSlug)
 	if err != nil {
 		t.Fatalf("Get task: %v", err)
 	}
@@ -46,7 +47,7 @@ func TestFeaturePromotionHook_NoFireOnOtherStatus(t *testing.T) {
 	}
 
 	// Task should still be queued — hook must not have fired.
-	res, err := svc.Get("task", taskID, taskSlug)
+	res, err := svc.Get(context.Background(), "task", taskID, taskSlug)
 	if err != nil {
 		t.Fatalf("Get task: %v", err)
 	}
@@ -71,7 +72,7 @@ func TestFeaturePromotionHook_NoFireOnNonFeature(t *testing.T) {
 	}
 
 	// Task status must be unchanged.
-	res, err := svc.Get("task", taskID, taskSlug)
+	res, err := svc.Get(context.Background(), "task", taskID, taskSlug)
 	if err != nil {
 		t.Fatalf("Get task: %v", err)
 	}

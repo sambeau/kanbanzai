@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"strings"
@@ -171,7 +172,7 @@ func runEntityGet(args []string, deps dependencies) error {
 		if err != nil {
 			return err
 		}
-		result, err := svc.Get(args[0], values["id"], values["slug"])
+		result, err := svc.Get(context.Background(), args[0], values["id"], values["slug"])
 		if err != nil {
 			return err
 		}

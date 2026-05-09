@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -133,7 +134,7 @@ func runMove(args []string, deps dependencies) error {
 	}
 
 	// REQ-009: Move via git mv
-	if err := igit.GitMove(repoRoot, srcPath, dstPath); err != nil {
+	if err := igit.GitMove(context.Background(), repoRoot, srcPath, dstPath); err != nil {
 		return fmt.Errorf("git mv failed: %w", err)
 	}
 
@@ -169,7 +170,7 @@ func runMoveFeature(displayID, planArg string, force bool, stateRoot, repoRoot s
 	}
 
 	// Load feature entity to get current parent.
-	result, err := entitySvc.Get("feature", canonicalID, slug)
+	result, err := entitySvc.Get(context.Background(), "feature", canonicalID, slug)
 	if err != nil {
 		return fmt.Errorf("load feature %s: %w", canonicalID, err)
 	}
@@ -235,7 +236,7 @@ func runMoveFeature(displayID, planArg string, force bool, stateRoot, repoRoot s
 		if err := os.MkdirAll(filepath.Dir(newPath), 0o755); err != nil {
 			return fmt.Errorf("create directory for %s: %w", newPath, err)
 		}
-		if err := igit.GitMove(repoRoot, doc.Path, newPath); err != nil {
+		if err := igit.GitMove(context.Background(), repoRoot, doc.Path, newPath); err != nil {
 			return fmt.Errorf("git mv %s → %s: %w", doc.Path, newPath, err)
 		}
 		if _, err := docSvc.UpdateDocumentPathAndOwner(doc.ID, newPath, targetPlanID); err != nil {

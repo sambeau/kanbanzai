@@ -1,6 +1,7 @@
 package context
 
 import (
+	"context"
 	"sync/atomic"
 	"testing"
 )
@@ -56,7 +57,7 @@ func TestSurfacer_CacheHit_LoadCalledOnce(t *testing.T) {
 	input := SurfaceInput{}
 
 	// First call: cold cache — loader must be called.
-	if _, err := s.Surface(input); err != nil {
+	if _, err := s.Surface(context.Background(), input); err != nil {
 		t.Fatalf("Surface() #1 error = %v", err)
 	}
 	if cl.count() != 1 {
@@ -64,7 +65,7 @@ func TestSurfacer_CacheHit_LoadCalledOnce(t *testing.T) {
 	}
 
 	// Second call: warm cache, same generation — loader must NOT be called again.
-	if _, err := s.Surface(input); err != nil {
+	if _, err := s.Surface(context.Background(), input); err != nil {
 		t.Fatalf("Surface() #2 error = %v", err)
 	}
 	if cl.count() != 1 {
@@ -72,7 +73,7 @@ func TestSurfacer_CacheHit_LoadCalledOnce(t *testing.T) {
 	}
 
 	// Third call: same generation — still cached.
-	if _, err := s.Surface(input); err != nil {
+	if _, err := s.Surface(context.Background(), input); err != nil {
 		t.Fatalf("Surface() #3 error = %v", err)
 	}
 	if cl.count() != 1 {
@@ -94,7 +95,7 @@ func TestSurfacer_CacheMiss_ReloadsOnGenerationChange(t *testing.T) {
 	s := NewSurfacer(cl.load, nil, fixedNow, gen.read)
 
 	// Warm the cache at gen-v1.
-	if _, err := s.Surface(SurfaceInput{}); err != nil {
+	if _, err := s.Surface(context.Background(), SurfaceInput{}); err != nil {
 		t.Fatalf("Surface() #1 error = %v", err)
 	}
 	if cl.count() != 1 {
@@ -106,7 +107,7 @@ func TestSurfacer_CacheMiss_ReloadsOnGenerationChange(t *testing.T) {
 	cl.entries = []map[string]any{entry1, entry2}
 
 	// Second call: generation mismatch — must reload.
-	if _, err := s.Surface(SurfaceInput{}); err != nil {
+	if _, err := s.Surface(context.Background(), SurfaceInput{}); err != nil {
 		t.Fatalf("Surface() #2 error = %v", err)
 	}
 	if cl.count() != 2 {
@@ -114,7 +115,7 @@ func TestSurfacer_CacheMiss_ReloadsOnGenerationChange(t *testing.T) {
 	}
 
 	// Third call: gen-v2 still matches — cache hit.
-	if _, err := s.Surface(SurfaceInput{}); err != nil {
+	if _, err := s.Surface(context.Background(), SurfaceInput{}); err != nil {
 		t.Fatalf("Surface() #3 error = %v", err)
 	}
 	if cl.count() != 2 {
@@ -138,7 +139,7 @@ func TestSurfacer_CacheInvalidatesAfterContribute(t *testing.T) {
 	s := NewSurfacer(cl.load, nil, fixedNow, gen.read)
 
 	// Populate cache at G1.
-	result1, err := s.Surface(SurfaceInput{})
+	result1, err := s.Surface(context.Background(), SurfaceInput{})
 	if err != nil {
 		t.Fatalf("Surface() before contribute error = %v", err)
 	}
@@ -152,7 +153,7 @@ func TestSurfacer_CacheInvalidatesAfterContribute(t *testing.T) {
 	gen.token = "G2"
 
 	// Next Surface() should detect the generation change and reload.
-	result2, err := s.Surface(SurfaceInput{})
+	result2, err := s.Surface(context.Background(), SurfaceInput{})
 	if err != nil {
 		t.Fatalf("Surface() after contribute error = %v", err)
 	}
@@ -185,7 +186,7 @@ func TestSurfacer_NilGenReader_AlwaysReloads(t *testing.T) {
 	input := SurfaceInput{}
 
 	for i := 0; i < 3; i++ {
-		if _, err := s.Surface(input); err != nil {
+		if _, err := s.Surface(context.Background(), input); err != nil {
 			t.Fatalf("Surface() #%d error = %v", i+1, err)
 		}
 	}
@@ -216,7 +217,7 @@ func TestSurfacer_ConcurrentSafety(t *testing.T) {
 	s := NewSurfacer(cl.load, nil, fixedNow, gen.read)
 
 	// Prime the cache.
-	if _, err := s.Surface(SurfaceInput{}); err != nil {
+	if _, err := s.Surface(context.Background(), SurfaceInput{}); err != nil {
 		t.Fatalf("prime Surface() error = %v", err)
 	}
 
@@ -224,7 +225,7 @@ func TestSurfacer_ConcurrentSafety(t *testing.T) {
 	for i := 0; i < 20; i++ {
 		go func() {
 			defer func() { done <- struct{}{} }()
-			_, _ = s.Surface(SurfaceInput{})
+			_, _ = s.Surface(context.Background(), SurfaceInput{})
 		}()
 	}
 	for i := 0; i < 20; i++ {

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"reflect"
 	"strings"
 	"testing"
@@ -399,7 +400,7 @@ func TestEntityService_IncidentRoundTrip(t *testing.T) {
 	}
 
 	// Load via Get
-	loaded, err := svc.Get(created.Type, created.ID, created.Slug)
+	loaded, err := svc.Get(context.Background(), created.Type, created.ID, created.Slug)
 	if err != nil {
 		t.Fatalf("Get() error = %v", err)
 	}

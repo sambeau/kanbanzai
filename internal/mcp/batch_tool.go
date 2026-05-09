@@ -51,7 +51,7 @@ func batchSnapshotAction(entitySvc *service.EntityService) ActionHandler {
 		}
 
 		// Retrieve the batch entity.
-		batch, err := entitySvc.Get("batch", batchID, "")
+		batch, err := entitySvc.Get(ctx, "batch", batchID, "")
 		if err != nil {
 			return nil, fmt.Errorf("Cannot snapshot: batch %s not found: %w", batchID, err)
 		}

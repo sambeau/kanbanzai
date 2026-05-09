@@ -33,7 +33,7 @@ func setupHandoffTest(t *testing.T) *service.EntityService {
 // mockRoleResolver returns a minimal role for any ID.
 type mockRoleResolver struct{}
 
-func (m *mockRoleResolver) Resolve(id string) (*kbzctx.ResolvedRole, error) {
+func (m *mockRoleResolver) Resolve(_ context.Context, id string) (*kbzctx.ResolvedRole, error) {
 	return &kbzctx.ResolvedRole{
 		ID:       id,
 		Identity: "Test role",
@@ -175,7 +175,7 @@ func advanceHandoffFeatureTo(t *testing.T, entitySvc *service.EntityService, fea
 	default:
 		t.Fatalf("advanceHandoffFeatureTo: unsupported target %q", target)
 	}
-	feat, err := entitySvc.Get("feature", featID, "")
+	feat, err := entitySvc.Get(context.Background(), "feature", featID, "")
 	if err != nil {
 		t.Fatalf("advanceHandoffFeatureTo: get %s: %v", featID, err)
 	}
@@ -552,7 +552,7 @@ func TestHandoff_ReadOnly(t *testing.T) {
 		"task_id": taskID,
 	})
 
-	after, err := entitySvc.Get("task", taskID, taskSlug)
+	after, err := entitySvc.Get(context.Background(), "task", taskID, taskSlug)
 	if err != nil {
 		t.Fatalf("get task after handoff: %v", err)
 	}
@@ -574,7 +574,7 @@ func TestHandoff_ReadOnlyForReady(t *testing.T) {
 		"task_id": taskID,
 	})
 
-	after, err := entitySvc.Get("task", taskID, taskSlug)
+	after, err := entitySvc.Get(context.Background(), "task", taskID, taskSlug)
 	if err != nil {
 		t.Fatalf("get task after handoff: %v", err)
 	}
@@ -852,7 +852,7 @@ func TestHandoff_PreDispatchCommit_CalledBeforeAssembly(t *testing.T) {
 
 	commitCalled := false
 	savedFn := commitStateFunc
-	commitStateFunc = func(repoRoot string) (bool, error) {
+	commitStateFunc = func(_ context.Context, repoRoot string) (bool, error) {
 		commitCalled = true
 		return false, nil // simulate nothing to commit
 	}
@@ -877,7 +877,7 @@ func TestHandoff_PreDispatchCommit_FailureDoesNotBlockHandoff(t *testing.T) {
 	advanceHandoffTaskTo(t, entitySvc, taskID, taskSlug, "active")
 
 	savedFn := commitStateFunc
-	commitStateFunc = func(repoRoot string) (bool, error) {
+	commitStateFunc = func(_ context.Context, repoRoot string) (bool, error) {
 		return false, fmt.Errorf("simulated git commit failure: lock file exists")
 	}
 	defer func() { commitStateFunc = savedFn }()
@@ -906,7 +906,7 @@ func TestHandoff_PreDispatchCommit_UsesRepoRootDot(t *testing.T) {
 
 	var capturedRoot string
 	savedFn := commitStateFunc
-	commitStateFunc = func(repoRoot string) (bool, error) {
+	commitStateFunc = func(_ context.Context, repoRoot string) (bool, error) {
 		capturedRoot = repoRoot
 		return false, nil
 	}

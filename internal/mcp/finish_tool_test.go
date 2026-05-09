@@ -1689,7 +1689,7 @@ func TestFinish_AutoCommit_MessageFormat(t *testing.T) {
 
 	var capturedMsg string
 	savedFn := finishCommitFunc
-	finishCommitFunc = func(repoRoot, message string) (bool, error) {
+	finishCommitFunc = func(_ context.Context, repoRoot, message string) (bool, error) {
 		capturedMsg = message
 		return false, nil
 	}
@@ -1719,7 +1719,7 @@ func TestFinish_AutoCommit_FailureDoesNotBlockResult(t *testing.T) {
 	advanceToActive(t, entitySvc, taskID, taskSlug)
 
 	savedFn := finishCommitFunc
-	finishCommitFunc = func(repoRoot, message string) (bool, error) {
+	finishCommitFunc = func(_ context.Context, repoRoot, message string) (bool, error) {
 		return false, fmt.Errorf("simulated git commit failure")
 	}
 	defer func() { finishCommitFunc = savedFn }()
@@ -1756,7 +1756,7 @@ func TestFinish_BatchAutoCommit_SingleCommit(t *testing.T) {
 
 	var commitCount int
 	savedFn := finishCommitFunc
-	finishCommitFunc = func(repoRoot, message string) (bool, error) {
+	finishCommitFunc = func(_ context.Context, repoRoot, message string) (bool, error) {
 		commitCount++
 		return false, nil
 	}

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"strconv"
 
@@ -27,11 +28,11 @@ func runEstimate(args []string, deps dependencies) error {
 
 	// Query mode: no second argument.
 	if len(args) == 1 {
-		result, err := entitySvc.Get("task", entityID, "")
+		result, err := entitySvc.Get(context.Background(), "task", entityID, "")
 		if err != nil {
 			// Try other entity types.
 			for _, t := range []string{"feature", "bug", "plan"} {
-				result, err = entitySvc.Get(t, entityID, "")
+				result, err = entitySvc.Get(context.Background(), t, entityID, "")
 				if err == nil {
 					break
 				}

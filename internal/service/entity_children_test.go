@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"testing"
 
 	"github.com/sambeau/kanbanzai/internal/model"
@@ -661,7 +662,7 @@ func TestMaybeAutoAdvanceFeature_DevelopingAllTasksDone(t *testing.T) {
 		t.Errorf("advanced = false, want true (developing + all tasks done)")
 	}
 
-	feat, err := svc.Get("feature", featID, "adv-feat-dev")
+	feat, err := svc.Get(context.Background(), "feature", featID, "adv-feat-dev")
 	if err != nil {
 		t.Fatalf("Get feature after advance error = %v", err)
 	}
@@ -697,7 +698,7 @@ func TestMaybeAutoAdvanceFeature_NeedsReworkAllTasksDone(t *testing.T) {
 		t.Errorf("advanced = false, want true (needs-rework + all tasks done)")
 	}
 
-	feat, err := svc.Get("feature", featID, "adv-feat-rw")
+	feat, err := svc.Get(context.Background(), "feature", featID, "adv-feat-rw")
 	if err != nil {
 		t.Fatalf("Get feature after advance error = %v", err)
 	}

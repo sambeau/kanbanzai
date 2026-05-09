@@ -1,6 +1,7 @@
 package context
 
 import (
+	"context"
 	"fmt"
 	"sort"
 	"strings"
@@ -98,7 +99,7 @@ func Assemble(
 	var designItems []AssemblyItem
 
 	if input.TaskID != "" && entitySvc != nil {
-		task, terr := entitySvc.Get("task", input.TaskID, "")
+		task, terr := entitySvc.Get(context.Background(), "task", input.TaskID, "")
 		if terr == nil {
 			ti := AssemblyItem{
 				Source:   SourceTask,

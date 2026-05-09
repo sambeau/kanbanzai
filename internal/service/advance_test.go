@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"strings"
 	"testing"
 	"time"
@@ -95,7 +96,7 @@ func TestAdvanceFeatureStatus_FullAdvance(t *testing.T) {
 		}
 	}
 
-	got, err := entitySvc.Get("feature", featureID, slug)
+	got, err := entitySvc.Get(context.Background(), "feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
 	}
@@ -152,7 +153,7 @@ func TestAdvanceFeatureStatus_PartialAdvance_StopsAtSpecifying(t *testing.T) {
 		}
 	}
 
-	got, err := entitySvc.Get("feature", featureID, slug)
+	got, err := entitySvc.Get(context.Background(), "feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
 	}
@@ -257,7 +258,7 @@ func TestAdvanceFeatureStatus_AdvanceToDone_StopsAtReviewing(t *testing.T) {
 		}
 	}
 
-	got, err := entitySvc.Get("feature", featureID, slug)
+	got, err := entitySvc.Get(context.Background(), "feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
 	}
@@ -328,7 +329,7 @@ func TestAdvanceFeatureStatus_AllGatesUnsatisfied(t *testing.T) {
 		t.Errorf("AdvancedThrough = %v, want [designing]", result.AdvancedThrough)
 	}
 
-	got, err := entitySvc.Get("feature", featureID, slug)
+	got, err := entitySvc.Get(context.Background(), "feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
 	}
@@ -369,7 +370,7 @@ func TestAdvanceFeatureStatus_AdvanceFromDeveloping_ToDone_StopsAtReviewing(t *t
 		t.Errorf("AdvancedThrough = %v, want [reviewing]", result.AdvancedThrough)
 	}
 
-	got, err := entitySvc.Get("feature", featureID, slug)
+	got, err := entitySvc.Get(context.Background(), "feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
 	}
@@ -442,7 +443,7 @@ func TestAdvanceFeatureStatus_AdvanceFromReviewing_ToDone(t *testing.T) {
 		t.Errorf("AdvancedThrough = %v, want [done]", result.AdvancedThrough)
 	}
 
-	got, err := entitySvc.Get("feature", featureID, slug)
+	got, err := entitySvc.Get(context.Background(), "feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
 	}
@@ -683,7 +684,7 @@ func TestAdvanceFeatureStatus_EachStepPersisted(t *testing.T) {
 		t.Fatalf("FinalStatus = %q, want %q", result.FinalStatus, "dev-planning")
 	}
 
-	got, err := entitySvc.Get("feature", featureID, slug)
+	got, err := entitySvc.Get(context.Background(), "feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
 	}
@@ -884,7 +885,7 @@ func TestAdvanceFeatureStatus_Override_PersistedOnDisk(t *testing.T) {
 	}
 
 	// Read the entity back from disk and verify the overrides field is present.
-	got, err := entitySvc.Get("feature", featureID, slug)
+	got, err := entitySvc.Get(context.Background(), "feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
 	}
@@ -1059,7 +1060,7 @@ func TestAdvanceFeatureStatus_RequireHumanReview_True_Halts(t *testing.T) {
 		t.Errorf("StoppedReason %q should mention require_human_review", result.StoppedReason)
 	}
 
-	got, err := entitySvc.Get("feature", featureID, slug)
+	got, err := entitySvc.Get(context.Background(), "feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
 	}
@@ -1114,7 +1115,7 @@ func TestAdvanceFeatureStatus_AutoAdvancePastReviewing_AllVerified(t *testing.T)
 		}
 	}
 
-	got, err := entitySvc.Get("feature", featureID, slug)
+	got, err := entitySvc.Get(context.Background(), "feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
 	}
@@ -1158,7 +1159,7 @@ func TestAdvanceFeatureStatus_HaltsAtReviewing_UnverifiedTask(t *testing.T) {
 		t.Errorf("StoppedReason %q should identify unverified task T-01EEEEEEEEEE03", result.StoppedReason)
 	}
 
-	got, err := entitySvc.Get("feature", featureID, slug)
+	got, err := entitySvc.Get(context.Background(), "feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
 	}
@@ -1199,7 +1200,7 @@ func TestAdvanceFeatureStatus_AutoAdvancePastReviewing_ZeroTasks(t *testing.T) {
 		t.Errorf("StoppedReason = %q, want empty", result.StoppedReason)
 	}
 
-	got, err := entitySvc.Get("feature", featureID, slug)
+	got, err := entitySvc.Get(context.Background(), "feature", featureID, slug)
 	if err != nil {
 		t.Fatalf("Get after advance: %v", err)
 	}

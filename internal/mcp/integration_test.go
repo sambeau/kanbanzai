@@ -109,7 +109,7 @@ func TestIntegration_NextHandoffFinish(t *testing.T) {
 	}
 
 	// The next tool should have transitioned the task to active.
-	taskAfterNext, err := entitySvc.Get("task", taskID, "")
+	taskAfterNext, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		t.Fatalf("Get task after next: %v", err)
 	}
@@ -194,7 +194,7 @@ func TestIntegration_NextHandoffFinish(t *testing.T) {
 
 	// ── Verify final state ──────────────────────────────────────────────
 
-	taskAfterFinish, err := entitySvc.Get("task", taskID, "")
+	taskAfterFinish, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		t.Fatalf("Get task after finish: %v", err)
 	}
@@ -344,7 +344,7 @@ func TestIntegration_FinishStateConsistency(t *testing.T) {
 
 	// ── AC-003: entity get returns done ─────────────────────────────────
 
-	taskAfterFinish, err := entitySvc.Get("task", task1ID, "")
+	taskAfterFinish, err := entitySvc.Get(context.Background(), "task", task1ID, "")
 	if err != nil {
 		t.Fatalf("entity get after finish: %v", err)
 	}

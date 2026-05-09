@@ -185,7 +185,7 @@ func createPR(
 			"reason": "no worktree exists — work was committed directly to the default branch",
 		}, nil
 	}
-	entity, err := entitySvc.Get(entityType, entityID, "")
+	entity, err := entitySvc.Get(ctx, entityType, entityID, "")
 	if err != nil {
 		return nil, fmt.Errorf("Cannot create PR for %s: failed to retrieve entity: %w.\n\nTo resolve:\n  Verify the entity ID exists: entity(action: \"get\", id: \"%s\")", entityID, err, entityID)
 	}
@@ -316,7 +316,7 @@ func updatePR(
 			"reason": "no worktree exists — work was committed directly to the default branch",
 		}, nil
 	}
-	entity, err := entitySvc.Get(entityType, entityID, "")
+	entity, err := entitySvc.Get(ctx, entityType, entityID, "")
 	if err != nil {
 		return nil, fmt.Errorf("Cannot update PR for %s: failed to retrieve entity: %w.\n\nTo resolve:\n  Verify the entity ID exists: entity(action: \"get\", id: \"%s\")", entityID, err, entityID)
 	}

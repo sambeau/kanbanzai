@@ -30,7 +30,7 @@ func callDecomposeApply(t *testing.T, entitySvc *service.EntityService, featID s
 	t.Helper()
 
 	savedFn := decomposeCommitFunc
-	decomposeCommitFunc = func(_, _ string) (bool, error) { return false, nil }
+	decomposeCommitFunc = func(_ context.Context, _, _ string) (bool, error) { return false, nil }
 	defer func() { decomposeCommitFunc = savedFn }()
 
 	proposal := map[string]any{

@@ -1545,7 +1545,7 @@ func TestEntity_Transition_ReviewCap_BlocksNeedsRework(t *testing.T) {
 	}
 
 	// blocked_reason must be persisted on the feature entity itself.
-	feat, err := entitySvc.Get("feature", featID, "")
+	feat, err := entitySvc.Get(context.Background(), "feature", featID, "")
 	if err != nil {
 		t.Fatalf("get feature after cap block: %v", err)
 	}
@@ -1591,7 +1591,7 @@ func TestEntity_Transition_ReviewCap_SubsequentAttemptAlsoRejected(t *testing.T)
 	}
 
 	// Feature must still be in reviewing (transition did not occur).
-	feat, err := entitySvc.Get("feature", featID, "")
+	feat, err := entitySvc.Get(context.Background(), "feature", featID, "")
 	if err != nil {
 		t.Fatalf("get feature after first attempt: %v", err)
 	}
@@ -1745,7 +1745,7 @@ func TestEntity_Create_AutoCommit_MessageFormat(t *testing.T) {
 
 	var capturedMsg string
 	savedFn := entityCommitFunc
-	entityCommitFunc = func(repoRoot, message string) (bool, error) {
+	entityCommitFunc = func(_ context.Context, repoRoot, message string) (bool, error) {
 		capturedMsg = message
 		return false, nil
 	}
@@ -1782,7 +1782,7 @@ func TestEntity_Create_AutoCommit_FailureDoesNotBlockResult(t *testing.T) {
 	featID := createEntityTestFeature(t, entitySvc, planID, "commit-fail-feat")
 
 	savedFn := entityCommitFunc
-	entityCommitFunc = func(repoRoot, message string) (bool, error) {
+	entityCommitFunc = func(_ context.Context, repoRoot, message string) (bool, error) {
 		return false, fmt.Errorf("simulated git commit failure")
 	}
 	defer func() { entityCommitFunc = savedFn }()
@@ -1828,7 +1828,7 @@ func TestEntity_Transition_AutoCommit_MessageFormat(t *testing.T) {
 
 	var capturedMsg string
 	savedFn := entityCommitFunc
-	entityCommitFunc = func(repoRoot, message string) (bool, error) {
+	entityCommitFunc = func(_ context.Context, repoRoot, message string) (bool, error) {
 		capturedMsg = message
 		return false, nil
 	}

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"strings"
 
@@ -178,7 +179,7 @@ func runIncidentShow(args []string, deps dependencies) error {
 	incidentID := strings.TrimSpace(args[0])
 
 	svc := service.NewEntityService(core.StatePath())
-	result, err := svc.Get("incident", incidentID, "")
+	result, err := svc.Get(context.Background(), "incident", incidentID, "")
 	if err != nil {
 		return err
 	}

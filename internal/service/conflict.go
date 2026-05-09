@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"strings"
 	"time"
@@ -110,7 +111,7 @@ func (s *ConflictService) Check(input ConflictCheckInput) (ConflictCheckResult, 
 
 	tasks := make([]taskConflictInfo, 0, len(input.TaskIDs))
 	for _, id := range input.TaskIDs {
-		result, err := s.entitySvc.Get("task", id, "")
+		result, err := s.entitySvc.Get(context.Background(), "task", id, "")
 		if err != nil {
 			return ConflictCheckResult{}, fmt.Errorf("load task %s: %w", id, err)
 		}
@@ -125,7 +126,7 @@ func (s *ConflictService) Check(input ConflictCheckInput) (ConflictCheckResult, 
 		}
 
 		if info.parentFeature != "" {
-			featResult, err := s.entitySvc.Get("feature", info.parentFeature, "")
+			featResult, err := s.entitySvc.Get(context.Background(), "feature", info.parentFeature, "")
 			if err == nil {
 				info.featureSlug = featResult.Slug
 				info.featureSpec = stringFromState(featResult.State, "spec")

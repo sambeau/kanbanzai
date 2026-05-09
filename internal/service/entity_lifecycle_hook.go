@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"strings"
@@ -59,7 +60,7 @@ func (h *entityLifecycleHookImpl) TransitionStatus(entityID, newStatus string) e
 		currentStatus = stringFromState(result.State, "status")
 		kind = validate.EntityPlan
 	case "feature":
-		result, err := h.entitySvc.Get("feature", resolvedID, slug)
+		result, err := h.entitySvc.Get(context.Background(), "feature", resolvedID, slug)
 		if err != nil {
 			return fmt.Errorf("load feature %s: %w", resolvedID, err)
 		}
@@ -131,7 +132,7 @@ func (h *entityLifecycleHookImpl) GetEntityStatus(entityID string) (string, stri
 		}
 		return "plan", stringFromState(result.State, "status"), nil
 	case "feature":
-		result, err := h.entitySvc.Get("feature", resolvedID, slug)
+		result, err := h.entitySvc.Get(context.Background(), "feature", resolvedID, slug)
 		if err != nil {
 			return "", "", err
 		}

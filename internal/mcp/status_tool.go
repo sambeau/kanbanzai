@@ -1051,7 +1051,7 @@ type docInfo struct {
 }
 
 func synthesiseFeature(featID string, entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store, repoPath string, staleReviewingDays int) (*featureDetail, error) {
-	feat, err := entitySvc.Get("feature", featID, "")
+	feat, err := entitySvc.Get(context.Background(), "feature", featID, "")
 	if err != nil {
 		return nil, fmt.Errorf("Cannot show status for feature %s: feature not found or unreadable: %w.\n\nTo resolve:\n  Verify the feature ID with entity(action: \"list\", type: \"feature\").", featID, err)
 	}
@@ -1285,7 +1285,7 @@ type depInfo struct {
 }
 
 func synthesiseTask(taskID string, entitySvc *service.EntityService) (*taskDetail, error) {
-	task, err := entitySvc.Get("task", taskID, "")
+	task, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		return nil, fmt.Errorf("Cannot show status for task %s: task not found or unreadable: %w.\n\nTo resolve:\n  Verify the task ID with entity(action: \"list\", type: \"task\").", taskID, err)
 	}
@@ -1326,7 +1326,7 @@ func synthesiseTask(taskID string, entitySvc *service.EntityService) (*taskDetai
 	// Load parent feature for context.
 	var parentFeat *featureInfo
 	if tparent != "" {
-		if pf, err := entitySvc.Get("feature", tparent, ""); err == nil {
+		if pf, err := entitySvc.Get(context.Background(), "feature", tparent, ""); err == nil {
 			pfstatus, _ := pf.State["status"].(string)
 			pfsummary, _ := pf.State["summary"].(string)
 			// Features store their parent plan in the "parent" field, not "owner".
@@ -1394,7 +1394,7 @@ type bugInfo struct {
 }
 
 func synthesiseBug(bugID string, entitySvc *service.EntityService) (*bugDetail, error) {
-	bug, err := entitySvc.Get("bug", bugID, "")
+	bug, err := entitySvc.Get(context.Background(), "bug", bugID, "")
 	if err != nil {
 		return nil, fmt.Errorf("Cannot show status for bug %s: bug not found or unreadable: %w.\n\nTo resolve:\n  Verify the bug ID with entity(action: \"list\", type: \"bug\").", bugID, err)
 	}
@@ -1847,7 +1847,7 @@ func resolveDependencies(taskState map[string]any, entitySvc *service.EntityServ
 		if depID == "" {
 			continue
 		}
-		dep, err := entitySvc.Get("task", depID, "")
+		dep, err := entitySvc.Get(context.Background(), "task", depID, "")
 		if err != nil {
 			result = append(result, depInfo{DisplayID: id.FormatFullDisplay(depID), TaskID: depID, Status: "unknown", Blocking: true})
 			continue

@@ -8,6 +8,7 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"strings"
 
@@ -156,7 +157,7 @@ func (s *EntityService) resolveBatchToPlan(batchID string) (string, string, erro
 // resolveFeatureToPlan looks up a feature entity, finds its parent batch,
 // then resolves the batch to its parent plan.
 func (s *EntityService) resolveFeatureToPlan(featureID string) (string, string, error) {
-	feat, err := s.Get("feature", featureID, "")
+	feat, err := s.Get(context.Background(), "feature", featureID, "")
 	if err != nil {
 		return "", "", fmt.Errorf("parent entity %s not found", featureID)
 	}

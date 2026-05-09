@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"strings"
 	"time"
@@ -48,7 +49,7 @@ func runMergeCheck(args []string, deps dependencies) error {
 		return fmt.Errorf("invalid entity type: ID must start with FEAT- or BUG-")
 	}
 
-	entity, err := entitySvc.Get(entityType, entityID, "")
+	entity, err := entitySvc.Get(context.Background(), entityType, entityID, "")
 	if err != nil {
 		return fmt.Errorf("get entity: %w", err)
 	}
@@ -134,7 +135,7 @@ func runMergeRun(args []string, deps dependencies) error {
 		return fmt.Errorf("invalid entity type: ID must start with FEAT- or BUG-")
 	}
 
-	entity, err := entitySvc.Get(entityType, entityID, "")
+	entity, err := entitySvc.Get(context.Background(), entityType, entityID, "")
 	if err != nil {
 		return fmt.Errorf("get entity: %w", err)
 	}

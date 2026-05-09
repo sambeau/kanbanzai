@@ -58,7 +58,7 @@ func developDispatchAction(entitySvc *service.EntityService, conflictSvc *servic
 		}
 
 		// Verify feature exists and is in developing status.
-		feat, err := entitySvc.Get("feature", featureID, "")
+		feat, err := entitySvc.Get(ctx, "feature", featureID, "")
 		if err != nil {
 			return nil, fmt.Errorf("Cannot dispatch: feature %s not found: %w", featureID, err)
 		}
@@ -261,7 +261,7 @@ func developDispatchAction(entitySvc *service.EntityService, conflictSvc *servic
 // handoff assembly pipeline. When the pipeline is unavailable, it returns a
 // minimal hint directing the agent to use the handoff tool.
 func generateDispatchHandoff(entitySvc *service.EntityService, taskID, instructions string) string {
-	task, err := entitySvc.Get("task", taskID, "")
+	task, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		return fmt.Sprintf("<!-- handoff: %s -->", taskID)
 	}

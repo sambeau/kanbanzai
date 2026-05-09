@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -53,7 +54,7 @@ func (s *ReviewService) ReviewTaskOutput(input ReviewInput) (ReviewResult, error
 	}
 
 	// Step 1: Load the task. Reject if status is not active, done, or needs-review.
-	taskResult, err := s.entitySvc.Get("task", taskID, "")
+	taskResult, err := s.entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		return ReviewResult{}, fmt.Errorf("loading task %s: %w", taskID, err)
 	}
@@ -71,7 +72,7 @@ func (s *ReviewService) ReviewTaskOutput(input ReviewInput) (ReviewResult, error
 	parentFeature, _ := taskResult.State["parent_feature"].(string)
 	specDocID := ""
 	if parentFeature != "" {
-		featureResult, err := s.entitySvc.Get("feature", parentFeature, "")
+		featureResult, err := s.entitySvc.Get(context.Background(), "feature", parentFeature, "")
 		if err == nil {
 			specDocID, _ = featureResult.State["spec"].(string)
 		}

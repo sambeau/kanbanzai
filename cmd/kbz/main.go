@@ -36,7 +36,7 @@ type entityService interface {
 	CreateBug(service.CreateBugInput) (service.CreateResult, error)
 	CreateDecision(service.CreateDecisionInput) (service.CreateResult, error)
 	GetPlan(id string) (service.ListResult, error)
-	Get(entityType, entityID, slug string) (service.GetResult, error)
+	Get(ctx context.Context, entityType, entityID, slug string) (service.GetResult, error)
 	List(entityType string) ([]service.ListResult, error)
 	ListPlans(filters service.PlanFilters) ([]service.ListResult, error)
 	UpdateStatus(service.UpdateStatusInput) (service.GetResult, error)

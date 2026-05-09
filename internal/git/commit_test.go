@@ -9,6 +9,8 @@
 package git
 
 import (
+	"context"
+	"errors"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -113,7 +115,7 @@ func TestCommitStateIfDirty_Clean_NothingCommitted(t *testing.T) {
 
 	before := countCommits(t, dir)
 
-	committed, err := CommitStateIfDirty(dir)
+	committed, err := CommitStateIfDirty(context.Background(), dir)
 	if err != nil {
 		t.Fatalf("CommitStateIfDirty: unexpected error: %v", err)
 	}
@@ -139,7 +141,7 @@ func TestCommitStateIfDirty_DirtyState_CommitCreated(t *testing.T) {
 
 	before := countCommits(t, dir)
 
-	committed, err := CommitStateIfDirty(dir)
+	committed, err := CommitStateIfDirty(context.Background(), dir)
 	if err != nil {
 		t.Fatalf("CommitStateIfDirty: unexpected error: %v", err)
 	}
@@ -176,7 +178,7 @@ func TestCommitStateIfDirty_OnlyStagedStateFiles(t *testing.T) {
 	// Write an unrelated file in a different directory (must NOT be committed).
 	writeFile(t, dir, "work/spec/some-spec.md", "# Some Spec\n")
 
-	committed, err := CommitStateIfDirty(dir)
+	committed, err := CommitStateIfDirty(context.Background(), dir)
 	if err != nil {
 		t.Fatalf("CommitStateIfDirty: unexpected error: %v", err)
 	}
@@ -220,7 +222,7 @@ func TestCommitStateIfDirty_SecondCallWithCleanState(t *testing.T) {
 	writeFile(t, dir, ".kbz/state/tasks/TASK-001.yaml", "id: TASK-001\n")
 
 	// First call — should commit.
-	committed1, err := CommitStateIfDirty(dir)
+	committed1, err := CommitStateIfDirty(context.Background(), dir)
 	if err != nil {
 		t.Fatalf("first CommitStateIfDirty: %v", err)
 	}
@@ -230,7 +232,7 @@ func TestCommitStateIfDirty_SecondCallWithCleanState(t *testing.T) {
 
 	// Second call — state is already committed; should not create another commit.
 	before := countCommits(t, dir)
-	committed2, err := CommitStateIfDirty(dir)
+	committed2, err := CommitStateIfDirty(context.Background(), dir)
 	if err != nil {
 		t.Fatalf("second CommitStateIfDirty: %v", err)
 	}
@@ -248,7 +250,7 @@ func TestCommitStateIfDirty_SecondCallWithCleanState(t *testing.T) {
 func TestCommitStateIfDirty_NonExistentRepo_ReturnsError(t *testing.T) {
 	t.Parallel()
 	// Pass a path that does not exist as a git repo.
-	_, err := CommitStateIfDirty("/tmp/kanbanzai-nonexistent-test-repo-xyz")
+	_, err := CommitStateIfDirty(context.Background(), "/tmp/kanbanzai-nonexistent-test-repo-xyz")
 	if err == nil {
 		t.Error("expected error for non-existent repo path, got nil")
 	}
@@ -264,7 +266,7 @@ func TestCommitStateWithMessage_CustomMessage(t *testing.T) {
 
 	writeFile(t, dir, ".kbz/state/tasks/TASK-001.yaml", "id: TASK-001\nstatus: done\n")
 
-	committed, err := CommitStateWithMessage(dir, "workflow(TASK-001): complete – do the thing")
+	committed, err := CommitStateWithMessage(context.Background(), dir, "workflow(TASK-001): complete – do the thing")
 	if err != nil {
 		t.Fatalf("CommitStateWithMessage: unexpected error: %v", err)
 	}
@@ -290,7 +292,7 @@ func TestCommitStateWithMessage_Clean_NothingCommitted(t *testing.T) {
 
 	before := countCommits(t, dir)
 
-	committed, err := CommitStateWithMessage(dir, "workflow: some message")
+	committed, err := CommitStateWithMessage(context.Background(), dir, "workflow: some message")
 	if err != nil {
 		t.Fatalf("CommitStateWithMessage: unexpected error: %v", err)
 	}
@@ -312,7 +314,7 @@ func TestCommitStateIfDirty_StillUsesFixedMessage(t *testing.T) {
 
 	writeFile(t, dir, ".kbz/state/tasks/TASK-002.yaml", "id: TASK-002\nstatus: active\n")
 
-	committed, err := CommitStateIfDirty(dir)
+	committed, err := CommitStateIfDirty(context.Background(), dir)
 	if err != nil {
 		t.Fatalf("CommitStateIfDirty: %v", err)
 	}
@@ -339,7 +341,7 @@ func TestCommitStateAndPaths_StagesStateAndExtraPath(t *testing.T) {
 	writeFile(t, dir, ".kbz/state/documents/DOC-001.yaml", "id: DOC-001\n")
 	writeFile(t, dir, "work/spec/my-spec.md", "# My Spec\n")
 
-	committed, err := CommitStateAndPaths(dir, "workflow(DOC-001): register specification", "work/spec/my-spec.md")
+	committed, err := CommitStateAndPaths(context.Background(), dir, "workflow(DOC-001): register specification", "work/spec/my-spec.md")
 	if err != nil {
 		t.Fatalf("CommitStateAndPaths: unexpected error: %v", err)
 	}
@@ -382,7 +384,7 @@ func TestCommitStateAndPaths_DoesNotStageOtherFiles(t *testing.T) {
 	writeFile(t, dir, "work/spec/my-spec.md", "# My Spec\n")
 	writeFile(t, dir, "work/design/other.md", "# Other\n") // NOT in extraPaths
 
-	committed, err := CommitStateAndPaths(dir, "workflow(DOC-002): register specification", "work/spec/my-spec.md")
+	committed, err := CommitStateAndPaths(context.Background(), dir, "workflow(DOC-002): register specification", "work/spec/my-spec.md")
 	if err != nil {
 		t.Fatalf("CommitStateAndPaths: %v", err)
 	}
@@ -406,7 +408,7 @@ func TestCommitStateAndPaths_Clean_NothingCommitted(t *testing.T) {
 
 	before := countCommits(t, dir)
 
-	committed, err := CommitStateAndPaths(dir, "workflow: test", "work/spec/nonexistent.md")
+	committed, err := CommitStateAndPaths(context.Background(), dir, "workflow: test", "work/spec/nonexistent.md")
 	if err != nil {
 		t.Fatalf("CommitStateAndPaths: unexpected error: %v", err)
 	}
@@ -430,7 +432,7 @@ func TestCommitStateAndPaths_OnlyExtraPathDirty(t *testing.T) {
 	// Only the extra path is dirty; .kbz/state/ is clean.
 	writeFile(t, dir, "work/spec/my-spec.md", "# New Spec\n")
 
-	committed, err := CommitStateAndPaths(dir, "workflow(DOC-003): register specification", "work/spec/my-spec.md")
+	committed, err := CommitStateAndPaths(context.Background(), dir, "workflow(DOC-003): register specification", "work/spec/my-spec.md")
 	if err != nil {
 		t.Fatalf("CommitStateAndPaths: %v", err)
 	}
@@ -447,5 +449,33 @@ func TestCommitStateAndPaths_OnlyExtraPathDirty(t *testing.T) {
 	}
 	if !hasExtra {
 		t.Error("commit does not contain work/spec/my-spec.md")
+	}
+}
+
+// ─── AC-002: cancelled context ──────────────────────────────────────────────
+
+// TestCommitStateIfDirty_CancelledContext verifies AC-002:
+// Given a cancelled context, CommitStateIfDirty returns a context error
+// and terminates the git command.
+func TestCommitStateIfDirty_CancelledContext(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	initTestRepo(t, dir)
+
+	writeFile(t, dir, ".kbz/state/tasks/TASK-AC002.yaml", "id: TASK-AC002\nstatus: active\n")
+
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel() // immediate cancellation
+
+	committed, err := CommitStateIfDirty(ctx, dir)
+
+	if committed {
+		t.Error("committed = true, want false (context cancelled)")
+	}
+	if err == nil {
+		t.Fatal("expected error from cancelled context, got nil")
+	}
+	if !errors.Is(err, context.Canceled) && !strings.Contains(err.Error(), context.Canceled.Error()) {
+		t.Errorf("expected context.Canceled, got: %v", err)
 	}
 }

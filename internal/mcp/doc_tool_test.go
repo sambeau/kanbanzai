@@ -1497,7 +1497,7 @@ func TestDocTool_Register_AutoCommit_MessageFormat(t *testing.T) {
 
 	var capturedMsg string
 	savedFn := docCommitPathsFunc
-	docCommitPathsFunc = func(repoRoot, message string, extraPaths ...string) (bool, error) {
+	docCommitPathsFunc = func(_ context.Context, repoRoot, message string, extraPaths ...string) (bool, error) {
 		capturedMsg = message
 		return false, nil
 	}
@@ -1527,7 +1527,7 @@ func TestDocTool_Register_AutoCommit_FailureDoesNotBlockResult(t *testing.T) {
 	writeDocFile(t, env.repoRoot, "work/spec/commit-fail.md", "# Spec\n\nContent.")
 
 	savedFn := docCommitPathsFunc
-	docCommitPathsFunc = func(repoRoot, message string, extraPaths ...string) (bool, error) {
+	docCommitPathsFunc = func(_ context.Context, repoRoot, message string, extraPaths ...string) (bool, error) {
 		return false, fmt.Errorf("simulated git commit failure")
 	}
 	defer func() { docCommitPathsFunc = savedFn }()
@@ -1562,7 +1562,7 @@ func TestDocTool_Approve_AutoCommit_MessageFormat(t *testing.T) {
 
 	var capturedMsg string
 	savedFn := docCommitFunc
-	docCommitFunc = func(repoRoot, message string) (bool, error) {
+	docCommitFunc = func(_ context.Context, repoRoot, message string) (bool, error) {
 		capturedMsg = message
 		return false, nil
 	}
@@ -1590,7 +1590,7 @@ func TestDocTool_Approve_AutoCommit_FailureDoesNotBlockResult(t *testing.T) {
 	docID := registerDoc(t, env, "work/design/approve-fail.md", "design", "Approve Fail Design")
 
 	savedFn := docCommitFunc
-	docCommitFunc = func(repoRoot, message string) (bool, error) {
+	docCommitFunc = func(_ context.Context, repoRoot, message string) (bool, error) {
 		return false, fmt.Errorf("simulated git commit failure")
 	}
 	defer func() { docCommitFunc = savedFn }()

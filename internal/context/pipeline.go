@@ -10,6 +10,7 @@
 package context
 
 import (
+	"context"
 	"fmt"
 	"strings"
 	"time"
@@ -56,7 +57,7 @@ const (
 // RoleResolver resolves a role by ID, walking the inheritance chain.
 // The production implementation wraps RoleStore + ResolveRole.
 type RoleResolver interface {
-	Resolve(id string) (*ResolvedRole, error)
+	Resolve(ctx context.Context, id string) (*ResolvedRole, error)
 }
 
 // SkillResolver loads a parsed skill by name.
@@ -74,7 +75,7 @@ type BindingResolver interface {
 // KnowledgeSurfacer retrieves relevant knowledge entries for a task context.
 // Step 7 of the pipeline delegates to this interface.
 type KnowledgeSurfacer interface {
-	Surface(input SurfaceInput) ([]SurfacedEntry, error)
+	Surface(ctx context.Context, input SurfaceInput) ([]SurfacedEntry, error)
 }
 
 // SurfaceInput is the input for knowledge auto-surfacing.
@@ -209,7 +210,7 @@ func (p *Pipeline) windowTokens() int {
 // Run executes the 10-step pipeline and returns the assembled result.
 // Each step either advances the PipelineState or returns an error with
 // step name, entity ID, and remediation hint (NFR-004).
-func (p *Pipeline) Run(input PipelineInput) (*PipelineResult, error) {
+func (p *Pipeline) Run(ctx context.Context, input PipelineInput) (*PipelineResult, error) {
 	state := &PipelineState{Input: input}
 
 	// Step 0: Lifecycle state validation.
@@ -234,7 +235,7 @@ func (p *Pipeline) Run(input PipelineInput) (*PipelineResult, error) {
 	p.stepExtractOrchestration(state)
 
 	// Step 5: Role resolution with inheritance.
-	if err := p.stepResolveRole(state); err != nil {
+	if err := p.stepResolveRole(ctx, state); err != nil {
 		return nil, err
 	}
 
@@ -247,7 +248,7 @@ func (p *Pipeline) Run(input PipelineInput) (*PipelineResult, error) {
 	p.stepCheckFreshness(state)
 
 	// Step 7: Knowledge entry integration.
-	p.stepSurfaceKnowledge(state)
+	p.stepSurfaceKnowledge(ctx, state)
 
 	// Step 8: Tool subset guidance.
 	p.stepToolGuidance(state)
@@ -356,7 +357,7 @@ func (p *Pipeline) stepExtractOrchestration(state *PipelineState) {
 }
 
 // stepResolveRole resolves the role (step 5) and merges vocabulary/anti-patterns.
-func (p *Pipeline) stepResolveRole(state *PipelineState) error {
+func (p *Pipeline) stepResolveRole(ctx context.Context, state *PipelineState) error {
 	// Determine which role to resolve: caller override > sub-agent's first role > binding's first role.
 	roleID := state.Input.Role
 	if roleID == "" && state.Binding.SubAgents != nil && len(state.Binding.SubAgents.Roles) > 0 {
@@ -377,7 +378,7 @@ func (p *Pipeline) stepResolveRole(state *PipelineState) error {
 			"ensure the pipeline is configured with a RoleResolver")
 	}
 
-	resolved, err := p.Roles.Resolve(roleID)
+	resolved, err := p.Roles.Resolve(ctx, roleID)
 	if err != nil {
 		return pipelineError(5, "role-resolution",
 			fmt.Sprintf("failed to resolve role %q: %v", roleID, err),
@@ -469,7 +470,7 @@ func (p *Pipeline) stepLoadSkill(state *PipelineState) error {
 }
 
 // stepSurfaceKnowledge invokes the knowledge surfacer at step 7.
-func (p *Pipeline) stepSurfaceKnowledge(state *PipelineState) {
+func (p *Pipeline) stepSurfaceKnowledge(ctx context.Context, state *PipelineState) {
 	if p.Knowledge == nil || !state.Inclusion.IncludeKnowledge {
 		return
 	}
@@ -493,7 +494,7 @@ func (p *Pipeline) stepSurfaceKnowledge(state *PipelineState) {
 		skillName = state.Skill.Frontmatter.Name
 	}
 
-	entries, err := p.Knowledge.Surface(SurfaceInput{
+	entries, err := p.Knowledge.Surface(ctx, SurfaceInput{
 		TaskID:    state.Input.TaskID,
 		FilePaths: filePaths,
 		RoleTags:  roleTags,

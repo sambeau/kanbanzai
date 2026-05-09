@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"testing"
 
 	"github.com/sambeau/kanbanzai/internal/model"
@@ -350,7 +351,7 @@ func TestWorkQueue_PromotionStillWorksWithConflictCheck(t *testing.T) {
 	}
 
 	// Verify it starts queued.
-	got, err := svc.Get("task", task.ID, task.Slug)
+	got, err := svc.Get(context.Background(), "task", task.ID, task.Slug)
 	if err != nil {
 		t.Fatalf("Get task: %v", err)
 	}

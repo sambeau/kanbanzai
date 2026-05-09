@@ -39,8 +39,8 @@ import (
 // pending .kbz/state/ changes before dispatching a sub-agent. It is a
 // package-level variable so tests can inject a stub without changing public
 // APIs. The production value delegates to git.CommitStateIfDirty.
-var commitStateFunc = func(repoRoot string) (bool, error) {
-	return git.CommitStateIfDirty(repoRoot)
+var commitStateFunc = func(ctx context.Context, repoRoot string) (bool, error) {
+	return git.CommitStateIfDirty(ctx, repoRoot)
 }
 
 // HandoffTools returns the `handoff` MCP tool registered in the core group.
@@ -127,7 +127,7 @@ func handoffTool(
 		instructions := strings.TrimSpace(req.GetString("instructions", ""))
 
 		// Load the task.
-		task, err := entitySvc.Get("task", taskID, "")
+		task, err := entitySvc.Get(ctx, "task", taskID, "")
 		if err != nil {
 			return mcp.NewToolResultText(invariants.Format(invariants.RefusalResponse{
 				Code:       invariants.INV002,
@@ -160,7 +160,7 @@ func handoffTool(
 		// the handoff (REQ-06, REQ-07 of sub-agent-state-isolation spec).
 		// commitStateFunc is a package-level variable (see top of file) so
 		// tests can inject a stub to verify this path without a real git repo.
-		if committed, commitErr := commitStateFunc("."); commitErr != nil {
+		if committed, commitErr := commitStateFunc(ctx, "."); commitErr != nil {
 			log.Printf("[handoff] WARNING: pre-dispatch state commit failed: %v", commitErr)
 		} else if committed {
 			log.Printf("[handoff] pre-dispatch state commit created for task %s", taskID)
@@ -170,7 +170,7 @@ func handoffTool(
 		parentFeature, _ := task.State["parent_feature"].(string)
 		var parentFeat service.GetResult
 		if parentFeature != "" {
-			if feat, featErr := entitySvc.Get("feature", parentFeature, ""); featErr == nil {
+			if feat, featErr := entitySvc.Get(ctx, "feature", parentFeature, ""); featErr == nil {
 				parentFeat = feat
 			}
 		}
@@ -214,7 +214,7 @@ func handoffTool(
 			input.FeatureState = parentFeat.State
 		}
 
-		result, runErr := pipeline.Run(input)
+		result, runErr := pipeline.Run(ctx, input)
 		if runErr != nil {
 			return mcp.NewToolResultText(handoffErrorJSON("pipeline_error",
 				fmt.Sprintf("Cannot assemble handoff for task %s: pipeline error: %v.\n\nTo resolve:\n  Check that the role profile exists and skill files are present. Review the feature's stage binding configuration.",

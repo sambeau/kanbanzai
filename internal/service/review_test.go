@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"os"
 	"path/filepath"
 	"strings"
@@ -156,7 +157,7 @@ func TestReviewTaskOutput_FailTransitionsToNeedsRework(t *testing.T) {
 	}
 
 	// Verify the task transitioned to needs-rework.
-	taskResult, err := entitySvc.Get("task", taskID, "")
+	taskResult, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		t.Fatalf("Get task error = %v", err)
 	}
@@ -205,7 +206,7 @@ func TestReviewTaskOutput_PassTransitionsToNeedsReview(t *testing.T) {
 	}
 
 	// Verify the task transitioned to needs-review.
-	taskResult, err := entitySvc.Get("task", taskID, "")
+	taskResult, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		t.Fatalf("Get task error = %v", err)
 	}
@@ -313,7 +314,7 @@ func TestReviewTaskOutput_ReworkReasonClearedOnActive(t *testing.T) {
 	}
 
 	// Verify rework_reason is set.
-	taskResult, err := entitySvc.Get("task", taskID, "")
+	taskResult, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		t.Fatalf("Get task error = %v", err)
 	}
@@ -331,7 +332,7 @@ func TestReviewTaskOutput_ReworkReasonClearedOnActive(t *testing.T) {
 	}
 
 	// Verify rework_reason is cleared.
-	taskResult, err = entitySvc.Get("task", taskID, "")
+	taskResult, err = entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		t.Fatalf("Get task after reactivation: %v", err)
 	}
@@ -371,7 +372,7 @@ func TestReviewTaskOutput_AlreadyNeedsReview_NoTransition(t *testing.T) {
 	}
 
 	// But task should still be in needs-review (no transition).
-	taskResult, err := entitySvc.Get("task", taskID, "")
+	taskResult, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		t.Fatalf("Get task: %v", err)
 	}
@@ -407,7 +408,7 @@ func TestReviewTaskOutput_AlreadyDone_NoTransition(t *testing.T) {
 	}
 
 	// Task should still be done (no transition).
-	taskResult, err := entitySvc.Get("task", taskID, "")
+	taskResult, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		t.Fatalf("Get task: %v", err)
 	}
@@ -484,7 +485,7 @@ func TestReviewTaskOutput_RoundTrip_ReworkReason(t *testing.T) {
 	}
 
 	// Load and re-save (trigger a round-trip through the store).
-	loaded, err := entitySvc.Get("task", taskID, "")
+	loaded, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		t.Fatalf("Get task: %v", err)
 	}
@@ -829,7 +830,7 @@ func TestLifecycle_ActiveToNeedsRework(t *testing.T) {
 		}
 	}
 
-	taskResult2, err := entitySvc.Get("task", taskID, "")
+	taskResult2, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		t.Fatalf("Get task: %v", err)
 	}

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"sort"
 	"strings"
@@ -262,7 +263,7 @@ func (s *EntityService) GetDependencyStatus(taskID string) (DependencyStatusResu
 	taskID = strings.TrimSpace(taskID)
 
 	// Resolve and load the task
-	result, err := s.Get("task", taskID, "")
+	result, err := s.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		return DependencyStatusResult{}, fmt.Errorf("task not found: %w", err)
 	}
@@ -278,7 +279,7 @@ func (s *EntityService) GetDependencyStatus(taskID string) (DependencyStatusResu
 	}
 
 	for _, depID := range dependsOn {
-		depResult, err := s.Get("task", depID, "")
+		depResult, err := s.Get(context.Background(), "task", depID, "")
 
 		var depStatus string
 		var depSlug string

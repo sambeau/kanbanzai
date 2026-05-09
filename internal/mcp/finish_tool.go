@@ -30,8 +30,8 @@ import (
 // pending .kbz/state/ changes after a task completes. It is a package-level
 // variable so tests can inject a stub without changing public APIs.
 // The production value delegates to git.CommitStateWithMessage (FR-A06, FR-A07).
-var finishCommitFunc = func(repoRoot, message string) (bool, error) {
-	return git.CommitStateWithMessage(repoRoot, message)
+var finishCommitFunc = func(ctx context.Context, repoRoot, message string) (bool, error) {
+	return git.CommitStateWithMessage(ctx, repoRoot, message)
 }
 
 // nudgeNoRetroSignals is shown when a feature completes with no retro signals recorded for any task.
@@ -114,7 +114,7 @@ func finishTool(entitySvc *service.EntityService, dispatchSvc *service.DispatchS
 			// Best-effort commit after all batch tasks complete (FR-A07).
 			// A single commit covers all N task state files in one operation.
 			batchCommitMsg := fmt.Sprintf("workflow: complete %d tasks", len(items))
-			if _, commitErr := finishCommitFunc(".", batchCommitMsg); commitErr != nil {
+			if _, commitErr := finishCommitFunc(ctx, ".", batchCommitMsg); commitErr != nil {
 				log.Printf("[finish] WARNING: batch auto-commit failed: %v", commitErr)
 			}
 			return batchResult, batchErr
@@ -209,7 +209,7 @@ func finishOne(
 	}
 
 	// Load the task to inspect its current status.
-	task, err := entitySvc.Get("task", input.TaskID, "")
+	task, err := entitySvc.Get(ctx, "task", input.TaskID, "")
 	if err != nil {
 		return nil, fmt.Errorf("Cannot complete task %s: task not found.\n\nTo resolve:\n  Verify the task ID exists: entity(action: \"get\", id: %q)", input.TaskID, input.TaskID)
 	}
@@ -278,7 +278,7 @@ func finishOne(
 			summaryTrunc = summaryTrunc[:50]
 		}
 		commitMsg := fmt.Sprintf("workflow(%s): complete \u2013 %s", input.TaskID, summaryTrunc)
-		if _, commitErr := finishCommitFunc(repoRoot, commitMsg); commitErr != nil {
+		if _, commitErr := finishCommitFunc(ctx, repoRoot, commitMsg); commitErr != nil {
 			log.Printf("[finish] WARNING: auto-commit after task %s failed: %v", input.TaskID, commitErr)
 		}
 	}

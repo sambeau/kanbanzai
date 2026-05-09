@@ -294,7 +294,7 @@ func TestMergeExecuteAction_NoWorktree_Skipped(t *testing.T) {
 
 	// Override commit func to avoid git operations.
 	old := mergeCommitFunc
-	mergeCommitFunc = func(_, _ string) (bool, error) { return false, nil }
+	mergeCommitFunc = func(_ context.Context, _, _ string) (bool, error) { return false, nil }
 	t.Cleanup(func() { mergeCommitFunc = old })
 
 	tool := mergeTool(store, entitySvc, nil, t.TempDir(), thresholds, localConfig)

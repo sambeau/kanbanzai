@@ -1,6 +1,7 @@
 package mcp
 
 import (
+	"context"
 	"strings"
 	"testing"
 	"time"
@@ -424,7 +425,7 @@ func TestGate_Override_LogsOverrideRecord(t *testing.T) {
 	})
 
 	// Read back the feature and verify the override record.
-	getResult, err := entitySvc.Get("feature", featID, "")
+	getResult, err := entitySvc.Get(context.Background(), "feature", featID, "")
 	if err != nil {
 		t.Fatalf("Get feature after override: %v", err)
 	}
@@ -791,7 +792,7 @@ func transitionEntityStatus(t *testing.T, entitySvc *service.EntityService, enti
 // assertFeatureStatus reads a feature entity from disk and asserts its status.
 func assertFeatureStatus(t *testing.T, entitySvc *service.EntityService, featID, wantStatus string) {
 	t.Helper()
-	got, err := entitySvc.Get("feature", featID, "")
+	got, err := entitySvc.Get(context.Background(), "feature", featID, "")
 	if err != nil {
 		t.Fatalf("Get feature %s: %v", featID, err)
 	}

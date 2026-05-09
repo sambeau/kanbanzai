@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -2546,7 +2547,7 @@ func TestCreateFix_FeatureTagsContainSignalIDs(t *testing.T) {
 	}
 
 	featID := result.Features[0].FeatureID
-	entity, err := svc.entitySvc.Get("feature", featID, "")
+	entity, err := svc.entitySvc.Get(context.Background(), "feature", featID, "")
 	if err != nil {
 		t.Fatalf("Get(%s): %v", featID, err)
 	}

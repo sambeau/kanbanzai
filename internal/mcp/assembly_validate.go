@@ -1,6 +1,7 @@
 package mcp
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/sambeau/kanbanzai/internal/service"
@@ -9,7 +10,7 @@ import (
 
 // EntityGetter is the subset of service.EntityService needed for stage validation.
 type EntityGetter interface {
-	Get(entityType, id, slug string) (service.GetResult, error)
+	Get(ctx context.Context, entityType, id, slug string) (service.GetResult, error)
 }
 
 // StageValidationError carries the data needed for the actionable error template.
@@ -43,7 +44,7 @@ func ValidateFeatureStage(parentFeatureID string, entitySvc EntityGetter) (strin
 		return "", nil
 	}
 
-	result, err := entitySvc.Get("feature", parentFeatureID, "")
+	result, err := entitySvc.Get(context.Background(), "feature", parentFeatureID, "")
 	if err != nil {
 		// Feature not found — graceful degradation (FR-014).
 		return "", nil

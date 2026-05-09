@@ -61,7 +61,7 @@ func runPRCreate(args []string, deps dependencies) error {
 		return fmt.Errorf("invalid entity type: ID must start with FEAT- or BUG-")
 	}
 
-	entity, err := entitySvc.Get(entityType, entityID, "")
+	entity, err := entitySvc.Get(context.Background(), entityType, entityID, "")
 	if err != nil {
 		return fmt.Errorf("get entity: %w", err)
 	}
@@ -120,7 +120,7 @@ func runPRUpdate(args []string, deps dependencies) error {
 		return fmt.Errorf("invalid entity type: ID must start with FEAT- or BUG-")
 	}
 
-	entity, err := entitySvc.Get(entityType, entityID, "")
+	entity, err := entitySvc.Get(context.Background(), entityType, entityID, "")
 	if err != nil {
 		return fmt.Errorf("get entity: %w", err)
 	}

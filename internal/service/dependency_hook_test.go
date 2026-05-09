@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"testing"
 
 	"github.com/sambeau/kanbanzai/internal/storage"
@@ -150,7 +151,7 @@ func TestDependencyUnblockingHook_OneTaskFullyUnblocked(t *testing.T) {
 	}
 
 	// Verify B is now ready
-	taskB, err := svc.Get("task", taskBID, "")
+	taskB, err := svc.Get(context.Background(), "task", taskBID, "")
 	if err != nil {
 		t.Fatalf("Get task B: %v", err)
 	}
@@ -206,7 +207,7 @@ func TestDependencyUnblockingHook_PartiallyUnblocked(t *testing.T) {
 	}
 
 	// Verify C is still queued
-	taskC, err := svc.Get("task", taskCID, "")
+	taskC, err := svc.Get(context.Background(), "task", taskCID, "")
 	if err != nil {
 		t.Fatalf("Get task C: %v", err)
 	}
@@ -251,7 +252,7 @@ func TestDependencyUnblockingHook_ChainABC(t *testing.T) {
 	}
 
 	// B should be ready
-	taskB, err := svc.Get("task", taskBID, "")
+	taskB, err := svc.Get(context.Background(), "task", taskBID, "")
 	if err != nil {
 		t.Fatalf("Get task B: %v", err)
 	}
@@ -260,7 +261,7 @@ func TestDependencyUnblockingHook_ChainABC(t *testing.T) {
 	}
 
 	// C should still be queued (B is now ready, not terminal)
-	taskC, err := svc.Get("task", taskCID, "")
+	taskC, err := svc.Get(context.Background(), "task", taskCID, "")
 	if err != nil {
 		t.Fatalf("Get task C: %v", err)
 	}
@@ -305,7 +306,7 @@ func TestDependencyUnblockingHook_NotPlannedSatisfiesDep(t *testing.T) {
 	}
 
 	// B should be promoted to ready
-	taskB, err := svc.Get("task", taskBID, "")
+	taskB, err := svc.Get(context.Background(), "task", taskBID, "")
 	if err != nil {
 		t.Fatalf("Get task B: %v", err)
 	}
@@ -343,7 +344,7 @@ func TestDependencyUnblockingHook_DuplicateSatisfiesDep(t *testing.T) {
 	}
 
 	// B should be promoted to ready
-	taskB, err := svc.Get("task", taskBID, "")
+	taskB, err := svc.Get(context.Background(), "task", taskBID, "")
 	if err != nil {
 		t.Fatalf("Get task B: %v", err)
 	}
@@ -410,7 +411,7 @@ func TestDependencyUnblockingHook_FailureIsolation(t *testing.T) {
 	}
 
 	// The original transition must succeed regardless of hook behavior
-	taskA, err := svc.Get("task", taskAID, "")
+	taskA, err := svc.Get(context.Background(), "task", taskAID, "")
 	if err != nil {
 		t.Fatalf("Get task A: %v", err)
 	}
@@ -476,7 +477,7 @@ func TestDependencyUnblockingHook_FailureIsolation_CorruptFile(t *testing.T) {
 	}
 
 	// Original transition succeeded
-	taskA, err := svc.Get("task", taskAID, "")
+	taskA, err := svc.Get(context.Background(), "task", taskAID, "")
 	if err != nil {
 		t.Fatalf("Get task A: %v", err)
 	}
@@ -485,7 +486,7 @@ func TestDependencyUnblockingHook_FailureIsolation_CorruptFile(t *testing.T) {
 	}
 
 	// B should still be promoted ([]any is handled by stringSliceFromState)
-	taskB, err := svc.Get("task", taskBID, "")
+	taskB, err := svc.Get(context.Background(), "task", taskBID, "")
 	if err != nil {
 		t.Fatalf("Get task B: %v", err)
 	}
@@ -570,7 +571,7 @@ func TestDependencyUnblockingHook_MultipleTasksUnblocked(t *testing.T) {
 		{taskCID, taskCSlug},
 		{taskDID, taskDSlug},
 	} {
-		task, err := svc.Get("task", tc.id, "")
+		task, err := svc.Get(context.Background(), "task", tc.id, "")
 		if err != nil {
 			t.Fatalf("Get task %s: %v", tc.id, err)
 		}
@@ -654,7 +655,7 @@ func TestDependencyUnblockingHook_AllDepsTerminal_MultipleDeps(t *testing.T) {
 		t.Fatalf("UpdateStatus to done: %v", err)
 	}
 
-	taskC, err := svc.Get("task", taskCID, "")
+	taskC, err := svc.Get(context.Background(), "task", taskCID, "")
 	if err != nil {
 		t.Fatalf("Get task C: %v", err)
 	}

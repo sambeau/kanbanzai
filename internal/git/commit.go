@@ -12,6 +12,7 @@ package git
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"os/exec"
 	"strings"
@@ -34,10 +35,11 @@ const stateDir = ".kbz/state/"
 // stateCommitMessage constant, preserving backward compatibility for the
 // handoff call site (FR-A05).
 //
+// ctx is used for cancellable git operations via exec.CommandContext.
 // repoRoot is the absolute path to the repository root (the directory
 // containing .git/). The caller is responsible for determining this path.
-func CommitStateIfDirty(repoRoot string) (committed bool, err error) {
-	return CommitStateWithMessage(repoRoot, stateCommitMessage)
+func CommitStateIfDirty(ctx context.Context, repoRoot string) (committed bool, err error) {
+	return CommitStateWithMessage(ctx, repoRoot, stateCommitMessage)
 }
 
 // CommitStateWithMessage stages all files under .kbz/state/ that have
@@ -51,12 +53,13 @@ func CommitStateIfDirty(repoRoot string) (committed bool, err error) {
 //
 // No empty commits are created (FR-A04).
 //
+// ctx is used for cancellable git operations via exec.CommandContext.
 // repoRoot is the absolute path to the repository root (the directory
 // containing .git/). The caller is responsible for determining this path.
-func CommitStateWithMessage(repoRoot, message string) (bool, error) {
+func CommitStateWithMessage(ctx context.Context, repoRoot, message string) (bool, error) {
 	// Check for uncommitted changes under .kbz/state/.
 	// git status --porcelain outputs one line per changed file; empty means clean.
-	statusOut, statusErr := runGitCmd(repoRoot, "status", "--porcelain", "--", stateDir)
+	statusOut, statusErr := runGitCmd(ctx, repoRoot, "status", "--porcelain", "--", stateDir)
 	if statusErr != nil {
 		return false, fmt.Errorf("git status: %w", statusErr)
 	}
@@ -66,12 +69,12 @@ func CommitStateWithMessage(repoRoot, message string) (bool, error) {
 	}
 
 	// Stage only files under .kbz/state/.
-	if _, addErr := runGitCmd(repoRoot, "add", "--", stateDir); addErr != nil {
+	if _, addErr := runGitCmd(ctx, repoRoot, "add", "--", stateDir); addErr != nil {
 		return false, fmt.Errorf("git add: %w", addErr)
 	}
 
 	// Create the commit with the caller-supplied message.
-	if _, commitErr := runGitCmd(repoRoot, "commit", "-m", message); commitErr != nil {
+	if _, commitErr := runGitCmd(ctx, repoRoot, "commit", "-m", message); commitErr != nil {
 		return false, fmt.Errorf("git commit: %w", commitErr)
 	}
 
@@ -89,16 +92,17 @@ func CommitStateWithMessage(repoRoot, message string) (bool, error) {
 //
 // No empty commits are created (FR-A04).
 //
+// ctx is used for cancellable git operations via exec.CommandContext.
 // repoRoot is the absolute path to the repository root (the directory
 // containing .git/). The caller is responsible for determining this path.
-func CommitStateAndPaths(repoRoot, message string, extraPaths ...string) (bool, error) {
+func CommitStateAndPaths(ctx context.Context, repoRoot, message string, extraPaths ...string) (bool, error) {
 	// Check for uncommitted changes under .kbz/state/ and each extra path.
 	// Build the status args: "status --porcelain -- .kbz/state/ <extraPaths...>"
 	statusArgs := make([]string, 0, 3+len(extraPaths))
 	statusArgs = append(statusArgs, "status", "--porcelain", "--", stateDir)
 	statusArgs = append(statusArgs, extraPaths...)
 
-	statusOut, statusErr := runGitCmd(repoRoot, statusArgs...)
+	statusOut, statusErr := runGitCmd(ctx, repoRoot, statusArgs...)
 	if statusErr != nil {
 		return false, fmt.Errorf("git status: %w", statusErr)
 	}
@@ -109,32 +113,33 @@ func CommitStateAndPaths(repoRoot, message string, extraPaths ...string) (bool, 
 
 	// Stage .kbz/state/ only if it has dirty files. This avoids a git error
 	// when the state dir is clean and only extraPaths are dirty.
-	stateStatusOut, _ := runGitCmd(repoRoot, "status", "--porcelain", "--", stateDir)
+	stateStatusOut, _ := runGitCmd(ctx, repoRoot, "status", "--porcelain", "--", stateDir)
 	if strings.TrimSpace(stateStatusOut) != "" {
-		if _, addErr := runGitCmd(repoRoot, "add", "--", stateDir); addErr != nil {
+		if _, addErr := runGitCmd(ctx, repoRoot, "add", "--", stateDir); addErr != nil {
 			return false, fmt.Errorf("git add state: %w", addErr)
 		}
 	}
 
 	// Stage each extra path individually (one git add per path, per FR-A03).
 	for _, p := range extraPaths {
-		if _, addErr := runGitCmd(repoRoot, "add", "--", p); addErr != nil {
+		if _, addErr := runGitCmd(ctx, repoRoot, "add", "--", p); addErr != nil {
 			return false, fmt.Errorf("git add %s: %w", p, addErr)
 		}
 	}
 
 	// Create the commit with the caller-supplied message.
-	if _, commitErr := runGitCmd(repoRoot, "commit", "-m", message); commitErr != nil {
+	if _, commitErr := runGitCmd(ctx, repoRoot, "commit", "-m", message); commitErr != nil {
 		return false, fmt.Errorf("git commit: %w", commitErr)
 	}
 
 	return true, nil
 }
 
-// runGitCmd runs a git command in repoRoot, returning stdout on success or
-// an error that includes stderr output on failure.
-func runGitCmd(repoRoot string, args ...string) (string, error) {
-	cmd := exec.Command("git", args...)
+// runGitCmd runs a git command in repoRoot using exec.CommandContext for
+// cancellation support, returning stdout on success or an error that
+// includes stderr output on failure.
+func runGitCmd(ctx context.Context, repoRoot string, args ...string) (string, error) {
+	cmd := exec.CommandContext(ctx, "git", args...)
 	cmd.Dir = repoRoot
 
 	var stdout, stderr bytes.Buffer

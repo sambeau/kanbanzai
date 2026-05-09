@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"regexp"
 	"strconv"
@@ -114,7 +115,7 @@ func (s *DecomposeService) DecomposeFeature(input DecomposeInput) (DecomposeResu
 	}
 
 	// 1. Load the feature.
-	feat, err := s.entitySvc.Get("feature", input.FeatureID, "")
+	feat, err := s.entitySvc.Get(context.Background(), "feature", input.FeatureID, "")
 	if err != nil {
 		return DecomposeResult{}, fmt.Errorf("load feature %s: %w", input.FeatureID, err)
 	}
@@ -279,7 +280,7 @@ func (s *DecomposeService) SliceAnalysis(input SliceAnalysisInput) (SliceAnalysi
 		return SliceAnalysisResult{}, fmt.Errorf("feature_id is required")
 	}
 
-	feat, err := s.entitySvc.Get("feature", input.FeatureID, "")
+	feat, err := s.entitySvc.Get(context.Background(), "feature", input.FeatureID, "")
 	if err != nil {
 		return SliceAnalysisResult{}, fmt.Errorf("load feature %s: %w", input.FeatureID, err)
 	}
@@ -323,7 +324,7 @@ func (s *DecomposeService) ReviewProposal(input DecomposeReviewInput) (Decompose
 	}
 
 	// 1. Load the feature to get the spec reference.
-	feat, err := s.entitySvc.Get("feature", input.FeatureID, "")
+	feat, err := s.entitySvc.Get(context.Background(), "feature", input.FeatureID, "")
 	if err != nil {
 		return DecomposeReviewResult{}, fmt.Errorf("load feature %s: %w", input.FeatureID, err)
 	}

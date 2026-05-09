@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"testing"
@@ -42,7 +43,7 @@ func TestPromoteQueuedTasks_NoDeps(t *testing.T) {
 	}
 
 	for _, tc := range []struct{ id, slug string }{{taskAID, taskASlug}, {taskBID, taskBSlug}} {
-		res, err := svc.Get("task", tc.id, tc.slug)
+		res, err := svc.Get(context.Background(), "task", tc.id, tc.slug)
 		if err != nil {
 			t.Fatalf("Get(%s): %v", tc.id, err)
 		}
@@ -68,7 +69,7 @@ func TestPromoteQueuedTasks_AllDoneDeps(t *testing.T) {
 		t.Fatalf("PromoteQueuedTasks() error = %v", err)
 	}
 
-	res, err := svc.Get("task", blockedID, blockedSlug)
+	res, err := svc.Get(context.Background(), "task", blockedID, blockedSlug)
 	if err != nil {
 		t.Fatalf("Get blocked task: %v", err)
 	}
@@ -94,7 +95,7 @@ func TestPromoteQueuedTasks_BlockedByQueued(t *testing.T) {
 	}
 
 	// dep has no deps → gets promoted to ready
-	depRes, err := svc.Get("task", depID, depSlug)
+	depRes, err := svc.Get(context.Background(), "task", depID, depSlug)
 	if err != nil {
 		t.Fatalf("Get dep task: %v", err)
 	}
@@ -103,7 +104,7 @@ func TestPromoteQueuedTasks_BlockedByQueued(t *testing.T) {
 	}
 
 	// blocked task still has a non-terminal dep (dep is now ready, not done)
-	blockedRes, err := svc.Get("task", blockedID, blockedSlug)
+	blockedRes, err := svc.Get(context.Background(), "task", blockedID, blockedSlug)
 	if err != nil {
 		t.Fatalf("Get blocked task: %v", err)
 	}
@@ -126,7 +127,7 @@ func TestPromoteQueuedTasks_AlreadyReady(t *testing.T) {
 		t.Fatalf("PromoteQueuedTasks() error = %v", err)
 	}
 
-	res, err := svc.Get("task", taskID, taskSlug)
+	res, err := svc.Get(context.Background(), "task", taskID, taskSlug)
 	if err != nil {
 		t.Fatalf("Get task: %v", err)
 	}
@@ -151,7 +152,7 @@ func TestPromoteQueuedTasks_Idempotent(t *testing.T) {
 
 	// Verify both are ready
 	for _, tc := range []struct{ id, slug string }{{taskAID, taskASlug}, {taskBID, taskBSlug}} {
-		res, err := svc.Get("task", tc.id, tc.slug)
+		res, err := svc.Get(context.Background(), "task", tc.id, tc.slug)
 		if err != nil {
 			t.Fatalf("Get(%s): %v", tc.id, err)
 		}
@@ -167,7 +168,7 @@ func TestPromoteQueuedTasks_Idempotent(t *testing.T) {
 
 	// Status unchanged
 	for _, tc := range []struct{ id, slug string }{{taskAID, taskASlug}, {taskBID, taskBSlug}} {
-		res, err := svc.Get("task", tc.id, tc.slug)
+		res, err := svc.Get(context.Background(), "task", tc.id, tc.slug)
 		if err != nil {
 			t.Fatalf("Get(%s): %v", tc.id, err)
 		}
@@ -202,7 +203,7 @@ func TestPromoteQueuedTasks_OnlyOwnFeature(t *testing.T) {
 		t.Fatalf("PromoteQueuedTasks() error = %v", err)
 	}
 
-	ownRes, err := svc.Get("task", ownTaskID, ownTaskSlug)
+	ownRes, err := svc.Get(context.Background(), "task", ownTaskID, ownTaskSlug)
 	if err != nil {
 		t.Fatalf("Get own task: %v", err)
 	}
@@ -210,7 +211,7 @@ func TestPromoteQueuedTasks_OnlyOwnFeature(t *testing.T) {
 		t.Errorf("own task status = %v, want ready", got)
 	}
 
-	otherRes, err := svc.Get("task", otherTaskID, otherTaskSlug)
+	otherRes, err := svc.Get(context.Background(), "task", otherTaskID, otherTaskSlug)
 	if err != nil {
 		t.Fatalf("Get other task: %v", err)
 	}
@@ -258,7 +259,7 @@ type: task
 	}
 
 	// Task A should be promoted
-	resA, err := svc.Get("task", taskAID, taskASlug)
+	resA, err := svc.Get(context.Background(), "task", taskAID, taskASlug)
 	if err != nil {
 		t.Fatalf("Get task A: %v", err)
 	}
@@ -267,7 +268,7 @@ type: task
 	}
 
 	// Task B should still be queued (UpdateStatus failed, loop continued)
-	resB, err := svc.Get("task", taskBID, taskBSlug)
+	resB, err := svc.Get(context.Background(), "task", taskBID, taskBSlug)
 	if err != nil {
 		t.Fatalf("Get task B: %v", err)
 	}

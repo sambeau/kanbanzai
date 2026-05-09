@@ -1,6 +1,7 @@
 package mcp
 
 import (
+	"context"
 	"errors"
 	"strings"
 	"testing"
@@ -14,7 +15,7 @@ type mockEntityGetter struct {
 	err    error
 }
 
-func (m *mockEntityGetter) Get(entityType, id, slug string) (service.GetResult, error) {
+func (m *mockEntityGetter) Get(_ context.Context, entityType, id, slug string) (service.GetResult, error) {
 	if m.err != nil {
 		return service.GetResult{}, m.err
 	}

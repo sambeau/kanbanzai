@@ -1,6 +1,7 @@
 package mcp
 
 import (
+	"context"
 	"encoding/json"
 	"os"
 	"testing"
@@ -129,7 +130,7 @@ func TestFinishOne_AggregationWriteFailureDoesNotFailFinish(t *testing.T) {
 	advanceToActive(t, entitySvc, taskID, taskSlug)
 
 	// Delete the feature entity file to force UpdateEntity to fail during aggregation.
-	feat, err := entitySvc.Get("feature", featID, "")
+	feat, err := entitySvc.Get(context.Background(), "feature", featID, "")
 	if err != nil {
 		t.Fatalf("get feature: %v", err)
 	}

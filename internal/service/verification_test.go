@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"strings"
 	"testing"
 )
@@ -104,7 +105,7 @@ func TestAggregateTaskVerification_AllPassed(t *testing.T) {
 		t.Error("Written = false, want true")
 	}
 	// Feature entity must have verification_status and verification set.
-	feat, err := entitySvc.Get("feature", featID, "")
+	feat, err := entitySvc.Get(context.Background(), "feature", featID, "")
 	if err != nil {
 		t.Fatalf("get feature: %v", err)
 	}
@@ -136,7 +137,7 @@ func TestAggregateTaskVerification_Partial(t *testing.T) {
 	if !result.Written {
 		t.Error("Written = false, want true")
 	}
-	feat, _ := entitySvc.Get("feature", featID, "")
+	feat, _ := entitySvc.Get(context.Background(), "feature", featID, "")
 	if vs, _ := feat.State["verification_status"].(string); vs != "partial" {
 		t.Errorf("feature.verification_status = %q, want %q", vs, "partial")
 	}
@@ -167,7 +168,7 @@ func TestAggregateTaskVerification_None(t *testing.T) {
 		t.Error("Written = true, want false (no write when status is none)")
 	}
 	// Feature entity must NOT have verification_status set.
-	feat, _ := entitySvc.Get("feature", featID, "")
+	feat, _ := entitySvc.Get(context.Background(), "feature", featID, "")
 	if vs := feat.State["verification_status"]; vs != nil && vs != "" {
 		t.Errorf("feature.verification_status = %v, want not set", vs)
 	}
@@ -212,7 +213,7 @@ func TestAggregateTaskVerification_WontDoExcludedFromSummary(t *testing.T) {
 	if result.Status != "passed" {
 		t.Errorf("Status = %q, want %q (only done tasks counted)", result.Status, "passed")
 	}
-	feat, _ := entitySvc.Get("feature", featID, "")
+	feat, _ := entitySvc.Get(context.Background(), "feature", featID, "")
 	verif, _ := feat.State["verification"].(string)
 	if !strings.Contains(verif, t1) {
 		t.Errorf("summary %q should contain done task %s", verif, t1)
@@ -251,7 +252,7 @@ func TestAggregateTaskVerification_Overwrites(t *testing.T) {
 		t.Errorf("Status = %q, want %q", result.Status, "passed")
 	}
 
-	feat, _ := entitySvc.Get("feature", featID, "")
+	feat, _ := entitySvc.Get(context.Background(), "feature", featID, "")
 	verif, _ := feat.State["verification"].(string)
 	if verif == "old stale value" {
 		t.Error("verification was not overwritten (old value persists)")

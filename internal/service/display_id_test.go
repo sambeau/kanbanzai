@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -267,13 +268,13 @@ func TestDisplayID_AC007_GetByDisplayID(t *testing.T) {
 	}
 
 	// Get by display_id.
-	byDID, err := svc.Get("feature", did, "")
+	byDID, err := svc.Get(context.Background(), "feature", did, "")
 	if err != nil {
 		t.Fatalf("Get by display_id %q: %v", did, err)
 	}
 
 	// Get by canonical ID.
-	byID, err := svc.Get("feature", created.ID, "")
+	byID, err := svc.Get(context.Background(), "feature", created.ID, "")
 	if err != nil {
 		t.Fatalf("Get by canonical ID: %v", err)
 	}
@@ -306,7 +307,7 @@ func TestDisplayID_AC008_GetCaseInsensitive(t *testing.T) {
 	did, _ := created.State["display_id"].(string) // "P24-F3"
 
 	lower := strings.ToLower(did) // "p24-f3"
-	byLower, err := svc.Get("feature", lower, "")
+	byLower, err := svc.Get(context.Background(), "feature", lower, "")
 	if err != nil {
 		t.Fatalf("Get by lowercase display_id %q: %v", lower, err)
 	}
@@ -336,7 +337,7 @@ func TestDisplayID_AC009_EntityGetAcceptsDisplayID(t *testing.T) {
 		t.Fatalf("CreateFeature: %v", err)
 	}
 
-	result, err := svc.Get("feature", "P37-F1", "")
+	result, err := svc.Get(context.Background(), "feature", "P37-F1", "")
 	if err != nil {
 		t.Fatalf("Get(P37-F1): %v", err)
 	}
@@ -378,7 +379,7 @@ func TestDisplayID_AC010_UpdateEntityAcceptsDisplayID(t *testing.T) {
 		t.Fatalf("UpdateEntity(%q): %v", did, err)
 	}
 
-	updated, err := svc.Get("feature", created.ID, created.Slug)
+	updated, err := svc.Get(context.Background(), "feature", created.ID, created.Slug)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -418,7 +419,7 @@ func TestDisplayID_AC011_UpdateStatusAcceptsDisplayID(t *testing.T) {
 		t.Fatalf("UpdateStatus(%q, designing): %v", did, err)
 	}
 
-	result, err := svc.Get("feature", created.ID, created.Slug)
+	result, err := svc.Get(context.Background(), "feature", created.ID, created.Slug)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -671,7 +672,7 @@ func TestDisplayID_AC017_ResolutionPerformance(t *testing.T) {
 	_ = targetSlug
 
 	start := time.Now()
-	result, err := svc.Get("feature", "P3-F7", "")
+	result, err := svc.Get(context.Background(), "feature", "P3-F7", "")
 	elapsed := time.Since(start)
 
 	if err != nil {
@@ -707,14 +708,14 @@ func TestDisplayID_AC018_CanonicalIDStillWorks(t *testing.T) {
 	}
 
 	// Get by canonical FEAT-TSID.
-	byCanonical, err := svc.Get("feature", created.ID, "")
+	byCanonical, err := svc.Get(context.Background(), "feature", created.ID, "")
 	if err != nil {
 		t.Fatalf("Get by canonical ID: %v", err)
 	}
 
 	// Get by display_id.
 	did, _ := created.State["display_id"].(string)
-	byDID, err := svc.Get("feature", did, "")
+	byDID, err := svc.Get(context.Background(), "feature", did, "")
 	if err != nil {
 		t.Fatalf("Get by display_id: %v", err)
 	}
@@ -748,7 +749,7 @@ func TestDisplayID_AC019_BreakHyphenStillWorks(t *testing.T) {
 	// Insert a hyphen at position 9 (after the 8-char prefix "FEAT-0123").
 	// ResolvePrefix handles this format.
 	// Use the full canonical ID instead to test backward compat.
-	result, err := svc.Get("feature", created.ID, created.Slug)
+	result, err := svc.Get(context.Background(), "feature", created.ID, created.Slug)
 	if err != nil {
 		t.Fatalf("Get by canonical ID+slug: %v", err)
 	}

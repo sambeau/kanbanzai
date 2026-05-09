@@ -836,7 +836,10 @@ func (s *EntityService) ResolvePrefix(entityType, prefix string) (resolvedID, re
 	}
 }
 
-func (s *EntityService) Get(entityType, entityID, slug string) (GetResult, error) {
+func (s *EntityService) Get(ctx context.Context, entityType, entityID, slug string) (GetResult, error) {
+	if err := ctx.Err(); err != nil {
+		return GetResult{}, err
+	}
 	entityType = strings.ToLower(strings.TrimSpace(entityType))
 	entityID = strings.TrimSpace(entityID)
 	slug = normalizeSlug(slug)

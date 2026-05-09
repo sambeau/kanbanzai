@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"testing"
 )
 
@@ -22,7 +23,7 @@ func TestIncrementFeatureReviewCycle_ZeroInit(t *testing.T) {
 		t.Fatalf("IncrementFeatureReviewCycle: %v", err)
 	}
 
-	got, err := svc.Get("feature", id, slug)
+	got, err := svc.Get(context.Background(), "feature", id, slug)
 	if err != nil {
 		t.Fatalf("Get: %v", err)
 	}
@@ -49,7 +50,7 @@ func TestIncrementFeatureReviewCycle_NToNPlusOne(t *testing.T) {
 		t.Fatalf("IncrementFeatureReviewCycle: %v", err)
 	}
 
-	got, err := svc.Get("feature", id, slug)
+	got, err := svc.Get(context.Background(), "feature", id, slug)
 	if err != nil {
 		t.Fatalf("Get: %v", err)
 	}
@@ -77,7 +78,7 @@ func TestIncrementFeatureReviewCycle_RoundTrip(t *testing.T) {
 		}
 	}
 
-	got, err := svc.Get("feature", id, slug)
+	got, err := svc.Get(context.Background(), "feature", id, slug)
 	if err != nil {
 		t.Fatalf("Get: %v", err)
 	}
@@ -104,7 +105,7 @@ func TestPersistFeatureBlockedReason_SetReason(t *testing.T) {
 		t.Fatalf("PersistFeatureBlockedReason: %v", err)
 	}
 
-	got, err := svc.Get("feature", id, slug)
+	got, err := svc.Get(context.Background(), "feature", id, slug)
 	if err != nil {
 		t.Fatalf("Get: %v", err)
 	}
@@ -132,7 +133,7 @@ func TestPersistFeatureBlockedReason_ClearReason(t *testing.T) {
 		t.Fatalf("PersistFeatureBlockedReason (clear): %v", err)
 	}
 
-	got, err := svc.Get("feature", id, slug)
+	got, err := svc.Get(context.Background(), "feature", id, slug)
 	if err != nil {
 		t.Fatalf("Get: %v", err)
 	}
@@ -160,7 +161,7 @@ func TestPersistFeatureBlockedReason_RoundTrip(t *testing.T) {
 	if err := svc.PersistFeatureBlockedReason(id, slug, reason); err != nil {
 		t.Fatalf("set blocked_reason: %v", err)
 	}
-	got1, err := svc.Get("feature", id, slug)
+	got1, err := svc.Get(context.Background(), "feature", id, slug)
 	if err != nil {
 		t.Fatalf("Get after set: %v", err)
 	}
@@ -172,7 +173,7 @@ func TestPersistFeatureBlockedReason_RoundTrip(t *testing.T) {
 	if err := svc.PersistFeatureBlockedReason(id, slug, ""); err != nil {
 		t.Fatalf("clear blocked_reason: %v", err)
 	}
-	got2, err := svc.Get("feature", id, slug)
+	got2, err := svc.Get(context.Background(), "feature", id, slug)
 	if err != nil {
 		t.Fatalf("Get after clear: %v", err)
 	}

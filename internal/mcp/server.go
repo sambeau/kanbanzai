@@ -1,6 +1,7 @@
 package mcp
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"path/filepath"
@@ -500,7 +501,7 @@ func (l *entityStageLookup) GetEntityKindAndParent(entityID string) (kind, paren
 	if entityType == "" {
 		return "", "", fmt.Errorf("unknown entity ID prefix: %s", entityID)
 	}
-	result, err := l.svc.Get(entityType, entityID, "")
+	result, err := l.svc.Get(context.Background(), entityType, entityID, "")
 	if err != nil {
 		return "", "", err
 	}
@@ -510,7 +511,7 @@ func (l *entityStageLookup) GetEntityKindAndParent(entityID string) (kind, paren
 
 // GetFeatureStage returns the lifecycle status for featureID.
 func (l *entityStageLookup) GetFeatureStage(featureID string) (string, error) {
-	result, err := l.svc.Get("feature", featureID, "")
+	result, err := l.svc.Get(context.Background(), "feature", featureID, "")
 	if err != nil {
 		return "", err
 	}
@@ -548,7 +549,9 @@ func wrapAllTools(mcpServer *server.MCPServer, hook *actionlog.Hook) {
 	for _, t := range toolMap {
 		inner := t.Handler
 		name := t.Tool.Name
-		t.Handler = server.ToolHandlerFunc(hook.Wrap(name, actionlog.HandlerFunc(inner)))
+		recovered := wrapWithRecovery(name, actionlog.HandlerFunc(inner))
+		timed := wrapWithTimeout(5*time.Second, recovered)
+		t.Handler = server.ToolHandlerFunc(hook.Wrap(name, timed))
 		wrapped = append(wrapped, *t)
 	}
 	mcpServer.SetTools(wrapped...)

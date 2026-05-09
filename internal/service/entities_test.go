@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -276,7 +277,7 @@ func TestEntityService_UpdateStatus_ReopensCannotReproduceBug(t *testing.T) {
 		t.Fatalf("UpdateStatus() reopened status = %v, want %q", got, model.BugStatusTriaged)
 	}
 
-	loaded, err := service.Get(string(model.EntityKindBug), created.ID, created.Slug)
+	loaded, err := service.Get(context.Background(), string(model.EntityKindBug), created.ID, created.Slug)
 	if err != nil {
 		t.Fatalf("Get() error = %v", err)
 	}
@@ -305,7 +306,7 @@ func TestEntityService_Get_ReturnsStoredEntity(t *testing.T) {
 		t.Fatalf("CreateFeature() error = %v", err)
 	}
 
-	got, err := service.Get(created.Type, created.ID, created.Slug)
+	got, err := service.Get(context.Background(), created.Type, created.ID, created.Slug)
 	if err != nil {
 		t.Fatalf("Get() error = %v", err)
 	}
@@ -441,7 +442,7 @@ func TestEntityService_StatusUpdate_UsesLifecycleValidation(t *testing.T) {
 		current = CreateResult(updated)
 	}
 
-	got, err := service.Get(created.Type, created.ID, created.Slug)
+	got, err := service.Get(context.Background(), created.Type, created.ID, created.Slug)
 	if err != nil {
 		t.Fatalf("Get() after status updates error = %v", err)
 	}
@@ -509,7 +510,7 @@ func TestEntityService_Get_MissingEntity(t *testing.T) {
 	root := t.TempDir()
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	_, err := service.Get("feature", "FEAT-01ZZZZZZZZZZ9", "missing")
+	_, err := service.Get(context.Background(), "feature", "FEAT-01ZZZZZZZZZZ9", "missing")
 	if err == nil {
 		t.Fatal("Get() error = nil, want non-nil")
 	}
@@ -1225,7 +1226,7 @@ func TestEntityService_UpdateEntity_CorrectField(t *testing.T) {
 		t.Fatalf("UpdateEntity() name = %v, want %q", updated.State["name"], "Phase 1 Kernel (Revised)")
 	}
 
-	got, err := svc.Get(created.Type, created.ID, created.Slug)
+	got, err := svc.Get(context.Background(), created.Type, created.ID, created.Slug)
 	if err != nil {
 		t.Fatalf("Get() after update error = %v", err)
 	}
@@ -1377,7 +1378,7 @@ func TestEntityService_UpdateEntity_CorrectParentReference(t *testing.T) {
 		t.Fatalf("updated parent = %v, want %q", updated.State["parent"], plan2ID)
 	}
 
-	got, err := svc.Get(feat.Type, feat.ID, feat.Slug)
+	got, err := svc.Get(context.Background(), feat.Type, feat.ID, feat.Slug)
 	if err != nil {
 		t.Fatalf("Get() after update error = %v", err)
 	}
@@ -1927,7 +1928,7 @@ func TestEntityService_Get_WithEmptySlug(t *testing.T) {
 	}
 
 	// Get with prefix and empty slug should resolve
-	got, err := svc.Get("feature", created.ID[:10], "")
+	got, err := svc.Get(context.Background(), "feature", created.ID[:10], "")
 	if err != nil {
 		t.Fatalf("Get() with prefix error = %v", err)
 	}
@@ -1939,7 +1940,7 @@ func TestEntityService_Get_WithEmptySlug(t *testing.T) {
 	}
 
 	// Get with non-existent prefix and empty slug should error
-	_, err = svc.Get("feature", "FEAT-ZZZZZZZZZZZZZ", "")
+	_, err = svc.Get(context.Background(), "feature", "FEAT-ZZZZZZZZZZZZZ", "")
 	if err == nil {
 		t.Fatal("Get() with non-existent prefix error = nil, want non-nil")
 	}
@@ -2287,7 +2288,7 @@ func TestTierInference_TierStoredAndRetrievable(t *testing.T) {
 	}
 
 	// Retrieve and verify tier is persisted.
-	getResult, getErr := svc.Get("feature", createResult.ID, "")
+	getResult, getErr := svc.Get(context.Background(), "feature", createResult.ID, "")
 	if getErr != nil {
 		t.Fatalf("Get(%s) error = %v", createResult.ID, getErr)
 	}
@@ -2358,7 +2359,7 @@ func TestEntityService_REQ005_DecisionRecord_CoversCapabilityGap(t *testing.T) {
 	}
 
 	// Verify we can retrieve the decision by ID.
-	retrieved, err := service.Get("decision", got.ID, "")
+	retrieved, err := service.Get(context.Background(), "decision", got.ID, "")
 	if err != nil {
 		t.Fatalf("Get(decision, %s) error = %v", got.ID, err)
 	}
@@ -2524,7 +2525,7 @@ func TestAC005_MaintainerRetrievesDecisionRecord(t *testing.T) {
 	// actual .kbz/state/ store — same path the MCP entity tool uses.
 	svc := NewEntityService(repoRoot)
 
-	retrieved, err := svc.Get("decision", "DEC-01KR484HRQ97X", "")
+	retrieved, err := svc.Get(context.Background(), "decision", "DEC-01KR484HRQ97X", "")
 	if err != nil {
 		// The entity may not exist in this worktree's store (decision
 		// entities are stored in the shared .kbz/state/ which worktrees
@@ -2749,5 +2750,26 @@ func TestAC005_DocumentationIsConsistentAfterUpdates(t *testing.T) {
 	// Verify the decision is in proposed status (awaiting maintainer review).
 	if !strings.Contains(decContent, "status: proposed") {
 		t.Error("decision must be in 'proposed' status for maintainer review")
+	}
+}
+
+// TestEntityService_Get_CancelledContext verifies AC-001:
+// Given a cancelled context, EntityService.Get returns a context cancellation error.
+func TestEntityService_Get_CancelledContext(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel() // immediate cancellation
+
+	_, err := service.Get(ctx, "feature", "FEAT-0000000000000", "")
+
+	if err == nil {
+		t.Fatal("expected error from cancelled context, got nil")
+	}
+	if !errors.Is(err, context.Canceled) {
+		t.Errorf("expected context.Canceled, got: %v", err)
 	}
 }

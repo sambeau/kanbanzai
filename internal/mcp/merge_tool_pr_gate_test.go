@@ -228,7 +228,7 @@ func TestMergeExecute_RequireGitHubPR_True_NoPR_Blocked(t *testing.T) {
 	// Also stub out mergeCommitFunc to avoid git operations.
 	oldCommit := mergeCommitFunc
 	t.Cleanup(func() { mergeCommitFunc = oldCommit })
-	mergeCommitFunc = func(_, _ string) (bool, error) { return false, nil }
+	mergeCommitFunc = func(_ context.Context, _, _ string) (bool, error) { return false, nil }
 
 	// Use override=true to bypass the standard merge gates (entity status, verification,
 	// default branch) and reach the PR gate check, which is what AC-009 tests.

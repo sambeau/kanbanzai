@@ -219,7 +219,7 @@ func nextClaimMode(
 	}
 
 	// Load the task to check its current status.
-	task, err := entitySvc.Get("task", taskID, "")
+	task, err := entitySvc.Get(ctx, "task", taskID, "")
 	if err != nil {
 		refusal := invariants.Format(invariants.RefusalResponse{
 			Code:       invariants.INV002,
@@ -304,7 +304,7 @@ func nextClaimMode(
 		})
 
 		// Reload the task to get updated dispatch fields.
-		task, err = entitySvc.Get("task", taskID, "")
+		task, err = entitySvc.Get(ctx, "task", taskID, "")
 		if err != nil {
 			return nil, fmt.Errorf("Cannot reload task %s after claim: %w.\n\nTo resolve:\n  The task was claimed successfully — use entity(action: \"get\", id: %q) to retrieve it", taskID, err, taskID)
 		}
@@ -314,7 +314,7 @@ func nextClaimMode(
 	parentFeature, _ := task.State["parent_feature"].(string)
 	var parentFeatureInfo map[string]any
 	if parentFeature != "" {
-		if feat, ferr := entitySvc.Get("feature", parentFeature, ""); ferr == nil {
+		if feat, ferr := entitySvc.Get(ctx, "feature", parentFeature, ""); ferr == nil {
 			parentFeatureInfo = map[string]any{
 				"id":         feat.ID,
 				"display_id": idpkg.FormatFullDisplay(feat.ID),

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"path/filepath"
 	"reflect"
 	"sort"
@@ -20,6 +21,28 @@ func attachCache(t *testing.T, svc *EntityService) *cache.Cache {
 	t.Cleanup(func() { _ = c.Close() })
 	svc.SetCache(c)
 	return c
+}
+
+// ---- Get() fast path tests --------------------------------------------------
+
+// TestGet_CancelledContext_ReturnsError verifies AC-001:
+// a cancelled context causes EntityService.Get to return an error immediately.
+func TestGet_CancelledContext_ReturnsError(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel() // cancel immediately
+
+	_, err := svc.Get(ctx, "feature", "FEAT-01DOESNOTMATTER", "")
+	if err == nil {
+		t.Fatal("Get() with cancelled context returned nil error, want context error")
+	}
+	if err != context.Canceled {
+		t.Errorf("Get() error = %v, want context.Canceled", err)
+	}
 }
 
 // ---- Get() fast path tests --------------------------------------------------
@@ -52,7 +75,7 @@ func TestGet_CacheFastPath(t *testing.T) {
 	}
 
 	// Call Get with empty slug — fast path should resolve slug from cache.
-	got, err := svc.Get("feature", created.ID, "")
+	got, err := svc.Get(context.Background(), "feature", created.ID, "")
 	if err != nil {
 		t.Fatalf("Get() error = %v", err)
 	}
@@ -96,7 +119,7 @@ func TestGet_CacheMiss_FallsBack(t *testing.T) {
 	}
 
 	// LookupByID will miss; Get should fall through to ResolvePrefix.
-	got, err := svc.Get("feature", created.ID, "")
+	got, err := svc.Get(context.Background(), "feature", created.ID, "")
 	if err != nil {
 		t.Fatalf("Get() after cache miss error = %v", err)
 	}
@@ -149,7 +172,7 @@ func TestGet_StaleCache_FallsBack(t *testing.T) {
 	// LookupByID will find the stale row; store.Load will fail (file missing);
 	// Get should fall back to ResolvePrefix, which also fails (entity doesn't
 	// exist on disk) — expect a non-nil error rather than a corrupt result.
-	_, err = svc.Get("feature", "FEAT-01FAKEDEADBEEF", "")
+	_, err = svc.Get(context.Background(), "feature", "FEAT-01FAKEDEADBEEF", "")
 	if err == nil {
 		t.Fatal("Get() with stale cache entry returned nil error, want an error")
 	}
@@ -178,7 +201,7 @@ func TestGet_NilCache_UsesFilesystem(t *testing.T) {
 		t.Fatalf("CreateFeature() error = %v", err)
 	}
 
-	got, err := svc.Get("feature", created.ID, "")
+	got, err := svc.Get(context.Background(), "feature", created.ID, "")
 	if err != nil {
 		t.Fatalf("Get() error = %v", err)
 	}
@@ -225,7 +248,7 @@ func TestGet_ColdType_FallsBack(t *testing.T) {
 	}
 
 	// Get with cold "feature" type should fall through to ResolvePrefix.
-	got, err := svc.Get("feature", created.ID, "")
+	got, err := svc.Get(context.Background(), "feature", created.ID, "")
 	if err != nil {
 		t.Fatalf("Get() with cold type error = %v", err)
 	}
@@ -628,14 +651,14 @@ func TestGet_CacheAndFilesystem_ResultEquivalent(t *testing.T) {
 	}
 
 	// Get via warm cache (empty slug triggers fast path).
-	cacheResult, err := svc.Get("feature", created.ID, "")
+	cacheResult, err := svc.Get(context.Background(), "feature", created.ID, "")
 	if err != nil {
 		t.Fatalf("Get() via cache error = %v", err)
 	}
 
 	// Get via filesystem (slug provided, no prefix resolution needed — no cache used).
 	svc.cache = nil
-	fsResult, err := svc.Get("feature", created.ID, created.Slug)
+	fsResult, err := svc.Get(context.Background(), "feature", created.ID, created.Slug)
 	if err != nil {
 		t.Fatalf("Get() via filesystem error = %v", err)
 	}

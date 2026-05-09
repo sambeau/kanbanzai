@@ -46,15 +46,15 @@ import (
 // docCommitFunc is the function called after doc register and approve to commit
 // state changes with a custom message. Package-level variable for test injection.
 // Production value delegates to git.CommitStateWithMessage (FR-A12, FR-B01).
-var docCommitFunc = func(repoRoot, message string) (bool, error) {
-	return git.CommitStateWithMessage(repoRoot, message)
+var docCommitFunc = func(ctx context.Context, repoRoot, message string) (bool, error) {
+	return git.CommitStateWithMessage(ctx, repoRoot, message)
 }
 
 // docCommitPathsFunc is the function called by doc register, move, and delete
 // to commit state changes plus extra file paths atomically.
 // Package-level variable for test injection. (FR-B01, FR-B13, FR-B19).
-var docCommitPathsFunc = func(repoRoot, message string, extraPaths ...string) (bool, error) {
-	return git.CommitStateAndPaths(repoRoot, message, extraPaths...)
+var docCommitPathsFunc = func(ctx context.Context, repoRoot, message string, extraPaths ...string) (bool, error) {
+	return git.CommitStateAndPaths(ctx, repoRoot, message, extraPaths...)
 }
 
 // classificationNudgeSection is one entry in the classification_nudge outline.
@@ -295,7 +295,7 @@ func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.In
 	// Best-effort: commit failure is logged but does not prevent the result.
 	repoRoot := docSvc.RepoRoot()
 	registerMsg := fmt.Sprintf("workflow(%s): register %s", result.ID, result.Type)
-	if _, commitErr := docCommitPathsFunc(repoRoot, registerMsg, path); commitErr != nil {
+	if _, commitErr := docCommitPathsFunc(context.Background(), repoRoot, registerMsg, path); commitErr != nil {
 		log.Printf("[doc] WARNING: auto-commit after register %s failed: %v", result.ID, commitErr)
 	}
 
@@ -445,7 +445,7 @@ func docApproveOne(ctx context.Context, docSvc *service.DocumentService, intelSv
 	// Auto-commit the approved document's state record (FR-A12). Best-effort.
 	repoRoot := docSvc.RepoRoot()
 	approveMsg := fmt.Sprintf("workflow(%s): approve %s", result.ID, result.Type)
-	if _, commitErr := docCommitFunc(repoRoot, approveMsg); commitErr != nil {
+	if _, commitErr := docCommitFunc(ctx, repoRoot, approveMsg); commitErr != nil {
 		log.Printf("[doc] WARNING: auto-commit after approve %s failed: %v", result.ID, commitErr)
 	}
 
@@ -487,7 +487,7 @@ func docMoveAction(docSvc *service.DocumentService) ActionHandler {
 		// Commit state record + old path (deletion) + new path (addition) atomically (FR-B13).
 		repoRoot := docSvc.RepoRoot()
 		moveMsg := fmt.Sprintf("workflow(%s): move to %s", docID, newPath)
-		if _, commitErr := docCommitPathsFunc(repoRoot, moveMsg, oldPath, newPath); commitErr != nil {
+		if _, commitErr := docCommitPathsFunc(ctx, repoRoot, moveMsg, oldPath, newPath); commitErr != nil {
 			log.Printf("[doc] WARNING: auto-commit after move %s failed: %v", docID, commitErr)
 		}
 
@@ -527,7 +527,7 @@ func docDeleteAction(docSvc *service.DocumentService) ActionHandler {
 		// Commit state record removal + document file removal atomically (FR-B19).
 		repoRoot := docSvc.RepoRoot()
 		deleteMsg := fmt.Sprintf("workflow(%s): delete %s", docID, result.Type)
-		if _, commitErr := docCommitPathsFunc(repoRoot, deleteMsg, filePath); commitErr != nil {
+		if _, commitErr := docCommitPathsFunc(ctx, repoRoot, deleteMsg, filePath); commitErr != nil {
 			log.Printf("[doc] WARNING: auto-commit after delete %s failed: %v", docID, commitErr)
 		}
 
@@ -682,7 +682,7 @@ func docGapsAction(docSvc *service.DocumentService, entitySvc *service.EntitySer
 		// Get parent plan ID for inheritance fallback.
 		var planID string
 		if entitySvc != nil {
-			if feat, err := entitySvc.Get("feature", featureID, ""); err == nil {
+			if feat, err := entitySvc.Get(ctx, "feature", featureID, ""); err == nil {
 				planID, _ = feat.State["parent"].(string)
 			}
 		}

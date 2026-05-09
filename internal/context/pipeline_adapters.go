@@ -3,6 +3,7 @@
 package context
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/sambeau/kanbanzai/internal/binding"
@@ -17,7 +18,10 @@ type RoleStoreAdapter struct {
 }
 
 // Resolve loads and resolves a role by ID, walking the inheritance chain.
-func (a *RoleStoreAdapter) Resolve(id string) (*ResolvedRole, error) {
+func (a *RoleStoreAdapter) Resolve(ctx context.Context, id string) (*ResolvedRole, error) {
+	if err := ctx.Err(); err != nil {
+		return nil, err
+	}
 	return ResolveRole(a.Store, id)
 }
 
@@ -61,6 +65,6 @@ func (a *BindingFileAdapter) Lookup(stage string) (*binding.StageBinding, error)
 type NoOpSurfacer struct{}
 
 // Surface returns an empty slice and no error.
-func (NoOpSurfacer) Surface(_ SurfaceInput) ([]SurfacedEntry, error) {
+func (NoOpSurfacer) Surface(_ context.Context, _ SurfaceInput) ([]SurfacedEntry, error) {
 	return nil, nil
 }

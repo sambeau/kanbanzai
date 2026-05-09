@@ -830,7 +830,7 @@ func (f *fakeEntityService) CreateDecision(input service.CreateDecisionInput) (s
 	}, nil
 }
 
-func (f *fakeEntityService) Get(entityType, entityID, slug string) (service.GetResult, error) {
+func (f *fakeEntityService) Get(_ context.Context, entityType, entityID, slug string) (service.GetResult, error) {
 	if strings.TrimSpace(entityType) == "" {
 		return service.GetResult{}, &testError{"entity type is required"}
 	}
@@ -886,7 +886,7 @@ func (f *fakeEntityService) UpdateStatus(input service.UpdateStatusInput) (servi
 		return service.GetResult{}, &testError{`invalid feature transition "draft" -> "done"`}
 	}
 
-	result, err := f.Get(input.Type, input.ID, input.Slug)
+	result, err := f.Get(context.Background(), input.Type, input.ID, input.Slug)
 	if err != nil {
 		return service.GetResult{}, err
 	}
@@ -908,7 +908,7 @@ func (f *fakeEntityService) UpdateEntity(input service.UpdateEntityInput) (servi
 		return service.GetResult{}, &testError{"cannot update status: use update_status instead"}
 	}
 
-	result, err := f.Get(input.Type, input.ID, input.Slug)
+	result, err := f.Get(context.Background(), input.Type, input.ID, input.Slug)
 	if err != nil {
 		return service.GetResult{}, err
 	}

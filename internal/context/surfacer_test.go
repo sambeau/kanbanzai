@@ -1,6 +1,7 @@
 package context
 
 import (
+	"context"
 	"testing"
 	"time"
 
@@ -51,7 +52,7 @@ func TestSurfacer_FullPipeline(t *testing.T) {
 	}
 
 	s := NewSurfacer(staticLoader(entries), nil, fixedNow, nil)
-	result, err := s.Surface(SurfaceInput{
+	result, err := s.Surface(context.Background(), SurfaceInput{
 		FilePaths: []string{"internal/service/handler.go"},
 		RoleTags:  []string{"go"},
 	})
@@ -79,7 +80,7 @@ func TestSurfacer_ZeroMatches(t *testing.T) {
 	}
 
 	s := NewSurfacer(staticLoader(entries), nil, fixedNow, nil)
-	result, err := s.Surface(SurfaceInput{
+	result, err := s.Surface(context.Background(), SurfaceInput{
 		FilePaths: []string{"cmd/main.go"},
 		RoleTags:  []string{"frontend"},
 	})
@@ -95,7 +96,7 @@ func TestSurfacer_EmptyKnowledgeBase(t *testing.T) {
 	t.Parallel()
 
 	s := NewSurfacer(staticLoader(nil), nil, fixedNow, nil)
-	result, err := s.Surface(SurfaceInput{
+	result, err := s.Surface(context.Background(), SurfaceInput{
 		FilePaths: []string{"internal/service/handler.go"},
 	})
 	if err != nil {
@@ -113,7 +114,7 @@ func TestSurfacer_LoaderError(t *testing.T) {
 		return nil, &testError{"knowledge base unavailable"}
 	}
 	s := NewSurfacer(loader, nil, fixedNow, nil)
-	result, err := s.Surface(SurfaceInput{
+	result, err := s.Surface(context.Background(), SurfaceInput{
 		FilePaths: []string{"internal/service/handler.go"},
 	})
 	if err != nil {
@@ -141,7 +142,7 @@ func TestSurfacer_CapAt10(t *testing.T) {
 	}
 
 	s := NewSurfacer(staticLoader(entries), nil, fixedNow, nil)
-	result, err := s.Surface(SurfaceInput{})
+	result, err := s.Surface(context.Background(), SurfaceInput{})
 	if err != nil {
 		t.Fatalf("Surface() error = %v", err)
 	}
@@ -162,8 +163,8 @@ func TestSurfacer_Deterministic(t *testing.T) {
 	s := NewSurfacer(staticLoader(entries), nil, fixedNow, nil)
 	input := SurfaceInput{FilePaths: []string{"internal/service/handler.go"}}
 
-	result1, _ := s.Surface(input)
-	result2, _ := s.Surface(input)
+	result1, _ := s.Surface(context.Background(), input)
+	result2, _ := s.Surface(context.Background(), input)
 
 	if len(result1) != len(result2) {
 		t.Fatalf("different lengths: %d vs %d", len(result1), len(result2))
@@ -199,7 +200,7 @@ func TestSurfacer_CapTrackerIntegration(t *testing.T) {
 
 	// 3 consecutive cap-hit assemblies.
 	for i := 0; i < 3; i++ {
-		_, err := s.Surface(input)
+		_, err := s.Surface(context.Background(), input)
 		if err != nil {
 			t.Fatalf("Surface() call %d error = %v", i, err)
 		}
@@ -219,7 +220,7 @@ func TestSurfacer_OutputContainsExpectedFields(t *testing.T) {
 	}
 
 	s := NewSurfacer(staticLoader(entries), nil, fixedNow, nil)
-	result, err := s.Surface(SurfaceInput{})
+	result, err := s.Surface(context.Background(), SurfaceInput{})
 	if err != nil {
 		t.Fatalf("Surface() error = %v", err)
 	}
@@ -252,7 +253,7 @@ func TestSurfacer_HighestScoreLast(t *testing.T) {
 	}
 
 	s := NewSurfacer(staticLoader(entries), nil, fixedNow, nil)
-	result, err := s.Surface(SurfaceInput{})
+	result, err := s.Surface(context.Background(), SurfaceInput{})
 	if err != nil {
 		t.Fatalf("Surface() error = %v", err)
 	}

@@ -637,7 +637,7 @@ func TestSynthesiseTask_DispatchInfo(t *testing.T) {
 
 	// Manually write dispatch fields onto the task record, simulating what
 	// dispatch_task does. Resolve the slug first since Store().Load requires it.
-	taskGet, err := entitySvc.Get("task", taskID, "")
+	taskGet, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		t.Fatalf("get task %s: %v", taskID, err)
 	}
@@ -1059,7 +1059,7 @@ func TestStatusTool_TaskDetail_HasDispatch(t *testing.T) {
 	taskID := createStatusTestTask(t, entitySvc, featID, "dispatch-tool-task", "Task")
 
 	// Manually write dispatch fields. Resolve the slug first since Store().Load requires it.
-	taskGet, err := entitySvc.Get("task", taskID, "")
+	taskGet, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		t.Fatalf("get task %s: %v", taskID, err)
 	}
@@ -1663,7 +1663,7 @@ func createStatusTestBug(t *testing.T, entitySvc *service.EntityService, slug, n
 		return result.ID
 	}
 	// Write origin_feature directly to the storage record.
-	bugGet, err := entitySvc.Get("bug", result.ID, "")
+	bugGet, err := entitySvc.Get(context.Background(), "bug", result.ID, "")
 	if err != nil {
 		t.Fatalf("get bug %s: %v", result.ID, err)
 	}
@@ -1681,7 +1681,7 @@ func createStatusTestBug(t *testing.T, entitySvc *service.EntityService, slug, n
 // setBugStatus writes a new status value directly to the storage record.
 func setBugStatus(t *testing.T, entitySvc *service.EntityService, bugID, status string) {
 	t.Helper()
-	bugGet, err := entitySvc.Get("bug", bugID, "")
+	bugGet, err := entitySvc.Get(context.Background(), "bug", bugID, "")
 	if err != nil {
 		t.Fatalf("get bug %s: %v", bugID, err)
 	}
@@ -1767,7 +1767,7 @@ func TestSynthesiseProject_StandaloneBug_EmptyName(t *testing.T) {
 
 	// Create with a placeholder name, then blank it out in storage.
 	bugID := createStatusTestBug(t, entitySvc, "noname-bug", "TempName", "high", "")
-	bugGet, err := entitySvc.Get("bug", bugID, "")
+	bugGet, err := entitySvc.Get(context.Background(), "bug", bugID, "")
 	if err != nil {
 		t.Fatalf("get bug: %v", err)
 	}
@@ -1903,7 +1903,7 @@ func TestSynthesiseProject_StandaloneBug_OrderingPreserved(t *testing.T) {
 	planID := createTestPlan(t, entitySvc, "ordering-plan", "Plan")
 	featID := createStatusTestFeature(t, entitySvc, planID, "ordering-feat", "Feature")
 	taskID := createStatusTestTask(t, entitySvc, featID, "ordering-task", "Task")
-	taskGet, err := entitySvc.Get("task", taskID, "")
+	taskGet, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		t.Fatalf("get task: %v", err)
 	}

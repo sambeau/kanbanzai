@@ -395,7 +395,7 @@ func TestFastTrack_Override_BypassesValidatorAndRecords(t *testing.T) {
 	}
 
 	// Verify the feature advanced past the gate.
-	feat, getErr := entitySvc.Get("feature", featID, "")
+	feat, getErr := entitySvc.Get(context.Background(), "feature", featID, "")
 	if getErr != nil {
 		t.Fatalf("Get feature: %v", getErr)
 	}
@@ -503,7 +503,7 @@ func TestFastTrack_TierInference_SecurityTagInfersCritical(t *testing.T) {
 		t.Fatalf("CreateFeature: %v", err)
 	}
 
-	feat, err := entitySvc.Get("feature", result.ID, "")
+	feat, err := entitySvc.Get(context.Background(), "feature", result.ID, "")
 	if err != nil {
 		t.Fatalf("Get feature: %v", err)
 	}
@@ -532,7 +532,7 @@ func TestFastTrack_TierInference_BugEntityInfersBugFix(t *testing.T) {
 		t.Fatalf("CreateBug: %v", err)
 	}
 
-	bug, err := entitySvc.Get("bug", result.ID, "")
+	bug, err := entitySvc.Get(context.Background(), "bug", result.ID, "")
 	if err != nil {
 		t.Fatalf("Get bug: %v", err)
 	}
@@ -564,7 +564,7 @@ func TestFastTrack_TierInference_ExplicitTierOverridesInference(t *testing.T) {
 		t.Fatalf("CreateBug: %v", err)
 	}
 
-	bug, err := entitySvc.Get("bug", result.ID, "")
+	bug, err := entitySvc.Get(context.Background(), "bug", result.ID, "")
 	if err != nil {
 		t.Fatalf("Get bug: %v", err)
 	}
@@ -657,7 +657,7 @@ func TestFastTrack_CycleCap_TriggersEscalation(t *testing.T) {
 	featID := createEntityTestFeature(t, entitySvc, planID, "ft-pipe-004")
 	setFeatureTier(t, entitySvc, featID, config.TierFeature)
 
-	feat, err := entitySvc.Get("feature", featID, "")
+	feat, err := entitySvc.Get(context.Background(), "feature", featID, "")
 	if err != nil {
 		t.Fatalf("Get feature: %v", err)
 	}

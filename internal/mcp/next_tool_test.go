@@ -284,7 +284,7 @@ func TestNext_QueueMode_PromotesQueuedTasks(t *testing.T) {
 	_ = taskSlug
 
 	// Verify the task starts in queued status.
-	task, err := entitySvc.Get("task", taskID, "")
+	task, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		t.Fatalf("get task: %v", err)
 	}
@@ -508,7 +508,7 @@ func TestNext_ClaimByTaskID_TransitionsToActive(t *testing.T) {
 	callNext(t, entitySvc, dispatchSvc, map[string]any{"id": taskID})
 
 	// Verify the task is now active in the store.
-	task, err := entitySvc.Get("task", taskID, "")
+	task, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		t.Fatalf("get task after claim: %v", err)
 	}
@@ -1128,7 +1128,7 @@ func TestNext_ClaimByTaskID_ProposedFeatureRejected(t *testing.T) {
 	}
 
 	// Task must remain in "ready" — it was not claimed.
-	task, err := entitySvc.Get("task", taskID, "")
+	task, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		t.Fatalf("get task after rejected claim: %v", err)
 	}

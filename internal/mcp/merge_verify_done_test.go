@@ -1,6 +1,7 @@
 package mcp
 
 import (
+	"context"
 	"encoding/json"
 	"testing"
 
@@ -281,7 +282,7 @@ func TestMergeVerifyDone_VerifyGate_BlocksSkippingToDone(t *testing.T) {
 	if errMsg == "" {
 		// If no error, at least verify the lifecycle model says this is invalid.
 		// The entity may have transitioned; check the current status.
-		feat, getErr := entitySvc.Get("feature", featID, "")
+		feat, getErr := entitySvc.Get(context.Background(), "feature", featID, "")
 		if getErr != nil {
 			t.Fatalf("Get feature: %v", getErr)
 		}

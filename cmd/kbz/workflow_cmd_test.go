@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"os"
 	"strings"
 	"testing"
@@ -834,7 +835,7 @@ func (f *faultyEntityService) CreateDecision(input service.CreateDecisionInput) 
 func (f *faultyEntityService) GetPlan(id string) (service.ListResult, error) {
 	return service.ListResult{}, f.err
 }
-func (f *faultyEntityService) Get(entityType, entityID, slug string) (service.GetResult, error) {
+func (f *faultyEntityService) Get(_ context.Context, entityType, entityID, slug string) (service.GetResult, error) {
 	return service.GetResult{}, f.err
 }
 func (f *faultyEntityService) List(entityType string) ([]service.ListResult, error) {

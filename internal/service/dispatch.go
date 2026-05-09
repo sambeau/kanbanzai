@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"strings"
 	"time"
@@ -118,12 +119,10 @@ func (s *DispatchService) DispatchTask(input DispatchInput) (DispatchResult, err
 	}
 
 	// Load the task.
-	task, err := s.entitySvc.Get("task", taskID, "")
+	task, err := s.entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		return DispatchResult{}, fmt.Errorf("task not found: %w", err)
 	}
-
-	// Verify task status is ready.
 	status := stringFromState(task.State, "status")
 	if status != string(model.TaskStatusReady) {
 		if status == string(model.TaskStatusActive) {
@@ -145,7 +144,7 @@ func (s *DispatchService) DispatchTask(input DispatchInput) (DispatchResult, err
 	if len(dependsOn) > 0 {
 		depStatuses := make(map[string]string, len(dependsOn))
 		for _, depID := range dependsOn {
-			dep, err := s.entitySvc.Get("task", depID, "")
+			dep, err := s.entitySvc.Get(context.Background(), "task", depID, "")
 			if err == nil {
 				depStatuses[depID] = stringFromState(dep.State, "status")
 			}
@@ -184,7 +183,7 @@ func (s *DispatchService) DispatchTask(input DispatchInput) (DispatchResult, err
 	}
 
 	// Reload final task state.
-	finalTask, err := s.entitySvc.Get("task", task.ID, "")
+	finalTask, err := s.entitySvc.Get(context.Background(), "task", task.ID, "")
 	if err != nil {
 		return DispatchResult{}, fmt.Errorf("reload task: %w", err)
 	}
@@ -246,7 +245,7 @@ func (s *DispatchService) CompleteTask(input CompleteInput) (CompleteResult, err
 	}
 
 	// Load task.
-	task, err := s.entitySvc.Get("task", taskID, "")
+	task, err := s.entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		return CompleteResult{}, fmt.Errorf("task not found: %w", err)
 	}
@@ -377,7 +376,7 @@ func (s *DispatchService) CompleteTask(input CompleteInput) (CompleteResult, err
 	}
 
 	// Reload final task state.
-	finalTask, err := s.entitySvc.Get("task", task.ID, "")
+	finalTask, err := s.entitySvc.Get(context.Background(), "task", task.ID, "")
 	if err != nil {
 		return CompleteResult{}, fmt.Errorf("reload task: %w", err)
 	}

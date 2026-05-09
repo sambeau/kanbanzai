@@ -27,8 +27,8 @@ import (
 	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
-var entityCommitFunc = func(repoRoot, message string) (bool, error) {
-	return git.CommitStateWithMessage(repoRoot, message)
+var entityCommitFunc = func(ctx context.Context, repoRoot, message string) (bool, error) {
+	return git.CommitStateWithMessage(ctx, repoRoot, message)
 }
 
 func EntityTool(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store, requiresHumanReview func() bool) []server.ServerTool {
@@ -109,7 +109,7 @@ func entityCreateAction(entitySvc *service.EntityService) ActionHandler {
 				r, e := entityCreateOne(entityType, m, entitySvc)
 				return entityArgStr(m, "slug"), r, e
 			})
-			if _, err := entityCommitFunc(".", fmt.Sprintf("workflow: create %d %s entities", len(items), entityType)); err != nil {
+			if _, err := entityCommitFunc(ctx, ".", fmt.Sprintf("workflow: create %d %s entities", len(items), entityType)); err != nil {
 				log.Printf("WARNING: commit after batch create failed: %v", err)
 			}
 			return result, err
@@ -199,7 +199,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 	if len(result.Warnings) > 0 {
 		out["warnings"] = result.Warnings
 	}
-	if _, err := entityCommitFunc(".", fmt.Sprintf("workflow(%s): create %s", result.ID, result.Type)); err != nil {
+	if _, err := entityCommitFunc(context.Background(), ".", fmt.Sprintf("workflow(%s): create %s", result.ID, result.Type)); err != nil {
 		log.Printf("WARNING: commit after create %s failed: %v", result.ID, err)
 	}
 	return out, nil
@@ -293,7 +293,7 @@ func entityGetAction(entitySvc *service.EntityService) ActionHandler {
 			}
 			return map[string]any{"entity": entityBatchRecord(r)}, nil
 		}
-		r, err := entitySvc.Get(entityType, entityID, "")
+		r, err := entitySvc.Get(ctx, entityType, entityID, "")
 		if err != nil {
 			return nil, fmt.Errorf("cannot get %s %s: %w", entityType, entityID, err)
 		}
@@ -577,7 +577,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			if err != nil {
 				return entityTransitionError(entitySvc, "strategic-plan", entityID, newStatus, err), nil
 			}
-			if _, err := entityCommitFunc(".", fmt.Sprintf("workflow(%s): transition %s → %s", entityID, fromStatus, newStatus)); err != nil {
+			if _, err := entityCommitFunc(ctx, ".", fmt.Sprintf("workflow(%s): transition %s → %s", entityID, fromStatus, newStatus)); err != nil {
 				log.Printf("WARNING: commit after strategic-plan transition failed: %v", err)
 			}
 			return map[string]any{"entity": entityFullRecord(r.ID, r.Type, r.Slug, r.State)}, nil
@@ -600,7 +600,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			if err != nil {
 				return entityTransitionError(entitySvc, "batch", entityID, newStatus, err), nil
 			}
-			if _, err := entityCommitFunc(".", fmt.Sprintf("workflow(%s): transition %s → %s", entityID, batchFromStatus, newStatus)); err != nil {
+			if _, err := entityCommitFunc(ctx, ".", fmt.Sprintf("workflow(%s): transition %s → %s", entityID, batchFromStatus, newStatus)); err != nil {
 				log.Printf("WARNING: commit after batch transition failed: %v", err)
 			}
 			r, _ := entitySvc.GetBatch(entityID)
@@ -610,7 +610,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 		if entityType == "feature" && !override {
 			isTerminal := newStatus == string(model.FeatureStatusDone) || newStatus == string(model.FeatureStatusSuperseded) || newStatus == string(model.FeatureStatusCancelled)
 			if isTerminal {
-				pre, preErr := entitySvc.Get("feature", entityID, "")
+				pre, preErr := entitySvc.Get(ctx, "feature", entityID, "")
 				var curStatus string
 				if preErr == nil {
 					curStatus, _ = pre.State["status"].(string)
@@ -624,7 +624,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			}
 		}
 		if entityType == "feature" {
-			getR, err := entitySvc.Get("feature", entityID, "")
+			getR, err := entitySvc.Get(ctx, "feature", entityID, "")
 			if err != nil {
 				return entityTransitionError(entitySvc, entityType, entityID, newStatus, err), nil
 			}
@@ -719,7 +719,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 		}
 		// Bug lifecycle gate enforcement (FR-010).
 		if entityType == "bug" && !override {
-			getR, err := entitySvc.Get("bug", entityID, "")
+			getR, err := entitySvc.Get(ctx, "bug", entityID, "")
 			if err != nil {
 				return entityTransitionError(entitySvc, entityType, entityID, newStatus, err), nil
 			}
@@ -763,7 +763,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			}
 		}
 		var fromStatus string
-		if pre, preErr := entitySvc.Get(entityType, entityID, ""); preErr == nil {
+		if pre, preErr := entitySvc.Get(ctx, entityType, entityID, ""); preErr == nil {
 			fromStatus, _ = pre.State["status"].(string)
 		}
 
@@ -810,12 +810,12 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			isTerminal := newStatus == string(model.TaskStatusDone) || newStatus == string(model.TaskStatusNotPlanned) || newStatus == "duplicate"
 			if isTerminal {
 				parentFeatureID := ""
-				if taskR, taskErr := entitySvc.Get("task", entityID, ""); taskErr == nil {
+				if taskR, taskErr := entitySvc.Get(ctx, "task", entityID, ""); taskErr == nil {
 					parentFeatureID, _ = taskR.State["parent_feature"].(string)
 				}
 				if parentFeatureID != "" {
 					featFrom := "developing"
-					if preFeat, preFeatErr := entitySvc.Get("feature", parentFeatureID, ""); preFeatErr == nil {
+					if preFeat, preFeatErr := entitySvc.Get(ctx, "feature", parentFeatureID, ""); preFeatErr == nil {
 						if s, _ := preFeat.State["status"].(string); s != "" {
 							featFrom = s
 						}
@@ -843,7 +843,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 				}
 			}
 		}
-		if _, err := entityCommitFunc(".", fmt.Sprintf("workflow(%s): transition %s → %s", entityID, fromStatus, newStatus)); err != nil {
+		if _, err := entityCommitFunc(ctx, ".", fmt.Sprintf("workflow(%s): transition %s → %s", entityID, fromStatus, newStatus)); err != nil {
 			log.Printf("WARNING: commit after transition failed: %v", err)
 		}
 		return resp, nil
@@ -851,7 +851,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 }
 
 func entityAdvanceFeature(ctx context.Context, entitySvc *service.EntityService, docSvc *service.DocumentService, entityID, targetStatus string, override bool, overrideReason string, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store, requiresHumanReview func() bool) (any, error) {
-	getR, err := entitySvc.Get("feature", entityID, "")
+	getR, err := entitySvc.Get(ctx, "feature", entityID, "")
 	if err != nil {
 		return nil, fmt.Errorf("loading feature %s: %w", entityID, err)
 	}
@@ -1120,7 +1120,7 @@ func entityCurrentStatus(entitySvc *service.EntityService, entityType, entityID 
 		if r, err := entitySvc.GetBatch(entityID); err == nil {
 			return string(r.Status), nil
 		}
-		r, err := entitySvc.Get(entityType, entityID, "")
+		r, err := entitySvc.Get(context.Background(), entityType, entityID, "")
 		if err != nil {
 			return "", err
 		}
@@ -1134,7 +1134,7 @@ func entityCurrentStatus(entitySvc *service.EntityService, entityType, entityID 
 		status, _ := r.State["status"].(string)
 		return status, nil
 	default:
-		r, err := entitySvc.Get(entityType, entityID, "")
+		r, err := entitySvc.Get(context.Background(), entityType, entityID, "")
 		if err != nil {
 			return "", err
 		}
@@ -1372,7 +1372,7 @@ func entityCloseOutAction(entitySvc *service.EntityService, docSvc *service.Docu
 		featureID = resolvedID
 
 		// Verify feature exists and is in reviewing status.
-		feat, err := entitySvc.Get("feature", featureID, "")
+		feat, err := entitySvc.Get(ctx, "feature", featureID, "")
 		if err != nil {
 			return nil, fmt.Errorf("Cannot close out: feature %s not found: %w", featureID, err)
 		}
@@ -1437,7 +1437,7 @@ func entityCloseOutAction(entitySvc *service.EntityService, docSvc *service.Docu
 		}
 		if batchID != "" {
 			if advanced, _ := entitySvc.MaybeAutoAdvancePlan(batchID); advanced {
-				batchFeat, batchErr := entitySvc.Get("batch", batchID, "")
+				batchFeat, batchErr := entitySvc.Get(ctx, "batch", batchID, "")
 				batchStatus := ""
 				if batchErr == nil {
 					batchStatus, _ = batchFeat.State["status"].(string)

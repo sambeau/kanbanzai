@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"strings"
 	"time"
@@ -114,7 +115,7 @@ func runWorktreeCreate(args []string, deps dependencies) error {
 
 	// Verify entity exists
 	entitySvc := service.NewEntityService(core.StatePath())
-	entity, err := entitySvc.Get(entityType, entityID, "")
+	entity, err := entitySvc.Get(context.Background(), entityType, entityID, "")
 	if err != nil {
 		return fmt.Errorf("get entity: %w", err)
 	}

@@ -3,6 +3,7 @@ package git
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"os/exec"
@@ -114,7 +115,7 @@ func IsFileModifiedSince(repoPath, filePath string, since time.Time) (bool, erro
 
 // GitMove moves src to dst using git mv, preserving Git history.
 // Both src and dst must be paths relative to repoRoot.
-func GitMove(repoRoot, src, dst string) error {
-	_, err := runGitCmd(repoRoot, "mv", src, dst)
+func GitMove(ctx context.Context, repoRoot, src, dst string) error {
+	_, err := runGitCmd(ctx, repoRoot, "mv", src, dst)
 	return err
 }

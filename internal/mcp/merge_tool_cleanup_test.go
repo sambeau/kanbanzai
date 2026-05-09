@@ -1,6 +1,7 @@
 package mcp
 
 import (
+	"context"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -210,7 +211,7 @@ func TestExecuteMerge_SquashMergeDeletesLocalBranch_AC007(t *testing.T) {
 	repoPath, wtStore, entitySvc, entityID, _ := setupMergeTestRepo(t)
 
 	oldCommit := mergeCommitFunc
-	mergeCommitFunc = func(_, _ string) (bool, error) { return false, nil }
+	mergeCommitFunc = func(_ context.Context, _, _ string) (bool, error) { return false, nil }
 	t.Cleanup(func() { mergeCommitFunc = oldCommit })
 
 	branch := "feature/FEAT-01KQG3MRGTEST1"
@@ -269,7 +270,7 @@ func TestExecuteMerge_CleanupFailureDoesNotFailMerge_AC011(t *testing.T) {
 	repoPath, wtStore, entitySvc, entityID, _ := setupMergeTestRepo(t)
 
 	oldCommit := mergeCommitFunc
-	mergeCommitFunc = func(_, _ string) (bool, error) { return false, nil }
+	mergeCommitFunc = func(_ context.Context, _, _ string) (bool, error) { return false, nil }
 	t.Cleanup(func() { mergeCommitFunc = oldCommit })
 
 	// Execute merge — the key assertion from REQ-NF-002: if cleanup scheduling
@@ -333,7 +334,7 @@ func TestExecuteMerge_SetsMergedAtAndCleanupAfter(t *testing.T) {
 	repoPath, wtStore, entitySvc, entityID, _ := setupMergeTestRepo(t)
 
 	oldCommit := mergeCommitFunc
-	mergeCommitFunc = func(_, _ string) (bool, error) { return false, nil }
+	mergeCommitFunc = func(_ context.Context, _, _ string) (bool, error) { return false, nil }
 	t.Cleanup(func() { mergeCommitFunc = oldCommit })
 
 	beforeMerge := time.Now().UTC().Truncate(time.Second)
@@ -386,7 +387,7 @@ func TestExecuteMerge_DeleteBranchFalse_PreservesBranch(t *testing.T) {
 	repoPath, wtStore, entitySvc, entityID, _ := setupMergeTestRepo(t)
 
 	oldCommit := mergeCommitFunc
-	mergeCommitFunc = func(_, _ string) (bool, error) { return false, nil }
+	mergeCommitFunc = func(_ context.Context, _, _ string) (bool, error) { return false, nil }
 	t.Cleanup(func() { mergeCommitFunc = oldCommit })
 
 	branch := "feature/FEAT-01KQG3MRGTEST1"
@@ -424,7 +425,7 @@ func TestExecuteMerge_BranchIsAncestor_MarksWorktreeMerged(t *testing.T) {
 	repoPath, wtStore, entitySvc, entityID, _ := setupMergeTestRepo(t)
 
 	oldCommit := mergeCommitFunc
-	mergeCommitFunc = func(_, _ string) (bool, error) { return false, nil }
+	mergeCommitFunc = func(_ context.Context, _, _ string) (bool, error) { return false, nil }
 	t.Cleanup(func() { mergeCommitFunc = oldCommit })
 
 	// Use merge strategy "merge" (not squash) so that merge-base --is-ancestor
@@ -464,7 +465,7 @@ func TestExecuteMerge_SquashMerge_BranchNotAncestor_WorktreeStaysActive(t *testi
 	repoPath, wtStore, entitySvc, entityID, _ := setupMergeTestRepo(t)
 
 	oldCommit := mergeCommitFunc
-	mergeCommitFunc = func(_, _ string) (bool, error) { return false, nil }
+	mergeCommitFunc = func(_ context.Context, _, _ string) (bool, error) { return false, nil }
 	t.Cleanup(func() { mergeCommitFunc = oldCommit })
 
 	// Squash merge creates a new commit but does NOT make the feature branch
@@ -519,7 +520,7 @@ func TestExecuteMerge_DeletedBranch_AncestorCheckError_WorktreeStaysActive(t *te
 	repoPath, wtStore, entitySvc, entityID, _ := setupMergeTestRepo(t)
 
 	oldCommit := mergeCommitFunc
-	mergeCommitFunc = func(_, _ string) (bool, error) { return false, nil }
+	mergeCommitFunc = func(_ context.Context, _, _ string) (bool, error) { return false, nil }
 	t.Cleanup(func() { mergeCommitFunc = oldCommit })
 
 	branch := "feature/FEAT-01KQG3MRGTEST1"

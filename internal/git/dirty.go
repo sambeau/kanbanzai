@@ -1,6 +1,7 @@
 package git
 
 import (
+	"context"
 	"fmt"
 	"strings"
 )
@@ -12,7 +13,7 @@ func CheckKbzDirty(repoRoot string) ([]string, error) {
 	// --untracked-files=all forces individual file listing rather than
 	// directory-level summary (e.g. ".kbz/state/tasks/TASK-001.yaml" instead
 	// of ".kbz/state/").
-	out, err := runGitCmd(repoRoot, "status", "--porcelain", "--untracked-files=all",
+	out, err := runGitCmd(context.Background(), repoRoot, "status", "--porcelain", "--untracked-files=all",
 		"--", ".kbz/state/", ".kbz/index/", ".kbz/context/")
 	if err != nil {
 		return nil, fmt.Errorf("git status: %w", err)

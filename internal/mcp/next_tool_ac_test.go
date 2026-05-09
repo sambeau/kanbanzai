@@ -4,6 +4,7 @@ package mcp
 // Tests for AC-006, AC-007, AC-008 already exist in next_tool_test.go.
 
 import (
+	"context"
 	"encoding/json"
 	"testing"
 )
@@ -66,7 +67,7 @@ func TestNextClaimMode_AlreadyActive_PreservesDispatchMeta(t *testing.T) {
 	callNext(t, entitySvc, dispatchSvc, map[string]any{"id": taskID})
 
 	// Record dispatch metadata from the entity store after first claim.
-	afterFirst, err := entitySvc.Get("task", taskID, taskSlug)
+	afterFirst, err := entitySvc.Get(context.Background(), "task", taskID, taskSlug)
 	if err != nil {
 		t.Fatalf("get task after first claim: %v", err)
 	}
@@ -90,7 +91,7 @@ func TestNextClaimMode_AlreadyActive_PreservesDispatchMeta(t *testing.T) {
 	}
 
 	// Dispatch metadata must be unchanged after reclaim.
-	afterReclaim, err := entitySvc.Get("task", taskID, taskSlug)
+	afterReclaim, err := entitySvc.Get(context.Background(), "task", taskID, taskSlug)
 	if err != nil {
 		t.Fatalf("get task after reclaim: %v", err)
 	}
@@ -128,7 +129,7 @@ func TestNextClaimMode_AlreadyActive_NoHookRefired(t *testing.T) {
 	}
 
 	// Record the dispatched_at timestamp to detect whether dispatch fires again.
-	afterFirst, err := entitySvc.Get("task", taskID, taskSlug)
+	afterFirst, err := entitySvc.Get(context.Background(), "task", taskID, taskSlug)
 	if err != nil {
 		t.Fatalf("get task after first claim: %v", err)
 	}
@@ -154,7 +155,7 @@ func TestNextClaimMode_AlreadyActive_NoHookRefired(t *testing.T) {
 	}
 
 	// dispatched_at must be unchanged (proves DispatchTask was not called again).
-	afterReclaim, err := entitySvc.Get("task", taskID, taskSlug)
+	afterReclaim, err := entitySvc.Get(context.Background(), "task", taskID, taskSlug)
 	if err != nil {
 		t.Fatalf("get task after reclaim: %v", err)
 	}

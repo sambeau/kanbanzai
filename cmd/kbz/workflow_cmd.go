@@ -128,7 +128,7 @@ func runStatusResolveNone(target, format string, r *render.Renderer, deps depend
 	entityType := deriveEntityType(target)
 	if entityType != "" {
 		entitySvc := deps.newEntityService(stateRoot)
-		if _, err := entitySvc.Get(entityType, target, ""); err == nil {
+		if _, err := entitySvc.Get(context.Background(), entityType, target, ""); err == nil {
 			// Found as entity — route through the entity path.
 			return runStatusEntity(target, format, r, deps)
 		}
@@ -259,7 +259,7 @@ func runStatusEntity(target, format string, r *render.Renderer, deps dependencie
 		return fmt.Errorf("cannot determine entity type for target %q", target)
 	}
 
-	result, err := entitySvc.Get(entityType, target, "")
+	result, err := entitySvc.Get(context.Background(), entityType, target, "")
 	if err != nil {
 		// Entity not found — exit 1 with descriptive message per FR-016.
 		return fmt.Errorf("entity not found: %s", target)
@@ -650,7 +650,7 @@ func runStatusPath(target, format string, r *render.Renderer, deps dependencies)
 		if entityType == "" {
 			return nil
 		}
-		entity, err := entitySvc.Get(entityType, doc.Owner, "")
+		entity, err := entitySvc.Get(context.Background(), entityType, doc.Owner, "")
 		if err != nil {
 			return nil
 		}
@@ -701,7 +701,7 @@ func runNextCmd(args []string, deps dependencies) error {
 }
 
 func runNextClaim(taskID string, entitySvc *service.EntityService, deps dependencies) error {
-	result, err := entitySvc.Get("task", taskID, "")
+	result, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		return fmt.Errorf("task not found: %s", taskID)
 	}
@@ -802,7 +802,7 @@ func runFinish(args []string, deps dependencies) error {
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
 
 	// Auto-transition ready → active if needed.
-	task, err := entitySvc.Get("task", taskID, "")
+	task, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		return fmt.Errorf("task not found: %s", taskID)
 	}
@@ -873,7 +873,7 @@ func runHandoff(args []string, deps dependencies) error {
 	stateRoot := core.StatePath()
 	entitySvc := service.NewEntityService(stateRoot)
 
-	task, err := entitySvc.Get("task", taskID, "")
+	task, err := entitySvc.Get(context.Background(), "task", taskID, "")
 	if err != nil {
 		return fmt.Errorf("task not found: %s", taskID)
 	}
@@ -884,7 +884,7 @@ func runHandoff(args []string, deps dependencies) error {
 
 	var featureSummary string
 	if parentFeature != "" {
-		feat, ferr := entitySvc.Get("feature", parentFeature, "")
+		feat, ferr := entitySvc.Get(context.Background(), "feature", parentFeature, "")
 		if ferr == nil {
 			featureSummary, _ = feat.State["summary"].(string)
 		}

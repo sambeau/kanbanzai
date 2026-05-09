@@ -19,7 +19,7 @@ func resolveEntityType(entitySvc *service.EntityService, entityID string) (strin
 	if !ok {
 		return "", service.GetResult{}, fmt.Errorf("Cannot resolve entity %q: unrecognised ID prefix.\n\nTo resolve:\n  Provide an ID with a valid prefix (e.g. FEAT-xxx, TASK-xxx, BUG-xxx)", entityID)
 	}
-	result, err := entitySvc.Get(entityType, entityID, "")
+	result, err := entitySvc.Get(context.Background(), entityType, entityID, "")
 	if err != nil {
 		return "", service.GetResult{}, err
 	}

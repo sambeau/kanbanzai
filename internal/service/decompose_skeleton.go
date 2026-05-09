@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -73,7 +74,7 @@ func (s *DecomposeService) WriteSkeletonDevPlan(featureID string, tasks []Skelet
 	}
 
 	// Load the feature to get slug and name.
-	feat, err := s.entitySvc.Get("feature", featureID, "")
+	feat, err := s.entitySvc.Get(context.Background(), "feature", featureID, "")
 	if err != nil {
 		return WriteSkeletonDevPlanResult{}, fmt.Errorf("load feature %s: %w", featureID, err)
 	}

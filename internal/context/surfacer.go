@@ -12,6 +12,7 @@
 package context
 
 import (
+	"context"
 	"log"
 	"sync"
 	"time"
@@ -37,9 +38,9 @@ type Surfacer struct {
 	now         func() time.Time
 	genReader   GenReader
 
-	mu             sync.Mutex
-	cachedGen      string
-	cachedEntries  []map[string]any
+	mu            sync.Mutex
+	cachedGen     string
+	cachedEntries []map[string]any
 }
 
 // NewSurfacer creates a production KnowledgeSurfacer.
@@ -59,7 +60,10 @@ func NewSurfacer(loader EntryLoader, capTracker *knowledge.CapTracker, now func(
 }
 
 // Surface implements KnowledgeSurfacer.Surface.
-func (s *Surfacer) Surface(input SurfaceInput) ([]SurfacedEntry, error) {
+func (s *Surfacer) Surface(ctx context.Context, input SurfaceInput) ([]SurfacedEntry, error) {
+	if err := ctx.Err(); err != nil {
+		return nil, err
+	}
 	entries, err := s.resolveEntries()
 	if err != nil {
 		// Graceful degradation (NFR-004): return empty result on load failure.
