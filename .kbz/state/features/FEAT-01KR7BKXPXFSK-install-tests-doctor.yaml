@@ -2,11 +2,18 @@ id: FEAT-01KR7BKXPXFSK
 slug: install-tests-doctor
 name: Install e2e tests and kbz doctor
 parent: B64-install-skill-quality
-status: developing
+status: reviewing
+review_cycle: 1
 summary: Add end-to-end install test suite wired into CI. Add kbz doctor subcommand for in-place install validation. Widen partial-install rollback. Rename misleading skip flags.
 spec: FEAT-01KR7BKXPXFSK/spec-p62-f4-spec-install-tests-doctor
 dev_plan: FEAT-01KR7BKXPXFSK/dev-plan-p62-f4-dev-plan-install-tests-doctor
 created: "2026-05-09T21:52:08Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: developing
+    reason: Review approved. All tasks done. CG-3 fixed.
+    timestamp: "2026-05-10T03:13:21+01:00"
+    to_status: reviewing
 display_id: B64-F4
 tier: feature
