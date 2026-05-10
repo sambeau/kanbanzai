@@ -1,0 +1,6 @@
+id: TASK-01KR8YZDB9AM1
+parent_feature: FEAT-01KR8YRQN1HPG
+slug: fix-plan-type
+name: Fix planEntityTypeFromID and all callers
+summary: Change planEntityTypeFromID to return string(model.EntityKindPlan). Update all callers. ~95 tests fixed.
+status: queued
