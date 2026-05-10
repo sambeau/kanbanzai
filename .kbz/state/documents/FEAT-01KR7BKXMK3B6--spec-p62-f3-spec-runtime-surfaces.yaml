@@ -1,0 +1,13 @@
+approved_at: "2026-05-09T22:08:53Z"
+approved_by: sambeau
+canonical_content_hash: 159e60c7a8c894e9005a973145978e2f16163a0b96128d85f49faf69d6b5d6eb
+content_hash: 454b0e4f96d1d066d8e58fba99164d2de0d6358b50afce02e2c2876d85453d3f
+created: "2026-05-09T21:58:21Z"
+created_by: sambeau
+id: FEAT-01KR7BKXMK3B6/spec-p62-f3-spec-runtime-surfaces
+owner: FEAT-01KR7BKXMK3B6
+path: work/P62-install-skill-quality-remediation/P62-F3-spec-runtime-surfaces.md
+status: approved
+title: P62-F3 Spec — Runtime Discovery Surfaces
+type: spec
+updated: "2026-05-09T22:08:53Z"

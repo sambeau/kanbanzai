@@ -276,9 +276,13 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 	baseDir := filepath.Dir(kbzDir)
 
 	// Detect partial init: .kbz/ exists but sentinel is absent.
+	// Only warn when .kbz/ pre-existed — on a fresh repo there is nothing
+	// incomplete about the absence of a sentinel before the first init.
 	sentinelPath := filepath.Join(kbzDir, initCompleteFile)
-	if _, err := os.Stat(sentinelPath); os.IsNotExist(err) {
-		fmt.Fprintf(i.stdout, "Warning: previous init appears incomplete (no '%s' sentinel). Re-running init to complete setup.\n", initCompleteFile)
+	if kbzExisted {
+		if _, err := os.Stat(sentinelPath); os.IsNotExist(err) {
+			fmt.Fprintf(i.stdout, "Warning: previous init appears incomplete (no '%s' sentinel). Re-running init to complete setup.\n", initCompleteFile)
+		}
 	}
 
 	fmt.Fprintln(i.stdout, "Existing project detected.")

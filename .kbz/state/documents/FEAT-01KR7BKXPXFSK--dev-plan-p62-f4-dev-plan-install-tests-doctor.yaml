@@ -1,0 +1,13 @@
+approved_at: "2026-05-09T22:15:29Z"
+approved_by: sambeau
+canonical_content_hash: 3be2d2e181396adafeddf8394c5e53721dbe855156e3f2a7b93245fe464d6234
+content_hash: 5d4625be92b6d51e2f33ac0b84ae9a7df739d4919113f3ddc68994576a87dfa7
+created: "2026-05-09T22:14:21Z"
+created_by: sambeau
+id: FEAT-01KR7BKXPXFSK/dev-plan-p62-f4-dev-plan-install-tests-doctor
+owner: FEAT-01KR7BKXPXFSK
+path: work/P62-install-skill-quality-remediation/P62-F4-dev-plan-install-tests-doctor.md
+status: approved
+title: "P62-F4 Dev-Plan — Install E2E Tests & kbz doctor"
+type: dev-plan
+updated: "2026-05-09T22:15:29Z"

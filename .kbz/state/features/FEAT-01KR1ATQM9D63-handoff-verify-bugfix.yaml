@@ -2,7 +2,7 @@ id: FEAT-01KR1ATQM9D63
 slug: handoff-verify-bugfix
 name: Handoff Verification - Bug Fix Type
 parent: B1-p51-exec
-status: reviewing
+status: cancelled
 review_cycle: 1
 summary: Temporary bug_fix tier feature for P51 handoff pipeline verification. DELETE after verification.
 tags:

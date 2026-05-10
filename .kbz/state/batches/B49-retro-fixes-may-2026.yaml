@@ -1,7 +1,7 @@
 id: B49-retro-fixes-may-2026
 slug: retro-fixes-may-2026
 name: Retrospective Fixes — May 2026
-status: proposed
+status: done
 summary: "Four focused features addressing the highest-priority retrospective findings: error classification, decompose proposal quality, document path tool, and commit discipline prompts."
 created: "2026-05-04T23:42:20Z"
 created_by: sambeau

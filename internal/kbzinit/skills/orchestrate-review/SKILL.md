@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: orchestrate-review
 description:
   expert: "Review orchestration with adaptive specialist dispatch,

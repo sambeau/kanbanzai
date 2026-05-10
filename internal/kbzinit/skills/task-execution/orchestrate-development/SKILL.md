@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: orchestrate-development
 description:
   expert: "Multi-agent development orchestration with conflict-aware parallel

@@ -1,0 +1,13 @@
+id: BUG-01KR6FT9XKHB1
+slug: status-tool-cancelled-and-stale-batches
+name: Status tool shows cancelled entities and stale batch data
+status: planned
+severity: low
+priority: low
+type: implementation-defect
+reported_by: samphillips
+reported: "2026-05-09T13:46:17Z"
+observed: "1. The project overview dashboard shows `plan_ready_to_close` for B50-review-remediation-v1 which has status `cancelled`. The heuristic checks \"has all N features done\" but doesn't exclude cancelled from the ready-to-close suggestion.\n\n2. After transitioning B43-composite-tools to `done` via entity(action: transition), the project-overview batches section continued to show it as `reviewing` for multiple subsequent status() calls — an apparent index/cache that lags behind entity writes. Entity-level calls (get, status(id)) return correct status immediately."
+expected: "The status() tool should:\n1. Not show cancelled batches/plans as \"ready to close\" — cancelled is a terminal state.\n2. The project-overview batches section should reflect current entity state, not stale cached/indexed data."
+spec: BUG-01KR6FT9XKHB1/spec-spec
+tier: bug_fix

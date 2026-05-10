@@ -3,4 +3,7 @@ parent_feature: FEAT-01KR003J3ATM2
 slug: copilot-instructions-worktree
 name: Update copilot-instructions for worktree file operations
 summary: Add note to .github/copilot-instructions.md that kanbanzai_edit_file and write_file accept entity_id for worktree targeting.
-status: ready
+status: done
+completed: "2026-05-09T13:39:34Z"
+completion_summary: "Update copilot-instructions for worktree file operations. The `.github/copilot-instructions.md` already contains the required guidance: \"Use kanbanzai_edit_file and write_file with entity_id for worktree file operations.\" — this was added by work in a concurrent batch. No additional changes needed — the acceptance criteria (AC-004) are already satisfied."
+verification: "Verified `.github/copilot-instructions.md` contains the worktree entity_id guidance in the \"Critical rules\" section: \"Use kanbanzai_edit_file and write_file with entity_id for worktree file operations.\""

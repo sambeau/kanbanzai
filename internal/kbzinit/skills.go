@@ -1,13 +1,10 @@
 package kbzinit
 
 import (
-	"bufio"
-	"bytes"
 	"embed"
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
 //go:embed skills
@@ -25,9 +22,6 @@ var skillNames = []string{
 	"specification",
 	"workflow",
 }
-
-const managedMarker = "# kanbanzai-managed:"
-const versionMarker = "# kanbanzai-version:"
 
 // installSkills installs all six kanbanzai skill files into
 // <baseDir>/.agents/skills/kanbanzai-<name>/SKILL.md.
@@ -100,63 +94,4 @@ func (i *Initializer) installOneSkill(baseDir, name string) error {
 	}
 	fmt.Fprintf(i.stdout, "Updated .agents/skills/kanbanzai-%s/SKILL.md\n", name)
 	return nil
-}
-
-// transformSkillContent rewrites the embedded skill content with the proper
-// managed marker text and the actual binary version.
-//
-// The embedded files contain:
-//
-//	# kanbanzai-managed: true
-//	# kanbanzai-version: dev
-//
-// These are replaced with:
-//
-//	# kanbanzai-managed: do not edit. Regenerate with: kanbanzai init --update-skills
-//	# kanbanzai-version: <version>
-func transformSkillContent(src []byte, version string) ([]byte, error) {
-	var buf bytes.Buffer
-	scanner := bufio.NewScanner(bytes.NewReader(src))
-	for scanner.Scan() {
-		line := scanner.Text()
-		if strings.HasPrefix(line, managedMarker) {
-			buf.WriteString("# kanbanzai-managed: do not edit. Regenerate with: kanbanzai init --update-skills\n")
-			continue
-		}
-		if strings.HasPrefix(line, versionMarker) {
-			buf.WriteString("# kanbanzai-version: " + version + "\n")
-			continue
-		}
-		buf.WriteString(line)
-		buf.WriteByte('\n')
-	}
-	if err := scanner.Err(); err != nil {
-		return nil, err
-	}
-	return buf.Bytes(), nil
-}
-
-// hasLine reports whether data contains a line that starts with prefix.
-func hasLine(data []byte, prefix string) bool {
-	scanner := bufio.NewScanner(bytes.NewReader(data))
-	for scanner.Scan() {
-		if strings.HasPrefix(scanner.Text(), prefix) {
-			return true
-		}
-	}
-	return false
-}
-
-// extractVersion returns the version string from the first line that starts
-// with "# kanbanzai-version:". Returns empty string if not found.
-func extractVersion(data []byte) string {
-	scanner := bufio.NewScanner(bytes.NewReader(data))
-	for scanner.Scan() {
-		line := scanner.Text()
-		if strings.HasPrefix(line, versionMarker) {
-			v := strings.TrimPrefix(line, versionMarker)
-			return strings.TrimSpace(v)
-		}
-	}
-	return ""
 }

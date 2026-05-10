@@ -13,3 +13,5 @@ created: "2026-05-07T01:16:17Z"
 created_by: sambeau
 display_id: B53-F2
 tier: retro_fix
+verification: "TASK-01KR00NZASR4Z: Verified `.github/copilot-instructions.md` contains the worktree entity_id guidance in the \"Critical rules\" section: \"Use kanbanzai_edit_file and write_file with entity_id for worktree file operations.\"\nTASK-01KR00NZDFRRW: Verified implement-task/SKILL.md contains Worktree File Editing section with write_file(entity_id:...) guidance. All AC criteria satisfied.\nTASK-01KR00QDMHH86: Verified copilot-instructions.md updated with worktree guidance (commit 1e5b485c). implement-task/SKILL.md already contains Worktree File Editing section with write_file/kanbanzai_edit_file guidance. AC-001 through AC-004 satisfied."
+verification_status: passed

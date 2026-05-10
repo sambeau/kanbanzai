@@ -1,0 +1,13 @@
+approved_at: "2026-05-09T22:08:52Z"
+approved_by: sambeau
+canonical_content_hash: f4ba761d65d26eb554c2fb1d1ffaa3e89c1820812ff7c26fba5e38afe57def96
+content_hash: 0521cad5dd87366ac00644b127523ef8ef07f069f46c59c12c7e864aa22eb499
+created: "2026-05-09T21:58:19Z"
+created_by: sambeau
+id: FEAT-01KR7BKXJGEPD/spec-p62-f2-spec-install-registry
+owner: FEAT-01KR7BKXJGEPD
+path: work/P62-install-skill-quality-remediation/P62-F2-spec-install-registry.md
+status: approved
+title: "P62-F2 Spec — Install Registry &amp; Marker Unification"
+type: spec
+updated: "2026-05-09T22:08:52Z"

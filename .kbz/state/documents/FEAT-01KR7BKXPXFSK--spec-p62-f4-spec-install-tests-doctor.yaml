@@ -1,0 +1,13 @@
+approved_at: "2026-05-09T22:08:53Z"
+approved_by: sambeau
+canonical_content_hash: 78f20098f36de9dc8b9bca8bb745a459429b9b0ff3e23911f5e0f3611a62d9eb
+content_hash: 5b6272c7b618f97a17e2e883162393fff70217914930e4df007d0fc37eaa8c4b
+created: "2026-05-09T21:58:21Z"
+created_by: sambeau
+id: FEAT-01KR7BKXPXFSK/spec-p62-f4-spec-install-tests-doctor
+owner: FEAT-01KR7BKXPXFSK
+path: work/P62-install-skill-quality-remediation/P62-F4-spec-install-tests-doctor.md
+status: approved
+title: "P62-F4 Spec — Install E2E Tests &amp; kbz doctor"
+type: spec
+updated: "2026-05-09T22:08:53Z"

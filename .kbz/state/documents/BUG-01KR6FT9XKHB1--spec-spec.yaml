@@ -1,0 +1,13 @@
+approved_at: "2026-05-09T13:46:18Z"
+approved_by: samphillips
+canonical_content_hash: ebeeed32948002b4d02edf52f86b96bf3a59f844fa5577cbf56e337873674364
+content_hash: ebeeed32948002b4d02edf52f86b96bf3a59f844fa5577cbf56e337873674364
+created: "2026-05-09T13:46:18Z"
+created_by: samphillips
+id: BUG-01KR6FT9XKHB1/spec-spec
+owner: BUG-01KR6FT9XKHB1
+path: work/bugs/status-tool-cancelled-and-stale-batches/spec.md
+status: approved
+title: "Bug Specification: Status tool shows cancelled entities and stale batch data"
+type: spec
+updated: "2026-05-09T13:46:18Z"

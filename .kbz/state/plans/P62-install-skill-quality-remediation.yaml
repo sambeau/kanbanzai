@@ -1,0 +1,9 @@
+id: P62-install-skill-quality-remediation
+slug: install-skill-quality-remediation
+name: "Install &amp; Skill Quality Remediation"
+status: active
+summary: "Fix the consumer install pipeline so fresh installs and upgrades reliably deliver the post-P59 instruction corpus, and add automated regression tests for both the install flow and the skill/role content itself."
+order: 0
+created: "2026-05-09T21:46:02Z"
+created_by: sambeau
+updated: "2026-05-09T22:09:22Z"

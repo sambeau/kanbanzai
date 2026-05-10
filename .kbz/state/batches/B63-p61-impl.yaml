@@ -1,7 +1,7 @@
 id: B63-p61-impl
 slug: p61-impl
 name: Handoff resilience and binding hardening implementation
-status: proposed
+status: done
 summary: "Implementation batch for P61 — four features covering documentation reconciliation, configuration safety, failure-mode resilience, and performance hygiene."
 created: "2026-05-08T16:28:12Z"
 created_by: sambeau

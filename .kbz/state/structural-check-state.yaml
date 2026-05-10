@@ -3,6 +3,10 @@ entries:
         mode: warning
         consecutive_clean: 0
         false_positive_count: 2
+    acceptance_criteria/dev-plan:
+        mode: warning
+        consecutive_clean: 0
+        false_positive_count: 1
     acceptance_criteria/specification:
         mode: warning
         consecutive_clean: 0
@@ -11,6 +15,10 @@ entries:
         mode: warning
         consecutive_clean: 0
         false_positive_count: 2
+    cross_reference/dev-plan:
+        mode: warning
+        consecutive_clean: 0
+        false_positive_count: 1
     cross_reference/specification:
         mode: warning
         consecutive_clean: 0
@@ -27,6 +35,10 @@ entries:
         mode: warning
         consecutive_clean: 0
         false_positive_count: 3
+    required_sections/dev-plan:
+        mode: warning
+        consecutive_clean: 0
+        false_positive_count: 1
     required_sections/specification:
         mode: warning
         consecutive_clean: 0
