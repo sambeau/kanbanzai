@@ -1,0 +1,6 @@
+id: TASK-01KR8Z2FNHB2W
+parent_feature: FEAT-01KR8YRQN1M56
+slug: update-agents-md
+name: Update AGENTS.md for test rules
+summary: "Document pre-commit hook, no-failing-tests-on-main rule, and test-failure reporting procedure in AGENTS.md."
+status: queued
