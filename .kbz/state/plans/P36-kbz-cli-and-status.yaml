@@ -5,5 +5,5 @@ status: proposed
 summary: "Rename the kanbanzai binary to kbz and extend kbz status to accept file paths and entity IDs, producing human-readable and machine-readable workflow summaries."
 created: "2026-04-25T17:35:28Z"
 created_by: sambeau
-updated: "2026-05-10T09:38:27Z"
+updated: "2026-05-10T11:11:08Z"
 next_feature_seq: 5

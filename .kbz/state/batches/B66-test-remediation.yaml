@@ -1,0 +1,9 @@
+id: B66-test-remediation
+slug: test-remediation
+name: Test Remediation — Fix 111 Failing Tests
+status: proposed
+summary: "Systematically fix 111 failing tests across 3 packages (kbzinit, mcp, service). Root causes: plan→batch type migration broke test setup helpers, nil DocumentService in bug gate, embedded seed drift, and MCP regression test staleness. Also establish test infrastructure improvements to prevent recurrence."
+created: "2026-05-10T11:11:09Z"
+created_by: sambeau
+updated: "2026-05-10T11:11:09Z"
+next_feature_seq: 1
