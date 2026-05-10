@@ -2,11 +2,23 @@ id: FEAT-01KR7BKXG3X61
 slug: init-unblock
 name: Init unblock — fix re-init failure
 parent: B64-install-skill-quality
-status: developing
+status: done
+review_cycle: 1
 summary: Fix the missing managed marker in orchestrate-development/SKILL.md and harden the skill installer so it self-heals rather than aborting on marker-less files. Also guards the bogus previous-init-incomplete warning. Smallest possible PR — hot-fix candidate.
 spec: FEAT-01KR7BKXG3X61/spec-p62-f1-spec-init-unblock
 dev_plan: FEAT-01KR7BKXG3X61/dev-plan-p62-f1-dev-plan-init-unblock
 created: "2026-05-09T21:52:08Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: developing
+    reason: "Code already on main (merged in prior session). All 6 tasks completed prior session — 2 show as not-planned due to state file corruption. Tests pass: TestTransformSkillContent (5/5), TestEmbeddedSkillsAllHaveMarker, TestOrchestrateReviewSkillExists, TestRun_PreExistingKbzNoSentinel_WarningFires."
+    timestamp: "2026-05-10T10:54:54+01:00"
+    to_status: reviewing
+  -
+    from_status: reviewing
+    reason: "Work done in prior session. Verification: go build passes, TestTransformSkillContent (5/5 PASS), TestEmbeddedSkillsAllHaveMarker PASS, TestOrchestrateReviewSkillExists PASS."
+    timestamp: "2026-05-10T10:54:54+01:00"
+    to_status: done
 display_id: B64-F1
 tier: feature
