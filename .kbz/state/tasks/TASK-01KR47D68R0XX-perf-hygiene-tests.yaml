@@ -3,7 +3,7 @@ parent_feature: FEAT-01KR46PKHSWQF
 slug: perf-hygiene-tests
 name: Tests for cache and handoff de-duplication
 summary: Write tests covering all 7 acceptance criteria including benchmarks for cache hit (<1ms) and cold (<100ms).
-status: queued
+status: not-planned
 depends_on:
   - TASK-01KR47D68NMXZ
   - TASK-01KR47D68QX0K
