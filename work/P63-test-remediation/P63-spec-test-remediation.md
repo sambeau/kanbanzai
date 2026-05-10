@@ -3,12 +3,12 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-10                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | spec-author                    |
 
 ---
 
-## Problem Statement
+## Overview
 
 This specification implements the design described in `work/P63-test-remediation/P63-design-test-remediation.md` (P63-test-remediation/design-p63-design-test-remediation, approved).
 
@@ -22,19 +22,32 @@ This specification covers:
 - **Enforcement:** pre-commit hooks, merge gate test verification, `kbz doctor` diagnostics, and `health` MCP integration — all within Kanbanzai's agentic workflow model (no external CI)
 - **DoD and cultural changes:** updated policy documents, AGENTS.md rules, and dashboard visibility
 
-### Scope Exclusions
+## Scope
 
-This specification does NOT cover:
+This specification covers the remediation of 111 failing tests, test infrastructure hardening, enforcement mechanisms (pre-commit hooks, merge gates, kbz doctor, health MCP), and Definition of Done updates. All enforcement lives within Kanbanzai's own tooling — no external CI.
+
+### In Scope
+
+- Fixing all 111 failing tests across `internal/kbzinit`, `internal/mcp`, and `internal/service`
+- Consolidating duplicated test helpers into shared infrastructure
+- Pruning tests for removed features or duplicate coverage
+- Pre-commit hook that blocks commits with failing tests
+- Merge gate test verification via `merge(action: check)`
+- `kbz doctor` test suite diagnostics
+- `health` MCP test status dashboard
+- DoD and AGENTS.md policy updates
+
+### Out of Scope
+
 - Adding net-new test coverage beyond what is needed to fix the failing tests
 - Re-architecting the test framework or migrating to a different testing library
 - Changing the Go testing runtime or test runner
 - External CI/CD pipeline configuration (GitHub Actions, etc.) — enforcement lives in Kanbanzai's own tooling
+- Adding test coverage for untested code paths
 
 ---
 
-## Requirements
-
-### Functional Requirements
+## Functional Requirements
 
 **Phase 1 — Fixes:**
 
@@ -70,7 +83,7 @@ This specification does NOT cover:
 - **REQ-021:** The `status` dashboard must display test suite health as a top-level metric alongside entity counts and health errors/warnings.
 - **REQ-022:** If a test is intentionally removed, the commit message must explain why the test was removed and reference the requirement or decision that made it obsolete.
 
-### Non-Functional Requirements
+## Non-Functional Requirements
 
 - **REQ-NF-001:** The pre-commit hook must complete within 5 seconds for a no-op run (cached results, no changed Go files). A full `go test ./...` run from cold must complete within 90 seconds.
 - **REQ-NF-002:** `kbz doctor` test check must complete within the same time as `go test ./...` — it must not add measurable overhead beyond running the test suite.
@@ -165,3 +178,7 @@ This specification does NOT cover:
 | AC-025 | Inspection | Read AGENTS.md, verify pre-commit hook, no-failing-tests rule, and reporting procedure are documented |
 | AC-026 | Test | Integration test: call `status`, verify test suite health metric in dashboard output |
 | AC-027 | Inspection | `git log` for test-removal commits, verify commit messages explain the rationale |
+| AC-NF-001 | Demo | Run pre-commit hook on a Go change with cached tests; verify completion within 5s. Run full `go test ./...` cold; verify completion within 90s. |
+| AC-NF-002 | Demo | Run `kbz doctor` and `go test ./...`; verify doctor elapsed time ≤ test suite elapsed time + 1s. |
+| AC-NF-003 | Test | Integration test: call `merge(action: check)` on a feature branch; verify total gate evaluation time ≤ 90s. |
+| AC-NF-004 | Test | Integration test: call `health` twice in rapid succession; verify the second call uses cached test results (sub-second response). |

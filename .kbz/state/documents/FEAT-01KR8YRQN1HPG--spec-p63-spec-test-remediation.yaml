@@ -1,0 +1,11 @@
+canonical_content_hash: ed6ed00ee30af2b38aa39bd447bef89ccba178ba490af512c8bbd77ac87393db
+content_hash: ed6ed00ee30af2b38aa39bd447bef89ccba178ba490af512c8bbd77ac87393db
+created: "2026-05-10T12:47:03Z"
+created_by: sambeau
+id: FEAT-01KR8YRQN1HPG/spec-p63-spec-test-remediation
+owner: FEAT-01KR8YRQN1HPG
+path: work/P63-test-remediation/P63-spec-test-remediation.md
+status: draft
+title: "P63 Specification — Test Remediation (Phase 1: Fix All Failing Tests)"
+type: spec
+updated: "2026-05-10T12:47:03Z"
