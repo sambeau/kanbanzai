@@ -1,0 +1,10 @@
+id: FEAT-01KR8YRQN0P0W
+slug: test-infra-hardening
+name: Phase 2 — Test Infrastructure Hardening
+parent: B68-test-remediation-impl
+status: proposed
+summary: "Consolidate duplicated writeTestPlan helpers, replace fragile id[0]=='B' checks with model.EntityKindPlan, identify and prune duplicate-coverage tests and tests for removed features."
+created: "2026-05-10T12:46:03Z"
+created_by: sambeau
+display_id: B68-F1
+tier: feature

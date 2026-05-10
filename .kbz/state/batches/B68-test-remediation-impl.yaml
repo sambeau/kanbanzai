@@ -6,5 +6,5 @@ summary: "Implement all four phases of P63: fix 111 failing tests, harden test i
 created: "2026-05-10T12:45:28Z"
 created_by: sambeau
 updated: "2026-05-10T12:45:28Z"
-next_feature_seq: 1
+next_feature_seq: 3
 parent: P63-test-remediation

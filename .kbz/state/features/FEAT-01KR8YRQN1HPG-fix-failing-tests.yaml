@@ -1,0 +1,10 @@
+id: FEAT-01KR8YRQN1HPG
+slug: fix-failing-tests
+name: Phase 1 — Fix All 111 Failing Tests
+parent: B68-test-remediation-impl
+status: proposed
+summary: "Fix all 111 failing tests: update planEntityTypeFromID to use model.EntityKindPlan (~95 tests), add nil guard in checkBugWorktreeHasCommits (1 test), sync embedded seed files (3 tests), and update MCP regression contracts (3 tests). go test ./... must exit 0."
+created: "2026-05-10T12:46:03Z"
+created_by: sambeau
+display_id: B68-F2
+tier: feature
