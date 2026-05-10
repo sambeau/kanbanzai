@@ -3,8 +3,11 @@ parent_feature: FEAT-01KR8V4YHAK4B
 slug: add-strategic-plan-fallback
 name: Add GetStrategicPlan fallback in CreateFeature
 summary: "In CreateFeature, when GetPlan fails for a P-prefixed parent, fall back to GetStrategicPlan. Update tests: switch AllocatesSequentialID to B1-parent, add StrategicPlanParent test."
-status: active
+status: done
+completed: "2026-05-10T11:49:13Z"
 claimed_at: "2026-05-10T11:44:24Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-10T11:44:24Z"
 dispatched_by: sambeau
+completion_summary: "Verified fix: CreateFeature now falls back to GetStrategicPlan for P-prefixed parents. All 3 CreateFeature tests pass (AllocatesSequentialID uses B1-parent, StrategicPlanParent tests new fallback, RejectsNonExistentParent still works). Unrelated pre-existing test failures in bug_gate_test.go and entity_children_test.go exist on main too."
+verification: "go test ./internal/service/ -run \"TestEntityService_CreateFeature\" -v -count=1 — all 3 tests PASS"
