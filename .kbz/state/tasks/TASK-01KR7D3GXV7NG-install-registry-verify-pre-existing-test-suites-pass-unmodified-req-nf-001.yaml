@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR7BKXJGEPD
 slug: install-registry-verify-pre-existing-test-suites-pass-unmodified-req-nf-001
 name: Verify pre-existing test suites pass unmodified (REQ-NF-001)
 summary: Verify pre-existing test suites pass unmodified (REQ-NF-001)
-status: queued
+status: not-planned

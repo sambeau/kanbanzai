@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR7BKXJGEPD
 slug: install-registry-testembeddedcorpus
 name: "`TestEmbeddedCorpus`"
 summary: "`TestEmbeddedCorpus`"
-status: queued
+status: not-planned
