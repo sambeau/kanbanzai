@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "~150+ gate overrides recorded across the project. While many are legitimate state-repair operations (features implemented before lifecycle tracking existed), the volume and variety of override reasons (state repair, batch-level review substitution, doc-publishing bypass, fast-track, cache staleness, missing verification) suggest the gate system doesn't match real workflow patterns. Common override categories: (1) state repair for pre-lifecycle work, (2) batch-level review substituting for per-feature review, (3) documentation-only features skipping gates, (4) cache staleness forcing overrides, (5) spec/doc ownership mismatches (plan-level vs feature-level)."
+created: "2026-05-10T09:15:17Z"
+created_by: sambeau
+id: KE-01KR8JPS4GQ5E
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - gate-override
+  - workflow-design
+  - systemic
+tier: 2
+topic: gate-override-systemic-pattern
+ttl_days: 90
+updated: "2026-05-10T09:15:17Z"
+use_count: 0

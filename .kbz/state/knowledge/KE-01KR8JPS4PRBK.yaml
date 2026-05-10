@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "Batch B64 is marked \"done\" but contains FEAT-01KR7BKXG3X61 (status: dev-planning, 2 queued tasks). The batch lifecycle advance to \"done\" does not verify that all child features are in terminal states. This allows batches to close with incomplete work."
+created: "2026-05-10T09:15:17Z"
+created_by: sambeau
+id: KE-01KR8JPS4PRBK
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - batch-lifecycle
+  - dod
+  - bug
+tier: 2
+topic: batch-done-with-incomplete-features
+ttl_days: 90
+updated: "2026-05-10T09:15:17Z"
+use_count: 0

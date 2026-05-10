@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "Gate overrides on reviewing→done do not validate that all child tasks are terminal. FEAT-01KR7BKXJGEPD was overridden to done with 9 queued incomplete tasks, and FEAT-01KR46PKHSWQF was done with 2 non-terminal tasks. The DoD enforcement at the reviewing gate should block advancement when incomplete tasks exist, even with an override reason."
+created: "2026-05-10T09:15:17Z"
+created_by: sambeau
+id: KE-01KR8JPS4GHCX
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - dod
+  - gate-override
+  - feature-lifecycle
+  - bug
+tier: 2
+topic: dod-gate-override-skips-task-completion
+ttl_days: 90
+updated: "2026-05-10T09:15:17Z"
+use_count: 0

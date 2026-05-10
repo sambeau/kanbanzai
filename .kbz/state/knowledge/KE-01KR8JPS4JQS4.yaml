@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "The project-level status dashboard showed B43 as \"reviewing\" when the batch was actually \"done\". Direct entity query returned the correct status. Suggests the dashboard reads from a cache that is not invalidated on batch status transitions."
+created: "2026-05-10T09:15:17Z"
+created_by: sambeau
+id: KE-01KR8JPS4JQS4
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - status
+  - cache
+  - staleness
+  - bug
+tier: 2
+topic: status-dashboard-cache-staleness
+ttl_days: 90
+updated: "2026-05-10T09:15:17Z"
+use_count: 0

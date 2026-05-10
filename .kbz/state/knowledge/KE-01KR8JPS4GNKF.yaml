@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "FEAT-01KR7BKXMK3B6 had 8 task state files destroyed by git clean during worktree cleanup. The tasks were \"effectively done\" but tracking was lost. This reveals a fragility: task state lives in the worktree and can be lost if the worktree is cleaned before task state is merged/persisted to the main store."
+created: "2026-05-10T09:15:17Z"
+created_by: sambeau
+id: KE-01KR8JPS4GNKF
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - worktree
+  - task-state
+  - data-loss
+  - fragility
+tier: 2
+topic: worktree-cleanup-orphaned-tasks
+ttl_days: 90
+updated: "2026-05-10T09:15:17Z"
+use_count: 0

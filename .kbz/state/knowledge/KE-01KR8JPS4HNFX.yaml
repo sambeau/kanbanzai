@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "The project-level status dashboard reports queued tasks as \"ready\" tasks. B64 showed 12 \"ready\" tasks but all 11 tasks under its features are actually \"queued\" (never started). This causes false-positive \"work available\" signals and incorrect attention items."
+created: "2026-05-10T09:15:17Z"
+created_by: sambeau
+id: KE-01KR8JPS4HNFX
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - status
+  - dashboard
+  - bug
+  - queued-vs-ready
+tier: 2
+topic: status-dashboard-queued-miscount
+ttl_days: 90
+updated: "2026-05-10T09:15:17Z"
+use_count: 0
