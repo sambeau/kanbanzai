@@ -1,0 +1,6 @@
+id: TASK-01KR8Z05Y5FZB
+parent_feature: FEAT-01KR8YRQN1HPG
+slug: nil-guard-bug-gate
+name: Nil guard in checkBugWorktreeHasCommits
+summary: "Add nil *DocumentService check in checkBugWorktreeHasCommits (prereq.go:450). Fixes panic in TestCheckBugTransitionGate_UngatedTransitions."
+status: queued

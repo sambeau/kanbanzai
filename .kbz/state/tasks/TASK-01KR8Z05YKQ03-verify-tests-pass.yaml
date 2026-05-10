@@ -1,0 +1,6 @@
+id: TASK-01KR8Z05YKQ03
+parent_feature: FEAT-01KR8YRQN1HPG
+slug: verify-tests-pass
+name: Verify go test passes
+summary: Run go test ./... and confirm zero failures after all Phase 1 fixes. Depends on all other Phase 1 tasks completing first.
+status: queued

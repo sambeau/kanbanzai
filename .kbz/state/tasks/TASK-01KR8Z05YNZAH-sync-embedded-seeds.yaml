@@ -1,0 +1,6 @@
+id: TASK-01KR8Z05YNZAH
+parent_feature: FEAT-01KR8YRQN1HPG
+slug: sync-embedded-seeds
+name: Sync embedded seed files
+summary: Copy .agents/skills/ and .kbz/ files to internal/kbzinit/ embedded counterparts. Fixes 3 kbzinit consistency tests.
+status: queued
