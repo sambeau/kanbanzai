@@ -447,6 +447,13 @@ func CheckBugTransitionGate(from, to string, bug *model.Bug, docSvc *DocumentSer
 // checkBugWorktreeHasCommits verifies that the bug's worktree branch has at
 // least one commit beyond the base branch (FR-006).
 func checkBugWorktreeHasCommits(bug *model.Bug, docSvc *DocumentService) GateResult {
+	if docSvc == nil {
+		return GateResult{
+			Stage:     string(model.BugStatusNeedsReview),
+			Satisfied: false,
+			Reason:    "document service not available",
+		}
+	}
 	repoRoot := docSvc.RepoRoot()
 	branchName := worktree.GenerateBranchName(bug.ID, bug.Slug)
 
@@ -517,6 +524,13 @@ func checkBugReviewReportAndTests(bug *model.Bug, docSvc *DocumentService) GateR
 // checkBugReviewCap increments the bug's review_cycle, checks the tier cap,
 // and blocks the transition if the cap is reached (FR-008/FR-014).
 func checkBugReviewCap(bug *model.Bug, entitySvc *EntityService) GateResult {
+	if entitySvc == nil {
+		return GateResult{
+			Stage:     string(model.BugStatusNeedsRework),
+			Satisfied: false,
+			Reason:    "entity service not available",
+		}
+	}
 	// Increment review_cycle (persisted before gate evaluation).
 	newCycle := bug.ReviewCycle + 1
 	if err := entitySvc.IncrementBugReviewCycle(bug.ID, bug.Slug); err != nil {
