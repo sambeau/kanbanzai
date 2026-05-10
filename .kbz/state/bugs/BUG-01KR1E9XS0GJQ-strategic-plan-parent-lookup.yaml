@@ -1,7 +1,7 @@
 id: BUG-01KR1E9XS0GJQ
 slug: strategic-plan-parent-lookup
 name: Feature creation fails with strategic plan parent
-status: needs-review
+status: verifying
 severity: high
 priority: high
 type: implementation-defect
