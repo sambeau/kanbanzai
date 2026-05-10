@@ -604,4 +604,136 @@ var Manifest = []Artifact{
 			VersionKind: Semver,
 		},
 	},
+
+	// ----------------------------------------------------------------
+	// F3 runtime discovery surfaces
+	// ----------------------------------------------------------------
+
+	// CLAUDE.md — embedded content (redirect to AGENTS.md + wrapper inventory).
+	// Uses the same integer version counter as AGENTS.md.
+	{
+		Name:        "CLAUDE.md",
+		Kind:        ClaudeMd,
+		EmbedPath:   "CLAUDE.md",
+		InstallPath: "CLAUDE.md",
+		Required:    true,
+		Marker: MarkerSpec{
+			Comment:      "<!-- kanbanzai-managed: v",
+			VersionKind:  IntCounter,
+			CurrentValue: strconv.Itoa(agentsMDVersion),
+		},
+	},
+
+	// OPENAI.md — embedded redirect to AGENTS.md.
+	{
+		Name:        "OPENAI.md",
+		Kind:        OpenAiRedirect,
+		EmbedPath:   "OPENAI.md",
+		InstallPath: "OPENAI.md",
+		Required:    true,
+		Marker: MarkerSpec{
+			Comment:      "<!-- kanbanzai-managed: v",
+			VersionKind:  IntCounter,
+			CurrentValue: strconv.Itoa(agentsMDVersion),
+		},
+	},
+
+	// .claude/skills/ wrappers — one per wrapper in the embed FS.
+	// REQ-004: wrappers whose canonical target lives under .agents/skills/kanbanzai-*/
+	// keep the kanbanzai- prefix in their install path; wrappers whose canonical target
+	// lives under .kbz/skills/<name>/ use the bare name.
+	{
+		Name:        "claude-kanbanzai-getting-started",
+		Kind:        ClaudeWrapper,
+		EmbedPath:   "claude_skills/kanbanzai-getting-started/SKILL.md",
+		InstallPath: ".claude/skills/kanbanzai-getting-started/SKILL.md",
+		Required:    true,
+		Marker: MarkerSpec{
+			Comment:     "# kanbanzai-version:",
+			VersionKind: Semver,
+		},
+	},
+	{
+		Name:        "claude-kanbanzai-workflow",
+		Kind:        ClaudeWrapper,
+		EmbedPath:   "claude_skills/kanbanzai-workflow/SKILL.md",
+		InstallPath: ".claude/skills/kanbanzai-workflow/SKILL.md",
+		Required:    true,
+		Marker: MarkerSpec{
+			Comment:     "# kanbanzai-version:",
+			VersionKind: Semver,
+		},
+	},
+	{
+		Name:        "claude-write-design",
+		Kind:        ClaudeWrapper,
+		EmbedPath:   "claude_skills/write-design/SKILL.md",
+		InstallPath: ".claude/skills/write-design/SKILL.md",
+		Required:    true,
+		Marker: MarkerSpec{
+			Comment:     "# kanbanzai-version:",
+			VersionKind: Semver,
+		},
+	},
+	{
+		Name:        "claude-implement-task",
+		Kind:        ClaudeWrapper,
+		EmbedPath:   "claude_skills/implement-task/SKILL.md",
+		InstallPath: ".claude/skills/implement-task/SKILL.md",
+		Required:    true,
+		Marker: MarkerSpec{
+			Comment:     "# kanbanzai-version:",
+			VersionKind: Semver,
+		},
+	},
+	{
+		Name:        "claude-orchestrate-development",
+		Kind:        ClaudeWrapper,
+		EmbedPath:   "claude_skills/orchestrate-development/SKILL.md",
+		InstallPath: ".claude/skills/orchestrate-development/SKILL.md",
+		Required:    true,
+		Marker: MarkerSpec{
+			Comment:     "# kanbanzai-version:",
+			VersionKind: Semver,
+		},
+	},
+	{
+		Name:        "claude-review-code",
+		Kind:        ClaudeWrapper,
+		EmbedPath:   "claude_skills/review-code/SKILL.md",
+		InstallPath: ".claude/skills/review-code/SKILL.md",
+		Required:    true,
+		Marker: MarkerSpec{
+			Comment:     "# kanbanzai-version:",
+			VersionKind: Semver,
+		},
+	},
+	{
+		Name:        "claude-write-spec",
+		Kind:        ClaudeWrapper,
+		EmbedPath:   "claude_skills/write-spec/SKILL.md",
+		InstallPath: ".claude/skills/write-spec/SKILL.md",
+		Required:    true,
+		Marker: MarkerSpec{
+			Comment:     "# kanbanzai-version:",
+			VersionKind: Semver,
+		},
+	},
+
+	// .cursor/rules/kanbanzai.mdc — conditional install (REQ-005/006).
+	// Uses Optional: true so the installer can skip it when gating conditions
+	// are not met without failing the init.
+	{
+		Name:        "kanbanzai.mdc",
+		Kind:        CursorRule,
+		EmbedPath:   "cursor_rules/kanbanzai.mdc",
+		InstallPath: ".cursor/rules/kanbanzai.mdc",
+		Required:    false,
+		Optional:    true,
+		Marker: MarkerSpec{
+			Comment:      "<!-- kanbanzai-managed: v",
+			VersionKind:  IntCounter,
+			CurrentValue: strconv.Itoa(agentsMDVersion),
+		},
+	},
 }

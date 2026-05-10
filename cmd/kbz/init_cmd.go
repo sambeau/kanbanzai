@@ -56,6 +56,11 @@ Flags:
   --skip-agents-md      Do not write AGENTS.md or .github/copilot-instructions.md.
                         Default: false
 
+  --enable-cursor       Install .cursor/rules/kanbanzai.mdc even when .cursor/
+                        does not already exist. When .cursor/ already exists,
+                        the rule is installed automatically without this flag.
+                        Default: false
+
 Example:
   kanbanzai init
   kanbanzai init --name "My Project" --non-interactive
@@ -98,6 +103,8 @@ func runInit(args []string, deps dependencies) error {
 			opts.SkipRoles = true
 		case "--skip-agents-md":
 			opts.SkipAgentsMD = true
+		case "--enable-cursor":
+			opts.EnableCursor = true
 		case "-h", "--help":
 			fmt.Fprint(deps.stdout, initUsageText)
 			return nil

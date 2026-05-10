@@ -11,16 +11,18 @@ import (
 // TestEmbeddedCorpus — structural assertions against the embedded corpus
 // =============================================================================
 
-// TestEmbeddedCorpus verifies four invariants against the live Manifest:
+// TestEmbeddedCorpus verifies invariants against the live Manifest:
 //   1. Every Manifest entry with a non-empty EmbedPath resolves in its FS.
 //   2. Every embedded skill/role contains its marker line and parseable version.
 //   3. AGENTS.md references no workflow skill absent from the Manifest.
 //   4. stage-bindings.yaml references no role absent from the Manifest.
+//   5. F3 surfaces contain required structural content.
 func TestEmbeddedCorpus(t *testing.T) {
 	t.Run("embed_fs_coverage", testEmbedFSCoverage)
 	t.Run("marker_and_version_parseable", testMarkerAndVersionParseable)
 	t.Run("agentsmd_drift_check", testAgentsMDDriftCheck)
 	t.Run("dangling_role_references", testDanglingRoleReferences)
+	t.Run("f3_surface_content", testF3SurfaceContent)
 }
 
 // ---------------------------------------------------------------------------
@@ -53,6 +55,18 @@ func resolveEmbedded(a Artifact) error {
 		return err
 	case StageBindings:
 		_ = embeddedStageBindings // compile-time check
+		return nil
+	case ClaudeMd:
+		_ = embeddedClaudeMd // compile-time check
+		return nil
+	case OpenAiRedirect:
+		_ = embeddedOpenAiRedirect // compile-time check
+		return nil
+	case ClaudeWrapper:
+		_, err := embeddedClaudeWrappers.ReadFile(a.EmbedPath)
+		return err
+	case CursorRule:
+		_ = embeddedCursorRule // compile-time check
 		return nil
 	default:
 		return nil
@@ -117,6 +131,14 @@ func readEmbeddedBytes(a Artifact) ([]byte, error) {
 		return embeddedRoles.ReadFile(a.EmbedPath)
 	case StageBindings:
 		return embeddedStageBindings, nil
+	case ClaudeMd:
+		return embeddedClaudeMd, nil
+	case OpenAiRedirect:
+		return embeddedOpenAiRedirect, nil
+	case ClaudeWrapper:
+		return embeddedClaudeWrappers.ReadFile(a.EmbedPath)
+	case CursorRule:
+		return embeddedCursorRule, nil
 	default:
 		return nil, nil
 	}
@@ -247,7 +269,47 @@ func extractRoleRefs(content string) []string {
 }
 
 // =============================================================================
-// Negative fixture sub-tests (AC-006, AC-007, AC-008)
+// 5. F3 surface content validation
+// =============================================================================
+
+func testF3SurfaceContent(t *testing.T) {
+	// CLAUDE.md must reference AGENTS.md.
+	claudeContent := string(embeddedClaudeMd)
+	if !strings.Contains(claudeContent, "AGENTS.md") {
+		t.Error("CLAUDE.md does not reference AGENTS.md")
+	}
+
+	// OPENAI.md must reference AGENTS.md.
+	openaiContent := string(embeddedOpenAiRedirect)
+	if !strings.Contains(openaiContent, "AGENTS.md") {
+		t.Error("OPENAI.md does not reference AGENTS.md")
+	}
+
+	// .cursor/rules/kanbanzai.mdc must have valid frontmatter with description.
+	cursorContent := string(embeddedCursorRule)
+	if !strings.Contains(cursorContent, "description:") {
+		t.Error(".cursor/rules/kanbanzai.mdc is missing frontmatter description field")
+	}
+
+	// Every claudeWrapper must have its embed path resolvable and contain
+	// a # kanbanzai-managed: marker line.
+	for _, a := range Manifest {
+		if a.Kind != ClaudeWrapper {
+			continue
+		}
+		data, err := embeddedClaudeWrappers.ReadFile(a.EmbedPath)
+		if err != nil {
+			t.Errorf("claudeWrapper %s: embed path %s not resolvable: %v", a.Name, a.EmbedPath, err)
+			continue
+		}
+		if !hasLine(data, "# kanbanzai-managed:") {
+			t.Errorf("claudeWrapper %s: missing # kanbanzai-managed: marker", a.Name)
+		}
+	}
+}
+
+// =============================================================================
+// Negative fixture sub-tests (AC-006, AC-007, AC-008, AC-010)
 // =============================================================================
 
 // TestEmbeddedCorpus_MissingMarker (AC-006):
@@ -298,5 +360,63 @@ func TestEmbeddedCorpus_DanglingRole(t *testing.T) {
 	}
 	if !foundMissing {
 		t.Error("expected nonexistent-role.yaml to be missing from Manifest")
+	}
+}
+
+// =============================================================================
+// F3 Manifest completeness negative fixtures (AC-010)
+// =============================================================================
+
+// TestEmbeddedCorpus_F3ManifestCompleteness (AC-010):
+// Verifies that a missing F3 artifact in the Manifest is detectable.
+func TestEmbeddedCorpus_F3ManifestCompleteness(t *testing.T) {
+	manifestKinds := make(map[ArtifactKind]bool)
+	for _, a := range Manifest {
+		manifestKinds[a.Kind] = true
+	}
+
+	requiredKinds := []ArtifactKind{ClaudeMd, OpenAiRedirect, CursorRule, ClaudeWrapper}
+	for _, kind := range requiredKinds {
+		if !manifestKinds[kind] {
+			t.Errorf("Manifest is missing required F3 artifact kind: %s", kind)
+		}
+	}
+
+	// Verify at least one ClaudeWrapper entry exists.
+	wrapperCount := 0
+	for _, a := range Manifest {
+		if a.Kind == ClaudeWrapper {
+			wrapperCount++
+		}
+	}
+	if wrapperCount == 0 {
+		t.Error("Manifest contains no ClaudeWrapper entries")
+	}
+}
+
+// TestEmbeddedCorpus_MissingClaudeMd (AC-010):
+// Synthetic check that missing CLAUDE.md from Manifest is detectable.
+func TestEmbeddedCorpus_MissingClaudeMd(t *testing.T) {
+	a := manifestByKind(ClaudeMd)
+	if a == nil {
+		t.Error("CLAUDE.md not found in Manifest")
+	}
+}
+
+// TestEmbeddedCorpus_MissingOpenAiRedirect (AC-010):
+// Synthetic check that missing OPENAI.md from Manifest is detectable.
+func TestEmbeddedCorpus_MissingOpenAiRedirect(t *testing.T) {
+	a := manifestByKind(OpenAiRedirect)
+	if a == nil {
+		t.Error("OPENAI.md not found in Manifest")
+	}
+}
+
+// TestEmbeddedCorpus_MissingCursorRule (AC-010):
+// Synthetic check that missing cursor rule from Manifest is detectable.
+func TestEmbeddedCorpus_MissingCursorRule(t *testing.T) {
+	a := manifestByKind(CursorRule)
+	if a == nil {
+		t.Error("kanbanzai.mdc not found in Manifest")
 	}
 }

@@ -1,0 +1,127 @@
+document_id: FEAT-01KR7BKXMK3B6/report-p62-f3-review-report
+document_path: work/P62-install-skill-quality-remediation/P62-F3-review-report.md
+content_hash: f9fa0bd7b4b3cb26328507f12b82b566686e640845286eb3bf06445615118607
+indexed_at: 2026-05-10T01:02:15.963522Z
+sections:
+    - path: "1"
+      level: 1
+      title: P62-F3 Review Report — Runtime Discovery Surfaces
+      byte_offset: 0
+      byte_count: 7516
+      word_count: 880
+      content_hash: f9fa0bd7b4b3cb26328507f12b82b566686e640845286eb3bf06445615118607
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 599
+          byte_count: 821
+          word_count: 137
+          content_hash: c5843c5dab971adaab34c154063eeca049cce574f14c9d6a1c7b7faee77c7ba6
+        - path: "1.2"
+          level: 2
+          title: Verification Points
+          byte_offset: 1420
+          byte_count: 4439
+          word_count: 479
+          content_hash: fa50090155ed43cfe3189bbffb234acb3e4632af17a00574a98a09dc865ae154
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 1. CLAUDE.md and OPENAI.md installed unconditionally ✅
+              byte_offset: 1444
+              byte_count: 640
+              word_count: 71
+              content_hash: 5517f3e4ddaabbcf986d14360d05ac8a6bdd9671935640fcf70f7f0b6ae64772
+            - path: 1.2.2
+              level: 3
+              title: 2. .claude/skills/ wrappers installed ✅
+              byte_offset: 2084
+              byte_count: 1165
+              word_count: 96
+              content_hash: 7d35bc515c9dbaa71fa11f012db3cbb17b1b4eeced8ed1fe2d4ba4afadd852cd
+            - path: 1.2.3
+              level: 3
+              title: 3. .cursor/rules/kanbanzai.mdc conditional on --enable-cursor ✅
+              byte_offset: 3249
+              byte_count: 596
+              word_count: 71
+              content_hash: 72376a2fd232b68744e591b772fb0cf5b30dce61d6a2d1899f207b9a6135fcf1
+            - path: 1.2.4
+              level: 3
+              title: 4. --skip-agents-md (--skip-instructions) suppresses F3 surfaces ✅
+              byte_offset: 3845
+              byte_count: 794
+              word_count: 97
+              content_hash: 04d004b4be606464603f6e83f0aa2a3431c23b1af168830f291c897b76cd86b3
+            - path: 1.2.5
+              level: 3
+              title: 5. TestEmbeddedCorpus extended, e2e tests for AC-001 through AC-009 ✅
+              byte_offset: 4639
+              byte_count: 1220
+              word_count: 141
+              content_hash: a48419c1ec7767c1fd1fc8fdb256512da1075f070f20f8ae270315a042e9ebf6
+        - path: "1.3"
+          level: 2
+          title: Conformance Matrix
+          byte_offset: 5859
+          byte_count: 974
+          word_count: 132
+          content_hash: fc9e56fd65552e219cdd096eb781f4b85947471989120efb35c53ea54169a72f
+        - path: "1.4"
+          level: 2
+          title: Findings
+          byte_offset: 6833
+          byte_count: 315
+          word_count: 42
+          content_hash: 62a6b1c8d30489deac96f71a0841794b61d33c010e65171faadc244f866c635f
+        - path: "1.5"
+          level: 2
+          title: Recommendations
+          byte_offset: 7148
+          byte_count: 368
+          word_count: 45
+          content_hash: d7dce0187bd7955b162db21ceb47fb5d165599fe79b796c7114ea8015bdf6ce1
+entity_refs:
+    - entity_id: FEAT-01KR7BKXMK3B6
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 204
+    - entity_id: B64-install-skill-quality
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 271
+    - entity_id: P62-install-skill-quality-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 339
+cross_doc_links:
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.2.1
+    - target_path: .claude/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .claude/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.2.2
+    - target_path: .claude/skills/kanbanzai-workflow/SKILL.md
+      link_text: .claude/skills/kanbanzai-workflow/SKILL.md
+      section_path: 1.2.2
+    - target_path: .claude/skills/write-design/SKILL.md
+      link_text: .claude/skills/write-design/SKILL.md
+      section_path: 1.2.2
+    - target_path: .claude/skills/implement-task/SKILL.md
+      link_text: .claude/skills/implement-task/SKILL.md
+      section_path: 1.2.2
+    - target_path: .claude/skills/orchestrate-development/SKILL.md
+      link_text: .claude/skills/orchestrate-development/SKILL.md
+      section_path: 1.2.2
+    - target_path: .claude/skills/review-code/SKILL.md
+      link_text: .claude/skills/review-code/SKILL.md
+      section_path: 1.2.2
+    - target_path: .claude/skills/write-spec/SKILL.md
+      link_text: .claude/skills/write-spec/SKILL.md
+      section_path: 1.2.2
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+classified: false

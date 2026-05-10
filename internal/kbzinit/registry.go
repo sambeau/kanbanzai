@@ -10,6 +10,10 @@ const (
 	AgentsMd            ArtifactKind = "agents-md"
 	CopilotInstructions ArtifactKind = "copilot-instructions"
 	StageBindings       ArtifactKind = "stage-bindings"
+	ClaudeMd            ArtifactKind = "claude-md"
+	OpenAiRedirect      ArtifactKind = "openai-redirect"
+	ClaudeWrapper       ArtifactKind = "claude-wrapper"
+	CursorRule          ArtifactKind = "cursor-rule"
 )
 
 // VersionKind controls which version comparison strategy MarkerSpec uses.

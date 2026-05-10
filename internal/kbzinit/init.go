@@ -45,6 +45,9 @@ type Options struct {
 	SkipRoles bool
 	// SkipAgentsMD suppresses writing AGENTS.md and .github/copilot-instructions.md.
 	SkipAgentsMD bool
+	// EnableCursor forces installation of .cursor/rules/kanbanzai.mdc even when
+	// .cursor/ does not already exist.
+	EnableCursor bool
 }
 
 // Initializer runs the kanbanzai init command.
@@ -102,8 +105,20 @@ func (i *Initializer) Run(opts Options) error {
 		if err := i.installTaskSkills(gitRoot); err != nil {
 			return err
 		}
-		// Also update managed role files.
+		// Also update managed role files and F3 runtime surfaces.
 		if err := i.updateManagedRoles(gitRoot); err != nil {
+			return err
+		}
+		if err := i.installClaudeMd(gitRoot); err != nil {
+			return err
+		}
+		if err := i.installOpenAiRedirect(gitRoot); err != nil {
+			return err
+		}
+		if err := i.installClaudeWrappers(gitRoot); err != nil {
+			return err
+		}
+		if err := i.installCursorRule(gitRoot, false); err != nil {
 			return err
 		}
 		fmt.Fprintln(i.stdout, "Update complete.")
@@ -247,6 +262,20 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 		if err := i.writeCopilotInstructions(baseDir); err != nil {
 			return err
 		}
+
+		// F3: runtime discovery surfaces — suppressed by --skip-agents-md / --skip-instructions.
+		if err := i.installClaudeMd(baseDir); err != nil {
+			return err
+		}
+		if err := i.installOpenAiRedirect(baseDir); err != nil {
+			return err
+		}
+		if err := i.installClaudeWrappers(baseDir); err != nil {
+			return err
+		}
+		if err := i.installCursorRule(baseDir, opts.EnableCursor); err != nil {
+			return err
+		}
 	}
 
 	if !opts.SkipRoles {
@@ -358,6 +387,20 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 			return err
 		}
 		if err := i.writeCopilotInstructions(baseDir); err != nil {
+			return err
+		}
+
+		// F3: runtime discovery surfaces — suppressed by --skip-agents-md / --skip-instructions.
+		if err := i.installClaudeMd(baseDir); err != nil {
+			return err
+		}
+		if err := i.installOpenAiRedirect(baseDir); err != nil {
+			return err
+		}
+		if err := i.installClaudeWrappers(baseDir); err != nil {
+			return err
+		}
+		if err := i.installCursorRule(baseDir, opts.EnableCursor); err != nil {
 			return err
 		}
 	}
