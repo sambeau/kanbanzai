@@ -1,0 +1,12 @@
+id: FEAT-01KR8V4YHAK4B
+slug: fix-createfeature-strategic-plan-parent
+name: Fix CreateFeature Strategic Plan Parent Resolution
+parent: B67-bugfix-strategic-plan-parent
+status: proposed
+summary: CreateFeature calls GetPlan which only looks in batches/ directory. Add fallback to GetStrategicPlan for P-prefixed parents.
+tags:
+  - bug_fix
+created: "2026-05-10T11:42:49Z"
+created_by: sambeau
+display_id: B67-F1
+tier: feature

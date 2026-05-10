@@ -6,4 +6,4 @@ summary: Fix CreateFeature to resolve P-prefixed parents via GetStrategicPlan fa
 created: "2026-05-10T11:42:39Z"
 created_by: sambeau
 updated: "2026-05-10T11:42:39Z"
-next_feature_seq: 1
+next_feature_seq: 2
