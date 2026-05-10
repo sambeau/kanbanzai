@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR7BKXJGEPD
 slug: install-registry-build-the-canonical-manifest-slice
 name: "Build the canonical `Manifest` slice"
 summary: "Build the canonical `Manifest` slice"
-status: queued
+status: not-planned

@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR7BKXJGEPD
 slug: install-registry-implement-comparemanaged
 name: "Implement `compareManaged`"
 summary: "Implement `compareManaged`"
-status: queued
+status: not-planned
