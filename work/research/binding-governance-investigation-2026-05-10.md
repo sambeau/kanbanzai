@@ -116,6 +116,16 @@ Verifying *VerifyingBlock       `yaml:"verifying,omitempty"`
 
 A project-wide grep for `\.Tier`, `\.Profile`, `\.Modes`, and `\.Verifying` against `*StageBinding` receivers returns zero non-test references. The fields parse cleanly but contribute nothing to behaviour. The "tracked separately" comment refers to no extant tracked entity.
 
+The failure is doubly explicit: the `Feature` entity model also carries a tier field that is set at creation time and threaded through to `PipelineInput.FeatureState`:
+
+```internal/model/entities.go#L399-401
+// Tier is the fast-track risk tier: retro_fix, bug_fix, feature, or critical.
+// Set explicitly or inferred at creation time. Never re-inferred after creation.
+Tier string `yaml:"tier,omitempty"`
+```
+
+So the pipeline has tier available in two places — the feature state map it consumes (`state.Input.FeatureState["tier"]`) and the binding object it loads (`state.Binding.Tier`) — and reads neither. This is not a missing-data problem; it is a missing-consumer problem on both sides.
+
 ### Finding 3 — Two separate tier subsystems exist; they share vocabulary but are not connected [P, high]
 
 This is the central architectural finding. The project has two complete and orthogonal mechanisms that both speak the language of "tiers":
@@ -193,11 +203,34 @@ func (r *BindingRegistry) Load() error {
 
 A grep for `NewBindingRegistry` across the production source tree (excluding tests and worktrees) returns **zero matches**. Every production caller — `internal/mcp/server.go:138`, `internal/mcp/server.go:72`, `internal/mcp/health_binding.go:31`, `internal/gate/registry_cache.go:84` — uses the bare `LoadBindingFile`, which performs only YAML parsing and structural decoding (with `KnownFields(true)`), not the cross-checks.
 
+The parsed `*binding.BindingFile` is then handed to a deliberately simple adapter that the pipeline uses for lookups:
+
+```internal/context/pipeline_adapters.go#L49-60
+// Lookup retrieves the stage binding for the given lifecycle stage.
+func (a *BindingFileAdapter) Lookup(stage string) (*binding.StageBinding, error) {
+    if a.File == nil || a.File.StageBindings == nil {
+        return nil, fmt.Errorf("no binding registry loaded")
+    }
+    sb, ok := a.File.StageBindings[stage]
+    if !ok {
+        return nil, fmt.Errorf("no binding for stage %q", stage)
+    }
+    return sb, nil
+}
+```
+
+This adapter is a bare map lookup. There is no validation hook, no role-existence check, no skill-existence check, and no opportunity to invoke `ValidateBindingFile` between parse and pipeline use. Wiring `BindingRegistry.Load` into `server.go` and replacing the adapter's backing store would close the gap with no semantic change to lookup behaviour.
+
 The consequence is that the only validation actually applied to the production binding file at startup is "is this YAML, are there no unknown fields, are stage keys unique." The five invalid stage names, the empty `roles`/`skills` in the `retro-fixing` block, and any role-file-not-found references all pass silently. **The production load path is structurally permissive.**
 
-### Finding 6 — The `retro-fixing` binding would itself fail `ValidateBinding` [P, high]
+### Finding 6 — Two production bindings would fail `ValidateBinding` if validation were run [P, high]
 
-`ValidateBinding` requires `description`, `orchestration`, non-empty `roles`, non-empty `skills`. The canonical `retro-fixing` block has only `description`. The production load tolerates this because `ValidateBinding` is never reached. This means the binding is also unusable as a target for `Lookup`: any code that did manage to call `Lookup("retro-fixing")` would receive a `*StageBinding` with empty `Roles` and empty `Skills`, and step 5 of the pipeline (`stepResolveRole`) would return an error.
+`ValidateBinding` requires `description`, an `orchestration` value drawn from `validOrchestrations` (`single-agent` or `orchestrator-workers`), non-empty `roles`, and non-empty `skills`. Two bindings in the canonical YAML fail this contract today:
+
+- **`retro-fixing`** has only `description`, `profile`, `tier`, `modes`, and `verifying`. It is missing `orchestration` (would emit `invalid orchestration ""`), missing `roles` (would emit `roles must not be empty`), and missing `skills` (would emit `skills must not be empty`). Even if it were ever reached via `Lookup("retro-fixing")`, step 5 of the pipeline (`stepResolveRole`) would error on the empty `Roles` slice.
+- **`doc-publishing`** declares `orchestration: pipeline-coordinator`. The `validOrchestrations` map (`internal/binding/model.go:142-145`) accepts only `single-agent` and `orchestrator-workers`. `ValidateBinding` would emit `invalid orchestration "pipeline-coordinator"`. The binding's sub-agent block (which dispatches the five-stage editorial pipeline) is presumably consumed via a separate code path; this report did not trace it.
+
+The production load tolerates both because `ValidateBinding` is never reached (Finding 5). If §6.1 recommendation 1 is implemented (wire `BindingRegistry.Load` at startup), both bindings will fail validation immediately and either need fixing or the validator needs an additional `pipeline-coordinator` orchestration mode. This is a known, contained migration step.
 
 ### Finding 7 — Bug lifecycle has no binding coverage at all [P, high]
 
@@ -218,6 +251,8 @@ var workableStatuses = []string{
 Bugs do have a working code path — `service.CheckBugTransitionGate` (see `internal/service/bug_gate_test.go`) — but this is yet another orthogonal subsystem, not the binding pipeline. The `next` and `handoff` tools, when called against a bug, hit `stepValidateLifecycle` and refuse with:
 
 > `feature is in status "in-progress"; pipeline requires one of: designing, specifying, dev-planning, developing, reviewing, plan-reviewing, researching, documenting`
+
+The situation is worse than mere absence: the system actively prepares a worktree for the bug and then strands the agent inside it. `WorktreeTransitionHook.handleBugInProgress` at `internal/service/status_transition_hook.go:163-167` creates a dedicated worktree when a bug transitions to `in-progress`, so the user (or orchestrator) is led to expect that handoff into that worktree will work. It does not — the pipeline's lifecycle validator immediately rejects the bug status. The worktree exists; no skill loads.
 
 The 19 health warnings on the project dashboard ("bug … reached 'closed' without passing through needs-review") are downstream symptoms: the bug pipeline cannot route to a review skill, so reviews are skipped.
 
@@ -324,43 +359,51 @@ The minimum viable regression suite to catch the present failures is approximate
 | 2026-04-28 | `10dc30df` | Rename `plan-reviewing` → `batch-reviewing` in YAML; **`validStages` and `workableStatuses` not updated**. |
 | 2026-05-04 | `b67a732c`, `2736d02a` | TransitionValidator and validation pipeline. |
 | 2026-05-06 | `6c2e9131` | Add `merging` and `verifying` stages to YAML; **`validStages` not updated**; **embedded copy not updated**. |
-| 2026-05-07 | `b4b2de39` | Add `retro-fixing` block (P57); **`validStages` not updated**; **embedded copy not updated**. |
+| 2026-05-07 | `b4b2de39` | Add `retro-fixing` block (P57); **`validStages` not updated**; **embedded copy not updated**. Same commit also adds `FixPlan string` to `Bug` (`internal/model/entities.go:484`), evidence of parallel intent to wire up bug-pipeline support that was equally never completed. |
 | 2026-05-08 | `f75b47cb` | **`chore(state): commit remaining modified work documents`** — silently adds 28-line schema extension (Profile/Tier/Modes/Verifying). |
 | 2026-05-09 | `3e98c6f2` | Schema-versioned binding loader (T1) + `binding_loadable` health check (T5). |
 
-Two patterns are visible. First, `validStages` has not been edited since its creation despite multiple stage additions and one rename. Second, the `f75b47cb` commit silently adds schema surface under a chore message that mentions only "work documents." That commit is the most concerning artifact in the timeline: it expanded the public surface of the binding model with no design document, no spec, no plan, no test, and no consumer. A reviewer scanning history would not see it.
+Three patterns are visible. First, `validStages` has not been edited since its creation despite multiple stage additions and one rename. Second, the `f75b47cb` commit silently adds schema surface under a chore message that mentions only "work documents." That commit is the most concerning artifact in the timeline: it expanded the public surface of the binding model with no design document, no spec, no plan, no test, and no consumer. A reviewer scanning history would not see it. Third, the `b4b2de39` commit added the dead `retro-fixing` YAML block *and* the `Bug.FixPlan` field in the same change — two distinct entry points for tier-aware behaviour, both opened, neither wired through. The pattern is *additions to schema surface without commensurate additions to the consumer code*.
 
 ### Finding 14 — Industry guidance favours code-level routing for orchestration topology, instructions for agent behaviour [S, medium]
 
-Anthropic's *Building effective agents* (December 2024) draws an explicit distinction:
+Anthropic's *Building effective agents* (Erik Schluntz and Barry Zhang, 19 December 2024, anthropic.com/engineering/building-effective-agents) draws an explicit architectural distinction between two categories of agentic system:
 
-> "Workflows are systems where LLMs and tools are orchestrated through predefined code paths; agents are LLM-driven dynamic decision-makers."
+> "**Workflows** are systems where LLMs and tools are orchestrated through predefined code paths. **Agents**, on the other hand, are systems where LLMs dynamically direct their own processes and tool usage, maintaining control over how they accomplish tasks."
 
-And, on reliability:
+Within workflows, the article enumerates five named patterns. The two most relevant to Kanbanzai's stage-bindings system are *routing* and *orchestrator-workers*. Anthropic defines routing thus:
 
-> "Use simple, composable patterns rather than complex frameworks. … Agents are best for problems where the workflow is hard to specify upfront. Workflows are better when the steps are known."
+> "Routing classifies an input and directs it to a specialized followup task. … Routing works well for complex tasks where there are distinct categories that are better handled separately, and where classification can be handled accurately, either by an LLM or a more traditional classification model/algorithm."
 
-Modern agent frameworks split routing from behaviour:
+And on the orchestrator-workers pattern (which Kanbanzai's `developing` and `reviewing` stages explicitly use):
 
-- **LangGraph** uses an explicit state graph — nodes and edges are Python objects; the LLM never decides the graph shape.
-- **CrewAI** declares "crews" (sets of agents) and "tasks" (assignments of agents to work) in code or structured config; behaviour prompts (the role description, backstory, tools) sit beneath.
-- **AutoGen** (Microsoft Research) uses a "GroupChat manager" — an explicit Python policy decides the next speaker; per-agent system prompts shape what each says.
-- **TaskWeaver** uses a planner agent but enforces type contracts on data passed between sub-agents in code.
-- **OpenHands / Devin-class systems** route by event type (file edit, shell command, browser action) in code; the LLM never selects which sub-agent runs.
+> "In the orchestrator-workers workflow, a central LLM dynamically breaks down tasks, delegates them to worker LLMs, and synthesizes their results."
 
-The consensus is consistent: **prompt instructions describe how an agent acts; code decides which agent acts.** No mainstream orchestration framework allows the LLM-readable instruction layer to decide its own routing. Kanbanzai's `stage-bindings.yaml` is unusual in that it tries to do both — a routing manifest (what skill to load) and a behaviour manifest (the skill content itself, by reference).
+The article's overall guidance favours code over framework abstractions for routing decisions:
 
-Cursor `.cursorrules` and GitHub Copilot `.github/copilot-instructions.md` are pure behaviour-level instructions; they do not attempt routing because the IDE/host owns dispatch. Kanbanzai's design is closer to LangGraph in ambition (declarative routing) but uses YAML rather than code, and lacks the static type-checking that LangGraph gets from being Python.
+> "We suggest that developers start by using LLM APIs directly: many patterns can be implemented in a few lines of code. … [Frameworks] often create extra layers of abstraction that can obscure the underlying prompts and responses, making them harder to debug."
 
-### Finding 15 — There is no published precedent for "instructions decide their own routing" at this scale [S, medium]
+— and explicitly identifies tool-and-routing definition as code-side concerns: "Tool definitions and specifications should be given just as much prompt engineering attention as your overall prompts."
 
-Searching the agent-framework literature for precedents where YAML/JSON declares stage→agent mappings consumed by a runtime turns up:
+The modern agent frameworks all implement routing in code:
+
+- **LangGraph** (Klarna, Replit, Elastic in production) describes itself as "a low-level orchestration framework for building, managing, and deploying long-running, stateful agents" with "durable execution" as a primary feature. The README and docs describe routing via Python `StateGraph` objects with explicit nodes and edges; agents are graphs of code, not declarations of intent (github.com/langchain-ai/langgraph; docs.langchain.com/oss/python/langgraph).
+- **CrewAI** restricts process types to a Python `Enum` of `sequential` and `hierarchical`, with `consensual` planned but not implemented (docs.crewai.com/concepts/processes). Hierarchical mode requires a `manager_llm` or `manager_agent` configured in Python; the docs note: "The `Process` class is implemented as an enumeration (`Enum`), ensuring type safety and restricting process values to the defined types." Routing is a code-level concern; agent and task content is the prompt-level concern.
+- **AutoGen v0.4 Core** (Microsoft, microsoft.github.io/autogen) implements its group-chat pattern as a `GroupChatManager` Python class that maintains an explicit message protocol (`GroupChatMessage`, `RequestToSpeak`) and selects the next speaker programmatically. The docs are explicit: "the order of turns is maintained by a Group Chat Manager agent, which selects the next agent to speak upon receiving a message. The exact algorithm for selecting the next agent can vary based on your application requirements. Typically, a round-robin algorithm or a selector with an LLM model is used." The selector is code; the speaker prompt is content.
+- **SWE-agent** (Yang et al., NeurIPS 2024; arxiv.org/abs/2405.15793) introduces the concept of an *Agent-Computer Interface* (ACI) and frames the entire contribution as a code-level interface design: "language model agents represent a new category of end users with their own needs and abilities, and would benefit from specially-built interfaces to the software they use … SWE-agent's custom agent-computer interface (ACI) significantly enhances an agent's ability to create and edit code files." The agent's behaviour is governed by code-defined commands, not by free-form instruction-following.
+- **Agentless** (Xia et al., arxiv.org/abs/2407.01489) goes further still and rejects agentic routing entirely: "Agentless employs a simplistic three-phase process of localization, repair, and patch validation, without letting the LLM decide future actions or operate with complex tools." On SWE-bench Lite at the time of publication, this code-only pipeline outperformed every open-source agentic competitor.
+
+The consensus across these sources is consistent: **prompt instructions describe how an agent acts; code decides which agent acts.** I did not find any mainstream orchestration framework that delegates routing decisions to an LLM-readable declarative manifest. Kanbanzai's `stage-bindings.yaml` is unusual in attempting both — it is simultaneously a routing manifest (which skill to load) and a content reference (the skill body, indirectly). LangGraph achieves declarative routing through Python type-checking; Kanbanzai attempts the same through YAML but lacks the corresponding load-time enforcement (Findings 5 and 6).
+
+### Finding 15 — There is no published precedent for "instructions decide their own routing" at this scale [S, low]
+
+My survey covered the four major agent frameworks (LangGraph, CrewAI, AutoGen, Deep Agents/Anthropic), two SWE-bench-class systems (SWE-agent, Agentless), and the Anthropic guidance article. None of these systems uses a YAML/JSON manifest as the runtime routing source of truth. The closest analogues from adjacent domains are:
 
 - **Runbooks** (e.g. Ansible playbooks): YAML drives a deterministic engine, but the engine is fully generic — there is no per-stage validator gap because the runtime is the schema.
 - **Workflow engines** (Argo, Temporal): YAML/code declares a DAG; the engine enforces the schema strictly at submit time.
-- **Pipeline-as-code** (GitHub Actions, GitLab CI): YAML schema is enforced by the platform; unknown keys reject.
+- **Pipeline-as-code** (GitHub Actions, GitLab CI): YAML schema is enforced by the platform; unknown top-level keys are rejected at load time.
 
-The common pattern in all of these is **strict schema enforcement at load time**. Kanbanzai's `LoadBindingFile` uses `KnownFields(true)` in the parser, which is a partial application of this principle, but the cross-cutting `ValidateBindingFile` is not invoked. The system has the bones of strict validation but does not run them.
+The common pattern across all five — runbooks, workflow engines, pipeline-as-code, plus LangGraph and CrewAI in the agent space — is **strict schema enforcement at load time**. Kanbanzai's `LoadBindingFile` uses `KnownFields(true)` in the YAML parser, which is a partial application of this principle, but the cross-cutting `ValidateBindingFile` is not invoked in production (Finding 5). The system has the bones of strict validation but does not run them, leaving it in a worse position than either of the two stable design points: pure code-routing (LangGraph/CrewAI) or strictly-validated declarative routing (Argo/Temporal/GitHub Actions).
 
 ### Finding 16 — The complexity ceiling is closer than headcount suggests [S, low]
 
@@ -369,6 +412,8 @@ Architectural literature on configuration sprawl (Sweller 1988 on cognitive load
 ---
 
 ## 4. Reachability Matrix
+
+### 4.1 Bindings
 
 Twelve bindings declared in `.kbz/stage-bindings.yaml`. For each: is it pipeline-routable (i.e. does any feature lifecycle status equal the binding key)? Are its declared skills present on disk? Would `ValidateBinding` accept it? Is it present in the embedded consumer copy?
 
@@ -384,14 +429,38 @@ Twelve bindings declared in `.kbz/stage-bindings.yaml`. For each: is it pipeline
 | `batch-reviewing` | **no** (batches do not pass through pipeline) | **no** (still listed as `plan-reviewing` in code) | yes | `review-plan` ✓ | yes |
 | `researching` | yes | yes | yes | `write-research` ✓ | yes |
 | `documenting` | yes | yes | yes | `update-docs` ✓ | yes |
-| `doc-publishing` | **no** (no feature status `doc-publishing`) | **no** | uncertain — `pipeline-coordinator` is not in `validOrchestrations` | sub-agent skills all present | yes |
+| `doc-publishing` | **no** (no feature status `doc-publishing`) | **no** | **no** — `pipeline-coordinator` orchestration is not in `validOrchestrations` (Finding 6) | sub-agent skills all present | yes |
 | `retro-fixing` | **no** (retro_fix tier features carry status `developing`) | **no** | **no** — missing `orchestration`, empty `roles`, empty `skills` | `verify-closeout` ✓ but only in verifying sub-block | **no** |
 
-**Summary:** of 12 declared bindings, **5 are routable from a feature lifecycle status** (designing, specifying, dev-planning, developing, reviewing). **3 are routable but only from write-side flows** that don't go through the pipeline (merging, verifying, batch-reviewing — these are advisory documentation for `merge` / `verify` / batch-close commands rather than handoff targets). **4 are completely unroutable** (doc-publishing, retro-fixing, plus the implicit "no bug binding"). The retro-fixing block additionally fails its own per-binding validator.
+**Summary:** of 12 declared bindings, **5 are routable from a feature lifecycle status** (designing, specifying, dev-planning, developing, reviewing). **3 are routable but only from write-side flows** that don't go through the pipeline (merging, verifying, batch-reviewing — these are advisory documentation for `merge` / `verify` / batch-close commands rather than handoff targets). **4 are completely unroutable** (doc-publishing, retro-fixing, plus the implicit "no bug binding"). Two of the twelve bindings would additionally fail their own per-binding validator (`retro-fixing` and `doc-publishing`).
 
 Twelve `BugStatus` values × zero bindings = **0/12 bug statuses routable**.
 
-Skills on disk (26) vs skills referenced (18) → **8 orphaned skills** (Finding 9), of which `implement-retro-fix` is the only one specifically authored for the failure case.
+### 4.2 Skills
+
+Skills on disk (26) vs skills referenced anywhere in `stage-bindings.yaml` (18 distinct names). The reachability column distinguishes top-level binding routing (the pipeline directly consults the skill) from sub-agent slot routing (the skill is dispatched by an orchestrator-workers parent) from unreachable.
+
+| Skill | Referenced from | Reachability |
+| --- | --- | --- |
+| `write-design` | `designing` (top-level) | top-level |
+| `write-spec` | `specifying` (top-level) | top-level |
+| `write-dev-plan` | `dev-planning` (top-level) | top-level |
+| `decompose-feature` | `dev-planning` (top-level) | top-level |
+| `orchestrate-development` | `developing` (top-level) | top-level |
+| `orchestrate-review` | `reviewing` (top-level), `merging`, `verifying` | top-level via `reviewing` only; `merging`/`verifying` references are unroutable |
+| `implement-task` | `developing` (sub_agents) | sub-agent |
+| `review-code` | `reviewing` (sub_agents) | sub-agent |
+| `review-plan` | `batch-reviewing` (top-level) | top-level (via `plan-reviewing` in code) |
+| `write-research` | `researching` (top-level) | top-level |
+| `update-docs` | `documenting` (top-level) | top-level |
+| `orchestrate-doc-pipeline` | `doc-publishing` (top-level) | unreachable via pipeline (binding fails validation; presumed direct trigger) |
+| `write-docs`, `edit-docs`, `check-docs`, `style-docs`, `copyedit-docs` | `doc-publishing` (sub_agents) | sub-agent only, parent unroutable via pipeline |
+| `verify-closeout` | `verifying` (sub_agents), `retro-fixing` (verifying block) | **unreachable** — both parents are unroutable |
+| `implement-retro-fix` | none | **unreachable** |
+| `validate-spec`, `validate-plan`, `validate-review` | none in YAML; consumed by FastTrack validators | unreachable via binding pipeline; consumed elsewhere |
+| `audit-codebase`, `prompt-engineering`, `references`, `write-skill` | none | unreachable via binding pipeline; presumed direct trigger or documentation |
+
+**Summary:** of 26 skills on disk, **11 are reachable as top-level binding skills**, **6 are reachable only as sub-agent dispatched skills**, and **9 are unreachable via the pipeline** (3 of those 9 are intentionally consumed by FastTrack instead). `implement-retro-fix` is the unique case of a skill purpose-built for the failure under investigation that is reachable from neither system.
 
 ---
 
@@ -457,10 +526,12 @@ Four architectural options, evaluated across six dimensions.
 
 1. **No fix actually attempted.** This is a diagnosis. Behaviour of the proposed remediations is hypothetical.
 2. **`ValidateBindingFile` outcome on canonical YAML is inferred, not executed.** I have not run the validator against `.kbz/stage-bindings.yaml` in a one-off harness. The Finding-6 prediction (that `retro-fixing` would fail) is based on reading the validator code; an independent run would confirm.
-3. **Industry survey is short.** I cited Anthropic primary, plus four agent frameworks at the architectural level. A deeper survey of Cursor, Cline, Aider, Continue, Amazon Q Developer, JetBrains AI, and recent academic work (e.g. SWE-bench leaderboard implementations) would strengthen the external comparison but is unlikely to change the direction of the conclusion.
+3. **Industry survey is bounded.** I verified primary sources for Anthropic's *Building effective agents*, LangGraph (README and docs landing pages), CrewAI (Processes documentation), AutoGen v0.4 Core (Group Chat design pattern documentation), SWE-agent (arXiv abstract 2405.15793), and Agentless (arXiv abstract 2407.01489). I did **not** verify Cursor's `.cursorrules` (the docs page is rendered client-side and returned no readable content via fetch), OpenHands' backend architecture (same issue), CrewAI's full hierarchical-process implementation, or AutoGen v0.4's `autogen-agentchat` higher-level API. The Cursor and Copilot characterisations from earlier drafts were removed from Finding 14 because I could not verify them in this pass. A deeper survey of Cline, Aider, Continue, Amazon Q Developer, JetBrains AI, and the SWE-bench leaderboard implementations beyond SWE-agent and Agentless would strengthen the external comparison but is unlikely to change the direction of the conclusion.
 4. **Complexity-ceiling estimate is qualitative.** The 5–7 vs 10 framing in Finding 16 is informed by software-architecture intuition rather than a quantitative study specific to YAML configuration of agent systems. I am not aware of such a study.
 5. **Consumer-project impact is partly conjectural.** I have read `kbz init` and the install code; I have not exhaustively tested what happens when an upgraded binary lands on an already-customised consumer project.
 6. **The recommendation to retire the `retro-fixing` YAML block assumes FastTrack is the canonical retro-fix mechanism.** This appears true from the code (`B48-fast-track-impl`, `B57-retro-pipeline-tightening-impl`, `B53-retro-fixes-may-2026`) but a project-leadership decision is needed to ratify it.
+
+6a. **No bug-pipeline design has been investigated.** §6.2 recommendation 6 offers a binary choice ("add `bug-developing`/`bug-reviewing` keys, or document the absence") but does not analyse what a correct bug pipeline would look like. Bug lifecycle stages (`reported`, `triaged`, `reproduced`, `planned`, `in-progress`, `needs-review`, `needs-rework`, `verifying`, `closed`, `duplicate`, `not-planned`, `cannot-reproduce`) differ structurally from feature stages (`designing`, `specifying`, `dev-planning`, `developing`, `reviewing`). Mapping them is not a mechanical exercise. A separate design effort is needed before either path can be chosen, ideally informed by what the existing `WorktreeTransitionHook` flow already implies (Finding 7).
 7. **Conditions that could change conclusions.** If a planned schema-v3 effort is already underway and intends to wire Profile/Tier/Modes/Verifying through the pipeline, then Option A becomes more defensible. If consumer projects are actively patching YAML in non-trivial ways, then Option C becomes more important than Option B. If FastTrack is itself slated for retirement, none of the above applies.
 
 ---
@@ -472,6 +543,9 @@ Four architectural options, evaluated across six dimensions.
 - `internal/context/pipeline.go:213-318, 848-861` — pipeline entry, stage resolution, binding lookup, workableStatuses.
 - `internal/binding/model.go:11-32, 150-159` — `StageBinding` struct, `validStages` allowlist.
 - `internal/binding/loader.go:24-122` — `LoadBindingFile`, parse-only path used in production.
+- `internal/context/pipeline_adapters.go:49-60` — `BindingFileAdapter.Lookup`, the bare map-lookup adapter that bypasses validation.
+- `internal/model/entities.go:399-401` — `Feature.Tier` field; available in `PipelineInput.FeatureState` but never read by the pipeline.
+- `internal/service/status_transition_hook.go:163-167` — `WorktreeTransitionHook.handleBugInProgress`, creates a worktree for bugs transitioning to `in-progress` with no corresponding pipeline routing.
 - `internal/binding/registry.go:18-86` — `BindingRegistry.Load` and `ValidateBindingFile` invocation (not used in production).
 - `internal/binding/validate.go:1-83` — `ValidateBindingFile` and `checkRoles`.
 - `internal/mcp/server.go:60-180` — pipeline construction at server startup; uses `LoadBindingFile` directly.
@@ -497,14 +571,15 @@ Four architectural options, evaluated across six dimensions.
 - `f75b47cb 2026-05-08 chore(state): commit remaining modified work documents` ← hidden schema extension
 - `3e98c6f2 2026-05-09 Merge FEAT-01KR46PKHPVSH: schema_version: 2 + binding_loadable health check`
 
-### Secondary (industry)
+### Secondary (industry, with primary URLs)
 
-- Anthropic, *Building effective agents* (December 2024). Workflows-vs-agents distinction; bias toward simple composable patterns.
-- LangChain / LangGraph documentation — explicit state-graph routing in code.
-- CrewAI documentation — declarative "crew" + "task" assignment.
-- Microsoft AutoGen — `GroupChat` manager and explicit speaker-selection policies.
-- TaskWeaver (Microsoft) — code-enforced type contracts between sub-agents.
-- Cursor `.cursorrules`; GitHub Copilot `.github/copilot-instructions.md` — pure behavioural instructions, no routing.
+- Schluntz, E. and Zhang, B. *Building effective agents.* Anthropic Engineering, 19 December 2024. https://www.anthropic.com/engineering/building-effective-agents — workflows-vs-agents architectural distinction; routing and orchestrator-workers patterns; bias toward simple composable patterns and code-level abstractions over framework abstractions.
+- LangChain Inc. *LangGraph README.* https://github.com/langchain-ai/langgraph (verified 2026-05-10) — "Low-level orchestration framework for building stateful agents"; durable execution and stateful graphs.
+- LangChain Inc. *LangGraph documentation.* https://docs.langchain.com/oss/python/langgraph/overview — Graph API and Functional API as the two routing surfaces, both code-managed.
+- CrewAI. *Processes.* https://docs.crewai.com/concepts/processes (verified 2026-05-10) — Process types restricted to `Enum(sequential, hierarchical)`; `manager_llm`/`manager_agent` configured in Python.
+- Microsoft. *AutoGen Core: Group Chat design pattern.* https://microsoft.github.io/autogen/stable/user-guide/core-user-guide/design-patterns/group-chat.html (verified 2026-05-10) — `GroupChatManager` Python class with explicit `RequestToSpeak` message protocol; selector algorithm chosen by application code.
+- Yang, J., Jimenez, C. E., Wettig, A., Lieret, K., Yao, S., Narasimhan, K., Press, O. *SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering.* NeurIPS 2024. https://arxiv.org/abs/2405.15793 — Agent-Computer Interface (ACI) as a code-level concern; instruction-following alone insufficient.
+- Xia, C. S., Deng, Y., Dunn, S., Zhang, L. *Agentless: Demystifying LLM-based Software Engineering Agents.* https://arxiv.org/abs/2407.01489 — Three-phase localisation/repair/validation pipeline outperforms agentic competitors on SWE-bench Lite, demonstrating that fixed code paths can beat LLM-driven routing on bounded software-engineering tasks.
 
 ### Project signals
 
