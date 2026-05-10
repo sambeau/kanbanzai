@@ -12,7 +12,8 @@ created: "2026-05-07T14:34:00Z"
 created_by: sambeau
 updated: "2026-05-07T14:34:00Z"
 overrides:
-  - from_status: dev-planning
+  -
+    from_status: dev-planning
     reason: "Fast-track: single 50-line change, no review cycle needed"
     timestamp: "2026-05-07T15:46:42+01:00"
     to_status: developing

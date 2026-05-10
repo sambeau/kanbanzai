@@ -1,0 +1,11 @@
+canonical_content_hash: 861306cf78b990798b94eba990ce8865eae4eb3ffbf949c3a1529d112d430013
+content_hash: 95422ce9436da6febb1b1f4c77e06ddc4070a66cd5d9b79035d6192fe91f193f
+created: "2026-05-10T11:13:01Z"
+created_by: sambeau
+id: B66-test-remediation/design-b66-test-remediation-design-test-remediation
+owner: B66-test-remediation
+path: work/test-remediation/B66-test-remediation-design-test-remediation.md
+status: draft
+title: "Design: Test Remediation — Fix 111 Failing Tests"
+type: design
+updated: "2026-05-10T11:13:01Z"
