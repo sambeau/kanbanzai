@@ -1,7 +1,7 @@
 id: BUG-01KR1E9XS0GJQ
 slug: strategic-plan-parent-lookup
 name: Feature creation fails with strategic plan parent
-status: in-progress
+status: needs-review
 severity: high
 priority: high
 type: implementation-defect
@@ -9,5 +9,5 @@ reported_by: sambeau
 reported: "2026-05-07T14:43:40Z"
 observed: "entity(action: create, type: feature, parent: P58-default-tool-hint-fallbacks) returns \"parent P58-default-tool-hint-fallbacks: referenced entity not found\". Root cause: CreateFeature calls GetPlan which skips strategic plans."
 expected: "Feature creation with a strategic plan as parent should resolve via GetStrategicPlan when GetPlan returns nothing, and succeed."
-needs_review_at: "2026-05-10T11:36:18Z"
+needs_review_at: "2026-05-10T11:58:35Z"
 tier: bug_fix
