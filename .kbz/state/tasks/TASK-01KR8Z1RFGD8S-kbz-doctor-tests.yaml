@@ -1,0 +1,6 @@
+id: TASK-01KR8Z1RFGD8S
+parent_feature: FEAT-01KR8YRQN0D6G
+slug: kbz-doctor-tests
+name: Add test suite check to kbz doctor
+summary: "Add go test ./... diagnostics to kbz doctor CLI. Report pass/fail status per package, total counts, and specific failure names."
+status: queued
