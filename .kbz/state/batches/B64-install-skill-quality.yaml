@@ -1,7 +1,7 @@
 id: B64-install-skill-quality
 slug: install-skill-quality
 name: "Install &amp; Skill Quality Remediation"
-status: active
+status: reviewing
 summary: "Implement P62 design: unblock install, deliver runtime surfaces, add e2e tests and corpus regression checks."
 created: "2026-05-09T21:51:40Z"
 created_by: sambeau
