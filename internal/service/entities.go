@@ -363,7 +363,13 @@ func (s *EntityService) CreateFeature(input CreateFeatureInput) (CreateResult, e
 	// Load parent — provides existence check, next_feature_seq, and number.
 	planResult, err := s.GetPlan(parentID)
 	if err != nil {
-		return CreateResult{}, fmt.Errorf("parent %s: %w", parentID, ErrReferenceNotFound)
+		// Fall back to strategic plan (P-prefixed) when batch lookup fails.
+		if prefix, _, _ := model.ParsePlanID(parentID); prefix == "P" {
+			planResult, err = s.GetStrategicPlan(parentID)
+		}
+		if err != nil {
+			return CreateResult{}, fmt.Errorf("parent %s: %w", parentID, ErrReferenceNotFound)
+		}
 	}
 
 	// Read next_feature_seq — use coordination DB if available, else local counter.

@@ -36,7 +36,8 @@ func TestEntityService_CreateFeature_AllocatesSequentialID(t *testing.T) {
 	root := t.TempDir()
 	service := newTestEntityService(root, "2026-03-19T12:00:00Z")
 
-	planID := "P1-parent"
+	// Use B-prefix for batch plan (execution layer).
+	planID := "B1-parent"
 	writeTestPlan(t, service, planID)
 
 	first, err := service.CreateFeature(CreateFeatureInput{
@@ -68,6 +69,40 @@ func TestEntityService_CreateFeature_AllocatesSequentialID(t *testing.T) {
 	}
 	if second.Slug != "validation-engine" {
 		t.Fatalf("second CreateFeature() slug = %q, want %q", second.Slug, "validation-engine")
+	}
+}
+
+func TestEntityService_CreateFeature_StrategicPlanParent(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+	svc := newTestEntityService(root, "2026-03-19T12:00:00Z")
+
+	// Create a strategic plan (P-prefix).
+	spResult, err := svc.CreateStrategicPlan(CreateStrategicPlanInput{
+		Prefix:    "P",
+		Slug:      "strategic-parent",
+		Name:      "Strategic Plan",
+		Summary:   "A strategic plan for testing",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateStrategicPlan() error = %v", err)
+	}
+
+	result, err := svc.CreateFeature(CreateFeatureInput{
+		Name:      "test",
+		Slug:      "feature-under-strategic",
+		Parent:    spResult.ID,
+		Summary:   "Feature under strategic plan",
+		CreatedBy: "sam",
+	})
+	if err != nil {
+		t.Fatalf("CreateFeature() with strategic plan parent error = %v", err)
+	}
+
+	if result.Type != string(model.EntityKindFeature) {
+		t.Fatalf("CreateFeature() type = %q, want %q", result.Type, model.EntityKindFeature)
 	}
 }
 
