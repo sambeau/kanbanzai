@@ -1,0 +1,163 @@
+document_id: FEAT-01KR7BKXPXFSK/report-p62-f4-review-report
+document_path: work/P62-install-skill-quality-remediation/P62-F4-review-report.md
+content_hash: 39362153f7b9e9ba955bfba1c77869d07e22c63ec73dd802fa0620aaf7b3e904
+indexed_at: 2026-05-10T02:08:37.657991Z
+sections:
+    - path: "1"
+      level: 1
+      title: P62-F4 Review Report — Install E2E Tests & `kbz doctor`
+      byte_offset: 0
+      byte_count: 8220
+      word_count: 1088
+      content_hash: 39362153f7b9e9ba955bfba1c77869d07e22c63ec73dd802fa0620aaf7b3e904
+      children:
+        - path: "1.1"
+          level: 2
+          title: 'Overall Verdict: CHANGES_REQUESTED'
+          byte_offset: 491
+          byte_count: 209
+          word_count: 28
+          content_hash: 80fc731eb6994163ee58279311e68ebe5aa1a648d93cb1e71243edebe67baf01
+        - path: "1.2"
+          level: 2
+          title: Checklist Verification
+          byte_offset: 700
+          byte_count: 1839
+          word_count: 252
+          content_hash: 8e83ccea3bf34b019660578ee16045b85ad86314f7eb941a932103d2f2112bf5
+        - path: "1.3"
+          level: 2
+          title: Conformance Gaps
+          byte_offset: 2539
+          byte_count: 1769
+          word_count: 238
+          content_hash: e912c8ce4e48420a03bd87191e40f72210cd2c44d74deee2d9b7f79dc75d6d98
+        - path: "1.4"
+          level: 2
+          title: Build & Test Results
+          byte_offset: 4308
+          byte_count: 576
+          word_count: 80
+          content_hash: c3a9797e41798a9429b41b55073c8114251eec6cc5258aca67421d98442df452
+          children:
+            - path: 1.4.1
+              level: 3
+              title: '`go build ./...`'
+              byte_offset: 4333
+              byte_count: 56
+              word_count: 10
+              content_hash: 7f8d8358a00f4907bfb0c7215d2f093ad4425c4484ad778f0573dc54903cde85
+            - path: 1.4.2
+              level: 3
+              title: '`go test ./...`'
+              byte_offset: 4389
+              byte_count: 495
+              word_count: 65
+              content_hash: 1ee2cfeda8ea4d8f22042dfa9dcea70aa1e83d43ad1ec14660d533d577375905
+        - path: "1.5"
+          level: 2
+          title: Git Log Summary
+          byte_offset: 4884
+          byte_count: 830
+          word_count: 90
+          content_hash: de551d51393d9c17be40ffab638707a7abb032c72c2dc9f58be565dc7278f92b
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria Traceability
+          byte_offset: 5714
+          byte_count: 1439
+          word_count: 191
+          content_hash: 1ec678da12f5960e769c42ed0b72886973c24a395c6f97d221a21db5ed640c91
+        - path: "1.7"
+          level: 2
+          title: Required Actions
+          byte_offset: 7153
+          byte_count: 734
+          word_count: 108
+          content_hash: 702aaa834f06d253cf269ed158c87ad03c57b291e687de1c46a1bc735640d9a8
+        - path: "1.8"
+          level: 2
+          title: Evidence
+          byte_offset: 7887
+          byte_count: 333
+          word_count: 48
+          content_hash: 23052ea2e83ff694d0fce1f9c9e44aed031c4a9282d316f12e65f48e00378f3a
+entity_refs:
+    - entity_id: FEAT-01KR7BKXPXFSK
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 109
+    - entity_id: TASK-01KR7DDD8VD99
+      entity_type: task
+      section_path: "1.5"
+      byte_offset: 4987
+    - entity_id: TASK-01KR7DDD5JDD2
+      entity_type: task
+      section_path: "1.5"
+      byte_offset: 5070
+    - entity_id: TASK-01KR7DDB3HG8H
+      entity_type: task
+      section_path: "1.5"
+      byte_offset: 5144
+    - entity_id: TASK-01KR7DC30AE4R
+      entity_type: task
+      section_path: "1.5"
+      byte_offset: 5214
+    - entity_id: TASK-01KR7DC3093PX
+      entity_type: task
+      section_path: "1.5"
+      byte_offset: 5279
+    - entity_id: TASK-01KR7DC308AW1
+      entity_type: task
+      section_path: "1.5"
+      byte_offset: 5345
+    - entity_id: TASK-01KR7DC3063A9
+      entity_type: task
+      section_path: "1.5"
+      byte_offset: 5436
+    - entity_id: TASK-01KR7DC3051HD
+      entity_type: task
+      section_path: "1.5"
+      byte_offset: 5503
+    - entity_id: TASK-01KR7DC304P3C
+      entity_type: task
+      section_path: "1.5"
+      byte_offset: 5570
+    - entity_id: TASK-01KR7DC302CRA
+      entity_type: task
+      section_path: "1.5"
+      byte_offset: 5641
+    - entity_id: B64-install-skill-quality
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 163
+    - entity_id: P62-install-skill-quality-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 200
+    - entity_id: F4-spec-install-tests-doctor
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 355
+    - entity_id: F4-dev-plan-install-tests-doctor
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 451
+cross_doc_links:
+    - target_path: work/P62-install-skill-quality-remediation/P62-F4-spec-install-tests-doctor.md
+      link_text: work/P62-install-skill-quality-remediation/P62-F4-spec-install-tests-doctor.md
+      section_path: "1"
+    - target_path: work/P62-install-skill-quality-remediation/P62-F4-dev-plan-install-tests-doctor.md
+      link_text: work/P62-install-skill-quality-remediation/P62-F4-dev-plan-install-tests-doctor.md
+      section_path: "1"
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: "1.2"
+conventional_roles:
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+classified: false

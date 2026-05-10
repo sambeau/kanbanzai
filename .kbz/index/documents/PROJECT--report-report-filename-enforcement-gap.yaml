@@ -1,0 +1,103 @@
+document_id: PROJECT/report-report-filename-enforcement-gap
+document_path: work/_project/report-filename-enforcement-gap.md
+content_hash: 4505748c828bb98c848a6e71f2c6fc813acacf0727dd1b8c18801eee1c25d03c
+indexed_at: 2026-05-10T10:06:22.628553Z
+sections:
+    - path: "1"
+      level: 1
+      title: Filename Enforcement Gap in Task-Execution Skills
+      byte_offset: 0
+      byte_count: 2905
+      word_count: 342
+      content_hash: 4505748c828bb98c848a6e71f2c6fc813acacf0727dd1b8c18801eee1c25d03c
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 126
+          byte_count: 517
+          word_count: 55
+          content_hash: 8a2555413da122b29ae09d912fdced20aad44aeb3e74e0df574dd12d07e032c5
+        - path: "1.2"
+          level: 2
+          title: Root cause
+          byte_offset: 643
+          byte_count: 806
+          word_count: 106
+          content_hash: 2a514eba8e23091891dbd1a5efec4aefb85931ee853f8985a5e2e19024d2d7c9
+        - path: "1.3"
+          level: 2
+          title: Affected skills
+          byte_offset: 1449
+          byte_count: 403
+          word_count: 59
+          content_hash: 5984bd6af285545d68836587a26c118aafec0ac63db497219128df9258b600d6
+        - path: "1.4"
+          level: 2
+          title: Fix
+          byte_offset: 1852
+          byte_count: 674
+          word_count: 79
+          content_hash: 5a390f7aeb9b3fa6e914621b2a33428586519515af2d207b2bc0b6100c1dce20
+        - path: "1.5"
+          level: 2
+          title: Examples of the failure mode
+          byte_offset: 2526
+          byte_count: 379
+          word_count: 29
+          content_hash: 7cf1487c293d956e23bc397016ba7b8c99e2a834ad01407247ec5b45395776f5
+entity_refs:
+    - entity_id: P62-install-skill-quality-remediation
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 2840
+    - entity_id: P62-proposal-revisit
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 2878
+cross_doc_links:
+    - target_path: work/investigations/orchestration-abandonment-silent-dod-pass.md
+      link_text: work/investigations/orchestration-abandonment-silent-dod-pass.md
+      section_path: "1.1"
+    - target_path: work/_project/research-orchestration-abandonment-silent-dod-pass.md
+      link_text: work/_project/research-orchestration-abandonment-silent-dod-pass.md
+      section_path: "1.1"
+    - target_path: AGENTS.md
+      link_text: |4
+        AGENTS.md  →  stage-bindings.yaml  →  role + skill  →  skill procedure
+      section_path: "1.2"
+    - target_path: .agents/skills/kanbanzai-documents/SKILL.md
+      link_text: .agents/skills/kanbanzai-documents/SKILL.md
+      section_path: "1.2"
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: "1.2"
+    - target_path: .agents/skills/kanbanzai-documents/SKILL.md
+      link_text: .agents/skills/kanbanzai-documents/SKILL.md
+      section_path: "1.4"
+    - target_path: work/_project/research-{slug}.md
+      link_text: work/_project/research-{slug}.md
+      section_path: "1.4"
+    - target_path: work/{BatchID}-{batch-slug}/{BatchID}-research-{slug}.md
+      link_text: work/{BatchID}-{batch-slug}/{BatchID}-research-{slug}.md
+      section_path: "1.4"
+    - target_path: work/investigations/orchestration-abandonment-silent-dod-pass.md
+      link_text: work/investigations/orchestration-abandonment-silent-dod-pass.md
+      section_path: "1.5"
+    - target_path: work/_project/research-orchestration-abandonment-silent-dod-pass.md
+      link_text: work/_project/research-orchestration-abandonment-silent-dod-pass.md
+      section_path: "1.5"
+    - target_path: work/prompts/p62-revisit-prompt.md
+      link_text: work/prompts/p62-revisit-prompt.md
+      section_path: "1.5"
+    - target_path: work/P62-install-skill-quality-remediation/P62-proposal-revisit.md
+      link_text: work/P62-install-skill-quality-remediation/P62-proposal-revisit.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: example
+      confidence: high
+classified: false

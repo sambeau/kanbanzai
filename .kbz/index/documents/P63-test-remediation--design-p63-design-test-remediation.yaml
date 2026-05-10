@@ -1,0 +1,258 @@
+document_id: P63-test-remediation/design-p63-design-test-remediation
+document_path: work/P63-test-remediation/P63-design-test-remediation.md
+content_hash: c92035eb152c0234b6ed8a32c5307256fa6fff20110eb9c9bd224b418bb23555
+indexed_at: 2026-05-10T11:44:06.767954Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P63 Design — Test Remediation: Fix Failing Tests and Harden Definition of Done'
+      byte_offset: 0
+      byte_count: 14365
+      word_count: 2195
+      content_hash: c92035eb152c0234b6ed8a32c5307256fa6fff20110eb9c9bd224b418bb23555
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 168
+          byte_count: 621
+          word_count: 97
+          content_hash: 942250b22018b596266d8bbc9a34b22c9bc6235e30826fe5dee824bbb9e3cb6b
+        - path: "1.2"
+          level: 2
+          title: Goals and Non-Goals
+          byte_offset: 789
+          byte_count: 675
+          word_count: 112
+          content_hash: b3cd778dfd59a2e59998a7ad4b81d953b49ebac5dc8ad0b86ab7eee71cc82d71
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Goals
+              byte_offset: 813
+              byte_count: 433
+              word_count: 72
+              content_hash: f458350e3fbd8223be8b4a2fbf90bea470f2bdf6e6d9e8d41bc72aa7c8a5f05f
+            - path: 1.2.2
+              level: 3
+              title: Non-Goals
+              byte_offset: 1246
+              byte_count: 218
+              word_count: 36
+              content_hash: 81d9ab4f0b821bfa614a23132f2ec59e467c480255cc54b3d4d0d626d28c6bc7
+        - path: "1.3"
+          level: 2
+          title: Current State
+          byte_offset: 1464
+          byte_count: 1149
+          word_count: 177
+          content_hash: 812cea64de85b2afb41ead9289e8507ba89bbb3c4bd1bac1c7ef3196337d9dce
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 2.1 Failing Tests by Package
+              byte_offset: 1482
+              byte_count: 459
+              word_count: 76
+              content_hash: fdb8e93b960d66fd173b2c119bfeec457f3d809836f0a6287cc24dede5cd576a
+            - path: 1.3.2
+              level: 3
+              title: 2.2 Historical Context
+              byte_offset: 1941
+              byte_count: 672
+              word_count: 98
+              content_hash: 8979f9a91be70c847c8c0a5f8ef85a23926b0290861eada0e1ee826da4103540
+        - path: "1.4"
+          level: 2
+          title: Root Cause Analysis
+          byte_offset: 2613
+          byte_count: 2659
+          word_count: 348
+          content_hash: 60c51f30001ae5676a5fbe829306a104a7290c1970514c4d26df766436b6710c
+          children:
+            - path: 1.4.1
+              level: 3
+              title: '3.1 RC-1: Plan→Batch Type Migration Broke Test Helpers (~95 tests)'
+              byte_offset: 2637
+              byte_count: 1100
+              word_count: 153
+              content_hash: e207896140e385dd8091f26920833733ef6081ddb61f9544e56a1913bf396f44
+            - path: 1.4.2
+              level: 3
+              title: '3.2 RC-2: Nil DocumentService Causes Panic (1 test + 3 cascade)'
+              byte_offset: 3737
+              byte_count: 648
+              word_count: 77
+              content_hash: d98035a54f36539449a2ccb63912cd8b5d07dc226d57e28249e602f1cc434163
+            - path: 1.4.3
+              level: 3
+              title: '3.3 RC-3: Embedded Seed Drift (3 tests)'
+              byte_offset: 4385
+              byte_count: 351
+              word_count: 49
+              content_hash: 4e750aef753063bb823edeb9424685a53be8d7f037fc27f7f28faf8d5cf5662c
+            - path: 1.4.4
+              level: 3
+              title: '3.4 RC-4: MCP Regression Contracts Stale (3 tests)'
+              byte_offset: 4736
+              byte_count: 536
+              word_count: 65
+              content_hash: 18770eabff4c72d45b6af77ace3c5c757d822b5840c6b30292f65f3ab3dcf3ef
+        - path: "1.5"
+          level: 2
+          title: 'Investigation: Why Tests are Brittle'
+          byte_offset: 5272
+          byte_count: 4541
+          word_count: 694
+          content_hash: 5a7a7ccc552ddc5a7368ababc05ba161cc428704ef86205a006f4ef3aa17bcf2
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 4.1 Are tests too tightly coupled to exact output?
+              byte_offset: 5313
+              byte_count: 1184
+              word_count: 172
+              content_hash: 71ea0786a1cf35d2de06bc6d1cb17165e8c92761bd980ab81fc4ae4baf61647b
+            - path: 1.5.2
+              level: 3
+              title: 4.2 Do we have too many low-quality tests?
+              byte_offset: 6497
+              byte_count: 662
+              word_count: 101
+              content_hash: cb658cfb9ce8427d444630d25cb643ef1c88891b98fe1fd0cda52ef9d482aa85
+            - path: 1.5.3
+              level: 3
+              title: 4.3 Why aren't tests updated when new features break old tests?
+              byte_offset: 7159
+              byte_count: 657
+              word_count: 103
+              content_hash: 9c8bcc32d4cfb18fe25827c7be4385605dfbb2391108960297334e1c962b857b
+            - path: 1.5.4
+              level: 3
+              title: 4.4 Why are failing tests ignored?
+              byte_offset: 7816
+              byte_count: 811
+              word_count: 120
+              content_hash: 82c065ae609859083ad32e998557a34aca84bcff009e2d324bda2d0b2a056418
+            - path: 1.5.5
+              level: 3
+              title: 4.5 Why are failing tests allowed to be committed?
+              byte_offset: 8627
+              byte_count: 397
+              word_count: 73
+              content_hash: 0b3597fa70b53f4aba566319baee54761c47819128becd8a70864e83d8b5507c
+            - path: 1.5.6
+              level: 3
+              title: 4.6 Should we be more proactive about removing tests?
+              byte_offset: 9024
+              byte_count: 789
+              word_count: 119
+              content_hash: fc74f6d0131bc14dace8a724332226f2aeb328268e80bccf21be0a65bf8409d4
+        - path: "1.6"
+          level: 2
+          title: Remediation Plan
+          byte_offset: 9813
+          byte_count: 2277
+          word_count: 377
+          content_hash: 1c870320e7140b20206166c550d37184ff8ff5e981fcdf1d852dbf606a950bd6
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Phase 1: Fix All Failing Tests'
+              byte_offset: 9834
+              byte_count: 512
+              word_count: 91
+              content_hash: 9e888d55a0f37d883b9ebd2c13d5eba2b875e6326dffc0312dce50fae6b90637
+            - path: 1.6.2
+              level: 3
+              title: 'Phase 2: Test Infrastructure Cleanup'
+              byte_offset: 10346
+              byte_count: 550
+              word_count: 81
+              content_hash: c63ea36f255ca19877152935f8d55e2af0772531620d086cd45df63d4720883d
+            - path: 1.6.3
+              level: 3
+              title: 'Phase 3: Prevent Recurrence (Enforcement)'
+              byte_offset: 10896
+              byte_count: 581
+              word_count: 94
+              content_hash: e5127800b32f31db34976252089b21c12e89b886de4a9dd7c58493cf196c2163
+            - path: 1.6.4
+              level: 3
+              title: 'Phase 4: Cultural and Process Changes'
+              byte_offset: 11477
+              byte_count: 613
+              word_count: 108
+              content_hash: dfe593291c80d97cf66a9edbe25f0dbd282ac137026f5157738f3b3781679f2f
+        - path: "1.7"
+          level: 2
+          title: 'Design: Enforcement Architecture'
+          byte_offset: 12090
+          byte_count: 949
+          word_count: 155
+          content_hash: 39bb4bd110f5e686f49bd923db933bc8f324e46fccbf247f87486c18a037c6b7
+          children:
+            - path: 1.7.1
+              level: 3
+              title: Pre-Commit Hook
+              byte_offset: 12127
+              byte_count: 461
+              word_count: 70
+              content_hash: 62982b0e5c882243ad5490f17eaebc57775eff23498e5bdf9d2371bbe77a3ecd
+            - path: 1.7.2
+              level: 3
+              title: CI Guard
+              byte_offset: 12588
+              byte_count: 247
+              word_count: 46
+              content_hash: 5ed75d8d9e0a801711dd774b2f61f9489a89613838a6d84e38282585f11c33c4
+            - path: 1.7.3
+              level: 3
+              title: Merge Gate Integration
+              byte_offset: 12835
+              byte_count: 204
+              word_count: 35
+              content_hash: 4d0957d7899e5c15149f467bdb60af903683606270ee58b42b08322447d4bb42
+        - path: "1.8"
+          level: 2
+          title: Open Questions
+          byte_offset: 13039
+          byte_count: 915
+          word_count: 144
+          content_hash: af2ea0314afb0bb9b21e33f174b1d1281db21112c81ffc2e93d8e1b33b0b4185
+        - path: "1.9"
+          level: 2
+          title: Success Criteria
+          byte_offset: 13954
+          byte_count: 411
+          word_count: 70
+          content_hash: 718b57bb7c482653dc3b2ffa51dda5a1b783d00137f2b65d25b767326fd002a7
+entity_refs:
+    - entity_id: BUG-01KQZS69DAJFG
+      entity_type: bug
+      section_path: 1.3.2
+      byte_offset: 2175
+    - entity_id: P63-test-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 115
+conventional_roles:
+    - section_path: "1"
+      role: definition
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: 1.3.2
+      role: narrative
+      confidence: high
+    - section_path: "1.8"
+      role: question
+      confidence: high
+classified: false

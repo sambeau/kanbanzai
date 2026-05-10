@@ -1,0 +1,223 @@
+document_id: B66-test-remediation/design-b66-test-remediation-design-test-remediation
+document_path: work/test-remediation/B66-test-remediation-design-test-remediation.md
+content_hash: 95422ce9436da6febb1b1f4c77e06ddc4070a66cd5d9b79035d6192fe91f193f
+indexed_at: 2026-05-10T11:13:01.558855Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Test Remediation — Fix 111 Failing Tests'
+      byte_offset: 0
+      byte_count: 11316
+      word_count: 1564
+      content_hash: 95422ce9436da6febb1b1f4c77e06ddc4070a66cd5d9b79035d6192fe91f193f
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Purpose
+          byte_offset: 134
+          byte_count: 298
+          word_count: 45
+          content_hash: b68e22cf137cd4774e5288e79b810579f961cd98d654c633f21510be5b22e451
+        - path: "1.2"
+          level: 2
+          title: 2. Current State
+          byte_offset: 432
+          byte_count: 506
+          word_count: 82
+          content_hash: 005b8f595ee8aa164bd4b663d4e948aceea9ef2c12044b90a5690d5826d8a866
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 Failing Package Summary
+              byte_offset: 453
+              byte_count: 350
+              word_count: 56
+              content_hash: 6adb804c46c5b3628055088827d815b16b08d5a8082d4086f06c2347b0305b4a
+            - path: 1.2.2
+              level: 3
+              title: 2.2 All Other Packages Pass
+              byte_offset: 803
+              byte_count: 135
+              word_count: 22
+              content_hash: 597b5dc9735814450ae61c9888883e9ff6341c6cc17215a943c831fe3e3ae2c7
+        - path: "1.3"
+          level: 2
+          title: 3. Root Cause Analysis
+          byte_offset: 938
+          byte_count: 4118
+          word_count: 536
+          content_hash: 24c913678d7a70c995851f0acf8e714ce7145d5db56f315e8665124042aa27b3
+          children:
+            - path: 1.3.1
+              level: 3
+              title: '3.1 RC-1: Plan→Batch Type Migration Broke Test Setup Helpers (~95 tests)'
+              byte_offset: 965
+              byte_count: 1824
+              word_count: 241
+              content_hash: f81ad56f2470278ee25deece9bd64f35825bfb4fb3d98cf6212a8a1182fc07a7
+            - path: 1.3.2
+              level: 3
+              title: '3.2 RC-2: Nil DocumentService in Bug Gate Test (1 test, +3 cascade)'
+              byte_offset: 2789
+              byte_count: 808
+              word_count: 102
+              content_hash: 99266b5ee51595c5977ab0aa31a8addb5766a1a763275b73524d10dace9dd8e9
+            - path: 1.3.3
+              level: 3
+              title: '3.3 RC-3: Embedded Seed Drift (3 tests)'
+              byte_offset: 3597
+              byte_count: 796
+              word_count: 103
+              content_hash: ead68ef125cc462e9716cbf0a152f81b196f3f726da1b3d6b55701ee9fbb60ae
+            - path: 1.3.4
+              level: 3
+              title: '3.4 RC-4: MCP Regression Test Staleness (3 tests)'
+              byte_offset: 4393
+              byte_count: 663
+              word_count: 85
+              content_hash: ca8adb77a578634e011e9d7619fef3294b1cf4447472a952c2fb9b9b1b713b77
+        - path: "1.4"
+          level: 2
+          title: 4. Test Quality Assessment
+          byte_offset: 5056
+          byte_count: 1649
+          word_count: 230
+          content_hash: cb60b08f8e35d8e9581fd4ee71493d8ee9dcb4f971e1fbf3021d8989ee6e25a3
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Are tests too brittle?
+              byte_offset: 5087
+              byte_count: 667
+              word_count: 99
+              content_hash: b1e8d774fdde5364ef7522f2208bc47be6128245fc061aba21caf0464a00f8a5
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Are there too many low-quality tests?
+              byte_offset: 5754
+              byte_count: 581
+              word_count: 82
+              content_hash: 9ac18eebd0033d0296a9773aa8876480507620c00f81acaf81283f4beb8ca94d
+            - path: 1.4.3
+              level: 3
+              title: 4.3 What needs to change?
+              byte_offset: 6335
+              byte_count: 370
+              word_count: 44
+              content_hash: 8e6e37df8ef83072afe7033649c4ede075366074bfbad0175f2ceca840096898
+        - path: "1.5"
+          level: 2
+          title: 5. Remediation Plan
+          byte_offset: 6705
+          byte_count: 2236
+          word_count: 288
+          content_hash: a4c1e99795b40bdf4b54075f414cb7dd40df577c1b330acb36372528acd21f71
+          children:
+            - path: 1.5.1
+              level: 3
+              title: '5.1 Phase 1: Fix Test Infrastructure (fixes ~95 tests)'
+              byte_offset: 6729
+              byte_count: 686
+              word_count: 80
+              content_hash: b6b4232a23164f7730515f623d8d2aec6bcf1ce171a9a984d8d1f5ce4ef590a0
+            - path: 1.5.2
+              level: 3
+              title: '5.2 Phase 2: Fix Nil DocumentService (fixes 1 test + 3 cascade)'
+              byte_offset: 7415
+              byte_count: 536
+              word_count: 75
+              content_hash: 26282cb06a3e2ca0aa7a8b3016551c359efd929e505d131b0eef955c045d3aa2
+            - path: 1.5.3
+              level: 3
+              title: '5.3 Phase 3: Sync Embedded Seeds (fixes 3 tests)'
+              byte_offset: 7951
+              byte_count: 449
+              word_count: 47
+              content_hash: ea3c095751bde518e37a1dee9099acd22f16d342c27d32ca7cf54c13e1524d57
+            - path: 1.5.4
+              level: 3
+              title: '5.4 Phase 4: Update MCP Regression Contracts (fixes 3 tests)'
+              byte_offset: 8400
+              byte_count: 541
+              word_count: 82
+              content_hash: 84295aff84d309398a3489af29870c582f1aaa002b85e328bedc9ddef533d00a
+        - path: "1.6"
+          level: 2
+          title: '6. Prevention: How Did This Happen?'
+          byte_offset: 8941
+          byte_count: 1477
+          word_count: 239
+          content_hash: 844077f8e9615d2fbb06c608175bc028b2c137d5209951ac8efc3fd82ab16f1c
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Root Cause Chain
+              byte_offset: 8981
+              byte_count: 419
+              word_count: 69
+              content_hash: a50a72b6dbbf4eec166d5433eba00f64bb2aa7941b6141341eee361e4e5b998a
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Process Gaps
+              byte_offset: 9400
+              byte_count: 596
+              word_count: 101
+              content_hash: 3f1819b83f9376cf59e8f5f8448974e83a925989e31d2324dc6b13ee6aa0efd8
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Recommended Preventive Measures
+              byte_offset: 9996
+              byte_count: 422
+              word_count: 62
+              content_hash: 92fc977cb8537014dbf39e807b764f1e8ad5b4fc70b119a48f4ea6a8dc7c0150
+        - path: "1.7"
+          level: 2
+          title: 7. Open Questions
+          byte_offset: 10418
+          byte_count: 633
+          word_count: 86
+          content_hash: f514b66325ea9deda3db507ae2ffbe606f012db6f0c79a802501b7a6cad0713d
+        - path: "1.8"
+          level: 2
+          title: 8. Success Criteria
+          byte_offset: 11051
+          byte_count: 265
+          word_count: 42
+          content_hash: d2bb336f3044bb5a248d91255059f005dc816c3e8bd0661511fb1f20331ad3e1
+entity_refs:
+    - entity_id: BUG-01KQZS69DAJFG
+      entity_type: bug
+      section_path: 1.6.1
+      byte_offset: 9211
+    - entity_id: B66-test-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 83
+    - entity_id: P1-dep-test
+      entity_type: plan
+      section_path: 1.3.1
+      byte_offset: 1932
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 1.5.3
+    - target_path: internal/kbzinit/skills/*/SKILL.md
+      link_text: internal/kbzinit/skills/*/SKILL.md
+      section_path: 1.5.3
+    - target_path: .kbz/skills/*/SKILL.md
+      link_text: .kbz/skills/*/SKILL.md
+      section_path: 1.5.3
+    - target_path: internal/kbzinit/skills/task-execution/*/SKILL.md
+      link_text: internal/kbzinit/skills/task-execution/*/SKILL.md
+      section_path: 1.5.3
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.1
+      role: narrative
+      confidence: high
+    - section_path: "1.7"
+      role: question
+      confidence: high
+classified: false
