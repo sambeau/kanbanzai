@@ -2,7 +2,8 @@ id: FEAT-01KR8V4YHAK4B
 slug: fix-createfeature-strategic-plan-parent
 name: Fix CreateFeature Strategic Plan Parent Resolution
 parent: B67-bugfix-strategic-plan-parent
-status: developing
+status: done
+review_cycle: 1
 summary: CreateFeature calls GetPlan which only looks in batches/ directory. Add fallback to GetStrategicPlan for P-prefixed parents.
 tags:
   - bug_fix
@@ -12,18 +13,23 @@ overrides:
   -
     from_status: designing
     reason: Fast-track bugfix — no design/spec/devplan needed for bug_fix tier; bypassing design/spec/devplan gates
-    timestamp: "2026-05-10T12:43:08+01:00"
+    timestamp: "2026-05-10T12:57:23+01:00"
     to_status: specifying
   -
     from_status: specifying
     reason: Fast-track bugfix — no design/spec/devplan needed for bug_fix tier; bypassing design/spec/devplan gates
-    timestamp: "2026-05-10T12:43:08+01:00"
+    timestamp: "2026-05-10T12:57:23+01:00"
     to_status: dev-planning
   -
     from_status: dev-planning
     reason: Fast-track bugfix — no design/spec/devplan needed for bug_fix tier; bypassing design/spec/devplan gates
-    timestamp: "2026-05-10T12:43:09+01:00"
+    timestamp: "2026-05-10T12:57:23+01:00"
     to_status: developing
+  -
+    from_status: reviewing
+    reason: "Fast-track bug_fix: conformance review passed, no human gates. Reviewer-conformance confirmed fix correct, no regressions, no scope creep."
+    timestamp: "2026-05-10T12:57:23+01:00"
+    to_status: done
 display_id: B67-F1
 tier: feature
 verification: "TASK-01KR8V6E586F2: go test ./internal/service/ -run \"TestEntityService_CreateFeature\" -v -count=1 — all 3 tests PASS"
