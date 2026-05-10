@@ -1,7 +1,7 @@
 id: B66-test-remediation
 slug: test-remediation
 name: Test Remediation — Fix 111 Failing Tests
-status: designing
+status: cancelled
 summary: "Systematically fix 111 failing tests across 3 packages (kbzinit, mcp, service). Root causes: plan→batch type migration broke test setup helpers, nil DocumentService in bug gate, embedded seed drift, and MCP regression test staleness. Also establish test infrastructure improvements to prevent recurrence."
 design: B66-test-remediation/design-b66-test-remediation-design-test-remediation
 created: "2026-05-10T11:11:09Z"
