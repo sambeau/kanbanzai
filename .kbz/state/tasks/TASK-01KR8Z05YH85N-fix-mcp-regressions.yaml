@@ -3,4 +3,7 @@ parent_feature: FEAT-01KR8YRQN1HPG
 slug: fix-mcp-regressions
 name: Fix MCP regression contracts
 summary: "Update canonical field list (add workflow_state_warning), fix handoff error message field, trim next/worktree tool descriptions to 250-token budget. Fixes 3 mcp tests."
-status: ready
+status: done
+completed: "2026-05-10T13:11:16Z"
+completion_summary: "Fixed 3 MCP regression test failures: added workflow_state_warning to nextContextAllFields canonical list, added message field to invariants error body (fixing handoff error response shape), and trimmed next/worktree tool descriptions to fit 250-token budget. All MCP and invariants tests pass."
+verification: "go test ./internal/mcp/... exits 0 (all 3 target tests pass, full suite passes), go test ./internal/invariants/... exits 0"
