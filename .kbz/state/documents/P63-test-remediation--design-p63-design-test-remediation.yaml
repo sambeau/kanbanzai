@@ -1,3 +1,5 @@
+approved_at: "2026-05-10T11:53:18Z"
+approved_by: sambeau
 canonical_content_hash: d9eade74b4026a5dd7dae611e14b7cd9e05dcca9f92899b4c934166602c7d17a
 content_hash: c92035eb152c0234b6ed8a32c5307256fa6fff20110eb9c9bd224b418bb23555
 created: "2026-05-10T11:44:06Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: P63-test-remediation/design-p63-design-test-remediation
 owner: P63-test-remediation
 path: work/P63-test-remediation/P63-design-test-remediation.md
-status: draft
+status: approved
 title: "P63 Design — Test Remediation: Fix Failing Tests and Harden Definition of Done"
 type: design
-updated: "2026-05-10T11:44:06Z"
+updated: "2026-05-10T11:53:18Z"

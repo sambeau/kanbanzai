@@ -26,3 +26,5 @@ overrides:
     to_status: developing
 display_id: B67-F1
 tier: feature
+verification: "TASK-01KR8V6E586F2: go test ./internal/service/ -run \"TestEntityService_CreateFeature\" -v -count=1 — all 3 tests PASS"
+verification_status: passed
