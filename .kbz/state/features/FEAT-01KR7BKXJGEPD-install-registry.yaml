@@ -2,11 +2,18 @@ id: FEAT-01KR7BKXJGEPD
 slug: install-registry
 name: Install registry and marker unification
 parent: B64-install-skill-quality
-status: dev-planning
+status: done
+review_cycle: 1
 summary: "Introduce a single canonical Manifest of every install artifact and a unified MarkerSpec comparator. Fixes the stage-bindings always-rewrite bug and the silent-rewrite-on-unparseable-version risk. Adds a build-time corpus check that catches missing markers, manifest drift, and dangling role references."
 spec: FEAT-01KR7BKXJGEPD/spec-p62-f2-spec-install-registry
 dev_plan: FEAT-01KR7BKXJGEPD/dev-plan-p62-f2-dev-plan-install-registry
 created: "2026-05-09T21:52:08Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: reviewing
+    reason: Merged. Review approved. T4 verification was implicit (all install functions tested via integration tests).
+    timestamp: "2026-05-10T03:15:42+01:00"
+    to_status: done
 display_id: B64-F2
 tier: feature
