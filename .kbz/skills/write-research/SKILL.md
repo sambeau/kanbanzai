@@ -117,6 +117,16 @@ Before beginning to write the research report:
 
 ### Step 4: Draft the Report
 
+Before writing, determine the correct path and filename. Consult
+`.agents/skills/kanbanzai-documents/SKILL.md` § "Document Types
+and Locations".
+
+For batch-scoped research: `work/{BatchID}-{batch-slug}/{BatchID}-research-{slug}.md`
+For project-level research: `work/_project/research-{slug}.md`
+
+Use `doc(action: "path", type: "research", parent: "<entity-id>")`
+to obtain the exact path if available.
+
 1. Call `now` to get the current date. Record the returned value — you will use it in the document header. Do not guess or invent a date.
 2. Write all sections in order: Research Question, Scope and Methodology, Findings, Trade-Off Analysis (if applicable), Recommendations, Limitations.
 3. Every finding must cite its source(s).

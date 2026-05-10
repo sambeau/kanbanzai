@@ -104,6 +104,21 @@ constraint_level: high
 3. Establish what is in scope and what is explicitly out of scope.
 4. IF the scope feels larger than a single specification → flag this for the human. It may need splitting.
 
+### Step 2.5: Determine File Placement
+
+Before writing any content, determine the correct path and filename.
+Consult `.agents/skills/kanbanzai-documents/SKILL.md` § "Document Types
+and Locations" for the canonical filename template and folder placement.
+
+For a batch-scoped feature specification, the path is:
+`work/{BatchID}-{batch-slug}/{BatchID}-{feature-seq}-spec-{slug}.md`
+
+For a plan-scoped specification, the path is:
+`work/{PlanID}-{plan-slug}/{PlanID}-spec-{slug}.md`
+
+Use `doc(action: "path", type: "specification", parent: "<FEAT-xxx>")`
+to obtain the exact path if available.
+
 ### Step 3: Write Requirements
 
 1. Call `now` to get the current date. Record the returned value — you will use it in the document header's `Date` field. Do not guess or invent a date.

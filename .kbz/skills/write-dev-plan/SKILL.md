@@ -88,6 +88,18 @@ constraint_level: high
 3. IF the specification is ambiguous, incomplete, or contradictory → STOP. Report the ambiguity. Do not plan around assumptions — the cost of replanning is higher than the cost of clarifying the spec.
 4. IF the specification scope is larger than expected → discuss with the human whether to split into multiple plans or proceed as one.
 
+### Step 1.5: Determine File Placement
+
+Before decomposing into tasks, determine where the dev-plan will be
+written. Consult `.agents/skills/kanbanzai-documents/SKILL.md`
+§ "Document Types and Locations" for the canonical filename template.
+
+For a feature-scoped dev-plan:
+`work/{BatchID}-{batch-slug}/{BatchID}-{feature-seq}-dev-plan-{slug}.md`
+
+Use `doc(action: "path", type: "dev-plan", parent: "<FEAT-xxx>")`
+to obtain the exact path if available.
+
 ### Step 2: Decompose into Tasks
 
 1. Break each requirement into one or more tasks with clear deliverables.
