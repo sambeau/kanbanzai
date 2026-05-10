@@ -6,7 +6,8 @@ created: "2026-05-10T13:33:43Z"
 created_by: sambeau
 id: PROJECT/research-research-skills-roles-pipeline-integrity
 path: work/_project/research-skills-roles-pipeline-integrity.md
-status: approved
+status: superseded
+superseded_by: FEAT-01KR90DX9GTET/research-binding-governance-investigation-2026-05-10
 title: Skills/Roles Pipeline Routing Integrity Investigation
 type: research
-updated: "2026-05-10T16:47:40Z"
+updated: "2026-05-10T16:47:46Z"

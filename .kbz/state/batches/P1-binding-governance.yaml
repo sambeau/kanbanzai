@@ -1,0 +1,9 @@
+id: P1-binding-governance
+slug: binding-governance
+name: Binding Governance
+status: proposed
+summary: "Architectural hardening of the skills/roles/stage-bindings system — ensuring discoverability, integrity, and correct routing for all feature tiers."
+created: "2026-05-10T18:38:13Z"
+created_by: sambeau
+updated: "2026-05-10T18:38:13Z"
+next_feature_seq: 1
