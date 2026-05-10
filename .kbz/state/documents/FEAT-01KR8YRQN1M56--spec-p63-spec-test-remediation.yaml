@@ -1,3 +1,5 @@
+approved_at: "2026-05-10T12:47:38Z"
+approved_by: sambeau
 canonical_content_hash: ed6ed00ee30af2b38aa39bd447bef89ccba178ba490af512c8bbd77ac87393db
 content_hash: ed6ed00ee30af2b38aa39bd447bef89ccba178ba490af512c8bbd77ac87393db
 created: "2026-05-10T12:47:28Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KR8YRQN1M56/spec-p63-spec-test-remediation
 owner: FEAT-01KR8YRQN1M56
 path: work/P63-test-remediation/P63-spec-test-remediation.md
-status: draft
+status: approved
 title: "P63 Specification — Test Remediation (Phase 4: Policy)"
 type: spec
-updated: "2026-05-10T12:47:28Z"
+updated: "2026-05-10T12:47:38Z"
