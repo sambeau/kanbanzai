@@ -26,6 +26,7 @@ type errorPayload struct {
 
 type errorBody struct {
 	Code       string `json:"code"`
+	Message    string `json:"message"`
 	Operation  string `json:"operation"`
 	Reason     string `json:"reason"`
 	NextAction string `json:"next_action"`
@@ -40,6 +41,7 @@ func Format(r RefusalResponse) string {
 	p := errorPayload{
 		Error: errorBody{
 			Code:       r.Code,
+			Message:    r.Reason,
 			Operation:  r.Operation,
 			Reason:     r.Reason,
 			NextAction: r.NextAction,

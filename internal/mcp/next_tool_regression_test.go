@@ -23,6 +23,7 @@ var nextContextAlwaysFields = []string{
 	"trimmed",
 	"stage_aware",
 	"graph_project",
+	"workflow_state_warning",
 }
 
 // nextContextOptionalFields lists fields that appear only when the

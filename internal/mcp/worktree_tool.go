@@ -33,11 +33,11 @@ func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOp
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Git Worktree Manager"),
 		mcp.WithDescription(
-			"Isolate parallel development by creating dedicated Git worktrees for feature and bug entities — "+
-				"each worktree provides its own branch and working directory so multiple tasks proceed without interfering. "+
+			"Isolate parallel development by creating Git worktrees for feature/bug entities — "+
+				"each worktree provides its own branch and working directory so parallel tasks don't interfere. "+
 				"Use INSTEAD OF manual `git worktree` commands; this tool tracks worktree records alongside entity lifecycle. "+
 				"Call AFTER entity(action: create) establishes the feature or bug. "+
-				"Do NOT use for branch health checks — use branch for that. "+
+				"Do NOT use for branch health — use branch instead. "+
 				"Actions: create, get, list, remove, update, gc. "+
 				"entity_id is required for create, get, remove, and update; optional filter for list. "+
 				"gc detects worktree records whose directories no longer exist on disk. "+
@@ -46,8 +46,8 @@ func worktreeTool(store *worktree.Store, entitySvc *service.EntityService, gitOp
 				"On timeout, fall back: (1) `git worktree add <path> -b <branch>` via terminal; "+
 				"(2) worktree(action: update, entity_id: ...) to register the record manually. "+
 				// TODO(P59-B2): align with invariant code
-				"One worktree per entity. Do not commit directly to main — "+
-				"all implementation work must be isolated in an entity worktree.",
+				"One worktree per entity. Do not commit to main — "+
+				"all implementation must stay in an entity worktree.",
 		),
 		mcp.WithString("action",
 			mcp.Required(),

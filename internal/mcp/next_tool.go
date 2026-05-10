@@ -82,13 +82,13 @@ func nextTool(
 		mcp.WithOpenWorldHintAnnotation(false),
 		mcp.WithTitleAnnotation("Work Queue & Dispatch"),
 		mcp.WithDescription(
-			"Start here when beginning work — the primary way to find and claim tasks. "+
+			"Start here when beginning work — primary way to find and claim tasks. "+
 				"Call without id to inspect the work queue (all ready tasks sorted by priority). "+
 				"Call with a task, feature, or plan ID to claim the next ready task and receive "+
 				"assembled context (spec sections, knowledge entries, file paths, role conventions). "+
 				"Use INSTEAD OF manually querying entities with entity(action: \"list\") and assembling "+
 				"context yourself. Call BEFORE handoff when delegating to sub-agents, or before starting "+
-				"work directly. For dashboard views and progress metrics, use status instead. "+
+				"work. For dashboard views and progress metrics, use status instead. "+
 				"When id is provided, the task transitions ready → active (claim). "+
 				"When id is omitted, no state changes occur (read-only queue inspection). "+
 				"Claim before work begins — do not start implementing without a claimed task. "+
