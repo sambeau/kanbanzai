@@ -1,6 +1,4 @@
 ---
-# kanbanzai-managed: true
-# kanbanzai-version: dev
 name: kanbanzai-workflow
 description: >
   Use when deciding what workflow stage work belongs to, whether to proceed

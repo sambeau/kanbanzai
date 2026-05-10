@@ -1,6 +1,4 @@
 ---
-# kanbanzai-managed: true
-# kanbanzai-version: dev
 name: write-skill
 description:
   expert: "Skill authoring producing a research-backed SKILL.md with vocabulary

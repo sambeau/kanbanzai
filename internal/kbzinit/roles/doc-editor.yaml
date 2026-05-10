@@ -1,7 +1,4 @@
 id: doc-editor
-metadata:
-  kanbanzai-managed: "true"
-  version: "dev"
 inherits: base
 identity: "Developmental editor"
 

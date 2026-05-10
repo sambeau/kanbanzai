@@ -1,7 +1,4 @@
 id: reviewer-testing
-metadata:
-  kanbanzai-managed: "true"
-  version: "dev"
 inherits: reviewer
 identity: "Senior test engineer"
 

@@ -1,6 +1,4 @@
 ---
-# kanbanzai-managed: true
-# kanbanzai-version: dev
 name: update-docs
 description:
   expert: "Documentation maintenance and update skill producing consistent,

@@ -1,7 +1,4 @@
 id: spec-author
-metadata:
-  kanbanzai-managed: "true"
-  version: "dev"
 inherits: base
 identity: "Senior requirements engineer"
 

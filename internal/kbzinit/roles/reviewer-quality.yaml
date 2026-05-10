@@ -1,7 +1,4 @@
 id: reviewer-quality
-metadata:
-  kanbanzai-managed: "true"
-  version: "dev"
 inherits: reviewer
 identity: "Senior software quality engineer"
 

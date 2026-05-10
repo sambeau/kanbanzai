@@ -1,6 +1,4 @@
 ---
-# kanbanzai-managed: true
-# kanbanzai-version: dev
 name: copyedit-docs
 description:
   expert: "Sentence-level copy editing enforcing active voice, verb clarity,

@@ -1,7 +1,4 @@
 id: doc-stylist
-metadata:
-  kanbanzai-managed: "true"
-  version: "dev"
 inherits: base
 identity: "AI prose editor"
 

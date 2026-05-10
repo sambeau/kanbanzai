@@ -1,7 +1,4 @@
 id: reviewer-conformance
-metadata:
-  kanbanzai-managed: "true"
-  version: "dev"
 inherits: reviewer
 identity: "Senior requirements verification engineer"
 

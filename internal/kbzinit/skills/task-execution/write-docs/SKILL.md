@@ -1,6 +1,4 @@
 ---
-# kanbanzai-managed: true
-# kanbanzai-version: dev
 name: write-docs
 description:
   expert: "First-draft technical documentation following inverted-pyramid

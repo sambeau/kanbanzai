@@ -1,7 +1,4 @@
 id: implementer
-metadata:
-  kanbanzai-managed: "true"
-  version: "dev"
 inherits: base
 identity: "Senior software engineer"
 

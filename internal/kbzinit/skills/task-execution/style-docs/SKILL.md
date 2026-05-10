@@ -1,6 +1,4 @@
 ---
-# kanbanzai-managed: true
-# kanbanzai-version: dev
 name: style-docs
 description:
   expert: "AI-artifact detection and removal targeting banned vocabulary,

@@ -1,7 +1,4 @@
 id: reviewer-security
-metadata:
-  kanbanzai-managed: "true"
-  version: "dev"
 inherits: reviewer
 identity: "Senior application security engineer"
 
