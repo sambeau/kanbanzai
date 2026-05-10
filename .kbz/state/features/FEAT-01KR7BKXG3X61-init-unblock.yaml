@@ -2,7 +2,7 @@ id: FEAT-01KR7BKXG3X61
 slug: init-unblock
 name: Init unblock — fix re-init failure
 parent: B64-install-skill-quality
-status: dev-planning
+status: developing
 summary: Fix the missing managed marker in orchestrate-development/SKILL.md and harden the skill installer so it self-heals rather than aborting on marker-less files. Also guards the bogus previous-init-incomplete warning. Smallest possible PR — hot-fix candidate.
 spec: FEAT-01KR7BKXG3X61/spec-p62-f1-spec-init-unblock
 dev_plan: FEAT-01KR7BKXG3X61/dev-plan-p62-f1-dev-plan-init-unblock
