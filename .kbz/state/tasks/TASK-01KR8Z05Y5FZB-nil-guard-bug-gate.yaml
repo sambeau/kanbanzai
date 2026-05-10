@@ -3,4 +3,7 @@ parent_feature: FEAT-01KR8YRQN1HPG
 slug: nil-guard-bug-gate
 name: Nil guard in checkBugWorktreeHasCommits
 summary: "Add nil *DocumentService check in checkBugWorktreeHasCommits (prereq.go:450). Fixes panic in TestCheckBugTransitionGate_UngatedTransitions."
-status: ready
+status: done
+completed: "2026-05-10T13:12:40Z"
+completion_summary: Added nil guards in checkBugWorktreeHasCommits (docSvc) and checkBugReviewCap (entitySvc) to prevent nil pointer dereference panics when services are unavailable.
+verification: "Ran `go test -run TestCheckBugTransitionGate ./internal/service/...` — no more panics. Remaining failures are assertion mismatches from tests passing nil services, not crashes."
