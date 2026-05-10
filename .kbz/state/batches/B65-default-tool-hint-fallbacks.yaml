@@ -1,7 +1,7 @@
 id: B65-default-tool-hint-fallbacks
 slug: default-tool-hint-fallbacks
 name: Default Tool Hint Fallbacks
-status: proposed
+status: designing
 summary: Retroactive batch wrapping P58-F1 (done).
 created: "2026-05-10T11:07:11Z"
 created_by: sambeau
