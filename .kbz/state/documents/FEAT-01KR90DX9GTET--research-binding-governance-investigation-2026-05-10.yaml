@@ -1,5 +1,5 @@
-canonical_content_hash: 27378b7c8bf4df16cc9963437843501bc6bcd713a6557ad22faeda42277a91f8
-content_hash: 4cc2ece1052b739bc60ce94478219c50eca40de1526a38c04af92797a7ba95e1
+canonical_content_hash: d61a1408fb4e7f4b8815fd24074466910763c3652a51275339147947d80ae3eb
+content_hash: 6c9ee7004589a36e69da66370159bb153a4c47f5ba910c482b4b092220f54460
 created: "2026-05-10T13:24:55Z"
 created_by: sambeau
 id: FEAT-01KR90DX9GTET/research-binding-governance-investigation-2026-05-10
@@ -8,4 +8,4 @@ path: work/research/binding-governance-investigation-2026-05-10.md
 status: draft
 title: Binding Governance and Pipeline Integrity
 type: research
-updated: "2026-05-10T13:24:55Z"
+updated: "2026-05-10T16:45:48Z"

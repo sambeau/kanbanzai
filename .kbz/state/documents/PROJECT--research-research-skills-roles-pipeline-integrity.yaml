@@ -1,10 +1,12 @@
+approved_at: "2026-05-10T16:47:40Z"
+approved_by: sambeau
 canonical_content_hash: 91cddabb87075c49ec23a382697d010834c86ba3e18dd1d6abee4afa827d663a
-content_hash: 4b1e7e58a250c5b96a87c8de0c790f8d7f2fb8f398d4ed99813a2465d506f130
+content_hash: da88023259211a7fce56192aad5271ec038bfc115cac1b123e2f6056d4d3a34b
 created: "2026-05-10T13:33:43Z"
 created_by: sambeau
 id: PROJECT/research-research-skills-roles-pipeline-integrity
 path: work/_project/research-skills-roles-pipeline-integrity.md
-status: draft
+status: approved
 title: Skills/Roles Pipeline Routing Integrity Investigation
 type: research
-updated: "2026-05-10T13:33:43Z"
+updated: "2026-05-10T16:47:40Z"
