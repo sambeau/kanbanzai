@@ -1,0 +1,10 @@
+id: FEAT-01KR90DX9GTET
+slug: binding-governance-investigation
+name: Binding Governance Investigation
+parent: B49-retro-fixes-may-2026
+status: proposed
+summary: "Research investigation into the integrity and discoverability of the skills/roles/stage-bindings system. Diagnoses why retro_fix and bug_fix tier features fail to route to their declared bindings, audits the synchronization contracts between stage-bindings.yaml, validStages, the pipeline, and the embedded consumer install, and recommends an architectural direction (harden vs code-managed vs hybrid)."
+created: "2026-05-10T13:15:06Z"
+created_by: sambeau
+display_id: B49-F5
+tier: feature
