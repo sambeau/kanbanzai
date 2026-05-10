@@ -2,7 +2,7 @@ id: FEAT-01KR7BKXMK3B6
 slug: runtime-surfaces
 name: Runtime discovery surfaces
 parent: B64-install-skill-quality
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Install CLAUDE.md, .claude/skills/ wrappers, OPENAI.md unconditionally, and .cursor/rules/kanbanzai.mdc conditionally during kbz init so consumers receive the same runtime discovery surfaces this repo uses."
 spec: FEAT-01KR7BKXMK3B6/spec-p62-f3-spec-runtime-surfaces
