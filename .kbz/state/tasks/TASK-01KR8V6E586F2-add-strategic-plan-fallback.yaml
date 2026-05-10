@@ -1,0 +1,6 @@
+id: TASK-01KR8V6E586F2
+parent_feature: FEAT-01KR8V4YHAK4B
+slug: add-strategic-plan-fallback
+name: Add GetStrategicPlan fallback in CreateFeature
+summary: "In CreateFeature, when GetPlan fails for a P-prefixed parent, fall back to GetStrategicPlan. Update tests: switch AllocatesSequentialID to B1-parent, add StrategicPlanParent test."
+status: queued

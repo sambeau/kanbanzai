@@ -2,11 +2,27 @@ id: FEAT-01KR8V4YHAK4B
 slug: fix-createfeature-strategic-plan-parent
 name: Fix CreateFeature Strategic Plan Parent Resolution
 parent: B67-bugfix-strategic-plan-parent
-status: proposed
+status: developing
 summary: CreateFeature calls GetPlan which only looks in batches/ directory. Add fallback to GetStrategicPlan for P-prefixed parents.
 tags:
   - bug_fix
 created: "2026-05-10T11:42:49Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: designing
+    reason: Fast-track bugfix — no design/spec/devplan needed for bug_fix tier; bypassing design/spec/devplan gates
+    timestamp: "2026-05-10T12:43:08+01:00"
+    to_status: specifying
+  -
+    from_status: specifying
+    reason: Fast-track bugfix — no design/spec/devplan needed for bug_fix tier; bypassing design/spec/devplan gates
+    timestamp: "2026-05-10T12:43:08+01:00"
+    to_status: dev-planning
+  -
+    from_status: dev-planning
+    reason: Fast-track bugfix — no design/spec/devplan needed for bug_fix tier; bypassing design/spec/devplan gates
+    timestamp: "2026-05-10T12:43:09+01:00"
+    to_status: developing
 display_id: B67-F1
 tier: feature
