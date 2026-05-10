@@ -3,4 +3,8 @@ parent_feature: FEAT-01KR8YRQN1HPG
 slug: fix-plan-type
 name: Fix planEntityTypeFromID and all callers
 summary: Change planEntityTypeFromID to return string(model.EntityKindPlan). Update all callers. ~95 tests fixed.
-status: ready
+status: done
+files_planned:
+  - internal/service/entities_test.go
+completed: "2026-05-10T13:03:07Z"
+completion_summary: "Changed planEntityTypeFromID to return string(model.EntityKindPlan) instead of \"plan\". The function now returns \"batch\" for P-prefixed plan IDs, matching the plan→batch rename. Only one line changed. All tests pass except 6 pre-existing bug_gate_test.go failures."
