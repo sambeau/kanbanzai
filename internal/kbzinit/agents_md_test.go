@@ -296,16 +296,16 @@ func TestWriteAgentsMD_NonManaged_SkipsWithWarning(t *testing.T) {
 	}
 }
 
-// AC-A10: --skip-agents-md prevents creation of AGENTS.md.
+// AC-A10: --skip-instructions prevents creation of AGENTS.md.
 func TestWriteAgentsMD_SkipFlag_DoesNotCreate(t *testing.T) {
 	dir := t.TempDir()
 	init, _ := newTestInit(dir, "")
 
-	// Simulate the flag by not calling writeAgentsMD when SkipAgentsMD is set.
+	// Simulate the flag by not calling writeAgentsMD when SkipInstructions is set.
 	// We verify the option plumbing directly via Options.
-	opts := Options{SkipAgentsMD: true}
-	if !opts.SkipAgentsMD {
-		t.Fatal("SkipAgentsMD field not set correctly")
+	opts := Options{SkipInstructions: true}
+	if !opts.SkipInstructions {
+		t.Fatal("SkipInstructions field not set correctly")
 	}
 
 	// Also verify that calling nothing when the flag is set leaves no file.
@@ -460,12 +460,12 @@ func TestWriteCopilotInstructions_NonManaged_SkipsWithWarning(t *testing.T) {
 	}
 }
 
-// AC-B7: --skip-agents-md prevents creation of copilot-instructions.md.
+// AC-B7: --skip-instructions prevents creation of copilot-instructions.md.
 // Verified via the Options struct flag being present and checked in init.go.
 func TestWriteCopilotInstructions_SkipFlag_FieldExists(t *testing.T) {
-	opts := Options{SkipAgentsMD: true}
-	if !opts.SkipAgentsMD {
-		t.Fatal("SkipAgentsMD field not set — flag plumbing is broken")
+	opts := Options{SkipInstructions: true}
+	if !opts.SkipInstructions {
+		t.Fatal("SkipInstructions field not set — flag plumbing is broken")
 	}
 }
 

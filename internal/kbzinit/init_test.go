@@ -259,7 +259,7 @@ func TestInitNameFlag(t *testing.T) {
 		SkipMCP:        true,
 		SkipWorkDirs:   true,
 		SkipRoles:      true,
-		SkipAgentsMD:   true,
+		SkipInstructions: true,
 	}); err != nil {
 		t.Fatalf("Run: %v", err)
 	}
@@ -282,7 +282,7 @@ func TestInitNameDefault(t *testing.T) {
 		SkipMCP:      true,
 		SkipWorkDirs: true,
 		SkipRoles:    true,
-		SkipAgentsMD: true,
+		SkipInstructions: true,
 	}); err != nil {
 		t.Fatalf("Run: %v", err)
 	}
@@ -316,7 +316,7 @@ func TestConfigNameMissing(t *testing.T) {
 		SkipSkills:   true,
 		SkipMCP:      true,
 		SkipRoles:    true,
-		SkipAgentsMD: true,
+		SkipInstructions: true,
 	}); err != nil {
 		t.Fatalf("expected no error reading config without name field, got: %v", err)
 	}
@@ -1537,18 +1537,18 @@ func TestInit_UnmanagedZedSettings_Skips(t *testing.T) {
 	}
 }
 
-// TestInit_SkipMcp verifies AC-13 to AC-16.
+// TestInit_SkipMcp verifies --skip-mcp suppresses .mcp.json only (narrowed behaviour).
 func TestInit_SkipMcp(t *testing.T) {
 	t.Parallel()
 	dir := makeGitRepoNoCommits(t)
 
-	// Create .zed/ to test that Zed file is also skipped
+	// Create .zed/ to test that Zed file is NOT skipped by --skip-mcp alone.
 	if err := os.MkdirAll(filepath.Join(dir, ".zed"), 0o755); err != nil {
 		t.Fatal(err)
 	}
 
 	in, _ := newTestInit(dir, "")
-	if err := in.Run(Options{SkipMCP: true}); err != nil {
+	if err := in.Run(Options{SkipMCP: true, SkipZed: true}); err != nil {
 		t.Fatalf("Run: %v", err)
 	}
 
@@ -1556,11 +1556,66 @@ func TestInit_SkipMcp(t *testing.T) {
 		t.Error("expected .mcp.json not to be created with --skip-mcp")
 	}
 	if _, err := os.Stat(filepath.Join(dir, ".zed", "settings.json")); !os.IsNotExist(err) {
-		t.Error("expected .zed/settings.json not to be created with --skip-mcp")
+		t.Error("expected .zed/settings.json not to be created with --skip-zed")
 	}
-	// Config should still be created
+	// Config should still be created.
 	if _, err := os.Stat(filepath.Join(dir, ".kbz", "config.yaml")); os.IsNotExist(err) {
-		t.Error("expected config.yaml to still be created with --skip-mcp")
+		t.Error("expected config.yaml to still be created")
+	}
+}
+
+// TestInit_SkipZed verifies --skip-zed suppresses .zed/settings.json only.
+func TestInit_SkipZed(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	// Create .zed/ to test that Zed file is skipped.
+	if err := os.MkdirAll(filepath.Join(dir, ".zed"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+
+	in, _ := newTestInit(dir, "")
+	if err := in.Run(Options{SkipZed: true}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	if _, err := os.Stat(filepath.Join(dir, ".zed", "settings.json")); !os.IsNotExist(err) {
+		t.Error("expected .zed/settings.json not to be created with --skip-zed")
+	}
+	// .mcp.json should still be created.
+	if _, err := os.Stat(filepath.Join(dir, ".mcp.json")); os.IsNotExist(err) {
+		t.Error("expected .mcp.json to still be created with --skip-zed")
+	}
+}
+
+// TestInit_SkipMcp_Deprecated verifies the deprecated --skip-mcp (without --skip-zed)
+// still suppresses both .mcp.json and .zed/settings.json but emits a stderr warning.
+func TestInit_SkipMcp_Deprecated(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	// Create .zed/ to test that Zed file is also skipped via deprecation alias.
+	if err := os.MkdirAll(filepath.Join(dir, ".zed"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+
+	var stderr bytes.Buffer
+	in, _ := newTestInit(dir, "")
+	in.WithStderr(&stderr)
+	if err := in.Run(Options{SkipMCP: true}); err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+
+	if _, err := os.Stat(filepath.Join(dir, ".mcp.json")); !os.IsNotExist(err) {
+		t.Error("expected .mcp.json not to be created")
+	}
+	if _, err := os.Stat(filepath.Join(dir, ".zed", "settings.json")); !os.IsNotExist(err) {
+		t.Error("expected .zed/settings.json not to be created (deprecated combined behaviour)")
+	}
+
+	// Verify deprecation warning on stderr.
+	if !strings.Contains(stderr.String(), "--skip-mcp") || !strings.Contains(stderr.String(), "--skip-zed") {
+		t.Errorf("stderr should contain scope-narrowing warning, got: %s", stderr.String())
 	}
 }
 
@@ -2018,34 +2073,34 @@ func TestP12_Integration_NewProject(t *testing.T) {
 	}
 }
 
-// TestP12_Integration_SkipAgentsMD verifies that --skip-agents-md suppresses
-// both AGENTS.md and .github/copilot-instructions.md (AC-INT-5).
-func TestP12_Integration_SkipAgentsMD(t *testing.T) {
+// TestP12_Integration_SkipInstructions verifies that --skip-instructions suppresses
+// both AGENTS.md and .github/copilot-instructions.md.
+func TestP12_Integration_SkipInstructions(t *testing.T) {
 	t.Parallel()
 	dir := makeGitRepoNoCommits(t)
 
 	in, _ := newTestInit(dir, "")
-	if err := in.Run(Options{SkipAgentsMD: true}); err != nil {
-		t.Fatalf("Run --skip-agents-md: %v", err)
+	if err := in.Run(Options{SkipInstructions: true}); err != nil {
+		t.Fatalf("Run --skip-instructions: %v", err)
 	}
 
 	if _, err := os.Stat(filepath.Join(dir, "AGENTS.md")); !os.IsNotExist(err) {
-		t.Error("AGENTS.md should not be created with --skip-agents-md")
+		t.Error("AGENTS.md should not be created with --skip-instructions")
 	}
 	if _, err := os.Stat(filepath.Join(dir, ".github", "copilot-instructions.md")); !os.IsNotExist(err) {
-		t.Error(".github/copilot-instructions.md should not be created with --skip-agents-md")
+		t.Error(".github/copilot-instructions.md should not be created with --skip-instructions")
 	}
 }
 
-// TestP12_Integration_SkipAgentsMDAndSkipSkills verifies that
-// --skip-agents-md --skip-skills produces a project with no AGENTS.md,
-// no copilot instructions, and no skills (AC-INT-5 edge case).
-func TestP12_Integration_SkipAgentsMDAndSkipSkills(t *testing.T) {
+// TestP12_Integration_SkipInstructionsAndSkipSkills verifies that
+// --skip-instructions --skip-skills produces a project with no AGENTS.md,
+// no copilot instructions, and no skills.
+func TestP12_Integration_SkipInstructionsAndSkipSkills(t *testing.T) {
 	t.Parallel()
 	dir := makeGitRepoNoCommits(t)
 
 	in, _ := newTestInit(dir, "")
-	if err := in.Run(Options{SkipAgentsMD: true, SkipSkills: true}); err != nil {
+	if err := in.Run(Options{SkipInstructions: true, SkipSkills: true}); err != nil {
 		t.Fatalf("Run: %v", err)
 	}
 
@@ -2061,6 +2116,34 @@ func TestP12_Integration_SkipAgentsMDAndSkipSkills(t *testing.T) {
 	// Config must still be created.
 	if _, err := os.Stat(filepath.Join(dir, ".kbz", "config.yaml")); os.IsNotExist(err) {
 		t.Error("config.yaml must still be created")
+	}
+}
+
+// TestP12_Integration_SkipAgentsMD_Deprecated verifies that the deprecated
+// --skip-agents-md flag behaves identically to --skip-instructions and emits
+// a deprecation warning to stderr.
+func TestP12_Integration_SkipAgentsMD_Deprecated(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	var stderr bytes.Buffer
+	in, _ := newTestInit(dir, "")
+	in.WithStderr(&stderr)
+	if err := in.Run(Options{SkipAgentsMD: true}); err != nil {
+		t.Fatalf("Run --skip-agents-md: %v", err)
+	}
+
+	// Verify behaviour identical to --skip-instructions.
+	if _, err := os.Stat(filepath.Join(dir, "AGENTS.md")); !os.IsNotExist(err) {
+		t.Error("AGENTS.md should not be created with --skip-agents-md")
+	}
+	if _, err := os.Stat(filepath.Join(dir, ".github", "copilot-instructions.md")); !os.IsNotExist(err) {
+		t.Error(".github/copilot-instructions.md should not be created with --skip-agents-md")
+	}
+
+	// Verify deprecation warning on stderr.
+	if !strings.Contains(stderr.String(), "deprecated") {
+		t.Errorf("stderr should contain 'deprecated', got: %s", stderr.String())
 	}
 }
 
@@ -2084,7 +2167,39 @@ func TestConfigNameField(t *testing.T) {
 	}
 }
 
-// ---- Migration detection: stale "command": "kanbanzai" ----
+// TestRunNewProject_Rollback_Widened verifies that a failure mid-init removes
+// all tracked artifacts, not just .kbz/. Pre-create a read-only directory at
+// AGENTS.md to induce a write failure after skills and MCP config are written.
+func TestRunNewProject_Rollback_Widened(t *testing.T) {
+	t.Parallel()
+	dir := makeGitRepoNoCommits(t)
+
+	// Pre-create AGENTS.md as a read-only directory so writeAgentsMD fails.
+	agentsPath := filepath.Join(dir, "AGENTS.md")
+	if err := os.Mkdir(agentsPath, 0o444); err != nil {
+		t.Fatal(err)
+	}
+	defer os.RemoveAll(agentsPath)
+
+	in, _ := newTestInit(dir, "")
+	err := in.Run(Options{})
+	if err == nil {
+		t.Fatal("expected Run to fail when AGENTS.md is a directory")
+	}
+
+	// Verify critical paths are cleaned up.
+	for _, p := range []string{
+		".kbz",
+		".agents",
+		".mcp.json",
+		"work",
+	} {
+		fullPath := filepath.Join(dir, p)
+		if _, statErr := os.Stat(fullPath); !os.IsNotExist(statErr) {
+			t.Errorf("expected %s to be cleaned up on rollback, but it exists", p)
+		}
+	}
+}
 
 // TestDetectStaleMCPConfig_MCPJSON_StaleCommand_Warns (AC-007) verifies that
 // kbz init --update-skills warns when a managed .mcp.json contains

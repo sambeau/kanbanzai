@@ -46,14 +46,23 @@ Flags:
                         Has no effect on existing projects.
                         Default: false
 
-  --skip-mcp            Do not write .mcp.json or .zed/settings.json.
+  --skip-mcp            Do not write .mcp.json.
+                        Default: false
+
+  --skip-zed            Do not write .zed/settings.json.
                         Default: false
 
   --skip-roles          Do not install context role files (base.yaml,
                         reviewer.yaml).
                         Default: false
 
-  --skip-agents-md      Do not write AGENTS.md or .github/copilot-instructions.md.
+  --skip-instructions   Do not write instruction-surface artifacts
+                        (AGENTS.md, .github/copilot-instructions.md,
+                        CLAUDE.md, OPENAI.md, .claude/skills/,
+                        .cursor/rules/).
+                        Default: false
+
+  --skip-agents-md      Deprecated alias for --skip-instructions.
                         Default: false
 
   --enable-cursor       Install .cursor/rules/kanbanzai.mdc even when .cursor/
@@ -68,7 +77,9 @@ Example:
   kanbanzai init --skip-skills
   kanbanzai init --update-skills
   kanbanzai init --skip-mcp
+  kanbanzai init --skip-zed
   kanbanzai init --skip-roles
+  kanbanzai init --skip-instructions
   kanbanzai init --skip-agents-md
 `
 
@@ -99,8 +110,12 @@ func runInit(args []string, deps dependencies) error {
 			opts.SkipWorkDirs = true
 		case "--skip-mcp":
 			opts.SkipMCP = true
+		case "--skip-zed":
+			opts.SkipZed = true
 		case "--skip-roles":
 			opts.SkipRoles = true
+		case "--skip-instructions":
+			opts.SkipInstructions = true
 		case "--skip-agents-md":
 			opts.SkipAgentsMD = true
 		case "--enable-cursor":

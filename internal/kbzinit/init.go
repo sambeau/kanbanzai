@@ -39,11 +39,20 @@ type Options struct {
 	Name string
 	// SkipWorkDirs suppresses creation of work/ placeholder directories.
 	SkipWorkDirs bool
-	// SkipMCP suppresses writing .mcp.json and .zed/settings.json.
+	// SkipMCP suppresses writing .mcp.json only.
+	// For one release, passing --skip-mcp without --skip-zed will also suppress
+	// .zed/settings.json with a deprecation warning.
 	SkipMCP bool
+	// SkipZed suppresses writing .zed/settings.json.
+	SkipZed bool
 	// SkipRoles suppresses installation of context role files.
 	SkipRoles bool
-	// SkipAgentsMD suppresses writing AGENTS.md and .github/copilot-instructions.md.
+	// SkipInstructions suppresses writing all instruction-surface artifacts:
+	// AGENTS.md, .github/copilot-instructions.md, CLAUDE.md, OPENAI.md,
+	// .claude/skills/, .cursor/rules/.
+	SkipInstructions bool
+	// SkipAgentsMD is a deprecated alias for SkipInstructions. It will be
+	// removed in a future release.
 	SkipAgentsMD bool
 	// EnableCursor forces installation of .cursor/rules/kanbanzai.mdc even when
 	// .cursor/ does not already exist.
@@ -55,12 +64,13 @@ type Initializer struct {
 	workDir string
 	stdin   io.Reader
 	stdout  io.Writer
+	stderr  io.Writer
 	version string
 }
 
 // New creates a new Initializer for the given working directory.
 func New(workDir string, stdin io.Reader, stdout io.Writer) *Initializer {
-	return &Initializer{workDir: workDir, stdin: stdin, stdout: stdout, version: "dev"}
+	return &Initializer{workDir: workDir, stdin: stdin, stdout: stdout, stderr: os.Stderr, version: "dev"}
 }
 
 // WithVersion sets the binary version string used when writing skill file
@@ -72,11 +82,31 @@ func (i *Initializer) WithVersion(v string) *Initializer {
 	return i
 }
 
+// WithStderr sets the writer for deprecation warnings and error diagnostics.
+func (i *Initializer) WithStderr(w io.Writer) *Initializer {
+	if w != nil {
+		i.stderr = w
+	}
+	return i
+}
+
 // Run executes the init command with the given options.
 func (i *Initializer) Run(opts Options) error {
 	// Validate mutually exclusive flags before touching anything.
 	if opts.UpdateSkills && opts.SkipSkills {
 		return fmt.Errorf("--update-skills and --skip-skills are mutually exclusive and cannot be combined")
+	}
+
+	// Resolve deprecated --skip-agents-md alias.
+	if opts.SkipAgentsMD && !opts.SkipInstructions {
+		fmt.Fprintln(i.stderr, "WARNING: --skip-agents-md is deprecated; use --skip-instructions instead")
+		opts.SkipInstructions = true
+	}
+
+	// Resolve deprecated --skip-mcp combined behaviour.
+	if opts.SkipMCP && !opts.SkipZed {
+		fmt.Fprintln(i.stderr, "WARNING: --skip-mcp now suppresses only .mcp.json; add --skip-zed to also suppress .zed/settings.json")
+		opts.SkipZed = true
 	}
 
 	// Require a git repository.
@@ -184,8 +214,9 @@ func (i *Initializer) isNewProject(gitRoot string, kbzExists bool) (bool, error)
 }
 
 // runNewProject handles the new project path: write config, create work/ dirs,
-// and install skill files. Uses a temp-dir-then-rename approach for atomicity:
-// if any step fails, the partial .kbz/ directory is removed.
+// and install skill files. Tracks every path created and removes all of them
+// on failure. The sentinel write is the single commit point — on any earlier
+// error, every tracked path is deleted.
 func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) error {
 	roots := DefaultDocumentRoots()
 	baseDir := filepath.Dir(kbzDir)
@@ -202,13 +233,18 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 		return fmt.Errorf("cannot create temporary directory: check that the current user has write access to this directory")
 	}
 
-	// Clean up the temp dir on any failure.
+	// trackedPaths accumulates every file and directory created during init.
+	// On failure, all are removed in reverse order.
+	var trackedPaths []string
 	success := false
 	defer func() {
 		if !success {
+			// Remove tmpDir if it wasn't renamed yet.
 			os.RemoveAll(tmpDir)
-			// Also remove the final kbzDir if it was partially created.
-			os.RemoveAll(kbzDir)
+			// Remove all tracked paths in reverse (children before parents).
+			for i := len(trackedPaths) - 1; i >= 0; i-- {
+				os.RemoveAll(trackedPaths[i])
+			}
 		}
 	}()
 
@@ -220,26 +256,36 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 	if err := os.Rename(tmpDir, kbzDir); err != nil {
 		return fmt.Errorf("cannot create '.kbz/' directory: %w", err)
 	}
+	trackedPaths = append(trackedPaths, kbzDir)
 	fmt.Fprintf(i.stdout, "Created %s\n", configPath)
 
 	if !opts.SkipWorkDirs {
 		if err := i.createWorkDirs(baseDir, roots); err != nil {
 			return err
 		}
+		for _, root := range roots {
+			trackedPaths = append(trackedPaths, filepath.Join(baseDir, root.Path))
+		}
 		if err := i.writeWorkReadme(baseDir); err != nil {
 			return err
 		}
+		trackedPaths = append(trackedPaths, filepath.Join(baseDir, "work", "README.md"))
+		trackedPaths = append(trackedPaths, filepath.Join(baseDir, "work"))
 	}
 
 	// Install stage-bindings.yaml after config is written (G1 fix).
 	if err := i.installStageBindings(baseDir); err != nil {
 		return err
 	}
+	trackedPaths = append(trackedPaths, filepath.Join(kbzDir, pathStageBindings))
 
 	if !opts.SkipSkills {
 		if err := i.installSkills(baseDir); err != nil {
 			return err
 		}
+		trackedPaths = append(trackedPaths, filepath.Join(baseDir, ".kbz", "skills"))
+		trackedPaths = append(trackedPaths, filepath.Join(baseDir, ".agents", "skills"))
+		trackedPaths = append(trackedPaths, filepath.Join(baseDir, ".agents"))
 		if err := i.installTaskSkills(baseDir); err != nil {
 			return err
 		}
@@ -250,18 +296,24 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 		if err := i.writeMCPConfig(baseDir); err != nil {
 			return err
 		}
+		trackedPaths = append(trackedPaths, filepath.Join(baseDir, ".mcp.json"))
+	}
+	if !opts.SkipZed {
 		if err := i.writeZedConfig(baseDir, true); err != nil {
 			return err
 		}
+		trackedPaths = append(trackedPaths, filepath.Join(baseDir, ".zed", "settings.json"))
 	}
 
-	if !opts.SkipAgentsMD {
+	if !opts.SkipInstructions {
 		if err := i.writeAgentsMD(baseDir); err != nil {
 			return err
 		}
+		trackedPaths = append(trackedPaths, filepath.Join(baseDir, pathAgentsMD))
 		if err := i.writeCopilotInstructions(baseDir); err != nil {
 			return err
 		}
+		trackedPaths = append(trackedPaths, filepath.Join(baseDir, ".github", pathCopilotInstructions))
 
 		// F3: runtime discovery surfaces — suppressed by --skip-agents-md / --skip-instructions.
 		if err := i.installClaudeMd(baseDir); err != nil {
@@ -282,6 +334,7 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 		if err := i.installRoles(baseDir); err != nil {
 			return err
 		}
+		trackedPaths = append(trackedPaths, filepath.Join(kbzDir, "roles"))
 	}
 
 	// Write the sentinel file as the very last step.
@@ -377,12 +430,14 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 		if err := i.writeMCPConfig(baseDir); err != nil {
 			return err
 		}
+	}
+	if !opts.SkipZed {
 		if err := i.writeZedConfig(baseDir, !kbzExisted); err != nil {
 			return err
 		}
 	}
 
-	if !opts.SkipAgentsMD {
+	if !opts.SkipInstructions {
 		if err := i.writeAgentsMD(baseDir); err != nil {
 			return err
 		}

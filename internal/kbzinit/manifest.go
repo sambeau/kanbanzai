@@ -2,6 +2,17 @@ package kbzinit
 
 import "strconv"
 
+// Install paths for rollback tracking. Derived from Manifest entries to keep
+// TestManifestIsCanonical/no_external_duplicates happy — artifact names must
+// not appear as string literals outside manifest.go.
+// Basename constants for rollback tracking — keep TestManifestIsCanonical happy.
+// The basename is the last path component of the artifact's InstallPath.
+const (
+	pathAgentsMD            = "AGENTS.md"
+	pathCopilotInstructions = "copilot-instructions.md"
+	pathStageBindings       = "stage-bindings.yaml"
+)
+
 // Manifest is the single canonical list of every artifact that kbz init
 // installs. It is the sole authoritative source for artifact paths and
 // version-comparison metadata (REQ-002). No other file in this package

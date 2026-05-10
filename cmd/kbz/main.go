@@ -197,6 +197,8 @@ func run(args []string, deps dependencies) error {
 		return runInstallRecord(args[1:], deps)
 	case "rebuild-index":
 		return runRebuildIndex(args[1:], deps)
+	case "doctor":
+		return runDoctor(args[1:], deps)
 	case "migrate":
 		return runMigrate(args[1:], deps)
 

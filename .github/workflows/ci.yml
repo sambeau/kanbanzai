@@ -17,3 +17,14 @@ jobs:
           go-version: "1.25"
       - name: Check generated registry regions
         run: make registry-check
+
+  test-install:
+    name: Install E2E Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+      - name: Run install e2e tests
+        run: make test-install
