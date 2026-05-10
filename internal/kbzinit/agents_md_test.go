@@ -5,87 +5,57 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"strings"
 	"testing"
 )
 
-// ---- readMarkdownManagedVersion unit tests ----
+// ---- compareManaged unit tests (IntCounter version kind) ----
 
-func TestReadMarkdownManagedVersion_ValidMarker(t *testing.T) {
+func TestCompareManaged_IntCounter_OlderVersion_Overwrite(t *testing.T) {
 	data := []byte("<!-- kanbanzai-managed: v1 -->\n\n# rest of file\n")
-	v, managed, err := readMarkdownManagedVersion(data)
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-	if !managed {
-		t.Error("expected managed=true")
-	}
-	if v != 1 {
-		t.Errorf("version = %d, want 1", v)
+	spec := MarkerSpec{Comment: "<!-- kanbanzai-managed: v", VersionKind: IntCounter, CurrentValue: "2"}
+	if got := compareManaged(data, spec); got != Overwrite {
+		t.Errorf("compareManaged = %v, want Overwrite", got)
 	}
 }
 
-func TestReadMarkdownManagedVersion_HigherVersion(t *testing.T) {
+func TestCompareManaged_IntCounter_NewerVersion_NoOp(t *testing.T) {
 	data := []byte("<!-- kanbanzai-managed: v42 -->\n")
-	v, managed, err := readMarkdownManagedVersion(data)
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-	if !managed {
-		t.Error("expected managed=true")
-	}
-	if v != 42 {
-		t.Errorf("version = %d, want 42", v)
+	spec := MarkerSpec{Comment: "<!-- kanbanzai-managed: v", VersionKind: IntCounter, CurrentValue: "2"}
+	if got := compareManaged(data, spec); got != NoOp {
+		t.Errorf("compareManaged = %v, want NoOp", got)
 	}
 }
 
-func TestReadMarkdownManagedVersion_NoMarker(t *testing.T) {
+func TestCompareManaged_IntCounter_EqualVersion_NoOp(t *testing.T) {
+	data := []byte("<!-- kanbanzai-managed: v2 -->\n")
+	spec := MarkerSpec{Comment: "<!-- kanbanzai-managed: v", VersionKind: IntCounter, CurrentValue: "2"}
+	if got := compareManaged(data, spec); got != NoOp {
+		t.Errorf("compareManaged = %v, want NoOp", got)
+	}
+}
+
+func TestCompareManaged_IntCounter_NoMarker_WarnSkip(t *testing.T) {
 	data := []byte("# Regular AGENTS.md\n\nsome content\n")
-	v, managed, err := readMarkdownManagedVersion(data)
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-	if managed {
-		t.Error("expected managed=false for file with no marker")
-	}
-	if v != 0 {
-		t.Errorf("version = %d, want 0", v)
+	spec := MarkerSpec{Comment: "<!-- kanbanzai-managed: v", VersionKind: IntCounter, CurrentValue: "2"}
+	if got := compareManaged(data, spec); got != WarnSkip {
+		t.Errorf("compareManaged = %v, want WarnSkip", got)
 	}
 }
 
-func TestReadMarkdownManagedVersion_EmptyFile(t *testing.T) {
-	v, managed, err := readMarkdownManagedVersion([]byte{})
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-	if managed {
-		t.Error("expected managed=false for empty file")
-	}
-	if v != 0 {
-		t.Errorf("version = %d, want 0", v)
+func TestCompareManaged_IntCounter_EmptyFile_Create(t *testing.T) {
+	spec := MarkerSpec{Comment: "<!-- kanbanzai-managed: v", VersionKind: IntCounter, CurrentValue: "2"}
+	if got := compareManaged(nil, spec); got != Create {
+		t.Errorf("compareManaged = %v, want Create", got)
 	}
 }
 
-func TestReadMarkdownManagedVersion_MalformedMarker(t *testing.T) {
+func TestCompareManaged_IntCounter_MalformedVersion_WarnSkip(t *testing.T) {
 	data := []byte("<!-- kanbanzai-managed: vNOT_A_NUMBER -->\n")
-	_, managed, err := readMarkdownManagedVersion(data)
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-	// Malformed version — treated as unmanaged.
-	if managed {
-		t.Error("expected managed=false for malformed version")
-	}
-}
-
-func TestReadMarkdownManagedVersion_MarkerNotOnFirstLine(t *testing.T) {
-	data := []byte("# Title\n<!-- kanbanzai-managed: v1 -->\n")
-	_, managed, err := readMarkdownManagedVersion(data)
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-	if managed {
-		t.Error("expected managed=false when marker is not on line 1")
+	spec := MarkerSpec{Comment: "<!-- kanbanzai-managed: v", VersionKind: IntCounter, CurrentValue: "2"}
+	if got := compareManaged(data, spec); got != WarnSkip {
+		t.Errorf("compareManaged = %v, want WarnSkip", got)
 	}
 }
 
@@ -122,15 +92,9 @@ func TestWriteAgentsMD_ManagedMarkerOnLineOne(t *testing.T) {
 		t.Fatalf("read AGENTS.md: %v", err)
 	}
 
-	v, managed, err := readMarkdownManagedVersion(data)
-	if err != nil {
-		t.Fatalf("readMarkdownManagedVersion: %v", err)
-	}
-	if !managed {
-		t.Error("AGENTS.md should have managed marker on line 1")
-	}
-	if v != agentsMDVersion {
-		t.Errorf("marker version = %d, want %d", v, agentsMDVersion)
+	spec := MarkerSpec{Comment: "<!-- kanbanzai-managed: v", VersionKind: IntCounter, CurrentValue: strconv.Itoa(agentsMDVersion)}
+	if got := compareManaged(data, spec); got != NoOp {
+		t.Errorf("AGENTS.md: compareManaged = %v, want NoOp (marker on line 1 at current version)", got)
 	}
 }
 
@@ -366,8 +330,8 @@ func TestWriteAgentsMD_ContentIsEmbedded(t *testing.T) {
 	if agentsMDContent == "" {
 		t.Error("agentsMDContent constant is empty — content must be embedded in the binary")
 	}
-	if !strings.HasPrefix(agentsMDContent, agentsMDMarkerPrefix) {
-		t.Errorf("agentsMDContent does not start with managed marker %q", agentsMDMarkerPrefix)
+	if !strings.HasPrefix(agentsMDContent, "<!-- kanbanzai-managed: v") {
+		t.Error("agentsMDContent does not start with managed marker <!-- kanbanzai-managed: v")
 	}
 }
 
@@ -423,15 +387,9 @@ func TestWriteCopilotInstructions_ManagedMarkerOnLineOne(t *testing.T) {
 		t.Fatalf("read copilot-instructions.md: %v", err)
 	}
 
-	v, managed, err := readMarkdownManagedVersion(data)
-	if err != nil {
-		t.Fatalf("readMarkdownManagedVersion: %v", err)
-	}
-	if !managed {
-		t.Error("copilot-instructions.md should have managed marker on line 1")
-	}
-	if v != agentsMDVersion {
-		t.Errorf("marker version = %d, want %d", v, agentsMDVersion)
+	spec := MarkerSpec{Comment: "<!-- kanbanzai-managed: v", VersionKind: IntCounter, CurrentValue: strconv.Itoa(agentsMDVersion)}
+	if got := compareManaged(data, spec); got != NoOp {
+		t.Errorf("copilot-instructions.md: compareManaged = %v, want NoOp (marker on line 1 at current version)", got)
 	}
 }
 
@@ -643,18 +601,19 @@ func TestAgentsMD_Idempotency(t *testing.T) {
 	}
 }
 
-// ---- Fuzz: readMarkdownManagedVersion never panics ----
+// ---- Fuzz: compareManaged never panics ----
 
-func FuzzReadMarkdownManagedVersion(f *testing.F) {
+func FuzzCompareManaged(f *testing.F) {
 	f.Add([]byte("<!-- kanbanzai-managed: v1 -->\n"))
 	f.Add([]byte("# Regular file\n"))
 	f.Add([]byte(""))
 	f.Add([]byte("<!-- kanbanzai-managed: vNaN -->\n"))
 
+	spec := MarkerSpec{Comment: "<!-- kanbanzai-managed: v", VersionKind: IntCounter, CurrentValue: "2"}
 	f.Fuzz(func(t *testing.T, data []byte) {
 		// Must not panic.
-		v, managed, err := readMarkdownManagedVersion(data)
-		_ = fmt.Sprintf("v=%d managed=%v err=%v", v, managed, err)
+		d := compareManaged(data, spec)
+		_ = fmt.Sprintf("decision=%v", d)
 	})
 }
 

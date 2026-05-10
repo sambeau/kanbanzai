@@ -1,4 +1,7 @@
 id: orchestrator
+metadata:
+  kanbanzai-managed: "true"
+  version: "dev"
 inherits: base
 identity: "Senior engineering manager coordinating an agent team"
 

@@ -3,6 +3,7 @@ package kbzinit
 import (
 	"os"
 	"path/filepath"
+	"strconv"
 	"testing"
 
 	"github.com/sambeau/kanbanzai/internal/binding"
@@ -40,12 +41,15 @@ func TestPipelineReadiness_NewProject(t *testing.T) {
 		t.Fatal("stage-bindings.yaml parsed to nil")
 	}
 
-	// --- AC-002: all 19 task-execution skills exist on disk ---
+	// --- AC-002: all task-execution skills exist on disk ---
 	skillsDir := filepath.Join(kbzDir, "skills")
-	for _, name := range taskSkillNames {
-		skillPath := filepath.Join(skillsDir, name, "SKILL.md")
+	for _, a := range Manifest {
+		if a.Kind != TaskSkill {
+			continue
+		}
+		skillPath := filepath.Join(dir, a.InstallPath)
 		if _, err := os.Stat(skillPath); os.IsNotExist(err) {
-			t.Errorf("task skill %q not installed: %s", name, skillPath)
+			t.Errorf("task skill %q not installed: %s", a.Name, skillPath)
 		}
 	}
 
@@ -71,12 +75,13 @@ func TestPipelineReadiness_NewProject(t *testing.T) {
 	if err != nil {
 		t.Fatalf("AGENTS.md not created: %v", err)
 	}
-	v, managed, err := readMarkdownManagedVersion(agentsData)
-	if err != nil || !managed {
-		t.Errorf("AGENTS.md missing managed marker (managed=%v err=%v)", managed, err)
+	mdSpec := MarkerSpec{
+		Comment:      "<!-- kanbanzai-managed: v",
+		VersionKind:  IntCounter,
+		CurrentValue: strconv.Itoa(agentsMDVersion),
 	}
-	if v != agentsMDVersion {
-		t.Errorf("AGENTS.md version = %d, want %d", v, agentsMDVersion)
+	if decision := compareManaged(agentsData, mdSpec); decision != NoOp {
+		t.Errorf("AGENTS.md: compareManaged returned %v, want NoOp", decision)
 	}
 	agentsText := string(agentsData)
 	for _, want := range []string{"Task-Execution Skills", "Roles", "Stage Bindings", "stage-bindings.yaml"} {
@@ -104,8 +109,14 @@ func TestPipelineReadiness_NewProject(t *testing.T) {
 	if err != nil {
 		t.Fatalf("SkillStore.LoadAll: %v", err)
 	}
-	if len(loadedSkills) != len(taskSkillNames) {
-		t.Errorf("SkillStore.LoadAll returned %d skills, want %d", len(loadedSkills), len(taskSkillNames))
+	taskSkillCount := 0
+	for _, a := range Manifest {
+		if a.Kind == TaskSkill {
+			taskSkillCount++
+		}
+	}
+	if len(loadedSkills) != taskSkillCount {
+		t.Errorf("SkillStore.LoadAll returned %d skills, want %d", len(loadedSkills), taskSkillCount)
 	}
 
 	// AC-009: RoleStore.LoadAll() returns all 18 roles without error.

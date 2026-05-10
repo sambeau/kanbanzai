@@ -1,0 +1,6 @@
+id: TASK-01KR7D3GXT9ZB
+parent_feature: FEAT-01KR7BKXJGEPD
+slug: install-registry-testembeddedcorpus
+name: "`TestEmbeddedCorpus`"
+summary: "`TestEmbeddedCorpus`"
+status: queued

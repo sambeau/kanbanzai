@@ -1,0 +1,6 @@
+id: TASK-01KR7D3GXM8JZ
+parent_feature: FEAT-01KR7BKXJGEPD
+slug: install-registry-implement-comparemanaged
+name: "Implement `compareManaged`"
+summary: "Implement `compareManaged`"
+status: queued

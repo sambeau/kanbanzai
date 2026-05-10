@@ -1,0 +1,6 @@
+id: TASK-01KR7D3GXRMFN
+parent_feature: FEAT-01KR7BKXJGEPD
+slug: install-registry-comparemanaged-table-driven-unit-tests
+name: "`compareManaged` table-driven unit tests"
+summary: "`compareManaged` table-driven unit tests"
+status: queued

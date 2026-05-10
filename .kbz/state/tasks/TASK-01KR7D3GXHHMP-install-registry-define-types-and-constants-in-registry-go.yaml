@@ -1,0 +1,6 @@
+id: TASK-01KR7D3GXHHMP
+parent_feature: FEAT-01KR7BKXJGEPD
+slug: install-registry-define-types-and-constants-in-registry-go
+name: "Define types and constants in `registry.go`"
+summary: "Define types and constants in `registry.go`"
+status: queued

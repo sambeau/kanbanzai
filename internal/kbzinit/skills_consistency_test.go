@@ -18,7 +18,7 @@ func TestEmbeddedSkillsMatchAgentSkills(t *testing.T) {
 	}
 	repoRoot := filepath.Join(filepath.Dir(thisFile), "..", "..")
 
-	for _, name := range skillNames {
+	for _, name := range workflowSkillShortNames() {
 		embeddedPath := filepath.Join(filepath.Dir(thisFile), "skills", name, "SKILL.md")
 		agentPath := filepath.Join(repoRoot, ".agents", "skills", "kanbanzai-"+name, "SKILL.md")
 
@@ -85,7 +85,7 @@ func TestEmbeddedTaskSkillsMatchProjectSkills(t *testing.T) {
 	}
 	repoRoot := filepath.Join(filepath.Dir(thisFile), "..", "..")
 
-	for _, name := range taskSkillNames {
+	for _, name := range taskSkillShortNames() {
 		embeddedPath := filepath.Join(filepath.Dir(thisFile), "skills", "task-execution", name, "SKILL.md")
 		projectPath := filepath.Join(repoRoot, ".kbz", "skills", name, "SKILL.md")
 
@@ -173,4 +173,34 @@ func normalizeRoleMarkers(content string) string {
 		out = append(out, line)
 	}
 	return strings.TrimSpace(strings.Join(out, "\n"))
+}
+
+// workflowSkillShortNames returns the short (directory) names of all
+// WorkflowSkill artifacts from the Manifest, extracted from EmbedPath.
+func workflowSkillShortNames() []string {
+	var names []string
+	for _, a := range Manifest {
+		if a.Kind == WorkflowSkill {
+			// EmbedPath is "skills/<name>/SKILL.md"
+			name := strings.TrimPrefix(a.EmbedPath, "skills/")
+			name = strings.TrimSuffix(name, "/SKILL.md")
+			names = append(names, name)
+		}
+	}
+	return names
+}
+
+// taskSkillShortNames returns the short (directory) names of all
+// TaskSkill artifacts from the Manifest, extracted from EmbedPath.
+func taskSkillShortNames() []string {
+	var names []string
+	for _, a := range Manifest {
+		if a.Kind == TaskSkill {
+			// EmbedPath is "skills/task-execution/<name>/SKILL.md"
+			name := strings.TrimPrefix(a.EmbedPath, "skills/task-execution/")
+			name = strings.TrimSuffix(name, "/SKILL.md")
+			names = append(names, name)
+		}
+	}
+	return names
 }

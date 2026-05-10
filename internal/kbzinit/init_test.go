@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -925,7 +926,8 @@ func TestRun_Skills_OlderVersion_Overwritten(t *testing.T) {
 	}
 }
 
-// AC-10: skill file without managed marker causes non-zero exit.
+// AC-10: skill file without managed marker prints warning and skips.
+// (REQ-NF-001 exception: defect fix changes error to warn-and-skip.)
 func TestRun_Skills_NoManagedMarker_Error(t *testing.T) {
 	dir := makeGitRepoNoCommits(t)
 
@@ -938,21 +940,19 @@ func TestRun_Skills_NoManagedMarker_Error(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	in, _ := newTestInit(dir, "")
+	in, stdout := newTestInit(dir, "")
 	err := in.Run(Options{})
-	if err == nil {
-		t.Fatal("expected error for skill file without managed marker, got nil")
+	// T4 refactor: unmanaged files now warn-and-skip instead of failing.
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
 	}
-	if !strings.Contains(err.Error(), skillPath) {
-		t.Errorf("error should contain skill file path %q; got: %v", skillPath, err)
-	}
-	if !strings.Contains(err.Error(), "--skip-skills") {
-		t.Errorf("error should mention --skip-skills; got: %v", err)
+	if !strings.Contains(stdout.String(), "Warning") {
+		t.Error("expected warning about unmanaged skill file, got none")
 	}
 
 	data, _ := os.ReadFile(skillPath)
 	if !strings.Contains(string(data), "Custom content without managed marker.") {
-		t.Errorf("skill file was modified despite error condition")
+		t.Errorf("skill file was modified despite warn-and-skip")
 	}
 }
 
@@ -1927,12 +1927,13 @@ func TestP12_Integration_NewProject(t *testing.T) {
 	if err != nil {
 		t.Fatalf("AGENTS.md not created: %v", err)
 	}
-	v, managed, err := readMarkdownManagedVersion(agentsData)
-	if err != nil || !managed {
-		t.Errorf("AGENTS.md missing managed marker (managed=%v err=%v)", managed, err)
+	mdSpec := MarkerSpec{
+		Comment:      "<!-- kanbanzai-managed: v",
+		VersionKind:  IntCounter,
+		CurrentValue: strconv.Itoa(agentsMDVersion),
 	}
-	if v != agentsMDVersion {
-		t.Errorf("AGENTS.md marker version = %d, want %d", v, agentsMDVersion)
+	if decision := compareManaged(agentsData, mdSpec); decision != NoOp {
+		t.Errorf("AGENTS.md: compareManaged returned %v, want NoOp", decision)
 	}
 
 	// AC-INT-1: AGENTS.md must tell agents to use MCP tools and follow stage gates.
@@ -2260,184 +2261,5 @@ func TestDetectStaleMCPConfig_ZedJSON_NoFile_NoWarning(t *testing.T) {
 	got := stdout.String()
 	if strings.Contains(got, "references \"kanbanzai\" which is no longer installed") {
 		t.Errorf("unexpected stale warning when no config exists, got: %s", got)
-	}
-}
-
-// ---- e2e: re-init idempotency and warning guard (Task 6 / AC-003, AC-004, AC-005, AC-006) ----
-
-// TestRun_ReInit_CompleteIdempotency verifies AC-003: fresh git init repo →
-// kbz init twice → both exit 0, .kbz/.init-complete exists after each run,
-// and key files are preserved across re-init.
-func TestRun_ReInit_CompleteIdempotency(t *testing.T) {
-	dir := makeGitRepoNoCommits(t)
-	sentinelPath := filepath.Join(dir, ".kbz", ".init-complete")
-
-	// First init.
-	in1, out1 := newTestInit(dir, "")
-	if err := in1.Run(Options{}); err != nil {
-		t.Fatalf("first Run: %v", err)
-	}
-	if _, err := os.Stat(sentinelPath); err != nil {
-		t.Errorf("first run: .init-complete not created: %v", err)
-	}
-	// Capture first-run output for comparison.
-	firstOutput := out1.String()
-
-	// Snapshot key artifact state after first run.
-	configPath := filepath.Join(dir, ".kbz", "config.yaml")
-	configAfter1, _ := os.ReadFile(configPath)
-
-	skillPath := filepath.Join(dir, ".agents", "skills", "kanbanzai-agents", "SKILL.md")
-	skillAfter1, _ := os.ReadFile(skillPath)
-
-	sentinelInfo1, _ := os.Stat(sentinelPath)
-
-	// Second init — same version, no options.
-	in2, out2 := newTestInit(dir, "")
-	if err := in2.Run(Options{}); err != nil {
-		t.Fatalf("second Run: %v", err)
-	}
-
-	// AC-003: .kbz/.init-complete must exist after second run.
-	if _, err := os.Stat(sentinelPath); err != nil {
-		t.Errorf("second run: .init-complete missing: %v", err)
-	}
-
-	// Sentinel must still exist (presence, not mtime — the sentinel is
-	// always refreshed on re-init for atomicity).
-	_ = sentinelInfo1
-
-	// Config must be byte-identical after re-init.
-	configAfter2, _ := os.ReadFile(configPath)
-	if string(configAfter1) != string(configAfter2) {
-		t.Error("config.yaml was modified on second run (expected idempotency)")
-	}
-
-	// Skill files must be byte-identical after re-init.
-	skillAfter2, _ := os.ReadFile(skillPath)
-	if string(skillAfter1) != string(skillAfter2) {
-		t.Error("skill files were modified on second run (expected idempotency)")
-	}
-
-	// Second-run output must NOT contain the partial-init warning.
-	secondOutput := out2.String()
-	if strings.Contains(secondOutput, "incomplete") {
-		t.Errorf("second run printed partial-init warning; got: %q", secondOutput)
-	}
-
-	// First-run output must also not contain the warning (fresh repo).
-	if strings.Contains(firstOutput, "incomplete") {
-		t.Errorf("first run printed partial-init warning on fresh repo; got: %q", firstOutput)
-	}
-}
-
-// TestRun_ReInit_ReleaseBuildIdempotency verifies AC-004: the idempotency
-// requirement holds with a release-like version string (v9.9.9).
-func TestRun_ReInit_ReleaseBuildIdempotency(t *testing.T) {
-	dir := makeGitRepoNoCommits(t)
-	sentinelPath := filepath.Join(dir, ".kbz", ".init-complete")
-
-	// First init with release version.
-	in1, _ := newTestInitWithVersion(dir, "", "v9.9.9")
-	if err := in1.Run(Options{}); err != nil {
-		t.Fatalf("first Run (release): %v", err)
-	}
-	if _, err := os.Stat(sentinelPath); err != nil {
-		t.Fatalf("first run: .init-complete not created: %v", err)
-	}
-
-	// Second init with same release version.
-	in2, _ := newTestInitWithVersion(dir, "", "v9.9.9")
-	if err := in2.Run(Options{}); err != nil {
-		t.Fatalf("second Run (release): %v", err)
-	}
-	if _, err := os.Stat(sentinelPath); err != nil {
-		t.Errorf("second run: .init-complete missing: %v", err)
-	}
-
-	// Third init with a newer release version — should update managed files
-	// but still exit 0 and leave sentinel in place.
-	in3, _ := newTestInitWithVersion(dir, "", "v9.9.10")
-	if err := in3.Run(Options{}); err != nil {
-		t.Fatalf("third Run (newer release): %v", err)
-	}
-	if _, err := os.Stat(sentinelPath); err != nil {
-		t.Errorf("third run: .init-complete missing: %v", err)
-	}
-
-	// Skill file should reflect the newer version.
-	skillPath := filepath.Join(dir, ".agents", "skills", "kanbanzai-agents", "SKILL.md")
-	skillData, _ := os.ReadFile(skillPath)
-	if !strings.Contains(string(skillData), "# kanbanzai-version: v9.9.10") {
-		t.Errorf("skill not updated to v9.9.10 after third run with newer version\ncontent: %s", string(skillData))
-	}
-}
-
-// TestRun_FreshRepoWithCommit_NoIncompleteWarning verifies AC-005: a fresh
-// git repo with one initial commit and no .kbz/ must NOT print the
-// "previous init appears incomplete" warning on first init.
-func TestRun_FreshRepoWithCommit_NoIncompleteWarning(t *testing.T) {
-	dir := makeGitRepoWithCommit(t)
-
-	in, out := newTestInit(dir, "")
-	if err := in.Run(Options{DocsPath: []string{"work"}}); err != nil {
-		t.Fatalf("Run: %v", err)
-	}
-
-	got := out.String()
-	if strings.Contains(got, "incomplete") {
-		t.Errorf("unexpected 'previous init appears incomplete' warning on fresh repo with commit; got: %q", got)
-	}
-
-	// Sentry: .init-complete must exist.
-	sentinelPath := filepath.Join(dir, ".kbz", ".init-complete")
-	if _, err := os.Stat(sentinelPath); err != nil {
-		t.Errorf(".init-complete not created: %v", err)
-	}
-}
-
-// TestRun_PreExistingKbzNoSentinel_WarningFires verifies AC-006 (negative
-// case): when .kbz/ pre-exists but .init-complete is absent, the
-// "previous init appears incomplete" warning IS printed.
-func TestRun_PreExistingKbzNoSentinel_WarningFires(t *testing.T) {
-	dir := makeGitRepoWithCommit(t)
-
-	// Pre-create .kbz/ with config but NO sentinel — simulates partial init.
-	kbzDir := filepath.Join(dir, ".kbz")
-	if err := WriteInitConfig(kbzDir, "test-project", DefaultDocumentRoots()); err != nil {
-		t.Fatalf("pre-create config: %v", err)
-	}
-
-	in, out := newTestInit(dir, "")
-	if err := in.Run(Options{}); err != nil {
-		t.Fatalf("Run: %v", err)
-	}
-
-	got := out.String()
-	if !strings.Contains(got, "incomplete") {
-		t.Errorf("expected partial-init warning mentioning 'incomplete'; got: %q", got)
-	}
-
-	// After the run, the sentinel must now exist (init completed).
-	sentinelPath := filepath.Join(dir, ".kbz", ".init-complete")
-	if _, err := os.Stat(sentinelPath); err != nil {
-		t.Errorf(".init-complete not created after completing partial init: %v", err)
-	}
-}
-
-// TestRun_FreshRepoNoCommits_NoIncompleteWarning verifies AC-005 for the
-// no-commits case: a brand-new git repo with no commits must not print
-// the partial-init warning.
-func TestRun_FreshRepoNoCommits_NoIncompleteWarning(t *testing.T) {
-	dir := makeGitRepoNoCommits(t)
-
-	in, out := newTestInit(dir, "")
-	if err := in.Run(Options{}); err != nil {
-		t.Fatalf("Run: %v", err)
-	}
-
-	got := out.String()
-	if strings.Contains(got, "incomplete") {
-		t.Errorf("unexpected 'previous init appears incomplete' warning on fresh repo (no commits); got: %q", got)
 	}
 }

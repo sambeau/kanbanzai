@@ -1,0 +1,6 @@
+id: TASK-01KR7D3GXNREZ
+parent_feature: FEAT-01KR7BKXJGEPD
+slug: install-registry-refactor-install-functions-as-thin-manifest-wrappers
+name: Refactor install functions as thin Manifest wrappers
+summary: Refactor install functions as thin Manifest wrappers
+status: queued

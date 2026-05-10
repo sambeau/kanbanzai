@@ -93,7 +93,7 @@ func (i *Initializer) Run(opts Options) error {
 			i.detectStaleMCPConfigs(gitRoot)
 		}
 		fmt.Fprintln(i.stdout, "Updating managed artifacts...")
-		if err := i.installStageBindings(kbzDir); err != nil {
+		if err := i.installStageBindings(gitRoot); err != nil {
 			return err
 		}
 		if err := i.installSkills(gitRoot); err != nil {
@@ -103,7 +103,7 @@ func (i *Initializer) Run(opts Options) error {
 			return err
 		}
 		// Also update managed role files.
-		if err := i.updateManagedRoles(kbzDir); err != nil {
+		if err := i.updateManagedRoles(gitRoot); err != nil {
 			return err
 		}
 		fmt.Fprintln(i.stdout, "Update complete.")
@@ -217,7 +217,7 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 	}
 
 	// Install stage-bindings.yaml after config is written (G1 fix).
-	if err := i.installStageBindings(kbzDir); err != nil {
+	if err := i.installStageBindings(baseDir); err != nil {
 		return err
 	}
 
@@ -250,7 +250,7 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 	}
 
 	if !opts.SkipRoles {
-		if err := i.installRoles(kbzDir); err != nil {
+		if err := i.installRoles(baseDir); err != nil {
 			return err
 		}
 	}
@@ -276,13 +276,9 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 	baseDir := filepath.Dir(kbzDir)
 
 	// Detect partial init: .kbz/ exists but sentinel is absent.
-	// Only warn when .kbz/ pre-existed — on a fresh repo there is nothing
-	// incomplete about the absence of a sentinel before the first init.
 	sentinelPath := filepath.Join(kbzDir, initCompleteFile)
-	if kbzExisted {
-		if _, err := os.Stat(sentinelPath); os.IsNotExist(err) {
-			fmt.Fprintf(i.stdout, "Warning: previous init appears incomplete (no '%s' sentinel). Re-running init to complete setup.\n", initCompleteFile)
-		}
+	if _, err := os.Stat(sentinelPath); os.IsNotExist(err) {
+		fmt.Fprintf(i.stdout, "Warning: previous init appears incomplete (no '%s' sentinel). Re-running init to complete setup.\n", initCompleteFile)
 	}
 
 	fmt.Fprintln(i.stdout, "Existing project detected.")
@@ -334,7 +330,7 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 	}
 
 	// Install stage-bindings.yaml after config is written (G1 fix).
-	if err := i.installStageBindings(kbzDir); err != nil {
+	if err := i.installStageBindings(baseDir); err != nil {
 		return err
 	}
 
@@ -367,7 +363,7 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 	}
 
 	if !opts.SkipRoles {
-		if err := i.installRoles(kbzDir); err != nil {
+		if err := i.installRoles(baseDir); err != nil {
 			return err
 		}
 	}

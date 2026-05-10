@@ -1,0 +1,6 @@
+id: TASK-01KR7D3GXQV2W
+parent_feature: FEAT-01KR7BKXJGEPD
+slug: install-registry-testmanifestiscanonical-unit-test
+name: "`TestManifestIsCanonical` unit test"
+summary: "`TestManifestIsCanonical` unit test"
+status: queued
