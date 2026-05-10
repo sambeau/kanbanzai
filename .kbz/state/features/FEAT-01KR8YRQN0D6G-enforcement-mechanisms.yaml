@@ -2,8 +2,9 @@ id: FEAT-01KR8YRQN0D6G
 slug: enforcement-mechanisms
 name: Phase 3 — Enforcement Mechanisms
 parent: B68-test-remediation-impl
-status: proposed
+status: specifying
 summary: "Add pre-commit hook that blocks commits with failing tests, integrate test verification into merge(action: check), add test suite check to kbz doctor, and add test status to health MCP output. All enforcement uses Kanbanzai-native tooling — no external CI."
+spec: FEAT-01KR8YRQN0D6G/spec-p63-spec-test-remediation
 created: "2026-05-10T12:46:03Z"
 created_by: sambeau
 display_id: B68-F1
