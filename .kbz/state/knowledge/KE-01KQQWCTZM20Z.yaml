@@ -3,9 +3,9 @@ content: "When claiming a task via next(id), the assembled context includes impl
 created: "2026-05-03T21:37:31Z"
 created_by: sambeau
 id: KE-01KQQWCTZM20Z
-last_accessed_at: "2026-05-09T11:37:48Z"
+last_accessed_at: "2026-05-10T11:44:25Z"
 miss_count: 0
-recent_use_count: 305
+recent_use_count: 306
 scope: project
 status: contributed
 tags:
