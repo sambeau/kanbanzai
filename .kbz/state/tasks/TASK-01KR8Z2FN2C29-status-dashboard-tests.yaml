@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR8YRQN1M56
 slug: status-dashboard-tests
 name: Add test health to status dashboard
 summary: Add test suite health metric to status dashboard output alongside entity counts and health errors/warnings.
-status: queued
+status: ready

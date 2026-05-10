@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR8YRQN1M56
 slug: update-dod
 name: Update Definition of Done
 summary: "Update DoD: All tests pass on main at all times. Any commit that introduces a test failure is a DoD violation. Any developer observing a failing test is responsible for reporting it. Not my package is not acceptable."
-status: queued
+status: ready

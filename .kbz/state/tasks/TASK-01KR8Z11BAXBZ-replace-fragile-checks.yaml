@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR8YRQN0P0W
 slug: replace-fragile-checks
 name: Replace fragile id-prefix checks
 summary: "Replace planEntityTypeFromID and all equivalent if id[0]=='B' checks with direct use of model.EntityKindPlan throughout the test suite."
-status: queued
+status: ready

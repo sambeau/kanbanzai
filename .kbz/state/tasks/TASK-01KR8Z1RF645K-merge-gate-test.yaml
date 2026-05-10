@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR8YRQN0D6G
 slug: merge-gate-test
 name: Integrate go test into merge gate
 summary: "Integrate go test ./... verification into merge(action: check). Report test failures as a blocking gate with specific failing test names."
-status: queued
+status: ready

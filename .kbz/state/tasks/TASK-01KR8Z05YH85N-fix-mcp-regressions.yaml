@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR8YRQN1HPG
 slug: fix-mcp-regressions
 name: Fix MCP regression contracts
 summary: "Update canonical field list (add workflow_state_warning), fix handoff error message field, trim next/worktree tool descriptions to 250-token budget. Fixes 3 mcp tests."
-status: queued
+status: ready

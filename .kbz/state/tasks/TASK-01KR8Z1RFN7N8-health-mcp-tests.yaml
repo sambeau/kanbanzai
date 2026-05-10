@@ -3,4 +3,4 @@ parent_feature: FEAT-01KR8YRQN0D6G
 slug: health-mcp-tests
 name: Add test status to health MCP
 summary: "Add test suite summary to health MCP tool output: total_packages, passing_packages, failing_packages, and failures list with package and test_name. Use cached results where available."
-status: queued
+status: ready
