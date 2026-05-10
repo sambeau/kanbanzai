@@ -1,0 +1,6 @@
+id: TASK-01KR8Z11B8M2Y
+parent_feature: FEAT-01KR8YRQN0P0W
+slug: remove-obsolete-tests
+name: Remove tests for removed features
+summary: "Identify and remove tests for removed features, deprecated lifecycle states, or behaviours no longer present in the codebase."
+status: queued

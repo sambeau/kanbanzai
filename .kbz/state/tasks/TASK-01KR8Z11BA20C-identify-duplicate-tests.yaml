@@ -1,0 +1,6 @@
+id: TASK-01KR8Z11BA20C
+parent_feature: FEAT-01KR8YRQN0P0W
+slug: identify-duplicate-tests
+name: Identify duplicate-coverage tests
+summary: "Identify tests that duplicate coverage across packages. Document each pair with a disposition: keep both (with reason) or consolidate/remove one."
+status: queued

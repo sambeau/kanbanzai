@@ -1,0 +1,6 @@
+id: TASK-01KR8Z11BJ6YA
+parent_feature: FEAT-01KR8YRQN0P0W
+slug: consolidate-test-helpers
+name: Consolidate writeTestPlan helpers
+summary: "Consolidate duplicated writeTestPlan helpers from entities_test.go, display_id_test.go, conflict_test.go, decompose_test.go, dispatch_test.go, doc_path_test.go into a single shared helper using model.EntityKindPlan."
+status: queued
