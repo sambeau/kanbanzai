@@ -1,11 +1,13 @@
+approved_at: "2026-05-10T12:53:16Z"
+approved_by: sambeau
 canonical_content_hash: 4fe014bf8909eced1fef205bdd4fc3a45b3aef09a2c7054e0d2ee192eb5e0beb
-content_hash: 4fe014bf8909eced1fef205bdd4fc3a45b3aef09a2c7054e0d2ee192eb5e0beb
+content_hash: ed52521fb1e856e0109f9f7d7a6f720a721927822ec49d0e34c2f8027996615c
 created: "2026-05-10T12:53:09Z"
 created_by: sambeau
 id: B68-test-remediation-impl/dev-plan-p63-dev-plan-test-remediation
 owner: B68-test-remediation-impl
 path: work/P63-test-remediation/P63-dev-plan-test-remediation.md
-status: draft
+status: approved
 title: P63 Dev-Plan — Test Remediation Implementation
 type: dev-plan
-updated: "2026-05-10T12:53:09Z"
+updated: "2026-05-10T12:53:16Z"
