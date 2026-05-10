@@ -786,7 +786,7 @@ func planEntityTypeFromID(id string) string {
 	if len(id) > 0 && id[0] == 'B' {
 		return "batch"
 	}
-	return "plan"
+	return string(model.EntityKindPlan)
 }
 
 func writeTestPlan(t *testing.T, svc *EntityService, id string) {
