@@ -1,7 +1,7 @@
 id: B67-bugfix-strategic-plan-parent
 slug: bugfix-strategic-plan-parent
 name: Bug Fix — Strategic Plan Parent Lookup
-status: reviewing
+status: done
 summary: Fix CreateFeature to resolve P-prefixed parents via GetStrategicPlan fallback
 created: "2026-05-10T11:42:39Z"
 created_by: sambeau
