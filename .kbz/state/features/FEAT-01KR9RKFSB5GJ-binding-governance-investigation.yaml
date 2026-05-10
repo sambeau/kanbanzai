@@ -1,0 +1,10 @@
+id: FEAT-01KR9RKFSB5GJ
+slug: binding-governance-investigation
+name: Binding Governance Investigation
+parent: B70-binding-governance-impl
+status: proposed
+summary: Research investigation into the integrity and discoverability of the skills/roles/stage-bindings system.
+created: "2026-05-10T20:17:35Z"
+created_by: sambeau
+display_id: B70-F1
+tier: feature
