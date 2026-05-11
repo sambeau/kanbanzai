@@ -144,17 +144,6 @@ var validOrchestrations = map[string]bool{
 	"orchestrator-workers": true,
 }
 
-var validStages = map[string]bool{
-	"designing":      true,
-	"specifying":     true,
-	"dev-planning":   true,
-	"developing":     true,
-	"reviewing":      true,
-	"researching":    true,
-	"documenting":    true,
-	"plan-reviewing": true,
-}
-
 var roleIDRegexp = regexp.MustCompile(`^[a-z0-9][a-z0-9-]{0,28}[a-z0-9]$|^[a-z0-9]{2}$`)
 var skillNameRegexp = regexp.MustCompile(`^[a-z0-9][a-z0-9-]{0,38}[a-z0-9]$|^[a-z0-9]{2}$`)
 
