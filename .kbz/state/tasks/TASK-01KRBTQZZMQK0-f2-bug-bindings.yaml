@@ -3,4 +3,12 @@ parent_feature: FEAT-01KRBQHAZ5BFV
 slug: f2-bug-bindings
 name: Add bug-developing and bug-reviewing stage bindings
 summary: Add bug-developing and bug-reviewing top-level binding keys. Update workableStatuses. Add bugStatusToBindingKey mapping. Handle unmapped BugStatus with clear errors. With tests.
-status: active
+status: done
+files_planned:
+  - internal/binding/model.go
+  - internal/context/pipeline.go
+  - internal/context/pipeline_test.go
+  - internal/kbzinit/stage-bindings.yaml
+completed: "2026-05-11T17:31:23Z"
+completion_summary: "Added bug-developing and bug-reviewing top-level binding keys to validStages, canonical and embedded stage-bindings.yaml. Updated stepValidateLifecycle with out-of-pipeline check for bug statuses. Verified with tests covering bug routing, bugStatusToBindingKey mapping, out-of-pipeline errors, unknown tier errors, and lifecycle validation."
+verification: "All tests pass: go test ./internal/binding/... ./internal/context/... — including TestBugStatusToBindingKey_MappedStatuses, TestStepResolveStage_BugInProgress/NeedsReview/OutOfPipeline, TestStepResolveStage_UnknownTier/KnownTier_NoError, TestStepValidateLifecycle_BugOutOfPipeline/WorkableStatuses, and all pre-existing tests (regression check)."
