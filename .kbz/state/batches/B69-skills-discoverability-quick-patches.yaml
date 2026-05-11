@@ -6,5 +6,5 @@ summary: "Three small, high-impact patches that restore agent awareness of skill
 created: "2026-05-11T11:00:01Z"
 created_by: sambeau
 updated: "2026-05-11T11:00:01Z"
-next_feature_seq: 3
+next_feature_seq: 4
 parent: P64-binding-governance
