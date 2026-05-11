@@ -1,11 +1,13 @@
+approved_at: "2026-05-11T11:37:22Z"
+approved_by: sambeau
 canonical_content_hash: d1745a42eeb8d38588ae5e15ee7bc703c065741b888aabb07c6e10e58531a6b7
-content_hash: 375fe489f7d4129496558a375bd6baeb59e6d1317119a88f8fc1cc495bfefc2f
+content_hash: b79bad6e29d5009864a43e350f63b57f628eef2bd39f1c2a585e655778a662bf
 created: "2026-05-11T11:33:39Z"
 created_by: sambeau
 id: B69-skills-discoverability-quick-patches/spec-p64-spec-b69-skills-discoverability-quick-patches
 owner: B69-skills-discoverability-quick-patches
 path: work/P64-binding-governance/P64-spec-b69-skills-discoverability-quick-patches.md
-status: draft
+status: approved
 title: Skills Discoverability Quick Patches Specification
 type: spec
-updated: "2026-05-11T11:33:39Z"
+updated: "2026-05-11T11:37:22Z"
