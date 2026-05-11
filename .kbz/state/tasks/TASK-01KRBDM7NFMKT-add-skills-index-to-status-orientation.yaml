@@ -3,5 +3,9 @@ parent_feature: FEAT-01KRBB4AM4FQT
 slug: add-skills-index-to-status-orientation
 name: Add skills index to status() orientation block
 summary: Modify synthesiseProject in internal/mcp/status_tool.go to include inline skills index in orientation block. List available skills with name + one-line summary. Add context-aware suggestion. Add tests.
-status: ready
+status: active
 estimate: "1"
+claimed_at: "2026-05-11T11:47:26Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-11T11:47:26Z"
+dispatched_by: sambeau
