@@ -1,0 +1,6 @@
+id: TASK-01KRBTR06K5XZ
+parent_feature: FEAT-01KRBQHAZDHKQ
+slug: f3-sync-surface-verify
+name: Verify sync surface reduction 7-to-4 after Phase 3
+summary: Verify sync surface count reduces from 7 to 4 after Phase 3. Ensure routing.yaml and router_gen.go are integrated into build. With tests.
+status: queued
