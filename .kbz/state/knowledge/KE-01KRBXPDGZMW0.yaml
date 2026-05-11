@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[minor] worked-well: kanbanzai_edit_file with entity_id cleanly applied edits to the worktree version of model_test.go without any path issues."
+created: "2026-05-11T16:25:02Z"
+created_by: unknown
+id: KE-01KRBXPDGZMW0
+learned_from: TASK-01KRBTQZYCVVW
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - worked-well
+tier: 3
+topic: retro-task-01krbtqzycvvw
+ttl_days: 30
+updated: "2026-05-11T16:25:02Z"
+use_count: 0

@@ -3,4 +3,9 @@ parent_feature: FEAT-01KRBQHAZ5KY7
 slug: f1-ci-parity-reachability
 name: CI parity and reachability tests for bindings
 summary: "Add CI test asserting structural equality between embedded and canonical stage-bindings. Add reachability test suites for roles, FeatureStatus values, ValidateBindingFile. With tests."
-status: active
+status: done
+files_planned:
+  - internal/binding/model_test.go
+completed: "2026-05-11T16:25:02Z"
+completion_summary: "Added 6 test suites to internal/binding/model_test.go: structural equality between canonical/embedded stage-bindings (AC-009), role/skill reachability (AC-011), FeatureStatus/BugStatus coverage (AC-012), ValidateBindingFile canonical success (AC-013). 6 pass, 2 correctly fail detecting gaps other feature tasks must fix. No regressions."
+verification: "Ran go test ./internal/binding/... -v: all pre-existing tests pass. 6 new tests pass. 2 new tests correctly fail (embedded YAML drift, validator gaps for pipeline-coordinator/retro-fixing) — expected CI guards for remaining feature tasks."

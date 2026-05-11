@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[moderate] spec-ambiguity: AC-013 expects ValidateBindingFile to succeed against canonical YAML, but ValidateBinding enforces stricter rules (sub_agents only with orchestrator-workers, topology must be parallel) that the canonical YAML intentionally violates. The test detects this gap correctly."
+created: "2026-05-11T16:25:02Z"
+created_by: unknown
+id: KE-01KRBXPDH6X1K
+learned_from: TASK-01KRBTQZYCVVW
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - spec-ambiguity
+tier: 3
+topic: retro-task-01krbtqzycvvw-2
+ttl_days: 30
+updated: "2026-05-11T16:25:02Z"
+use_count: 0

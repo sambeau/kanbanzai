@@ -3,10 +3,10 @@ content: "FastTrackConfig defines tier-based automation with MaxCycles caps: ret
 created: "2026-05-04T16:26:19Z"
 created_by: unknown
 id: KE-01KQSWZQ9P0H1
-last_accessed_at: "2026-05-11T16:13:54Z"
+last_accessed_at: "2026-05-11T16:13:56Z"
 learned_from: TASK-01KQSPBPCV01S
 miss_count: 0
-recent_use_count: 261
+recent_use_count: 262
 scope: project
 status: contributed
 tags:

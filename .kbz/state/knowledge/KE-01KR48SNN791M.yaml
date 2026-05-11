@@ -3,10 +3,10 @@ content: "BindingLoadableHealthChecker (internal/mcp/health_binding.go) wraps bi
 created: "2026-05-08T17:05:08Z"
 created_by: unknown
 id: KE-01KR48SNN791M
-last_accessed_at: "2026-05-11T16:13:54Z"
+last_accessed_at: "2026-05-11T16:13:56Z"
 learned_from: TASK-01KR47D68CR1J
 miss_count: 0
-recent_use_count: 81
+recent_use_count: 82
 scope: project
 status: contributed
 tags:
