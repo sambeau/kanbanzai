@@ -3,5 +3,15 @@ parent_feature: FEAT-01KRBB4AGXJDY
 slug: add-dispatch-and-worktree-directives
 name: Add dispatch and worktree-write directives to handoff
 summary: "Add two directive blocks to RenderPrompt in internal/context/pipeline.go: (1) dispatch contract for orchestrator-workers stages, (2) worktree-write directive for entities with active worktrees. Conditionally included based on binding and worktree state. Add tests verifying directives appear/hide correctly."
-status: ready
+status: done
 estimate: "2"
+files_planned:
+  - internal/context/pipeline.go
+  - internal/context/pipeline_test.go
+completed: "2026-05-11T11:59:12Z"
+claimed_at: "2026-05-11T11:47:54Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-11T11:47:54Z"
+dispatched_by: sambeau
+completion_summary: "Added two directive blocks to RenderPrompt in internal/context/pipeline.go: dispatch contract (for orchestrator-workers stages) and worktree-write directive (for entities with active worktrees). Both conditionally included based on binding orchestration and branch field. Added 6 tests verifying inclusion/exclusion behavior."
+verification: "Ran go test ./internal/context/... - all 6 new tests pass, all existing tests continue to pass"
