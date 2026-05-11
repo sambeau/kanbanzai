@@ -1,0 +1,486 @@
+document_id: PROJECT/research-research-kanbanzai-mcp-architecture-and-issues
+document_path: work/_project/research-kanbanzai-mcp-architecture-and-issues.md
+content_hash: f39d05966c5807ab6f771ca52662bcce56a6f48f9da1dcff8d9d83eb3e27b96b
+indexed_at: 2026-05-11T17:08:28.345581Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Kanbanzai MCP: What It Is, How It Works, and What''s Wrong'
+      byte_offset: 0
+      byte_count: 45361
+      word_count: 5912
+      content_hash: f39d05966c5807ab6f771ca52662bcce56a6f48f9da1dcff8d9d83eb3e27b96b
+      children:
+        - path: "1.1"
+          level: 2
+          title: 'Part 1: What Is Kanbanzai MCP?'
+          byte_offset: 191
+          byte_count: 8978
+          word_count: 990
+          content_hash: ba2494f73206d69d4cac5c344faea30cb5e13eaacc0ffb07d6891b69bc426bc3
+          children:
+            - path: 1.1.1
+              level: 3
+              title: 1.1 The elevator pitch
+              byte_offset: 226
+              byte_count: 631
+              word_count: 93
+              content_hash: 0432ea0568d1b92fd6ba901ece2ac4a4580b56ddfdad60a3fcd4651652fef1a2
+            - path: 1.1.2
+              level: 3
+              title: 1.2 Core architecture
+              byte_offset: 857
+              byte_count: 2820
+              word_count: 141
+              content_hash: ec86385e2407be97f8b3d76a657f2f6f2fac78a250840b7c15e69a701af943db
+            - path: 1.1.3
+              level: 3
+              title: 1.3 The 22 MCP tools
+              byte_offset: 3677
+              byte_count: 1719
+              word_count: 259
+              content_hash: 43aa20870e2d4889f96c95567eaf15c16a0547773294ff80136ed55bf296f307
+            - path: 1.1.4
+              level: 3
+              title: 1.4 Entity model
+              byte_offset: 5396
+              byte_count: 1126
+              word_count: 175
+              content_hash: a6a779eb0ba53a1b16c243f3e74a87417b977c60c1f75cb1b1b022d2fc02cab6
+            - path: 1.1.5
+              level: 3
+              title: 1.5 How state is stored
+              byte_offset: 6522
+              byte_count: 701
+              word_count: 67
+              content_hash: 740dd818a429d40df18adc5ebf61fc5ddc7c0a9ad56e0a85d386cfd12378c785
+            - path: 1.1.6
+              level: 3
+              title: 1.6 Roles, skills, and stage bindings
+              byte_offset: 7223
+              byte_count: 877
+              word_count: 107
+              content_hash: d4810aef8e2e7df6b3b360b25874273202653a7eed6bdf342560be94c3a0a477
+            - path: 1.1.7
+              level: 3
+              title: 1.7 Sub-agent dispatch model
+              byte_offset: 8100
+              byte_count: 753
+              word_count: 97
+              content_hash: 533d4335b3bd3296477f0e72f70fe12cb37d040e9f4062377438aa7537d3f7d9
+            - path: 1.1.8
+              level: 3
+              title: 1.8 Worktree isolation
+              byte_offset: 8853
+              byte_count: 316
+              word_count: 44
+              content_hash: c83b7a269d412861ee001bf1b8502c3ed26fafd0959d7398a64b996338b6f055
+        - path: "1.2"
+          level: 2
+          title: 'Part 2: What Makes It Interesting and Unique'
+          byte_offset: 9169
+          byte_count: 2619
+          word_count: 376
+          content_hash: b3eb01b07ad062d28fcee67393ffc223da746e463b48be828c5663d40c7c25c2
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 Git-native to the core
+              byte_offset: 9218
+              byte_count: 648
+              word_count: 101
+              content_hash: 074f0fd4d903803896650535245766b97f872612b2f2cf5039842244fbd43a73
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Deterministic lifecycle state machines
+              byte_offset: 9866
+              byte_count: 280
+              word_count: 43
+              content_hash: 4118f5c89ba9b1327930b1297da1504630e4b1bf9e35d7dbec242fbf57de8446
+            - path: 1.2.3
+              level: 3
+              title: 2.3 Document intelligence with 3-layer classification
+              byte_offset: 10146
+              byte_count: 578
+              word_count: 81
+              content_hash: 33c8d8bb664db665881dca6ef43979a38d16e3c4f3b919aa91a1a8b36ce773f6
+            - path: 1.2.4
+              level: 3
+              title: 2.4 Self-hosting validation
+              byte_offset: 10724
+              byte_count: 284
+              word_count: 37
+              content_hash: e99554cbecf911dbdec7984a884e0ce8ef726848a42637cd36534724a75975d1
+            - path: 1.2.5
+              level: 3
+              title: 2.5 Evidence-based agent guidance
+              byte_offset: 11008
+              byte_count: 468
+              word_count: 61
+              content_hash: 2fe98964404d742f7a9e431f8538556b836f52deb5209a855f0dd779fe294ec0
+            - path: 1.2.6
+              level: 3
+              title: 2.6 MCP as a workflow boundary
+              byte_offset: 11476
+              byte_count: 312
+              word_count: 44
+              content_hash: eff3ce600e35b0be5a7b71ca1c9882cbc887a16be980e37f91e6e0711dcb954a
+        - path: "1.3"
+          level: 2
+          title: 'Part 3: How It Works — The Conceptual Model'
+          byte_offset: 11788
+          byte_count: 2640
+          word_count: 367
+          content_hash: 8742cff70ed5723de843591ffe330542811561fa865cda8aedb09ea1787764ba
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 The plan/batch/feature/task hierarchy
+              byte_offset: 11838
+              byte_count: 623
+              word_count: 65
+              content_hash: 681f9194154529faa7acf02469cc170ffcbf5f16469bc129db90d49cc696eb46
+            - path: 1.3.2
+              level: 3
+              title: 3.2 The workflow lifecycle
+              byte_offset: 12461
+              byte_count: 622
+              word_count: 93
+              content_hash: 0fac8dab0551a14a5d5e74f707ab9fd9e2a925347a9b95b006a780f1f65d9ab3
+            - path: 1.3.3
+              level: 3
+              title: 3.3 The orchestrator model
+              byte_offset: 13083
+              byte_count: 612
+              word_count: 88
+              content_hash: ec42d0ca1b936dd80695f28ea2d2882e0d1131d1ed0cc9f43128e667ed44b425
+            - path: 1.3.4
+              level: 3
+              title: 3.4 The context assembly pipeline
+              byte_offset: 13695
+              byte_count: 733
+              word_count: 111
+              content_hash: d8f310679d28dc0e450fc07c825b035e5cd5428b459484929afbb4ab10c64f5b
+        - path: "1.4"
+          level: 2
+          title: 'Part 4: The Issues — What''s Wrong and Why'
+          byte_offset: 14428
+          byte_count: 17844
+          word_count: 2534
+          content_hash: ab219a49450ba4eb0bb4b575685611db3f942fd9436980ddb34acab0302f4c73
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Noise in git logs caused by state changes
+              byte_offset: 14476
+              byte_count: 1019
+              word_count: 146
+              content_hash: f067f6530b60b8530d29c4b5db5a6a20692f751c67fcac4dd28542cece3c9a12
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Difficulty getting AI agents to obey rules
+              byte_offset: 15495
+              byte_count: 1450
+              word_count: 208
+              content_hash: 2206ff21f19f0b9a3ca7b9f7a0e5fefe2749492dccc371695d7439645cb61764
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Random file names and paths
+              byte_offset: 16945
+              byte_count: 837
+              word_count: 105
+              content_hash: 85df6e71fb90290308b20bd8402e2e588502dd17a4c37a462b43378afeb397a8
+            - path: 1.4.4
+              level: 3
+              title: 4.4 Skills not being found or read
+              byte_offset: 17782
+              byte_count: 1350
+              word_count: 194
+              content_hash: 19e92cba3bb0045f9c3c1a246efaef87a46de55370af1f988b2790d2bf597096
+            - path: 1.4.5
+              level: 3
+              title: 4.5 Orchestrators doing implementation work
+              byte_offset: 19132
+              byte_count: 933
+              word_count: 129
+              content_hash: 9e233bd0628c40c48d585aa76386d6b9a7f648763e62e6f916e95691e5ebfcef
+            - path: 1.4.6
+              level: 3
+              title: 4.6 Stale MCP binary
+              byte_offset: 20065
+              byte_count: 1045
+              word_count: 165
+              content_hash: af6f3d5bcc2a8d4cbea25f1e016dd7767b7627f16e305dc203d02cccf5453535
+            - path: 1.4.7
+              level: 3
+              title: 4.7 Cache staleness (state consistency)
+              byte_offset: 21110
+              byte_count: 936
+              word_count: 134
+              content_hash: b19221607e6f7157bb674cdf539a8ce635588a9b46888869eb60e789d61bd223
+            - path: 1.4.8
+              level: 3
+              title: 4.8 Worktrees being forgotten
+              byte_offset: 22046
+              byte_count: 1073
+              word_count: 158
+              content_hash: 44033970fbaddd6e9f89c43e03a63bfd89203d131004b65fafb1d975b10639ce
+            - path: 1.4.9
+              level: 3
+              title: 4.9 Merges not happening / Definition of Done not enforced
+              byte_offset: 23119
+              byte_count: 1331
+              word_count: 202
+              content_hash: e4bd854e29f1d85cd2a9da602ef28f659728c7cbb9ab7211a849955002a5d2cb
+            - path: 1.4.10
+              level: 3
+              title: 4.10 Tests broken but ignored and not reported
+              byte_offset: 24450
+              byte_count: 1097
+              word_count: 161
+              content_hash: 0177d05470865f60ede588f732a901d48c83edff424c72c3d9624e7e64602fb4
+            - path: 1.4.11
+              level: 3
+              title: 4.11 Difficulty testing SKILLs
+              byte_offset: 25547
+              byte_count: 946
+              word_count: 135
+              content_hash: b7d77ed967f31b9185249cf6025c6a1214c6d4d73cae35aef52a2b392199e0a5
+            - path: 1.4.12
+              level: 3
+              title: 4.12 Difficulty sharing progress without merges to remote
+              byte_offset: 26493
+              byte_count: 978
+              word_count: 132
+              content_hash: 09eabecdca0e43636ed3813d4063060173d6262d789ee050b45a3d305c4713cb
+            - path: 1.4.13
+              level: 3
+              title: 4.13 Context rot in the orchestrator
+              byte_offset: 27471
+              byte_count: 1229
+              word_count: 179
+              content_hash: 3117432fd0be8a75a4cb1b650278a8b86a555eaf719510df3a2fd57514b28352
+            - path: 1.4.14
+              level: 3
+              title: 4.14 Gate overrides are systemic
+              byte_offset: 28700
+              byte_count: 920
+              word_count: 122
+              content_hash: 31eb7d2b159a10b786667a02f77a96dedc776434268fd7de5960a1bef7e43d45
+            - path: 1.4.15
+              level: 3
+              title: 4.15 Main branch leakage
+              byte_offset: 29620
+              byte_count: 817
+              word_count: 118
+              content_hash: ad7427f9bb18e7bd45eeef90cd32ea67580c4ec01fbb95cf925672896e46009d
+            - path: 1.4.16
+              level: 3
+              title: 4.16 edit_file reliability
+              byte_offset: 30437
+              byte_count: 842
+              word_count: 108
+              content_hash: 8651358afc9d6e7301f579b13569ccea3602a226207a88b84b9c06663eb8ee1c
+            - path: 1.4.17
+              level: 3
+              title: 4.17 Other significant issues
+              byte_offset: 31279
+              byte_count: 993
+              word_count: 128
+              content_hash: 7dc6c3961714d3861f39881ee0b7a24a7726566ed8f6ce3127b978810789a151
+        - path: "1.5"
+          level: 2
+          title: 'Part 5: Why Does It Work This Way?'
+          byte_offset: 32272
+          byte_count: 2368
+          word_count: 343
+          content_hash: bbc2b956d633ddfb3454731740c96631bc8d7f8dd6fd3bab63af22c231b33e4a
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Historical evolution
+              byte_offset: 32311
+              byte_count: 896
+              word_count: 125
+              content_hash: c045b92aaddfc401620e638bb85977cf0bcc1157ae81db4d893c4b3769b12eee
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Design philosophy tensions
+              byte_offset: 33207
+              byte_count: 791
+              word_count: 108
+              content_hash: 9eb880e4bf1e6045aab9c247ed5d99b5a1a9be30e06c56f04bb9fda5907ee162
+            - path: 1.5.3
+              level: 3
+              title: 5.3 The architectural root cause
+              byte_offset: 33998
+              byte_count: 642
+              word_count: 101
+              content_hash: b35c5b19aa20a55ab69a5f6e475d448e0b2521061b5c25c2810386093301fd70
+        - path: "1.6"
+          level: 2
+          title: 'Part 6: What Would We Do Differently From a Clean Slate?'
+          byte_offset: 34640
+          byte_count: 7332
+          word_count: 801
+          content_hash: 73e9760072af5671dc5d1cad45556812f5260ba6b9bf39f6b65d82d9087a5c79
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 What to throw away
+              byte_offset: 34701
+              byte_count: 1434
+              word_count: 228
+              content_hash: 456d9cb6b792a59292cd50d50511a86527b8138e02272674fac23ca792f08ceb
+            - path: 1.6.2
+              level: 3
+              title: 6.2 What to keep
+              byte_offset: 36135
+              byte_count: 1502
+              word_count: 218
+              content_hash: 253e838e4dd1641f6ec03f535317b24bf4b661b22288fec5c2f74d0ee96c8876
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Proposed target architecture
+              byte_offset: 37637
+              byte_count: 4335
+              word_count: 343
+              content_hash: 9d920a2994fecef920e8006289c310da36c60b114f9c7910dcca801c71e608ff
+        - path: "1.7"
+          level: 2
+          title: 'Part 7: Migration Considerations'
+          byte_offset: 41972
+          byte_count: 2129
+          word_count: 293
+          content_hash: 7fb89de030bd24042090a263e8eba211fbe015704072ce7cbe576f32775dc69f
+          children:
+            - path: 1.7.1
+              level: 3
+              title: 7.1 What we'd lose
+              byte_offset: 42009
+              byte_count: 633
+              word_count: 89
+              content_hash: daa36e63450fceee55f8b608c431d98677f7e6e10e40caad4e997d81e5f00d3b
+            - path: 1.7.2
+              level: 3
+              title: 7.2 Incremental migration path
+              byte_offset: 42642
+              byte_count: 652
+              word_count: 82
+              content_hash: 4cdf756802c692b537238bc57c922084a29c19c03267f1a185ceb18a7fd8fe44
+            - path: 1.7.3
+              level: 3
+              title: 7.3 What can be done immediately
+              byte_offset: 43294
+              byte_count: 807
+              word_count: 117
+              content_hash: d2cc20f54995a7808c216a0d8504116a3a2cf158f3fb81232b3eefea7823a964
+        - path: "1.8"
+          level: 2
+          title: 'Part 8: Summary Verdict'
+          byte_offset: 44101
+          byte_count: 1260
+          word_count: 178
+          content_hash: c0ff6ddfdb732919b58f0542bad2ef189e52ad24b80181fa2c64cacac7b4f4a2
+entity_refs:
+    - entity_id: FEAT-01KMKA278DFNV
+      entity_type: feature
+      section_path: 1.1.4
+      byte_offset: 6431
+    - entity_id: FEAT-01KMKA278DFNV
+      entity_type: feature
+      section_path: 1.1.5
+      byte_offset: 6711
+    - entity_id: FEAT-123
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 10671
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 12019
+    - entity_id: FEAT-002
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 12086
+    - entity_id: FEAT-003
+      entity_type: feature
+      section_path: 1.3.1
+      byte_offset: 12154
+    - entity_id: FEAT-01KR7BKXG3X61
+      entity_type: feature
+      section_path: 1.4.9
+      byte_offset: 23870
+    - entity_id: TASK-01KMKA278DFNW
+      entity_type: task
+      section_path: 1.1.5
+      byte_offset: 6753
+    - entity_id: TASK-001
+      entity_type: task
+      section_path: 1.3.1
+      byte_offset: 12032
+    - entity_id: TASK-002
+      entity_type: task
+      section_path: 1.3.1
+      byte_offset: 12099
+    - entity_id: TASK-003
+      entity_type: task
+      section_path: 1.3.1
+      byte_offset: 12167
+    - entity_id: TASK-01KQG2WT3GC31
+      entity_type: task
+      section_path: 1.4.7
+      byte_offset: 21646
+    - entity_id: BUG-01KMKA278DFNX
+      entity_type: bug
+      section_path: 1.1.5
+      byte_offset: 6795
+    - entity_id: P1-my-plan
+      entity_type: plan
+      section_path: 1.1.5
+      byte_offset: 6677
+    - entity_id: P41-prompt-design-review
+      entity_type: plan
+      section_path: 1.4.3
+      byte_offset: 17080
+    - entity_id: F1-design-init-command
+      entity_type: plan
+      section_path: 1.4.3
+      byte_offset: 17141
+    - entity_id: B1-p51-exec
+      entity_type: plan
+      section_path: 1.4.9
+      byte_offset: 23723
+cross_doc_links:
+    - target_path: .kbz/skills/*/SKILL.md
+      link_text: .kbz/skills/*/SKILL.md
+      section_path: 1.1.6
+    - target_path: P41-prompt-design-review.md
+      link_text: P41-prompt-design-review.md
+      section_path: 1.4.3
+    - target_path: design-kanbanzai-1.0.md
+      link_text: design-kanbanzai-1.0.md
+      section_path: 1.4.3
+    - target_path: B3-F1-design-init-command.md
+      link_text: B3-F1-design-init-command.md
+      section_path: 1.4.3
+    - target_path: spec-bootstrap-specification.md
+      link_text: spec-bootstrap-specification.md
+      section_path: 1.4.3
+    - target_path: kanbanzai-agents/SKILL.md
+      link_text: kanbanzai-agents/SKILL.md
+      section_path: 1.4.4
+conventional_roles:
+    - section_path: 1.3.4
+      role: narrative
+      confidence: high
+    - section_path: 1.4.9
+      role: definition
+      confidence: high
+    - section_path: 1.4.13
+      role: narrative
+      confidence: high
+    - section_path: "1.8"
+      role: narrative
+      confidence: high
+classified: false
