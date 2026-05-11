@@ -141,7 +141,7 @@ func TestValidateBindingFile(t *testing.T) {
 			wantErrors:  []string{"description must not be empty", "invalid orchestration"},
 		},
 		{
-			name: "sub_agents with single-agent orchestration error propagated from ValidateBinding",
+			name: "sub_agents with single-agent orchestration is now valid",
 			bf: &BindingFile{
 				StageBindings: map[string]*StageBinding{
 					"developing": {
@@ -158,7 +158,7 @@ func TestValidateBindingFile(t *testing.T) {
 				},
 			},
 			roleChecker: allRolesExist,
-			wantErrors:  []string{"sub_agents requires orchestration"},
+			wantErrors:  nil,
 		},
 		{
 			name: "role fallback checked for sub_agents roles too",

@@ -209,6 +209,26 @@ func TestStepValidateLifecycle_InvalidStatus(t *testing.T) {
 	}
 }
 
+// TestStepValidateLifecycle_PlanReviewingRejected verifies that the stale
+// plan-reviewing status is rejected (AC-006, REQ-003).
+func TestStepValidateLifecycle_PlanReviewingRejected(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	state := &PipelineState{
+		Input: PipelineInput{
+			TaskID:       "TASK-001",
+			FeatureState: map[string]any{"status": "plan-reviewing"},
+		},
+	}
+	err := p.stepValidateLifecycle(state)
+	if err == nil {
+		t.Fatal("expected error for plan-reviewing status")
+	}
+	if !strings.Contains(err.Error(), "plan-reviewing") {
+		t.Errorf("error should mention plan-reviewing: %v", err)
+	}
+}
+
 func TestStepValidateLifecycle_NilFeatureState(t *testing.T) {
 	t.Parallel()
 	p := testPipeline()

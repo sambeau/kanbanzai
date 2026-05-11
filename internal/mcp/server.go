@@ -40,13 +40,13 @@ const (
 // .kbz/config.yaml. If no mcp section is present, all groups are enabled
 // (preset: full). The entityRoot is the path for entity storage (typically
 // ".kbz/state"); pass an empty string to use the default.
-func NewServer(entityRoot string) *server.MCPServer {
+func NewServer(entityRoot string) (*server.MCPServer, error) {
 	return newServerWithConfig(entityRoot, config.LoadOrDefault())
 }
 
 // newServerWithConfig creates an MCP server using the provided configuration.
 // Separated from NewServer to allow config injection in tests.
-func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServer {
+func newServerWithConfig(entityRoot string, cfg *config.Config) (*server.MCPServer, error) {
 	entitySvc := service.NewEntityService(entityRoot)
 
 	// Documents are stored relative to the repository root (current directory).
@@ -135,8 +135,31 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	}
 
 	bindingPath := filepath.Join(core.InstanceRootDir, "stage-bindings.yaml")
-	bf, bindingErrs := binding.LoadBindingFile(bindingPath)
-	if bf != nil && len(bindingErrs) == 0 {
+
+	// REQ-001: Use BindingRegistry.Load instead of bare LoadBindingFile.
+	// Validation failures are hard errors — the server refuses to start.
+	// Load failures (file not found in test environments) are soft warnings.
+	var bf *binding.BindingFile
+	roleChecker := func(id string) bool {
+		return roleStore.Exists(id)
+	}
+	reg := binding.NewBindingRegistry(bindingPath, roleChecker)
+	if err := reg.Load(); err != nil {
+		if strings.Contains(err.Error(), "validating binding file") {
+			// Validation failure — hard error. Surface each error with
+			// fix hints pointing to recovery tools.
+			return nil, fmt.Errorf(
+				"binding validation failed for %s:\n%w\n\nRecovery: run 'kbz binding doctor' to diagnose and fix binding issues. "+
+					"For unmodified consumer files, run 'kbz init --upgrade' to regenerate stage-bindings.yaml.",
+				bindingPath, err,
+			)
+		}
+		// Load failure (e.g. file not found) — soft warning, same as before.
+		log.Printf("[server] WARNING: 3.0 context assembly pipeline DISABLED — handoff will return pipeline_unavailable errors")
+		log.Printf("[server] WARNING: stage-bindings file: %s", bindingPath)
+		log.Printf("[server] WARNING: stage-bindings load error: %v", err)
+	} else {
+		bf = reg.BindingFile()
 		capTracker = knowledge.NewCapTracker(cacheDir)
 		entryLoader := func() ([]map[string]any, error) {
 			records, err := knowledgeSvc.List(service.KnowledgeFilters{})
@@ -164,19 +187,6 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 			StalenessWindowDays: cfg.Freshness.StalenessWindowDays,
 		}
 		log.Printf("[server] 3.0 context assembly pipeline loaded with %d stage bindings", len(bf.StageBindings))
-	} else {
-		// Loudly surface why the pipeline is disabled. Without this branch a
-		// silent skip leaves handoff calling pipeline.Run on a nil receiver,
-		// which panics in (*Pipeline).stepLookupBinding and looks like a
-		// client-side timeout (BUG: handoff-nil-pipeline-panic).
-		log.Printf("[server] WARNING: 3.0 context assembly pipeline DISABLED — handoff will return pipeline_unavailable errors")
-		log.Printf("[server] WARNING: stage-bindings file: %s", bindingPath)
-		if len(bindingErrs) == 0 {
-			log.Printf("[server] WARNING: LoadBindingFile returned nil with no error — file missing or unreadable?")
-		}
-		for _, e := range bindingErrs {
-			log.Printf("[server] WARNING: stage-bindings load error: %v", e)
-		}
 	}
 
 	mcpServer := server.NewMCPServer(
@@ -325,7 +335,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) *server.MCPServe
 	// Wrap all registered tool handlers with the action-pattern logging hook.
 	wrapAllTools(mcpServer, logHook)
 
-	return mcpServer
+	return mcpServer, nil
 }
 
 // Serve starts the MCP server on stdio transport.
@@ -333,7 +343,10 @@ func Serve() error {
 	// Best-effort log cleanup — remove log files older than 30 days.
 	_ = actionlog.Cleanup(actionlog.LogsDir(), time.Now().UTC())
 
-	mcpServer := NewServer("")
+	mcpServer, err := NewServer("")
+	if err != nil {
+		return fmt.Errorf("server startup failed: %w", err)
+	}
 	return server.ServeStdio(mcpServer)
 }
 

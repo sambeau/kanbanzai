@@ -23,8 +23,34 @@ type StageBinding struct {
 	SubAgents           *SubAgents           `yaml:"sub_agents,omitempty"`
 	DocumentTemplate    *DocumentTemplate    `yaml:"document_template,omitempty"`
 
+	// Profile, Tier, Modes, and Verifying support stages that opt into the
+	// gated-mode profile schema (e.g. retro-fixing). They are decoded but not
+	// yet consumed by the pipeline; full schema work is tracked separately.
+	Profile   *bool                 `yaml:"profile,omitempty"`
+	Tier      string                `yaml:"tier,omitempty"`
+	Modes     map[string]*StageMode `yaml:"modes,omitempty"`
+	Verifying *VerifyingBlock       `yaml:"verifying,omitempty"`
 }
 
+// StageMode declares the gate configuration for a single mode of a profiled
+// stage (see StageBinding.Modes). All gate fields are optional strings such
+// as "human", "auto", or "conditional".
+type StageMode struct {
+	DesignGate      string `yaml:"design_gate,omitempty"`
+	SpecGate        string `yaml:"spec_gate,omitempty"`
+	DevPlanGate     string `yaml:"dev_plan_gate,omitempty"`
+	ReviewGate      string `yaml:"review_gate,omitempty"`
+	MaxReviewCycles *int   `yaml:"max_review_cycles,omitempty"`
+	Notes           string `yaml:"notes,omitempty"`
+}
+
+// VerifyingBlock declares the verifier role/skill bound to a profiled stage's
+// post-implementation verification step.
+type VerifyingBlock struct {
+	Roles      []string `yaml:"roles,omitempty"`
+	Skills     []string `yaml:"skills,omitempty"`
+	DoDVariant string   `yaml:"dod_variant,omitempty"`
+}
 
 type Prerequisites struct {
 	Documents      []DocumentPrereq `yaml:"documents,omitempty"`
@@ -116,6 +142,7 @@ type BindingFile struct {
 var validOrchestrations = map[string]bool{
 	"single-agent":         true,
 	"orchestrator-workers": true,
+	"pipeline-coordinator": true,
 }
 
 var validStages = map[string]bool{
@@ -124,11 +151,19 @@ var validStages = map[string]bool{
 	"dev-planning":    true,
 	"developing":      true,
 	"reviewing":       true,
+	"merging":         true,
+	"verifying":       true,
+	"batch-reviewing": true,
 	"researching":     true,
 	"documenting":     true,
-	"plan-reviewing":  true,
-	"bug-developing":  true,
-	"bug-reviewing":   true,
+	"doc-publishing":  true,
+	"retro-fixing":    true,
+}
+
+var validTopologies = map[string]bool{
+	"parallel":   true,
+	"sequential": true,
+	"single":     true,
 }
 
 var roleIDRegexp = regexp.MustCompile(`^[a-z0-9][a-z0-9-]{0,28}[a-z0-9]$|^[a-z0-9]{2}$`)
@@ -164,9 +199,8 @@ func ValidateBinding(b *StageBinding, stageName string) []error {
 		}
 	}
 
-	if b.SubAgents != nil && b.Orchestration != "orchestrator-workers" {
-		errs = append(errs, fmt.Errorf("%s: sub_agents requires orchestration \"orchestrator-workers\"", stageName))
-	}
+	// REQ-004: sub_agents is valid with any orchestration that declares it.
+	// orchestrator-workers still requires sub_agents.
 	if b.Orchestration == "orchestrator-workers" && b.SubAgents == nil {
 		errs = append(errs, fmt.Errorf("%s: orchestration \"orchestrator-workers\" requires sub_agents", stageName))
 	}
@@ -178,8 +212,8 @@ func ValidateBinding(b *StageBinding, stageName string) []error {
 		if len(b.SubAgents.Skills) == 0 {
 			errs = append(errs, fmt.Errorf("%s: sub_agents.skills must not be empty", stageName))
 		}
-		if b.SubAgents.Topology != "parallel" {
-			errs = append(errs, fmt.Errorf("%s: sub_agents.topology must be \"parallel\"", stageName))
+		if !validTopologies[b.SubAgents.Topology] {
+			errs = append(errs, fmt.Errorf("%s: sub_agents.topology must be one of: parallel, sequential, single", stageName))
 		}
 		if b.SubAgents.MaxAgents != nil && *b.SubAgents.MaxAgents < 1 {
 			errs = append(errs, fmt.Errorf("%s: sub_agents.max_agents must be >= 1", stageName))

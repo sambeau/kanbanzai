@@ -140,7 +140,7 @@ func TestWrapAllTools_AppliesRecoveryToAllHandlers(t *testing.T) {
 	entityRoot := t.TempDir()
 	cfg := config.DefaultConfig()
 	cfg.MCP.Preset = "minimal"
-	srv := newServerWithConfig(entityRoot, &cfg)
+	srv, err := newServerWithConfig(entityRoot, &cfg); if err != nil { t.Fatal(err) }
 	tools := srv.ListTools()
 
 	// Verify every registered tool has a non-nil handler (i.e. wrapAllTools ran).
