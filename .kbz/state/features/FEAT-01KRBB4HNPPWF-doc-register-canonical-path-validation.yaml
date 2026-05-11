@@ -2,7 +2,7 @@ id: FEAT-01KRBB4HNPPWF
 slug: doc-register-canonical-path-validation
 name: doc register rejects non-canonical paths
 parent: B69-skills-discoverability-quick-patches
-status: specifying
+status: dev-planning
 estimate: "1"
 summary: "Modify the register action in internal/mcp/doc_tool.go to compare the supplied path against doc(action: path) output for the same parent/type/title combination and reject mismatches. Error message includes the canonical path so the agent can correct in one round-trip. Currently the system silently accepts any path, then another agent moves the file later (observed twice in one session during P64 investigation). Addresses the specific files-saved-to-wrong-folder symptom. ~30 minutes including tests for both happy path and rejection."
 design: FEAT-01KRBB4HNPPWF/design-p64-design-doc-register-canonical-path-validation

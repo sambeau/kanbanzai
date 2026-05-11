@@ -1,3 +1,5 @@
+approved_at: "2026-05-11T11:42:19Z"
+approved_by: sambeau
 canonical_content_hash: e461ed0c5444c7c509f52f67d19a3ecf76540dc758688a043728238d561ce74e
 content_hash: e461ed0c5444c7c509f52f67d19a3ecf76540dc758688a043728238d561ce74e
 created: "2026-05-11T11:41:58Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KRBB4AGXJDY/spec-p64-spec-sub-agent-prompt-directives
 owner: FEAT-01KRBB4AGXJDY
 path: work/P64-binding-governance/P64-spec-sub-agent-prompt-directives.md
-status: draft
+status: approved
 title: "Spec: Sub-agent prompt dispatch and worktree-write directives"
 type: spec
-updated: "2026-05-11T11:41:58Z"
+updated: "2026-05-11T11:42:19Z"
