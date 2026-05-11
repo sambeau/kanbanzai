@@ -3,4 +3,4 @@ parent_feature: FEAT-01KRBQHAZ5BFV
 slug: f2-bug-bindings
 name: Add bug-developing and bug-reviewing stage bindings
 summary: Add bug-developing and bug-reviewing top-level binding keys. Update workableStatuses. Add bugStatusToBindingKey mapping. Handle unmapped BugStatus with clear errors. With tests.
-status: queued
+status: ready

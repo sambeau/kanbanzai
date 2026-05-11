@@ -3,4 +3,4 @@ parent_feature: FEAT-01KRBQHAZ5BFV
 slug: f2-retro-fixing-fasttrack
 name: "Remove retro-fixing block, route via FastTrack tier"
 summary: Remove retro-fixing top-level block from stage-bindings.yaml. Wire retro_fix tier through tier router to FastTrack. Remove orphaned Profile/Tier/Modes/Verifying from StageBinding. With tests.
-status: queued
+status: ready

@@ -3,4 +3,4 @@ parent_feature: FEAT-01KRBQHAZ5KY7
 slug: f1-ci-parity-reachability
 name: CI parity and reachability tests for bindings
 summary: "Add CI test asserting structural equality between embedded and canonical stage-bindings. Add reachability test suites for roles, FeatureStatus values, ValidateBindingFile. With tests."
-status: queued
+status: ready

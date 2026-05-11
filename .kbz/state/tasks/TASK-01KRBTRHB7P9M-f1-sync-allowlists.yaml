@@ -3,4 +3,4 @@ parent_feature: FEAT-01KRBQHAZ5KY7
 slug: f1-sync-allowlists
 name: Sync allowlists to canonical stage-bindings
 summary: Update validStages/validOrchestrations in internal/binding/model.go. Update workableStatuses in internal/context/pipeline.go. Sync to canonical stage-bindings.yaml. With tests.
-status: queued
+status: ready

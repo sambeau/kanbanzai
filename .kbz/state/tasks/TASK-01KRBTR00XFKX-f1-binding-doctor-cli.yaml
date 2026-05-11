@@ -3,4 +3,4 @@ parent_feature: FEAT-01KRBQHAZ5KY7
 slug: f1-binding-doctor-cli
 name: Add kbz binding doctor CLI subcommand
 summary: Implement kbz binding doctor CLI subcommand running ValidateBindingFile with diagnostic output. With tests.
-status: queued
+status: ready
