@@ -1,0 +1,11 @@
+canonical_content_hash: 3557c414de714c5cdbfae9541df39c96371c87349a0c6759fb766aa11b4715c9
+content_hash: 80f0c847c6d944b285e2ebdf1533c64cb78b3ffb789ace3dbe8c9c30c19a8261
+created: "2026-05-11T14:44:51Z"
+created_by: sambeau
+id: FEAT-01KRBQHAZ5KY7/spec-p64-spec-phase1-startup-validation
+owner: FEAT-01KRBQHAZ5KY7
+path: work/P64-binding-governance/P64-spec-phase1-startup-validation.md
+status: draft
+title: "Specification: Startup Validation Hardening"
+type: spec
+updated: "2026-05-11T14:44:51Z"
