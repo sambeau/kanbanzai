@@ -1,0 +1,11 @@
+canonical_content_hash: 52871a20b4d64b13ab452dfd2199ff2c48b5cd11838508be10b5c03d3820d340
+content_hash: 52871a20b4d64b13ab452dfd2199ff2c48b5cd11838508be10b5c03d3820d340
+created: "2026-05-11T11:40:25Z"
+created_by: sambeau
+id: FEAT-01KRBB4AM4FQT/design-p64-design-status-orientation-skills-index
+owner: FEAT-01KRBB4AM4FQT
+path: work/P64-binding-governance/P64-design-status-orientation-skills-index.md
+status: draft
+title: "Design: Inline skills index in status() orientation block"
+type: design
+updated: "2026-05-11T11:40:25Z"
