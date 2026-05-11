@@ -12,3 +12,5 @@ created: "2026-05-11T11:00:35Z"
 created_by: sambeau
 display_id: B69-F2
 tier: bug_fix
+verification: "TASK-01KRBDM7NFMKT: go test ./internal/mcp/... passed (19s, all tests green). New tests: TestReadSkillsIndex_ReadsSkillFiles, TestReadSkillsIndex_EmptyDir, TestReadSkillsIndex_MissingDir, TestReadSkillsIndex_IgnoresNonSkillDirs, TestSuggestSkill_NoActiveTasks, TestSuggestSkill_ActiveFeature, TestSuggestSkill_ActiveFeatureWinsOverNoActiveTasks, TestSuggestSkill_ActiveTaskNoActiveFeature, TestStatusTool_ProjectOverview_HasSkillsIndex, TestStatusTool_ProjectOverview_HasSuggestion."
+verification_status: passed
