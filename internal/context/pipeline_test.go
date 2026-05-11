@@ -2035,3 +2035,126 @@ func TestPipeline_Freshness_ContentUnchangedByStaleness(t *testing.T) {
 		}
 	}
 }
+
+// ─── Directive block tests ────────────────────────────────────────────────────
+
+func TestDispatchContract_Included_WhenOrchestratorWorkers(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	// Override the binding to use orchestrator-workers.
+	p.Bindings = &mockBindingResolver{
+		bindings: map[string]*binding.StageBinding{
+			"developing": {
+				Description:   "Development stage",
+				Orchestration: "orchestrator-workers",
+				Roles:         []string{"implementer-go"},
+				Skills:        []string{"implement-task"},
+			},
+		},
+	}
+	input := testInput()
+	result, err := p.Run(context.Background(), input)
+	if err != nil {
+		t.Fatalf("Run() error = %v", err)
+	}
+	prompt := RenderPrompt(result)
+	if !strings.Contains(prompt, "## Dispatch Contract") {
+		t.Error("prompt should contain dispatch contract when orchestration is orchestrator-workers")
+	}
+	if !strings.Contains(prompt, "orchestrator-workers") {
+		t.Error("dispatch contract should mention orchestrator-workers")
+	}
+}
+
+func TestDispatchContract_Excluded_WhenSingleAgent(t *testing.T) {
+	t.Parallel()
+	p := testPipeline() // uses "single-agent" orchestration
+	input := testInput()
+	result, err := p.Run(context.Background(), input)
+	if err != nil {
+		t.Fatalf("Run() error = %v", err)
+	}
+	prompt := RenderPrompt(result)
+	if strings.Contains(prompt, "## Dispatch Contract") {
+		t.Error("prompt should NOT contain dispatch contract when orchestration is single-agent")
+	}
+}
+
+func TestWorktreeDirective_Included_WhenBranchSet(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	input := testInput()
+	input.FeatureState["branch"] = "feature/FEAT-01KRBB4AGXJDY-sub-agent-prompt-directives"
+	result, err := p.Run(context.Background(), input)
+	if err != nil {
+		t.Fatalf("Run() error = %v", err)
+	}
+	prompt := RenderPrompt(result)
+	if !strings.Contains(prompt, "## Worktree Write Directive") {
+		t.Error("prompt should contain worktree directive when branch is set")
+	}
+	if !strings.Contains(prompt, "kanbanzai_edit_file") {
+		t.Error("worktree directive should mention kanbanzai_edit_file")
+	}
+	if !strings.Contains(prompt, "entity_id") {
+		t.Error("worktree directive should mention entity_id")
+	}
+}
+
+func TestWorktreeDirective_Excluded_WhenNoBranch(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	input := testInput()
+	// No branch field set.
+	result, err := p.Run(context.Background(), input)
+	if err != nil {
+		t.Fatalf("Run() error = %v", err)
+	}
+	prompt := RenderPrompt(result)
+	if strings.Contains(prompt, "## Worktree Write Directive") {
+		t.Error("prompt should NOT contain worktree directive when branch is not set")
+	}
+}
+
+func TestWorktreeDirective_Excluded_WhenBranchEmpty(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	input := testInput()
+	input.FeatureState["branch"] = ""
+	result, err := p.Run(context.Background(), input)
+	if err != nil {
+		t.Fatalf("Run() error = %v", err)
+	}
+	prompt := RenderPrompt(result)
+	if strings.Contains(prompt, "## Worktree Write Directive") {
+		t.Error("prompt should NOT contain worktree directive when branch is empty string")
+	}
+}
+
+func TestBothDirectives_Included_WhenBothConditionsMet(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	p.Bindings = &mockBindingResolver{
+		bindings: map[string]*binding.StageBinding{
+			"developing": {
+				Description:   "Development stage",
+				Orchestration: "orchestrator-workers",
+				Roles:         []string{"implementer-go"},
+				Skills:        []string{"implement-task"},
+			},
+		},
+	}
+	input := testInput()
+	input.FeatureState["branch"] = "feature/FEAT-01KRBB4AGXJDY-test"
+	result, err := p.Run(context.Background(), input)
+	if err != nil {
+		t.Fatalf("Run() error = %v", err)
+	}
+	prompt := RenderPrompt(result)
+	if !strings.Contains(prompt, "## Dispatch Contract") {
+		t.Error("prompt should contain dispatch contract")
+	}
+	if !strings.Contains(prompt, "## Worktree Write Directive") {
+		t.Error("prompt should contain worktree directive")
+	}
+}

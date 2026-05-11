@@ -35,6 +35,8 @@ const (
 	PositionKnowledge         = 9
 	PositionEvalCriteria      = 10
 	PositionRetrievalAnchors  = 11
+	PositionDispatchContract   = 12
+	PositionWorktreeDirective  = 13
 )
 
 // Progressive disclosure layer assignments (FR-018).
@@ -598,6 +600,39 @@ func (p *Pipeline) stepAssembleSections(state *PipelineState) {
 			Content:  toolHintContent,
 			Layer:    LayerAlways,
 			Tokens:   estimateTokens(toolHintContent),
+		})
+	}
+
+	// Position 12: Dispatch contract directive (Layer 1).
+	// FR-1: Included when binding orchestration is orchestrator-workers.
+	if state.Binding != nil && state.Binding.Orchestration == "orchestrator-workers" {
+		dispatchContent := "## Dispatch Contract\n\n" +
+			"This is an orchestrator-workers stage. The orchestration contract is:\n\n" +
+			"- **Orchestrator** dispatches tasks to sub-agents via `handoff` + `spawn_agent`.\n" +
+			"- **Sub-agents** execute tasks independently and report completion via `finish`.\n" +
+			"- The orchestrator must not attempt to perform implementation work directly."
+		state.Sections = append(state.Sections, PipelineSection{
+			Position: PositionDispatchContract,
+			Label:    "Dispatch Contract",
+			Content:  dispatchContent,
+			Layer:    LayerAlways,
+			Tokens:   estimateTokens(dispatchContent),
+		})
+	}
+
+	// Position 13: Worktree write directive (Layer 1).
+	// FR-2: Included when the entity has an active worktree (branch field set).
+	if branch, _ := state.Input.FeatureState["branch"].(string); branch != "" {
+		worktreeContent := "## Worktree Write Directive\n\n" +
+			"This entity has an active worktree. All file writes must be scoped to the worktree:\n\n" +
+			"- Use `kanbanzai_edit_file` or `write_file` with `entity_id` for all file operations.\n" +
+			"- Do NOT use raw shell writes (heredoc, cat, python -c) for file creation or editing."
+		state.Sections = append(state.Sections, PipelineSection{
+			Position: PositionWorktreeDirective,
+			Label:    "Worktree Directive",
+			Content:  worktreeContent,
+			Layer:    LayerAlways,
+			Tokens:   estimateTokens(worktreeContent),
 		})
 	}
 
