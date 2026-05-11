@@ -1,0 +1,6 @@
+id: TASK-01KRBTQZZK84Q
+parent_feature: FEAT-01KRBQHAZDHKQ
+slug: f3-routing-companion
+name: Create routing companion file and go generate pipeline
+summary: "Create internal/binding/routing.yaml. Add go:generate directive for router_gen.go. Generate Go constructs from routing.yaml. Add header comment to .kbz/stage-bindings.yaml. With tests."
+status: queued
