@@ -3,10 +3,10 @@ content: "Never normalise or defer a large failing test suite as \"pre-existing\
 created: "2026-05-06T22:57:21Z"
 created_by: GPT-5.5
 id: KE-01KQZR561V8FC
-last_accessed_at: "2026-05-11T17:00:49Z"
+last_accessed_at: "2026-05-11T17:37:41Z"
 learned_from: user-retro-2026-05-06-failing-tests
 miss_count: 0
-recent_use_count: 241
+recent_use_count: 245
 scope: project
 status: contributed
 tags:
