@@ -1,0 +1,6 @@
+id: TASK-01KRBDM7NJKWY
+parent_feature: FEAT-01KRBB4HNPPWF
+slug: add-canonical-path-validation
+name: Add canonical path validation to doc register
+summary: "Add canonical path validation to doc(action: register) in internal/mcp/doc_tool.go. Compare supplied path against doc(action: path) output; reject mismatches with error including canonical path. Add tests for happy path and rejection."
+status: queued
