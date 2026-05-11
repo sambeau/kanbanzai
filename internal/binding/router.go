@@ -70,6 +70,12 @@ func (e ErrUnknownTier) Error() string {
 	return fmt.Sprintf("unknown tier %q", e.Tier)
 }
 
+// Is enables errors.Is comparison against any ErrUnknownTier regardless of Tier value.
+func (e ErrUnknownTier) Is(target error) bool {
+	_, ok := target.(ErrUnknownTier)
+	return ok
+}
+
 // ErrSkillMissing is returned when a skill referenced by the resolved binding
 // is not present on disk.
 type ErrSkillMissing struct {
@@ -83,37 +89,13 @@ func (e ErrSkillMissing) Error() string {
 
 // ─── Tier constants ──────────────────────────────────────────────────────────
 
-// validTiers is the set of recognised tier values. An empty tier is treated as
-// the default tier and is valid.
-var validTiers = map[string]bool{
-	"feature":   true,
-	"bug_fix":   true,
-	"retro_fix": true,
-	"critical":  true,
-}
+// validTiers is resolved from the generated ValidTiers map (router_gen.go).
 
 // ─── Routing table ───────────────────────────────────────────────────────────
 
-// DefaultRoutingTable returns the identity routing table used before
-// routing.yaml is generated. Every valid stage maps to itself.
+// DefaultRoutingTable returns the routing table generated from routing.yaml.
 func DefaultRoutingTable() RoutingTable {
-	return RoutingTable{
-		"designing":       "designing",
-		"specifying":      "specifying",
-		"dev-planning":    "dev-planning",
-		"developing":      "developing",
-		"reviewing":       "reviewing",
-		"merging":         "merging",
-		"verifying":       "verifying",
-		"batch-reviewing": "batch-reviewing",
-		"researching":     "researching",
-		"documenting":     "documenting",
-		"doc-publishing":  "doc-publishing",
-		"retro-fixing":    "retro-fixing",
-		// Bug statuses map to their corresponding binding keys.
-		"in-progress":  "bug-developing",
-		"needs-review": "bug-reviewing",
-	}
+	return routingTable
 }
 
 // ─── Default FastTrackConfig ─────────────────────────────────────────────────
@@ -189,7 +171,7 @@ func Resolve(status string, tier string, routingTable RoutingTable, config *Fast
 	}
 
 	// Validate tier.
-	if !validTiers[tier] {
+	if !ValidTiers[tier] {
 		return nil, ErrUnknownTier{Tier: tier}
 	}
 

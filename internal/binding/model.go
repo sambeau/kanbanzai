@@ -7,25 +7,6 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-// validStages is the set of valid stage names for validation.
-// Generated from routing.yaml — keep in sync with router_gen.go and routing.yaml.
-var validStages = map[string]bool{
-	"designing":       true,
-	"specifying":      true,
-	"dev-planning":    true,
-	"developing":      true,
-	"reviewing":       true,
-	"merging":         true,
-	"verifying":       true,
-	"batch-reviewing": true,
-	"doc-publishing":  true,
-	"retro-fixing":    true,
-	"bug-developing":  true,
-	"bug-reviewing":   true,
-	"researching":     true,
-	"documenting":     true,
-}
-
 // StageBinding represents a single stage's binding configuration.
 type StageBinding struct {
 	Description         string               `yaml:"description"`
@@ -161,6 +142,7 @@ type BindingFile struct {
 var validOrchestrations = map[string]bool{
 	"single-agent":         true,
 	"orchestrator-workers": true,
+	"pipeline-coordinator": true,
 }
 
 var roleIDRegexp = regexp.MustCompile(`^[a-z0-9][a-z0-9-]{0,28}[a-z0-9]$|^[a-z0-9]{2}$`)
@@ -196,9 +178,6 @@ func ValidateBinding(b *StageBinding, stageName string) []error {
 		}
 	}
 
-	if b.SubAgents != nil && b.Orchestration != "orchestrator-workers" {
-		errs = append(errs, fmt.Errorf("%s: sub_agents requires orchestration \"orchestrator-workers\"", stageName))
-	}
 	if b.Orchestration == "orchestrator-workers" && b.SubAgents == nil {
 		errs = append(errs, fmt.Errorf("%s: orchestration \"orchestrator-workers\" requires sub_agents", stageName))
 	}
@@ -210,8 +189,8 @@ func ValidateBinding(b *StageBinding, stageName string) []error {
 		if len(b.SubAgents.Skills) == 0 {
 			errs = append(errs, fmt.Errorf("%s: sub_agents.skills must not be empty", stageName))
 		}
-		if b.SubAgents.Topology != "parallel" {
-			errs = append(errs, fmt.Errorf("%s: sub_agents.topology must be \"parallel\"", stageName))
+		if b.SubAgents.Topology != "parallel" && b.SubAgents.Topology != "sequential" && b.SubAgents.Topology != "single" {
+			errs = append(errs, fmt.Errorf("%s: sub_agents.topology must be one of: parallel, sequential, single", stageName))
 		}
 		if b.SubAgents.MaxAgents != nil && *b.SubAgents.MaxAgents < 1 {
 			errs = append(errs, fmt.Errorf("%s: sub_agents.max_agents must be >= 1", stageName))

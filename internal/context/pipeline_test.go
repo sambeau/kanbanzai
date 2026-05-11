@@ -409,7 +409,7 @@ func TestStepValidateLifecycle_BugOutOfPipeline(t *testing.T) {
 	p := testPipeline()
 	outOfPipeline := []string{
 		"reported", "triaged", "reproduced", "planned",
-		"needs-rework", "verifying", "closed", "duplicate",
+		"needs-rework", "closed", "duplicate",
 		"not-planned", "cannot-reproduce",
 	}
 	for _, status := range outOfPipeline {

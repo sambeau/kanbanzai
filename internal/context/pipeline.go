@@ -280,13 +280,25 @@ func (p *Pipeline) stepValidateLifecycle(state *PipelineState) error {
 	}
 
 	status, _ := state.Input.FeatureState["status"].(string)
-	if !isWorkableFeatureStatus(status) {
-		return pipelineError(0, "lifecycle-validation",
-			fmt.Sprintf("feature is in status %q; pipeline requires one of: %s",
-				status, strings.Join(workableStatuses, ", ")),
-			"advance the feature to a workable status before generating context")
+
+	// Check workable statuses (feature and bug).
+	for _, s := range binding.WorkableStatuses {
+		if s == status {
+			return nil
+		}
 	}
-	return nil
+
+	// Not workable. If it is a known bug status, produce an out-of-pipeline error.
+	for _, bs := range binding.BugStatuses {
+		if bs == status {
+			return fmt.Errorf("pipeline step 0 (lifecycle-validation): bug status %q is out-of-pipeline", status)
+		}
+	}
+
+	return pipelineError(0, "lifecycle-validation",
+		fmt.Sprintf("feature is in status %q; pipeline requires one of: %s",
+			status, strings.Join(binding.WorkableStatuses, ", ")),
+		"advance the feature to a workable status before generating context")
 }
 
 // stepResolveStage resolves the task's parent feature lifecycle stage (step 1).
@@ -297,8 +309,30 @@ func (p *Pipeline) stepResolveStage(state *PipelineState) error {
 			fmt.Sprintf("task %s: parent feature has no status", state.Input.TaskID),
 			"ensure the parent feature has a valid lifecycle status")
 	}
-	state.Stage = status
-	return nil
+
+	// Validate tier if present.
+	if tier, ok := state.Input.FeatureState["tier"].(string); ok && tier != "" {
+		if !binding.IsValidTier(tier) {
+			return binding.ErrUnknownTier{Tier: tier}
+		}
+	}
+
+	// Look up the status in the routing table.
+	rt := binding.DefaultRoutingTable()
+	if key, ok := rt[status]; ok {
+		state.Stage = key
+		return nil
+	}
+
+	// Not in routing table. Check if it is a known bug status for a better error.
+	for _, bs := range binding.BugStatuses {
+		if bs == status {
+			return fmt.Errorf("pipeline step 1 (stage-resolution): bug status %q is out-of-pipeline", status)
+		}
+	}
+
+	// Unknown status — return a generic error.
+	return fmt.Errorf("pipeline step 1 (stage-resolution): unknown status %q", status)
 }
 
 // stepLookupBinding retrieves the stage binding for the resolved stage (step 2).
@@ -339,17 +373,9 @@ func (p *Pipeline) stepApplyInclusion(state *PipelineState) {
 	}
 }
 
-// bugStatusToBindingKey maps a bug lifecycle status to its corresponding stage binding key.
-// Only in-progress and needs-review are workable; all other bug statuses return an error.
+// bugStatusToBindingKey delegates to the generated binding.BugStatusToBindingKey.
 func bugStatusToBindingKey(status string) (string, error) {
-	switch status {
-	case "in-progress":
-		return "bug-developing", nil
-	case "needs-review":
-		return "bug-reviewing", nil
-	default:
-		return "", fmt.Errorf("bug status %q is out-of-pipeline", status)
-	}
+	return binding.BugStatusToBindingKey(status)
 }
 
 // stepExtractOrchestration extracts orchestration metadata from the binding (step 4).
@@ -893,21 +919,8 @@ func (p *Pipeline) stepBuildResult(state *PipelineState) *PipelineResult {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-var workableStatuses = []string{
-	"designing", "specifying", "dev-planning",
-	"developing", "reviewing", "merging", "verifying",
-	"batch-reviewing", "researching", "documenting",
-	"doc-publishing", "retro-fixing",
-}
-
-func isWorkableFeatureStatus(status string) bool {
-	for _, s := range workableStatuses {
-		if s == status {
-			return true
-		}
-	}
-	return false
-}
+// workableStatuses is a package-level reference to the generated binding.WorkableStatuses.
+var workableStatuses = binding.WorkableStatuses
 
 // pipelineError creates a formatted error with step, entity, and remediation hint (NFR-004).
 func pipelineError(step int, stepName, detail, hint string) error {

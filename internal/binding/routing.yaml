@@ -1,0 +1,39 @@
+# routing.yaml — canonical routing table for status→binding-key mapping.
+# Owned by the binding package; code-generated into router_gen.go via go generate.
+# Do not hand-edit router_gen.go.
+
+routing:
+  designing: designing
+  specifying: specifying
+  dev-planning: dev-planning
+  developing: developing
+  reviewing: reviewing
+  merging: merging
+  verifying: verifying
+  batch-reviewing: batch-reviewing
+  researching: researching
+  documenting: documenting
+  doc-publishing: doc-publishing
+  retro-fixing: retro-fixing
+  in-progress: bug-developing
+  needs-review: bug-reviewing
+
+skill_overrides:
+  retro_fix:
+    implement-task: implement-retro-fix
+
+# All known bug lifecycle statuses. Only in-progress and needs-review are workable
+# (they appear in the routing table above). All others are out-of-pipeline.
+bug_statuses:
+  - cannot-reproduce
+  - closed
+  - duplicate
+  - in-progress
+  - needs-review
+  - needs-rework
+  - not-planned
+  - planned
+  - reported
+  - reproduced
+  - triaged
+  - verifying
