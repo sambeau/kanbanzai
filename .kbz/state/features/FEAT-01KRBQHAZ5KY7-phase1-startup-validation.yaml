@@ -15,3 +15,5 @@ overrides:
     to_status: developing
 display_id: P64-F1
 tier: feature
+verification: "TASK-01KRBTQZYCVVW: Ran go test ./internal/binding/... -v: all pre-existing tests pass. 6 new tests pass. 2 new tests correctly fail (embedded YAML drift, validator gaps for pipeline-coordinator/retro-fixing) — expected CI guards for remaining feature tasks.\nTASK-01KRBTR00XFKX: Ran go test ./cmd/kbz/ (all pass), go test ./internal/binding/... (pass), go test ./internal/core/... (pass), and go build ./... (success).\nTASK-01KRBTRH7GWZ3: go test ./internal/binding/... (pass), ./internal/context/... (pass), ./internal/mcp/... (no new failures). go build ./... (success). All 7 new tests pass.\nTASK-01KRBTRHB7P9M: go test ./internal/binding/... ./internal/context/... passes. New TestValidStagesSync, TestValidOrchestrationsSync, and TestStepValidateLifecycle_PlanReviewingRejected all pass."
+verification_status: passed

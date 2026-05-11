@@ -3,4 +3,4 @@ parent_feature: FEAT-01KRBQHAZ5BFV
 slug: f2-step-resolve-stage
 name: Add stepResolveStage pure mapping plus bug_fix routing
 summary: Add pure mapping function in stepResolveStage. Handle bug_fix tier routing to bug bindings. Handle unknown tier values with errors. With tests.
-status: ready
+status: active
