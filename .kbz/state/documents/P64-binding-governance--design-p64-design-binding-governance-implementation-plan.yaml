@@ -1,11 +1,13 @@
-canonical_content_hash: e762a7916e0b0573705a16ac8cae438f2a689ff7ad2ee09df4cbdd115ac3be58
-content_hash: a7035e12d117fb4c93cb8e861b3752837dc0f0af51a7e670df64fba2c6d34b7e
+approved_at: "2026-05-11T14:36:28Z"
+approved_by: sambeau
+canonical_content_hash: a1272dba53866bc4641335d9b8467bd9f1a12cdd7b232c475ea7fe19b0b3276f
+content_hash: dc3608b22bd6589f29c42bfd9a16dd749a29d60a950475a243b588f58eb501c4
 created: "2026-05-11T14:11:28Z"
 created_by: sambeau
 id: P64-binding-governance/design-p64-design-binding-governance-implementation-plan
 owner: P64-binding-governance
 path: work/P64-binding-governance/P64-design-binding-governance-implementation-plan.md
-status: draft
+status: approved
 title: "Design: Binding Governance Implementation Plan"
 type: design
-updated: "2026-05-11T14:11:28Z"
+updated: "2026-05-11T14:36:28Z"
