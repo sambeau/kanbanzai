@@ -201,6 +201,8 @@ func run(args []string, deps dependencies) error {
 		return runDoctor(args[1:], deps)
 	case "migrate":
 		return runMigrate(args[1:], deps)
+	case "binding":
+		return runBinding(args[1:], deps)
 
 	default:
 		return fmt.Errorf("unknown command %q\n\n%s", args[0], usageText)
@@ -391,6 +393,7 @@ Utility commands:
   import <path> [flags]      Batch import document records
   install-record write       Write binary install record
   migrate stage-bindings     Add schema_version: 2 to stage-bindings.yaml
+  binding doctor             Validate stage-bindings.yaml
 
 Other:
   serve                      Start the MCP server (stdio transport)
