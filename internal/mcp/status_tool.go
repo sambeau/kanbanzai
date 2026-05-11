@@ -35,11 +35,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"math"
+	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
+	"gopkg.in/yaml.v3"
 
 	"github.com/sambeau/kanbanzai/internal/health"
 	"github.com/sambeau/kanbanzai/internal/id"
@@ -260,9 +263,16 @@ type featureInfo struct {
 
 // ─── Project overview synthesis ───────────────────────────────────────────────
 
+type skillEntry struct {
+	Name    string `json:"name"`
+	Summary string `json:"summary"`
+}
+
 type orientationInfo struct {
-	Message    string `json:"message"`
-	SkillsPath string `json:"skills_path"`
+	Message    string       `json:"message"`
+	SkillsPath string       `json:"skills_path"`
+	Skills     []skillEntry `json:"skills"`
+	Suggestion string       `json:"suggestion,omitempty"`
 }
 
 type projectOverview struct {
@@ -319,6 +329,113 @@ type batchSummary struct {
 		Done   int `json:"done"`
 		Total  int `json:"total"`
 	} `json:"tasks"`
+}
+
+// skillFrontmatter is the YAML frontmatter structure in SKILL.md files.
+type skillFrontmatter struct {
+	Name        string `yaml:"name"`
+	Description string `yaml:"description"`
+}
+
+// readSkillsIndex reads .agents/skills/ subdirectories and returns a list of
+// skills with name and one-line summary parsed from each SKILL.md frontmatter.
+func readSkillsIndex(repoPath string) ([]skillEntry, error) {
+	skillsDir := filepath.Join(repoPath, ".agents", "skills")
+	entries, err := os.ReadDir(skillsDir)
+	if err != nil {
+		return nil, err
+	}
+
+	var skills []skillEntry
+	for _, e := range entries {
+		if !e.IsDir() {
+			continue
+		}
+		skillPath := filepath.Join(skillsDir, e.Name(), "SKILL.md")
+		data, err := os.ReadFile(skillPath)
+		if err != nil {
+			continue
+		}
+
+		fm := extractFrontmatter(string(data))
+		if fm == nil {
+			continue
+		}
+
+		var sf skillFrontmatter
+		if err := yaml.Unmarshal(fm, &sf); err != nil {
+			continue
+		}
+		if sf.Name == "" {
+			continue
+		}
+
+		// Extract one-line summary: first sentence or first ~100 chars.
+		summary := oneLineSummary(sf.Description)
+		skills = append(skills, skillEntry{Name: sf.Name, Summary: summary})
+	}
+	return skills, nil
+}
+
+// extractFrontmatter returns the raw YAML between the first pair of ---
+// delimiters. Returns nil if no frontmatter block is found.
+func extractFrontmatter(content string) []byte {
+	if !strings.HasPrefix(content, "---\n") {
+		return nil
+	}
+	// Find the closing --- after the first line.
+	rest := content[4:]
+	end := strings.Index(rest, "\n---")
+	if end < 0 {
+		return nil
+	}
+	return []byte(rest[:end])
+}
+
+// oneLineSummary extracts the first sentence or first ~100 chars from a
+// multi-line description string, collapsing whitespace.
+func oneLineSummary(desc string) string {
+	// Collapse whitespace (including newlines) to single spaces.
+	s := strings.Join(strings.Fields(desc), " ")
+	// Take up to first period-space or period-end.
+	if idx := strings.Index(s, ". "); idx > 0 {
+		s = s[:idx+1]
+	}
+	if len(s) > 120 {
+		s = s[:117] + "..."
+	}
+	return s
+}
+
+// suggestSkill returns a context-aware skill suggestion based on project state.
+// FR-2: When no task is claimed (no active tasks), suggest kanbanzai-documents.
+// FR-3: When an active feature exists, suggest kanbanzai-workflow.
+func suggestSkill(features []service.ListResult, tasks []service.ListResult) string {
+	hasActiveFeature := false
+	for _, f := range features {
+		status, _ := f.State["status"].(string)
+		if status == "developing" || status == "active" {
+			hasActiveFeature = true
+			break
+		}
+	}
+	if hasActiveFeature {
+		return "kanbanzai-workflow"
+	}
+
+	hasActiveTask := false
+	for _, t := range tasks {
+		status, _ := t.State["status"].(string)
+		if status == "active" {
+			hasActiveTask = true
+			break
+		}
+	}
+	if !hasActiveTask {
+		return "kanbanzai-documents"
+	}
+
+	return "kanbanzai-getting-started"
 }
 
 func synthesiseProject(entitySvc *service.EntityService, docSvc *service.DocumentService, worktreeStore *worktree.Store, repoPath string) (*projectOverview, error) {
@@ -537,6 +654,13 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 	}
 	attention = append(attention, generateOrphanedReviewingAttention(reviewingCandidates, docSvc)...)
 
+	// Build orientation with dynamic skills index (FR-1, FR-4).
+	skills, _ := readSkillsIndex(repoPath)
+	if skills == nil {
+		skills = make([]skillEntry, 0)
+	}
+	suggestion := suggestSkill(allFeatures, allTasks)
+
 	return &projectOverview{
 		Scope:     "project",
 		Plans:     summaries,
@@ -547,6 +671,8 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 		Orientation: &orientationInfo{
 			Message:    "This is a kanbanzai-managed project. For workflow guidance, read .agents/skills/kanbanzai-getting-started/SKILL.md",
 			SkillsPath: ".agents/skills/",
+			Skills:     skills,
+			Suggestion: suggestion,
 		},
 		GeneratedAt: time.Now().UTC().Format(time.RFC3339),
 	}, nil

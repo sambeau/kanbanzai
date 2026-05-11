@@ -1190,6 +1190,273 @@ func TestStatusTool_PlanDashboard_NoOrientation(t *testing.T) {
 	}
 }
 
+// ─── readSkillsIndex tests ───────────────────────────────────────────────────
+
+func TestReadSkillsIndex_ReadsSkillFiles(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	skillsDir := filepath.Join(dir, ".agents", "skills")
+
+	// Create two skill directories with SKILL.md files.
+	for _, s := range []struct{ dir, name, desc string }{
+		{"kanbanzai-agents", "kanbanzai-agents", "Use when dispatching tasks to sub-agents. Also used for commits."},
+		{"kanbanzai-workflow", "kanbanzai-workflow", "Use when deciding what stage work belongs to. Activates for lifecycle."},
+	} {
+		sd := filepath.Join(skillsDir, s.dir)
+		if err := os.MkdirAll(sd, 0o755); err != nil {
+			t.Fatal(err)
+		}
+		content := fmt.Sprintf("---\nname: %s\ndescription: >\n  %s\nmetadata:\n  version: \"1.0\"\n---\n# SKILL\n", s.name, s.desc)
+		if err := os.WriteFile(filepath.Join(sd, "SKILL.md"), []byte(content), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	skills, err := readSkillsIndex(dir)
+	if err != nil {
+		t.Fatalf("readSkillsIndex error: %v", err)
+	}
+	if len(skills) != 2 {
+		t.Fatalf("got %d skills, want 2", len(skills))
+	}
+
+	// Verify name and summary extraction.
+	found := make(map[string]string)
+	for _, s := range skills {
+		found[s.Name] = s.Summary
+	}
+	if v, ok := found["kanbanzai-agents"]; !ok || !strings.Contains(v, "dispatching tasks") {
+		t.Errorf("kanbanzai-agents summary = %q, want containing 'dispatching tasks'", v)
+	}
+	if v, ok := found["kanbanzai-workflow"]; !ok || !strings.Contains(v, "deciding what stage") {
+		t.Errorf("kanbanzai-workflow summary = %q, want containing 'deciding what stage'", v)
+	}
+}
+
+func TestReadSkillsIndex_EmptyDir(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	skillsDir := filepath.Join(dir, ".agents", "skills")
+	if err := os.MkdirAll(skillsDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+
+	skills, err := readSkillsIndex(dir)
+	if err != nil {
+		t.Fatalf("readSkillsIndex error: %v", err)
+	}
+	if len(skills) != 0 {
+		t.Errorf("got %d skills, want 0", len(skills))
+	}
+}
+
+func TestReadSkillsIndex_MissingDir(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	// Don't create .agents/skills/.
+
+	_, err := readSkillsIndex(dir)
+	if err == nil {
+		t.Error("expected error for missing .agents/skills/")
+	}
+}
+
+func TestReadSkillsIndex_IgnoresNonSkillDirs(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	skillsDir := filepath.Join(dir, ".agents", "skills")
+
+	// Create a regular file (README.md) — should be ignored.
+	if err := os.MkdirAll(skillsDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(skillsDir, "README.md"), []byte("# Readme"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	// Create a skill dir without SKILL.md — should be skipped.
+	noskill := filepath.Join(skillsDir, "empty-skill")
+	if err := os.MkdirAll(noskill, 0o755); err != nil {
+		t.Fatal(err)
+	}
+
+	// Create a valid skill.
+	sd := filepath.Join(skillsDir, "kanbanzai-agents")
+	if err := os.MkdirAll(sd, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	content := "---\nname: kanbanzai-agents\ndescription: Test.\n---\n"
+	if err := os.WriteFile(filepath.Join(sd, "SKILL.md"), []byte(content), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	skills, err := readSkillsIndex(dir)
+	if err != nil {
+		t.Fatalf("readSkillsIndex error: %v", err)
+	}
+	if len(skills) != 1 {
+		t.Fatalf("got %d skills, want 1", len(skills))
+	}
+	if skills[0].Name != "kanbanzai-agents" {
+		t.Errorf("skill name = %q, want kanbanzai-agents", skills[0].Name)
+	}
+}
+
+// ─── suggestSkill tests ──────────────────────────────────────────────────────
+
+func TestSuggestSkill_NoActiveTasks(t *testing.T) {
+	t.Parallel()
+	// FR-2: When no task is claimed, suggest kanbanzai-documents.
+	features := []service.ListResult{}
+	tasks := []service.ListResult{
+		{State: map[string]any{"status": "queued"}},
+		{State: map[string]any{"status": "done"}},
+	}
+	got := suggestSkill(features, tasks)
+	if got != "kanbanzai-documents" {
+		t.Errorf("suggestSkill = %q, want kanbanzai-documents", got)
+	}
+}
+
+func TestSuggestSkill_ActiveFeature(t *testing.T) {
+	t.Parallel()
+	// FR-3: When an active feature exists, suggest kanbanzai-workflow.
+	features := []service.ListResult{
+		{State: map[string]any{"status": "developing"}},
+	}
+	tasks := []service.ListResult{
+		{State: map[string]any{"status": "active"}},
+	}
+	got := suggestSkill(features, tasks)
+	if got != "kanbanzai-workflow" {
+		t.Errorf("suggestSkill = %q, want kanbanzai-workflow", got)
+	}
+}
+
+func TestSuggestSkill_ActiveFeatureWinsOverNoActiveTasks(t *testing.T) {
+	t.Parallel()
+	// Active feature takes priority over no-active-tasks heuristic.
+	features := []service.ListResult{
+		{State: map[string]any{"status": "developing"}},
+	}
+	tasks := []service.ListResult{
+		{State: map[string]any{"status": "queued"}},
+	}
+	got := suggestSkill(features, tasks)
+	if got != "kanbanzai-workflow" {
+		t.Errorf("suggestSkill = %q, want kanbanzai-workflow", got)
+	}
+}
+
+func TestSuggestSkill_ActiveTaskNoActiveFeature(t *testing.T) {
+	t.Parallel()
+	// Active task but no active feature → kanbanzai-getting-started.
+	features := []service.ListResult{
+		{State: map[string]any{"status": "done"}},
+	}
+	tasks := []service.ListResult{
+		{State: map[string]any{"status": "active"}},
+	}
+	got := suggestSkill(features, tasks)
+	if got != "kanbanzai-getting-started" {
+		t.Errorf("suggestSkill = %q, want kanbanzai-getting-started", got)
+	}
+}
+
+// ─── Status tool orientation skills integration tests ────────────────────────
+
+func TestStatusTool_ProjectOverview_HasSkillsIndex(t *testing.T) {
+	t.Parallel()
+	// AC-1: status() output includes an inline skills list with name + summary.
+	entitySvc, docSvc := setupStatusTest(t)
+
+	// Create a temp repo with .agents/skills/ so readSkillsIndex can find them.
+	repoPath := t.TempDir()
+	skillsDir := filepath.Join(repoPath, ".agents", "skills", "kanbanzai-agents")
+	if err := os.MkdirAll(skillsDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	content := "---\nname: kanbanzai-agents\ndescription: Use when dispatching tasks.\n---\n"
+	if err := os.WriteFile(filepath.Join(skillsDir, "SKILL.md"), []byte(content), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	tool := statusTool(entitySvc, docSvc, nil, repoPath, 0)
+	req := makeRequest(map[string]any{})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	orientation, ok := parsed["orientation"].(map[string]any)
+	if !ok {
+		t.Fatalf("orientation field missing or wrong type: %v", parsed)
+	}
+
+	// skills must be a list.
+	skillsList, ok := orientation["skills"].([]any)
+	if !ok {
+		t.Fatalf("orientation.skills missing or not a list: %v", orientation)
+	}
+	if len(skillsList) == 0 {
+		t.Error("orientation.skills is empty, expected at least one skill entry")
+	}
+
+	// Each skill entry must have name and summary.
+	for i, s := range skillsList {
+		entry, ok := s.(map[string]any)
+		if !ok {
+			t.Errorf("skills[%d] = %v, want object", i, s)
+			continue
+		}
+		name, _ := entry["name"].(string)
+		summary, _ := entry["summary"].(string)
+		if name == "" {
+			t.Errorf("skills[%d].name is empty", i)
+		}
+		if summary == "" {
+			t.Errorf("skills[%d].summary is empty", i)
+		}
+	}
+}
+
+func TestStatusTool_ProjectOverview_HasSuggestion(t *testing.T) {
+	t.Parallel()
+	// AC-2: status() output includes a context-aware skill suggestion.
+	entitySvc, docSvc := setupStatusTest(t)
+
+	tool := statusTool(entitySvc, docSvc, nil, "", 0)
+	req := makeRequest(map[string]any{})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	orientation, ok := parsed["orientation"].(map[string]any)
+	if !ok {
+		t.Fatalf("orientation field missing: %v", parsed)
+	}
+
+	suggestion, _ := orientation["suggestion"].(string)
+	if suggestion == "" {
+		t.Error("orientation.suggestion is empty")
+	}
+	// With no active feature and no active task, should suggest kanbanzai-documents.
+	if suggestion != "kanbanzai-documents" {
+		t.Errorf("orientation.suggestion = %q, want kanbanzai-documents", suggestion)
+	}
+}
+
 // ─── generateFeatureAttention tests ──────────────────────────────────────────
 
 // TestFeatureAttention_AllTasksDone_Developing verifies that when all tasks are
