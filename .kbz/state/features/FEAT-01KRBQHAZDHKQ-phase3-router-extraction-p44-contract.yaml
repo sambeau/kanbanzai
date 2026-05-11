@@ -2,7 +2,8 @@ id: FEAT-01KRBQHAZDHKQ
 slug: phase3-router-extraction-p44-contract
 name: Router Extraction and P44 Contract
 parent: P64-binding-governance
-status: developing
+status: reviewing
+review_cycle: 1
 summary: "Extract routing into internal/binding/router.go, create generated routing companion file, establish P44 interface seam, reduce sync surface from 7 to 4."
 spec: FEAT-01KRBQHAZDHKQ/spec-p64-spec-phase3-router-extraction-p44-contract
 created: "2026-05-11T14:37:24Z"
@@ -15,3 +16,5 @@ overrides:
     to_status: developing
 display_id: P64-F2
 tier: feature
+verification: "TASK-01KRBTQZXVKS7: (no verification recorded)\nTASK-01KRBTQZZK84Q: go build ./... passes, go test -short ./internal/binding/... passes all tests, average Resolve latency 105ns (well under 1ms p99 requirement)\nTASK-01KRBTR03CWTE: Ran go test ./internal/binding/... ./internal/context/... - all pass (binding: 27 tests, context: 100+ tests). go build ./... succeeds. go vet clean. Key edge cases tested: invalid tier → ErrUnknownTier, missing skill → ErrSkillMissing, unmapped status → ErrNoBinding, bug status routing, tier validation in stepResolveStage.\nTASK-01KRBTR06K5XZ: All binding and context tests pass (zero regressions). Benchmarks confirm Resolve p99 << 1ms (80ns avg). Sync surface tests confirm 4 surfaces (routing.yaml, stage-bindings.yaml, roles/, skills/). Makefile generate target wires go generate ./internal/binding/. Pre-existing test failures in kbzinit and mcp confirmed unrelated."
+verification_status: partial
