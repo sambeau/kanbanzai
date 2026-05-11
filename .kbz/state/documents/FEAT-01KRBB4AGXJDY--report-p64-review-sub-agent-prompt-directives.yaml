@@ -1,0 +1,13 @@
+approved_at: "2026-05-11T12:13:03Z"
+approved_by: sambeau
+canonical_content_hash: f784b640293cf2cd6bf71c4c02797464342f2d0d81d5a3e0133d4bf8dd1a77fa
+content_hash: f784b640293cf2cd6bf71c4c02797464342f2d0d81d5a3e0133d4bf8dd1a77fa
+created: "2026-05-11T12:13:03Z"
+created_by: sambeau
+id: FEAT-01KRBB4AGXJDY/report-p64-review-sub-agent-prompt-directives
+owner: FEAT-01KRBB4AGXJDY
+path: work/P64-binding-governance/P64-review-sub-agent-prompt-directives.md
+status: approved
+title: "Review: Sub-agent prompt dispatch and worktree-write directives"
+type: report
+updated: "2026-05-11T12:13:03Z"

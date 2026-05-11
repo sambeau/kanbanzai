@@ -1,0 +1,13 @@
+approved_at: "2026-05-11T12:13:03Z"
+approved_by: sambeau
+canonical_content_hash: e7982cd644a51d8302008a26168511677950d2eb7e4454da923a4bf443f999c1
+content_hash: e7982cd644a51d8302008a26168511677950d2eb7e4454da923a4bf443f999c1
+created: "2026-05-11T12:13:03Z"
+created_by: sambeau
+id: FEAT-01KRBB4HNPPWF/report-p64-review-doc-register-canonical-path-validation
+owner: FEAT-01KRBB4HNPPWF
+path: work/P64-binding-governance/P64-review-doc-register-canonical-path-validation.md
+status: approved
+title: "Review: doc register rejects non-canonical paths"
+type: report
+updated: "2026-05-11T12:13:03Z"
