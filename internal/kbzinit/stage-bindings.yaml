@@ -1,5 +1,6 @@
 # kanbanzai-managed: true
 # kanbanzai-version: dev
+schema_version: 2
 stage_bindings:
   designing:
     description: "Creating or revising a design document"
@@ -105,6 +106,34 @@ stage_bindings:
       max_agents: 4
     notes: "DeepMind saturation point for specialist panels is 4. Escalate to human after 3 fail-rework cycles."
 
+  merging:
+    description: "Merging the feature branch into main after review approval"
+    orchestration: single-agent
+    roles: [orchestrator]
+    skills: [orchestrate-review]
+    human_gate: false
+    effort_budget: "5-10 tool calls"
+    prerequisites:
+      documents:
+        - type: report
+          status: approved
+      tasks:
+        all_terminal: true
+    notes: "Auto gate — no human checkpoint. Orchestrator completes merge, verifies ancestry, then advances to verifying. Full procedure: .agents/skills/kanbanzai-agents/SKILL.md §Post-Review Merge."
+
+  verifying:
+    description: "Delegating close-out verification of the Definition of Done to a clean-context verifier sub-agent"
+    orchestration: single-agent
+    roles: [orchestrator]
+    skills: [orchestrate-review]
+    human_gate: false
+    effort_budget: "5-10 tool calls"
+    sub_agents:
+      roles: [verifier]
+      skills: [verify-closeout]
+      topology: single
+    notes: "Auto gate — no human checkpoint. Dispatch the verifier sub-agent with the feature ID and the verify-closeout skill. The verifier runs the 10-item DoD checklist independently and returns a structured pass/fail report. The orchestrator reads the report: if all-pass, transition to done. On failure, route to remediation."
+
   batch-reviewing:
     description: "Reviewing a completed batch for aggregate delivery"
     orchestration: single-agent
@@ -154,3 +183,38 @@ stage_bindings:
       problem, and collates all changelogs into a completion summary.
       All documents run through all five stages. Individual stages can
       also be triggered independently via their own skill triggers.
+
+  retro-fixing:
+    description: "Implementing a fix for a retrospective theme"
+    orchestration: single-agent
+    roles: [orchestrator]
+    skills: [orchestrate-development]
+    profile: true
+    tier: retro_fix
+    modes:
+      human-gated:
+        design_gate: human
+        spec_gate: auto
+        dev_plan_gate: auto
+        review_gate: conditional
+        max_review_cycles: 3
+        notes: >
+          Human picks which themes to fix and approves the design approach.
+          Spec is auto-generated from theme data. Review is conditional:
+          doc-only changes skip review, implementation changes trigger full
+          panel.
+      auto:
+        design_gate: auto
+        spec_gate: auto
+        dev_plan_gate: auto
+        review_gate: conditional
+        max_review_cycles: 3
+        notes: >
+          Human initiates the cycle and steps back. System auto-picks themes
+          by severity, auto-generates and auto-approves design and spec, then
+          decomposes, implements, reviews, and verifies without checkpoints.
+          Human reviews results after completion.
+    verifying:
+      roles: [verifier]
+      skills: [verify-closeout]
+      dod_variant: retro-fix

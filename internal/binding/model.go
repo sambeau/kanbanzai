@@ -142,17 +142,28 @@ type BindingFile struct {
 var validOrchestrations = map[string]bool{
 	"single-agent":         true,
 	"orchestrator-workers": true,
+	"pipeline-coordinator": true,
 }
 
 var validStages = map[string]bool{
-	"designing":      true,
-	"specifying":     true,
-	"dev-planning":   true,
-	"developing":     true,
-	"reviewing":      true,
-	"researching":    true,
-	"documenting":    true,
-	"plan-reviewing": true,
+	"designing":       true,
+	"specifying":      true,
+	"dev-planning":    true,
+	"developing":      true,
+	"reviewing":       true,
+	"merging":         true,
+	"verifying":       true,
+	"batch-reviewing": true,
+	"researching":     true,
+	"documenting":     true,
+	"doc-publishing":  true,
+	"retro-fixing":    true,
+}
+
+var validTopologies = map[string]bool{
+	"parallel":   true,
+	"sequential": true,
+	"single":     true,
 }
 
 var roleIDRegexp = regexp.MustCompile(`^[a-z0-9][a-z0-9-]{0,28}[a-z0-9]$|^[a-z0-9]{2}$`)
@@ -188,9 +199,8 @@ func ValidateBinding(b *StageBinding, stageName string) []error {
 		}
 	}
 
-	if b.SubAgents != nil && b.Orchestration != "orchestrator-workers" {
-		errs = append(errs, fmt.Errorf("%s: sub_agents requires orchestration \"orchestrator-workers\"", stageName))
-	}
+	// REQ-004: sub_agents is valid with any orchestration that declares it.
+	// orchestrator-workers still requires sub_agents.
 	if b.Orchestration == "orchestrator-workers" && b.SubAgents == nil {
 		errs = append(errs, fmt.Errorf("%s: orchestration \"orchestrator-workers\" requires sub_agents", stageName))
 	}
@@ -202,8 +212,8 @@ func ValidateBinding(b *StageBinding, stageName string) []error {
 		if len(b.SubAgents.Skills) == 0 {
 			errs = append(errs, fmt.Errorf("%s: sub_agents.skills must not be empty", stageName))
 		}
-		if b.SubAgents.Topology != "parallel" {
-			errs = append(errs, fmt.Errorf("%s: sub_agents.topology must be \"parallel\"", stageName))
+		if !validTopologies[b.SubAgents.Topology] {
+			errs = append(errs, fmt.Errorf("%s: sub_agents.topology must be one of: parallel, sequential, single", stageName))
 		}
 		if b.SubAgents.MaxAgents != nil && *b.SubAgents.MaxAgents < 1 {
 			errs = append(errs, fmt.Errorf("%s: sub_agents.max_agents must be >= 1", stageName))

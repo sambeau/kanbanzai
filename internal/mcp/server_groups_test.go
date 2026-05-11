@@ -15,7 +15,7 @@ import (
 // It uses the MCPServer.ListTools() API so this goes through the real registration path.
 func toolNamesFromServer(t *testing.T, entityRoot string, cfg *config.Config) []string {
 	t.Helper()
-	mcpSrv := newServerWithConfig(entityRoot, cfg)
+	mcpSrv, err := newServerWithConfig(entityRoot, cfg); if err != nil { t.Fatal(err) }
 	tools := mcpSrv.ListTools()
 	names := make([]string, 0, len(tools))
 	for name := range tools {

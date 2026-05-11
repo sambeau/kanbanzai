@@ -51,6 +51,11 @@ func (r *BindingRegistry) Load() error {
 	return nil
 }
 
+// BindingFile returns the loaded binding file, or nil if not loaded.
+func (r *BindingRegistry) BindingFile() *BindingFile {
+	return r.bindings
+}
+
 // Lookup returns the binding for the given stage name.
 // Returns an error if not loaded or if the stage has no binding.
 func (r *BindingRegistry) Lookup(stage string) (*StageBinding, error) {

@@ -13,7 +13,7 @@ import (
 func testServerToolNames(t *testing.T, cfg *config.Config) map[string]bool {
 	t.Helper()
 	entityRoot := t.TempDir()
-	srv := newServerWithConfig(entityRoot, cfg)
+	srv, err := newServerWithConfig(entityRoot, cfg); if err != nil { t.Fatal(err) }
 	tools := srv.ListTools()
 	names := make(map[string]bool, len(tools))
 	for name := range tools {

@@ -882,8 +882,9 @@ func (p *Pipeline) stepBuildResult(state *PipelineState) *PipelineResult {
 
 var workableStatuses = []string{
 	"designing", "specifying", "dev-planning",
-	"developing", "reviewing", "plan-reviewing",
-	"researching", "documenting",
+	"developing", "reviewing", "merging", "verifying",
+	"batch-reviewing", "researching", "documenting",
+	"doc-publishing", "retro-fixing",
 }
 
 func isWorkableFeatureStatus(status string) bool {

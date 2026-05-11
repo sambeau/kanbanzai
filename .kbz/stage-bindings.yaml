@@ -184,6 +184,9 @@ stage_bindings:
 
   retro-fixing:
     description: "Implementing a fix for a retrospective theme"
+    orchestration: single-agent
+    roles: [orchestrator]
+    skills: [orchestrate-development]
     profile: true
     tier: retro_fix
     modes:

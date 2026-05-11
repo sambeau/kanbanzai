@@ -135,7 +135,7 @@ func TestValidateBinding(t *testing.T) {
 			wantErrors: []string{"invalid skill name"},
 		},
 		{
-			name: "sub_agents with single-agent orchestration",
+			name: "sub_agents with single-agent orchestration is valid",
 			binding: func() *StageBinding {
 				b := validMinimalBinding()
 				b.Orchestration = "single-agent"
@@ -147,7 +147,7 @@ func TestValidateBinding(t *testing.T) {
 				return b
 			}(),
 			stage:      "designing",
-			wantErrors: []string{"sub_agents requires orchestration"},
+			wantErrors: nil,
 		},
 		{
 			name: "orchestrator-workers without sub_agents",
@@ -168,7 +168,7 @@ func TestValidateBinding(t *testing.T) {
 				b.SubAgents = &SubAgents{
 					Roles:    nil,
 					Skills:   nil,
-					Topology: "sequential",
+					Topology: "bogus",
 				}
 				return b
 			}(),
@@ -176,7 +176,7 @@ func TestValidateBinding(t *testing.T) {
 			wantErrors: []string{
 				"sub_agents.roles must not be empty",
 				"sub_agents.skills must not be empty",
-				"sub_agents.topology must be \"parallel\"",
+				"sub_agents.topology must be one of",
 			},
 		},
 		{
