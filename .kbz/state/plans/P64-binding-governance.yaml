@@ -1,9 +1,9 @@
 id: P64-binding-governance
 slug: binding-governance
 name: Binding Governance
-status: shaping
+status: ready
 summary: "Architectural hardening of the skills/roles/stage-bindings system — ensuring discoverability, integrity, and correct routing for all feature tiers."
 order: 0
 created: "2026-05-10T20:17:06Z"
 created_by: sambeau
-updated: "2026-05-11T14:36:28Z"
+updated: "2026-05-11T14:36:34Z"
