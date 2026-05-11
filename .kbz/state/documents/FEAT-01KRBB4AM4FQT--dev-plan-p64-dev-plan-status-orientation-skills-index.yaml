@@ -1,0 +1,11 @@
+canonical_content_hash: 8b47ad2fdb4eb668aa3489acae4c561a977df1084d44fe3f5d5f5e42027d7b39
+content_hash: 8b47ad2fdb4eb668aa3489acae4c561a977df1084d44fe3f5d5f5e42027d7b39
+created: "2026-05-11T11:43:09Z"
+created_by: sambeau
+id: FEAT-01KRBB4AM4FQT/dev-plan-p64-dev-plan-status-orientation-skills-index
+owner: FEAT-01KRBB4AM4FQT
+path: work/P64-binding-governance/P64-dev-plan-status-orientation-skills-index.md
+status: draft
+title: "Dev-Plan: Inline skills index in status() orientation block"
+type: dev-plan
+updated: "2026-05-11T11:43:09Z"

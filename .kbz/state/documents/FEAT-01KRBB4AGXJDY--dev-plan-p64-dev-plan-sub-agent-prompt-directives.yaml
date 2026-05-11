@@ -1,0 +1,11 @@
+canonical_content_hash: 564fb77681c6eeda76fd860272ae25c0267ef6891331d9b01722282bd7eca178
+content_hash: 564fb77681c6eeda76fd860272ae25c0267ef6891331d9b01722282bd7eca178
+created: "2026-05-11T11:43:09Z"
+created_by: sambeau
+id: FEAT-01KRBB4AGXJDY/dev-plan-p64-dev-plan-sub-agent-prompt-directives
+owner: FEAT-01KRBB4AGXJDY
+path: work/P64-binding-governance/P64-dev-plan-sub-agent-prompt-directives.md
+status: draft
+title: "Dev-Plan: Sub-agent prompt dispatch and worktree-write directives"
+type: dev-plan
+updated: "2026-05-11T11:43:09Z"

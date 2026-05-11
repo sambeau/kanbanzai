@@ -1,0 +1,11 @@
+canonical_content_hash: d86391d7cf7fcd24baa0540099827d651d8db9f3c6f47ebe08dad55da1c377a7
+content_hash: d86391d7cf7fcd24baa0540099827d651d8db9f3c6f47ebe08dad55da1c377a7
+created: "2026-05-11T11:43:09Z"
+created_by: sambeau
+id: FEAT-01KRBB4HNPPWF/dev-plan-p64-dev-plan-doc-register-canonical-path-validation
+owner: FEAT-01KRBB4HNPPWF
+path: work/P64-binding-governance/P64-dev-plan-doc-register-canonical-path-validation.md
+status: draft
+title: "Dev-Plan: doc register rejects non-canonical paths"
+type: dev-plan
+updated: "2026-05-11T11:43:09Z"
