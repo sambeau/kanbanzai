@@ -3,4 +3,6 @@ parent_feature: FEAT-01KRBQHAZDHKQ
 slug: f3-router-extraction
 name: Extract routing into internal/binding/router.go
 summary: Create internal/binding/router.go with pure Resolve(featureID)→BindingResolution function. Define BindingResolution struct. Accept FastTrackConfig. Return typed errors. With tests.
-status: active
+status: done
+completed: "2026-05-11T17:57:41Z"
+completion_summary: "Created and verified internal/binding/router.go with Resolve(featureID)→BindingResolution function, BindingResolution struct, FastTrackConfig acceptance, and typed errors (ErrNoBinding, ErrUnknownTier, ErrSkillMissing). Added go:generate directive. All 15 router tests pass covering AC-001 through AC-005, AC-012, and AC-014."
