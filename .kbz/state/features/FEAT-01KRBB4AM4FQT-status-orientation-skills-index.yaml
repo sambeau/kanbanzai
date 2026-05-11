@@ -6,6 +6,7 @@ status: specifying
 estimate: "1"
 summary: Modify synthesiseProject in internal/mcp/status_tool.go to include an inline skills index in the orientation block returned by status() with no ID. Currently the block points at .agents/skills/kanbanzai-getting-started/SKILL.md as a path; replace with a list of available skills (name + one-line summary) plus a context-aware suggestion based on observed work shape (no claimed task → kanbanzai-documents skill; active feature → kanbanzai-workflow skill). Addresses the diagnosed casual-chat / orchestrator discovery gap where agents do not proactively read skills. ~1 hour.
 design: FEAT-01KRBB4AM4FQT/design-p64-design-status-orientation-skills-index
+spec: FEAT-01KRBB4AM4FQT/spec-p64-spec-status-orientation-skills-index
 created: "2026-05-11T11:00:35Z"
 created_by: sambeau
 display_id: B69-F2

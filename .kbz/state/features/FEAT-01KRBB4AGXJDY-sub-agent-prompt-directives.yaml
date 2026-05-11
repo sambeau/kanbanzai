@@ -6,6 +6,7 @@ status: specifying
 estimate: "2"
 summary: "Add two short imperative directive blocks to handoff prompt assembly in internal/context/pipeline.go RenderPrompt. Block 1 (when binding.Orchestration == orchestrator-workers): names the dispatch contract — orchestrators dispatch via spawn_agent, sub-agents execute. Block 2 (when entity has active worktree): instructs use of write_file/kanbanzai_edit_file with entity_id parameter rather than plain write_file or shell redirection. Addresses the diagnosed root cause of orchestrators implementing directly instead of dispatching, and files saved outside worktree. ~1-2 hours including a test that asserts directives appear in handoff output for orchestrator-workers stages."
 design: FEAT-01KRBB4AGXJDY/design-p64-design-sub-agent-prompt-directives
+spec: FEAT-01KRBB4AGXJDY/spec-p64-spec-sub-agent-prompt-directives
 created: "2026-05-11T11:00:35Z"
 created_by: sambeau
 display_id: B69-F1

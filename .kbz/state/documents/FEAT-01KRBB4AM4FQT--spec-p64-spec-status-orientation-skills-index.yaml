@@ -1,0 +1,11 @@
+canonical_content_hash: c305d46f9dfa0e3e69dc362235bd1ce6816e34831a68d5e1eaf807795e489c0f
+content_hash: c305d46f9dfa0e3e69dc362235bd1ce6816e34831a68d5e1eaf807795e489c0f
+created: "2026-05-11T11:41:58Z"
+created_by: sambeau
+id: FEAT-01KRBB4AM4FQT/spec-p64-spec-status-orientation-skills-index
+owner: FEAT-01KRBB4AM4FQT
+path: work/P64-binding-governance/P64-spec-status-orientation-skills-index.md
+status: draft
+title: "Spec: Inline skills index in status() orientation block"
+type: spec
+updated: "2026-05-11T11:41:58Z"

@@ -1,0 +1,11 @@
+canonical_content_hash: 3b8ad1dbef54fe52f3cd3684a84aa940d68804bcd55a9c1f6809f87ab269055c
+content_hash: 3b8ad1dbef54fe52f3cd3684a84aa940d68804bcd55a9c1f6809f87ab269055c
+created: "2026-05-11T11:41:58Z"
+created_by: sambeau
+id: FEAT-01KRBB4HNPPWF/spec-p64-spec-doc-register-canonical-path-validation
+owner: FEAT-01KRBB4HNPPWF
+path: work/P64-binding-governance/P64-spec-doc-register-canonical-path-validation.md
+status: draft
+title: "Spec: doc register rejects non-canonical paths"
+type: spec
+updated: "2026-05-11T11:41:58Z"
