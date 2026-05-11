@@ -1,7 +1,7 @@
 id: B69-skills-discoverability-quick-patches
 slug: skills-discoverability-quick-patches
 name: Skills Discoverability Quick Patches
-status: designing
+status: active
 summary: "Three small, high-impact patches that restore agent awareness of skills before the larger binding-governance refactor lands. Diagnosed in P64 research: agents (orchestrators and casual chat) currently do not proactively discover or follow skills because (a) sub-agent prompts contain no dispatch/worktree-write directives, (b) status() orientation block points at skill paths without surfacing content, (c) doc(action: register) accepts non-canonical paths silently. These patches address each gap with no schema changes. Estimated total effort: 3-4 hours."
 created: "2026-05-11T11:00:01Z"
 created_by: sambeau
