@@ -3,4 +3,12 @@ parent_feature: FEAT-01KRBQHAZDHKQ
 slug: f3-sync-surface-verify
 name: Verify sync surface reduction 7-to-4 after Phase 3
 summary: Verify sync surface count reduces from 7 to 4 after Phase 3. Ensure routing.yaml and router_gen.go are integrated into build. With tests.
-status: active
+status: done
+files_planned:
+  - internal/binding/router.go
+  - internal/binding/sync_surface_test.go
+  - internal/binding/model.go
+  - Makefile
+completed: "2026-05-11T18:03:04Z"
+completion_summary: "Added sync surface verification tests and build integration. Fixed FastTrackConfig DefaultTier field and empty tier normalization. Removed hand-edited validStages from model.go. Added Makefile generate target. Wrote 5 sync surface tests verifying count=4, routing.yaml location, header comment, no hand-edited tables, and build integration."
+verification: "All binding and context tests pass (zero regressions). Benchmarks confirm Resolve p99 << 1ms (80ns avg). Sync surface tests confirm 4 surfaces (routing.yaml, stage-bindings.yaml, roles/, skills/). Makefile generate target wires go generate ./internal/binding/. Pre-existing test failures in kbzinit and mcp confirmed unrelated."
