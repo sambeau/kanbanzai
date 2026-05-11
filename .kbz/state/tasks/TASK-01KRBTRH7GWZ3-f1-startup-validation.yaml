@@ -3,4 +3,24 @@ parent_feature: FEAT-01KRBQHAZ5KY7
 slug: f1-startup-validation
 name: Wire ValidateBindingFile at server startup
 summary: Wire BindingRegistry.Load into server startup. Call ValidateBindingFile on .kbz/stage-bindings.yaml. Convert silent failures into loud startup errors with actionable messages. With tests.
-status: active
+status: done
+files_planned:
+  - .kbz/stage-bindings.yaml
+  - internal/binding/model.go
+  - internal/binding/model_test.go
+  - internal/binding/registry.go
+  - internal/binding/validate_test.go
+  - internal/context/pipeline.go
+  - internal/context/pipeline_test.go
+  - internal/kbzinit/stage-bindings.yaml
+  - internal/mcp/server.go
+  - internal/mcp/annotations_test.go
+  - internal/mcp/handler_test.go
+  - internal/mcp/server_groups_test.go
+  - internal/mcp/server_test.go
+  - internal/mcp/tool_description_budget_test.go
+  - internal/binding/registry_canonical_test.go
+  - internal/mcp/server_startup_test.go
+completed: "2026-05-11T16:58:30Z"
+completion_summary: "Wired BindingRegistry.Load into server startup. Replaced bare LoadBindingFile with BindingRegistry.Load using role store for validation. Validation failures now hard-fail with actionable error messages referencing 'kbz binding doctor' and 'kbz init --upgrade'. Updated validStages (12), validOrchestrations (+pipeline-coordinator), workableStatuses, and validTopologies. Added retro-fixing fields to both YAMLs. 7 new tests."
+verification: "go test ./internal/binding/... (pass), ./internal/context/... (pass), ./internal/mcp/... (no new failures). go build ./... (success). All 7 new tests pass."

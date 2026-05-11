@@ -1,0 +1,14 @@
+confidence: "0.5"
+content: "BindingRegistry.Load wraps LoadBindingFile + ValidateBindingFile. At startup, validation errors hard-fail (refuse to start with fix hints), load errors soft-warn. Error includes 'kbz binding doctor' and 'kbz init --upgrade'. RoleChecker built from RoleStore.Exists."
+created: "2026-05-11T16:58:30Z"
+created_by: unknown
+id: KE-01KRBZKPBMXKH
+learned_from: TASK-01KRBTRH7GWZ3
+miss_count: 0
+scope: project
+status: contributed
+tier: 3
+topic: binding-registry-startup-validation
+ttl_days: 30
+updated: "2026-05-11T16:58:30Z"
+use_count: 0
