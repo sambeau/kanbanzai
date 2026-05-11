@@ -3,4 +3,11 @@ parent_feature: FEAT-01KRBQHAZ5BFV
 slug: f2-doc-fasttrack-sync
 name: "Document FastTrackConfig, verify sync surface 10-to-7"
 summary: Add Go doc comments to FastTrackConfig. Verify sync surface count reduces from 10 to 7 after Phase 2. With tests.
-status: active
+status: done
+files_planned:
+  - internal/config/config.go
+  - .kbz/stage-bindings.yaml
+  - internal/config/config_test.go
+completed: "2026-05-11T17:13:24Z"
+completion_summary: "Updated FastTrackConfig doc comment to state it is the system of record for tier-aware behaviour (AC-009). Added header comment to canonical stage-bindings.yaml stating routing decisions are owned by FastTrackConfig (code). Added two tests: TestFastTrackConfig_SystemOfRecordDocComment (verifies doc comment), TestSyncSurface_PostPhase2_Count (enumerates 7 sync surfaces, verifies retro-fixing key removal, reports embedded-vs-canonical drift). All tests pass."
+verification: "go test ./internal/config/... passed (all tests including 2 new ones pass). AC-009 verified: doc comment contains 'system of record'. AC-013 verified: 7 sync surfaces enumerated, retro-fixing key absent, drift between canonical (13 keys) and embedded (11 keys) reported as diagnostic."
