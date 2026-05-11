@@ -3,4 +3,7 @@ parent_feature: FEAT-01KRBQHAZDHKQ
 slug: f3-pipeline-resolve-wire
 name: Wire pipeline stepLookupBinding to Resolve
 summary: "Update pipeline stepLookupBinding to call Resolve. Verify existing 3.0 pipeline works after change. Handle edge cases: unmapped status, invalid tier, missing skill. With tests."
-status: active
+status: done
+completed: "2026-05-11T18:05:42Z"
+completion_summary: "Updated stepLookupBinding to call binding.Resolve. Added RoutingTable, FastTrackCfg, SkillChecker fields to Pipeline. Updated stepResolveStage with tier validation, bug status mapping, ErrUnknownTier sentinel, and bugStatusToBindingKey helper. Updated stepValidateLifecycle for bug status handling. Added 14 new tests covering edge cases: invalid tier, missing skill, unmapped status, bug routing, and tier validation. All existing tests pass."
+verification: "Ran go test ./internal/binding/... ./internal/context/... - all pass (binding: 27 tests, context: 100+ tests). go build ./... succeeds. go vet clean. Key edge cases tested: invalid tier → ErrUnknownTier, missing skill → ErrSkillMissing, unmapped status → ErrNoBinding, bug status routing, tier validation in stepResolveStage."
