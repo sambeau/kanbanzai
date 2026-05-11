@@ -1,0 +1,13 @@
+approved_at: "2026-05-11T11:35:33Z"
+approved_by: sambeau
+canonical_content_hash: d252f7dd9eb74ba73b6f139b3d95b3e0497c7aba2c08c103b95a759c9cf629f8
+content_hash: d252f7dd9eb74ba73b6f139b3d95b3e0497c7aba2c08c103b95a759c9cf629f8
+created: "2026-05-11T11:35:33Z"
+created_by: sambeau
+id: BUG-01KRBD4B236SZ/spec-spec
+owner: BUG-01KRBD4B236SZ
+path: work/bugs/doc-path-strategic-plan-parent-lookup/spec.md
+status: approved
+title: "Bug Specification: doc path fails with strategic-plan ancestor"
+type: spec
+updated: "2026-05-11T11:35:33Z"
