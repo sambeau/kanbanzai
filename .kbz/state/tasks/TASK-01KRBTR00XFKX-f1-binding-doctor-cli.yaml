@@ -3,8 +3,11 @@ parent_feature: FEAT-01KRBQHAZ5KY7
 slug: f1-binding-doctor-cli
 name: Add kbz binding doctor CLI subcommand
 summary: Implement kbz binding doctor CLI subcommand running ValidateBindingFile with diagnostic output. With tests.
-status: active
+status: done
+completed: "2026-05-11T16:02:45Z"
 claimed_at: "2026-05-11T15:35:24Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-11T15:35:24Z"
 dispatched_by: sambeau
+completion_summary: "Implemented kbz binding doctor CLI subcommand. Created cmd/kbz/binding_cmd.go with runBinding doctor command that loads and validates stage-bindings.yaml via ValidateBindingFile, with role file checker. Added 13 tests covering valid/invalid bindings, role fallback, missing files, CLI dispatch, and output formatting. All tests pass."
+verification: "Ran go test ./cmd/kbz/ (all pass), go test ./internal/binding/... (pass), go test ./internal/core/... (pass), and go build ./... (success)."
