@@ -3,4 +3,15 @@ parent_feature: FEAT-01KRBQHAZDHKQ
 slug: f3-routing-companion
 name: Create routing companion file and go generate pipeline
 summary: "Create internal/binding/routing.yaml. Add go:generate directive for router_gen.go. Generate Go constructs from routing.yaml. Add header comment to .kbz/stage-bindings.yaml. With tests."
-status: active
+status: done
+files_planned:
+  - internal/binding/routing.yaml
+  - internal/binding/gen/main.go
+  - internal/binding/router_gen.go
+  - internal/binding/router_test.go
+  - internal/binding/model.go
+  - .kbz/stage-bindings.yaml
+  - internal/context/pipeline.go
+completed: "2026-05-11T18:03:28Z"
+completion_summary: "Created routing.yaml, code generator gen/main.go, generated router_gen.go (validStages, WorkableStatuses, routing constants, bugStatusToBindingKey, routingTable). Removed hand-edited validStages from model.go. Updated pipeline.go to reference binding.WorkableStatuses. Added header comment to stage-bindings.yaml. Wrote comprehensive router_test.go covering all 15 ACs — all 22+ tests pass, Resolve latency ~105ns avg."
+verification: "go build ./... passes, go test -short ./internal/binding/... passes all tests, average Resolve latency 105ns (well under 1ms p99 requirement)"
