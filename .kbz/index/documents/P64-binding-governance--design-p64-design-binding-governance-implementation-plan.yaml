@@ -1,0 +1,273 @@
+document_id: P64-binding-governance/design-p64-design-binding-governance-implementation-plan
+document_path: work/P64-binding-governance/P64-design-binding-governance-implementation-plan.md
+content_hash: a7035e12d117fb4c93cb8e861b3752837dc0f0af51a7e670df64fba2c6d34b7e
+indexed_at: 2026-05-11T14:11:28.195447Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Binding Governance Implementation Plan'
+      byte_offset: 0
+      byte_count: 33510
+      word_count: 4560
+      content_hash: a7035e12d117fb4c93cb8e861b3752837dc0f0af51a7e670df64fba2c6d34b7e
+      children:
+        - path: "1.1"
+          level: 2
+          title: Related Work
+          byte_offset: 201
+          byte_count: 4298
+          word_count: 496
+          content_hash: bd7dc2f26bb7aa772e46b1fcbe345447abbee467e81c5f29a5b2e1293764c866
+        - path: "1.2"
+          level: 2
+          title: Problem and Motivation
+          byte_offset: 4499
+          byte_count: 3496
+          word_count: 462
+          content_hash: 948024ca410f41b300cc3cb4cb915f57bd44ba6a8fe0c9a9ef06f79d0db7f739
+        - path: "1.3"
+          level: 2
+          title: Design
+          byte_offset: 7995
+          byte_count: 14262
+          word_count: 2001
+          content_hash: 1cad129a03a4a189852c435610c2b722180ab33865dacf0f7144a7bd57ed4c0c
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Component map
+              byte_offset: 8364
+              byte_count: 1354
+              word_count: 187
+              content_hash: 3c09ab8ff0fa056ab98fbed11f7b8fa3d1bb6aae6bd6840c5c79fd6d998d0f6b
+            - path: 1.3.2
+              level: 3
+              title: Phase 1 — Stop the lying
+              byte_offset: 9718
+              byte_count: 2782
+              word_count: 380
+              content_hash: 0f589760561534237472880615a5732b7ae540fb9b26468935a48017294e7bb6
+            - path: 1.3.3
+              level: 3
+              title: Phase 2 — Resolve the two failures and reduce drift
+              byte_offset: 12500
+              byte_count: 2735
+              word_count: 386
+              content_hash: b461f61648189e2657664c9d53bd429713fd3e4d72c427c1855cc60bb363e26d
+            - path: 1.3.4
+              level: 3
+              title: Phase 3 — Establish the contract for P44
+              byte_offset: 15235
+              byte_count: 2811
+              word_count: 381
+              content_hash: 9c0ca42c528e5c289dac8d553fa48481001e8f21402ba6ac26930dd209bc313c
+            - path: 1.3.5
+              level: 3
+              title: Failure mode handling
+              byte_offset: 18046
+              byte_count: 2045
+              word_count: 316
+              content_hash: cecf77a4febfdbae61a7ca9a39a6a15f25a3bfe267660ea99e26fcc0122aa760
+            - path: 1.3.6
+              level: 3
+              title: Migration strategy for consumer projects
+              byte_offset: 20091
+              byte_count: 991
+              word_count: 142
+              content_hash: eb6eb743530f9df380e575abb6d4bdf711972d77c800afc2b630c2bfbc7a4bf1
+            - path: 1.3.7
+              level: 3
+              title: Interface contract for P44
+              byte_offset: 21082
+              byte_count: 1175
+              word_count: 152
+              content_hash: 433d5c55d17786175530084270260e2e5a78a1f5634f3883704ecc88dd1c411c
+        - path: "1.4"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 22257
+          byte_count: 3838
+          word_count: 546
+          content_hash: c95b1bd996138021717bc61d6ad0d14dff2973f831a15efa41f9e1206114e21b
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Alternative A — Harden instruction-only (P64 Option A)
+              byte_offset: 22285
+              byte_count: 627
+              word_count: 89
+              content_hash: f13ec74033431527672fecff5a05dcb2945d6f3faf41e8db59e2e714fcdcf861
+            - path: 1.4.2
+              level: 3
+              title: Alternative B — Full code-managed pipeline (P64 Option B)
+              byte_offset: 22912
+              byte_count: 701
+              word_count: 96
+              content_hash: 4c0569db1a61978f23ba2ffa6800bb84cbaff1a4a79abec7dbae2a20f9acf1ec
+            - path: 1.4.3
+              level: 3
+              title: Alternative C — Hybrid (P64 Option C — recommended and adopted)
+              byte_offset: 23613
+              byte_count: 736
+              word_count: 101
+              content_hash: 5451850f51b5fb00b2d3ed697dce82cb0d854c985e952040a2d2b25c7e4346a7
+            - path: 1.4.4
+              level: 3
+              title: Alternative D — Retire dead bindings, promote FastTrack (P64 Option D)
+              byte_offset: 24349
+              byte_count: 798
+              word_count: 116
+              content_hash: b05b1de65761a44a241f0cf58999297ad426a3ee01415cd64c68d2a40c93e33b
+            - path: 1.4.5
+              level: 3
+              title: Alternative E — Do nothing / status quo
+              byte_offset: 25147
+              byte_count: 384
+              word_count: 63
+              content_hash: 49b859c50b78b23d70a1fd0431cbfde3ce8cddd96e2d939ec719fd11ec8ce1ff
+            - path: 1.4.6
+              level: 3
+              title: Alternative F — Schema-v3 YAML to support tier routing declaratively
+              byte_offset: 25531
+              byte_count: 564
+              word_count: 78
+              content_hash: e9886b7c5f26b83558a448b8426051e57f47a94ca060c69aa52d024a83617bdd
+        - path: "1.5"
+          level: 2
+          title: Decisions
+          byte_offset: 26095
+          byte_count: 5504
+          word_count: 767
+          content_hash: 2827a325bddab3cc41b28d54e26df3277914d2c8b63968b67d98a249aef84f64
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Decision 1 — Resolve `retro-fixing` by deleting the YAML block and wiring `implement-retro-fix` through FastTrack
+              byte_offset: 26109
+              byte_count: 1123
+              word_count: 153
+              content_hash: 6463ef6e110477632f5709d95b15797647e9cba6192c346ea40e78d8e63f1b74
+            - path: 1.5.2
+              level: 3
+              title: Decision 2 — Add `bug-developing` and `bug-reviewing` bindings rather than declare bugs out-of-pipeline
+              byte_offset: 27232
+              byte_count: 1185
+              word_count: 165
+              content_hash: 95d97a0f8313a9e5d6f5a57a9247137a69a9d6dc9bd826c107e9a36a2cefe885
+            - path: 1.5.3
+              level: 3
+              title: Decision 3 — Validation failure mode is hard-fail at startup for the canonical file, warn-and-continue for consumer files
+              byte_offset: 28417
+              byte_count: 1153
+              word_count: 175
+              content_hash: fecdec05d2044923eece8921b95d8fb9c560cb55c1206558c07a510fcec24ac6
+            - path: 1.5.4
+              level: 3
+              title: Decision 4 — Reduce synchronisation surfaces via a single routing companion file generated into code
+              byte_offset: 29570
+              byte_count: 1099
+              word_count: 153
+              content_hash: 0ef79c25916a0732cdf70452d2a152c158727f93c5f369ed305354599951954c
+            - path: 1.5.5
+              level: 3
+              title: Decision 5 — `doc-publishing` retains `pipeline-coordinator` orchestration; the validator admits it
+              byte_offset: 30669
+              byte_count: 930
+              word_count: 119
+              content_hash: 7f8841b9d3a5d3461899c44aa351c30f27669cd61c546f5a14b1adba284acaea
+        - path: "1.6"
+          level: 2
+          title: Open Questions
+          byte_offset: 31599
+          byte_count: 1911
+          word_count: 260
+          content_hash: 61d573713c7f894b35ce6cd892a056e2532b498143cb49ef7afee202c0a34340
+entity_refs:
+    - entity_id: P64-binding-governance
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 436
+    - entity_id: B69-skills-discoverability-quick-patches
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 462
+    - entity_id: B57-retro-pipeline-tightening-impl
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 506
+    - entity_id: B48-fast-track-impl
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 544
+    - entity_id: P44-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 567
+    - entity_id: P52-fast-track-orchestration
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 1854
+    - entity_id: P43-fast-track-architecture
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 1932
+    - entity_id: P51-handoff-pipeline-unification
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 2216
+    - entity_id: P59-roles-skills-remediation
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 2497
+    - entity_id: P61-handoff-resilience-binding-hardening
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 2721
+    - entity_id: P60-whole-project-remediation-cycle
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 3003
+conventional_roles:
+    - section_path: "1.4"
+      role: alternative
+      confidence: high
+    - section_path: 1.4.1
+      role: alternative
+      confidence: high
+    - section_path: 1.4.2
+      role: alternative
+      confidence: high
+    - section_path: 1.4.3
+      role: alternative
+      confidence: high
+    - section_path: 1.4.4
+      role: alternative
+      confidence: high
+    - section_path: 1.4.5
+      role: alternative
+      confidence: high
+    - section_path: 1.4.6
+      role: alternative
+      confidence: high
+    - section_path: "1.5"
+      role: decision
+      confidence: high
+    - section_path: 1.5.1
+      role: decision
+      confidence: high
+    - section_path: 1.5.2
+      role: decision
+      confidence: high
+    - section_path: 1.5.3
+      role: decision
+      confidence: high
+    - section_path: 1.5.4
+      role: decision
+      confidence: high
+    - section_path: 1.5.5
+      role: decision
+      confidence: high
+    - section_path: "1.6"
+      role: question
+      confidence: high
+classified: false

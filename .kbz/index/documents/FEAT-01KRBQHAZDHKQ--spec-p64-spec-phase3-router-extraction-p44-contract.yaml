@@ -1,0 +1,87 @@
+document_id: FEAT-01KRBQHAZDHKQ/spec-p64-spec-phase3-router-extraction-p44-contract
+document_path: work/P64-binding-governance/P64-spec-phase3-router-extraction-p44-contract.md
+content_hash: 66c7753056ceeab1185570313c699a8e5e51131db4c7e7030a1e6ccfc76dc377
+indexed_at: 2026-05-11T14:49:27.520075Z
+sections:
+    - path: "1"
+      level: 2
+      title: Overview
+      byte_offset: 221
+      byte_count: 1696
+      word_count: 181
+      content_hash: 5e6c0d0aca98b75593955d60e9ade1ad36456ff198c0f9c9c8afdb918dc1c6d7
+    - path: "2"
+      level: 2
+      title: Scope
+      byte_offset: 1917
+      byte_count: 1316
+      word_count: 172
+      content_hash: 094e6413dc891151724df108cfba5572aa0eaa5e313d766782fb639c6985abe0
+    - path: "3"
+      level: 2
+      title: Functional Requirements
+      byte_offset: 3233
+      byte_count: 3247
+      word_count: 425
+      content_hash: a401d137386b10fa7290a3f0f7de2281fc636a4b740be417659beda1008f5ea8
+    - path: "4"
+      level: 2
+      title: Non-Functional Requirements
+      byte_offset: 6480
+      byte_count: 619
+      word_count: 87
+      content_hash: 7fb9eb548e6167433b4bfde2c3e99ccb000beaaad29267e1ae10c4956456f8c6
+    - path: "5"
+      level: 2
+      title: Constraints
+      byte_offset: 7099
+      byte_count: 1692
+      word_count: 237
+      content_hash: 1e7c41a56a54a5f76d4d6c2694d6fadec4c8c1e667586a1575c171c7ca711994
+    - path: "6"
+      level: 2
+      title: Acceptance Criteria
+      byte_offset: 8791
+      byte_count: 3875
+      word_count: 493
+      content_hash: 1bd18c452b46e8f02974c83c087737322aafa2506553fdcdb7284a674bff9cdf
+    - path: "7"
+      level: 2
+      title: Verification Plan
+      byte_offset: 12666
+      byte_count: 3229
+      word_count: 484
+      content_hash: 09fdaf0f7f077397d2c9927dceb1b83a5bc93d9eb8d63a325bc5022f0a85d324
+entity_refs:
+    - entity_id: P64-binding-governance
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 294
+    - entity_id: P64-design-binding-governance-implementation-plan
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 317
+cross_doc_links:
+    - target_path: work/P64-binding-governance/P64-design-binding-governance-implementation-plan.md
+      link_text: work/P64-binding-governance/P64-design-binding-governance-implementation-plan.md
+      section_path: "1"
+conventional_roles:
+    - section_path: "1"
+      role: narrative
+      confidence: high
+    - section_path: "2"
+      role: constraint
+      confidence: high
+    - section_path: "3"
+      role: requirement
+      confidence: high
+    - section_path: "4"
+      role: requirement
+      confidence: high
+    - section_path: "5"
+      role: constraint
+      confidence: high
+    - section_path: "6"
+      role: requirement
+      confidence: high
+classified: false
