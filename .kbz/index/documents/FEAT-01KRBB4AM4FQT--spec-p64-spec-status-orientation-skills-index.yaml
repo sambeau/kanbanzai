@@ -1,0 +1,69 @@
+document_id: FEAT-01KRBB4AM4FQT/spec-p64-spec-status-orientation-skills-index
+document_path: work/P64-binding-governance/P64-spec-status-orientation-skills-index.md
+content_hash: c305d46f9dfa0e3e69dc362235bd1ce6816e34831a68d5e1eaf807795e489c0f
+indexed_at: 2026-05-11T11:41:58.227986Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Inline skills index in status() orientation block'
+      byte_offset: 0
+      byte_count: 1247
+      word_count: 183
+      content_hash: c305d46f9dfa0e3e69dc362235bd1ce6816e34831a68d5e1eaf807795e489c0f
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 68
+          byte_count: 232
+          word_count: 27
+          content_hash: 82cc731ec75a2ec08df8e3ad307e87c3ed7b591f8b7bfcc8ffe4c4cd679d0e1b
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 300
+          byte_count: 100
+          word_count: 10
+          content_hash: 4108f8f3760776a1b8b8a8d7a8fcc1c3ca7b8b24ff9a8d72834a48d8f518e9ee
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 400
+          byte_count: 497
+          word_count: 80
+          content_hash: 76098e4953da0abf5e79fb2a7228ceec2e5f876d421bdea40fcadcf4585d8319
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 897
+          byte_count: 126
+          word_count: 19
+          content_hash: d59f5f19dd24c8481451d3530e70cca89be7d83130afbf170f1416489a69b0df
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 1023
+          byte_count: 224
+          word_count: 38
+          content_hash: 65d3e63e004cb3ae5441a8a0c987a3ccdb1a3673a0bb2d544bbb51c177b9b82d
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+classified: false

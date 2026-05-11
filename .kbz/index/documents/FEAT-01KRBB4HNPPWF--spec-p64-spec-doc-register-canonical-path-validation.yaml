@@ -1,0 +1,65 @@
+document_id: FEAT-01KRBB4HNPPWF/spec-p64-spec-doc-register-canonical-path-validation
+document_path: work/P64-binding-governance/P64-spec-doc-register-canonical-path-validation.md
+content_hash: 3b8ad1dbef54fe52f3cd3684a84aa940d68804bcd55a9c1f6809f87ab269055c
+indexed_at: 2026-05-11T11:41:58.228358Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: doc register rejects non-canonical paths'
+      byte_offset: 0
+      byte_count: 1187
+      word_count: 182
+      content_hash: 3b8ad1dbef54fe52f3cd3684a84aa940d68804bcd55a9c1f6809f87ab269055c
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 59
+          byte_count: 221
+          word_count: 33
+          content_hash: 5b3f9d30d791c3934c0b0f7a1dd70bff8d3700633b1f486dd01ea2caf5c88d2a
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 280
+          byte_count: 85
+          word_count: 10
+          content_hash: c6b89ff26deecc8290b737c800bdc00a482848ca8dd55b7200d4fafd6cfc97b0
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 365
+          byte_count: 417
+          word_count: 64
+          content_hash: b2d69d1fcf58af979f0f4ee9cf1dfab03b56f871695c72c55bc42de0619a4a4e
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 782
+          byte_count: 146
+          word_count: 24
+          content_hash: 10a298187a32566e6463f6b35762fc2c2c3a1e3b081c9ba3791b063f6aaaabab
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 928
+          byte_count: 259
+          word_count: 44
+          content_hash: 8766c754fbaf58790d24b78e4618b19c36d0c60c4200c857d8cf8369c40bc5fb
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+classified: false

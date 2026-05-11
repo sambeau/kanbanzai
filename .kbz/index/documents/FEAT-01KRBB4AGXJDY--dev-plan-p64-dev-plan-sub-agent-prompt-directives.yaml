@@ -1,0 +1,53 @@
+document_id: FEAT-01KRBB4AGXJDY/dev-plan-p64-dev-plan-sub-agent-prompt-directives
+document_path: work/P64-binding-governance/P64-dev-plan-sub-agent-prompt-directives.md
+content_hash: 564fb77681c6eeda76fd860272ae25c0267ef6891331d9b01722282bd7eca178
+indexed_at: 2026-05-11T11:43:09.979262Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Sub-agent prompt dispatch and worktree-write directives'
+      byte_offset: 0
+      byte_count: 792
+      word_count: 101
+      content_hash: 564fb77681c6eeda76fd860272ae25c0267ef6891331d9b01722282bd7eca178
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 69
+          byte_count: 116
+          word_count: 11
+          content_hash: 180238efddc23e265a04851f73417c2adf20ba4846e36208c275f4213354c883
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 185
+          byte_count: 293
+          word_count: 37
+          content_hash: bfcafe3148602a4721326cd037047b616eb34486605f54acd4f4c5a8a6a5e9c1
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 478
+          byte_count: 49
+          word_count: 7
+          content_hash: a7bbda9289ad0d294a44c268f279f4eb2b8af9cd06079b67985a570e2ba04325
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 527
+          byte_count: 123
+          word_count: 15
+          content_hash: 352d2e2005f10491b5138310c06522545a6fbf27cf294acb1b84e30f2ac4d03c
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 650
+          byte_count: 142
+          word_count: 23
+          content_hash: bc5852af5f8164cf6244bb273f42aaeef5df9a340c21d09e6ed951dc33b60793
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

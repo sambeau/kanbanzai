@@ -3,9 +3,9 @@ content: "The doc_intel knowledge graph engine writes to .kbz/index/documents/*.
 created: "2026-05-05T12:11:16Z"
 created_by: sambeau
 id: KE-01KQW0SEB540A
-last_accessed_at: "2026-05-11T10:48:14Z"
+last_accessed_at: "2026-05-11T11:45:36Z"
 miss_count: 0
-recent_use_count: 216
+recent_use_count: 218
 scope: project
 status: contributed
 tags:

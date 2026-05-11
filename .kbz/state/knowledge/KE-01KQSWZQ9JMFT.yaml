@@ -3,10 +3,10 @@ content: "tryAutoValidate in doc_tool.go implements per-feature auto-validation 
 created: "2026-05-04T16:26:19Z"
 created_by: unknown
 id: KE-01KQSWZQ9JMFT
-last_accessed_at: "2026-05-11T10:48:14Z"
+last_accessed_at: "2026-05-11T11:45:36Z"
 learned_from: TASK-01KQSPBPCV01S
 miss_count: 0
-recent_use_count: 239
+recent_use_count: 241
 scope: project
 status: contributed
 tags:

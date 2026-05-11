@@ -1,0 +1,53 @@
+document_id: FEAT-01KRBB4AM4FQT/design-p64-design-status-orientation-skills-index
+document_path: work/P64-binding-governance/P64-design-status-orientation-skills-index.md
+content_hash: 52871a20b4d64b13ab452dfd2199ff2c48b5cd11838508be10b5c03d3820d340
+indexed_at: 2026-05-11T11:40:25.827923Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Inline skills index in status() orientation block'
+      byte_offset: 0
+      byte_count: 1058
+      word_count: 136
+      content_hash: 52871a20b4d64b13ab452dfd2199ff2c48b5cd11838508be10b5c03d3820d340
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 61
+          byte_count: 155
+          word_count: 18
+          content_hash: 5a9057c8256468b2ae66638d35faaaf0bf2b7a2ef3133e9cd64eab68796e5f2a
+        - path: "1.2"
+          level: 2
+          title: Design
+          byte_offset: 216
+          byte_count: 524
+          word_count: 65
+          content_hash: 34063f447bfb20a24cf5c8ef99a4baeeef2cc64cca9a4acf197aa79f51331f97
+        - path: "1.3"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 740
+          byte_count: 279
+          word_count: 40
+          content_hash: 5b3dd6929697f362c9fc23a56519ea42319a8460cdab1cf519407308a84d375c
+        - path: "1.4"
+          level: 2
+          title: Dependencies
+          byte_offset: 1019
+          byte_count: 39
+          word_count: 4
+          content_hash: 7cf5d42485542c3d17085e58253184faf8b656c020bd039734656df2d0867e48
+cross_doc_links:
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: "1.2"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: alternative
+      confidence: high
+classified: false

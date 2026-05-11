@@ -1,0 +1,179 @@
+document_id: B68-test-remediation-impl/dev-plan-p63-dev-plan-test-remediation
+document_path: work/P63-test-remediation/P63-dev-plan-test-remediation.md
+content_hash: 4fe014bf8909eced1fef205bdd4fc3a45b3aef09a2c7054e0d2ee192eb5e0beb
+indexed_at: 2026-05-10T12:53:09.7659Z
+sections:
+    - path: "1"
+      level: 1
+      title: B68 Dev-Plan — Test Remediation Implementation
+      byte_offset: 0
+      byte_count: 3124
+      word_count: 416
+      content_hash: 4fe014bf8909eced1fef205bdd4fc3a45b3aef09a2c7054e0d2ee192eb5e0beb
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 229
+          byte_count: 289
+          word_count: 47
+          content_hash: 86105f872d9df5746f6d63bb6d89830ebe6727c8990d424d45e062e9edf9d75b
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 518
+          byte_count: 1853
+          word_count: 252
+          content_hash: 77fdd301c65023d3abf81c0168891bbcd9b97049c48db16454ed332d47986f44
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'FEAT-01KR8YRQN1HPG — Phase 1: Fix All 111 Failing Tests'
+              byte_offset: 537
+              byte_count: 557
+              word_count: 77
+              content_hash: 00dd51336722a69011a126166b1eee98baa5e85f32a26bacf28a28f5ada526d3
+            - path: 1.2.2
+              level: 3
+              title: 'FEAT-01KR8YRQN0P0W — Phase 2: Test Infrastructure Hardening'
+              byte_offset: 1094
+              byte_count: 449
+              word_count: 54
+              content_hash: cfab9809bac847d9f9e59c7b855b9e17036d69e0bb706b52ce5de68bd61ae735
+            - path: 1.2.3
+              level: 3
+              title: 'FEAT-01KR8YRQN0D6G — Phase 3: Enforcement Mechanisms'
+              byte_offset: 1543
+              byte_count: 409
+              word_count: 60
+              content_hash: f3803e712e55162c19289fa6073a3b7b71c5b254e750be9d97ddb8bfb344287d
+            - path: 1.2.4
+              level: 3
+              title: 'FEAT-01KR8YRQN1M56 — Phase 4: DoD and Policy Updates'
+              byte_offset: 1952
+              byte_count: 419
+              word_count: 58
+              content_hash: 9fb7698eb6f4d267759abea88226386edaf226f6d678f14d80b31237a5f89bfe
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 2371
+          byte_count: 371
+          word_count: 45
+          content_hash: 51fe6d5479aedd5368eb85eb91a7501831055f540abc967456dd229a2cfd21eb
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 2742
+          byte_count: 223
+          word_count: 34
+          content_hash: bcf2ee2d03c90d683d685785b28527b25b63ea6875574a3563a93c6fbd3252fd
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 2965
+          byte_count: 159
+          word_count: 15
+          content_hash: 75263f76aec50cf158c995d2727801e701c506962af27ab526518d617d407e96
+entity_refs:
+    - entity_id: FEAT-01KR8YRQN1HPG
+      entity_type: feature
+      section_path: 1.2.1
+      byte_offset: 541
+    - entity_id: FEAT-01KR8YRQN0P0W
+      entity_type: feature
+      section_path: 1.2.2
+      byte_offset: 1098
+    - entity_id: FEAT-01KR8YRQN0D6G
+      entity_type: feature
+      section_path: 1.2.3
+      byte_offset: 1547
+    - entity_id: FEAT-01KR8YRQN1M56
+      entity_type: feature
+      section_path: 1.2.4
+      byte_offset: 1956
+    - entity_id: TASK-01KR8YZDB9AM1
+      entity_type: task
+      section_path: 1.2.1
+      byte_offset: 654
+    - entity_id: TASK-01KR8Z05Y5FZB
+      entity_type: task
+      section_path: 1.2.1
+      byte_offset: 760
+    - entity_id: TASK-01KR8Z05YNZAH
+      entity_type: task
+      section_path: 1.2.1
+      byte_offset: 847
+    - entity_id: TASK-01KR8Z05YH85N
+      entity_type: task
+      section_path: 1.2.1
+      byte_offset: 920
+    - entity_id: TASK-01KR8Z05YKQ03
+      entity_type: task
+      section_path: 1.2.1
+      byte_offset: 997
+    - entity_id: TASK-01KR8Z11BJ6YA
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 1215
+    - entity_id: TASK-01KR8Z11BAXBZ
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 1302
+    - entity_id: TASK-01KR8Z11BA20C
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 1379
+    - entity_id: TASK-01KR8Z11B8M2Y
+      entity_type: task
+      section_path: 1.2.2
+      byte_offset: 1460
+    - entity_id: TASK-01KR8Z1RFPS36
+      entity_type: task
+      section_path: 1.2.3
+      byte_offset: 1657
+    - entity_id: TASK-01KR8Z1RF645K
+      entity_type: task
+      section_path: 1.2.3
+      byte_offset: 1726
+    - entity_id: TASK-01KR8Z1RFGD8S
+      entity_type: task
+      section_path: 1.2.3
+      byte_offset: 1804
+    - entity_id: TASK-01KR8Z1RFN7N8
+      entity_type: task
+      section_path: 1.2.3
+      byte_offset: 1878
+    - entity_id: TASK-01KR8Z2FNJMXX
+      entity_type: task
+      section_path: 1.2.4
+      byte_offset: 2066
+    - entity_id: TASK-01KR8Z2FNHB2W
+      entity_type: task
+      section_path: 1.2.4
+      byte_offset: 2131
+    - entity_id: TASK-01KR8Z2FN2C29
+      entity_type: task
+      section_path: 1.2.4
+      byte_offset: 2193
+    - entity_id: TASK-01KR8Z2FN9F8X
+      entity_type: task
+      section_path: 1.2.4
+      byte_offset: 2280
+    - entity_id: P63-test-remediation
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 3050
+    - entity_id: P63-spec-test-remediation
+      entity_type: plan
+      section_path: "1.5"
+      byte_offset: 3071
+cross_doc_links:
+    - target_path: work/P63-test-remediation/P63-spec-test-remediation.md
+      link_text: work/P63-test-remediation/P63-spec-test-remediation.md
+      section_path: "1.5"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

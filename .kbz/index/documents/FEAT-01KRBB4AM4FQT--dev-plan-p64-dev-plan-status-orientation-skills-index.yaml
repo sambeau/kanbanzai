@@ -1,0 +1,53 @@
+document_id: FEAT-01KRBB4AM4FQT/dev-plan-p64-dev-plan-status-orientation-skills-index
+document_path: work/P64-binding-governance/P64-dev-plan-status-orientation-skills-index.md
+content_hash: 8b47ad2fdb4eb668aa3489acae4c561a977df1084d44fe3f5d5f5e42027d7b39
+indexed_at: 2026-05-11T11:43:09.979464Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: Inline skills index in status() orientation block'
+      byte_offset: 0
+      byte_count: 762
+      word_count: 105
+      content_hash: 8b47ad2fdb4eb668aa3489acae4c561a977df1084d44fe3f5d5f5e42027d7b39
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 63
+          byte_count: 146
+          word_count: 15
+          content_hash: 450d013724e664df7b48b34a9e7c2debdb9b1586e9022b4772839bb8bf0e325a
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 209
+          byte_count: 263
+          word_count: 38
+          content_hash: 22679374cfe30ceab7a7dfddcf08100a2eb731a4a4266c51fa50f9dbd3ad5def
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 472
+          byte_count: 49
+          word_count: 7
+          content_hash: a7bbda9289ad0d294a44c268f279f4eb2b8af9cd06079b67985a570e2ba04325
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 521
+          byte_count: 106
+          word_count: 14
+          content_hash: 7a78e0a5b6a5290fa36b772e41ed0fddfa5ea60961e0a795eccd745d8820fa1c
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 627
+          byte_count: 135
+          word_count: 22
+          content_hash: 8f54aa8c008249d7a5a9d8a422bbcd9839c3898b3b9779b5fb3d2476068788d3
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

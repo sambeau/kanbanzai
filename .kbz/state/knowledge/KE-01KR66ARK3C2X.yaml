@@ -3,10 +3,10 @@ content: "[moderate] tool-friction: Pre-existing compilation errors in bug_gate_
 created: "2026-05-09T11:00:31Z"
 created_by: unknown
 id: KE-01KR66ARK3C2X
-last_accessed_at: "2026-05-11T10:48:14Z"
+last_accessed_at: "2026-05-11T11:45:36Z"
 learned_from: TASK-01KR47B9NQ05R
 miss_count: 0
-recent_use_count: 13
+recent_use_count: 15
 scope: project
 status: contributed
 tags:

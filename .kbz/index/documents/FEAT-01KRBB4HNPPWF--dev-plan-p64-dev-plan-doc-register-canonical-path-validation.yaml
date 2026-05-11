@@ -1,0 +1,53 @@
+document_id: FEAT-01KRBB4HNPPWF/dev-plan-p64-dev-plan-doc-register-canonical-path-validation
+document_path: work/P64-binding-governance/P64-dev-plan-doc-register-canonical-path-validation.md
+content_hash: d86391d7cf7fcd24baa0540099827d651d8db9f3c6f47ebe08dad55da1c377a7
+indexed_at: 2026-05-11T11:43:09.980046Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev-Plan: doc register rejects non-canonical paths'
+      byte_offset: 0
+      byte_count: 731
+      word_count: 100
+      content_hash: d86391d7cf7fcd24baa0540099827d651d8db9f3c6f47ebe08dad55da1c377a7
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 54
+          byte_count: 120
+          word_count: 12
+          content_hash: 99a2e801267e76e804a022892d9f187f043c84b0660660a8ca7da2bbcc305daf
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 174
+          byte_count: 269
+          word_count: 38
+          content_hash: 41cecdaffffd2df2a72bb38e170fb0b739bc20b22e1ae8042d0b368b9884601b
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 443
+          byte_count: 49
+          word_count: 7
+          content_hash: a7bbda9289ad0d294a44c268f279f4eb2b8af9cd06079b67985a570e2ba04325
+        - path: "1.4"
+          level: 2
+          title: Interface Contracts
+          byte_offset: 492
+          byte_count: 116
+          word_count: 16
+          content_hash: 0943dc713e758bd626ae04e9928db06772118e611ddac7e9e3e3a7d8ad24d1a7
+        - path: "1.5"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 608
+          byte_count: 123
+          word_count: 20
+          content_hash: 3d56fd4184a37467fbe18c675b7cb3a8406efab0f3b7abbaf2110b32b004f756
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

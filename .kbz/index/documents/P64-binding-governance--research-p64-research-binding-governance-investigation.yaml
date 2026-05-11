@@ -1,0 +1,348 @@
+document_id: P64-binding-governance/research-p64-research-binding-governance-investigation
+document_path: work/P64-binding-governance/P64-research-binding-governance-investigation.md
+content_hash: eb4787eb30e7d769bd2c6f40c89cb9ef8f4d626347a76244fc68b13122d516b9
+indexed_at: 2026-05-10T20:22:11.95142Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Research: Binding Governance and Pipeline Integrity'
+      byte_offset: 0
+      byte_count: 54053
+      word_count: 7201
+      content_hash: eb4787eb30e7d769bd2c6f40c89cb9ef8f4d626347a76244fc68b13122d516b9
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Research Question
+          byte_offset: 485
+          byte_count: 1348
+          word_count: 185
+          content_hash: ecc2d583ad296237c02f9d81fc8b22558a7e7db4580c2c26370660ad7f7b2088
+        - path: "1.2"
+          level: 2
+          title: 2. Scope and Methodology
+          byte_offset: 1833
+          byte_count: 1932
+          word_count: 278
+          content_hash: a94aa1a73c71a2c866e2b807fbea041844c088f0ae4d0742f8170384d1f6ffd1
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 In scope
+              byte_offset: 1862
+              byte_count: 574
+              word_count: 82
+              content_hash: 6445cce96c727264d27e02daeecec680544ecd97052e7e3a86ca4cfa89445970
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Out of scope
+              byte_offset: 2436
+              byte_count: 233
+              word_count: 34
+              content_hash: df9d27a496cefd6bc252b2c0e0e7aad57c4f2dae8c1702d611671fd5220efce6
+            - path: 1.2.3
+              level: 3
+              title: 2.3 Methodology actually used
+              byte_offset: 2669
+              byte_count: 1096
+              word_count: 157
+              content_hash: cf5835af07f656aa3fc2adbcdfce2bef6ca35ee776c1bacbdf1e049d19f65d72
+        - path: "1.3"
+          level: 2
+          title: 3. Findings
+          byte_offset: 3765
+          byte_count: 28658
+          word_count: 3836
+          content_hash: 24a3992c3f694151bdf4bce82ef5096e13417d23878cde1f1d54d1baceba4cab
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Finding 1 — The pipeline resolves binding solely from feature `status`; tier is never consulted [P, high]
+              byte_offset: 3983
+              byte_count: 1532
+              word_count: 191
+              content_hash: 9061ee649fe1ad4c6d0f16af470f4b1bda5ae0baa5571c449841c7002e82ec71
+            - path: 1.3.2
+              level: 3
+              title: Finding 2 — `StageBinding` has tier-aware fields but no consumer [P, high]
+              byte_offset: 5515
+              byte_count: 1549
+              word_count: 193
+              content_hash: 01b6c8218efe084fc2a60fbebefdb37ae4fdc9558d5f1ba63b0b7971278cd2a6
+            - path: 1.3.3
+              level: 3
+              title: Finding 3 — Two separate tier subsystems exist; they share vocabulary but are not connected [P, high]
+              byte_offset: 7064
+              byte_count: 2176
+              word_count: 276
+              content_hash: 310fbd993020d2b8b81f6c0f61f7460e78edbbf5c731d61a90c0a5037c5d7c80
+            - path: 1.3.4
+              level: 3
+              title: Finding 4 — `validStages` is a hardcoded allowlist that excludes every non-standard stage [P, high]
+              byte_offset: 9240
+              byte_count: 933
+              word_count: 109
+              content_hash: 7bc986a129ba3efa11aa587b73f8f71bdd8043f19b966c3f652a8b89a62b872a
+            - path: 1.3.5
+              level: 3
+              title: Finding 5 — `ValidateBindingFile` is dead code in production [P, high]
+              byte_offset: 10173
+              byte_count: 2308
+              word_count: 283
+              content_hash: 2942fe37f1a3923f4489e8b532f4c01298887353888d807829c0e86f903d97bd
+            - path: 1.3.6
+              level: 3
+              title: Finding 6 — Two production bindings would fail `ValidateBinding` if validation were run [P, high]
+              byte_offset: 12481
+              byte_count: 1578
+              word_count: 194
+              content_hash: cfd3afa8519a7b6178ad543857c86f367cbcb9b18dd8a7437b394367bf4eb709
+            - path: 1.3.7
+              level: 3
+              title: Finding 7 — Bug lifecycle has no binding coverage at all [P, high]
+              byte_offset: 14059
+              byte_count: 1955
+              word_count: 235
+              content_hash: e132d664ffc2d5fcedb5ce78de61549d504a79b7a3337aff081295a8709560aa
+            - path: 1.3.8
+              level: 3
+              title: Finding 8 — The embedded consumer install drops three stages and the schema marker [P, high]
+              byte_offset: 16014
+              byte_count: 1672
+              word_count: 235
+              content_hash: 16dfe038f7be6e3ff8c378c3b7180d9533eb53d3c3811361578565348ed35f6a
+            - path: 1.3.9
+              level: 3
+              title: 'Finding 9 — Skills are unreachable: 8 of 26 are orphaned [P, high]'
+              byte_offset: 17686
+              byte_count: 942
+              word_count: 117
+              content_hash: 64e53648f057be19a31f07ff19523f864c2f7b772aba5468816a2bcc75b4a2ab
+            - path: 1.3.10
+              level: 3
+              title: Finding 10 — Implicit synchronisation contracts that must move in lockstep [P, high]
+              byte_offset: 18628
+              byte_count: 1561
+              word_count: 220
+              content_hash: 1d4a52d06e38b2ff54bde0603b7b90ca1c7474cb7ee01912f6ed2f36b9723550
+            - path: 1.3.11
+              level: 3
+              title: Finding 11 — Failure modes are predominantly silent [P, high]
+              byte_offset: 20189
+              byte_count: 1529
+              word_count: 260
+              content_hash: 1ed138d68cca2546f3c9c016c0ae4b91611a2b4b83fd7b4292c939c3be184c2f
+            - path: 1.3.12
+              level: 3
+              title: Finding 12 — There are no automated tests that detect binding/skill mismatches [P, high]
+              byte_offset: 21718
+              byte_count: 988
+              word_count: 140
+              content_hash: 2d89b274f33f2ffcc386cad0cdd4575bb981e9e06afd90b2cb3bb895e30bc2df
+            - path: 1.3.13
+              level: 3
+              title: Finding 13 — The regression history points at uncoordinated additions, not at a bad design [P, high]
+              byte_offset: 22706
+              byte_count: 2224
+              word_count: 323
+              content_hash: 80409bf9bda3b5843516ea522a9a96612e888ffcc27e8aff8b96acb346fa1bc3
+            - path: 1.3.14
+              level: 3
+              title: Finding 14 — Industry guidance favours code-level routing for orchestration topology, instructions for agent behaviour [S, medium]
+              byte_offset: 24930
+              byte_count: 5272
+              word_count: 710
+              content_hash: 0b055cfcce2b62de8d098cc25f2f60beeaf953c69dc7e1ab5690b8eeb7a88b31
+            - path: 1.3.15
+              level: 3
+              title: Finding 15 — There is no published precedent for "instructions decide their own routing" at this scale [S, low]
+              byte_offset: 30202
+              byte_count: 1548
+              word_count: 223
+              content_hash: 04eb3523e6cdc2394c31515bcf8ccce559d0865da5471b124519efec81118dc4
+            - path: 1.3.16
+              level: 3
+              title: Finding 16 — The complexity ceiling is closer than headcount suggests [S, low]
+              byte_offset: 31750
+              byte_count: 673
+              word_count: 94
+              content_hash: e6f534ce7c32c1b650123045101fdb9d908cd2958ff5ce2a517d9318756e8be8
+        - path: "1.4"
+          level: 2
+          title: 4. Reachability Matrix
+          byte_offset: 32423
+          byte_count: 4933
+          word_count: 718
+          content_hash: 8899ce56373adac2a0997cb2bb4ada09bb04c6671ece86a4fcacb8fbfb53d836
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Bindings
+              byte_offset: 32450
+              byte_count: 2527
+              word_count: 402
+              content_hash: 7bfe5546ec1b5961370d3988fd2783aef9373cbf15e682e88009d02b42f2943b
+            - path: 1.4.2
+              level: 3
+              title: 4.2 Skills
+              byte_offset: 34977
+              byte_count: 2379
+              word_count: 312
+              content_hash: 091c653d9938a3c00dd8d6c1b5ac9cf61a1e5ee28a24b8613164103c8def5979
+        - path: "1.5"
+          level: 2
+          title: 5. Trade-Off Analysis
+          byte_offset: 37356
+          byte_count: 3805
+          word_count: 576
+          content_hash: 8b3a362d428c9c1914cab8a332a140e6bef5063046dd1dd20d3da7bdb92e0a98
+          children:
+            - path: 1.5.1
+              level: 3
+              title: Cross-option observations
+              byte_offset: 40040
+              byte_count: 1121
+              word_count: 168
+              content_hash: aa652fc05526d8fededff605c4ce7a74e5f9e3437d22c0800cbd7baa32054db0
+        - path: "1.6"
+          level: 2
+          title: 6. Recommendations
+          byte_offset: 41161
+          byte_count: 4072
+          word_count: 551
+          content_hash: eeee3bd08a2a96503d22ec334fe82d15dfd23bcd8ac2adc2a238ce043bbe49c9
+          children:
+            - path: 1.6.1
+              level: 3
+              title: '6.1 Immediate (this week, ~3 days work) — confidence: **high**'
+              byte_offset: 41184
+              byte_count: 1163
+              word_count: 144
+              content_hash: 9be86c93a1fb8a30f0fa78080a860e117f9be02ef80ee8d838215bab151c40be
+            - path: 1.6.2
+              level: 3
+              title: '6.2 Short term (next 2 weeks) — confidence: **high**'
+              byte_offset: 42347
+              byte_count: 1383
+              word_count: 188
+              content_hash: 67faecfc002b0f1ba6ed0dce3edbb592d0e752b3b4640f0af6550b7eedec8f53
+            - path: 1.6.3
+              level: 3
+              title: '6.3 Medium term (next 4–6 weeks) — confidence: **medium**'
+              byte_offset: 43730
+              byte_count: 888
+              word_count: 116
+              content_hash: 7a6bdbf21a8ed539d0f64710ceb3b824a8e51bff44d605eb0d1cc31b23addcac
+            - path: 1.6.4
+              level: 3
+              title: 6.4 What I do not recommend
+              byte_offset: 44618
+              byte_count: 615
+              word_count: 100
+              content_hash: 2ca3d25e5b17c6447bb543b475b019aee072c646ddd4a69c6b1412b53876ff81
+        - path: "1.7"
+          level: 2
+          title: 7. Limitations
+          byte_offset: 45233
+          byte_count: 3353
+          word_count: 445
+          content_hash: 24a617b115b73246f0f51ae2b79873858508dca4f145b7b7fef638ae326d4305
+        - path: "1.8"
+          level: 2
+          title: 8. Appendix — Citations Index
+          byte_offset: 48586
+          byte_count: 5467
+          word_count: 575
+          content_hash: 4062f76987b15d9fcd2e89c5b5659ed2942ea4871a3a7a00628062f352a3e3d8
+          children:
+            - path: 1.8.1
+              level: 3
+              title: Primary (project source)
+              byte_offset: 48622
+              byte_count: 1948
+              word_count: 177
+              content_hash: 3709608fba372eefad6bed41293c5c51e6d7bf4523184a0324418818907e346c
+            - path: 1.8.2
+              level: 3
+              title: Primary (git history)
+              byte_offset: 50570
+              byte_count: 774
+              word_count: 89
+              content_hash: ea99a898d3594212ec9d3b4e7310e7c7b269aa92e3d532122c36eb69cd3fcdab
+            - path: 1.8.3
+              level: 3
+              title: Secondary (industry, with primary URLs)
+              byte_offset: 51344
+              byte_count: 1975
+              word_count: 200
+              content_hash: 65a85249b2d1a61df2dbc521a65b6688fed30ed04facbe2bf209fae66f0e859c
+            - path: 1.8.4
+              level: 3
+              title: Project signals
+              byte_offset: 53319
+              byte_count: 734
+              word_count: 103
+              content_hash: e56150d4db793379c9d47e63a4a7e26073a8604bae7927fbff1fc3640a0b6ee1
+entity_refs:
+    - entity_id: FEAT-01KR46PKHPVSH
+      entity_type: feature
+      section_path: 1.8.2
+      byte_offset: 51272
+    - entity_id: P64-binding-governance
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 309
+    - entity_id: B57-retro-pipeline-tightening-impl
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 375
+    - entity_id: B48-fast-track-impl
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 413
+    - entity_id: B62-discover-runtime-instruction-surfaces
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 436
+    - entity_id: B48-fast-track-impl
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 47284
+    - entity_id: B57-retro-pipeline-tightening-impl
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 47307
+    - entity_id: B53-retro-fixes-may-2026
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 47345
+cross_doc_links:
+    - target_path: .kbz/skills/write-research/SKILL.md
+      link_text: .kbz/skills/write-research/SKILL.md
+      section_path: "1"
+    - target_path: CONVENTIONS.md
+      link_text: CONVENTIONS.md
+      section_path: 1.3.9
+    - target_path: README.md
+      link_text: README.md
+      section_path: 1.3.9
+    - target_path: .kbz/skills/<name>/SKILL.md
+      link_text: .kbz/skills/<name>/SKILL.md
+      section_path: 1.3.10
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.6.3
+conventional_roles:
+    - section_path: "1.1"
+      role: question
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+classified: false

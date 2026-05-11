@@ -1,0 +1,152 @@
+document_id: FEAT-01KR8YRQN1HPG/spec-p63-spec-test-remediation
+document_path: work/P63-test-remediation/P63-spec-test-remediation.md
+content_hash: ed6ed00ee30af2b38aa39bd447bef89ccba178ba490af512c8bbd77ac87393db
+indexed_at: 2026-05-10T12:47:03.350515Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'P63 Specification — Test Remediation: Fix Failing Tests and Harden Definition of Done'
+      byte_offset: 0
+      byte_count: 17909
+      word_count: 2636
+      content_hash: ed6ed00ee30af2b38aa39bd447bef89ccba178ba490af512c8bbd77ac87393db
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 295
+          byte_count: 1443
+          word_count: 195
+          content_hash: c06769990ed5279ad02d2326a5a8ff0f30d6f8b27dae96fa29dbd89a60cde5e9
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 1738
+          byte_count: 1145
+          word_count: 169
+          content_hash: 71e71a1ed473342f511d940d4ff17d6ce4886f0d4de363f98a7559e7dabf01bf
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In Scope
+              byte_offset: 2029
+              byte_count: 463
+              word_count: 66
+              content_hash: 6ded526629114fad2d2b8993fea5eabd4519946211e338dd9ae64e8706763a6c
+            - path: 1.2.2
+              level: 3
+              title: Out of Scope
+              byte_offset: 2492
+              byte_count: 391
+              word_count: 63
+              content_hash: 7a97479778a917ca0786c78d9596ee019938d0db3366b8360019f11dd9cdc7f6
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 2883
+          byte_count: 4044
+          word_count: 563
+          content_hash: b0e814984ff59c78fc3eca99692b69cddcdf0bd77ccc5a838d64cb9301f0d87e
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 6927
+          byte_count: 692
+          word_count: 112
+          content_hash: 56987572b3147726788397485aeb352b5a2ff08b86a18f10e79a1f78f1464aea
+        - path: "1.5"
+          level: 2
+          title: Constraints
+          byte_offset: 7619
+          byte_count: 1469
+          word_count: 224
+          content_hash: c67a8aa031bf38a960160d3120418a6f047cc66d4a901d48db2a4fc5c38f53fb
+        - path: "1.6"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 9088
+          byte_count: 5312
+          word_count: 765
+          content_hash: 0380f7167ac700aa4e37520071de9465a382469b25c52ee37c9b3d45657a56d0
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Phase 1 — Fixes
+              byte_offset: 9112
+              byte_count: 1746
+              word_count: 216
+              content_hash: cb8fecb7489a9cfc4d2e4fe949cab19bf315f6ebae77d49618438f10548b2b39
+            - path: 1.6.2
+              level: 3
+              title: Phase 2 — Test Infrastructure
+              byte_offset: 10858
+              byte_count: 883
+              word_count: 136
+              content_hash: 7c02e89495077a8c7ccfddb921dd822d16753d40ccb0cfe49d20bb7d501cb731
+            - path: 1.6.3
+              level: 3
+              title: Phase 3 — Enforcement
+              byte_offset: 11741
+              byte_count: 1722
+              word_count: 264
+              content_hash: 58c7344b8f47bdc90128a17a0f0308baf0097164600e7f7f6413975f53f13dba
+            - path: 1.6.4
+              level: 3
+              title: Phase 4 — Policy and Culture
+              byte_offset: 13463
+              byte_count: 937
+              word_count: 146
+              content_hash: 61d341d519be2f9350916c9d9f20c818de64ed19298e68be041b2914c75568ff
+        - path: "1.7"
+          level: 2
+          title: Verification Plan
+          byte_offset: 14400
+          byte_count: 3509
+          word_count: 572
+          content_hash: 93be9bf2c28c587e3d99cd843f3f167dfc97efdb72f44f7cac1a26fcdcdea6c1
+entity_refs:
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.6.3
+      byte_offset: 12610
+    - entity_id: P63-test-remediation
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 368
+    - entity_id: P63-design-test-remediation
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 389
+cross_doc_links:
+    - target_path: work/P63-test-remediation/P63-design-test-remediation.md
+      link_text: work/P63-test-remediation/P63-design-test-remediation.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1"
+      role: definition
+      confidence: high
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: requirement
+      confidence: high
+classified: false

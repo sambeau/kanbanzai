@@ -1,0 +1,238 @@
+document_id: PROJECT/research-research-skills-roles-pipeline-integrity
+document_path: work/_project/research-skills-roles-pipeline-integrity.md
+content_hash: 4b1e7e58a250c5b96a87c8de0c790f8d7f2fb8f398d4ed99813a2465d506f130
+indexed_at: 2026-05-10T13:33:43.417107Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Research Report: Skills/Roles Pipeline Routing Integrity'
+      byte_offset: 217
+      byte_count: 27285
+      word_count: 3599
+      content_hash: 936aa2a02d2be41d8f743be54963613766ea6574fe90220eaf802cbdc3feab7a
+      children:
+        - path: "1.1"
+          level: 2
+          title: Research Question
+          byte_offset: 277
+          byte_count: 1005
+          word_count: 132
+          content_hash: 5e1447a9e1ab5ff0db75eddca693aef6805af6eef932e92744c207d1304d1885
+        - path: "1.2"
+          level: 2
+          title: Scope and Methodology
+          byte_offset: 1282
+          byte_count: 2159
+          word_count: 221
+          content_hash: 1089e6808c5e6fb895f6c47d245f16b98caca44cee3bd7c82513fd602f842173
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In scope
+              byte_offset: 1308
+              byte_count: 778
+              word_count: 89
+              content_hash: 6e561f966d00fc5ad59f6d689fcaafaa59fba1d913ad6a4f57815e68f4a60b06
+            - path: 1.2.2
+              level: 3
+              title: Out of scope
+              byte_offset: 2086
+              byte_count: 259
+              word_count: 37
+              content_hash: d471e3ebe50942c2ba28069b980b78acaae3b01a88314c90be96f0fb1b1cf93f
+            - path: 1.2.3
+              level: 3
+              title: Methodology
+              byte_offset: 2345
+              byte_count: 1096
+              word_count: 91
+              content_hash: b618e6e39653a1ede965f28a7d41472cd6408b93aa0c6bef9324bea67888cc78
+        - path: "1.3"
+          level: 2
+          title: Findings
+          byte_offset: 3441
+          byte_count: 11775
+          word_count: 1497
+          content_hash: 3a071f5aed1d65b851e93231a581ee851dda086491bc9c05b054b074e5b882ac
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'Finding 1: The pipeline resolves `status → binding` with zero tier awareness (root cause)'
+              byte_offset: 3454
+              byte_count: 1550
+              word_count: 187
+              content_hash: 8ec6ee615a4afb13f8a94c521ef154cf262fc36f0c77231814d421465760b6f4
+            - path: 1.3.2
+              level: 3
+              title: 'Finding 2: The `StageBinding` struct has tier-awareness fields that are decoded but never consumed'
+              byte_offset: 5004
+              byte_count: 917
+              word_count: 108
+              content_hash: fa89a17817f34d59ee00638f13b0302420f8f3f2ed5a2122be07a69db3bfb168
+            - path: 1.3.3
+              level: 3
+              title: 'Finding 3: `validStages` does not include `retro-fixing` or any bug-lifecycle stages'
+              byte_offset: 5921
+              byte_count: 985
+              word_count: 104
+              content_hash: e2bebc08c21927a991df8f99de17fec7af1407dd3c4122a2f5e8eba338640a02
+            - path: 1.3.4
+              level: 3
+              title: 'Finding 4: The `retro-fixing` binding is structurally invalid — but validation is never run'
+              byte_offset: 6906
+              byte_count: 1652
+              word_count: 203
+              content_hash: dfc534f30014fb4173481ca4085a352ee1dafdd02411ee9a2a989c884cf29c7b
+            - path: 1.3.5
+              level: 3
+              title: 'Finding 5: `implement-retro-fix` skill is complete but unreachable'
+              byte_offset: 8558
+              byte_count: 916
+              word_count: 112
+              content_hash: 61968da173e67a8182282c7f3e22c94222dd821151a316418aed2b6e843f4ed6
+            - path: 1.3.6
+              level: 3
+              title: 'Finding 6: Bugs have zero pipeline routing'
+              byte_offset: 9474
+              byte_count: 905
+              word_count: 106
+              content_hash: 20d9d71318388e873cd7ce2da70713a56a4b4be868d8cec4fa6dc17823ec5e03
+            - path: 1.3.7
+              level: 3
+              title: 'Finding 7: Regression timeline — two separate creation events with an unreconciled gap'
+              byte_offset: 10379
+              byte_count: 1421
+              word_count: 200
+              content_hash: 99fb2ef585d16f7aef8fa55a8ec5f2b1b240746dac1c40cbc83c107dfc1498cb
+            - path: 1.3.8
+              level: 3
+              title: 'Finding 8: The embedded bindings file is missing three bindings present in the live file'
+              byte_offset: 11800
+              byte_count: 1044
+              word_count: 136
+              content_hash: a14bfcf3dfedbcf4ff25b267565c67bb700033e3807156e571112df9755f30da
+            - path: 1.3.9
+              level: 3
+              title: 'Finding 9: Synchronization dependency enumeration — six independent components'
+              byte_offset: 12844
+              byte_count: 1339
+              word_count: 182
+              content_hash: afede5470c2265921a0c1202ae8e92b4f1463928ac70e23292eede2aaa73c47e
+            - path: 1.3.10
+              level: 3
+              title: 'Finding 10: The system fails silently more often than loudly'
+              byte_offset: 14183
+              byte_count: 1033
+              word_count: 157
+              content_hash: 548b50e2e72c4cd065a7906e1f04a318bf7241d4732598c8b9c894bf2946a43a
+        - path: "1.4"
+          level: 2
+          title: Reachability Matrix
+          byte_offset: 15216
+          byte_count: 3565
+          word_count: 546
+          content_hash: ae203715f46b6221da87952dbccf000b6b334cb3206aa1e2f611e476820e5c6a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: Bindings → Pipeline Reachability
+              byte_offset: 15240
+              byte_count: 1500
+              word_count: 256
+              content_hash: 25ee6ef4ffacc428973a360f056f6bef27687cb6d1255ffd07845d84a98d947d
+            - path: 1.4.2
+              level: 3
+              title: Skills on Disk → Reachability
+              byte_offset: 16740
+              byte_count: 2041
+              word_count: 287
+              content_hash: 5beb633600516a999ad02b2941d29e3b9a79739683b0c643690f96868b5128e5
+        - path: "1.5"
+          level: 2
+          title: Trade-Off Analysis
+          byte_offset: 18781
+          byte_count: 1936
+          word_count: 293
+          content_hash: 1e794b4b766d19fe50fe48f1b34eddac1341a7ada0899a345ef94dae5f2ad56c
+        - path: "1.6"
+          level: 2
+          title: Recommendations
+          byte_offset: 20717
+          byte_count: 4292
+          word_count: 576
+          content_hash: bb7f4029d5704e3f4a157062da5c970f5eea33a8ab2ad9094fad8fb3ccf85c65
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Recommendation 1: Adopt the hybrid approach (Option C)'
+              byte_offset: 20737
+              byte_count: 696
+              word_count: 92
+              content_hash: 14da33cdf99eb7691d00c255b12bb4e5b450534cc2b2e3ee5d8721f5241cde79
+            - path: 1.6.2
+              level: 3
+              title: 'Recommendation 2: Run `ValidateBindingFile` at server startup (immediate fix)'
+              byte_offset: 21433
+              byte_count: 587
+              word_count: 73
+              content_hash: e57e456b4e04c6279e6b32e151c8ee25380c37cbd9088418205c1e0a120e361c
+            - path: 1.6.3
+              level: 3
+              title: 'Recommendation 3: Synchronize `validStages` and `workableStatuses` with stage-bindings.yaml'
+              byte_offset: 22020
+              byte_count: 564
+              word_count: 83
+              content_hash: f119ab07ca54c52566cc447031d2d926e18f292383c92fddcf33a1c7db39eba5
+            - path: 1.6.4
+              level: 3
+              title: 'Recommendation 4: Add a pipeline routing test for every tier'
+              byte_offset: 22584
+              byte_count: 576
+              word_count: 78
+              content_hash: e62c745e5feb766c00a4a742bc196409291c7dab2ab83a5740ab82385ec3d85e
+            - path: 1.6.5
+              level: 3
+              title: 'Recommendation 5: Test embedded bindings parity'
+              byte_offset: 23160
+              byte_count: 463
+              word_count: 59
+              content_hash: 15139b1c02b4b065181d61e827b92d96a00fef83c8c69161b1edb4916ae78696
+            - path: 1.6.6
+              level: 3
+              title: 'Recommendation 6: Add a `kbz health` check for binding/skill integrity'
+              byte_offset: 23623
+              byte_count: 535
+              word_count: 72
+              content_hash: 8870138f228599fbaebfa9340e132c252d4f1d525dff222352c971fd79be3bd5
+            - path: 1.6.7
+              level: 3
+              title: 'Recommendation 7: Implement tier-aware routing for `retro_fix` and `bug_fix`'
+              byte_offset: 24158
+              byte_count: 851
+              word_count: 117
+              content_hash: 09f4267e795826b0092dd711219c4f6d2899284a854cf3e26c26869a06e5cead
+        - path: "1.7"
+          level: 2
+          title: Limitations
+          byte_offset: 25009
+          byte_count: 2493
+          word_count: 327
+          content_hash: b70ee0f2e2973f83189fbc57682e692addacb9dfcd8dc35fbf1863972e1822df
+cross_doc_links:
+    - target_path: .kbz/skills/implement-retro-fix/SKILL.md
+      link_text: .kbz/skills/implement-retro-fix/SKILL.md
+      section_path: 1.3.5
+conventional_roles:
+    - section_path: "1.1"
+      role: question
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+classified: false
