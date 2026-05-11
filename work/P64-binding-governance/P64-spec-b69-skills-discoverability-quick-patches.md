@@ -5,7 +5,7 @@
 | Date    | 2026-05-11                                           |
 | Batch   | B69-skills-discoverability-quick-patches             |
 | Plan    | P64-binding-governance                               |
-| Status  | Draft                                                |
+| Status | approved |
 | Tier    | bug_fix (per feature)                                |
 | Author  | Architect                                            |
 

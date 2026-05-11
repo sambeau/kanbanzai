@@ -3,7 +3,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-10                     |
-| Status | Draft                          |
+| Status | approved |
 
 ## Overview
 

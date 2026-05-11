@@ -1,7 +1,7 @@
 | Field  | Value                         |
 |--------|-------------------------------|
 | Date   | 2026-05-10T13:23:31Z          |
-| Status | Draft                         |
+| Status | approved |
 | Author | Architect (via write-research) |
 
 # Research Report: Skills/Roles Pipeline Routing Integrity

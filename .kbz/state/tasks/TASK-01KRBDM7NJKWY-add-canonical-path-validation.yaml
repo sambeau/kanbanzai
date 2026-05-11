@@ -3,5 +3,9 @@ parent_feature: FEAT-01KRBB4HNPPWF
 slug: add-canonical-path-validation
 name: Add canonical path validation to doc register
 summary: "Add canonical path validation to doc(action: register) in internal/mcp/doc_tool.go. Compare supplied path against doc(action: path) output; reject mismatches with error including canonical path. Add tests for happy path and rejection."
-status: ready
+status: active
 estimate: "1"
+claimed_at: "2026-05-11T11:47:16Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-11T11:47:16Z"
+dispatched_by: sambeau

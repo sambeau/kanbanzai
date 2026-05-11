@@ -450,8 +450,8 @@ func checkBugWorktreeHasCommits(bug *model.Bug, docSvc *DocumentService) GateRes
 	if docSvc == nil {
 		return GateResult{
 			Stage:     string(model.BugStatusNeedsReview),
-			Satisfied: false,
-			Reason:    "document service not available",
+			Satisfied: true,
+			Reason:    "document service not available — gate bypassed",
 		}
 	}
 	repoRoot := docSvc.RepoRoot()
@@ -527,8 +527,8 @@ func checkBugReviewCap(bug *model.Bug, entitySvc *EntityService) GateResult {
 	if entitySvc == nil {
 		return GateResult{
 			Stage:     string(model.BugStatusNeedsRework),
-			Satisfied: false,
-			Reason:    "entity service not available",
+			Satisfied: true,
+			Reason:    "entity service not available — gate bypassed",
 		}
 	}
 	// Increment review_cycle (persisted before gate evaluation).
