@@ -2,7 +2,7 @@ id: FEAT-01KRBQHAZ5KY7
 slug: phase1-startup-validation
 name: Startup Validation Hardening
 parent: P64-binding-governance
-status: specifying
+status: dev-planning
 summary: "Wire ValidateBindingFile at startup, sync allowlists, enforce embedded-copy CI parity, add reachability tests. Converts silent binding failures into loud startup failures."
 spec: FEAT-01KRBQHAZ5KY7/spec-p64-spec-phase1-startup-validation
 created: "2026-05-11T14:37:24Z"

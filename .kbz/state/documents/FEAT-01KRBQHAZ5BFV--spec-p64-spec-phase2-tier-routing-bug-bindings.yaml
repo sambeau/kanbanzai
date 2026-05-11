@@ -1,11 +1,13 @@
+approved_at: "2026-05-11T15:29:52Z"
+approved_by: sambeau
 canonical_content_hash: a3eacb703189bc173e38d94cd87082d7fd8b80e552d044fda38a42958349fece
-content_hash: 4d49844467258230f45d75e91cb8ca4561ac2108362fc0943ee0eb4e2247898d
+content_hash: 13d6d2b5cc8b0cfd45dbba6436823b486e417a6b0095a429aaf436e15ca6c1da
 created: "2026-05-11T14:45:30Z"
 created_by: sambeau
 id: FEAT-01KRBQHAZ5BFV/spec-p64-spec-phase2-tier-routing-bug-bindings
 owner: FEAT-01KRBQHAZ5BFV
 path: work/P64-binding-governance/P64-spec-phase2-tier-routing-bug-bindings.md
-status: draft
+status: approved
 title: "Specification: Tier Routing and Bug Bindings"
 type: spec
-updated: "2026-05-11T14:45:30Z"
+updated: "2026-05-11T15:29:52Z"

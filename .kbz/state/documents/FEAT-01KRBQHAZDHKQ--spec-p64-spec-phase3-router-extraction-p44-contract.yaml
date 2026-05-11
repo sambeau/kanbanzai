@@ -1,11 +1,13 @@
+approved_at: "2026-05-11T15:29:52Z"
+approved_by: sambeau
 canonical_content_hash: e8dd6dd6a2839d78b1bcff0377e70094d3d973fb97e3f38c99099e99cb8da421
-content_hash: 66c7753056ceeab1185570313c699a8e5e51131db4c7e7030a1e6ccfc76dc377
+content_hash: 5b506763b2172646e1068e11d4a28a45032c634125b708bdd0afe895882df649
 created: "2026-05-11T14:49:27Z"
 created_by: sambeau
 id: FEAT-01KRBQHAZDHKQ/spec-p64-spec-phase3-router-extraction-p44-contract
 owner: FEAT-01KRBQHAZDHKQ
 path: work/P64-binding-governance/P64-spec-phase3-router-extraction-p44-contract.md
-status: draft
+status: approved
 title: "Specification: Router Extraction and P44 Contract"
 type: spec
-updated: "2026-05-11T14:49:27Z"
+updated: "2026-05-11T15:29:52Z"
