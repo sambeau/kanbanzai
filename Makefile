@@ -13,7 +13,7 @@ LDFLAGS  := -X '$(PKG).Version=$(VERSION)' \
             -X '$(PKG).BuildTime=$(BUILD_TIME)' \
             -X '$(PKG).Dirty=$(DIRTY)'
 
-.PHONY: build install clean test test-install registry-check registry-sync claude-skills-check
+.PHONY: build install clean test test-install registry-check registry-sync claude-skills-check generate
 
 build:
 	go build -ldflags "$(LDFLAGS)" -o $(BINARY) ./cmd/kbz
@@ -39,3 +39,7 @@ registry-sync:
 
 claude-skills-check:
 	go test -v -run TestClaudeSkills ./internal/claudeskills/
+
+generate:
+	go generate ./internal/binding/
+	@echo "router_gen.go regenerated from routing.yaml"
