@@ -2,8 +2,9 @@ id: FEAT-01KRBQHAZ5BFV
 slug: phase2-tier-routing-bug-bindings
 name: Tier Routing and Bug Bindings
 parent: P64-binding-governance
-status: proposed
+status: specifying
 summary: "Wire retro-fix through FastTrack, add bug-developing/bug-reviewing bindings, remove orphaned tier fields from StageBinding, reduce sync surface from 10 to 7."
+spec: FEAT-01KRBQHAZ5BFV/spec-p64-spec-phase2-tier-routing-bug-bindings
 created: "2026-05-11T14:37:24Z"
 created_by: sambeau
 display_id: P64-F1
