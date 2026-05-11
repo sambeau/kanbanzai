@@ -3,8 +3,16 @@ parent_feature: FEAT-01KRBQHAZ5KY7
 slug: f1-sync-allowlists
 name: Sync allowlists to canonical stage-bindings
 summary: Update validStages/validOrchestrations in internal/binding/model.go. Update workableStatuses in internal/context/pipeline.go. Sync to canonical stage-bindings.yaml. With tests.
-status: active
+status: done
+files_planned:
+  - internal/binding/model.go
+  - internal/binding/model_test.go
+  - internal/context/pipeline.go
+  - internal/context/pipeline_test.go
+completed: "2026-05-11T16:12:24Z"
 claimed_at: "2026-05-11T16:03:24Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-11T16:03:24Z"
 dispatched_by: sambeau
+completion_summary: "Updated validStages, validOrchestrations, and workableStatuses to sync with canonical .kbz/stage-bindings.yaml. Removed stale plan-reviewing, added merging/verifying/batch-reviewing/doc-publishing/retro-fixing to validStages, added pipeline-coordinator to validOrchestrations. Wrote sync tests verifying allowlists match the canonical file."
+verification: "go test ./internal/binding/... ./internal/context/... passes. New TestValidStagesSync, TestValidOrchestrationsSync, and TestStepValidateLifecycle_PlanReviewingRejected all pass."

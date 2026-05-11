@@ -3,10 +3,10 @@ content: "[minor] worked-well: write_file with entity_id scoped the new file dir
 created: "2026-05-08T17:04:28Z"
 created_by: unknown
 id: KE-01KR48REF5HDH
-last_accessed_at: "2026-05-11T16:03:24Z"
+last_accessed_at: "2026-05-11T16:03:36Z"
 learned_from: TASK-01KR3Q16BFSES
 miss_count: 0
-recent_use_count: 79
+recent_use_count: 80
 scope: project
 status: contributed
 tags:
