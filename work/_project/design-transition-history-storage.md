@@ -66,21 +66,24 @@ This is intentionally the Git-native side of the broader state-backend decision.
 
 Each entity that supports lifecycle transitions gets a corresponding transition log file. The preferred layout is per-entity and per-type to minimise coupling and merge contention.
 
-Proposed layout:
+Proposed layout (mirrors the flat directory structure of `.kbz/state/`):
 
 - `.kbz/state/transitions/features/FEAT-...jsonl`
 - `.kbz/state/transitions/tasks/TASK-...jsonl`
 - `.kbz/state/transitions/bugs/BUG-...jsonl`
 - `.kbz/state/transitions/plans/P...jsonl`
+- `.kbz/state/transitions/batches/B...jsonl`
 - `.kbz/state/transitions/decisions/DEC-...jsonl`
 - `.kbz/state/transitions/incidents/INC-...jsonl`
+
+> **Note:** The directory structure mirrors the existing flat `.kbz/state/{features,tasks,bugs,...}/` layout. Batches were added to the entity model in P38 (April 2026) with their own lifecycle (`proposed → designing → active → reviewing → done`) and require their own transition log directory.
 
 Each line is one immutable transition event encoded as JSON.
 
 Example event shape:
 
 - `entity_id` — canonical entity ID
-- `entity_type` — feature, task, bug, plan, decision, incident
+- `entity_type` — feature, task, bug, plan, batch, decision, incident
 - `from` — previous status
 - `to` — new status
 - `at` — RFC 3339 UTC timestamp
@@ -105,7 +108,11 @@ The write rule is:
 - append the transition event to the entity's JSONL log
 - persist both changes atomically from the perspective of the application
 
-If the system cannot write both the YAML update and the JSONL append, the transition fails. The system must not leave the entity in a state where the current status changed but the transition event was not recorded, or vice versa.
+**Chained transitions (`advance: true`).** The `entity(action: "transition", advance: true)` flag walks a feature through multiple lifecycle states in a single MCP call (e.g., `specifying → dev-planning → developing → reviewing`). Each *individual* transition in the chain must be recorded as a separate JSONL event, not just the net status change. If a chain of three transitions succeeds, the JSONL log must contain three lines — one per step. This preserves the full semantic history even when the caller collapsed multiple steps into one tool invocation.
+
+**Two-file atomicity.** The current `EntityStore.Write` in `internal/storage/entity_store.go` uses `fsutil.WriteFileAtomic` for the YAML write, but there is no two-phase commit across the YAML and JSONL files. True cross-file atomicity is not achievable with filesystem operations alone. This design accepts eventual consistency: the YAML write and JSONL append are performed sequentially, and a health check (see Health and repair, rule 7) detects and surfaces any gap where the YAML status and JSONL final event disagree. The repair path is to append a synthetic correction event to the JSONL log. In practice, JSONL append failures are extremely rare (they share the same filesystem and write path as the YAML), and the health check ensures any gap is visible rather than silent.
+
+If the system cannot write the YAML update, the transition fails and no JSONL event is written. If the YAML write succeeds but the JSONL append fails, the transition is still considered successful (the canonical current state is correct), but the health check will flag the entity for repair.
 
 ### Commit granularity
 
@@ -116,11 +123,15 @@ State files are still written immediately so that the working tree reflects the 
 Recommended default flush boundaries:
 
 - task completion via `finish`
-- feature advancement into `reviewing` or `done`
-- bug advancement into `needs-review`, `verified`, or `closed`
+- feature advancement into `reviewing`, `merging`, `verifying`, or `done`
+- bug advancement into `needs-review`, `verifying`, or `closed`
 - document registration and approval operations that already bundle state with a work artifact
 - pre-dispatch safety flush before sub-agent handoff
 - explicit merge preparation and merge execution
+
+The `merging` and `verifying` flush boundaries were added in P50 (May 2026) when the feature lifecycle was extended with post-review merge and close-out verification stages. The `merging` boundary is especially critical — it is the point where the worktree branch is about to be merged, and losing uncommitted state here would be catastrophic.
+
+**Flush trigger mechanism.** The `SignalStateModified` side effect (introduced in P50, `internal/mcp/sideeffect.go`) marks every mutating MCP call with `state_modified: true` in its response. A milestone-aware flush coordinator can use this signal to know that dirty `.kbz/state/` files exist and must be committed at the next milestone boundary. Read-only operations do not call `SignalStateModified`, so they never trigger unnecessary flushes.
 
 This preserves durability in the repository working tree while making commit history more useful for humans.
 
@@ -147,10 +158,14 @@ Health checks should validate transition logs with the following rules:
 4. timestamps are monotonically non-decreasing
 5. the final event's `to` matches the entity YAML `status`
 6. the chain is continuous: each event's `from` matches the previous event's `to`
+7. for entities with a transition log and a YAML `status`, the final JSONL event's `to` must equal the YAML `status` (gap detection)
+
+Rule 7 is the key integrity check for the eventual-consistency model described in Authority and consistency. A mismatch means a YAML write succeeded but its corresponding JSONL append failed (or vice versa). This is surfaced as a `transition_log_gap` warning. The repair path is: compare timestamps, and if the YAML status is newer, append a synthetic correction event to the JSONL log with `reason: "auto-repair: gap in transition log"` and `source: "health/repair"`.
 
 Health failures should be surfaced as warnings or errors depending on severity:
 
 - malformed JSONL or broken continuity is an error
+- a `transition_log_gap` (rule 7 violation) is a warning with an auto-repair path
 - missing historical fields on older events is a warning during migration
 - absence of a transition log for legacy entities is a warning or informational state, not an error
 
@@ -187,7 +202,14 @@ This design introduces several failure modes that must be handled explicitly. Se
 
 #### Partial write risk
 
-If YAML and JSONL writes are not coordinated, the system can drift. The implementation must use the same atomic-write discipline already used elsewhere in the repository and treat the pair as one logical transaction.
+If YAML and JSONL writes are not coordinated, the system can drift. True cross-file atomicity is not achievable with filesystem operations alone — there is no `fsync`-and-`rename` trick that covers two separate files. This design accepts eventual consistency: the YAML write (`fsutil.WriteFileAtomic`) and JSONL append are performed sequentially within the same `EntityStore.Write` call.
+
+The failure modes are:
+- **YAML write fails**: The transition is aborted; no JSONL event is written. No gap.
+- **YAML succeeds, JSONL append fails**: The canonical current state is correct. A `transition_log_gap` warning is raised on the next health check. Repair appends a synthetic correction event. This is expected to be extremely rare (same filesystem, same write path).
+- **Crash between YAML write and JSONL append**: Same as above — the health check detects the gap on next run.
+
+The health check (rule 7, above) is the safety net. Until automated repair is implemented, the health dashboard makes the gap visible so a human or agent can trigger repair.
 
 #### Merge conflicts on transition logs
 
