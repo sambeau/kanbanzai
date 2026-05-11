@@ -1,0 +1,6 @@
+id: TASK-01KRBTRH7GWZ3
+parent_feature: FEAT-01KRBQHAZ5KY7
+slug: f1-startup-validation
+name: Wire ValidateBindingFile at server startup
+summary: Wire BindingRegistry.Load into server startup. Call ValidateBindingFile on .kbz/stage-bindings.yaml. Convert silent failures into loud startup errors with actionable messages. With tests.
+status: queued
