@@ -285,7 +285,10 @@ type TierConfig struct {
 	MaxCycles int    `yaml:"max_cycles"` // max fix-validate iterations (0 = no auto-validation)
 }
 
-// FastTrackConfig defines the fast-track architecture settings.
+// FastTrackConfig is the system of record for tier-aware behaviour
+// in the fast-track architecture. It defines the automation matrix and
+// cycle caps for each risk tier.
+//
 // Enabled controls whether the entire fast-track system is active.
 // DefaultTier is applied when a feature has no explicit tier.
 // Tiers maps tier names to their automation configuration.

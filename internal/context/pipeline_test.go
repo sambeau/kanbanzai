@@ -2,6 +2,7 @@ package context
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 	"testing"
@@ -259,6 +260,211 @@ func TestStepResolveStage_EmptyStatus(t *testing.T) {
 	}
 	if !strings.Contains(err.Error(), "step 1") {
 		t.Errorf("error should mention step 1: %v", err)
+	}
+}
+
+func TestStepResolveStage_BugInProgress(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	state := &PipelineState{
+		Input: PipelineInput{
+			FeatureState: map[string]any{"status": "in-progress"},
+		},
+	}
+	if err := p.stepResolveStage(state); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if state.Stage != "bug-developing" {
+		t.Errorf("stage = %q, want %q", state.Stage, "bug-developing")
+	}
+}
+
+func TestStepResolveStage_BugNeedsReview(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	state := &PipelineState{
+		Input: PipelineInput{
+			FeatureState: map[string]any{"status": "needs-review"},
+		},
+	}
+	if err := p.stepResolveStage(state); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if state.Stage != "bug-reviewing" {
+		t.Errorf("stage = %q, want %q", state.Stage, "bug-reviewing")
+	}
+}
+
+func TestStepResolveStage_BugOutOfPipeline(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	state := &PipelineState{
+		Input: PipelineInput{
+			FeatureState: map[string]any{"status": "triaged"},
+		},
+	}
+	err := p.stepResolveStage(state)
+	if err == nil {
+		t.Fatal("expected error for out-of-pipeline bug status")
+	}
+	if !strings.Contains(err.Error(), "out-of-pipeline") {
+		t.Errorf("error should mention out-of-pipeline: %v", err)
+	}
+	if !strings.Contains(err.Error(), "triaged") {
+		t.Errorf("error should mention the status: %v", err)
+	}
+}
+
+func TestStepResolveStage_UnknownTier(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	state := &PipelineState{
+		Input: PipelineInput{
+			FeatureState: map[string]any{
+				"status": "developing",
+				"tier":   "nonexistent_tier",
+			},
+		},
+	}
+	err := p.stepResolveStage(state)
+	if err == nil {
+		t.Fatal("expected error for unknown tier")
+	}
+	if !errors.Is(err, ErrUnknownTier) {
+		t.Errorf("error should wrap ErrUnknownTier: %v", err)
+	}
+	if !strings.Contains(err.Error(), "nonexistent_tier") {
+		t.Errorf("error should name the unrecognised tier: %v", err)
+	}
+}
+
+func TestStepResolveStage_ValidTiers(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	for _, tier := range []string{"feature", "bug_fix", "retro_fix", "critical"} {
+		state := &PipelineState{
+			Input: PipelineInput{
+				FeatureState: map[string]any{
+					"status": "developing",
+					"tier":   tier,
+				},
+			},
+		}
+		if err := p.stepResolveStage(state); err != nil {
+			t.Errorf("tier %q should be valid, got error: %v", tier, err)
+		}
+	}
+}
+
+func TestBugStatusToBindingKey_MappedStatuses(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		status    string
+		wantKey   string
+		wantError bool
+	}{
+		{"in-progress", "bug-developing", false},
+		{"needs-review", "bug-reviewing", false},
+		{"reported", "", true},
+		{"triaged", "", true},
+		{"closed", "", true},
+		{"developing", "", true},
+		{"reviewing", "", true},
+		{"", "", true},
+		{"unknown-status", "", true},
+	}
+	for _, tt := range tests {
+		key, err := bugStatusToBindingKey(tt.status)
+		if (err != nil) != tt.wantError {
+			t.Errorf("bugStatusToBindingKey(%q) err = %v, wantError = %v", tt.status, err, tt.wantError)
+		}
+		if key != tt.wantKey {
+			t.Errorf("bugStatusToBindingKey(%q) key = %q, want %q", tt.status, key, tt.wantKey)
+		}
+	}
+}
+
+func TestStepValidateLifecycle_BugOutOfPipeline(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	outOfPipeline := []string{
+		"reported", "triaged", "reproduced", "planned",
+		"needs-rework", "verifying", "closed", "duplicate",
+		"not-planned", "cannot-reproduce",
+	}
+	for _, status := range outOfPipeline {
+		state := &PipelineState{
+			Input: PipelineInput{
+				TaskID:       "TASK-001",
+				FeatureState: map[string]any{"status": status},
+			},
+		}
+		err := p.stepValidateLifecycle(state)
+		if err == nil {
+			t.Errorf("status %q should produce an error (out-of-pipeline)", status)
+			continue
+		}
+		if !strings.Contains(err.Error(), "out-of-pipeline") {
+			t.Errorf("error for status %q should contain 'out-of-pipeline': %v", status, err)
+		}
+		if !strings.Contains(err.Error(), status) {
+			t.Errorf("error for status %q should contain the status name: %v", status, err)
+		}
+	}
+}
+
+func TestStepValidateLifecycle_BugWorkableStatuses(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	workable := []string{"in-progress", "needs-review"}
+	for _, status := range workable {
+		state := &PipelineState{
+			Input: PipelineInput{
+				TaskID:       "TASK-001",
+				FeatureState: map[string]any{"status": status},
+			},
+		}
+		if err := p.stepValidateLifecycle(state); err != nil {
+			t.Errorf("status %q should be workable, got error: %v", status, err)
+		}
+	}
+}
+func TestStepResolveStage_KnownTier_NoError(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	for _, tier := range []string{"feature", "bug_fix", "retro_fix", "critical"} {
+		state := &PipelineState{
+			Input: PipelineInput{
+				FeatureState: map[string]any{
+					"status": "developing",
+					"tier":   tier,
+				},
+			},
+		}
+		if err := p.stepResolveStage(state); err != nil {
+			t.Errorf("tier %q should be accepted, got error: %v", tier, err)
+		}
+		if state.Stage != "developing" {
+			t.Errorf("tier %q: stage = %q, want %q", tier, state.Stage, "developing")
+		}
+	}
+}
+func TestStepResolveStage_EmptyTier_NoError(t *testing.T) {
+	t.Parallel()
+	p := testPipeline()
+	state := &PipelineState{
+		Input: PipelineInput{
+			FeatureState: map[string]any{
+				"status": "developing",
+				"tier":   "",
+			},
+		},
+	}
+	if err := p.stepResolveStage(state); err != nil {
+		t.Fatalf("empty tier should be accepted: %v", err)
+	}
+	if state.Stage != "developing" {
+		t.Errorf("stage = %q, want %q", state.Stage, "developing")
 	}
 }
 
@@ -726,8 +932,8 @@ func TestStepResolveRole_SubAgentsDefault(t *testing.T) {
 	p := &Pipeline{
 		Roles: &mockRoleResolver{
 			roles: map[string]*ResolvedRole{
-				"implementer":   {ID: "implementer", Identity: "Implementer role"},
-				"orchestrator":  {ID: "orchestrator", Identity: "Orchestrator role"},
+				"implementer":  {ID: "implementer", Identity: "Implementer role"},
+				"orchestrator": {ID: "orchestrator", Identity: "Orchestrator role"},
 			},
 		},
 	}

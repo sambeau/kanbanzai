@@ -125,6 +125,25 @@ stage_bindings:
     effort_budget: "10-30 tool calls"
     notes: "No human gate — research outputs are informational and feed into design and spec decisions, which carry their own gates. Higher effort budget reflects open-ended investigation scope."
 
+  bug-developing:
+    description: "Implementing a bug fix"
+    orchestration: single-agent
+    roles: [implementer]
+    skills: [implement-task]
+    human_gate: false
+    effort_budget: "5-20 tool calls"
+    notes: "Bug fixes follow the same implementation pattern but with reduced scope — the fix is the spec."
+
+  bug-reviewing:
+    description: "Reviewing a bug fix implementation"
+    orchestration: single-agent
+    roles: [reviewer-conformance]
+    skills: [review-code]
+    human_gate: true
+    document_type: report
+    effort_budget: "5-10 tool calls"
+    notes: "Bug review verifies the fix resolves the reported issue without regressions."
+
   documenting:
     description: "Updating project documentation for currency"
     orchestration: single-agent

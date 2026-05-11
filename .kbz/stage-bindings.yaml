@@ -1,3 +1,6 @@
+# This file describes how agents act per stage. Routing decisions —
+# which agent runs and what tier-aware behaviour applies — are owned by
+# FastTrackConfig (code), not by this file.
 schema_version: 2
 stage_bindings:
   designing:
@@ -152,6 +155,25 @@ stage_bindings:
     effort_budget: "10-30 tool calls"
     notes: "No human gate — research outputs are informational and feed into design and spec decisions, which carry their own gates. Higher effort budget reflects open-ended investigation scope."
 
+  bug-developing:
+    description: "Implementing a bug fix"
+    orchestration: single-agent
+    roles: [implementer]
+    skills: [implement-task]
+    human_gate: false
+    effort_budget: "5-20 tool calls"
+    notes: "Bug fixes follow the same implementation pattern but with reduced scope — the fix is the spec."
+
+  bug-reviewing:
+    description: "Reviewing a bug fix implementation"
+    orchestration: single-agent
+    roles: [reviewer-conformance]
+    skills: [review-code]
+    human_gate: true
+    document_type: report
+    effort_budget: "5-10 tool calls"
+    notes: "Bug review verifies the fix resolves the reported issue without regressions."
+
   documenting:
     description: "Updating project documentation for currency"
     orchestration: single-agent
@@ -182,34 +204,3 @@ stage_bindings:
       All documents run through all five stages. Individual stages can
       also be triggered independently via their own skill triggers.
 
-  retro-fixing:
-    description: "Implementing a fix for a retrospective theme"
-    profile: true
-    tier: retro_fix
-    modes:
-      human-gated:
-        design_gate: human
-        spec_gate: auto
-        dev_plan_gate: auto
-        review_gate: conditional
-        max_review_cycles: 3
-        notes: >
-          Human picks which themes to fix and approves the design approach.
-          Spec is auto-generated from theme data. Review is conditional:
-          doc-only changes skip review, implementation changes trigger full
-          panel.
-      auto:
-        design_gate: auto
-        spec_gate: auto
-        dev_plan_gate: auto
-        review_gate: conditional
-        max_review_cycles: 3
-        notes: >
-          Human initiates the cycle and steps back. System auto-picks themes
-          by severity, auto-generates and auto-approves design and spec, then
-          decomposes, implements, reviews, and verifies without checkpoints.
-          Human reviews results after completion.
-    verifying:
-      roles: [verifier]
-      skills: [verify-closeout]
-      dod_variant: retro-fix

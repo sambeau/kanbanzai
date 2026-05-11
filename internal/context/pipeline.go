@@ -11,6 +11,7 @@ package context
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -35,8 +36,8 @@ const (
 	PositionKnowledge         = 9
 	PositionEvalCriteria      = 10
 	PositionRetrievalAnchors  = 11
-	PositionDispatchContract   = 12
-	PositionWorktreeDirective  = 13
+	PositionDispatchContract  = 12
+	PositionWorktreeDirective = 13
 )
 
 // Progressive disclosure layer assignments (FR-018).
@@ -230,6 +231,9 @@ func (p *Pipeline) Run(ctx context.Context, input PipelineInput) (*PipelineResul
 		return nil, err
 	}
 
+	// Step 2b: Tier-aware skill substitution (tier router).
+	p.stepApplyTierRouting(state)
+
 	// Step 3: Stage-specific inclusion/exclusion.
 	p.stepApplyInclusion(state)
 
@@ -280,6 +284,16 @@ func (p *Pipeline) stepValidateLifecycle(state *PipelineState) error {
 	}
 
 	status, _ := state.Input.FeatureState["status"].(string)
+
+	// Catch out-of-pipeline bug statuses early with a clear message (REQ-006).
+	if allBugStatuses[status] {
+		if _, err := bugStatusToBindingKey(status); err != nil {
+			return pipelineError(0, "lifecycle-validation",
+				fmt.Sprintf("bug status %q is out-of-pipeline; pipeline bug statuses: in-progress, needs-review", status),
+				"advance the bug to in-progress or needs-review before generating context")
+		}
+	}
+
 	if !isWorkableFeatureStatus(status) {
 		return pipelineError(0, "lifecycle-validation",
 			fmt.Sprintf("feature is in status %q; pipeline requires one of: %s",
@@ -289,14 +303,35 @@ func (p *Pipeline) stepValidateLifecycle(state *PipelineState) error {
 	return nil
 }
 
-// stepResolveStage resolves the task's parent feature lifecycle stage (step 1).
+// stepResolveStage resolves the task's parent entity lifecycle stage (step 1).
+// For FeatureStatus values the stage is the status itself (e.g. "developing").
+// For BugStatus values the stage is resolved via bugStatusToBindingKey (e.g. "in-progress" → "bug-developing").
+// Unmapped BugStatus values and unknown tier values produce hard errors.
 func (p *Pipeline) stepResolveStage(state *PipelineState) error {
 	status, _ := state.Input.FeatureState["status"].(string)
 	if status == "" {
 		return pipelineError(1, "stage-resolution",
-			fmt.Sprintf("task %s: parent feature has no status", state.Input.TaskID),
-			"ensure the parent feature has a valid lifecycle status")
+			fmt.Sprintf("task %s: parent entity has no status", state.Input.TaskID),
+			"ensure the parent entity has a valid lifecycle status")
 	}
+
+	// Validate tier if present (REQ-010).
+	if tier, ok := state.Input.FeatureState["tier"].(string); ok && tier != "" && !knownTiers[tier] {
+		return fmt.Errorf("%w: %s", ErrUnknownTier, tier)
+	}
+
+	// Route BugStatus values through the bug binding mapping (REQ-005, REQ-006).
+	if allBugStatuses[status] {
+		key, err := bugStatusToBindingKey(status)
+		if err != nil {
+			return pipelineError(1, "stage-resolution",
+				fmt.Sprintf("bug status %q is out-of-pipeline", status),
+				"advance the bug to in-progress or needs-review before generating context")
+		}
+		state.Stage = key
+		return nil
+	}
+
 	state.Stage = status
 	return nil
 }
@@ -317,6 +352,37 @@ func (p *Pipeline) stepLookupBinding(state *PipelineState) error {
 	}
 	state.Binding = b
 	return nil
+}
+
+// stepApplyTierRouting applies tier-specific skill substitutions after binding lookup (step 2b).
+// For retro_fix tier features in the developing stage, implement-task is replaced
+// with implement-retro-fix. The pipeline's stepLoadSkill remains unchanged; only
+// the resolved skill list differs (REQ-002).
+func (p *Pipeline) stepApplyTierRouting(state *PipelineState) {
+	tier, _ := state.Input.FeatureState["tier"].(string)
+	if tier != "retro_fix" {
+		return
+	}
+	if state.Stage != "developing" {
+		return
+	}
+	if state.Binding == nil {
+		return
+	}
+	// Substitute implement-task → implement-retro-fix in the binding's skills list.
+	for i, skill := range state.Binding.Skills {
+		if skill == "implement-task" {
+			state.Binding.Skills[i] = "implement-retro-fix"
+		}
+	}
+	// Also substitute in sub_agents skills if present.
+	if state.Binding.SubAgents != nil {
+		for i, skill := range state.Binding.SubAgents.Skills {
+			if skill == "implement-task" {
+				state.Binding.SubAgents.Skills[i] = "implement-retro-fix"
+			}
+		}
+	}
 }
 
 // stepApplyInclusion derives what content categories to include/exclude (step 3).
@@ -880,10 +946,59 @@ func (p *Pipeline) stepBuildResult(state *PipelineState) *PipelineResult {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
+// ErrUnknownTier is returned when an entity's tier is not in the enumerated set
+// (feature, bug_fix, retro_fix, critical).
+var ErrUnknownTier = errors.New("unknown tier")
+
+// knownTiers is the set of valid fast-track tier values.
+var knownTiers = map[string]bool{
+	"feature":   true,
+	"bug_fix":   true,
+	"retro_fix": true,
+	"critical":  true,
+}
+
+// allBugStatuses is the set of all BugStatus string values.
+// Used to distinguish bug statuses from feature statuses during stage resolution.
+var allBugStatuses = map[string]bool{
+	"reported":         true,
+	"triaged":          true,
+	"reproduced":       true,
+	"planned":          true,
+	"in-progress":      true,
+	"needs-review":     true,
+	"needs-rework":     true,
+	"verifying":        true,
+	"closed":           true,
+	"duplicate":        true,
+	"not-planned":      true,
+	"cannot-reproduce": true,
+}
+
+// bugStatusToBindingKey maps a BugStatus value to its corresponding stage binding key.
+// It is a pure function: no I/O, no logging, no side effects, no allocation beyond its return value.
+//
+// Mapping:
+//   - "in-progress"  → "bug-developing"
+//   - "needs-review" → "bug-reviewing"
+//
+// All other BugStatus values are out-of-pipeline and produce an error.
+func bugStatusToBindingKey(status string) (string, error) {
+	switch status {
+	case "in-progress":
+		return "bug-developing", nil
+	case "needs-review":
+		return "bug-reviewing", nil
+	default:
+		return "", fmt.Errorf("bug status %q is out-of-pipeline", status)
+	}
+}
+
 var workableStatuses = []string{
 	"designing", "specifying", "dev-planning",
 	"developing", "reviewing", "plan-reviewing",
 	"researching", "documenting",
+	"in-progress", "needs-review",
 }
 
 func isWorkableFeatureStatus(status string) bool {
