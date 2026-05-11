@@ -1,0 +1,6 @@
+id: TASK-01KRBTR04HRSF
+parent_feature: FEAT-01KRBQHAZ5BFV
+slug: f2-doc-fasttrack-sync
+name: "Document FastTrackConfig, verify sync surface 10-to-7"
+summary: Add Go doc comments to FastTrackConfig. Verify sync surface count reduces from 10 to 7 after Phase 2. With tests.
+status: queued
