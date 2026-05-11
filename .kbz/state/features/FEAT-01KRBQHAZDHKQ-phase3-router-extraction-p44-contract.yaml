@@ -1,0 +1,10 @@
+id: FEAT-01KRBQHAZDHKQ
+slug: phase3-router-extraction-p44-contract
+name: Router Extraction and P44 Contract
+parent: P64-binding-governance
+status: proposed
+summary: "Extract routing into internal/binding/router.go, create generated routing companion file, establish P44 interface seam, reduce sync surface from 7 to 4."
+created: "2026-05-11T14:37:24Z"
+created_by: sambeau
+display_id: P64-F2
+tier: feature

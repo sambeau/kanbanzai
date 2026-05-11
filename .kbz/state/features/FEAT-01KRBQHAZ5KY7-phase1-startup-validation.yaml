@@ -1,0 +1,10 @@
+id: FEAT-01KRBQHAZ5KY7
+slug: phase1-startup-validation
+name: Startup Validation Hardening
+parent: P64-binding-governance
+status: proposed
+summary: "Wire ValidateBindingFile at startup, sync allowlists, enforce embedded-copy CI parity, add reachability tests. Converts silent binding failures into loud startup failures."
+created: "2026-05-11T14:37:24Z"
+created_by: sambeau
+display_id: P64-F1
+tier: feature
