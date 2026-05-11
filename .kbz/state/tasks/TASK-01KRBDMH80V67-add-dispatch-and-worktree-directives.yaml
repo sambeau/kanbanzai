@@ -1,0 +1,6 @@
+id: TASK-01KRBDMH80V67
+parent_feature: FEAT-01KRBB4AGXJDY
+slug: add-dispatch-and-worktree-directives
+name: Add dispatch and worktree-write directives to handoff
+summary: "Add two directive blocks to RenderPrompt in internal/context/pipeline.go: (1) dispatch contract for orchestrator-workers stages, (2) worktree-write directive for entities with active worktrees. Conditionally included based on binding and worktree state. Add tests verifying directives appear/hide correctly."
+status: queued
