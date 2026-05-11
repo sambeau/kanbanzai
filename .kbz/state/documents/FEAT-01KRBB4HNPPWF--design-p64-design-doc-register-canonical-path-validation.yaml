@@ -1,3 +1,5 @@
+approved_at: "2026-05-11T11:40:38Z"
+approved_by: sambeau
 canonical_content_hash: 414983c361541aecaf291f6a2be6e2b093b08fbba3286386ba3b5a1aa46af090
 content_hash: 414983c361541aecaf291f6a2be6e2b093b08fbba3286386ba3b5a1aa46af090
 created: "2026-05-11T11:40:25Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KRBB4HNPPWF/design-p64-design-doc-register-canonical-path-validation
 owner: FEAT-01KRBB4HNPPWF
 path: work/P64-binding-governance/P64-design-doc-register-canonical-path-validation.md
-status: draft
+status: approved
 title: "Design: doc register rejects non-canonical paths"
 type: design
-updated: "2026-05-11T11:40:25Z"
+updated: "2026-05-11T11:40:38Z"
