@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: kanbanzai-documents
 description: >
   Use when creating, editing, registering, or approving documents in a
@@ -8,9 +10,6 @@ description: >
   or lifecycle. Use whenever any markdown file is created or modified in a
   configured document root — even if the edit seems minor, registration
   and refresh rules still apply.
-metadata:
-  kanbanzai-managed: "true"
-  version: "0.4.0"
 ---
 
 # SKILL: Kanbanzai Documents
@@ -133,28 +132,6 @@ normalised to the short form.
 **Placement rule:** design content goes in design documents, not in planning
 documents. A document whose content contains "Decision:",
 "Architecture:", or "Technology Choice:" should be a `design` type.
-
-### Unclassified and ad-hoc files
-
-Files that do not match a defined document type (prompts, handoff notes,
-investigation scratchpads, agent-to-agent handover documents) must still
-follow naming and placement conventions.
-
-**Path:** `work/_project/`
-
-**Naming:** Use a descriptive type prefix in lowercase kebab-case followed
-by the slug:
-
-| Type prefix | When to use |
-|---|---|
-| `proposal-{slug}.md` | Early-stage proposals, prompt artifacts |
-| `note-{slug}.md` | Handoff notes, scratchpads, agent communications |
-| `investigation-{slug}.md` | Preliminary investigations (not formal research) |
-
-**Rule:** Do NOT create new directories under `work/`. All non-entity-scoped
-files go in `work/_project/`. The only directories permitted under `work/`
-are `_project/` and entity-scoped folders matching `{PlanID}-{slug}/` or
-`{BatchID}-{slug}/`.
 
 ---
 

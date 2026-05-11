@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: review-plan
 description:
   expert: "Batch-level conformance review verifying feature delivery status,

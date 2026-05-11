@@ -32,3 +32,5 @@ tools:
   - next
   - finish
   - read_file
+  - grep
+  - search_graph

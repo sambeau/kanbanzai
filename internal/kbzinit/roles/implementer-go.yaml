@@ -1,4 +1,7 @@
 id: implementer-go
+metadata:
+  kanbanzai-managed: "true"
+  version: "dev"
 inherits: implementer
 identity: "Senior Go engineer"
 

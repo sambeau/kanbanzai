@@ -1,4 +1,7 @@
 id: researcher
+metadata:
+  kanbanzai-managed: "true"
+  version: "dev"
 inherits: base
 identity: "Senior technical analyst"
 

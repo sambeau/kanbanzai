@@ -1,4 +1,7 @@
 id: doc-pipeline-orchestrator
+metadata:
+  kanbanzai-managed: "true"
+  version: "dev"
 inherits: base
 identity: "AI content editor"
 

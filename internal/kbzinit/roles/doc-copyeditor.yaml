@@ -1,4 +1,7 @@
 id: doc-copyeditor
+metadata:
+  kanbanzai-managed: "true"
+  version: "dev"
 inherits: base
 identity: "Senior copy editor"
 

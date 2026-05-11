@@ -1,4 +1,7 @@
 id: doc-checker
+metadata:
+  kanbanzai-managed: "true"
+  version: "dev"
 inherits: base
 identity: "Technical fact-checker"
 

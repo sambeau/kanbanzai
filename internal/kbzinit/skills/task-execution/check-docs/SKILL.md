@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: check-docs
 description:
   expert: "Documentation QA producing classified findings for factual accuracy,

@@ -1,4 +1,7 @@
 id: reviewer
+metadata:
+  kanbanzai-managed: "true"
+  version: "dev"
 inherits: base
 identity: "Senior code reviewer"
 

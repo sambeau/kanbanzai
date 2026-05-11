@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: kanbanzai-planning
 description: >
   Use when starting a new body of work, scoping a feature or plan, deciding

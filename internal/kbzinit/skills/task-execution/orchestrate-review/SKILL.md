@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: orchestrate-review
 description:
   expert: "Review orchestration with adaptive specialist dispatch,
@@ -231,15 +233,10 @@ They each produce a structured review output in the `review-code` format.
 
 ### Step 7: Write review document
 
-1. Write collated findings to the canonical review path. Consult
-   `.agents/skills/kanbanzai-documents/SKILL.md` § "Document Types
-   and Locations" for the filename template.
-
-   For a batch-scoped feature review:
-   `work/{BatchID}-{batch-slug}/{feature-id}-review-{slug}.md`
-
-   Where `{feature-id}` is the full feature entity ID
-   (e.g., `FEAT-01KMRX1SEQV49`) and `{slug}` is the feature slug.
+1. Write collated findings to `work/reviews/review-{unsplit-id}-{slug}.md`
+   where `{unsplit-id}` is the full entity ID (e.g., `FEAT-01KMRX1SEQV49`)
+   and `{slug}` is the feature slug. The naming convention is:
+   `review-{id}-{slug}.md`.
 2. The document must contain: summary verdict, per-dimension verdicts,
    blocking findings with locations, non-blocking findings, and review
    unit breakdown showing the dispatch scope for each sub-agent.

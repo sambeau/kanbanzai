@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: orchestrate-doc-pipeline
 description:
   expert: "Sequential pipeline coordination dispatching five editorial

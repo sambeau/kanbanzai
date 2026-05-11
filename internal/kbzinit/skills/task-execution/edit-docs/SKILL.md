@@ -1,4 +1,6 @@
 ---
+# kanbanzai-managed: true
+# kanbanzai-version: dev
 name: edit-docs
 description:
   expert: "Structural and developmental editing verifying inverted-pyramid
