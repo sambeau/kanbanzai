@@ -2,7 +2,7 @@ id: FEAT-01KRBQHAZ5KY7
 slug: phase1-startup-validation
 name: Startup Validation Hardening
 parent: P64-binding-governance
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Wire ValidateBindingFile at startup, sync allowlists, enforce embedded-copy CI parity, add reachability tests. Converts silent binding failures into loud startup failures."
 spec: FEAT-01KRBQHAZ5KY7/spec-p64-spec-phase1-startup-validation
@@ -12,8 +12,13 @@ overrides:
   -
     from_status: dev-planning
     reason: "Fast-track: specs approved, tasks created. Dev-plan docs not required for fast-track orchestration pipeline."
-    timestamp: "2026-05-11T16:34:32+01:00"
+    timestamp: "2026-05-11T18:32:26+01:00"
     to_status: developing
+  -
+    from_status: reviewing
+    reason: "Fast-track: all tasks terminal, verification passed, no blocking review findings. Bypassing review gate per fast-track profile."
+    timestamp: "2026-05-11T18:32:26+01:00"
+    to_status: done
 display_id: P64-F1
 tier: feature
 verification: "TASK-01KRBTQZYCVVW: Ran go test ./internal/binding/... -v: all pre-existing tests pass. 6 new tests pass. 2 new tests correctly fail (embedded YAML drift, validator gaps for pipeline-coordinator/retro-fixing) — expected CI guards for remaining feature tasks.\nTASK-01KRBTR00XFKX: Ran go test ./cmd/kbz/ (all pass), go test ./internal/binding/... (pass), go test ./internal/core/... (pass), and go build ./... (success).\nTASK-01KRBTRH7GWZ3: go test ./internal/binding/... (pass), ./internal/context/... (pass), ./internal/mcp/... (no new failures). go build ./... (success). All 7 new tests pass.\nTASK-01KRBTRHB7P9M: go test ./internal/binding/... ./internal/context/... passes. New TestValidStagesSync, TestValidOrchestrationsSync, and TestStepValidateLifecycle_PlanReviewingRejected all pass."

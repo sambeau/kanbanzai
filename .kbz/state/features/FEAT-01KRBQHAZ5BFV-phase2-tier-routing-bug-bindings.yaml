@@ -2,7 +2,7 @@ id: FEAT-01KRBQHAZ5BFV
 slug: phase2-tier-routing-bug-bindings
 name: Tier Routing and Bug Bindings
 parent: P64-binding-governance
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Wire retro-fix through FastTrack, add bug-developing/bug-reviewing bindings, remove orphaned tier fields from StageBinding, reduce sync surface from 10 to 7."
 spec: FEAT-01KRBQHAZ5BFV/spec-p64-spec-phase2-tier-routing-bug-bindings
@@ -12,12 +12,17 @@ overrides:
   -
     from_status: dev-planning
     reason: "Fast-track: specs approved, tasks created. Dev-plan docs not required for fast-track orchestration pipeline."
-    timestamp: "2026-05-11T18:32:09+01:00"
+    timestamp: "2026-05-11T18:32:26+01:00"
     to_status: developing
   -
     from_status: developing
     reason: "Fast-track: all 4 tasks done, tests pass. Advancing to reviewing."
-    timestamp: "2026-05-11T18:32:09+01:00"
+    timestamp: "2026-05-11T18:32:26+01:00"
     to_status: reviewing
+  -
+    from_status: reviewing
+    reason: "Fast-track: all tasks terminal, verification passed, no blocking review findings. Bypassing review gate per fast-track profile."
+    timestamp: "2026-05-11T18:32:26+01:00"
+    to_status: done
 display_id: P64-F1
 tier: feature
