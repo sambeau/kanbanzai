@@ -3,9 +3,9 @@ content: "The kbz serve MCP server has no built-in restart mechanism. When a new
 created: "2026-05-06T15:50:14Z"
 created_by: sambeau
 id: KE-01KQYZQ3F43JC
-last_accessed_at: "2026-05-11T17:00:41Z"
+last_accessed_at: "2026-05-11T17:00:43Z"
 miss_count: 0
-recent_use_count: 236
+recent_use_count: 237
 scope: project
 status: contributed
 tags:
