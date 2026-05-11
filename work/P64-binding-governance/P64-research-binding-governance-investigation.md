@@ -290,7 +290,7 @@ Counted from the filesystem and the YAML:
 - **Orphaned (unreferenced by any binding): 8** —
   `audit-codebase`, `implement-retro-fix`, `prompt-engineering`, `references`, `validate-plan`, `validate-review`, `validate-spec`, `write-skill`.
 
-Several of these are used by code paths outside the binding pipeline (`validate-spec`, `validate-plan`, `validate-review` are used by FastTrack validators; `audit-codebase` is presumably referenced elsewhere). But `implement-retro-fix` — a well-formed, ~300-line skill purpose-built for the failure case under investigation — is reachable from neither the pipeline, the FastTrack subsystem, nor any test fixture. It is a complete dead artifact on disk.
+Several of these are used by code paths outside the binding pipeline (`validate-spec`, `validate-plan`, `validate-review` are used by FastTrack validators; `audit-codebase` is presumably referenced elsewhere). But `implement-retro-fix` — a well-formed, ~300-line skill purpose-built for the failure case under investigation — is reachable from neither the pipeline, the FastTrack subsystem, nor any test fixture. It is a complete dead artifact on disk. *(2026-05-11: `status()` now surfaces skill names inline in the orientation block, which partially mitigates the discoverability symptom — agents can see what skills exist — but does not address the underlying reachability gap: orphaned skills remain unreferenced by any binding.)*
 
 ### Finding 10 — Implicit synchronisation contracts that must move in lockstep [P, high]
 

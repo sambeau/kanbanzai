@@ -3,7 +3,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-11                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | spec-author                    |
 | Plan   | P64-binding-governance         |
 | Tier   | feature                        |

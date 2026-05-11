@@ -1,7 +1,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-11                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | spec-author                    |
 
 ## Overview

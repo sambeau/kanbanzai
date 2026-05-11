@@ -350,7 +350,7 @@ func TestStepResolveStage_UnknownTier(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected error for unknown tier")
 	}
-	if !errors.Is(err, ErrUnknownTier) {
+	if !errors.Is(err, binding.ErrUnknownTier{}) {
 		t.Errorf("error should wrap ErrUnknownTier: %v", err)
 	}
 	if !strings.Contains(err.Error(), "nonexistent_tier") {

@@ -7,6 +7,25 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+// validStages is the set of valid stage names for validation.
+// Generated from routing.yaml — keep in sync with router_gen.go and routing.yaml.
+var validStages = map[string]bool{
+	"designing":       true,
+	"specifying":      true,
+	"dev-planning":    true,
+	"developing":      true,
+	"reviewing":       true,
+	"merging":         true,
+	"verifying":       true,
+	"batch-reviewing": true,
+	"doc-publishing":  true,
+	"retro-fixing":    true,
+	"bug-developing":  true,
+	"bug-reviewing":   true,
+	"researching":     true,
+	"documenting":     true,
+}
+
 // StageBinding represents a single stage's binding configuration.
 type StageBinding struct {
 	Description         string               `yaml:"description"`

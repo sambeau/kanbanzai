@@ -35,8 +35,8 @@ const (
 	PositionKnowledge         = 9
 	PositionEvalCriteria      = 10
 	PositionRetrievalAnchors  = 11
-	PositionDispatchContract   = 12
-	PositionWorktreeDirective  = 13
+	PositionDispatchContract  = 12
+	PositionWorktreeDirective = 13
 )
 
 // Progressive disclosure layer assignments (FR-018).
@@ -336,6 +336,19 @@ func (p *Pipeline) stepApplyInclusion(state *PipelineState) {
 	switch state.Stage {
 	case "reviewing", "plan-reviewing":
 		state.Inclusion.IncludeReferences = false
+	}
+}
+
+// bugStatusToBindingKey maps a bug lifecycle status to its corresponding stage binding key.
+// Only in-progress and needs-review are workable; all other bug statuses return an error.
+func bugStatusToBindingKey(status string) (string, error) {
+	switch status {
+	case "in-progress":
+		return "bug-developing", nil
+	case "needs-review":
+		return "bug-reviewing", nil
+	default:
+		return "", fmt.Errorf("bug status %q is out-of-pipeline", status)
 	}
 }
 

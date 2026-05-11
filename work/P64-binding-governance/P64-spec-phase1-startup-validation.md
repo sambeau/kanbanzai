@@ -3,7 +3,7 @@
 | Field  | Value                          |
 |--------|--------------------------------|
 | Date   | 2026-05-11                     |
-| Status | Draft                          |
+| Status | approved |
 | Author | spec-author                    |
 | Plan   | P64-binding-governance         |
 | Tier   | feature                        |
@@ -261,10 +261,20 @@ preserved; no feature is rerouted.
   `kbz binding doctor` and a reference to `kbz init --upgrade` for
   unmodified consumer files.
 
-- **AC-017 (regression):** Given the post-Phase-1 codebase, when all
+- **AC-017 (REQ-NF-001):** Given the post-Phase-1 codebase, when all
   existing tests in `internal/binding/`, `internal/context/`,
   `internal/mcp/`, and `internal/kbzinit/` are run, then all tests
   that passed before Phase 1 continue to pass.
+
+- **AC-018 (REQ-NF-002):** Given the post-Phase-1 codebase, when
+  the canonical and embedded `stage-bindings.yaml` files are inspected,
+  then the `schema_version` field is `2` in both files and no new
+  top-level keys have been added to either file.
+
+- **AC-019 (REQ-NF-003):** Given the post-Phase-1 codebase, when
+  the test suite is inspected, then every functional requirement
+  REQ-001 through REQ-012 has at least one corresponding automated
+  test function.
 
 ---
 
@@ -289,3 +299,5 @@ preserved; no feature is rerouted.
 | AC-015 | Test | Automated test: invoke `kbz binding doctor` subprocess against a project directory with an intentionally broken binding file; assert exit code non-zero and stderr/stdout names the violating stage and field. |
 | AC-016 | Test | Automated test: `BindingRegistry.Load` with a broken fixture; assert the returned error string contains `kbz binding doctor` and `kbz init --upgrade`. |
 | AC-017 | Test | Run `go test ./internal/binding/... ./internal/context/... ./internal/mcp/... ./internal/kbzinit/...` against the final Phase 1 branch; assert all tests pass. |
+| AC-018 | Inspection | Code review: verify `schema_version` is `2` in both `.kbz/stage-bindings.yaml` and `internal/kbzinit/stage-bindings.yaml`; verify no new top-level keys beyond those present pre-Phase-1. |
+| AC-019 | Inspection | Test suite audit: confirm each of REQ-001 through REQ-012 has at least one test function asserting its behaviour. |

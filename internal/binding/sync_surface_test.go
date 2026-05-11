@@ -231,30 +231,6 @@ func syncSurfaces(t *testing.T) []string {
 	return surfaces
 }
 
-func findRepoRoot(t *testing.T) string {
-	t.Helper()
-
-	// Walk up from the test file's directory to find the git root.
-	dir, err := os.Getwd()
-	if err != nil {
-		t.Fatalf("cannot get working directory: %v", err)
-	}
-
-	for {
-		gitPath := filepath.Join(dir, ".git")
-		if info, err := os.Stat(gitPath); err == nil {
-			// .git may be a directory (main repo) or a file (worktree).
-			if info.IsDir() || info.Mode().IsRegular() {
-				return dir
-			}
-		}
-		parent := filepath.Dir(dir)
-		if parent == dir {
-			t.Fatal("cannot find repository root (no .git directory found)")
-		}
-		dir = parent
-	}
-}
 
 func pathExists(t *testing.T, path string) bool {
 	t.Helper()

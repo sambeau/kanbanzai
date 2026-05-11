@@ -3,7 +3,7 @@
 | Field  | Value           |
 |--------|-----------------|
 | Date   | 2026-05-11      |
-| Status | Draft           |
+| Status | approved |
 | Author | architect       |
 
 ---
@@ -150,9 +150,9 @@ change that must pass validation.
 
 - **Loader wiring (Subsystem C).** Replace the four production
   `LoadBindingFile` call sites with `BindingRegistry.Load`, which runs
-  `ValidateBindingFile`. Server startup fails on validation errors for the
-  canonical (project-owned) binding file. Consumer bindings warn rather
-  than fail for one release window (see *Failure modes* below).
+  `ValidateBindingFile`. Server startup fails on validation errors for
+  any binding file — project-owned or consumer-owned. The asymmetric
+  warn-window approach was considered and rejected (see Decision 3).
 - **Allowlists (Subsystem C).** `validStages` and `workableStatuses` are
   brought into agreement with the canonical YAML — `merging`, `verifying`,
   `batch-reviewing`, `doc-publishing`, `retro-fixing` added; stale
@@ -245,8 +245,11 @@ provider integration can consume without rework.
 **Components changed.**
 
 - **Router extraction (new component, Subsystem A).** A new
-  `internal/binding/router.go` package owns the
-  `(status, tier) → BindingResolution` mapping. `BindingResolution` is a
+  `internal/binding/router.go` file owns the
+  `(status, tier) → BindingResolution` mapping. Located alongside the
+  binding loader and validator because routing is a binding concern;
+  the pipeline package (`internal/context/`) consumes routing
+  decisions but does not own them. `BindingResolution` is a
   small struct: `BindingKey string; SkillOverrides []string; ModeProfile
   *FastTrackTier`. `Resolve` is a pure function: no I/O, no logging,
   callable from a transition hook. FastTrackConfig is one of its inputs;
@@ -254,9 +257,12 @@ provider integration can consume without rework.
   Phase 2 are absorbed into it. The pipeline's `stepLookupBinding` calls
   `Resolve` instead of looking up the bare `state.Stage`.
 - **Generated registry (Subsystem C).** A single source-of-truth YAML
-  companion file (`.kbz/stage-routing.yaml` — small, code-adjacent, not
-  consumer-customisable) declares which feature/bug statuses are
-  routable and which binding key each maps to. `validStages`,
+  companion file (`internal/binding/routing.yaml`) declares which
+  feature/bug statuses are routable and which binding key each maps
+  to. Located inside `internal/` because routing is a code concern
+  under Option C; placing it in `.kbz/` would invite consumer edits
+  the design explicitly does not support and would contradict the
+  contract documented in `stage-bindings.yaml`'s header. `validStages`,
   `workableStatuses`, the `FeatureStatus*` and `BugStatus*` enum
   constants, and the `bugStatusToBindingKey` table from Phase 2 are
   generated from it via `go generate`. After Phase 3, four hand-edited
@@ -294,8 +300,7 @@ table below names the policy for each failure surface.
 
 | Failure | Phase | Behaviour |
 |---------|-------|-----------|
-| Canonical `stage-bindings.yaml` fails `ValidateBindingFile` at startup | 1 | **Hard fail.** Server refuses to start. The project must hold itself to the strict bar. |
-| Consumer `stage-bindings.yaml` fails validation | 1 | **Warn-and-continue for one release window** (versioned by `kanbanzai-version` marker), then hard fail. `kbz init --upgrade` writes the corrected embedded copy. |
+| Any `stage-bindings.yaml` (project or consumer) fails `ValidateBindingFile` at startup | 1 | **Hard fail.** Server refuses to start. Validation errors are surfaced with a fix hint and a pointer to `kbz init --upgrade` for unmodified consumer files. |
 | Embedded YAML drifts from canonical | 1 | **CI fail.** Structural equality test in the test suite. |
 | Skill referenced in YAML missing on disk | 1 | **Startup fail** (via `ValidateBindingFile` already covers this; just needs to be invoked). |
 | Skill on disk unreferenced by any binding | 1 | **CI warn**, not fail. Some skills (`audit-codebase`, `prompt-engineering`) are direct-trigger and intentionally unbound; the test asserts they appear on a known-allowlist. |
@@ -304,26 +309,33 @@ table below names the policy for each failure surface.
 | Tier router resolves an unknown tier | 2 | **Hard fail at `Resolve` call.** Tiers are an enumerated set; unknown tiers indicate corrupt entity state. |
 | `bug_fix` feature in a status that has no `bug-*` binding | 2 | **Per-task fail with explicit out-of-pipeline message** (same template as above). |
 
-The deliberate asymmetry: *project-owned* binding files fail loudly
-at startup; *consumer-owned* binding files warn during a transition
-window. This honours the brief's constraint that "a startup
-validation gate that hard-fails on schema drift would break consumer
-projects."
+All binding files are validated identically. The brief's concern
+that "a startup validation gate that hard-fails on schema drift would
+break consumer projects" is addressed by Decision 3 — the cost of an
+upgrade-time break is judged lower than the cost of a permanent
+two-class validation policy and a warn-window mechanism that may not
+be noticed by consumers in time.
 
 ### Migration strategy for consumer projects
 
 Two scenarios:
 
 1. **Consumer has not customised `stage-bindings.yaml`.** `kbz init
-   --upgrade` overwrites the embedded copy in place (existing behaviour,
-   gated by the `kanbanzai-managed: true` marker). After Phase 1, the
-   embedded copy passes validation strictly. No action required.
+   --upgrade` overwrites the embedded copy in place (existing
+   behaviour, gated by the `kanbanzai-managed: true` marker). After
+   Phase 1, the embedded copy passes validation strictly. No action
+   required by the consumer.
 2. **Consumer has customised `stage-bindings.yaml`.** The marker is
-   absent, so `kbz init --upgrade` does not overwrite. The startup
-   validation runs in *warn-and-continue* mode for the first release
-   that ships with strict validation — startup logs name each
-   validation error and links to a migration note. The next minor
-   release flips warn to hard-fail.
+   absent, so `kbz init --upgrade` does not overwrite. On first start
+   after upgrade, the server hard-fails if the customised file does
+   not pass validation. The error message names each violation and
+   the canonical fix.
+
+To make the upgrade-time break recoverable, Phase 1 also adds a
+`kbz binding doctor` command that runs the validator against the
+current file and reports issues *without* starting the server.
+Consumers can run it before upgrading (or before restarting after
+upgrade) to surface and fix issues offline.
 
 The schema version stays at `2` throughout. A schema bump would be
 warranted only if Subsystem B's content shape changed; under Option C
@@ -493,27 +505,42 @@ health warnings become eliminable. Negative: two more binding keys to
 maintain; `workableStatuses` grows. Mitigation: Phase 3's generated
 registry collapses these surfaces into one.
 
-### Decision 3 — Validation failure mode is hard-fail at startup for the canonical file, warn-and-continue for consumer files
+### Decision 3 — Validation failure mode is hard-fail at startup for all binding files
 
-**Context.** The brief states that "a startup validation gate that
-hard-fails on schema drift would break those projects." The project's
-own canonical file, however, must be held to the strict bar — it is
-the reference.
+**Context.** The brief flags that "a startup validation gate that
+hard-fails on schema drift would break those projects." Three
+policies were considered: (a) hard-fail for everyone, (b)
+warn-and-continue for consumers during a defined release window then
+flip to hard-fail, (c) permanent warn-mode for consumers, hard-fail
+for the project file only.
 
-**Rationale.** The canonical file is *project-owned* and tested in CI;
-a validation failure there is a bug introduced by the project, fixable
-before release. Consumer files are *user-owned* and may have been
-edited; a hard fail would brick a working consumer install on
-upgrade. The warn-and-continue window for consumers (one release)
-gives time to migrate, with explicit per-error log lines naming the
-fix. The next release flips to hard fail.
+**Rationale.** The warn-window option (b) adds significant
+implementation complexity (a `strictValidation` flag, a release
+checklist item to flip it, log-surfacing through `status`/`health`
+because MCP startup logs are easy to miss) for moderate benefit. Its
+value depends entirely on consumers reading log messages they
+historically have not needed to read. The permanent warn option (c)
+preserves the architectural invariant for the project but leaves
+consumer files quietly broken indefinitely — the same silent-failure
+class this entire design exists to eliminate.
 
-**Consequences.** Positive: the project cannot ship a broken binding
-file; consumers are not bricked by an upgrade. Negative: the
-asymmetry must be implemented (a flag on `BindingRegistry.Load`
-indicating canonical vs consumer mode) and tested. The warn-mode log
-lines must be informative enough that consumers actually migrate
-before the next release.
+Hard-failing for everyone (a) is the simplest, most honest, and most
+consistent policy. Kanbanzai's user base is small and technical;
+upgrade breakage is recoverable through the new `kbz binding doctor`
+command. If this causes meaningful consumer pain in practice, the
+policy can be revisited and a warn-window introduced as a follow-up
+feature — but the cost of starting strict and relaxing is far lower
+than the cost of starting lenient and tightening.
+
+**Consequences.** Positive: a single, mechanical validation policy;
+no release-cadence dependency; no policy state to manage; no
+two-class code path. Consumer files are held to the same standard as
+the project's own. Negative: a consumer with a customised binding
+file that drifts from the validator's expectations will see a
+startup failure on upgrade. Mitigation: `kbz binding doctor` (added
+in Phase 1) can be run before restart to surface issues offline; the
+release note for the Phase 1 release prominently documents the
+policy change.
 
 ### Decision 4 — Reduce synchronisation surfaces via a single routing companion file generated into code
 
@@ -523,12 +550,13 @@ The four hand-edited tables — `validStages`, `workableStatuses`,
 drift risk because every stage rename touches all four.
 
 **Rationale.** A single small YAML companion file
-(`.kbz/stage-routing.yaml`) declares which statuses route to which
-binding keys. A `go generate` step produces the four tables from it.
-After Phase 3, renaming a stage is a one-line edit. This is P64 §6.3
-recommendation 9. The companion file is code-adjacent (not
-consumer-customisable) because routing is a code concern under Option
-C.
+(`internal/binding/routing.yaml`) declares which statuses route to
+which binding keys. A `go generate` step produces the four tables
+from it. After Phase 3, renaming a stage is a one-line edit. This is
+P64 §6.3 recommendation 9. The companion file lives inside
+`internal/` because routing is a code concern under Option C;
+placing it in `.kbz/` would invite consumer edits the design
+explicitly does not support.
 
 **Consequences.** Positive: the highest-drift surfaces become
 generated; the surface count drops from 7 to 4. Negative: a
@@ -559,36 +587,20 @@ comment.
 
 ## Open Questions
 
-1. **Where does `pipeline-coordinator` orchestration sit under Option C?**
-   Decision 5 admits it; the `doc-publishing` flow is consumed outside
-   the main pipeline. Phase 3's router could either include
-   `pipeline-coordinator` bindings in `Resolve` (treating doc-publishing
-   as a routable lifecycle stage in its own right) or leave it outside
-   (Resolve only handles feature/bug statuses). The design currently
-   leaves it outside; resolving this is a Phase 3 question for the
-   spec.
+None. The five questions present in the initial draft were resolved
+before approval:
 
-2. **Should the tier-conditional skill substitution for retro-fix be
-   declarative (a small data table inside the router) or programmatic
-   (a Go switch)?** Either works; both are equally reviewable. The
-   spec should pick one. The design assumes a data table because it
-   composes more cleanly with the Phase 3 generated registry.
-
-3. **What's the stable name for the Phase 3 router package?** This
-   design names it `internal/binding/router.go`. An alternative is
-   `internal/pipeline/router.go` (sits next to its primary consumer
-   `internal/context/pipeline.go`). The spec should resolve based on
-   import-cycle considerations not visible at design level.
-
-4. **Is the warn-and-continue window for consumer validation one
-   minor release or two?** Decision 3 says one. This is a release-cadence
-   question; if the project ships fewer minor releases per quarter,
-   two may be more humane. The design defers this to release planning.
-
-5. **Does the `go generate` registry source live at `.kbz/stage-routing.yaml`
-   (consumer-visible but marked as not-customisable) or
-   `internal/binding/routing.yaml` (code-internal)?** The latter is more
-   honest about it being a code concern; the former is more discoverable
-   for contributors reading `.kbz/`. The design assumes `.kbz/` for
-   discoverability with a header comment naming it as not-customisable.
-   The spec should confirm.
+- **`pipeline-coordinator` under Option C** — resolved: stays outside
+  `Resolve`. The router answers "what binding does this feature/bug
+  task route to?" `doc-publishing` is not a feature lifecycle stage
+  and is triggered separately.
+- **Tier-conditional skill substitution mechanism** — resolved: data
+  table inside the router. Composes with the Phase 3 generated
+  registry; one fewer code path to read.
+- **Router package location** — resolved: `internal/binding/router.go`.
+  Routing is a binding concern.
+- **Validation failure mode for consumers** — resolved: hard-fail for
+  all binding files, with `kbz binding doctor` as the recovery path.
+  See Decision 3.
+- **Companion file location** — resolved: `internal/binding/routing.yaml`.
+  Code-internal, not consumer-customisable. See Decision 4.
