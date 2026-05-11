@@ -299,14 +299,16 @@ func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.In
 		log.Printf("[doc] WARNING: auto-commit after register %s failed: %v", result.ID, commitErr)
 	}
 
-	// Canonical path warning (REQ-006): when a parent entity is specified,
+	// Canonical path validation: when a parent entity is specified,
 	// compare the provided path against the canonical form for this doc type.
-	var pathWarnings []string
+	// Reject mismatches so the caller can correct in a single round-trip.
 	if entitySvc != nil && owner != "" && docType != "prompt" {
 		if canonical, cErr := entitySvc.CanonicalDocPath(docType, owner); cErr == nil && canonical != "" {
 			if path != canonical {
-				pathWarnings = append(pathWarnings,
-					fmt.Sprintf("Path does not match canonical form. Expected: %s", canonical))
+				return path, nil, fmt.Errorf(
+					"Path %q does not match canonical form. Expected: %s",
+					path, canonical,
+				)
 			}
 		}
 	}
@@ -330,9 +332,8 @@ func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.In
 		"document":             docRecordToMap(result),
 		"classification_nudge": nudge,
 	}
-	allWarnings := append(result.Warnings, pathWarnings...)
-	if len(allWarnings) > 0 {
-		out["warnings"] = allWarnings
+	if len(result.Warnings) > 0 {
+		out["warnings"] = result.Warnings
 	}
 	return result.ID, out, nil
 }

@@ -1,0 +1,33 @@
+document_id: FEAT-01KRBB4HNPPWF/report-p64-review-doc-register-canonical-path-validation
+document_path: work/P64-binding-governance/P64-review-doc-register-canonical-path-validation.md
+content_hash: e7982cd644a51d8302008a26168511677950d2eb7e4454da923a4bf443f999c1
+indexed_at: 2026-05-11T12:13:03.280223Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: doc register rejects non-canonical paths'
+      byte_offset: 0
+      byte_count: 656
+      word_count: 84
+      content_hash: e7982cd644a51d8302008a26168511677950d2eb7e4454da923a4bf443f999c1
+      children:
+        - path: "1.1"
+          level: 2
+          title: Findings
+          byte_offset: 145
+          byte_count: 302
+          word_count: 48
+          content_hash: 290891f441a6bac7947cdf569c35d9b5f037e711969e12231e6816c948f5ae3e
+        - path: "1.2"
+          level: 2
+          title: Test Results
+          byte_offset: 447
+          byte_count: 209
+          word_count: 22
+          content_hash: 0ff8e9c700cd1b5c1019f7e0e15e2bd10ebe81d899b4d915c1947135127e72c2
+entity_refs:
+    - entity_id: FEAT-01KRBB4HNPPWF
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 72
+classified: false

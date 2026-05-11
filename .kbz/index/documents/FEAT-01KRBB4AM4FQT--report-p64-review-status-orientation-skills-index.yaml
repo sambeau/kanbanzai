@@ -1,0 +1,33 @@
+document_id: FEAT-01KRBB4AM4FQT/report-p64-review-status-orientation-skills-index
+document_path: work/P64-binding-governance/P64-review-status-orientation-skills-index.md
+content_hash: 01f39fc0dabd8eec0363ca6fe7bb5b816e006e2860cb77c2c02519599fef7b30
+indexed_at: 2026-05-11T12:13:03.280219Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Inline skills index in status() orientation block'
+      byte_offset: 0
+      byte_count: 589
+      word_count: 93
+      content_hash: 01f39fc0dabd8eec0363ca6fe7bb5b816e006e2860cb77c2c02519599fef7b30
+      children:
+        - path: "1.1"
+          level: 2
+          title: Findings
+          byte_offset: 154
+          byte_count: 367
+          word_count: 64
+          content_hash: 4b540e8576576730ec30a86e10572d3d026917cab1475f9d259b3acb4757c364
+        - path: "1.2"
+          level: 2
+          title: Test Results
+          byte_offset: 521
+          byte_count: 68
+          word_count: 13
+          content_hash: a7b0b627b620f684b3166eb2aa4c9d10d6217425546ca7156d89d0a54358ecb2
+entity_refs:
+    - entity_id: FEAT-01KRBB4AM4FQT
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 81
+classified: false

@@ -2283,88 +2283,73 @@ func TestDocTool_Path_FeatureThroughBatch(t *testing.T) {
 	}
 }
 
-func TestDocTool_Register_CanonicalPathWarning(t *testing.T) {
+func TestDocTool_Register_CanonicalPathRejection(t *testing.T) {
 	t.Parallel()
 
 	env := setupDocToolTest(t)
 	entitySvc := service.NewEntityService(t.TempDir())
 
-	// Write plan and feature directly to the store with correct entity kind types.
-	now := time.Now().UTC().Format(time.RFC3339)
-	planID := "P1-gap-test-plan"
-	planSlug := "gap-test-plan"
-	if _, err := entitySvc.Store().Write(storage.EntityRecord{
-		Type: "batch",
-		ID:   planID,
-		Slug: planSlug,
-		Fields: map[string]any{
-			"id": planID, "slug": planSlug, "name": "Test plan " + planSlug,
-			"status": "proposed", "summary": "Test plan summary",
-			"created": now, "created_by": "tester", "updated": now,
-		},
-	}); err != nil {
-		t.Fatalf("write plan: %v", err)
-	}
-	featureID := "FEAT-TEST-GAP"
-	if _, err := entitySvc.Store().Write(storage.EntityRecord{
-		Type: "feature",
-		ID:   featureID,
-		Slug: "gap-test-feature",
-		Fields: map[string]any{
-			"id": featureID, "slug": "gap-test-feature", "name": "Test feature",
-			"status": "designing", "parent": planID, "summary": "Test feature summary",
-			"created": now, "created_by": "tester", "updated": now,
-		},
-	}); err != nil {
-		t.Fatalf("write feature: %v", err)
-	}
+	planID, _ := setupPlanFeature(t, entitySvc)
 
-	// Compute the canonical path for this type + parent.
 	canonical, err := entitySvc.CanonicalDocPath("design", planID)
 	if err != nil {
 		t.Fatalf("CanonicalDocPath error: %v", err)
 	}
 
-	// Register a doc with a valid-but-non-canonical path.
+	// Register a doc with a non-canonical path.
 	wrongPath := "work/P1-gap-test-plan/P1-design-wrong-name.md"
 	writeDocFile(t, env.repoRoot, wrongPath, "# Test Design\n\nContent.")
 
-	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
+	tool := docTool(env.docSvc, nil, entitySvc)
+	req := makeRequest(map[string]any{
 		"action": "register",
 		"path":   wrongPath,
 		"type":   "design",
 		"title":  "Test Design",
 		"owner":  planID,
 	})
+	_, err = tool.Handler(context.Background(), req)
 
-	// Verify the document was registered successfully.
+	// AC-1: Registering a document at a non-canonical path returns an error
+	// containing the canonical path.
+	if err == nil {
+		t.Fatalf("expected error for non-canonical path, got nil")
+	}
+	if !strings.Contains(err.Error(), canonical) {
+		t.Errorf("error should contain canonical path %q, got: %v", canonical, err)
+	}
+}
+
+func TestDocTool_Register_CanonicalPathSucceeds(t *testing.T) {
+	t.Parallel()
+
+	env := setupDocToolTest(t)
+	entitySvc := service.NewEntityService(t.TempDir())
+
+	planID, _ := setupPlanFeature(t, entitySvc)
+
+	canonical, err := entitySvc.CanonicalDocPath("design", planID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath error: %v", err)
+	}
+
+	writeDocFile(t, env.repoRoot, canonical, "# Test Design\n\nContent.")
+
+	// AC-2: Registering a document at the canonical path succeeds.
+	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
+		"action": "register",
+		"path":   canonical,
+		"type":   "design",
+		"title":  "Test Design",
+		"owner":  planID,
+	})
+
 	doc, ok := resp["document"].(map[string]any)
 	if !ok {
 		t.Fatalf("expected document field, got: %v", resp)
 	}
 	if doc["status"] != "draft" {
 		t.Errorf("status = %q, want draft", doc["status"])
-	}
-
-	// AC-006: When register is called with a path that doesn't match canonical
-	// form, the response must include a warning showing the expected path.
-	warnings, hasWarnings := resp["warnings"]
-	if !hasWarnings {
-		t.Fatalf("expected warnings for non-canonical path, got none. Expected canonical path: %s", canonical)
-	}
-	warnList, ok := warnings.([]interface{})
-	if !ok {
-		t.Fatalf("warnings is not []interface{}, got %T", warnings)
-	}
-	found := false
-	for _, w := range warnList {
-		if ws, ok := w.(string); ok && strings.Contains(ws, canonical) {
-			found = true
-			break
-		}
-	}
-	if !found {
-		t.Errorf("warning did not contain canonical path %q. Got: %v", canonical, warnList)
 	}
 }
 
