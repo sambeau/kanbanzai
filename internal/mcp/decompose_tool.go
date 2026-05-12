@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
+	"log/slog"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
@@ -273,7 +273,7 @@ func decomposeApply(entitySvc *service.EntityService, decomposeSvc *service.Deco
 		// Best-effort: commit failure is logged but does not block the result.
 		commitMsg := fmt.Sprintf("workflow(%s): decompose into %d tasks", featureID, len(tasksOut))
 		if _, commitErr := decomposeCommitFunc(ctx, ".", commitMsg); commitErr != nil {
-			log.Printf("[decompose] WARNING: auto-commit after apply for %s failed: %v", featureID, commitErr)
+			slog.Warn("auto-commit after apply failed", "component", "decompose", "feature_id", featureID, "error", commitErr)
 		}
 
 		// Write skeleton dev plan (REQ-001, REQ-003, REQ-004, REQ-006).
@@ -300,7 +300,7 @@ func decomposeApply(entitySvc *service.EntityService, decomposeSvc *service.Deco
 			}
 			skeletonResult, skErr := decomposeSvc.WriteSkeletonDevPlan(featureID, skeletonTasks)
 			if skErr != nil {
-				log.Printf("[decompose] WARNING: failed to write skeleton dev plan for %s: %v", featureID, skErr)
+				slog.Warn("failed to write skeleton dev plan", "component", "decompose", "feature_id", featureID, "error", skErr)
 			} else if skeletonResult.Action != "skipped" {
 				// Include note in response (REQ-005).
 				resp["skeleton_dev_plan"] = map[string]string{

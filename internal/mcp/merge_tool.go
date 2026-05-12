@@ -5,7 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
+	"log/slog"
 	"os/exec"
 	"time"
 
@@ -572,7 +572,7 @@ func executeMerge(
 	// Best-effort: commit failure is logged but does not prevent the merge result.
 	mergeStateMsg := fmt.Sprintf("workflow(%s): mark worktree merged", entityID)
 	if _, commitErr := mergeCommitFunc(context.Background(), repoPath, mergeStateMsg); commitErr != nil {
-		log.Printf("[merge] WARNING: auto-commit after merge of %s failed: %v", entityID, commitErr)
+		slog.Warn("auto-commit after merge failed", "component", "merge", "entity_id", entityID, "error", commitErr)
 	}
 
 	// Record override events when blocking gates were bypassed.
