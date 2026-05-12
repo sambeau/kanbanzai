@@ -1,14 +1,14 @@
 approved_at: "2026-05-08T11:12:37Z"
 approved_by: sambeau
-canonical_content_hash: bdd8b32646758f1edeb48993e7cc71198a0159200711077d90148c12eaa05260
-content_hash: cec9a7771f6a8a77072b815860b98fce976db35f0d167d99be77796dac2bb358
+canonical_content_hash: ad6a995d846b6fbba91d1d40d128a517c9ef1aeaead17a70155cb6513a698a23
+content_hash: da5f2efc8e0779d9ec527c65a58f858bcd6f23b28ce0eacb0b719f9ed86717f5
 created: "2026-05-08T11:12:26Z"
 created_by: sambeau
 id: P44-model-routing-agent-launcher/design-p44-design-deterministic-workflow-controller
 owner: P44-model-routing-agent-launcher
 path: work/P44-model-routing-agent-launcher/P44-design-deterministic-workflow-controller.md
-status: approved
+status: draft
 supersedes: P44-model-routing-agent-launcher/design-p44-design-feature-execution-pipeline
 title: "Design: Deterministic Workflow Controller"
 type: design
-updated: "2026-05-08T11:12:41Z"
+updated: "2026-05-12T14:11:17Z"
