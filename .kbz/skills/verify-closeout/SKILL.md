@@ -16,6 +16,15 @@ stage: verifying
 constraint_level: high
 ---
 
+> **Overarching policy (applies project-wide, not just to feature close-out):**
+> 1. **All tests pass on `main` at all times.** Any commit that introduces a test
+>    failure on `main` is a DoD violation, regardless of which feature or package
+>    the change was in.
+> 2. **Any developer who observes a failing test on `main` is responsible for
+>    reporting it immediately** — create a BUG entity or file an incident. "Not my
+>    package" is not an acceptable response. All team members share collective
+>    responsibility for test suite health.
+
 ## Vocabulary
 
 - **DoD** — Definition of Done. The ten conditions every feature must satisfy before
@@ -103,6 +112,9 @@ Suitable new tests exist for the change.
 no failures.
 **Fail criterion:** Any build error, test failure, or non-zero exit code from
 either command.
+
+> **Main-branch policy:** The same standard applies to `main` at all times.
+> See the overarching policy at the top of this document.
 
 ### Item 5: Code Reviewed
 

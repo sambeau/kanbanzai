@@ -195,6 +195,81 @@ Task-execution skills under `.kbz/skills/` are project-local; no dual-write appl
 - Never stash, discard, or `.gitignore` `.kbz/` files.
 - If `git status` shows orphaned `.kbz/` files at the start of a task, commit them before proceeding.
 
+## Test Discipline
+
+### Pre-commit hook
+
+A pre-commit hook runs `go test ./...` before every commit. If any test fails,
+the commit is blocked. The hook can be bypassed with `git commit --no-verify`
+for emergency situations, but bypassing emits a prominent warning and should
+generally be avoided.
+
+The hook is installed via:
+```
+make setup          # installs all development dependencies including the hook
+```
+
+### No failing tests on `main`
+
+**All tests must pass on `main` at all times.** This is a hard requirement and
+a Definition of Done violation if broken. Key rules:
+
+- Any commit that introduces a test failure on `main` is a DoD violation,
+  regardless of which feature or package the change was in.
+- "Pre-existing" test failure is not a valid category. A failing test means
+  someone did not run tests before merging.
+- If tests are failing on `main`, the first task for any developer is to fix
+  them. No new work should start until the test suite is green.
+- Flaky or race-detected test failures must not be dismissed as "pre-existing".
+  They must be filed as a BUG entity so they appear in health reports.
+- If you encounter a failing test during verification, file a BUG entity and
+  block the task completion (or explicitly note the bug ID in the summary line).
+
+### Reporting test failures
+
+Any developer who observes a failing test on `main` is responsible for
+reporting it immediately:
+
+1. **Check whether a BUG entity already exists** for the failure.
+2. **If no BUG exists**, create one:
+   ```
+   entity(action: "create", type: "bug", slug: "<brief-description>",
+          name: "<descriptive name>", severity: "<low|medium|high|critical>",
+          priority: "<low|medium|high|critical>",
+          summary: "Failing test(s) in <package>: <failure description>",
+          observed: "<test output or error message>",
+          expected: "Tests pass unconditionally")
+   ```
+3. **If a BUG already exists**, add a comment with your observation.
+4. **For production-level impact** (multiple packages affected, or test suite
+   unusable), also file an incident:
+   ```
+   incident(action: "create", slug: "<slug>", severity: "<medium|high|critical>",
+             summary: "Test suite failures in <packages>",
+             reported_by: "<your-identity>")
+   ```
+
+The key principle: **"Not my package" is not an acceptable response.**
+All team members share collective responsibility for test suite health.
+
+### Test removal convention
+
+Any commit that removes a test must explain in the commit message **why**
+the test was removed and reference the requirement or decision that made
+it obsolete. Acceptable reasons include:
+
+- The tested behaviour was removed or changed by a specification update
+  (reference the spec or design document).
+- The test was superseded by a more comprehensive test in a different
+  location (reference the replacement test).
+- The requirement that motivated the test was explicitly obsoleted by
+  a decision record (reference the decision).
+
+Unacceptable reasons:
+- "Test was flaky" — file a BUG entity for the flaky test instead.
+- "Test was in the way" — restructure or update it, don't delete.
+- No explanation or a generic message like "cleanup".
+
 ## Scope Guard
 
 Phases 1–15 and Kanbanzai 2.0/2.5 are complete. For detailed delivery history, see `docs/project-timeline.md`.

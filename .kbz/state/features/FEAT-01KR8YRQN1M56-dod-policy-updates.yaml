@@ -9,3 +9,5 @@ created: "2026-05-10T12:46:03Z"
 created_by: sambeau
 display_id: B68-F1
 tier: feature
+verification: "TASK-01KR8Z2FN2C29: go build ./... passes. go test ./internal/mcp/... passes. The new test_health field appears only when there are failures (omitted for clean suites). Import of internal/merge is correct and unused package is not flagged.\nTASK-01KR8Z2FN9F8X: Verified the Test removal convention subsection is present in AGENTS.md with clear acceptable/unacceptable reasons.\nTASK-01KR8Z2FNHB2W: Reviewed AGENTS.md to confirm the new Test Discipline section is correctly placed after Git Discipline and before Scope Guard.\nTASK-01KR8Z2FNJMXX: Reviewed the updated SKILL.md to confirm the overarching policy block and Item 4 cross-reference are correctly placed."
+verification_status: passed

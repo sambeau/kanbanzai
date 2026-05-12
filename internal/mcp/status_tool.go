@@ -46,6 +46,7 @@ import (
 
 	"github.com/sambeau/kanbanzai/internal/health"
 	"github.com/sambeau/kanbanzai/internal/id"
+	"github.com/sambeau/kanbanzai/internal/merge"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/validate"
@@ -275,12 +276,20 @@ type orientationInfo struct {
 	Suggestion string       `json:"suggestion,omitempty"`
 }
 
+type testHealthSummary struct {
+	Status         string   `json:"status"`
+	FailedPackages []string `json:"failed_packages,omitempty"`
+	FailingTests   []string `json:"failing_tests,omitempty"`
+	TotalPackages  int      `json:"total_packages"`
+}
+
 type projectOverview struct {
 	Scope       string                 `json:"scope"`
 	Plans       []strategicPlanSummary `json:"plans,omitempty"`
 	Batches     []batchSummary         `json:"batches,omitempty"`
 	Total       planAggregate          `json:"total"`
 	Health      *statusHealthSummary   `json:"health,omitempty"`
+	TestHealth  *testHealthSummary     `json:"test_health,omitempty"`
 	Attention   []AttentionItem        `json:"attention,omitempty"`
 	Orientation *orientationInfo       `json:"orientation,omitempty"`
 	GeneratedAt string                 `json:"generated_at"`
@@ -661,13 +670,35 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 	}
 	suggestion := suggestSkill(allFeatures, allTasks)
 
+	// Test suite health: run go test ./... and report failures.
+	// Best-effort: if repoPath is empty or test run fails to parse, omit the section.
+	var testHealth *testHealthSummary
+	if repoPath != "" {
+		result, _ := merge.DefaultTestRunner(repoPath)
+		status := "pass"
+		if result.HasFailure {
+			status = "fail"
+		}
+		testHealth = &testHealthSummary{
+			Status:         status,
+			FailedPackages: result.FailedPackages,
+			FailingTests:   result.FailingTests,
+			TotalPackages:  result.TotalPackages,
+		}
+		// Only include when there are failures (omit for passing suites).
+		if !result.HasFailure {
+			testHealth = nil
+		}
+	}
+
 	return &projectOverview{
-		Scope:     "project",
-		Plans:     summaries,
-		Batches:   batchSummaries,
-		Total:     agg,
-		Health:    health,
-		Attention: attention,
+		TestHealth: testHealth,
+		Scope:      "project",
+		Plans:      summaries,
+		Batches:    batchSummaries,
+		Total:      agg,
+		Health:     health,
+		Attention:  attention,
 		Orientation: &orientationInfo{
 			Message:    "This is a kanbanzai-managed project. For workflow guidance, read .agents/skills/kanbanzai-getting-started/SKILL.md",
 			SkillsPath: ".agents/skills/",
