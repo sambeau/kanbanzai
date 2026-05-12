@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -582,7 +582,7 @@ func (s *EntityService) generateBugSpec(result *CreateResult, bug model.Bug, doc
 	specDir := filepath.Join(repoRoot, "work", "bugs", bug.Slug)
 	if err := os.MkdirAll(specDir, 0o755); err != nil {
 		warn := fmt.Sprintf("spec generation: failed to create directory %s: %v", specDir, err)
-		log.Println(warn)
+		slog.Info(warn)
 		result.Warnings = append(result.Warnings, warn)
 		return
 	}
@@ -600,7 +600,7 @@ func (s *EntityService) generateBugSpec(result *CreateResult, bug model.Bug, doc
 
 	if err := os.WriteFile(specPath, []byte(content), 0o644); err != nil {
 		warn := fmt.Sprintf("spec generation: failed to write %s: %v", specPath, err)
-		log.Println(warn)
+		slog.Info(warn)
 		result.Warnings = append(result.Warnings, warn)
 		return
 	}
@@ -618,7 +618,7 @@ func (s *EntityService) generateBugFixPlan(result *CreateResult, bug model.Bug, 
 	planDir := filepath.Join(repoRoot, "work", "bugs", bug.Slug)
 	if err := os.MkdirAll(planDir, 0o755); err != nil {
 		warn := fmt.Sprintf("fix-plan generation: failed to create directory %s: %v", planDir, err)
-		log.Println(warn)
+		slog.Info(warn)
 		result.Warnings = append(result.Warnings, warn)
 		return
 	}
@@ -632,7 +632,7 @@ func (s *EntityService) generateBugFixPlan(result *CreateResult, bug model.Bug, 
 
 	if err := os.WriteFile(planPath, []byte(bug.FixPlan+"\n"), 0o644); err != nil {
 		warn := fmt.Sprintf("fix-plan generation: failed to write %s: %v", planPath, err)
-		log.Println(warn)
+		slog.Info(warn)
 		result.Warnings = append(result.Warnings, warn)
 		return
 	}
@@ -652,7 +652,7 @@ func (s *EntityService) registerAndApproveBugDoc(result *CreateResult, bug model
 	})
 	if err != nil {
 		warn := fmt.Sprintf("document registration failed for %s (%s): %v", path, docType, err)
-		log.Println(warn)
+		slog.Info(warn)
 		result.Warnings = append(result.Warnings, warn)
 		return
 	}
@@ -682,7 +682,7 @@ func (s *EntityService) registerExistingBugDoc(result *CreateResult, bug model.B
 	})
 	if err != nil {
 		// If already registered, this error is expected and non-fatal.
-		log.Printf("re-register existing doc %s: %v", path, err)
+		slog.Info("re-register existing doc", "path", path, "error", err)
 	}
 }
 
@@ -881,7 +881,7 @@ func (s *EntityService) Get(ctx context.Context, entityType, entityID, slug stri
 					}, nil
 				}
 				// Load failed (stale cache entry) — fall through to ResolvePrefix
-				log.Printf("[entity] cache hit but Load failed for %s/%s (falling back): %v", entityType, entityID, err)
+				slog.Info("cache hit but Load failed (falling back)", "component", "entity", "entityType", entityType, "entityID", entityID, "error", err)
 			}
 			// Cache miss — fall through to ResolvePrefix
 		}
@@ -939,7 +939,7 @@ func (s *EntityService) List(entityType string) ([]ListResult, error) {
 			return results, nil
 		}
 		// ListByType error — fall through to filesystem path
-		log.Printf("[entity] cache ListByType error for %s (falling back): %v", entityType, err)
+		slog.Info("cache ListByType error (falling back)", "component", "entity", "entityType", entityType, "error", err)
 	}
 
 	dir := filepath.Join(s.root, entityDirectory(entityType))
@@ -1100,7 +1100,7 @@ func (s *EntityService) PromoteQueuedTasks(featureID string) error {
 			Slug:   t.Slug,
 			Status: "ready",
 		}); err != nil {
-			log.Printf("PromoteQueuedTasks: failed to promote task %s (%s): %v", t.ID, t.Slug, err)
+			slog.Info("PromoteQueuedTasks: failed to promote task", "id", t.ID, "slug", t.Slug, "error", err)
 		}
 	}
 

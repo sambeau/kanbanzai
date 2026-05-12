@@ -3,7 +3,8 @@ package mcp
 import (
 	"context"
 	"fmt"
-	"log"
+	"log/slog"
+	"os"
 	"path/filepath"
 	"strings"
 	"time"
@@ -47,6 +48,8 @@ func NewServer(entityRoot string) (*server.MCPServer, error) {
 // newServerWithConfig creates an MCP server using the provided configuration.
 // Separated from NewServer to allow config injection in tests.
 func newServerWithConfig(entityRoot string, cfg *config.Config) (*server.MCPServer, error) {
+	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{Level: slog.LevelInfo})))
+
 	entitySvc := service.NewEntityService(entityRoot)
 
 	// Documents are stored relative to the repository root (current directory).
@@ -95,15 +98,15 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) (*server.MCPServ
 		entitySvc.SetCache(c)
 		start := time.Now()
 		if n, err := entitySvc.RebuildCache(); err != nil {
-			log.Printf("[server] cache warm-up failed (continuing without cache): %v", err)
+			slog.Info("cache warm-up failed (continuing without cache)", "component", "server", "error", err)
 		} else {
-			log.Printf("[server] cache warm-up: loaded %d entities in %s", n, time.Since(start))
+			slog.Info("cache warm-up: loaded entities", "component", "server", "count", n, "duration", time.Since(start))
 		}
 	}
 
 	// Backfill display_ids for any existing features that predate this feature (idempotent).
 	if err := service.MigrateDisplayIDs(entitySvc); err != nil {
-		log.Printf("[server] display_id migration warning (non-fatal): %v", err)
+		slog.Info("display_id migration warning (non-fatal)", "component", "server", "error", err)
 	}
 
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
@@ -155,9 +158,9 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) (*server.MCPServ
 			)
 		}
 		// Load failure (e.g. file not found) — soft warning, same as before.
-		log.Printf("[server] WARNING: 3.0 context assembly pipeline DISABLED — handoff will return pipeline_unavailable errors")
-		log.Printf("[server] WARNING: stage-bindings file: %s", bindingPath)
-		log.Printf("[server] WARNING: stage-bindings load error: %v", err)
+		slog.Warn("3.0 context assembly pipeline DISABLED - handoff will return pipeline_unavailable errors", "component", "server")
+		slog.Warn("stage-bindings file", "component", "server", "path", bindingPath)
+		slog.Warn("stage-bindings load error", "component", "server", "error", err)
 	} else {
 		bf = reg.BindingFile()
 		capTracker = knowledge.NewCapTracker(cacheDir)
@@ -186,7 +189,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) (*server.MCPServ
 			WindowSize:          windowSize,
 			StalenessWindowDays: cfg.Freshness.StalenessWindowDays,
 		}
-		log.Printf("[server] 3.0 context assembly pipeline loaded with %d stage bindings", len(bf.StageBindings))
+		slog.Info("3.0 context assembly pipeline loaded", "component", "server", "stage_bindings", len(bf.StageBindings))
 	}
 
 	mcpServer := server.NewMCPServer(
@@ -256,7 +259,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) (*server.MCPServ
 		constraintPath := filepath.Join(core.InstanceRootDir, "constraints.yaml")
 		constraintReg, constraintErr := card.LoadConstraintRegistry(constraintPath)
 		if constraintErr != nil {
-			log.Printf("[server] WARNING: constraint registry disabled: %v", constraintErr)
+			slog.Warn("constraint registry disabled", "component", "server", "error", constraintErr)
 		}
 		mcpServer.AddTools(NextTools(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, mergedToolHints, roleStore, worktreeStore, bf, constraintReg)...)
 		// Track G: handoff — sub-agent prompt generation (3.0 pipeline)

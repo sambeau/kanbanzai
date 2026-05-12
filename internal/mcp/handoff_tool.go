@@ -18,7 +18,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
+	"log/slog"
 	"strings"
 
 	"github.com/mark3labs/mcp-go/mcp"
@@ -104,7 +104,7 @@ func handoffTool(
 		// without writing a response — see BUG: handoff-nil-pipeline-panic.
 		defer func() {
 			if r := recover(); r != nil {
-				log.Printf("[handoff] PANIC recovered: %v", r)
+				slog.Error("PANIC recovered", "component", "handoff", "panic", r)
 				toolResult = mcp.NewToolResultText(handoffErrorJSON("internal_panic", fmt.Sprintf(
 					"Cannot generate handoff prompt: internal panic: %v.\n\nTo resolve:\n  Report this as a bug with the task ID and the server stderr log.", r)))
 				retErr = nil
@@ -161,9 +161,9 @@ func handoffTool(
 		// commitStateFunc is a package-level variable (see top of file) so
 		// tests can inject a stub to verify this path without a real git repo.
 		if committed, commitErr := commitStateFunc(ctx, "."); commitErr != nil {
-			log.Printf("[handoff] WARNING: pre-dispatch state commit failed: %v", commitErr)
+			slog.Warn("pre-dispatch state commit failed", "component", "handoff", "error", commitErr)
 		} else if committed {
-			log.Printf("[handoff] pre-dispatch state commit created for task %s", taskID)
+			slog.Info("pre-dispatch state commit created", "component", "handoff", "task_id", taskID)
 		}
 
 		// Resolve the parent feature once (REQ-004/AC-005: single Get call).

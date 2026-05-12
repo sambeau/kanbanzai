@@ -28,7 +28,7 @@ package mcp
 import (
 	"context"
 	"fmt"
-	"log"
+	"log/slog"
 	"strconv"
 	"time"
 
@@ -296,7 +296,7 @@ func docRegisterOne(docSvc *service.DocumentService, intelligenceSvc *service.In
 	repoRoot := docSvc.RepoRoot()
 	registerMsg := fmt.Sprintf("workflow(%s): register %s", result.ID, result.Type)
 	if _, commitErr := docCommitPathsFunc(context.Background(), repoRoot, registerMsg, path); commitErr != nil {
-		log.Printf("[doc] WARNING: auto-commit after register %s failed: %v", result.ID, commitErr)
+		slog.Warn("auto-commit after register failed", "component", "doc", "id", result.ID, "error", commitErr)
 	}
 
 	// Canonical path validation: when a parent entity is specified,
@@ -447,7 +447,7 @@ func docApproveOne(ctx context.Context, docSvc *service.DocumentService, intelSv
 	repoRoot := docSvc.RepoRoot()
 	approveMsg := fmt.Sprintf("workflow(%s): approve %s", result.ID, result.Type)
 	if _, commitErr := docCommitFunc(ctx, repoRoot, approveMsg); commitErr != nil {
-		log.Printf("[doc] WARNING: auto-commit after approve %s failed: %v", result.ID, commitErr)
+		slog.Warn("auto-commit after approve failed", "component", "doc", "id", result.ID, "error", commitErr)
 	}
 
 	return result.ID, map[string]any{"document": docRecordToMap(result)}, nil
@@ -489,7 +489,7 @@ func docMoveAction(docSvc *service.DocumentService) ActionHandler {
 		repoRoot := docSvc.RepoRoot()
 		moveMsg := fmt.Sprintf("workflow(%s): move to %s", docID, newPath)
 		if _, commitErr := docCommitPathsFunc(ctx, repoRoot, moveMsg, oldPath, newPath); commitErr != nil {
-			log.Printf("[doc] WARNING: auto-commit after move %s failed: %v", docID, commitErr)
+			slog.Warn("auto-commit after move failed", "component", "doc", "id", docID, "error", commitErr)
 		}
 
 		return map[string]any{"document": docRecordToMap(result)}, nil
@@ -529,7 +529,7 @@ func docDeleteAction(docSvc *service.DocumentService) ActionHandler {
 		repoRoot := docSvc.RepoRoot()
 		deleteMsg := fmt.Sprintf("workflow(%s): delete %s", docID, result.Type)
 		if _, commitErr := docCommitPathsFunc(ctx, repoRoot, deleteMsg, filePath); commitErr != nil {
-			log.Printf("[doc] WARNING: auto-commit after delete %s failed: %v", docID, commitErr)
+			slog.Warn("auto-commit after delete failed", "component", "doc", "id", docID, "error", commitErr)
 		}
 
 		return map[string]any{

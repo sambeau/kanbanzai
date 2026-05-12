@@ -13,8 +13,9 @@ package context
 
 import (
 	"context"
-	"log"
+
 	"strings"
+	"log/slog"
 	"sync"
 	"time"
 
@@ -92,7 +93,7 @@ func (s *Surfacer) Surface(ctx context.Context, input SurfaceInput) ([]SurfacedE
 
 	if len(excluded) > 0 {
 		for _, ex := range excluded {
-			log.Printf("[knowledge-surfacer] excluded entry %s (topic: %s) due to cap", ex.ID, ex.Topic)
+			slog.Info("excluded entry due to cap", "component", "knowledge-surfacer", "id", ex.ID, "topic", ex.Topic)
 		}
 	}
 
@@ -147,7 +148,7 @@ func (s *Surfacer) recordCap(scope string, capHit bool) {
 		return
 	}
 	if err := s.capTracker.RecordAssembly(scope, capHit); err != nil {
-		log.Printf("[knowledge-surfacer] cap tracker error: %v", err)
+		slog.Info("cap tracker error", "component", "knowledge-surfacer", "error", err)
 	}
 }
 

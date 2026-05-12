@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"log"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"strings"
@@ -2554,12 +2554,12 @@ func TestApproveDocument_PatchesStatusField(t *testing.T) {
 
 // TestApproveDocument_PatchFailure_ApprovalSucceeds (AC-009): when the source
 // file is unreadable (after the store write), PatchStatusField returns an error
-// but ApproveDocument still returns success and emits a WARNING log entry.
+// but ApproveDocument still returns success and emits a WARN log entry.
 func TestApproveDocument_PatchFailure_ApprovalSucceeds(t *testing.T) {
 	if os.Getuid() == 0 {
 		t.Skip("running as root; chmod 0o000 has no effect")
 	}
-	// Not parallel — uses global log.SetOutput.
+	// Not parallel — uses global slog.SetDefault.
 
 	stateRoot := t.TempDir()
 	repoRoot := t.TempDir()
@@ -2592,8 +2592,9 @@ func TestApproveDocument_PatchFailure_ApprovalSucceeds(t *testing.T) {
 	t.Cleanup(func() { os.Chmod(fullPath, 0o644) })
 
 	var logBuf bytes.Buffer
-	log.SetOutput(&logBuf)
-	t.Cleanup(func() { log.SetOutput(os.Stderr) })
+	origLogger := slog.Default()
+	slog.SetDefault(slog.New(slog.NewTextHandler(&logBuf, &slog.HandlerOptions{Level: slog.LevelWarn})))
+	t.Cleanup(func() { slog.SetDefault(origLogger) })
 
 	approveResult, approveErr := svc.ApproveDocument(ApproveDocumentInput{
 		ID:         submitResult.ID,
@@ -2605,15 +2606,15 @@ func TestApproveDocument_PatchFailure_ApprovalSucceeds(t *testing.T) {
 	if approveResult.Status != string(model.DocumentStatusApproved) {
 		t.Errorf("Status = %q, want approved", approveResult.Status)
 	}
-	if !strings.Contains(logBuf.String(), "[doc] WARNING") {
-		t.Errorf("expected WARNING in log, got: %q", logBuf.String())
+	if !strings.Contains(logBuf.String(), "WARN") {
+		t.Errorf("expected WARN in log, got: %q", logBuf.String())
 	}
 }
 
 // TestApproveDocument_NoStatusField_NoSideEffects (AC-010): a document without
-// any Status field is left unchanged and no WARNING is emitted.
+// any Status field is left unchanged and no WARN is emitted.
 func TestApproveDocument_NoStatusField_NoSideEffects(t *testing.T) {
-	// Not parallel — uses global log.SetOutput.
+	// Not parallel — uses global slog.SetDefault.
 
 	stateRoot := t.TempDir()
 	repoRoot := t.TempDir()
@@ -2640,8 +2641,9 @@ func TestApproveDocument_NoStatusField_NoSideEffects(t *testing.T) {
 	}
 
 	var logBuf bytes.Buffer
-	log.SetOutput(&logBuf)
-	t.Cleanup(func() { log.SetOutput(os.Stderr) })
+	origLogger2 := slog.Default()
+	slog.SetDefault(slog.New(slog.NewTextHandler(&logBuf, &slog.HandlerOptions{Level: slog.LevelWarn})))
+	t.Cleanup(func() { slog.SetDefault(origLogger2) })
 
 	_, err = svc.ApproveDocument(ApproveDocumentInput{
 		ID:         submitResult.ID,
@@ -2660,9 +2662,9 @@ func TestApproveDocument_NoStatusField_NoSideEffects(t *testing.T) {
 		t.Errorf("file should be unchanged\ngot:  %q\nwant: %q", string(got), original)
 	}
 
-	// No WARNING should be logged.
-	if strings.Contains(logBuf.String(), "[doc] WARNING") {
-		t.Errorf("unexpected WARNING log: %q", logBuf.String())
+	// No WARN should be logged.
+	if strings.Contains(logBuf.String(), "WARN") {
+		t.Errorf("unexpected WARN log: %q", logBuf.String())
 	}
 }
 
@@ -2673,7 +2675,7 @@ func TestApproveDocument_HashRefreshFailure_ApprovalSucceeds(t *testing.T) {
 	if os.Getuid() == 0 {
 		t.Skip("running as root; chmod restrictions have no effect")
 	}
-	// Not parallel — uses global log.SetOutput.
+	// Not parallel — uses global slog.SetDefault.
 
 	stateRoot := t.TempDir()
 	repoRoot := t.TempDir()
@@ -2707,8 +2709,9 @@ func TestApproveDocument_HashRefreshFailure_ApprovalSucceeds(t *testing.T) {
 	t.Cleanup(func() { os.Chmod(docsDir, 0o755) })
 
 	var logBuf bytes.Buffer
-	log.SetOutput(&logBuf)
-	t.Cleanup(func() { log.SetOutput(os.Stderr) })
+	origLogger3 := slog.Default()
+	slog.SetDefault(slog.New(slog.NewTextHandler(&logBuf, &slog.HandlerOptions{Level: slog.LevelWarn})))
+	t.Cleanup(func() { slog.SetDefault(origLogger3) })
 
 	approveResult, approveErr := svc.ApproveDocument(ApproveDocumentInput{
 		ID:         submitResult.ID,
@@ -2720,8 +2723,8 @@ func TestApproveDocument_HashRefreshFailure_ApprovalSucceeds(t *testing.T) {
 	if approveResult.Status != string(model.DocumentStatusApproved) {
 		t.Errorf("Status = %q, want approved", approveResult.Status)
 	}
-	if !strings.Contains(logBuf.String(), "[doc] WARNING") {
-		t.Errorf("expected WARNING log for hash refresh failure, got: %q", logBuf.String())
+	if !strings.Contains(logBuf.String(), "WARN") {
+		t.Errorf("expected WARN log for hash refresh failure, got: %q", logBuf.String())
 	}
 }
 

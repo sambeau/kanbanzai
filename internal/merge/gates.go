@@ -2,7 +2,7 @@ package merge
 
 import (
 	"fmt"
-	"log"
+	"log/slog"
 	"os/exec"
 	"strings"
 
@@ -412,7 +412,7 @@ func (g ReviewReportExistsGate) Check(ctx GateContext) GateResult {
 
 	// Fail-open: no doc service → pass with a log warning (FR-011, FR-012).
 	if ctx.DocSvc == nil {
-		log.Printf("[merge gate] WARNING: ReviewReportExistsGate: DocSvc is nil, failing open for %s", ctx.EntityID)
+		slog.Warn("ReviewReportExistsGate: DocSvc is nil, failing open", "component", "merge gate", "entityID", ctx.EntityID)
 		return GateResult{
 			Name:       g.Name(),
 			Severity:   g.Severity(),
@@ -424,7 +424,7 @@ func (g ReviewReportExistsGate) Check(ctx GateContext) GateResult {
 	docs, err := ctx.DocSvc.ListDocuments(DocFilters{Owner: ctx.EntityID, Type: "report"})
 	if err != nil {
 		// Fail-open on service error (FR-011, FR-012).
-		log.Printf("[merge gate] WARNING: ReviewReportExistsGate: document service error for %s: %v — failing open", ctx.EntityID, err)
+		slog.Warn("ReviewReportExistsGate: document service error, failing open", "component", "merge gate", "entityID", ctx.EntityID, "error", err)
 		return GateResult{
 			Name:       g.Name(),
 			Severity:   g.Severity(),

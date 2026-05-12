@@ -3,7 +3,7 @@ package mcp
 import (
 	"context"
 	"fmt"
-	"log"
+	"log/slog"
 	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
@@ -182,7 +182,7 @@ func checkpointRespondAction(store *chk.Store, entitySvc *service.EntityService)
 		// so the feature can resume auto-validation (REQ-PIPE-004).
 		if record.FeatureID != "" && entitySvc != nil {
 			if err := entitySvc.PersistFeatureBlockedReason(record.FeatureID, "", ""); err != nil {
-				log.Printf("[checkpoint] WARNING: failed to clear blocked_reason for %s after checkpoint %s responded: %v", record.FeatureID, record.ID, err)
+				slog.Warn("failed to clear blocked_reason after checkpoint responded", "component", "checkpoint", "feature_id", record.FeatureID, "checkpoint_id", record.ID, "error", err)
 			}
 		}
 

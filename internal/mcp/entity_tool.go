@@ -4,7 +4,7 @@ package mcp
 import (
 	"context"
 	"fmt"
-	"log"
+	"log/slog"
 	"os"
 	"path/filepath"
 
@@ -110,7 +110,7 @@ func entityCreateAction(entitySvc *service.EntityService) ActionHandler {
 				return entityArgStr(m, "slug"), r, e
 			})
 			if _, err := entityCommitFunc(ctx, ".", fmt.Sprintf("workflow: create %d %s entities", len(items), entityType)); err != nil {
-				log.Printf("WARNING: commit after batch create failed: %v", err)
+				slog.Warn("commit after batch create failed", "error", err)
 			}
 			return result, err
 		}
@@ -200,7 +200,7 @@ func entityCreateOne(entityType string, args map[string]any, entitySvc *service.
 		out["warnings"] = result.Warnings
 	}
 	if _, err := entityCommitFunc(context.Background(), ".", fmt.Sprintf("workflow(%s): create %s", result.ID, result.Type)); err != nil {
-		log.Printf("WARNING: commit after create %s failed: %v", result.ID, err)
+		slog.Warn("commit after create failed", "id", result.ID, "error", err)
 	}
 	return out, nil
 }
@@ -578,7 +578,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 				return entityTransitionError(entitySvc, "strategic-plan", entityID, newStatus, err), nil
 			}
 			if _, err := entityCommitFunc(ctx, ".", fmt.Sprintf("workflow(%s): transition %s → %s", entityID, fromStatus, newStatus)); err != nil {
-				log.Printf("WARNING: commit after strategic-plan transition failed: %v", err)
+				slog.Warn("commit after strategic-plan transition failed", "error", err)
 			}
 			return map[string]any{"entity": entityFullRecord(r.ID, r.Type, r.Slug, r.State)}, nil
 		}
@@ -601,7 +601,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 				return entityTransitionError(entitySvc, "batch", entityID, newStatus, err), nil
 			}
 			if _, err := entityCommitFunc(ctx, ".", fmt.Sprintf("workflow(%s): transition %s → %s", entityID, batchFromStatus, newStatus)); err != nil {
-				log.Printf("WARNING: commit after batch transition failed: %v", err)
+				slog.Warn("commit after batch transition failed", "error", err)
 			}
 			r, _ := entitySvc.GetBatch(entityID)
 			return map[string]any{"entity": entityBatchRecord(r)}, nil
@@ -704,7 +704,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 							FromStatus: currentStatus, ToStatus: newStatus, Reason: overrideReason, Timestamp: time.Now(), CheckpointID: chkR.CheckpointID,
 						})
 						if err := entitySvc.PersistFeatureOverrides(feature.ID, feature.Slug, feature.Overrides); err != nil {
-							log.Printf("[entity] WARNING: failed to persist feature overrides for %s: %v", feature.ID, err)
+							slog.Warn("failed to persist feature overrides", "component", "entity", "feature_id", feature.ID, "error", err)
 						}
 						return map[string]any{"checkpoint_created": true, "checkpoint_id": chkR.CheckpointID, "message": chkR.Message, "feature_id": entityID}, nil
 					}
@@ -712,7 +712,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 						FromStatus: currentStatus, ToStatus: newStatus, Reason: overrideReason, Timestamp: time.Now(),
 					})
 					if err := entitySvc.PersistFeatureOverrides(feature.ID, feature.Slug, feature.Overrides); err != nil {
-						log.Printf("[entity] WARNING: failed to persist feature overrides for %s: %v", feature.ID, err)
+						slog.Warn("failed to persist feature overrides", "component", "entity", "feature_id", feature.ID, "error", err)
 					}
 				}
 			}
@@ -789,7 +789,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 		}
 		if entityType == "feature" && newStatus == string(model.FeatureStatusReviewing) {
 			if err := entitySvc.IncrementFeatureReviewCycle(entityID, ""); err != nil {
-				log.Printf("ERROR: failed to increment review cycle for %s: %v", entityID, err)
+				slog.Error("failed to increment review cycle", "entity_id", entityID, "error", err)
 			}
 		}
 		resp := map[string]any{"entity": entityFullRecord(r.ID, r.Type, r.Slug, r.State)}
@@ -799,7 +799,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 				Type: "bug", ID: entityID,
 				Fields: map[string]string{"needs_review_at": now.Format(time.RFC3339)},
 			}); err != nil {
-				log.Printf("ERROR: failed to record needs-review timestamp for %s: %v", entityID, err)
+				slog.Error("failed to record needs-review timestamp", "entity_id", entityID, "error", err)
 			}
 			resp["stop_state"] = true
 		}
@@ -844,7 +844,7 @@ func entityTransitionAction(entitySvc *service.EntityService, docSvc *service.Do
 			}
 		}
 		if _, err := entityCommitFunc(ctx, ".", fmt.Sprintf("workflow(%s): transition %s → %s", entityID, fromStatus, newStatus)); err != nil {
-			log.Printf("WARNING: commit after transition failed: %v", err)
+			slog.Warn("commit after transition failed", "error", err)
 		}
 		return resp, nil
 	}

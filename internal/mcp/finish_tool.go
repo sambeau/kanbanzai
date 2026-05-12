@@ -15,7 +15,7 @@ package mcp
 import (
 	"context"
 	"fmt"
-	"log"
+	"log/slog"
 	"strings"
 
 	"github.com/mark3labs/mcp-go/mcp"
@@ -115,7 +115,7 @@ func finishTool(entitySvc *service.EntityService, dispatchSvc *service.DispatchS
 			// A single commit covers all N task state files in one operation.
 			batchCommitMsg := fmt.Sprintf("workflow: complete %d tasks", len(items))
 			if _, commitErr := finishCommitFunc(ctx, ".", batchCommitMsg); commitErr != nil {
-				log.Printf("[finish] WARNING: batch auto-commit failed: %v", commitErr)
+				slog.Warn("batch auto-commit failed", "component", "finish", "error", commitErr)
 			}
 			return batchResult, batchErr
 		}
@@ -279,7 +279,7 @@ func finishOne(
 		}
 		commitMsg := fmt.Sprintf("workflow(%s): complete \u2013 %s", input.TaskID, summaryTrunc)
 		if _, commitErr := finishCommitFunc(ctx, repoRoot, commitMsg); commitErr != nil {
-			log.Printf("[finish] WARNING: auto-commit after task %s failed: %v", input.TaskID, commitErr)
+			slog.Warn("auto-commit after task failed", "component", "finish", "task_id", input.TaskID, "error", commitErr)
 		}
 	}
 
@@ -415,7 +415,7 @@ func finishOne(
 	if allTerminal && parentFeatureID != "" {
 		aggResult, aggErr := dispatchSvc.AggregateTaskVerification(parentFeatureID)
 		if aggErr != nil {
-			log.Printf("[finish] WARNING: AggregateTaskVerification for feature %s failed: %v", parentFeatureID, aggErr)
+			slog.Warn("AggregateTaskVerification failed", "component", "finish", "feature_id", parentFeatureID, "error", aggErr)
 		} else {
 			resp["verification_aggregation"] = map[string]any{
 				"status":  aggResult.Status,

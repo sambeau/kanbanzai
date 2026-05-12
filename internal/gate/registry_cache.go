@@ -1,7 +1,7 @@
 package gate
 
 import (
-	"log"
+	"log/slog"
 	"os"
 	"sync"
 	"time"
@@ -83,7 +83,7 @@ func (c *RegistryCache) Get() (*binding.BindingFile, error) {
 
 	bf, errs := binding.LoadBindingFile(c.path)
 	if len(errs) > 0 {
-		log.Printf("registry_cache: failed to load %s: %v", c.path, errs)
+		slog.Info("registry_cache: failed to load stage bindings", "path", c.path, "errors", errs)
 		// Return nil so caller falls back to hardcoded gates.
 		// Keep the old cache state so a subsequent stat change can retry.
 		return nil, nil

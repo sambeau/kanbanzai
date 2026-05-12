@@ -3,7 +3,7 @@ package mcp
 import (
 	"context"
 	"fmt"
-	"log"
+	"log/slog"
 	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
@@ -31,7 +31,7 @@ func wrapWithRecovery(toolName string, inner actionlog.HandlerFunc) actionlog.Ha
 	return func(ctx context.Context, req mcp.CallToolRequest) (result *mcp.CallToolResult, retErr error) {
 		defer func() {
 			if r := recover(); r != nil {
-				log.Printf("[%s] PANIC recovered: %v", toolName, r)
+				slog.Error("PANIC recovered", "component", toolName, "panic", r)
 				result = ActionError("internal_panic", fmt.Sprintf(
 					"Tool %q panicked: %v. Report this as a bug with the tool name and server stderr log.", toolName, r), nil)
 				retErr = nil
