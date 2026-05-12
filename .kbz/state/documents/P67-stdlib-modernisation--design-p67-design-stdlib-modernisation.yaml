@@ -1,11 +1,13 @@
-canonical_content_hash: 56680321e91c525a5c6ff042a092f040fb2c7ffc23a86666d7df79fb3a8b1385
-content_hash: 94257abfbaa4f652fba08f47b0ae4053ed0256d662ad35dbe64a3b848269be51
+approved_at: "2026-05-12T16:31:37Z"
+approved_by: sambeau
+canonical_content_hash: c34beb9aa5e58fa898fb3fafea3253b12fa1f446ebb3d4dad3bf1e62d78bfd6b
+content_hash: 5e2b5dc2081514fcb8586cd5cfbc2b6edeccecdbbfa91bf3e848de4010e313c8
 created: "2026-05-12T16:27:47Z"
 created_by: sambeau
 id: P67-stdlib-modernisation/design-p67-design-stdlib-modernisation
 owner: P67-stdlib-modernisation
 path: work/P67-stdlib-modernisation/P67-design-stdlib-modernisation.md
-status: draft
+status: approved
 title: "Design: Go Standard Library Modernisation"
 type: design
-updated: "2026-05-12T16:27:47Z"
+updated: "2026-05-12T16:31:37Z"
