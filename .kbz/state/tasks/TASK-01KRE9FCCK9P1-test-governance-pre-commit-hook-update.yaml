@@ -3,6 +3,14 @@ parent_feature: FEAT-01KRE9DSX3Z17
 slug: test-governance-pre-commit-hook-update
 name: Pre-Commit Hook Update
 summary: Pre-Commit Hook Update
-status: ready
+status: done
 depends_on:
   - TASK-01KRE9FCCEHYD
+files_planned:
+  - .githooks/pre-commit
+completed: "2026-05-12T15:02:34Z"
+claimed_at: "2026-05-12T15:02:10Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-12T15:02:10Z"
+dispatched_by: sambeau
+completion_summary: "Updated .githooks/pre-commit to record test status after running tests. Added a `kanbanzai test record` call that runs after `go test ./...` captures test output and exit code. The call is guarded by `command -v kanbanzai` for graceful degradation when the binary is not in PATH. Uses existing `$test_exit` and `$test_output` variables from the hook."
