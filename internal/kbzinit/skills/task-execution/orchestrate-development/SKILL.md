@@ -19,8 +19,6 @@ roles: [orchestrator]
 stage: developing
 constraint_level: medium
 ---
-# kanbanzai-managed: true
-# kanbanzai-version: dev
 
 ## Vocabulary
 
@@ -113,6 +111,11 @@ Copy this checklist and track your progress:
 
 Skip this phase entirely if the batch has 3 or fewer features.
 
+> **Test-health gate:** Before dispatching any cohort, call `test(action: "verify")`
+> to confirm the test suite on `main` is green. If tests are failing, bail — do not
+> dispatch sub-agents until the test suite is fixed. This prevents compounding
+> pre-existing failures with new work.
+
 1. Read the dev-plan's `## Merge Schedule` block. If a merge schedule is present, treat
    its cohort groupings as authoritative — record them and proceed to Phase 1 for
    cohort-1 features only.
@@ -202,6 +205,9 @@ After all tasks reach a terminal state, the feature must be explicitly advanced 
 
 3. **Merge and delete the branch.** This step is mandatory regardless of how work was committed.
    - **If a worktree exists:** call `pr(action: "create", entity_id: "FEAT-xxx")` (if `require_github_pr: true`), then `merge(action: "check", entity_id: "FEAT-xxx")`, then `merge(action: "execute", entity_id: "FEAT-xxx")`. The `merge execute` tool deletes the branch automatically (`delete_branch` defaults to `true`) — verify it did so.
+   - **Post-merge test verification:** After the merge, call `test(action: "run")` to
+     confirm the test suite passes on `main`. Do not skip this step — it is the primary
+     gate against introducing test failures into the main branch.
    - **If no worktree exists** (work was committed directly to the main branch): `merge` and `pr` will return `not_applicable`. In this case you **must** manually delete the feature branch: run `git branch -d feature/FEAT-xxx` (or `git branch -D` if git refuses due to squash history). **Do not skip this step.** Orphaned branches accumulate silently and are painful to audit later.
 
    > **Why this matters:** When branches are not deleted after merging, they appear unmerged at sprint boundaries, making it impossible for humans to tell what has and hasn't landed. Files committed to the branch but not included in the squash merge commit will be permanently lost. This has caused repeated incidents.
@@ -250,6 +256,11 @@ constraint — breaking it constitutes the Implicit Gate anti-pattern.
 
 Replaces Phase 0 (Cohort Setup) from the full procedure. Fast-track has no cohorts —
 single-feature batches only.
+
+> **Test-health gate:** Call `test(action: "verify")` before dispatching any
+> sub-agents. If tests are failing on `main`, bail — the first job is to fix the
+> test suite, not to start new work. The orchestrator may return to this feature
+> once tests are green.
 
 1. **Call `status()` to build authoritative entity state.** Call `status()` with the plan
    or batch ID. Identify:
