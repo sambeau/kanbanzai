@@ -1,7 +1,7 @@
 id: B72-stdlib-modernisation
 slug: stdlib-modernisation
 name: Go Standard Library Modernisation
-status: proposed
+status: active
 summary: "Four workstreams to replace legacy packages and hand-rolled helpers with Go 1.21 standard library equivalents: sort→slices, log→slog, point fixes, and atomic-write consolidation."
 created: "2026-05-12T16:45:25Z"
 created_by: sambeau
