@@ -3,4 +3,13 @@ parent_feature: FEAT-01KR8YRQN1M56
 slug: update-agents-md
 name: Update AGENTS.md for test rules
 summary: "Document pre-commit hook, no-failing-tests-on-main rule, and test-failure reporting procedure in AGENTS.md."
-status: ready
+status: done
+files_planned:
+  - AGENTS.md
+completed: "2026-05-12T11:49:27Z"
+claimed_at: "2026-05-12T11:49:01Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-12T11:49:01Z"
+dispatched_by: sambeau
+completion_summary: "Added Test Discipline section to AGENTS.md covering: pre-commit hook documentation, no failing tests on main rule with key principles, and test failure reporting procedure with entity creation examples. Also included test removal convention (covers TASK-01KR8Z2FN9F8X)."
+verification: Reviewed AGENTS.md to confirm the new Test Discipline section is correctly placed after Git Discipline and before Scope Guard.
