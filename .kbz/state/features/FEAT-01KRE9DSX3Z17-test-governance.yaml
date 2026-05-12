@@ -2,7 +2,7 @@ id: FEAT-01KRE9DSX3Z17
 slug: test-governance
 name: Test Governance Framework
 parent: B71-test-governance-impl
-status: reviewing
+status: merging
 review_cycle: 1
 summary: "Implement the .kbz/state/test-status.yaml record store, test() MCP tool, kanbanzai test CLI subcommand, status integration, skill/doc updates, pre-commit hook update, and init seed. Per dev-plan: 7 tasks with Task 1 foundational; Tasks 2 and 7 depend on it; Tasks 3 and 4 depend on store; Tasks 5 and 6 parallelisable after Task 2."
 design: FEAT-01KRE9DSX3Z17/design-p66-design-test-governance
