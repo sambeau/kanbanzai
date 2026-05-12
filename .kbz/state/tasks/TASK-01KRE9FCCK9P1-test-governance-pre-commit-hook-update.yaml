@@ -3,6 +3,6 @@ parent_feature: FEAT-01KRE9DSX3Z17
 slug: test-governance-pre-commit-hook-update
 name: Pre-Commit Hook Update
 summary: Pre-Commit Hook Update
-status: queued
+status: ready
 depends_on:
   - TASK-01KRE9FCCEHYD
