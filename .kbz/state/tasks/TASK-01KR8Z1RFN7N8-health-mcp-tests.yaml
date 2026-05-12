@@ -3,4 +3,12 @@ parent_feature: FEAT-01KR8YRQN0D6G
 slug: health-mcp-tests
 name: Add test status to health MCP
 summary: "Add test suite summary to health MCP tool output: total_packages, passing_packages, failing_packages, and failures list with package and test_name. Use cached results where available."
-status: ready
+status: done
+files_planned:
+  - internal/health/test_suite.go
+  - internal/health/test_suite_test.go
+  - internal/mcp/health_tool.go
+  - internal/mcp/server.go
+completed: "2026-05-12T12:02:45Z"
+completion_summary: "Add TestSuiteHealthChecker and test suite diagnostics to health MCP tool. New test_suite.go in internal/health/ provides CheckTestSuite (with 30-min cache support per NFR-004: .kbz/cache/test-suite-cache.json), CheckTestSuiteHealth (CategoryResult), and FormatTestSuiteSummary. TestSuiteHealthChecker registered as AdditionalHealthChecker in server.go. Output includes entities_by_type counts for packages/passing/failing and error/warning messages with failing test names."
+verification: "All tests pass. New tests cover: empty path, no go.mod dir, mocked passing/failing, cache hit, stale cache, CheckTestSuiteHealth passing/failing/empty, FormatTestSuiteSummary, save/load cache round-trip."
