@@ -1,0 +1,11 @@
+canonical_content_hash: 00a7754df7c4f3e0fb544be60f504314ba2222ae0f7c4658a1a3201f189b00cb
+content_hash: f0d0810c749b2f5dbc484bb23cc72c035bda11245070cd3693328e8ba78e965e
+created: "2026-05-12T14:24:10Z"
+created_by: sambeau
+id: P66-test-governance/design-p66-design-test-governance
+owner: P66-test-governance
+path: work/P66-test-governance/P66-design-test-governance.md
+status: draft
+title: "Design: Test Governance Framework"
+type: design
+updated: "2026-05-12T14:24:10Z"
