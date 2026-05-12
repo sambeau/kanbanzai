@@ -1,3 +1,5 @@
+approved_at: "2026-05-12T17:31:23Z"
+approved_by: sambeau
 canonical_content_hash: 7811661f769649f716799ca28b1149d9a096da7a6ec6f219e86a833d66c9fbfa
 content_hash: 9f5bda1fbfedb50d706acbc257924a1bef9d556fe9c795158643400ce13c7d0d
 created: "2026-05-12T17:31:08Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KREH8PKSPM3/report-p67-report-ws-a-sort-to-slices
 owner: FEAT-01KREH8PKSPM3
 path: work/P67-stdlib-modernisation/P67-report-ws-a-sort-to-slices.md
-status: draft
+status: approved
 title: "Review: ws-a-sort-to-slices"
 type: report
-updated: "2026-05-12T17:31:08Z"
+updated: "2026-05-12T17:31:23Z"
