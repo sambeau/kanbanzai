@@ -1,0 +1,6 @@
+id: TASK-01KREHHRYYECY
+parent_feature: FEAT-01KREH8QC3VZ4
+slug: ws-b1-slog-entrypoints
+name: slog entry-point configuration
+summary: "Add slog.SetDefault(slog.New(slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{Level: slog.LevelInfo}))) as first statement in cmd/kbz/main.go main() and in internal/mcp/server.go before tool registration. Replace log import with log/slog. Add os import to cmd/kbz/main.go if not present."
+status: queued
