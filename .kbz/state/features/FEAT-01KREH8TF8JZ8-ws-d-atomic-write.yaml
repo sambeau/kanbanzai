@@ -2,7 +2,7 @@ id: FEAT-01KREH8TF8JZ8
 slug: ws-d-atomic-write
 name: atomic write consolidation
 parent: B72-stdlib-modernisation
-status: specifying
+status: dev-planning
 summary: Delete private atomicWriteFile in internal/context/refresh.go and replace two call-sites with fsutil.WriteFileAtomic. Workstream D of P67.
 created: "2026-05-12T16:45:37Z"
 created_by: sambeau
@@ -10,7 +10,12 @@ overrides:
   -
     from_status: proposed
     reason: Design and spec completed at plan level P67; advancing directly to dev-planning
-    timestamp: "2026-05-12T17:46:10+01:00"
+    timestamp: "2026-05-12T17:46:16+01:00"
     to_status: specifying
+  -
+    from_status: specifying
+    reason: Spec approved at plan level P67
+    timestamp: "2026-05-12T17:46:17+01:00"
+    to_status: dev-planning
 display_id: B72-F4
 tier: feature
