@@ -3,9 +3,9 @@ content: "Always create the worktree BEFORE editing any files. Editing on main f
 created: "2026-05-07T00:51:23Z"
 created_by: sambeau
 id: KE-01KQZYNZJPVMD
-last_accessed_at: "2026-05-12T15:02:10Z"
+last_accessed_at: "2026-05-12T15:15:22Z"
 miss_count: 0
-recent_use_count: 257
+recent_use_count: 258
 scope: project
 status: contributed
 tags:

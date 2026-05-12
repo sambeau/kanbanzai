@@ -3,10 +3,10 @@ content: "wrapWithRecovery in internal/mcp/handler.go is the canonical panic rec
 created: "2026-05-08T17:08:13Z"
 created_by: unknown
 id: KE-01KR48ZA40QYT
-last_accessed_at: "2026-05-12T15:02:10Z"
+last_accessed_at: "2026-05-12T15:15:22Z"
 learned_from: TASK-01KR47D68REWB
 miss_count: 0
-recent_use_count: 106
+recent_use_count: 107
 scope: project
 status: contributed
 tags:
