@@ -1,3 +1,5 @@
+approved_at: "2026-05-12T12:57:39Z"
+approved_by: sambeau
 canonical_content_hash: 2fbd87b90c4969f618718b10c4f1688c7d00f7c2b5dfa2d0020ed15085a21c3c
 content_hash: 5297938b501c565ba3238b42847271ae0037ca3e9c69b018793a5222e522f495
 created: "2026-05-12T12:57:27Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: P44-model-routing-agent-launcher/research-p44-research-hardening-principle
 owner: P44-model-routing-agent-launcher
 path: work/P44-model-routing-agent-launcher/P44-research-hardening-principle.md
-status: draft
+status: approved
 title: Adopting the Hardening Principle for Kanbanzai
 type: research
-updated: "2026-05-12T12:57:27Z"
+updated: "2026-05-12T12:57:39Z"
