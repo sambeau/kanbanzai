@@ -2,7 +2,8 @@ id: FEAT-01KREH8QC3VZ4
 slug: ws-b-log-to-slog
 name: log to slog migration
 parent: B72-stdlib-modernisation
-status: developing
+status: reviewing
+review_cycle: 1
 summary: Replace all log package usages with log/slog and configure global handler at two entry points across 16 files. Workstream B of P67.
 created: "2026-05-12T16:45:34Z"
 created_by: sambeau
