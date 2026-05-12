@@ -1,0 +1,7 @@
+id: WT-01KRCTE5PQXH0
+entity_id: BUG-01KR45KJWB2KY
+branch: bug/BUG-01KR45KJWB2KY-handoff-nil-pipeline-panic
+path: .worktrees/BUG-01KR45KJWB2KY-handoff-nil-pipeline-panic
+status: active
+created: "2026-05-12T00:47:21Z"
+created_by: sambeau
