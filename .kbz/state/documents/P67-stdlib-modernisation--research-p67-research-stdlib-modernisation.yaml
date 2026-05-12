@@ -1,0 +1,13 @@
+approved_at: "2026-05-12T16:22:38Z"
+approved_by: sambeau
+canonical_content_hash: a093de84d4064f98408484b5c68a09452add449724ca144dc4ab7281813198f3
+content_hash: 825401bc9a449d631858a84a4a06d96c54726ce0a0f40287ab924f88a9dc92d1
+created: "2026-05-12T16:22:38Z"
+created_by: sambeau
+id: P67-stdlib-modernisation/research-p67-research-stdlib-modernisation
+owner: P67-stdlib-modernisation
+path: work/P67-stdlib-modernisation/P67-research-stdlib-modernisation.md
+status: approved
+title: Go Standard Library Audit Report
+type: research
+updated: "2026-05-12T16:22:38Z"
