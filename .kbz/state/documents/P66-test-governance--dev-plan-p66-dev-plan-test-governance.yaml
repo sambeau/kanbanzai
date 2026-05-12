@@ -1,5 +1,5 @@
-canonical_content_hash: a2a041da25b83d67dfb07c3c62ffc3faff398d1e71fe3f98134aef5737aca3c4
-content_hash: c6db523dc6f690907f51e2e0b433386653664d6623b138641e7a0b475292d56d
+canonical_content_hash: 7974f5751055c6c30514bfd2c1f54e479e89c9b16afba307c255a20782184b8a
+content_hash: 56c24b1cf3f1a1363e26594715e9c8976bac761770599f59323c7bfd28c1b8fb
 created: "2026-05-12T14:24:11Z"
 created_by: sambeau
 id: P66-test-governance/dev-plan-p66-dev-plan-test-governance
@@ -8,4 +8,4 @@ path: work/P66-test-governance/P66-dev-plan-test-governance.md
 status: draft
 title: "Dev Plan: Test Governance Framework"
 type: dev-plan
-updated: "2026-05-12T14:24:11Z"
+updated: "2026-05-12T14:27:57Z"
