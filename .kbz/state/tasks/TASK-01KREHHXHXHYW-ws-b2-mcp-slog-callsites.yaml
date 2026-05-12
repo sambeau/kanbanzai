@@ -3,6 +3,23 @@ parent_feature: FEAT-01KREH8QC3VZ4
 slug: ws-b2-mcp-slog-callsites
 name: slog migration — internal/mcp/ call-sites
 summary: "Translate all log.Printf/Println/Print calls to structured slog calls in 9 internal/mcp/ files (checkpoint_tool, decompose_tool, doc_tool, entity_tool, finish_tool, handler, handoff_tool, merge_tool, server). Apply level-mapping: WARNING: prefix→slog.Warn, ERROR:→slog.Error, unqualified→slog.Info. [component] tag→component key-value."
-status: ready
+status: done
 depends_on:
   - TASK-01KREHHRYYECY
+files_planned:
+  - internal/mcp/checkpoint_tool.go
+  - internal/mcp/decompose_tool.go
+  - internal/mcp/doc_tool.go
+  - internal/mcp/entity_tool.go
+  - internal/mcp/finish_tool.go
+  - internal/mcp/handler.go
+  - internal/mcp/handoff_tool.go
+  - internal/mcp/merge_tool.go
+  - internal/mcp/server.go
+completed: "2026-05-12T17:16:20Z"
+claimed_at: "2026-05-12T17:09:54Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-12T17:09:54Z"
+dispatched_by: sambeau
+completion_summary: "Translated all log.Printf/Println/Print calls to structured slog.* calls across 9 internal/mcp/ files. Applied level-mapping rules (WARNING/WARN → slog.Warn, ERROR → slog.Error, others → slog.Info; PANIC recovery mapped to slog.Error). Converted [component] tag patterns to structured key-value pairs. Removed \"log\" import from all 9 files (server.go already had log/slog from B1; others needed import swap from \"log\" to \"log/slog\"). go build and go test pass."
+verification: "go build ./... succeeds. go test ./... passes — all packages ok including internal/mcp (21s run). Verified zero remaining log.Printf/Println/Print calls and zero remaining bare \"log\" imports in the 9 target files."
