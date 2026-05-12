@@ -1,3 +1,5 @@
+approved_at: "2026-05-12T15:22:28Z"
+approved_by: sambeau
 canonical_content_hash: 3be7e49f43dba35943adb8a5fe3f5faee474bc06ece2b0f4850550a6e3a1ca9e
 content_hash: 3be7e49f43dba35943adb8a5fe3f5faee474bc06ece2b0f4850550a6e3a1ca9e
 created: "2026-05-12T15:22:24Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KRE9DSX3Z17/report-p66-report-test-governance
 owner: FEAT-01KRE9DSX3Z17
 path: work/P66-test-governance/P66-report-test-governance.md
-status: draft
+status: approved
 title: "Review: Test Governance Framework"
 type: report
-updated: "2026-05-12T15:22:24Z"
+updated: "2026-05-12T15:22:28Z"
