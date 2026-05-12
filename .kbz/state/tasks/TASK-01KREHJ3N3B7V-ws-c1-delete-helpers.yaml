@@ -1,0 +1,6 @@
+id: TASK-01KREHJ3N3B7V
+parent_feature: FEAT-01KREH8S3WFC4
+slug: ws-c1-delete-helpers
+name: delete three hand-rolled stdlib helpers
+summary: "Delete stringSliceContains in internal/docint/concepts.go→replace with slices.Contains (add slices import). Delete trimTrailingSlash in internal/context/surfacer.go→inline strings.TrimSuffix(s, \"/\"). Delete containsMarker in internal/kbzdoctor/doctor.go→replace with bytes.Contains(data, []byte(marker)) (remove bufio import)."
+status: queued
