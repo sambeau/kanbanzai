@@ -19,3 +19,5 @@ overrides:
     to_status: dev-planning
 display_id: B72-F3
 tier: feature
+verification: "TASK-01KREHJ3N3B7V: go build ./... clean; go test ./... 43 packages all pass; grep for removed symbols returns empty"
+verification_status: passed
