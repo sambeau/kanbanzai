@@ -1,11 +1,13 @@
-canonical_content_hash: 73f1d5e466b73e5da185a01a7b1d45dba4e0862a842303a4055e3ee0b3424b27
-content_hash: c9f7b74b0c6b5299aca0617f11ab9035c02cab3f08913ef5454ff6dec6640bbc
+approved_at: "2026-05-12T16:49:51Z"
+approved_by: sambeau
+canonical_content_hash: 7a38ed4fde67dcb01a0e8a2bb27b09ca017249501274e5aef658eb7e09cfaa09
+content_hash: c0b540c1bd553cca99209a81e28b86c47013858c889c44fb30259e63f5ae6227
 created: "2026-05-12T16:48:05Z"
 created_by: sambeau
 id: B72-stdlib-modernisation/dev-plan-p67-dev-plan-stdlib-modernisation
 owner: B72-stdlib-modernisation
 path: work/P67-stdlib-modernisation/P67-dev-plan-stdlib-modernisation.md
-status: draft
+status: approved
 title: "Implementation Plan: Go Standard Library Modernisation (P67)"
 type: dev-plan
-updated: "2026-05-12T16:48:05Z"
+updated: "2026-05-12T16:49:51Z"
