@@ -3,10 +3,10 @@ content: "[moderate] tool-friction: write_file with entity_id resolves paths rel
 created: "2026-05-08T17:38:52Z"
 created_by: unknown
 id: KE-01KR4AQE06G9W
-last_accessed_at: "2026-05-12T16:56:01Z"
+last_accessed_at: "2026-05-12T17:05:53Z"
 learned_from: TASK-01KR47D688P0S
 miss_count: 0
-recent_use_count: 103
+recent_use_count: 104
 scope: project
 status: contributed
 tags:
