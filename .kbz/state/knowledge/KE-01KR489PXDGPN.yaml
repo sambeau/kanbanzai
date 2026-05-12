@@ -3,10 +3,10 @@ content: "[moderate] workflow-friction: T2 and T4 both preemptively added T3 del
 created: "2026-05-08T16:56:25Z"
 created_by: unknown
 id: KE-01KR489PXDGPN
-last_accessed_at: "2026-05-12T14:47:59Z"
+last_accessed_at: "2026-05-12T14:50:39Z"
 learned_from: TASK-01KR3Q0CQW50P
 miss_count: 0
-recent_use_count: 112
+recent_use_count: 114
 scope: project
 status: contributed
 tags:
