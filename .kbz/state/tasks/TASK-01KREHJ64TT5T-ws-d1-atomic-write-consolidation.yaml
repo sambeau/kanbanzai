@@ -3,8 +3,13 @@ parent_feature: FEAT-01KREH8TF8JZ8
 slug: ws-d1-atomic-write-consolidation
 name: replace atomicWriteFile with fsutil.WriteFileAtomic
 summary: "In internal/context/refresh.go: delete atomicWriteFile function, replace its two call-sites with fsutil.WriteFileAtomic(path, data, 0o644), add import github.com/sambeau/kanbanzai/internal/fsutil. No other files changed."
-status: active
+status: done
+files_planned:
+  - internal/context/refresh.go
+completed: "2026-05-12T16:53:22Z"
 claimed_at: "2026-05-12T16:51:30Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-12T16:51:30Z"
 dispatched_by: sambeau
+completion_summary: "Deleted atomicWriteFile from internal/context/refresh.go, replaced its two call-sites with fsutil.WriteFileAtomic(path, data, 0o644), and added the fsutil import. No other files changed."
+verification: "go build ./internal/context/... succeeded; go test ./internal/context/... passed (ok 0.275s); grep -r atomicWriteFile --include=*.go returned empty."
