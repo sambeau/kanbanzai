@@ -24,3 +24,5 @@ overrides:
     to_status: dev-planning
 display_id: B72-F1
 tier: feature
+verification: "TASK-01KREHH9YJB2S: go build ./internal/service/... — clean. go test ./internal/service/... — ok (1.897s). grep for \\\"sort\\\" in non-test production files — empty. One test file (entities_cache_read_test.go) retains \\\"sort\\\" per the constraint against modifying *_test.go files.\nTASK-01KREHHCVGMP6: go build ./internal/mcp/... clean; grep for sort import returns empty; go test ./internal/mcp/... passes (22.6s)\nTASK-01KREHHDR6QY5: go build ./internal/knowledge/... clean; go test ./internal/knowledge/... passed (0.317s); grep for \\\"sort\\\" import returns empty.\nTASK-01KREHHH0KGPJ: go build ./... passes clean. go test on all 14 test packages passes. Verification grep for \\\"sort\\\" across all assigned file paths returns empty."
+verification_status: passed
