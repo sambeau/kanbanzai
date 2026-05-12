@@ -1,0 +1,6 @@
+id: TASK-01KRE9FCCFMEP
+parent_feature: FEAT-01KRE9DSX3Z17
+slug: test-governance-mcp-tool-test
+name: "MCP Tool `test`"
+summary: "MCP Tool `test`"
+status: queued

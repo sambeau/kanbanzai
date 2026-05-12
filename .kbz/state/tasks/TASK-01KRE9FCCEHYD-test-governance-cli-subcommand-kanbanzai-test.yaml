@@ -1,0 +1,6 @@
+id: TASK-01KRE9FCCEHYD
+parent_feature: FEAT-01KRE9DSX3Z17
+slug: test-governance-cli-subcommand-kanbanzai-test
+name: "CLI Subcommand `kanbanzai test`"
+summary: "CLI Subcommand `kanbanzai test`"
+status: queued
