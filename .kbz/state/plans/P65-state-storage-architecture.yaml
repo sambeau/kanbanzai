@@ -1,0 +1,9 @@
+id: P65-state-storage-architecture
+slug: state-storage-architecture
+name: State storage architecture
+status: idea
+summary: "Design and migration plan for Kanbanzai's workflow-state storage layer. Evaluates the Git-native JSONL transition log approach against a transactional database (SQLite first, possibly Postgres later) as the substrate for entity state, transition history, durable workflow execution, audit logs, and document records. Architecturally coupled to P44's deterministic orchestration journey: P44 Phase 2's durable controllers and audit log assume something stronger than today's YAML-on-disk model, and the storage decision determines whether that \"something stronger\" is JSONL files, embedded SQLite, or a hosted database."
+order: 0
+created: "2026-05-12T13:31:12Z"
+created_by: sambeau
+updated: "2026-05-12T13:31:12Z"
