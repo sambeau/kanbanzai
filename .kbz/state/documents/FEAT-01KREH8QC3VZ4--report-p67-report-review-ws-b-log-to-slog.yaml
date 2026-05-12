@@ -1,3 +1,5 @@
+approved_at: "2026-05-12T17:33:46Z"
+approved_by: sambeau
 canonical_content_hash: de1f4ce050976104a5bf17298356b553804dff7975db479512ba4df9cd1b8c1e
 content_hash: 9e75add03bfee80f8bc3b4401f2bb9e8be5fc02a414c25abea70d2391125387e
 created: "2026-05-12T17:33:27Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KREH8QC3VZ4/report-p67-report-review-ws-b-log-to-slog
 owner: FEAT-01KREH8QC3VZ4
 path: work/P67-stdlib-modernisation/P67-report-review-ws-b-log-to-slog.md
-status: draft
+status: approved
 title: "Review: ws-b-log-to-slog"
 type: report
-updated: "2026-05-12T17:33:27Z"
+updated: "2026-05-12T17:33:46Z"
