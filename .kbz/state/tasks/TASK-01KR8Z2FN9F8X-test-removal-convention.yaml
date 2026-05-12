@@ -3,4 +3,13 @@ parent_feature: FEAT-01KR8YRQN1M56
 slug: test-removal-convention
 name: Document test removal commit convention
 summary: Document requirement that intentional test removal commits must explain why the test was removed and reference the requirement or decision that made it obsolete.
-status: ready
+status: done
+files_planned:
+  - AGENTS.md
+completed: "2026-05-12T11:58:39Z"
+claimed_at: "2026-05-12T11:58:28Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-12T11:58:28Z"
+dispatched_by: sambeau
+completion_summary: Added test removal convention documentation to AGENTS.md under Test Discipline section. Requires commit messages for test-removal commits to explain why and reference the requirement/decision that made the test obsolete. Includes acceptable and unacceptable reasons.
+verification: Verified the Test removal convention subsection is present in AGENTS.md with clear acceptable/unacceptable reasons.
