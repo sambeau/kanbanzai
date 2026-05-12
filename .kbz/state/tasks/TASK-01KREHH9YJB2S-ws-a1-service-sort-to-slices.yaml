@@ -1,0 +1,6 @@
+id: TASK-01KREHH9YJB2S
+parent_feature: FEAT-01KREH8PKSPM3
+slug: ws-a1-service-sort-to-slices
+name: sort to slices — internal/service/
+summary: "Replace all sort.* calls with slices.*/cmp.* in 11 internal/service/ files. Remove sort import, add slices import (and cmp where sort.Slice/SliceStable used). Every SliceStable must become SortStableFunc."
+status: queued
