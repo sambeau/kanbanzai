@@ -1,0 +1,11 @@
+canonical_content_hash: 0d6059e6ae386eff5b739361b340890381c2e022d2c1db5d9ac213a66dc25dfc
+content_hash: 0d6059e6ae386eff5b739361b340890381c2e022d2c1db5d9ac213a66dc25dfc
+created: "2026-05-12T00:49:28Z"
+created_by: sambeau
+id: BUG-01KR45KJWB2KY/report-review
+owner: BUG-01KR45KJWB2KY
+path: work/bugs/handoff-nil-pipeline-panic/review.md
+status: draft
+title: "Review: Handoff nil-pipeline panic fix verification"
+type: report
+updated: "2026-05-12T00:49:28Z"
