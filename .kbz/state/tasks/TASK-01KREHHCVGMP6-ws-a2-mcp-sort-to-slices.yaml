@@ -3,8 +3,15 @@ parent_feature: FEAT-01KREH8PKSPM3
 slug: ws-a2-mcp-sort-to-slices
 name: sort to slices — internal/mcp/ (3 files)
 summary: "Replace all sort.* calls with slices.*/cmp.* in internal/mcp/assembly.go, entity_tool.go, next_tool.go. Remove sort import, add slices (and cmp if needed)."
-status: active
+status: done
+files_planned:
+  - internal/mcp/assembly.go
+  - internal/mcp/entity_tool.go
+  - internal/mcp/next_tool.go
+completed: "2026-05-12T17:00:51Z"
 claimed_at: "2026-05-12T16:56:01Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-12T16:56:01Z"
 dispatched_by: sambeau
+completion_summary: "Replaced sort→slices/cmp in internal/mcp/assembly.go (6 SliceStable calls), internal/mcp/entity_tool.go (1 sort.Strings call), and internal/mcp/next_tool.go (1 SliceStable call). Removed \"sort\" import from all 3 files; added \"slices\" to all 3 and \"cmp\" to assembly.go and next_tool.go."
+verification: go build ./internal/mcp/... clean; grep for sort import returns empty; go test ./internal/mcp/... passes (22.6s)
