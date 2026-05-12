@@ -1,0 +1,10 @@
+id: FEAT-01KREH8PKSPM3
+slug: ws-a-sort-to-slices
+name: sort to slices migration
+parent: B72-stdlib-modernisation
+status: proposed
+summary: Replace all sort package usages with slices (and cmp where needed) across 35 non-test files. Workstream A of P67.
+created: "2026-05-12T16:45:33Z"
+created_by: sambeau
+display_id: B72-F1
+tier: feature
