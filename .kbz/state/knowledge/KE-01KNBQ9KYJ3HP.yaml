@@ -2,18 +2,19 @@ confidence: "0.5"
 content: "[minor] worked-well: Python-based file editing via terminal was reliable for worktree modifications across 8 files. The pattern of reading, replacing, and writing was more predictable than sed for multi-line changes."
 created: "2026-04-04T07:46:06Z"
 created_by: unknown
+deprecated_reason: tier 3 TTL expired with use_count < 3
 id: KE-01KNBQ9KYJ3HP
 last_accessed_at: "2026-05-11T17:37:48Z"
 learned_from: TASK-01KNAKX798DCB
 miss_count: 0
 recent_use_count: 596
 scope: project
-status: contributed
+status: retired
 tags:
   - retrospective
   - worked-well
 tier: 3
 topic: retro-task-01knakx798dcb
 ttl_days: 30
-updated: "2026-04-04T07:46:06Z"
+updated: "2026-05-12T00:36:20Z"
 use_count: 0

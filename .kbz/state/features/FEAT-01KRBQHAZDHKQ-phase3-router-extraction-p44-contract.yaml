@@ -1,7 +1,7 @@
 id: FEAT-01KRBQHAZDHKQ
 slug: phase3-router-extraction-p44-contract
 name: Router Extraction and P44 Contract
-parent: P64-binding-governance
+parent: B70-binding-governance-impl
 status: done
 review_cycle: 1
 summary: "Extract routing into internal/binding/router.go, create generated routing companion file, establish P44 interface seam, reduce sync surface from 7 to 4."
@@ -9,13 +9,11 @@ spec: FEAT-01KRBQHAZDHKQ/spec-p64-spec-phase3-router-extraction-p44-contract
 created: "2026-05-11T14:37:24Z"
 created_by: sambeau
 overrides:
-  -
-    from_status: dev-planning
+  - from_status: dev-planning
     reason: "Fast-track: specs approved, tasks created. Dev-plan docs not required for fast-track orchestration pipeline."
     timestamp: "2026-05-11T19:06:22+01:00"
     to_status: developing
-  -
-    from_status: reviewing
+  - from_status: reviewing
     reason: "Fast-track: all tasks terminal, verification passed. Review gate bypassed per fast-track profile."
     timestamp: "2026-05-11T19:06:22+01:00"
     to_status: done

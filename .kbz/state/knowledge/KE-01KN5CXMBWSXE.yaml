@@ -2,18 +2,19 @@ confidence: "0.5"
 content: "[significant] tool-friction: edit_file and create_directory tools write to the main repo root, not to the worktree. All file operations for worktree-based development must go through terminal commands (python3 -c) instead. Suggestion: Document that worktree development requires terminal-based file writes; edit_file only works with the registered project root"
 created: "2026-04-01T20:49:21Z"
 created_by: unknown
+deprecated_reason: tier 3 TTL expired with use_count < 3
 id: KE-01KN5CXMBWSXE
 last_accessed_at: "2026-05-11T17:37:48Z"
 learned_from: TASK-01KN5AK342WDJ
 miss_count: 0
 recent_use_count: 597
 scope: project
-status: contributed
+status: retired
 tags:
   - retrospective
   - tool-friction
 tier: 3
 topic: retro-task-01kn5ak342wdj
 ttl_days: 30
-updated: "2026-04-01T20:49:21Z"
+updated: "2026-05-12T00:36:20Z"
 use_count: 0

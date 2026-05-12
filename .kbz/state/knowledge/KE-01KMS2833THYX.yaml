@@ -2,18 +2,19 @@ confidence: "0.5"
 content: "[moderate] worked-well: Using a cross-plan feature (Skills Content from P3) as a second review target worked well — it provided a genuine review with real blocking findings (fabricated lifecycles, stale 1.0 tool names) rather than a synthetic scenario. The missing-spec edge case also created a natural ambiguous-finding candidate."
 created: "2026-03-28T01:51:56Z"
 created_by: unknown
+deprecated_reason: tier 3 TTL expired with use_count < 3
 id: KE-01KMS2833THYX
 last_accessed_at: "2026-05-11T17:37:48Z"
 learned_from: TASK-01KMRXK5ARR1S
 miss_count: 0
 recent_use_count: 592
 scope: project
-status: contributed
+status: retired
 tags:
   - retrospective
   - worked-well
 tier: 3
 topic: retro-task-01kmrxk5arr1s-2
 ttl_days: 30
-updated: "2026-03-28T01:51:56Z"
+updated: "2026-05-12T00:36:20Z"
 use_count: 0

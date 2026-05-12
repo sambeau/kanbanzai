@@ -1,7 +1,7 @@
 id: FEAT-01KRBQHAZ5KY7
 slug: phase1-startup-validation
 name: Startup Validation Hardening
-parent: P64-binding-governance
+parent: B70-binding-governance-impl
 status: done
 review_cycle: 1
 summary: "Wire ValidateBindingFile at startup, sync allowlists, enforce embedded-copy CI parity, add reachability tests. Converts silent binding failures into loud startup failures."
@@ -9,13 +9,11 @@ spec: FEAT-01KRBQHAZ5KY7/spec-p64-spec-phase1-startup-validation
 created: "2026-05-11T14:37:24Z"
 created_by: sambeau
 overrides:
-  -
-    from_status: dev-planning
+  - from_status: dev-planning
     reason: "Fast-track: specs approved, tasks created. Dev-plan docs not required for fast-track orchestration pipeline."
     timestamp: "2026-05-11T18:32:26+01:00"
     to_status: developing
-  -
-    from_status: reviewing
+  - from_status: reviewing
     reason: "Fast-track: all tasks terminal, verification passed, no blocking review findings. Bypassing review gate per fast-track profile."
     timestamp: "2026-05-11T18:32:26+01:00"
     to_status: done

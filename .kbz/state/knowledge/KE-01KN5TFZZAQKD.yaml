@@ -2,18 +2,19 @@ confidence: "0.5"
 content: "[moderate] worked-well: Sub-agent parallelism with disjoint file scopes worked perfectly for this feature — 7 tasks with zero merge conflicts. Tasks 4+6 and 3+5 ran in parallel with clean boundaries."
 created: "2026-04-02T00:46:34Z"
 created_by: unknown
+deprecated_reason: tier 3 TTL expired with use_count < 3
 id: KE-01KN5TFZZAQKD
 last_accessed_at: "2026-05-11T17:37:48Z"
 learned_from: TASK-01KN5AJRS26YW
 miss_count: 0
 recent_use_count: 601
 scope: project
-status: contributed
+status: retired
 tags:
   - retrospective
   - worked-well
 tier: 3
 topic: retro-task-01kn5ajrs26yw
 ttl_days: 30
-updated: "2026-04-02T00:46:34Z"
+updated: "2026-05-12T00:36:20Z"
 use_count: 0

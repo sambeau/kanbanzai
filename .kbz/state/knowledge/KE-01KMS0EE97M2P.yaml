@@ -2,18 +2,19 @@ confidence: "0.5"
 content: "[moderate] tool-friction: The stale MCP binary issue wasted significant verification time — 3 of 9 ACs appeared to fail when the code was correct. There's no built-in way to query the running server's build timestamp or source version. Suggestion: Add a server_info or version MCP tool that reports build timestamp, git commit SHA, and binary path. This would make stale-binary issues immediately diagnosable."
 created: "2026-03-28T01:20:27Z"
 created_by: unknown
+deprecated_reason: tier 3 TTL expired with use_count < 3
 id: KE-01KMS0EE97M2P
 last_accessed_at: "2026-05-11T17:37:48Z"
 learned_from: TASK-01KMRXK1G474P
 miss_count: 0
 recent_use_count: 587
 scope: project
-status: contributed
+status: retired
 tags:
   - retrospective
   - tool-friction
 tier: 3
 topic: retro-task-01kmrxk1g474p
 ttl_days: 30
-updated: "2026-03-28T01:20:27Z"
+updated: "2026-05-12T00:36:20Z"
 use_count: 0
