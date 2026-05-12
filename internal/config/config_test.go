@@ -1455,12 +1455,14 @@ func TestSyncSurface_PostPhase2_Count(t *testing.T) {
 	embKeys := extractStageKeys(embData)
 	canKeys := extractStageKeys(canData)
 
-	// REQ-001: retro-fixing key must not exist in either copy.
-	if canKeys["retro-fixing"] {
-		t.Error("retro-fixing key still exists in canonical YAML — REQ-001 violation")
+	// retro-fixing is a profile-based stage (profile: true) and is expected
+	// to exist in both copies. It was briefly removed during B57 but restored
+	// because routing.yaml and validStages reference it.
+	if !canKeys["retro-fixing"] {
+		t.Error("retro-fixing key missing from canonical YAML — should be present as profile-based stage")
 	}
-	if embKeys["retro-fixing"] {
-		t.Error("retro-fixing key still exists in embedded YAML — REQ-001 violation")
+	if !embKeys["retro-fixing"] {
+		t.Error("retro-fixing key missing from embedded YAML — should be present as profile-based stage")
 	}
 
 	// Report drift between the two copies (Phase 1 CI enforcement should

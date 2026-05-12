@@ -64,7 +64,7 @@ func (s *EntityService) CanonicalDocPath(docType string, parentEntityID string) 
 
 	// Handle prompts specially (REQ-007): they go under work/{plan-slug}/prompts/
 	if docType == "prompt" {
-		return fmt.Sprintf("work/%s/prompts/%s.md", planSlug, planSlug), nil
+		return fmt.Sprintf("work/%s/prompts/%s.md", planID, planSlug), nil
 	}
 
 	// Look up the type abbreviation (REQ-002).
@@ -73,7 +73,10 @@ func (s *EntityService) CanonicalDocPath(docType string, parentEntityID string) 
 		return "", fmt.Errorf("unsupported document type %q — valid types are: design, specification, dev-plan, research, report, policy", docType)
 	}
 
-	return fmt.Sprintf("work/%s/%s-%s-%s.md", planSlug, planID, abbrev, planSlug), nil
+	// Extract just the P{n} prefix (e.g. "P1" from "P1-gap-test-plan") for filename validation.
+	prefix, num, _ := model.ParsePlanID(planID)
+	planIDPrefix := prefix + num
+	return fmt.Sprintf("work/%s/%s-%s-%s.md", planID, planIDPrefix, abbrev, planSlug), nil
 }
 
 // canonicalBugDocPath returns the canonical path for a bug entity document (FR-112).
@@ -142,7 +145,13 @@ func (s *EntityService) resolveToPlan(entityID string) (planID, planSlug string,
 func (s *EntityService) resolveBatchToPlan(batchID string) (string, string, error) {
 	batch, err := s.GetPlan(batchID)
 	if err != nil {
-		return "", "", fmt.Errorf("parent entity %s not found", batchID)
+		// Fall back to strategic plan (P-prefixed) when batch lookup fails.
+		if prefix, _, _ := model.ParsePlanID(batchID); prefix == "P" {
+			batch, err = s.GetStrategicPlan(batchID)
+		}
+		if err != nil {
+			return "", "", fmt.Errorf("parent entity %s not found", batchID)
+		}
 	}
 	parent, _ := batch.State["parent"].(string)
 	if parent == "" || !model.IsPlanID(parent) {

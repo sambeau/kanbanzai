@@ -2025,7 +2025,8 @@ func TestDocTool_Path_PlanParent(t *testing.T) {
 		t.Fatalf("expected 'path' string in response, got: %v", resp)
 	}
 	// Plan slug is "gap-test-plan" (from setupPlanFeature).
-	want := fmt.Sprintf("work/gap-test-plan/%s-design-gap-test-plan.md", planID)
+	// New format: work/{planID}/{prefix}-{type}-{slug}.md
+	want := fmt.Sprintf("work/%s/P1-design-gap-test-plan.md", planID)
 	if path != want {
 		t.Errorf("path = %q, want %q", path, want)
 	}
@@ -2049,7 +2050,8 @@ func TestDocTool_Path_FeatureParent(t *testing.T) {
 		t.Fatalf("expected 'path' string in response, got: %v", resp)
 	}
 	// Feature resolves upward to plan.
-	want := fmt.Sprintf("work/gap-test-plan/%s-spec-gap-test-plan.md", planID)
+	// New format: work/{planID}/{prefix}-{type}-{slug}.md
+	want := fmt.Sprintf("work/%s/P1-spec-gap-test-plan.md", planID)
 	if path != want {
 		t.Errorf("path = %q, want %q", path, want)
 	}
@@ -2152,18 +2154,20 @@ func TestDocTool_Path_AllTypes(t *testing.T) {
 	planID, _ := setupPlanFeature(t, entitySvc)
 
 	// setupPlanFeature constructs plan ID as "P1-gap-test-plan" with slug "gap-test-plan".
+	// New format: work/{planID}/{prefix}-{type}-{slug}.md
+	planIDPrefix := "P1"
 	planSlug := "gap-test-plan"
 
 	tests := []struct {
 		docType string
 		want    string
 	}{
-		{"design", fmt.Sprintf("work/%s/%s-design-%s.md", planSlug, planID, planSlug)},
-		{"specification", fmt.Sprintf("work/%s/%s-spec-%s.md", planSlug, planID, planSlug)},
-		{"dev-plan", fmt.Sprintf("work/%s/%s-dev-plan-%s.md", planSlug, planID, planSlug)},
-		{"research", fmt.Sprintf("work/%s/%s-research-%s.md", planSlug, planID, planSlug)},
-		{"report", fmt.Sprintf("work/%s/%s-report-%s.md", planSlug, planID, planSlug)},
-		{"policy", fmt.Sprintf("work/%s/%s-policy-%s.md", planSlug, planID, planSlug)},
+		{"design", fmt.Sprintf("work/%s/%s-design-%s.md", planID, planIDPrefix, planSlug)},
+		{"specification", fmt.Sprintf("work/%s/%s-spec-%s.md", planID, planIDPrefix, planSlug)},
+		{"dev-plan", fmt.Sprintf("work/%s/%s-dev-plan-%s.md", planID, planIDPrefix, planSlug)},
+		{"research", fmt.Sprintf("work/%s/%s-research-%s.md", planID, planIDPrefix, planSlug)},
+		{"report", fmt.Sprintf("work/%s/%s-report-%s.md", planID, planIDPrefix, planSlug)},
+		{"policy", fmt.Sprintf("work/%s/%s-policy-%s.md", planID, planIDPrefix, planSlug)},
 	}
 
 	for _, tt := range tests {
@@ -2201,8 +2205,8 @@ func TestDocTool_Path_BatchParent(t *testing.T) {
 	if !ok {
 		t.Fatalf("expected 'path' string in response, got: %v", resp)
 	}
-	planSlug := "gap-test-plan"
-	want := fmt.Sprintf("work/%s/%s-design-%s.md", planSlug, planID, planSlug)
+	// New format: work/{planID}/{prefix}-{type}-{slug}.md
+	want := fmt.Sprintf("work/%s/P1-design-gap-test-plan.md", planID)
 	if path != want {
 		t.Errorf("path = %q, want %q", path, want)
 	}
@@ -2226,8 +2230,9 @@ func TestDocTool_Path_StandaloneBatch(t *testing.T) {
 	if !ok {
 		t.Fatalf("expected 'path' string in response, got: %v", resp)
 	}
-	batchSlug := "standalone-batch"
-	want := fmt.Sprintf("work/%s/%s-design-%s.md", batchSlug, batchID, batchSlug)
+	// New format for standalone batch: batchID is "B1-standalone-batch", prefix is "B1".
+	// Path becomes: work/{batchID}/{prefix}-design-{slug}.md
+	want := fmt.Sprintf("work/%s/B1-design-standalone-batch.md", batchID)
 	if path != want {
 		t.Errorf("path = %q, want %q", path, want)
 	}
@@ -2240,7 +2245,7 @@ func TestDocTool_Path_PromptType(t *testing.T) {
 	entitySvc := service.NewEntityService(t.TempDir())
 	planID, _ := setupPlanFeature(t, entitySvc)
 
-	// Prompt type goes under work/{plan-slug}/prompts/
+	// Prompt type goes under work/{planID}/prompts/
 	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
 		"action": "path",
 		"type":   "prompt",
@@ -2252,7 +2257,7 @@ func TestDocTool_Path_PromptType(t *testing.T) {
 		t.Fatalf("expected 'path' string in response, got: %v", resp)
 	}
 	planSlug := "gap-test-plan"
-	want := fmt.Sprintf("work/%s/prompts/%s.md", planSlug, planSlug)
+	want := fmt.Sprintf("work/%s/prompts/%s.md", planID, planSlug)
 	if path != want {
 		t.Errorf("path = %q, want %q", path, want)
 	}
@@ -2276,8 +2281,8 @@ func TestDocTool_Path_FeatureThroughBatch(t *testing.T) {
 	if !ok {
 		t.Fatalf("expected 'path' string in response, got: %v", resp)
 	}
-	planSlug := "gap-test-plan"
-	want := fmt.Sprintf("work/%s/%s-spec-%s.md", planSlug, planID, planSlug)
+	// New format: work/{planID}/{prefix}-{type}-{slug}.md
+	want := fmt.Sprintf("work/%s/P1-spec-gap-test-plan.md", planID)
 	if path != want {
 		t.Errorf("path = %q, want %q", path, want)
 	}
@@ -2300,23 +2305,23 @@ func TestDocTool_Register_CanonicalPathRejection(t *testing.T) {
 	wrongPath := "work/P1-gap-test-plan/P1-design-wrong-name.md"
 	writeDocFile(t, env.repoRoot, wrongPath, "# Test Design\n\nContent.")
 
-	tool := docTool(env.docSvc, nil, entitySvc)
-	req := makeRequest(map[string]any{
+	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
 		"action": "register",
 		"path":   wrongPath,
 		"type":   "design",
 		"title":  "Test Design",
 		"owner":  planID,
 	})
-	_, err = tool.Handler(context.Background(), req)
 
 	// AC-1: Registering a document at a non-canonical path returns an error
 	// containing the canonical path.
-	if err == nil {
-		t.Fatalf("expected error for non-canonical path, got nil")
+	errResp, hasErr := resp["error"].(map[string]any)
+	if !hasErr {
+		t.Fatalf("expected error for non-canonical path, got: %v", resp)
 	}
-	if !strings.Contains(err.Error(), canonical) {
-		t.Errorf("error should contain canonical path %q, got: %v", canonical, err)
+	errMsg, _ := errResp["message"].(string)
+	if !strings.Contains(errMsg, canonical) {
+		t.Errorf("error should contain canonical path %q, got: %v", canonical, errMsg)
 	}
 }
 

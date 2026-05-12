@@ -174,13 +174,13 @@ func TestCanonicalDocPath_PlanParent(t *testing.T) {
 		parent  string
 		want    string
 	}{
-		{"design", "P50-retro-may-2026", "work/retro-may-2026/P50-retro-may-2026-design-retro-may-2026.md"},
-		{"specification", "P50-retro-may-2026", "work/retro-may-2026/P50-retro-may-2026-spec-retro-may-2026.md"},
-		{"dev-plan", "P50-retro-may-2026", "work/retro-may-2026/P50-retro-may-2026-dev-plan-retro-may-2026.md"},
-		{"research", "P50-retro-may-2026", "work/retro-may-2026/P50-retro-may-2026-research-retro-may-2026.md"},
-		{"report", "P50-retro-may-2026", "work/retro-may-2026/P50-retro-may-2026-report-retro-may-2026.md"},
-		{"policy", "P50-retro-may-2026", "work/retro-may-2026/P50-retro-may-2026-policy-retro-may-2026.md"},
-		{"design", "P1-master-plan", "work/master-plan/P1-master-plan-design-master-plan.md"},
+		{"design", "P50-retro-may-2026", "work/P50-retro-may-2026/P50-design-retro-may-2026.md"},
+		{"specification", "P50-retro-may-2026", "work/P50-retro-may-2026/P50-spec-retro-may-2026.md"},
+		{"dev-plan", "P50-retro-may-2026", "work/P50-retro-may-2026/P50-dev-plan-retro-may-2026.md"},
+		{"research", "P50-retro-may-2026", "work/P50-retro-may-2026/P50-research-retro-may-2026.md"},
+		{"report", "P50-retro-may-2026", "work/P50-retro-may-2026/P50-report-retro-may-2026.md"},
+		{"policy", "P50-retro-may-2026", "work/P50-retro-may-2026/P50-policy-retro-may-2026.md"},
+		{"design", "P1-master-plan", "work/P1-master-plan/P1-design-master-plan.md"},
 	}
 
 	for _, tt := range tests {
@@ -203,7 +203,7 @@ func TestCanonicalDocPath_BatchParent(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	want := "work/retro-may-2026/P50-retro-may-2026-spec-retro-may-2026.md"
+	want := "work/P50-retro-may-2026/P50-spec-retro-may-2026.md"
 	if got != want {
 		t.Errorf("canonicalDocPath(specification, B49-execution) = %q, want %q", got, want)
 	}
@@ -217,7 +217,7 @@ func TestCanonicalDocPath_FeatureParent(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	want := "work/retro-may-2026/P50-retro-may-2026-design-retro-may-2026.md"
+	want := "work/P50-retro-may-2026/P50-design-retro-may-2026.md"
 	if got != want {
 		t.Errorf("canonicalDocPath(design, FEAT-01KQTNYN00HZA) = %q, want %q", got, want)
 	}
@@ -226,7 +226,7 @@ func TestCanonicalDocPath_FeatureParent(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	want = "work/retro-may-2026/P50-retro-may-2026-design-retro-may-2026.md"
+	want = "work/P50-retro-may-2026/P50-design-retro-may-2026.md"
 	if got != want {
 		t.Errorf("canonicalDocPath(design, FEAT-01ABCDEF12345) = %q, want %q", got, want)
 	}
@@ -313,7 +313,7 @@ func TestCanonicalDocPath_StandaloneBatch(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	want := "work/standalone/B99-standalone-design-standalone.md"
+	want := "work/B99-standalone/B99-design-standalone.md"
 	if got != want {
 		t.Errorf("canonicalDocPath(design, B99-standalone) = %q, want %q", got, want)
 	}
@@ -327,7 +327,7 @@ func TestCanonicalDocPath_PromptType(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	want := "work/retro-may-2026/prompts/retro-may-2026.md"
+	want := "work/P50-retro-may-2026/prompts/retro-may-2026.md"
 	if got != want {
 		t.Errorf("canonicalDocPath(prompt, P50-retro-may-2026) = %q, want %q", got, want)
 	}
@@ -351,7 +351,7 @@ func TestCanonicalDocPath_RetroType(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	want := "work/retro-may-2026/P50-retro-may-2026-retro-retro-may-2026.md"
+	want := "work/P50-retro-may-2026/P50-retro-retro-may-2026.md"
 	if got != want {
 		t.Errorf("canonicalDocPath(retro, P50-retro-may-2026) = %q, want %q", got, want)
 	}
@@ -365,7 +365,7 @@ func TestCanonicalDocPath_CaseInsensitiveTypes(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	want := "work/retro-may-2026/P50-retro-may-2026-design-retro-may-2026.md"
+	want := "work/P50-retro-may-2026/P50-design-retro-may-2026.md"
 	if got != want {
 		t.Errorf("canonicalDocPath(DESIGN, ...) = %q, want %q", got, want)
 	}

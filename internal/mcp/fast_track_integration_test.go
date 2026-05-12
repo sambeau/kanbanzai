@@ -165,13 +165,17 @@ func TestFastTrack_SpecValidator_BlocksTransitionOnMissingVerificationPlan(t *te
 	setFeatureTier(t, entitySvc, featID, config.TierFeature)
 
 	// Register a spec missing the Verification Plan section.
-	writeDocFile(t, repoRoot, "work/spec/ft-spec-001.md",
+	specPath, err := entitySvc.CanonicalDocPath("specification", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath(specification) error: %v", err)
+	}
+	writeDocFile(t, repoRoot, specPath,
 		"# Spec\n\n## Overview\n\nContent.\n\n## Scope\n\nScoped.\n\n"+
 			"## Functional Requirements\n\nNone.\n\n## Acceptance Criteria\n\n- [ ] AC-001")
 
 	docResult := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
 		"action": "register",
-		"path":   "work/spec/ft-spec-001.md",
+		"path":   specPath,
 		"type":   "specification",
 		"title":  "FT Spec 001",
 		"owner":  featID,
@@ -182,7 +186,11 @@ func TestFastTrack_SpecValidator_BlocksTransitionOnMissingVerificationPlan(t *te
 	}
 
 	// Approve design so the prerequisite is met.
-	setupApprovedDoc(t, env.docSvc, repoRoot, "work/design/ft-design-001.md", "design", featID)
+	designPath, err := entitySvc.CanonicalDocPath("design", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath(design) error: %v", err)
+	}
+	setupApprovedDoc(t, env.docSvc, repoRoot, designPath, "design", featID)
 
 	// Advance feature to specifying.
 	transitionEntityStatus(t, entitySvc, "feature", featID, "designing")
@@ -228,18 +236,31 @@ func TestFastTrack_PlanValidator_BlocksTransitionOnCyclicDependency(t *testing.T
 	featID := createEntityTestFeature(t, entitySvc, planID, "ft-trans-003")
 	setFeatureTier(t, entitySvc, featID, config.TierFeature)
 
-	setupApprovedDoc(t, env.docSvc, repoRoot, "work/design/ft-design-003.md", "design", featID)
-	setupApprovedDoc(t, env.docSvc, repoRoot, "work/spec/ft-spec-003.md", "specification", featID)
+	designPath, err := entitySvc.CanonicalDocPath("design", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath(design) error: %v", err)
+	}
+	setupApprovedDoc(t, env.docSvc, repoRoot, designPath, "design", featID)
+
+	specPath, err := entitySvc.CanonicalDocPath("specification", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath(specification) error: %v", err)
+	}
+	setupApprovedDoc(t, env.docSvc, repoRoot, specPath, "specification", featID)
 
 	transitionEntityStatus(t, entitySvc, "feature", featID, "designing")
 	transitionEntityStatus(t, entitySvc, "feature", featID, "specifying")
 	transitionEntityStatus(t, entitySvc, "feature", featID, "dev-planning")
 
-	writeDocFile(t, repoRoot, "work/dev-plan/ft-devplan-003.md",
+	devPlanPath, err := entitySvc.CanonicalDocPath("dev-plan", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath(dev-plan) error: %v", err)
+	}
+	writeDocFile(t, repoRoot, devPlanPath,
 		"# Dev-Plan\n\n## Overview\n\nPlan.\n\n## Task Breakdown\n\n## Dependency Graph\n\n## Interface Contracts\n\n## Traceability Matrix")
 	callDocWithEntitySvc(t, env, entitySvc, map[string]any{
 		"action": "register",
-		"path":   "work/dev-plan/ft-devplan-003.md",
+		"path":   devPlanPath,
 		"type":   "dev-plan",
 		"title":  "FT Dev-Plan 003",
 		"owner":  featID,
@@ -278,9 +299,21 @@ func TestFastTrack_ReviewGateValidator_BlocksOnRubberStampReview(t *testing.T) {
 	featID := createEntityTestFeature(t, entitySvc, planID, "ft-rvw-002")
 	setFeatureTier(t, entitySvc, featID, config.TierFeature)
 
-	setupApprovedDoc(t, env.docSvc, repoRoot, "work/design/ft-design-rvw.md", "design", featID)
-	setupApprovedDoc(t, env.docSvc, repoRoot, "work/spec/ft-spec-rvw.md", "specification", featID)
-	setupApprovedDoc(t, env.docSvc, repoRoot, "work/dev-plan/ft-devplan-rvw.md", "dev-plan", featID)
+	designPath, err := entitySvc.CanonicalDocPath("design", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath(design) error: %v", err)
+	}
+	setupApprovedDoc(t, env.docSvc, repoRoot, designPath, "design", featID)
+	specPath, err := entitySvc.CanonicalDocPath("specification", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath(specification) error: %v", err)
+	}
+	setupApprovedDoc(t, env.docSvc, repoRoot, specPath, "specification", featID)
+	devPlanPath, err := entitySvc.CanonicalDocPath("dev-plan", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath(dev-plan) error: %v", err)
+	}
+	setupApprovedDoc(t, env.docSvc, repoRoot, devPlanPath, "dev-plan", featID)
 	transitionEntityStatus(t, entitySvc, "feature", featID, "designing")
 	transitionEntityStatus(t, entitySvc, "feature", featID, "specifying")
 	transitionEntityStatus(t, entitySvc, "feature", featID, "dev-planning")
@@ -321,19 +354,27 @@ func TestFastTrack_NonBlockingFindings_AttachToDocRecord(t *testing.T) {
 	featID := createEntityTestFeature(t, entitySvc, planID, "ft-trans-004")
 	setFeatureTier(t, entitySvc, featID, config.TierFeature)
 
-	setupApprovedDoc(t, env.docSvc, repoRoot, "work/design/ft-design-004.md", "design", featID)
+	designPath, err := entitySvc.CanonicalDocPath("design", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath(design) error: %v", err)
+	}
+	setupApprovedDoc(t, env.docSvc, repoRoot, designPath, "design", featID)
 	transitionEntityStatus(t, entitySvc, "feature", featID, "designing")
 	transitionEntityStatus(t, entitySvc, "feature", featID, "specifying")
 
 	// Register a well-formed spec with Verification Plan → should pass validation.
-	writeDocFile(t, repoRoot, "work/spec/ft-spec-004.md",
+	specPath, err := entitySvc.CanonicalDocPath("specification", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath(specification) error: %v", err)
+	}
+	writeDocFile(t, repoRoot, specPath,
 		"# Spec\n\n## Overview\n\nContent.\n\n## Scope\n\nScoped.\n\n"+
 			"## Functional Requirements\n\nREQ-001: Test.\n\n"+
 			"## Acceptance Criteria\n\n- [ ] AC-001 Test\n\n"+
 			"## Verification Plan\n\n| Requirement | Method | Description |\n|-------------|--------|-------------|\n| REQ-001 | Test | unit |")
 	docResult := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
 		"action": "register",
-		"path":   "work/spec/ft-spec-004.md",
+		"path":   specPath,
 		"type":   "specification",
 		"title":  "FT Spec 004",
 		"owner":  featID,
@@ -376,7 +417,11 @@ func TestFastTrack_Override_BypassesValidatorAndRecords(t *testing.T) {
 	featID := createEntityTestFeature(t, entitySvc, planID, "ft-trans-005")
 	setFeatureTier(t, entitySvc, featID, config.TierFeature)
 
-	setupApprovedDoc(t, env.docSvc, repoRoot, "work/design/ft-design-005.md", "design", featID)
+	designPath, err := entitySvc.CanonicalDocPath("design", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath(design) error: %v", err)
+	}
+	setupApprovedDoc(t, env.docSvc, repoRoot, designPath, "design", featID)
 	transitionEntityStatus(t, entitySvc, "feature", featID, "designing")
 	transitionEntityStatus(t, entitySvc, "feature", featID, "specifying")
 
@@ -587,14 +632,18 @@ func TestFastTrack_Pipeline_AutoApprovesOnPass(t *testing.T) {
 	featID := createEntityTestFeature(t, entitySvc, planID, "ft-pipe-002")
 	setFeatureTier(t, entitySvc, featID, config.TierFeature)
 
-	writeDocFile(t, env.repoRoot, "work/spec/ft-pipe-spec.md",
+	specPath, err := entitySvc.CanonicalDocPath("specification", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath(specification) error: %v", err)
+	}
+	writeDocFile(t, env.repoRoot, specPath,
 		"# Spec\n\n## Overview\n\nValid spec.\n\n## Scope\n\nScoped.\n\n"+
 			"## Functional Requirements\n\nREQ-001: Valid.\n\n"+
 			"## Acceptance Criteria\n\n- [ ] AC-001 Valid test\n\n"+
 			"## Verification Plan\n\n| Requirement | Method | Description |\n|-------------|--------|-------------|\n| REQ-001 | Test | unit |")
 	result := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
 		"action": "register",
-		"path":   "work/spec/ft-pipe-spec.md",
+		"path":   specPath,
 		"type":   "specification",
 		"title":  "FT Pipe Spec",
 		"owner":  featID,
@@ -628,10 +677,14 @@ func TestFastTrack_Pipeline_DesignNeverAutoValidates(t *testing.T) {
 	featID := createEntityTestFeature(t, entitySvc, planID, "ft-pipe-005")
 	setFeatureTier(t, entitySvc, featID, config.TierFeature)
 
-	writeDocFile(t, env.repoRoot, "work/design/ft-pipe-design.md", "# Design\n\nContent.")
+	designPath, err := entitySvc.CanonicalDocPath("design", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath(design) error: %v", err)
+	}
+	writeDocFile(t, env.repoRoot, designPath, "# Design\n\nContent.")
 	result := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
 		"action": "register",
-		"path":   "work/design/ft-pipe-design.md",
+		"path":   designPath,
 		"type":   "design",
 		"title":  "FT Pipe Design",
 		"owner":  featID,
@@ -669,11 +722,15 @@ func TestFastTrack_CycleCap_TriggersEscalation(t *testing.T) {
 	}
 
 	env := setupDocToolTest(t)
-	writeDocFile(t, env.repoRoot, "work/spec/ft-cycle-spec.md",
+	specPath, err := entitySvc.CanonicalDocPath("specification", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath(specification) error: %v", err)
+	}
+	writeDocFile(t, env.repoRoot, specPath,
 		"# Spec\n\n## Overview\n\nContent.\n\n## Verification Plan\n\n| Req | Method | Desc |\n|-----|--------|------|\n| REQ-001 | Test | unit |")
 	result := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
 		"action": "register",
-		"path":   "work/spec/ft-cycle-spec.md",
+		"path":   specPath,
 		"type":   "specification",
 		"title":  "FT Cycle Spec",
 		"owner":  featID,
@@ -710,7 +767,11 @@ func TestFastTrack_Performance_ValidatorCompletesQuickly(t *testing.T) {
 	featID := createEntityTestFeature(t, entitySvc, planID, "ft-nf-001")
 	setFeatureTier(t, entitySvc, featID, config.TierFeature)
 
-	writeDocFile(t, env.repoRoot, "work/spec/ft-nf-spec.md",
+	specPath, err := entitySvc.CanonicalDocPath("specification", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath(specification) error: %v", err)
+	}
+	writeDocFile(t, env.repoRoot, specPath,
 		"# Spec\n\n## Overview\n\nPerf test.\n\n## Scope\n\nScope.\n\n"+
 			"## Functional Requirements\n\nREQ-001.\n\n"+
 			"## Acceptance Criteria\n\n- [ ] AC-001\n\n"+
@@ -719,7 +780,7 @@ func TestFastTrack_Performance_ValidatorCompletesQuickly(t *testing.T) {
 	start := time.Now()
 	result := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
 		"action": "register",
-		"path":   "work/spec/ft-nf-spec.md",
+		"path":   specPath,
 		"type":   "specification",
 		"title":  "FT NF Spec",
 		"owner":  featID,

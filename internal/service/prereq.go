@@ -415,7 +415,10 @@ func checkReworkTaskExists(feature *model.Feature, entitySvc *EntityService) Gat
 // unsatisfied GateResult when prerequisites are not met (FR-005 through FR-011).
 func CheckBugTransitionGate(from, to string, bug *model.Bug, docSvc *DocumentService, entitySvc *EntityService) GateResult {
 	// Terminal state transitions are always ungated.
-	if to == string(model.BugStatusClosed) || to == string(model.BugStatusDuplicate) || to == string(model.BugStatusNotPlanned) {
+	// NOTE: BugStatusClosed is deliberately excluded from this early return
+	// so that verifying→closed can go through checkBugCloseOutVerification.
+	// Other transitions to "closed" fall through to the switch default.
+	if to == string(model.BugStatusDuplicate) || to == string(model.BugStatusNotPlanned) {
 		return GateResult{Stage: to, Satisfied: true}
 	}
 
@@ -524,28 +527,24 @@ func checkBugReviewReportAndTests(bug *model.Bug, docSvc *DocumentService) GateR
 // checkBugReviewCap increments the bug's review_cycle, checks the tier cap,
 // and blocks the transition if the cap is reached (FR-008/FR-014).
 func checkBugReviewCap(bug *model.Bug, entitySvc *EntityService) GateResult {
-	if entitySvc == nil {
-		return GateResult{
-			Stage:     string(model.BugStatusNeedsRework),
-			Satisfied: true,
-			Reason:    "entity service not available — gate bypassed",
-		}
-	}
 	// Increment review_cycle (persisted before gate evaluation).
 	newCycle := bug.ReviewCycle + 1
-	if err := entitySvc.IncrementBugReviewCycle(bug.ID, bug.Slug); err != nil {
-		log.Printf("[bug-gate] WARNING: failed to increment review cycle for %s: %v", bug.ID, err)
-		// Continue with in-memory value even if persist fails.
+	if entitySvc != nil {
+		if err := entitySvc.IncrementBugReviewCycle(bug.ID, bug.Slug); err != nil {
+			log.Printf("[bug-gate] WARNING: failed to increment review cycle for %s: %v", bug.ID, err)
+			// Continue with in-memory value even if persist fails.
+		}
 	}
 
-	// Resolve tier's MaxCycles.
-	tierCfg := ResolveBugTierConfig(bug.Tier)
+	// Resolve tier's MaxCycles using the bug-specific helper which handles
+	// feature_equivalent → 4, bug_fix → 2.
+	maxCycles := MaxReviewCyclesForTier(bug.Tier)
 
-	if newCycle >= tierCfg.MaxCycles {
+	if newCycle > maxCycles {
 		return GateResult{
 			Stage:            string(model.BugStatusNeedsRework),
 			Satisfied:        false,
-			Reason:           fmt.Sprintf("Review iteration cap reached (%d/%d). Human decision required: accept with known issues, rework with revised scope, or cancel.", newCycle, tierCfg.MaxCycles),
+			Reason:           fmt.Sprintf("Review iteration cap reached (%d/%d). Human decision required: accept with known issues, rework with revised scope, or cancel.", newCycle, maxCycles),
 			ReviewCapReached: true,
 		}
 	}
@@ -553,7 +552,7 @@ func checkBugReviewCap(bug *model.Bug, entitySvc *EntityService) GateResult {
 	return GateResult{
 		Stage:     string(model.BugStatusNeedsRework),
 		Satisfied: true,
-		Reason:    fmt.Sprintf("review cycle %d/%d", newCycle, tierCfg.MaxCycles),
+		Reason:    fmt.Sprintf("review cycle %d/%d", newCycle, maxCycles),
 	}
 }
 

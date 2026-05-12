@@ -23,10 +23,14 @@ func TestDocTool_AutoValidate_DesignNeverAutoValidated(t *testing.T) {
 		Fields: map[string]string{"tier": "feature"},
 	})
 
-	writeDocFile(t, env.repoRoot, "work/design/av-design.md", "# Design\n\nContent.")
+	canonical, err := entitySvc.CanonicalDocPath("design", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath error: %v", err)
+	}
+	writeDocFile(t, env.repoRoot, canonical, "# Design\n\nContent.")
 	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
 		"action": "register",
-		"path":   "work/design/av-design.md",
+		"path":   canonical,
 		"type":   "design",
 		"title":  "AV Design",
 		"owner":  featID,
@@ -299,10 +303,14 @@ func TestDocTool_AutoValidate_ResearchDoc_NotTriggered(t *testing.T) {
 		Fields: map[string]string{"tier": "feature"},
 	})
 
-	writeDocFile(t, env.repoRoot, "work/research/av-research.md", "# Research\n\nContent.")
+	canonical, err := entitySvc.CanonicalDocPath("research", featID)
+	if err != nil {
+		t.Fatalf("CanonicalDocPath error: %v", err)
+	}
+	writeDocFile(t, env.repoRoot, canonical, "# Research\n\nContent.")
 	resp := callDocWithEntitySvc(t, env, entitySvc, map[string]any{
 		"action": "register",
-		"path":   "work/research/av-research.md",
+		"path":   canonical,
 		"type":   "research",
 		"title":  "AV Research",
 		"owner":  featID,
