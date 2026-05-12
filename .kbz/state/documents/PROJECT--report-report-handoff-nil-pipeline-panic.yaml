@@ -1,10 +1,12 @@
+approved_at: "2026-05-12T00:49:14Z"
+approved_by: sambeau
 canonical_content_hash: 0d6059e6ae386eff5b739361b340890381c2e022d2c1db5d9ac213a66dc25dfc
 content_hash: 0d6059e6ae386eff5b739361b340890381c2e022d2c1db5d9ac213a66dc25dfc
 created: "2026-05-12T00:49:11Z"
 created_by: sambeau
 id: PROJECT/report-report-handoff-nil-pipeline-panic
 path: work/_project/report-handoff-nil-pipeline-panic.md
-status: draft
+status: approved
 title: "Review: Handoff nil-pipeline panic fix verification"
 type: report
-updated: "2026-05-12T00:49:11Z"
+updated: "2026-05-12T00:49:14Z"
