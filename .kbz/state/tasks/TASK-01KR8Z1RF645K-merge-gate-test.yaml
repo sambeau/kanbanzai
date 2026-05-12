@@ -3,4 +3,12 @@ parent_feature: FEAT-01KR8YRQN0D6G
 slug: merge-gate-test
 name: Integrate go test into merge gate
 summary: "Integrate go test ./... verification into merge(action: check). Report test failures as a blocking gate with specific failing test names."
-status: ready
+status: done
+files_planned:
+  - internal/merge/gates.go
+  - internal/merge/checker.go
+  - internal/merge/checker_test.go
+  - internal/merge/gates_test.go
+completed: "2026-05-12T11:55:00Z"
+completion_summary: Add TestSuiteGate to merge gate system. New gate runs go test ./... via DefaultTestRunner and reports specific failing test names when tests fail. Gate is blocking but bypassable. GateContext has injectable TestRunner for testing. Gate added to DefaultGates() list between NoConflictsGate and HealthCheckCleanGate.
+verification: "All merge package tests pass. New TestSuiteGate tests cover: interface conformance, no-repo-path warning, all-tests-pass, failing-tests-block (with test names), failing-packages-without-test-names, empty path handling, and real repo execution. Existing tests updated to pass 9 gates instead of 8."
