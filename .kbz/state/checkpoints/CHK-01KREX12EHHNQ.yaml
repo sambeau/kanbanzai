@@ -1,0 +1,9 @@
+id: CHK-01KREX12EHHNQ
+question: "I don't have GitHub credentials to open a PR. Can you push the branch and open a PR for this branch?\n\n**Branch:** `bug/BUG-01KRBD4B236SZ-doc-path-strategic-plan-parent-lookup`\n**Title:** `test(BUG-01KRBD4B236SZ): add strategic-plan ancestor cases to CanonicalDocPath tests`\n\nOr I can merge directly if you prefer."
+context: The tests have been committed and pushed. The PR creation failed because no GitHub token is configured in .kbz/local.yaml.
+orchestration_summary: "BUG-01KRBD4B236SZ is now in 'in-progress' status. A worktree was created, tests were written, committed, and pushed. Need to proceed with PR/merge path to close the bug."
+status: pending
+created_at: "2026-05-12T20:11:06Z"
+created_by: sam
+responded_at: null
+response: null
