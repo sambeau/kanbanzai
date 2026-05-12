@@ -106,12 +106,15 @@ locations are acceptable.
 Suitable new tests exist for the change.
 
 **Verification action:** Run `go build ./...` in the repository root, then run
-`go test ./...`. Record the exit codes and any failure output from both.
+`go test ./...` (or `test(action: "run")`). Record the exit codes and any failure
+output from both. Cross-reference against the test-status record produced by
+`test(action: "verify")` — the record must show zero failures for the relevant
+packages and a clean bill of health for the feature.
 
 **Pass criterion:** Both `go build ./...` and `go test ./...` exit zero with
-no failures.
+no failures. The test-status record confirms a clean run.
 **Fail criterion:** Any build error, test failure, or non-zero exit code from
-either command.
+either command. Mismatch between the test-status record and the live run.
 
 > **Main-branch policy:** The same standard applies to `main` at all times.
 > See the overarching policy at the top of this document.

@@ -159,7 +159,7 @@ Copy this checklist and track your progress:
 
 ### Phase 4: Verify
 
-1. Run the full test suite. All tests must pass, including pre-existing tests (regression check).
+1. Run the full test suite using the test tool: `test(action: "run")`. All tests must pass, including pre-existing tests (regression check).
    - If any test fails intermittently — passes on retry without any code change — do not mark the task done without first filing a BUG entity:
      ```
      entity(action: "create", type: "bug", name: "<test name> fails intermittently",

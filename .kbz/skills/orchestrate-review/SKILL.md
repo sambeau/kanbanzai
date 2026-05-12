@@ -381,11 +381,13 @@ entity(action: "transition", id: "<feature-id>", status: "needs-rework",
 
 STOP. Report the build failure and do not proceed further.
 
-Run the tests from the repository root:
+Run the tests from the repository root using the test tool:
 
 ```
-go test ./...
+test(action: "run")
 ```
+
+(Which runs `go test ./...` internally.)
 
 If any test fails:
 

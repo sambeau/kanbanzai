@@ -270,6 +270,20 @@ Unacceptable reasons:
 - "Test was in the way" — restructure or update it, don't delete.
 - No explanation or a generic message like "cleanup".
 
+### Test-health gate rules
+
+The following rules govern test discipline across the project. They are
+enforced by the `test(action: "verify")` tool and the `test(action: "run")`
+tool:
+
+1. ALL tests must be maintained — no test may be disabled without a decision record.
+2. NO test should ever be ignored — every test failure must be investigated.
+3. NO code should be merged until all tests pass — the merge gate enforces this.
+4. ALL tests must pass after merge to meet the Definition of Done — DoD Item 4.
+5. There is no such thing as "just a flaky test" — file a BUG entity.
+6. Pre-existing failing tests must not be ignored — they appear as `test_failure` attention items at error severity in every `status()` call.
+7. The orchestrator must bail before new work starts if tests are failing — `test(action: "verify")` in Phase 0 enforces this.
+
 ## Scope Guard
 
 Phases 1–15 and Kanbanzai 2.0/2.5 are complete. For detailed delivery history, see `docs/project-timeline.md`.

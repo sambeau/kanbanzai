@@ -203,6 +203,8 @@ func run(args []string, deps dependencies) error {
 		return runMigrate(args[1:], deps)
 	case "binding":
 		return runBinding(args[1:], deps)
+	case "test":
+		return runTest(args[1:], deps)
 
 	default:
 		return fmt.Errorf("unknown command %q\n\n%s", args[0], usageText)
@@ -389,6 +391,7 @@ Feature group commands:
 
 Utility commands:
   validate [flags]           Validate a candidate entity
+  test <subcommand>           Manage test suite status tracking
   cache rebuild              Rebuild the local derived cache
   import <path> [flags]      Batch import document records
   install-record write       Write binary install record

@@ -12,6 +12,7 @@ import (
 
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/storage"
+	"github.com/sambeau/kanbanzai/internal/teststatus"
 	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
@@ -2385,5 +2386,283 @@ func TestStatusTool_ShortPlanRef_UnknownPrefix(t *testing.T) {
 	msg, _ := errField["message"].(string)
 	if !strings.Contains(msg, "unknown plan prefix") {
 		t.Errorf("error message = %q, want it to contain %q", msg, "unknown plan prefix")
+	}
+}
+
+// ─── test_health block tests ───────────────────────────────────────────────────
+
+func TestBuildTestHealth_NoFile(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	h := buildTestHealth(dir)
+	if h == nil {
+		t.Fatal("buildTestHealth returned nil")
+	}
+	if h.Status != "unknown" {
+		t.Errorf("Status = %q, want %q", h.Status, "unknown")
+	}
+	if h.LastRun != "" {
+		t.Errorf("LastRun = %q, want empty", h.LastRun)
+	}
+	if h.FailureCount != 0 {
+		t.Errorf("FailureCount = %d, want 0", h.FailureCount)
+	}
+}
+
+func TestBuildTestHealth_PassRecord(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	now := time.Now().Truncate(time.Second)
+	rec := teststatus.Record{
+		LastRun: &now,
+		Result:  teststatus.ResultPass,
+		Summary: "all tests passed",
+	}
+	if err := teststatus.WriteRecord(dir, rec); err != nil {
+		t.Fatal(err)
+	}
+
+	h := buildTestHealth(dir)
+	if h.Status != "pass" {
+		t.Errorf("Status = %q, want %q", h.Status, "pass")
+	}
+	if h.LastRun == "" {
+		t.Error("LastRun is empty, want non-empty")
+	}
+	if h.FailureCount != 0 {
+		t.Errorf("FailureCount = %d, want 0", h.FailureCount)
+	}
+	if h.Summary != "all tests passed" {
+		t.Errorf("Summary = %q, want %q", h.Summary, "all tests passed")
+	}
+}
+
+func TestBuildTestHealth_FailRecord(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	now := time.Now().Truncate(time.Second)
+	rec := teststatus.Record{
+		LastRun: &now,
+		Result:  teststatus.ResultFail,
+		Summary: "2 tests failed",
+		Failures: []teststatus.Failure{
+			{Package: "github.com/example/pkg", Test: "TestBar", Message: "--- FAIL: TestBar"},
+			{Package: "github.com/example/pkg", Test: "TestQux", Message: "--- FAIL: TestQux"},
+		},
+		Runner: "cli",
+	}
+	if err := teststatus.WriteRecord(dir, rec); err != nil {
+		t.Fatal(err)
+	}
+
+	h := buildTestHealth(dir)
+	if h.Status != "fail" {
+		t.Errorf("Status = %q, want %q", h.Status, "fail")
+	}
+	if h.FailureCount != 2 {
+		t.Errorf("FailureCount = %d, want 2", h.FailureCount)
+	}
+	if h.Runner != "cli" {
+		t.Errorf("Runner = %q, want %q", h.Runner, "cli")
+	}
+	if h.Stale {
+		t.Error("Stale = true, want false (freshly written record)")
+	}
+}
+
+func TestStatusTool_ProjectOverview_HasTestHealth(t *testing.T) {
+	t.Parallel()
+	// Test that the test_health field is present in project overview.
+	entitySvc, docSvc := setupStatusTest(t)
+
+	// Create a temp dir with a passing test record.
+	repoRoot := t.TempDir()
+	now := time.Now().Truncate(time.Second)
+	rec := teststatus.Record{
+		LastRun: &now,
+		Result:  teststatus.ResultPass,
+		Summary: "all tests passed",
+	}
+	if err := teststatus.WriteRecord(repoRoot, rec); err != nil {
+		t.Fatal(err)
+	}
+
+	tool := statusTool(entitySvc, docSvc, nil, repoRoot, 0)
+	req := makeRequest(map[string]any{})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	testHealth, ok := parsed["test_health"].(map[string]any)
+	if !ok {
+		t.Fatalf("test_health field missing or wrong type: %v", parsed)
+	}
+	if status, _ := testHealth["status"].(string); status != "pass" {
+		t.Errorf("test_health.status = %q, want %q", status, "pass")
+	}
+	if stale, _ := testHealth["stale"].(bool); stale {
+		t.Error("test_health.stale = true, want false")
+	}
+	if fc, _ := testHealth["failure_count"].(float64); fc != 0 {
+		t.Errorf("test_health.failure_count = %v, want 0", fc)
+	}
+}
+
+func TestStatusTool_ProjectOverview_TestHealthAttentionFail(t *testing.T) {
+	t.Parallel()
+	entitySvc, docSvc := setupStatusTest(t)
+
+	repoRoot := t.TempDir()
+	now := time.Now().Truncate(time.Second)
+	rec := teststatus.Record{
+		LastRun: &now,
+		Result:  teststatus.ResultFail,
+		Summary: "tests failing",
+	}
+	if err := teststatus.WriteRecord(repoRoot, rec); err != nil {
+		t.Fatal(err)
+	}
+
+	tool := statusTool(entitySvc, docSvc, nil, repoRoot, 0)
+	req := makeRequest(map[string]any{})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	attention, ok := parsed["attention"].([]any)
+	if !ok {
+		t.Fatalf("attention field missing or wrong type: %v", parsed)
+	}
+
+	found := false
+	for _, item := range attention {
+		a, ok := item.(map[string]any)
+		if !ok {
+			continue
+		}
+		if a["type"] == "test_failure" {
+			found = true
+			sev, _ := a["severity"].(string)
+			if sev != "error" {
+				t.Errorf("test_failure severity = %q, want error", sev)
+			}
+			msg, _ := a["message"].(string)
+			if !strings.Contains(msg, "failing") {
+				t.Errorf("test_failure message = %q, want it to mention failing", msg)
+			}
+		}
+	}
+	if !found {
+		t.Error("no test_failure attention item found when result=fail")
+	}
+}
+
+func TestStatusTool_ProjectOverview_TestHealthNoAttentionOnPass(t *testing.T) {
+	t.Parallel()
+	entitySvc, docSvc := setupStatusTest(t)
+
+	repoRoot := t.TempDir()
+	now := time.Now().Truncate(time.Second)
+	rec := teststatus.Record{
+		LastRun: &now,
+		Result:  teststatus.ResultPass,
+		Summary: "all tests passed",
+	}
+	if err := teststatus.WriteRecord(repoRoot, rec); err != nil {
+		t.Fatal(err)
+	}
+
+	tool := statusTool(entitySvc, docSvc, nil, repoRoot, 0)
+	req := makeRequest(map[string]any{})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	attention, ok := parsed["attention"].([]any)
+	if !ok {
+		// No attention items at all is fine.
+		return
+	}
+	for _, item := range attention {
+		a, ok := item.(map[string]any)
+		if !ok {
+			continue
+		}
+		if a["type"] == "test_failure" {
+			t.Error("unexpected test_failure attention item when result=pass")
+		}
+	}
+}
+
+func TestStatusTool_ProjectOverview_TestHealthAttentionUnknown(t *testing.T) {
+	t.Parallel()
+	// A temp dir with no test-status file produces unknown status with warning attention.
+	entitySvc, docSvc := setupStatusTest(t)
+	repoRoot := t.TempDir()
+
+	tool := statusTool(entitySvc, docSvc, nil, repoRoot, 0)
+	req := makeRequest(map[string]any{})
+	result, err := tool.Handler(context.Background(), req)
+	if err != nil {
+		t.Fatalf("handler error: %v", err)
+	}
+	text := extractText(t, result)
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(text), &parsed); err != nil {
+		t.Fatalf("parse result: %v\nraw: %s", err, text)
+	}
+
+	// Check test_health block.
+	testHealth, ok := parsed["test_health"].(map[string]any)
+	if !ok {
+		t.Fatalf("test_health field missing: %v", parsed)
+	}
+	if status, _ := testHealth["status"].(string); status != "unknown" {
+		t.Errorf("test_health.status = %q, want %q", status, "unknown")
+	}
+
+	// Check attention items.
+	attention, ok := parsed["attention"].([]any)
+	if !ok {
+		t.Fatalf("attention field missing: %v", parsed)
+	}
+	found := false
+	for _, item := range attention {
+		a, ok := item.(map[string]any)
+		if !ok {
+			continue
+		}
+		if a["type"] == "test_failure" {
+			found = true
+			sev, _ := a["severity"].(string)
+			if sev != "warning" {
+				t.Errorf("test_failure severity = %q, want warning", sev)
+			}
+			msg, _ := a["message"].(string)
+			if !strings.Contains(msg, "unknown") {
+				t.Errorf("test_failure message = %q, want it to mention unknown", msg)
+			}
+		}
+	}
+	if !found {
+		t.Error("no test_failure attention item found when result=unknown")
 	}
 }

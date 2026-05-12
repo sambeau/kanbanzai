@@ -11,6 +11,7 @@ import (
 
 	"gopkg.in/yaml.v3"
 
+	"github.com/sambeau/kanbanzai/internal/teststatus"
 	"github.com/sambeau/kanbanzai/internal/validate"
 )
 
@@ -343,6 +344,11 @@ func (i *Initializer) runNewProject(opts Options, kbzDir, configPath string) err
 		return fmt.Errorf("cannot write sentinel '%s': %w", sentinelPath, err)
 	}
 
+	// Seed the test-status record with an unknown result.
+	if err := teststatus.WriteRecord(baseDir, teststatus.Record{Result: teststatus.ResultUnknown}); err != nil {
+		return fmt.Errorf("cannot write test-status record: %w", err)
+	}
+
 	success = true
 	fmt.Fprintln(i.stdout, "Initialisation complete.")
 	return nil
@@ -469,6 +475,13 @@ func (i *Initializer) runExistingProject(opts Options, kbzDir, configPath string
 	// Write/refresh the sentinel file.
 	if err := os.WriteFile(sentinelPath, []byte{}, 0o644); err != nil {
 		return fmt.Errorf("cannot write sentinel '%s': %w", sentinelPath, err)
+	}
+
+	// Seed the test-status record with an unknown result if it doesn't exist.
+	if _, err := os.Stat(filepath.Join(baseDir, ".kbz", "state", "test-status.yaml")); os.IsNotExist(err) {
+		if err := teststatus.WriteRecord(baseDir, teststatus.Record{Result: teststatus.ResultUnknown}); err != nil {
+			return fmt.Errorf("cannot write test-status record: %w", err)
+		}
 	}
 
 	fmt.Fprintln(i.stdout, "Done.")

@@ -46,9 +46,9 @@ import (
 
 	"github.com/sambeau/kanbanzai/internal/health"
 	"github.com/sambeau/kanbanzai/internal/id"
-	"github.com/sambeau/kanbanzai/internal/merge"
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
+	"github.com/sambeau/kanbanzai/internal/teststatus"
 	"github.com/sambeau/kanbanzai/internal/validate"
 	"github.com/sambeau/kanbanzai/internal/worktree"
 )
@@ -235,6 +235,47 @@ func buildHealthSummary(entitySvc *service.EntityService) *statusHealthSummary {
 	}
 }
 
+// buildTestHealth reads .kbz/state/test-status.yaml via the teststatus package
+// and returns a testHealthSummary. It does NOT trigger a test re-run.
+func buildTestHealth(repoPath string) *testHealthSummary {
+	rec, err := teststatus.ReadRecord(repoPath)
+	if err != nil {
+		return &testHealthSummary{
+			Status:  "unknown",
+			Summary: fmt.Sprintf("error reading test status: %v", err),
+		}
+	}
+
+	lastRun := ""
+	if rec.LastRun != nil {
+		lastRun = rec.LastRun.Format(time.RFC3339)
+	}
+
+	stale, err := teststatus.IsStale(repoPath, rec)
+	if err != nil {
+		stale = false
+	}
+
+	summary := rec.Summary
+	if summary == "" {
+		summary = string(rec.Result)
+	}
+
+	fCount := len(rec.Failures)
+	if rec.Result == teststatus.ResultFail && fCount == 0 {
+		fCount = 1 // at least one failure implied by the result
+	}
+
+	return &testHealthSummary{
+		Status:       string(rec.Result),
+		LastRun:      lastRun,
+		Stale:        stale,
+		Runner:       rec.Runner,
+		FailureCount: fCount,
+		Summary:      summary,
+	}
+}
+
 // worktreeInfo is the compact worktree block included in feature detail.
 type worktreeInfo struct {
 	Status string `json:"status"`
@@ -277,10 +318,12 @@ type orientationInfo struct {
 }
 
 type testHealthSummary struct {
-	Status         string   `json:"status"`
-	FailedPackages []string `json:"failed_packages,omitempty"`
-	FailingTests   []string `json:"failing_tests,omitempty"`
-	TotalPackages  int      `json:"total_packages"`
+	Status       string `json:"status"`
+	LastRun      string `json:"last_run"`
+	Stale        bool   `json:"stale"`
+	Runner       string `json:"runner,omitempty"`
+	FailureCount int    `json:"failure_count"`
+	Summary      string `json:"summary"`
 }
 
 type projectOverview struct {
@@ -670,24 +713,30 @@ func synthesiseProject(entitySvc *service.EntityService, docSvc *service.Documen
 	}
 	suggestion := suggestSkill(allFeatures, allTasks)
 
-	// Test suite health: run go test ./... and report failures.
-	// Best-effort: if repoPath is empty or test run fails to parse, omit the section.
+	// Test suite health: read .kbz/state/test-status.yaml and check staleness.
+	// Read-only: does NOT trigger a test re-run.
 	var testHealth *testHealthSummary
 	if repoPath != "" {
-		result, _ := merge.DefaultTestRunner(repoPath)
-		status := "pass"
-		if result.HasFailure {
-			status = "fail"
-		}
-		testHealth = &testHealthSummary{
-			Status:         status,
-			FailedPackages: result.FailedPackages,
-			FailingTests:   result.FailingTests,
-			TotalPackages:  result.TotalPackages,
-		}
-		// Only include when there are failures (omit for passing suites).
-		if !result.HasFailure {
-			testHealth = nil
+		testHealth = buildTestHealth(repoPath)
+	}
+
+	// Generate test-failure attention items from test health.
+	if testHealth != nil {
+		switch testHealth.Status {
+		case "fail":
+			attention = append(attention, AttentionItem{
+				Type:     "test_failure",
+				Severity: "error",
+				EntityID: "main",
+				Message:  "Tests are failing",
+			})
+		case "unknown":
+			attention = append(attention, AttentionItem{
+				Type:     "test_failure",
+				Severity: "warning",
+				EntityID: "main",
+				Message:  "Test status unknown",
+			})
 		}
 	}
 

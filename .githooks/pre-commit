@@ -50,6 +50,13 @@ done
 test_exit=0
 test_output=$(go test ./... 2>&1) || test_exit=$?
 
+# ── Record test status ──────────────────────────────────────────────────────
+# Write test-status record for the Kanbanzai workflow system.
+# Gracefully degrades if kanbanzai binary is not in PATH.
+if command -v kanbanzai >/dev/null 2>&1; then
+    kanbanzai test record --result=$test_exit --output="$(echo "$test_output" | head -500)"
+fi
+
 if [ "$test_exit" -ne 0 ]; then
     echo ""
     echo "  ❌ Tests FAILED — commit blocked"

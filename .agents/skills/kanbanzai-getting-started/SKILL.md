@@ -47,6 +47,10 @@ Copy this checklist at the beginning of every session:
 - [ ] **Store check** — If `git status` shows uncommitted `.kbz/` files, commit them now. These are versioned project state, not ephemeral cache. Do not stash, discard, or `.gitignore` them.
 - [ ] **Corpus integrity check** — Call `doc(action: "audit")` and review its output before proceeding. If audit shows files on disk not registered → call `doc(action: "import", path: "work")` to register all unregistered documents. If audit shows registered records whose files are missing from disk → call `doc(action: "delete", id: "DOC-xxx")` for each stale record. After any batch registration, run a classification pass on newly registered documents (see the Classification (Layer 3) section in `kanbanzai-documents`) before proceeding. *Rationale: an incomplete corpus produces false negatives in design searches, and a designer who finds no results cannot distinguish "not addressed" from "not registered".*
 - [ ] **Read project context** — Read `AGENTS.md` if you have not this session.
+- [ ] **Test health check** — Call `test(action: "verify")` to check whether the test
+     suite on `main` is green. If the suite has failures, do not start new work — the
+     first priority is to fix the test suite. Pre-existing test failures are not
+     acceptable for new feature work to proceed.
 - [ ] **Check the work queue** — Call `next()` to see what is ready.
 - [ ] **Claim your task** — Call `next(id: "TASK-xxx")` to get full context for your chosen task.
 - [ ] **Understand the workflow** — If unsure about the current stage, check the `kanbanzai-workflow` skill.
