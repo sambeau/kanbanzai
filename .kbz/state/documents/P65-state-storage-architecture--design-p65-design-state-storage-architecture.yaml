@@ -1,0 +1,11 @@
+canonical_content_hash: 835ba8929cf00ccc67d435ab8743c820656b88c4b63ce770b915937e138aac1b
+content_hash: 43d7d0ccea48bbc16c4e89ab10569d2db9982fc0c7addb353c4761d7f8f23dc0
+created: "2026-05-12T13:34:18Z"
+created_by: sambeau
+id: P65-state-storage-architecture/design-p65-design-state-storage-architecture
+owner: P65-state-storage-architecture
+path: work/P65-state-storage-architecture/P65-design-state-storage-architecture.md
+status: draft
+title: State Storage Architecture for Kanbanzai
+type: design
+updated: "2026-05-12T13:34:18Z"
