@@ -1,0 +1,6 @@
+id: TASK-01KREHHCVGMP6
+parent_feature: FEAT-01KREH8PKSPM3
+slug: ws-a2-mcp-sort-to-slices
+name: sort to slices — internal/mcp/ (3 files)
+summary: "Replace all sort.* calls with slices.*/cmp.* in internal/mcp/assembly.go, entity_tool.go, next_tool.go. Remove sort import, add slices (and cmp if needed)."
+status: queued
