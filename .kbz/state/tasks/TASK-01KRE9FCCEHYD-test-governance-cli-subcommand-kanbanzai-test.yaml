@@ -3,6 +3,17 @@ parent_feature: FEAT-01KRE9DSX3Z17
 slug: test-governance-cli-subcommand-kanbanzai-test
 name: "CLI Subcommand `kanbanzai test`"
 summary: "CLI Subcommand `kanbanzai test`"
-status: ready
+status: done
 depends_on:
   - TASK-01KRE9FCCCHD9
+files_planned:
+  - cmd/kbz/test_cmd.go
+  - cmd/kbz/test_cmd_test.go
+  - cmd/kbz/main.go
+completed: "2026-05-12T14:54:32Z"
+claimed_at: "2026-05-12T14:50:47Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-12T14:50:47Z"
+dispatched_by: sambeau
+completion_summary: "Implemented `kanbanzai test` CLI subcommand with five modes: status (JSON output), record (writes from exit code/output), run (executes go test ./...), verify (staleness check + re-run), force-fail (manual override). Added parseFailures to extract failing test names/packages from test output. All commands handle missing state file gracefully (ResultUnknown). 24 tests covering all acceptance criteria, subcommand dispatch, edge cases, and parsing."
+verification: "All tests pass (go test ./cmd/kbz/), go vet clean, build succeeds. Test coverage includes: status with/without record, record pass/fail, record no flags, force-fail with/without summary, parseFailures empty/no-failures/build-fail/basic, buildRecord pass/fail, verify no-record/current-passing, JSON output format, command dispatch wiring."
