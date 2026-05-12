@@ -37,6 +37,10 @@ func setupCanonicalDocPathTest(t *testing.T) *EntityService {
 	writeBatch(t, svc, "B42-test-batch", "test-batch", "P1-master-plan")
 	writeBatch(t, svc, "B99-standalone", "standalone", "")
 
+	// Strategic plan and entities nested under it (BUG-01KRBD4B236SZ).
+	writeStrategicPlan(t, svc, "P64-binding-governance", "binding-governance")
+	writeBatch(t, svc, "B69-skills-patches", "skills-patches", "P64-binding-governance")
+
 	writeFeature(t, svc, "FEAT-01KQTNYN00HZA", "doc-path-tool", "B49-execution")
 	writeFeature(t, svc, "FEAT-01ABCDEF12345", "direct-feature", "P50-retro-may-2026")
 	writeBug(t, svc, "BUG-01KR12RE970R8", "test-bug")
@@ -163,6 +167,24 @@ func writeBug(t *testing.T, svc *EntityService, id, slug string) {
 	}
 }
 
+func writeStrategicPlan(t *testing.T, svc *EntityService, id, slug string) {
+	t.Helper()
+	_, err := svc.store.Write(storage.EntityRecord{
+		Type: "strategic-plan",
+		ID:   id,
+		Slug: slug,
+		Fields: map[string]any{
+			"id":     id,
+			"slug":   slug,
+			"name":   "Test " + id,
+			"status": "active",
+		},
+	})
+	if err != nil {
+		t.Fatalf("write strategic plan %s: %v", id, err)
+	}
+}
+
 // --- tests ---
 
 func TestCanonicalDocPath_PlanParent(t *testing.T) {
@@ -259,6 +281,68 @@ func TestCanonicalDocPath_NonexistentParent(t *testing.T) {
 	}
 	if !strings.Contains(err.Error(), "P999-nonexist") {
 		t.Errorf("error = %q, want message containing parent ID 'P999-nonexist'", err.Error())
+	}
+}
+
+func TestCanonicalDocPath_StrategicPlanParent(t *testing.T) {
+	t.Parallel()
+	svc := setupCanonicalDocPathTest(t)
+
+	tests := []struct {
+		docType string
+		parent  string
+		want    string
+	}{
+		{"design", "P64-binding-governance", "work/P64-binding-governance/P64-design-binding-governance.md"},
+		{"specification", "P64-binding-governance", "work/P64-binding-governance/P64-spec-binding-governance.md"},
+		{"dev-plan", "P64-binding-governance", "work/P64-binding-governance/P64-dev-plan-binding-governance.md"},
+		{"research", "P64-binding-governance", "work/P64-binding-governance/P64-research-binding-governance.md"},
+		{"report", "P64-binding-governance", "work/P64-binding-governance/P64-report-binding-governance.md"},
+		{"policy", "P64-binding-governance", "work/P64-binding-governance/P64-policy-binding-governance.md"},
+	}
+
+	for _, tt := range tests {
+		got, err := svc.CanonicalDocPath(tt.docType, tt.parent)
+		if err != nil {
+			t.Errorf("canonicalDocPath(%q, %q): unexpected error: %v", tt.docType, tt.parent, err)
+			continue
+		}
+		if got != tt.want {
+			t.Errorf("canonicalDocPath(%q, %q) = %q, want %q", tt.docType, tt.parent, got, tt.want)
+		}
+	}
+}
+
+func TestCanonicalDocPath_BatchUnderStrategicPlan(t *testing.T) {
+	t.Parallel()
+	svc := setupCanonicalDocPathTest(t)
+
+	// B69-skills-patches has parent P64-binding-governance (strategic-plan).
+	// CanonicalDocPath should resolve upward through the strategic plan.
+	got, err := svc.CanonicalDocPath("specification", "B69-skills-patches")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	want := "work/P64-binding-governance/P64-spec-binding-governance.md"
+	if got != want {
+		t.Errorf("canonicalDocPath(specification, B69-skills-patches) = %q, want %q", got, want)
+	}
+}
+
+func TestCanonicalDocPath_FeatureUnderStrategicPlan(t *testing.T) {
+	t.Parallel()
+	svc := setupCanonicalDocPathTest(t)
+
+	// Write a feature under the strategic-plan batch.
+	writeFeature(t, svc, "FEAT-99SPFEATURE", "sp-feature", "B69-skills-patches")
+
+	got, err := svc.CanonicalDocPath("design", "FEAT-99SPFEATURE")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	want := "work/P64-binding-governance/P64-design-binding-governance.md"
+	if got != want {
+		t.Errorf("canonicalDocPath(design, FEAT-99SPFEATURE) = %q, want %q", got, want)
 	}
 }
 
