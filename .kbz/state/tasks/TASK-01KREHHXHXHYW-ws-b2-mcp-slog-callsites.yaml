@@ -1,0 +1,6 @@
+id: TASK-01KREHHXHXHYW
+parent_feature: FEAT-01KREH8QC3VZ4
+slug: ws-b2-mcp-slog-callsites
+name: slog migration — internal/mcp/ call-sites
+summary: "Translate all log.Printf/Println/Print calls to structured slog calls in 9 internal/mcp/ files (checkpoint_tool, decompose_tool, doc_tool, entity_tool, finish_tool, handler, handoff_tool, merge_tool, server). Apply level-mapping: WARNING: prefix→slog.Warn, ERROR:→slog.Error, unqualified→slog.Info. [component] tag→component key-value."
+status: queued
