@@ -1,7 +1,7 @@
 id: BUG-01KR45KJWB2KY
 slug: handoff-nil-pipeline-panic
 name: Handoff panics with nil pipeline on bindings load failure
-status: reproduced
+status: planned
 severity: critical
 priority: critical
 type: implementation-defect
