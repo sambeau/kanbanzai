@@ -1,9 +1,9 @@
 id: P58-default-tool-hint-fallbacks
 slug: default-tool-hint-fallbacks
 name: Default Tool Hint Fallbacks
-status: active
+status: done
 summary: "Add hardcoded default tool hints to the 3.0 context assembly pipeline so sub-agent prompts always include codebase-memory-mcp, kanbanzai_edit_file, search_graph, and other role-scoped tools — even when no tool_hints config exists."
 order: 0
 created: "2026-05-07T14:34:33Z"
 created_by: sambeau
-updated: "2026-05-12T20:07:01Z"
+updated: "2026-05-12T20:07:06Z"
