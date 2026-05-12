@@ -1,0 +1,13 @@
+approved_at: "2026-05-12T15:47:26Z"
+approved_by: samphillips
+canonical_content_hash: 611411a498fc42f4acebaf61b4b9671fcadf41b4283375e8c411162127f5e193
+content_hash: 611411a498fc42f4acebaf61b4b9671fcadf41b4283375e8c411162127f5e193
+created: "2026-05-12T15:47:26Z"
+created_by: samphillips
+id: BUG-01KREDY92M4T9/spec-spec
+owner: BUG-01KREDY92M4T9
+path: work/bugs/replace-canonical-yaml-parser/spec.md
+status: approved
+title: "Bug Specification: Replace custom canonical YAML parser with yaml.v3"
+type: spec
+updated: "2026-05-12T15:47:26Z"

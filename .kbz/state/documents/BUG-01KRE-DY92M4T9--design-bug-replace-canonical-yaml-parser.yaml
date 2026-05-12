@@ -1,0 +1,13 @@
+approved_at: "2026-05-12T15:49:06Z"
+approved_by: sambeau
+canonical_content_hash: 2f7b590deac46a08e4bd154d464567cf41f394e90da08519db9cadeef20a2fdf
+content_hash: faa62b3db561352ab59ac1698b2d31e41792e44d50890309f42d4ae8420159cc
+created: "2026-05-12T15:48:37Z"
+created_by: sambeau
+id: BUG-01KRE-DY92M4T9/design-bug-replace-canonical-yaml-parser
+owner: BUG-01KRE-DY92M4T9
+path: .kbz/docs/bug-replace-canonical-yaml-parser.md
+status: approved
+title: Replace custom YAML parser with yaml.v3
+type: design
+updated: "2026-05-12T15:49:06Z"
