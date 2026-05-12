@@ -1,0 +1,76 @@
+document_id: FEAT-01KREH8QC3VZ4/report-p67-report-review-ws-b-log-to-slog
+document_path: work/P67-stdlib-modernisation/P67-report-review-ws-b-log-to-slog.md
+content_hash: 9e75add03bfee80f8bc3b4401f2bb9e8be5fc02a414c25abea70d2391125387e
+indexed_at: 2026-05-12T17:33:27.073559Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: ws-b-log-to-slog'
+      byte_offset: 0
+      byte_count: 5061
+      word_count: 677
+      content_hash: 9e75add03bfee80f8bc3b4401f2bb9e8be5fc02a414c25abea70d2391125387e
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 210
+          byte_count: 686
+          word_count: 91
+          content_hash: 3807fda4cf628bfcf90683c9ce196e50c5405cd2b954b0d0937e6a37d1e8e35a
+        - path: "1.2"
+          level: 2
+          title: Conformance Findings
+          byte_offset: 896
+          byte_count: 2448
+          word_count: 303
+          content_hash: 26bc71b7d02dca41c5544dab03d184ce0bc34af7861e7765796c082b34319444
+          children:
+            - path: 1.2.1
+              level: 3
+              title: F-01 (Minor) — `server_warmup_test.go` not migrated; tests now test dead code paths
+              byte_offset: 921
+              byte_count: 1159
+              word_count: 150
+              content_hash: fe05c24340c9b11a0e59de5cf3ed7b7257e8c759e40d06307c9a9f3b1d45f653
+            - path: 1.2.2
+              level: 3
+              title: F-02 (Moderate) — Stray changes in `next_tool.go` outside migration scope
+              byte_offset: 2080
+              byte_count: 1264
+              word_count: 150
+              content_hash: 408021231d8cf52aaa20efa503c1d1a37baa95d3dc5461580884c3634eb35f2d
+        - path: "1.3"
+          level: 2
+          title: Conformance Checks
+          byte_offset: 3344
+          byte_count: 954
+          word_count: 160
+          content_hash: abdf4e1aac4ac62950fccfc24bfce032f7b613d8e5a2d8a40f1ddae70d8be2ce
+        - path: "1.4"
+          level: 2
+          title: Quality Notes
+          byte_offset: 4298
+          byte_count: 429
+          word_count: 51
+          content_hash: f187b5a54ad510228d1ef0931adfb2926cc940cffed43de05b42d4279ff3d6d7
+        - path: "1.5"
+          level: 2
+          title: Overall Verdict
+          byte_offset: 4727
+          byte_count: 334
+          word_count: 52
+          content_hash: cbdefc55418c2b9f90db3d4777ce464a6413cc36ead4a2c376084b17aaa0d5e6
+entity_refs:
+    - entity_id: FEAT-01KREH8QC3VZ4
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 41
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+classified: false
