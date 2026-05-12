@@ -1,0 +1,18 @@
+confidence: "0.5"
+content: "After a squash merge, the merge tool emits a warning: \"branch is not an ancestor of main (merge-base check failed). Worktree left active\". This is a known false positive with squash strategy — squash creates a new commit that is not a direct ancestor of the feature branch. The merge succeeds; the worktree can be safely removed after confirming `go build ./...` and `go test ./...` pass on main."
+created: "2026-05-12T19:03:35Z"
+created_by: sambeau
+id: KE-01KRES5E1G8W3
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - squash-merge
+  - merge-gate
+  - false-positive
+  - workflow
+tier: 2
+topic: squash-merge-ancestor-warning
+ttl_days: 90
+updated: "2026-05-12T19:03:35Z"
+use_count: 0
