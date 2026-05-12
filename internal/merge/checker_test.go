@@ -6,11 +6,21 @@ import (
 	"github.com/sambeau/kanbanzai/internal/git"
 )
 
+// passingTestRunner returns a passing test result without running real tests.
+func passingTestRunner(repoPath string) (TestSuiteResult, string) {
+	return TestSuiteResult{
+		TotalPackages:  10,
+		HasFailure:     false,
+		FailedPackages: nil,
+		FailingTests:   nil,
+	}, "ok all passed"
+}
+
 func TestDefaultGates(t *testing.T) {
 	gates := DefaultGates()
 
-	if len(gates) != 8 {
-		t.Errorf("DefaultGates: got %d gates, want 8", len(gates))
+	if len(gates) != 9 {
+		t.Errorf("DefaultGates: got %d gates, want 9", len(gates))
 	}
 
 	// Verify order and names
@@ -21,6 +31,7 @@ func TestDefaultGates(t *testing.T) {
 		"verification_exists",
 		"verification_passed",
 		"no_conflicts",
+		"test_suite_pass",
 		"health_check_clean",
 		"branch_not_stale",
 	}
@@ -57,6 +68,7 @@ func TestCheckGates_AllPassing(t *testing.T) {
 		DefaultBranchDetector: func(repoPath string) (string, error) {
 			return "main", nil
 		},
+		TestRunner: passingTestRunner,
 	}
 
 	result := CheckGates(ctx)
@@ -70,8 +82,8 @@ func TestCheckGates_AllPassing(t *testing.T) {
 	if result.OverallStatus != OverallStatusPassed {
 		t.Errorf("OverallStatus: got %q, want %q", result.OverallStatus, OverallStatusPassed)
 	}
-	if len(result.Gates) != 8 {
-		t.Errorf("Gates: got %d, want 8", len(result.Gates))
+	if len(result.Gates) != 9 {
+		t.Errorf("Gates: got %d, want 9", len(result.Gates))
 	}
 
 	for _, g := range result.Gates {
@@ -103,6 +115,7 @@ func TestCheckGates_BlockingFailure(t *testing.T) {
 		DefaultBranchDetector: func(repoPath string) (string, error) {
 			return "main", nil
 		},
+		TestRunner: passingTestRunner,
 	}
 
 	result := CheckGates(ctx)
@@ -150,6 +163,7 @@ func TestCheckGates_WarningsOnly(t *testing.T) {
 		DefaultBranchDetector: func(repoPath string) (string, error) {
 			return "main", nil
 		},
+		TestRunner: passingTestRunner,
 	}
 
 	result := CheckGates(ctx)
@@ -445,6 +459,7 @@ func TestCheckGates_ReviewingFeature_NoReport_Blocked(t *testing.T) {
 			return git.BranchStatus{}, nil
 		},
 		DefaultBranchDetector: func(_ string) (string, error) { return "main", nil },
+		TestRunner:            passingTestRunner,
 	}
 
 	result := CheckGates(ctx)
@@ -489,6 +504,7 @@ func TestCheckGates_ReviewingFeature_WithReport_ReviewGatePasses(t *testing.T) {
 			return git.BranchStatus{}, nil
 		},
 		DefaultBranchDetector: func(_ string) (string, error) { return "main", nil },
+		TestRunner:            passingTestRunner,
 	}
 
 	result := CheckGates(ctx)
@@ -526,6 +542,7 @@ func TestCheckGates_ExistingGates_AreBypassable(t *testing.T) {
 			return git.BranchStatus{}, nil
 		},
 		DefaultBranchDetector: func(_ string) (string, error) { return "main", nil },
+		TestRunner:            passingTestRunner,
 	}
 
 	result := CheckGates(ctx)
@@ -555,6 +572,7 @@ func TestCheckGates_NilDocSvc_ReviewingGateFailsOpen(t *testing.T) {
 			return git.BranchStatus{}, nil
 		},
 		DefaultBranchDetector: func(_ string) (string, error) { return "main", nil },
+		TestRunner:            passingTestRunner,
 	}
 
 	result := CheckGates(ctx)

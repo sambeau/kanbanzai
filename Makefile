@@ -13,7 +13,7 @@ LDFLAGS  := -X '$(PKG).Version=$(VERSION)' \
             -X '$(PKG).BuildTime=$(BUILD_TIME)' \
             -X '$(PKG).Dirty=$(DIRTY)'
 
-.PHONY: build install clean test test-install registry-check registry-sync claude-skills-check generate
+.PHONY: build install clean test test-install registry-check registry-sync claude-skills-check generate setup
 
 build:
 	go build -ldflags "$(LDFLAGS)" -o $(BINARY) ./cmd/kbz
@@ -39,6 +39,10 @@ registry-sync:
 
 claude-skills-check:
 	go test -v -run TestClaudeSkills ./internal/claudeskills/
+
+setup:
+	git config core.hooksPath .githooks
+	@echo "Git hooks installed from .githooks/"
 
 generate:
 	go generate ./internal/binding/

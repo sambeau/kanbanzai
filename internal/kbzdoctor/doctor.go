@@ -9,6 +9,7 @@ import (
 	"io"
 	"io/fs"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -19,6 +20,75 @@ const managedMarkerPrefix = "<!-- kanbanzai-managed: v"
 
 // skillManagedMarker is the YAML comment marker for managed skill files.
 const skillManagedMarker = "# kanbanzai-managed:"
+
+// TestSuiteResult holds the parsed output of a go test run.
+type TestSuiteResult struct {
+	TotalPackages   int
+	PassingPackages int
+	FailingPackages []string
+	FailingTests    []string
+	HasFailure      bool
+}
+
+// RunTestSuite runs go test ./... and returns parsed results.
+// If repoRoot is empty, returns an empty result.
+func RunTestSuite(repoRoot string) TestSuiteResult {
+	return runTestSuiteCmd(repoRoot)
+}
+
+// runTestSuiteCmd is a variable so tests can inject a mock.
+var runTestSuiteCmd = defaultRunTestSuite
+
+func defaultRunTestSuite(repoRoot string) TestSuiteResult {
+	var result TestSuiteResult
+
+	if repoRoot == "" {
+		return result
+	}
+
+	// Verify this is a Go module directory first.
+	if _, err := os.Stat(filepath.Join(repoRoot, "go.mod")); os.IsNotExist(err) {
+		return result
+	}
+
+	cmd := exec.Command("go", "test", "./...")
+	cmd.Dir = repoRoot
+	raw, err := cmd.CombinedOutput()
+	output := string(raw)
+
+	if err != nil {
+		result.HasFailure = true
+	}
+
+	lines := strings.Split(output, "\n")
+	for _, line := range lines {
+		if strings.HasPrefix(line, "ok ") {
+			result.TotalPackages++
+			result.PassingPackages++
+		} else if strings.HasPrefix(line, "FAIL ") {
+			result.TotalPackages++
+			pkgName := strings.TrimSpace(strings.TrimPrefix(line, "FAIL "))
+			result.FailingPackages = append(result.FailingPackages, pkgName)
+		} else if strings.HasPrefix(line, "? ") {
+			result.TotalPackages++
+			result.PassingPackages++
+		}
+
+		// Extract failing test names
+		if strings.Contains(line, "--- FAIL:") {
+			parts := strings.SplitN(line, "--- FAIL:", 2)
+			if len(parts) == 2 {
+				testName := strings.TrimSpace(parts[1])
+				if idx := strings.LastIndex(testName, "("); idx > 0 {
+					testName = strings.TrimSpace(testName[:idx])
+				}
+				result.FailingTests = append(result.FailingTests, testName)
+			}
+		}
+	}
+
+	return result
+}
 
 // Doctor validates a Kanbanzai install.
 type Doctor struct {
@@ -95,6 +165,19 @@ func (d *Doctor) Run(repoRoot string) ([]CheckResult, error) {
 		results = append(results, r)
 	}
 
+	// Check test suite status.
+	testResult := RunTestSuite(repoRoot)
+	if testResult.TotalPackages > 0 {
+		r := CheckResult{
+			Path: "go test ./...",
+			Ok:   !testResult.HasFailure,
+		}
+		if testResult.HasFailure {
+			r.Warning = formatTestSuiteResult(testResult)
+		}
+		results = append(results, r)
+	}
+
 	// Check for ghost files in managed directories.
 	ghostDirs := []string{
 		filepath.Join(kbzDir, "skills"),
@@ -138,15 +221,43 @@ func ExitCode(results []CheckResult) int {
 	return 0
 }
 
+// formatTestSuiteResult formats a TestSuiteResult as a human-readable warning string.
+func formatTestSuiteResult(r TestSuiteResult) string {
+	var b strings.Builder
+	fmt.Fprintf(&b, "%d package(s) tested, %d passed, %d failed",
+		r.TotalPackages, r.PassingPackages, len(r.FailingPackages))
+	if len(r.FailingTests) > 0 {
+		b.WriteString("; failing tests: ")
+		for i, name := range r.FailingTests {
+			if i > 0 {
+				b.WriteString(", ")
+			}
+			b.WriteString(name)
+		}
+	}
+	return b.String()
+}
+
 // PrintResults writes human-readable results to the doctor's stdout.
 func (d *Doctor) PrintResults(results []CheckResult) {
 	hasErrors := false
+	testWarning := false
 	for _, r := range results {
 		if r.Missing {
 			hasErrors = true
 			fmt.Fprintf(d.stdout, "ERROR: %s — %s\n", r.Path, r.Warning)
 		} else if r.Warning != "" {
 			fmt.Fprintf(d.stdout, "WARN:  %s — %s\n", r.Path, r.Warning)
+			if r.Path == "go test ./..." {
+				testWarning = true
+			}
+		}
+	}
+
+	// Print test suite summary even when it passes.
+	for _, r := range results {
+		if r.Path == "go test ./..." && r.Ok && !testWarning {
+			fmt.Fprintf(d.stdout, "OK:    go test ./... — all packages pass\n")
 		}
 	}
 

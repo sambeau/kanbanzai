@@ -318,6 +318,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) (*server.MCPServ
 		mcpServer.AddTools(HealthTool(entitySvc,
 			knowledgeHealthChecker(knowledgeSvc, profileStore),
 			profileHealthChecker(roleStore),
+			TestSuiteHealthChecker(repoRoot),
 			Phase3HealthChecker(worktreeStore, knowledgeSvc, entitySvc, cfg, repoRoot),
 			Phase4aHealthChecker(entitySvc, worktreeStore, checkpointStore, cfg.Dispatch.StallThresholdDays, repoRoot),
 			Phase4bHealthChecker(entitySvc, cfg.Incidents.RCALinkWarnAfterDays),

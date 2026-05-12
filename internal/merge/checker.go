@@ -10,6 +10,7 @@ func DefaultGates() []Gate {
 		VerificationExistsGate{},
 		VerificationPassedGate{},
 		NoConflictsGate{},
+		TestSuiteGate{},
 		HealthCheckCleanGate{},
 		BranchNotStaleGate{},
 	}

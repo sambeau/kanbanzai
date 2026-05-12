@@ -2,6 +2,7 @@ package merge
 
 import (
 	"errors"
+	"strings"
 	"testing"
 
 	"github.com/sambeau/kanbanzai/internal/git"
@@ -858,6 +859,121 @@ func TestReviewReportExistsGate_NilDocService_FailsOpen(t *testing.T) {
 	result := ReviewReportExistsGate{}.Check(ctx)
 	if result.Status != GateStatusPassed {
 		t.Errorf("got status %v, want passed (fail-open for nil DocSvc)", result.Status)
+	}
+}
+
+// ─── TestSuiteGate tests ──────────────────────────────────────────────────────
+
+func TestTestSuiteGate_Interface(t *testing.T) {
+	var g Gate = TestSuiteGate{}
+
+	if g.Name() != "test_suite_pass" {
+		t.Errorf("Name: got %q, want %q", g.Name(), "test_suite_pass")
+	}
+	if g.Severity() != GateSeverityBlocking {
+		t.Errorf("Severity: got %q, want %q", g.Severity(), GateSeverityBlocking)
+	}
+}
+
+func TestTestSuiteGate_Check(t *testing.T) {
+	tests := []struct {
+		name       string
+		repoPath   string
+		runner     func(string) (TestSuiteResult, string)
+		wantStatus GateStatus
+		wantMsg    string
+	}{
+		{
+			name:       "no repo path is warning",
+			repoPath:   "",
+			wantStatus: GateStatusWarning,
+			wantMsg:    "skipping",
+		},
+		{
+			name:     "all tests pass",
+			repoPath: "/repo",
+			runner: func(_ string) (TestSuiteResult, string) {
+				return TestSuiteResult{TotalPackages: 10, HasFailure: false}, "ok"
+			},
+			wantStatus: GateStatusPassed,
+			wantMsg:    "all 10 package(s) passed",
+		},
+		{
+			name:     "failing tests block",
+			repoPath: "/repo",
+			runner: func(_ string) (TestSuiteResult, string) {
+				return TestSuiteResult{
+					TotalPackages:  10,
+					HasFailure:     true,
+					FailingTests:   []string{"TestFoo", "TestBar"},
+					FailedPackages: []string{"./internal/foo"},
+				}, "fail"
+			},
+			wantStatus: GateStatusFailed,
+			wantMsg:    "test suite failed: 2 failing test(s): TestFoo, TestBar",
+		},
+		{
+			name:     "failing packages without test names",
+			repoPath: "/repo",
+			runner: func(_ string) (TestSuiteResult, string) {
+				return TestSuiteResult{
+					TotalPackages:  10,
+					HasFailure:     true,
+					FailedPackages: []string{"./internal/foo"},
+				}, "fail"
+			},
+			wantStatus: GateStatusFailed,
+			wantMsg:    "test suite failed: 1 package(s) with failures",
+		},
+	}
+
+	gate := TestSuiteGate{}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ctx := GateContext{
+				EntityID:   "FEAT-001",
+				RepoPath:   tt.repoPath,
+				TestRunner: tt.runner,
+			}
+
+			result := gate.Check(ctx)
+
+			if result.Status != tt.wantStatus {
+				t.Errorf("Status: got %q, want %q", result.Status, tt.wantStatus)
+			}
+			if tt.wantMsg != "" && !strings.Contains(result.Message, tt.wantMsg) {
+				t.Errorf("Message: got %q, want it to contain %q", result.Message, tt.wantMsg)
+			}
+			if result.Bypassable != true {
+				t.Errorf("Bypassable: got false, want true")
+			}
+		})
+	}
+}
+
+func TestDefaultTestRunner_EmptyPath(t *testing.T) {
+	result, output := DefaultTestRunner("")
+	if result.TotalPackages != 0 {
+		t.Errorf("TotalPackages: got %d, want 0", result.TotalPackages)
+	}
+	if output != "" {
+		t.Errorf("output: got %q, want empty", output)
+	}
+}
+
+func TestDefaultTestRunner_RealRepo(t *testing.T) {
+	result, _ := DefaultTestRunner(".")
+	if result.TotalPackages == 0 {
+		t.Error("TotalPackages: got 0, want >0")
+	}
+	if result.HasFailure {
+		t.Errorf("HasFailure: got true, want false")
+	}
+	if len(result.FailingTests) != 0 {
+		t.Errorf("FailingTests: got %v, want empty", result.FailingTests)
+	}
+	if len(result.FailedPackages) != 0 {
+		t.Errorf("FailedPackages: got %v, want empty", result.FailedPackages)
 	}
 }
 

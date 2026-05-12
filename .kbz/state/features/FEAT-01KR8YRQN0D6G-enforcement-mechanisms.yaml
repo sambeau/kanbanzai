@@ -9,3 +9,5 @@ created: "2026-05-10T12:46:03Z"
 created_by: sambeau
 display_id: B68-F1
 tier: feature
+verification: "TASK-01KR8Z1RF645K: All merge package tests pass. New TestSuiteGate tests cover: interface conformance, no-repo-path warning, all-tests-pass, failing-tests-block (with test names), failing-packages-without-test-names, empty path handling, and real repo execution. Existing tests updated to pass 9 gates instead of 8.\nTASK-01KR8Z1RFGD8S: All kbzdoctor tests pass including new tests: RunTestSuite_EmptyPath, RunTestSuite_NoGoModDir, RunTestSuite_Mocked (passing/failing), FormatTestSuiteResult. Existing tests unmodified and passing.\nTASK-01KR8Z1RFN7N8: All tests pass. New tests cover: empty path, no go.mod dir, mocked passing/failing, cache hit, stale cache, CheckTestSuiteHealth passing/failing/empty, FormatTestSuiteSummary, save/load cache round-trip.\nTASK-01KR8Z1RFPS36: Verified hook script is executable. Existing test suite passes. Hook script correctly parses changed .go files, runs go test ./..., and extracts failing test names. Makefile setup target configures core.hooksPath."
+verification_status: passed

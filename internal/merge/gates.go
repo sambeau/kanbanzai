@@ -3,6 +3,7 @@ package merge
 import (
 	"fmt"
 	"log"
+	"os/exec"
 	"strings"
 
 	"github.com/sambeau/kanbanzai/internal/git"
@@ -55,6 +56,11 @@ type GateContext struct {
 	// DocSvc provides access to the document store for gate evaluation.
 	// If nil, gates that require it fail open.
 	DocSvc DocService
+
+	// TestRunner runs go test and returns parsed output. If nil, uses DefaultTestRunner.
+	// RunTests is the function that executes the test suite and returns test results.
+	// The returned string is the raw combined stdout+stderr from the test run.
+	TestRunner func(repoPath string) (TestSuiteResult, string)
 }
 
 // TasksCompleteGate checks that all tasks are done or wont_do.
@@ -443,6 +449,114 @@ func (g ReviewReportExistsGate) Check(ctx GateContext) GateResult {
 		Status:     GateStatusPassed,
 		Bypassable: true,
 	}
+}
+
+// TestSuiteResult holds the parsed output of a go test run.
+type TestSuiteResult struct {
+	// FailedPackages contains the names of packages with test failures.
+	FailedPackages []string
+
+	// FailingTests contains the names of individual failing tests.
+	FailingTests []string
+
+	// HasFailure is true when any test in the suite failed.
+	HasFailure bool
+
+	// TotalPackages is the total number of packages tested.
+	TotalPackages int
+}
+
+// DefaultTestRunner runs go test ./... and parses the output into a TestSuiteResult.
+func DefaultTestRunner(repoPath string) (TestSuiteResult, string) {
+	result := TestSuiteResult{}
+
+	if repoPath == "" {
+		return result, ""
+	}
+
+	cmd := exec.Command("go", "test", "./...")
+	cmd.Dir = repoPath
+	raw, err := cmd.CombinedOutput()
+	output := string(raw)
+
+	if err != nil {
+		result.HasFailure = true
+	}
+
+	lines := strings.Split(output, "\n")
+	for _, line := range lines {
+		// Count packages: lines starting with "ok", "FAIL", or "?"
+		if strings.HasPrefix(line, "ok ") || strings.HasPrefix(line, "FAIL ") || strings.HasPrefix(line, "? ") {
+			result.TotalPackages++
+			if strings.HasPrefix(line, "FAIL ") {
+				pkgName := strings.TrimSpace(strings.TrimPrefix(line, "FAIL "))
+				result.FailedPackages = append(result.FailedPackages, pkgName)
+			}
+		}
+
+		// Extract failing test names
+		if strings.Contains(line, "--- FAIL:") {
+			// Format: "    --- FAIL: TestName (0.00s)"
+			parts := strings.SplitN(line, "--- FAIL:", 2)
+			if len(parts) == 2 {
+				testName := strings.TrimSpace(parts[1])
+				// Remove duration suffix if present
+				if idx := strings.LastIndex(testName, "("); idx > 0 {
+					testName = strings.TrimSpace(testName[:idx])
+				}
+				result.FailingTests = append(result.FailingTests, testName)
+			}
+		}
+	}
+
+	return result, output
+}
+
+// TestSuiteGate checks that go test ./... passes before merge.
+type TestSuiteGate struct{}
+
+func (g TestSuiteGate) Name() string {
+	return "test_suite_pass"
+}
+
+func (g TestSuiteGate) Severity() GateSeverity {
+	return GateSeverityBlocking
+}
+
+func (g TestSuiteGate) Check(ctx GateContext) GateResult {
+	result := GateResult{
+		Name:       g.Name(),
+		Severity:   g.Severity(),
+		Status:     GateStatusPassed,
+		Bypassable: true,
+	}
+
+	if ctx.RepoPath == "" {
+		result.Status = GateStatusWarning
+		result.Message = "no repository path specified — skipping test suite check"
+		return result
+	}
+
+	runner := ctx.TestRunner
+	if runner == nil {
+		runner = DefaultTestRunner
+	}
+
+	testResult, _ := runner(ctx.RepoPath)
+
+	if testResult.HasFailure {
+		result.Status = GateStatusFailed
+		if len(testResult.FailingTests) > 0 {
+			result.Message = fmt.Sprintf("test suite failed: %d failing test(s): %s",
+				len(testResult.FailingTests), strings.Join(testResult.FailingTests, ", "))
+		} else {
+			result.Message = fmt.Sprintf("test suite failed: %d package(s) with failures", len(testResult.FailedPackages))
+		}
+	} else {
+		result.Message = fmt.Sprintf("all %d package(s) passed", testResult.TotalPackages)
+	}
+
+	return result
 }
 
 // toString extracts a string from an any value, returning "" if nil or not a string.

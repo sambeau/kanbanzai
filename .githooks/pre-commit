@@ -1,0 +1,77 @@
+#!/bin/sh
+# Kanbanzai pre-commit hook
+#
+# Runs go test on changed Go packages. Blocks the commit if any test fails.
+# Skips entirely when no .go files have changed (docs-only commit).
+#
+# Bypass with: git commit --no-verify
+#         or:  SKIP_TESTS=1 git commit
+
+set -e
+
+# ── Detect bypass ──────────────────────────────────────────────────────────
+if [ -n "$SKIP_TESTS" ]; then
+    echo ""
+    echo "  ╔═══════════════════════════════════════════════════════════════╗"
+    echo "  ║  WARNING: Tests bypassed via SKIP_TESTS=1                    ║"
+    echo "  ║  Committing without running tests — ensure CI will catch     ║"
+    echo "  ║  any regressions before merge.                               ║"
+    echo "  ╚═══════════════════════════════════════════════════════════════╝"
+    echo ""
+    exit 0
+fi
+
+# ── Detect changed .go files ───────────────────────────────────────────────
+changed_files=$(git diff --cached --name-only --diff-filter=ACM -- '*.go' 2>/dev/null || true)
+
+if [ -z "$changed_files" ]; then
+    # No .go files changed — skip tests entirely
+    exit 0
+fi
+
+# ── Determine changed packages ─────────────────────────────────────────────
+# Collect unique package directories from changed files
+changed_pkgs=""
+for f in $changed_files; do
+    pkg=$(dirname "$f")
+    if [ "$pkg" = "." ]; then
+        pkg="."
+    fi
+    # Avoid duplicates
+    case " $changed_pkgs " in
+        *" $pkg "*) ;;
+        *) changed_pkgs="$changed_pkgs $pkg" ;;
+    esac
+done
+
+# ── Run tests ───────────────────────────────────────────────────────────────
+# For now, run go test ./... (full suite). This is a safe starting point.
+# Future optimisation: scope to only the changed packages using go test $changed_pkgs.
+test_exit=0
+test_output=$(go test ./... 2>&1) || test_exit=$?
+
+if [ "$test_exit" -ne 0 ]; then
+    echo ""
+    echo "  ❌ Tests FAILED — commit blocked"
+    echo ""
+    echo "$test_output" | grep -E '^(--- FAIL|--- PASS|ok\s|FAIL\s)' | head -20
+    echo ""
+    echo "  Fix the test failures above before committing, or bypass with:"
+    echo "    git commit --no-verify"
+    echo "    SKIP_TESTS=1 git commit"
+    echo ""
+
+    # Extract failing test names
+    failures=$(echo "$test_output" | grep -E '^\s+--- FAIL:' | sed 's/^[[:space:]]*--- FAIL: //' | sed 's/ ([^)]*)$//')
+    if [ -n "$failures" ]; then
+        echo "  Failing tests:"
+        echo "$failures" | sed 's/^/    - /'
+        echo ""
+    fi
+
+    exit 1
+fi
+
+# All tests passed
+echo "  ✓ go test ./... passed"
+exit 0

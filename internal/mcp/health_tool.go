@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
@@ -207,6 +208,58 @@ func Phase3HealthChecker(
 		// Check knowledge conflicts
 		conflictsResult := health.CheckKnowledgeConflicts(entries)
 		mergeHealthResult(report, "knowledge_conflicts", conflictsResult)
+
+		return report, nil
+	}
+}
+
+// TestSuiteHealthChecker returns an AdditionalHealthChecker that adds test suite
+// status to the health report. Uses cached results where available (NFR-004).
+// The output includes summary counts as entities_by_type keys and per-failure
+// entries as validation warnings.
+func TestSuiteHealthChecker(repoPath string) AdditionalHealthChecker {
+	return func() (*validate.HealthReport, error) {
+		report := &validate.HealthReport{
+			Summary: validate.HealthSummary{
+				EntitiesByType: make(map[string]int),
+			},
+		}
+
+		// Run test suite check — uses cache when available (NFR-004).
+		summary := health.CheckTestSuite(repoPath)
+		if summary.TotalPackages == 0 {
+			return report, nil
+		}
+
+		// Record aggregate counts as structured fields.
+		report.Summary.EntitiesByType["test_suite.packages"] = summary.TotalPackages
+		report.Summary.EntitiesByType["test_suite.passing"] = summary.PassingPackages
+		report.Summary.EntitiesByType["test_suite.failing"] = summary.FailingPackages
+		report.Summary.TotalEntities += summary.TotalPackages
+
+		// Add error if any failures exist, with specific test names.
+		if summary.HasFailure {
+			msg := fmt.Sprintf("test suite: %d package(s) tested, %d passed, %d failed",
+				summary.TotalPackages, summary.PassingPackages, summary.FailingPackages)
+			if len(summary.Failures) > 0 {
+				names := make([]string, len(summary.Failures))
+				for i, f := range summary.Failures {
+					names[i] = f.TestName
+				}
+				msg += fmt.Sprintf("; failing tests: %s", strings.Join(names, ", "))
+			}
+			report.Errors = append(report.Errors, validate.ValidationError{
+				EntityType: "test_suite",
+				Message:    msg,
+			})
+			report.Summary.ErrorCount = len(report.Errors)
+		} else {
+			report.Warnings = append(report.Warnings, validate.ValidationWarning{
+				EntityType: "test_suite",
+				Message:    fmt.Sprintf("test suite: all %d package(s) passed", summary.TotalPackages),
+			})
+			report.Summary.WarningCount = len(report.Warnings)
+		}
 
 		return report, nil
 	}

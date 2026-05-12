@@ -136,6 +136,118 @@ func TestDoctor_GhostFile(t *testing.T) {
 	}
 }
 
+func TestRunTestSuite_EmptyPath(t *testing.T) {
+	// Empty path should return empty result
+	result := RunTestSuite("")
+	if result.TotalPackages != 0 {
+		t.Errorf("TotalPackages: got %d, want 0", result.TotalPackages)
+	}
+	if result.HasFailure {
+		t.Error("HasFailure: got true, want false")
+	}
+}
+
+func TestRunTestSuite_NoGoModDir(t *testing.T) {
+	// A temp dir without go.mod should return empty result
+	dir := t.TempDir()
+	result := RunTestSuite(dir)
+	if result.TotalPackages != 0 {
+		t.Errorf("TotalPackages: got %d, want 0", result.TotalPackages)
+	}
+	if result.HasFailure {
+		t.Error("HasFailure: got true, want false")
+	}
+}
+
+func TestRunTestSuite_Mocked(t *testing.T) {
+	// Save and restore the command runner
+	origCmd := runTestSuiteCmd
+	t.Cleanup(func() { runTestSuiteCmd = origCmd })
+
+	// Set up a mock that returns passing output
+	runTestSuiteCmd = func(repoRoot string) TestSuiteResult {
+		return TestSuiteResult{
+			TotalPackages:   10,
+			PassingPackages: 10,
+			FailingPackages: nil,
+			FailingTests:    nil,
+			HasFailure:      false,
+		}
+	}
+
+	result := RunTestSuite(".")
+	if result.TotalPackages != 10 {
+		t.Errorf("TotalPackages: got %d, want 10", result.TotalPackages)
+	}
+	if result.HasFailure {
+		t.Error("HasFailure: got true, want false")
+	}
+}
+
+func TestRunTestSuite_MockedFailing(t *testing.T) {
+	origCmd := runTestSuiteCmd
+	t.Cleanup(func() { runTestSuiteCmd = origCmd })
+
+	runTestSuiteCmd = func(repoRoot string) TestSuiteResult {
+		return TestSuiteResult{
+			TotalPackages:   10,
+			PassingPackages: 8,
+			FailingPackages: []string{"./internal/foo"},
+			FailingTests:    []string{"TestFoo", "TestBar"},
+			HasFailure:      true,
+		}
+	}
+
+	result := RunTestSuite(".")
+	if !result.HasFailure {
+		t.Error("HasFailure: got false, want true")
+	}
+	if len(result.FailingTests) != 2 {
+		t.Errorf("len(FailingTests): got %d, want 2", len(result.FailingTests))
+	}
+	if len(result.FailingPackages) != 1 {
+		t.Errorf("len(FailingPackages): got %d, want 1", len(result.FailingPackages))
+	}
+}
+
+func TestFormatTestSuiteResult(t *testing.T) {
+	tests := []struct {
+		name   string
+		result TestSuiteResult
+		want   string
+	}{
+		{
+			name: "no failures",
+			result: TestSuiteResult{
+				TotalPackages:   10,
+				PassingPackages: 10,
+				FailingPackages: nil,
+				FailingTests:    nil,
+			},
+			want: "10 package(s) tested, 10 passed, 0 failed",
+		},
+		{
+			name: "with failures and test names",
+			result: TestSuiteResult{
+				TotalPackages:   10,
+				PassingPackages: 8,
+				FailingPackages: []string{"./internal/foo"},
+				FailingTests:    []string{"TestFoo", "TestBar"},
+			},
+			want: "10 package(s) tested, 8 passed, 1 failed; failing tests: TestFoo, TestBar",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := formatTestSuiteResult(tt.result)
+			if got != tt.want {
+				t.Errorf("formatTestSuiteResult: got %q, want %q", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestPrintResults(t *testing.T) {
 	var stdout bytes.Buffer
 	d := New(&stdout, &bytes.Buffer{})
