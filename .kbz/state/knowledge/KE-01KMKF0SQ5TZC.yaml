@@ -3,10 +3,10 @@ content: "Incidents track production-significant failures with MTTR-measurable t
 created: "2026-03-25T21:39:42Z"
 created_by: sambeau
 id: KE-01KMKF0SQ5TZC
-last_accessed_at: "2026-05-12T16:51:51Z"
+last_accessed_at: "2026-05-12T16:55:43Z"
 learned_from: P1-phase-4-orchestration
 miss_count: 0
-recent_use_count: 558
+recent_use_count: 559
 scope: project
 status: confirmed
 tags:
