@@ -150,7 +150,96 @@ Prompt Engineering Checklist
 
 See [examples-prompt-engineering.md](references/examples-prompt-engineering.md) for worked prompt construction examples: no-vocabulary-routing anti-pattern, vocabulary-routed prompt, flattery-identity anti-pattern, and brief real-world identity.
 
+## Procedure
+
+### When authoring a new prompt or skill
+
+1. **Determine the task structure and constraint level.** Is this a
+   fragile operation requiring exact steps (LOW freedom), structured work
+   with a template (MEDIUM), or creative work with multiple valid
+   approaches (HIGH)? Match the procedure's specificity to this level.
+
+2. **Draft the vocabulary payload.** List 15–30 domain terms. Apply the
+   15-year practitioner test: would a senior expert with 15+ years in
+   this domain use this exact term with a peer? Strip general terms the
+   model already knows. THIS GOES FIRST in the prompt body.
+
+3. **Write identity.** Under 50 tokens. Real job title. No flattery, no
+   superlatives, no elaborate backstory. Use structured format (YAML).
+
+4. **Write constraints as ALWAYS/NEVER pairs.** Pair each positive
+   instruction with a negative constraint. Every imperative gets a
+   BECAUSE clause. Place constraints near the top of the prompt.
+
+5. **Name the anti-patterns.** For each likely mistake, create an entry
+   with: a specific name, how to detect it, BECAUSE (consequence chain),
+   and how to resolve it. Place after constraints.
+
+6. **Write the procedure.** 5–10 imperative steps. Use numbered format
+   (survives attention degradation). Include IF/THEN branches for
+   condition-dependent paths. Place in the middle.
+
+7. **Write the output format.** Define exactly what the agent should
+   produce. Use a template if possible. List evaluation dimensions if
+   output quality varies. Place near the examples section.
+
+8. **Add retrieval anchors.** 5–10 natural-language questions at the
+   very end. These benefit from recency bias and end-of-context
+   attention. Use questions the agent would ask about the domain.
+
+### When evaluating an existing prompt
+
+1. **Run the checklist.** Start every evaluation session by copy-pasting
+   the checklist below and checking every item.
+
+2. **Score each dimension.** Use the evaluation criteria section to
+   assign a 0.0–1.0 score for each dimension.
+
+3. **Identify anti-patterns.** For any dimension scoring below 0.7,
+   identify the specific anti-pattern(s) at play.
+
+4. **Provide a rewrite suggestion.** Name the anti-pattern, explain
+   why it matters, and show the specific change.
+
+## Output Format
+
+When authoring or evaluating a prompt, produce a structured report with
+three sections:
+
+### 1. Prompt Header
+
+```yaml
+name: <prompt-name>
+role: <role-id>
+constraint_level: low|medium|high
+stage: <stage-name>
+```
+
+### 2. Section-by-Section Scores
+
+| Section | Score | Issues |
+|---------|-------|--------|
+| Vocabulary | 0.0–1.0 | ... |
+| Identity | 0.0–1.0 | ... |
+| Constraints | 0.0–1.0 | ... |
+| Anti-Patterns | 0.0–1.0 | ... |
+| Structure | 0.0–1.0 | ... |
+| Examples | 0.0–1.0 | ... |
+| Output Format | 0.0–1.0 | ... |
+| Retrieval Anchors | 0.0–1.0 | ... |
+
+### 3. Findings
+
+For each dimension scoring below 0.7, provide:
+
+- **Anti-pattern name**
+- **BECAUSE:** Why this matters
+- **Current state:** What the prompt does now
+- **Suggestion:** Specific change to make
+
 ## Evaluation Criteria
+
+When evaluating a prompt or skill authored with this procedure, score
 
 When evaluating a prompt or skill authored with this procedure, score
 each dimension on a 0.0–1.0 scale:

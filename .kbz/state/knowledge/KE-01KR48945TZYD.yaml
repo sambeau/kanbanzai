@@ -3,10 +3,10 @@ content: "[minor] workflow-friction: Untracked T3 files (dirty.go, dirty_test.go
 created: "2026-05-08T16:56:06Z"
 created_by: unknown
 id: KE-01KR48945TZYD
-last_accessed_at: "2026-05-11T17:37:48Z"
+last_accessed_at: "2026-05-12T01:00:26Z"
 learned_from: TASK-01KR3Q0FB91YP
 miss_count: 0
-recent_use_count: 105
+recent_use_count: 106
 scope: project
 status: contributed
 tags:

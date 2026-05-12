@@ -1,0 +1,18 @@
+document_id: BUG-01KR45KJWB2KY/report-review
+document_path: work/bugs/handoff-nil-pipeline-panic/review.md
+content_hash: 0d6059e6ae386eff5b739361b340890381c2e022d2c1db5d9ac213a66dc25dfc
+indexed_at: 2026-05-12T00:49:28.475816Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: Handoff nil-pipeline panic fix verification'
+      byte_offset: 0
+      byte_count: 314
+      word_count: 38
+      content_hash: 0d6059e6ae386eff5b739361b340890381c2e022d2c1db5d9ac213a66dc25dfc
+entity_refs:
+    - entity_id: BUG-01KR45KJWB2KY
+      entity_type: bug
+      section_path: "1"
+      byte_offset: 64
+classified: false
