@@ -3,4 +3,9 @@ parent_feature: FEAT-01KR8YRQN1M56
 slug: status-dashboard-tests
 name: Add test health to status dashboard
 summary: Add test suite health metric to status dashboard output alongside entity counts and health errors/warnings.
-status: ready
+status: done
+files_planned:
+  - internal/mcp/status_tool.go
+completed: "2026-05-12T11:58:21Z"
+completion_summary: "Added test suite health metric to the MCP status dashboard project overview. When go test ./... produces failures on the current branch, the test_health block appears with overall status, failed packages list, and failing test names. Uses the existing merge.DefaultTestRunner. The test_health section is omitted when all tests pass or when no repo path is available."
+verification: go build ./... passes. go test ./internal/mcp/... passes. The new test_health field appears only when there are failures (omitted for clean suites). Import of internal/merge is correct and unused package is not flagged.
