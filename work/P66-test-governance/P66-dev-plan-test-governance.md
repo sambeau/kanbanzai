@@ -169,6 +169,112 @@ running tests.
   `result: unknown`, `last_run: null`.
 - Existing tests for init still pass.
 
+## Interface Contracts
+
+### `internal/teststatus` package (Task 1)
+
+```go
+package teststatus
+
+type Result string
+
+const (
+    ResultPass    Result = "pass"
+    ResultFail    Result = "fail"
+    ResultUnknown Result = "unknown"
+)
+
+type Failure struct {
+    Package string `yaml:"package"`
+    Test    string `yaml:"test"`
+    Message string `yaml:"message"`
+}
+
+type Record struct {
+    LastRun  *time.Time `yaml:"last_run"`           // nil when unknown
+    Result   Result     `yaml:"result"`
+    Summary  string     `yaml:"summary"`
+    Failures []Failure  `yaml:"failures"`
+    Runner   string     `yaml:"runner,omitempty"`   // agent | human | hook | ci
+    Trigger  string     `yaml:"trigger,omitempty"`  // post-merge | manual | startup-check
+}
+
+// ReadRecord parses .kbz/state/test-status.yaml. Returns a zero-value record
+// with Result=ResultUnknown when the file does not exist.
+func ReadRecord(repoRoot string) (Record, error)
+
+// WriteRecord atomically writes the record (write to .tmp, then os.Rename).
+func WriteRecord(repoRoot string, rec Record) error
+
+// IsStale returns true if any .go file under repoRoot has a modtime newer than
+// rec.LastRun, or if rec.LastRun is nil. Excludes .worktrees/, vendor/, .git/,
+// and any other top-level hidden directory.
+func IsStale(repoRoot string, rec Record) (bool, error)
+```
+
+### `kanbanzai test` CLI (Task 2)
+
+```
+kanbanzai test status
+  → prints the current record as JSON to stdout.
+  → exit 0 always (status is informational).
+
+kanbanzai test record --result=<exit-code> [--output=<test-output>]
+  → writes the record. exit-code 0 → result: pass; non-zero → result: fail.
+  → --output is parsed for failing test names/packages when provided.
+  → exit 0 on successful write.
+
+kanbanzai test run
+  → executes `go test ./...`, captures stdout+stderr, writes the record.
+  → exit code mirrors `go test`.
+
+kanbanzai test verify
+  → modtime staleness check. Re-runs `kanbanzai test run` if stale or
+    last result was fail/unknown; otherwise returns the cached record.
+  → exit 0 on cached pass; mirrors `go test` exit on a re-run.
+
+kanbanzai test force-fail --summary="reason"
+  → writes result: fail, runner: agent, trigger: manual.
+  → exit 0 on successful write.
+```
+
+### MCP `test` tool (Task 3)
+
+```
+test(action: "run")
+  → { result: "pass"|"fail", last_run: ISO8601, failure_count: int, summary: string }
+
+test(action: "verify")
+  → { result, last_run, failure_count, summary, was_rerun: bool }
+
+test(action: "status")
+  → { result, last_run, stale: bool, runner, failure_count, summary }
+  → does NOT run tests; pure read.
+
+test(action: "force-fail", summary: string)
+  → { result: "fail", last_run: ISO8601 }
+```
+
+### `status` tool extension (Task 4)
+
+```
+status()  // no ID
+  → response.test_health = {
+      status: "pass"|"fail"|"unknown",
+      last_run: ISO8601 | null,
+      stale: bool,
+      runner: string,
+      failure_count: int,
+      summary: string,
+    }
+  → response.attention may include {
+      type: "test_failure",
+      severity: "error"|"warning",
+      entity_id: "main",
+      message: string,
+    }
+```
+
 ## Dependency Graph
 
 ```
