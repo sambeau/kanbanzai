@@ -9,5 +9,5 @@ created: "2026-05-10T12:46:03Z"
 created_by: sambeau
 display_id: B68-F2
 tier: feature
-verification: "TASK-01KR8YZDB9AM1: (no verification recorded)\nTASK-01KR8Z05Y5FZB: Ran `go test -run TestCheckBugTransitionGate ./internal/service/...` — no more panics. Remaining failures are assertion mismatches from tests passing nil services, not crashes.\nTASK-01KR8Z05YH85N: go test ./internal/mcp/... exits 0 (all 3 target tests pass, full suite passes), go test ./internal/invariants/... exits 0\nTASK-01KR8Z05YNZAH: go test ./internal/kbzinit/... -run \"TestEmbeddedSkillsMatchAgentSkills|TestEmbeddedTaskSkillsMatchProjectSkills|TestEmbeddedRolesMatchProjectRoles\" -v — all 3 PASS"
+verification: "TASK-01KR8YZDB9AM1: (no verification recorded)\nTASK-01KR8Z05Y5FZB: Ran `go test -run TestCheckBugTransitionGate ./internal/service/...` — no more panics. Remaining failures are assertion mismatches from tests passing nil services, not crashes.\nTASK-01KR8Z05YH85N: go test ./internal/mcp/... exits 0 (all 3 target tests pass, full suite passes), go test ./internal/invariants/... exits 0\nTASK-01KR8Z05YKQ03: go test ./... — all 41 packages pass, zero failures\nTASK-01KR8Z05YNZAH: go test ./internal/kbzinit/... -run \"TestEmbeddedSkillsMatchAgentSkills|TestEmbeddedTaskSkillsMatchProjectSkills|TestEmbeddedRolesMatchProjectRoles\" -v — all 3 PASS"
 verification_status: partial
