@@ -3,4 +3,8 @@ parent_feature: FEAT-01KREH8PKSPM3
 slug: ws-a3-knowledge-sort-to-slices
 name: sort to slices — internal/knowledge/ (5 files)
 summary: "Replace all sort.* calls with slices.*/cmp.* in 5 internal/knowledge/ files (cap_tracker.go, compact.go, links.go, score.go, surface.go). Remove sort import, add slices (and cmp if needed)."
-status: ready
+status: active
+claimed_at: "2026-05-12T16:56:01Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-12T16:56:01Z"
+dispatched_by: sambeau
