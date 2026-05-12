@@ -4,3 +4,5 @@ slug: ws-b3-remaining-slog-callsites
 name: slog migration — remaining 6 files
 summary: "Translate all log.Printf/Println/Print calls to structured slog calls in: internal/context/surfacer.go, internal/docint/store.go, internal/gate/registry_cache.go, internal/merge/gates.go, internal/service/documents.go, internal/service/entities.go. Apply same level-mapping rules as B2."
 status: queued
+depends_on:
+  - TASK-01KREHHRYYECY

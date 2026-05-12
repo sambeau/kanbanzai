@@ -3,4 +3,4 @@ parent_feature: FEAT-01KREH8PKSPM3
 slug: ws-a4-remaining-sort-to-slices
 name: sort to slices — remaining 16 files
 summary: "Replace all sort.* calls with slices.*/cmp.* in the remaining 16 files across actionlog, binding, card, checkpoint, cleanup, cli/status, context, health, registry, storage, validate, worktree packages."
-status: queued
+status: ready
