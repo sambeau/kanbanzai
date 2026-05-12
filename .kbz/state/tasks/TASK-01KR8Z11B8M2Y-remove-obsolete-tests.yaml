@@ -3,4 +3,13 @@ parent_feature: FEAT-01KR8YRQN0P0W
 slug: remove-obsolete-tests
 name: Remove tests for removed features
 summary: "Identify and remove tests for removed features, deprecated lifecycle states, or behaviours no longer present in the codebase."
-status: ready
+status: done
+files_planned:
+  - internal/mcp/doc_intel_find_limit_test.go
+  - internal/mcp/doc_intel_tool_test.go
+  - internal/mcp/doc_tool_autovalidate_test.go
+  - internal/mcp/entity_tool_test.go
+  - internal/mcp/entity_transition_gate_test.go
+completed: "2026-05-12T12:08:23Z"
+completion_summary: "Removed 11 skipped (frozen) tests and 1 unused helper that were abandoned after the plan→batch refactor. Removed tests from doc_intel_find_limit_test.go (5), doc_intel_tool_test.go (1), doc_tool_autovalidate_test.go (3), entity_tool_test.go (1), entity_transition_gate_test.go (1 + createPhase1Feature helper)."
+verification: go test ./internal/service/ passes. go test ./internal/mcp/ passes (modulo pre-existing parallel test flake unrelated to changes). All other 39 packages pass consistently.
