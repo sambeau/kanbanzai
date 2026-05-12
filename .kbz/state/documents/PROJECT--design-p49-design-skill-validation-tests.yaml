@@ -1,0 +1,10 @@
+canonical_content_hash: 65be2e28526d87584224dfbd7fd5b6ed3954e416bd9b6929b1ae02ae6b050558
+content_hash: 65be2e28526d87584224dfbd7fd5b6ed3954e416bd9b6929b1ae02ae6b050558
+created: "2026-05-12T20:40:22Z"
+created_by: sambeau
+id: PROJECT/design-p49-design-skill-validation-tests
+path: work/P49-skill-validation-tests/P49-design-skill-validation-tests.md
+status: draft
+title: "P49 Design: Agent File Structural Verification"
+type: design
+updated: "2026-05-12T20:40:22Z"
