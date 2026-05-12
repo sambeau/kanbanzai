@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/sambeau/kanbanzai/internal/fsutil"
 	"gopkg.in/yaml.v3"
 )
 
@@ -30,7 +31,7 @@ func RefreshRoleLastVerified(path string, now time.Time) error {
 		return fmt.Errorf("marshal role file: %w", err)
 	}
 
-	return atomicWriteFile(path, out)
+	return fsutil.WriteFileAtomic(path, out, 0o644)
 }
 
 // RefreshSkillLastVerified reads the SKILL.md in skillDir, updates the
@@ -83,27 +84,5 @@ func RefreshSkillLastVerified(skillDir string, now time.Time) error {
 		lines = expanded
 	}
 
-	return atomicWriteFile(path, []byte(strings.Join(lines, "\n")))
-}
-
-// atomicWriteFile writes data to path by first writing to a temporary file in
-// the same directory, then renaming. This ensures the target is never left in
-// a partially-written state (NFR-002 atomicity).
-func atomicWriteFile(path string, data []byte) error {
-	dir := filepath.Dir(path)
-	tmp, err := os.CreateTemp(dir, ".refresh-*.tmp")
-	if err != nil {
-		return fmt.Errorf("create temp file: %w", err)
-	}
-	tmpPath := tmp.Name()
-	defer os.Remove(tmpPath) // clean up on failure; no-op after successful rename
-
-	if _, err := tmp.Write(data); err != nil {
-		tmp.Close()
-		return fmt.Errorf("write temp file: %w", err)
-	}
-	if err := tmp.Close(); err != nil {
-		return fmt.Errorf("close temp file: %w", err)
-	}
-	return os.Rename(tmpPath, path)
+	return fsutil.WriteFileAtomic(path, []byte(strings.Join(lines, "\n")), 0o644)
 }
