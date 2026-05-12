@@ -4,3 +4,5 @@ slug: test-governance-skill-and-documentation-updates
 name: Skill and Documentation Updates
 summary: Skill and Documentation Updates
 status: queued
+depends_on:
+  - TASK-01KRE9FCCFMEP

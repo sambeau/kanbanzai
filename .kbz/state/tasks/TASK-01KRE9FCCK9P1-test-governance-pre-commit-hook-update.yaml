@@ -4,3 +4,5 @@ slug: test-governance-pre-commit-hook-update
 name: Pre-Commit Hook Update
 summary: Pre-Commit Hook Update
 status: queued
+depends_on:
+  - TASK-01KRE9FCCEHYD

@@ -4,3 +4,5 @@ slug: test-governance-cli-subcommand-kanbanzai-test
 name: "CLI Subcommand `kanbanzai test`"
 summary: "CLI Subcommand `kanbanzai test`"
 status: queued
+depends_on:
+  - TASK-01KRE9FCCCHD9

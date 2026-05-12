@@ -4,3 +4,5 @@ slug: test-governance-status-integration
 name: Status Integration
 summary: Status Integration
 status: queued
+depends_on:
+  - TASK-01KRE9FCCCHD9

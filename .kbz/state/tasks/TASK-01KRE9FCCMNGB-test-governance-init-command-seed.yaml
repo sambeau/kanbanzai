@@ -4,3 +4,5 @@ slug: test-governance-init-command-seed
 name: Init Command Seed
 summary: Init Command Seed
 status: queued
+depends_on:
+  - TASK-01KRE9FCCCHD9

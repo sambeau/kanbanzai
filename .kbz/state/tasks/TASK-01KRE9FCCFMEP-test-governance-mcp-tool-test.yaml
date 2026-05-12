@@ -4,3 +4,5 @@ slug: test-governance-mcp-tool-test
 name: "MCP Tool `test`"
 summary: "MCP Tool `test`"
 status: queued
+depends_on:
+  - TASK-01KRE9FCCEHYD
