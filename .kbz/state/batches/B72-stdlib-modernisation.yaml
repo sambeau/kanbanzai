@@ -6,5 +6,5 @@ summary: "Four workstreams to replace legacy packages and hand-rolled helpers wi
 created: "2026-05-12T16:45:25Z"
 created_by: sambeau
 updated: "2026-05-12T16:45:25Z"
-next_feature_seq: 4
+next_feature_seq: 5
 parent: P67-stdlib-modernisation
