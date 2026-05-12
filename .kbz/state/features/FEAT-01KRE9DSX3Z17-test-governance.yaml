@@ -2,7 +2,8 @@ id: FEAT-01KRE9DSX3Z17
 slug: test-governance
 name: Test Governance Framework
 parent: B71-test-governance-impl
-status: developing
+status: reviewing
+review_cycle: 1
 summary: "Implement the .kbz/state/test-status.yaml record store, test() MCP tool, kanbanzai test CLI subcommand, status integration, skill/doc updates, pre-commit hook update, and init seed. Per dev-plan: 7 tasks with Task 1 foundational; Tasks 2 and 7 depend on it; Tasks 3 and 4 depend on store; Tasks 5 and 6 parallelisable after Task 2."
 design: FEAT-01KRE9DSX3Z17/design-p66-design-test-governance
 spec: FEAT-01KRE9DSX3Z17/spec-p66-spec-test-governance
@@ -11,3 +12,5 @@ created: "2026-05-12T14:28:32Z"
 created_by: sambeau
 display_id: B71-F1
 tier: feature
+verification: "TASK-01KRE9FCCCHD9: go test ./internal/teststatus/ passes with 10/10 tests OK.\nTASK-01KRE9FCCEHYD: All tests pass (go test ./cmd/kbz/), go vet clean, build succeeds. Test coverage includes: status with/without record, record pass/fail, record no flags, force-fail with/without summary, parseFailures empty/no-failures/build-fail/basic, buildRecord pass/fail, verify no-record/current-passing, JSON output format, command dispatch wiring.\nTASK-01KRE9FCCFMEP: All diagnostics pass for modified files: test_tool.go, test_tool_test.go, server.go, groups.go, groups_test.go, server_groups_test.go. Build compiles cleanly (go build). Tests cover: status with missing file (returns unknown), status with record, status with failures, force-fail, force-fail missing summary, verify cached pass, verify stale re-runs, verify fail re-runs, verify unknown re-runs, unknown action, missing action, parseFailures, buildTestResponse, buildRecordFromOutput, and run with no go.mod (graceful failure).\nTASK-01KRE9FCCH02R: Full internal/mcp test suite passes. All 7 new test health tests pass individually. go vet clean. Build succeeds.\nTASK-01KRE9FCCJ104: Verified via grep that all 6 files contain test(action: verify) or test(action: run) references. Each skill file mentions the test tool. AGENTS.md has the 7 numbered rules. orchestrate-development Phase 0 includes the pre-dispatch test-health gate. Getting-started checklist includes the test-health check step.\nTASK-01KRE9FCCK9P1: (no verification recorded)\nTASK-01KRE9FCCMNGB: go test ./internal/kbzinit/... passes (4.9s). go test ./internal/teststatus/... passes (0.2s)."
+verification_status: partial
