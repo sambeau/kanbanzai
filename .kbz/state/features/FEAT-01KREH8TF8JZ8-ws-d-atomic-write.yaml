@@ -19,3 +19,5 @@ overrides:
     to_status: dev-planning
 display_id: B72-F4
 tier: feature
+verification: "TASK-01KREHJ64TT5T: go build ./internal/context/... succeeded; go test ./internal/context/... passed (ok 0.275s); grep -r atomicWriteFile --include=*.go returned empty."
+verification_status: passed

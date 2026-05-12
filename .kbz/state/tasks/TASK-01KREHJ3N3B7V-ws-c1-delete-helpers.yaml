@@ -3,8 +3,16 @@ parent_feature: FEAT-01KREH8S3WFC4
 slug: ws-c1-delete-helpers
 name: delete three hand-rolled stdlib helpers
 summary: "Delete stringSliceContains in internal/docint/concepts.go→replace with slices.Contains (add slices import). Delete trimTrailingSlash in internal/context/surfacer.go→inline strings.TrimSuffix(s, \"/\"). Delete containsMarker in internal/kbzdoctor/doctor.go→replace with bytes.Contains(data, []byte(marker)) (remove bufio import)."
-status: active
+status: done
+files_planned:
+  - internal/docint/concepts.go
+  - internal/docint/concepts_test.go
+  - internal/context/surfacer.go
+  - internal/kbzdoctor/doctor.go
+completed: "2026-05-12T16:55:10Z"
 claimed_at: "2026-05-12T16:51:30Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-12T16:51:30Z"
 dispatched_by: sambeau
+completion_summary: "Deleted three hand-rolled helper functions and replaced with stdlib equivalents: stringSliceContains→slices.Contains (docint/concepts.go + test), trimTrailingSlash→strings.TrimSuffix (context/surfacer.go), containsMarker→bytes.Contains (kbzdoctor/doctor.go, removed bufio import). All 43 packages pass."
+verification: go build ./... clean; go test ./... 43 packages all pass; grep for removed symbols returns empty
