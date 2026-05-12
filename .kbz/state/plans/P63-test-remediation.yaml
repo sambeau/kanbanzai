@@ -1,9 +1,9 @@
 id: P63-test-remediation
 slug: test-remediation
 name: Test Remediation — Fix Failing Tests and Harden DoD
-status: active
+status: done
 summary: "111 failing tests across kbzinit, mcp, and service packages represent a Definition of Done violation. This plan fixes all failing tests, investigates root causes of test brittleness and silent test decay, establishes preventive measures (CI enforcement, commit hooks), and hardens the DoD to ensure failing tests are never ignored or committed again."
 order: 0
 created: "2026-05-10T11:37:16Z"
 created_by: sambeau
-updated: "2026-05-12T20:07:06Z"
+updated: "2026-05-12T20:07:09Z"
