@@ -4,7 +4,7 @@
 package kbzdoctor
 
 import (
-	"bufio"
+	"bytes"
 	"fmt"
 	"io"
 	"io/fs"
@@ -154,7 +154,7 @@ func (d *Doctor) Run(repoRoot string) ([]CheckResult, error) {
 		}
 
 		if rf.managed && rf.marker != "" {
-			if !containsMarker(data, rf.marker) {
+			if !bytes.Contains(data, []byte(rf.marker)) {
 				r.Warning = "not managed by Kanbanzai (no marker found)"
 				results = append(results, r)
 				continue
@@ -200,7 +200,7 @@ func (d *Doctor) Run(repoRoot string) ([]CheckResult, error) {
 			if err != nil {
 				return nil
 			}
-			if !containsMarker(data, skillManagedMarker) {
+			if !bytes.Contains(data, []byte(skillManagedMarker)) {
 				r := CheckResult{Path: path, Warning: "ghost file (not in managed install)"}
 				results = append(results, r)
 			}
@@ -273,17 +273,6 @@ func (d *Doctor) PrintResults(results []CheckResult) {
 	} else {
 		fmt.Fprintf(d.stdout, "\nAll %d checks passed.\n", len(results))
 	}
-}
-
-// containsMarker checks if data contains the given marker string.
-func containsMarker(data []byte, marker string) bool {
-	scanner := bufio.NewScanner(strings.NewReader(string(data)))
-	for scanner.Scan() {
-		if strings.Contains(scanner.Text(), marker) {
-			return true
-		}
-	}
-	return false
 }
 
 // extractMarkerVersion extracts the version number from a markdown managed marker.

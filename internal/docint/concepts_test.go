@@ -1,6 +1,7 @@
 package docint
 
 import (
+	"slices"
 	"testing"
 
 	"gopkg.in/yaml.v3"
@@ -119,10 +120,10 @@ func TestUpdateConceptRegistry_Aliases_Stored(t *testing.T) {
 	if len(c.Aliases) != 2 {
 		t.Fatalf("expected 2 aliases, got %d: %v", len(c.Aliases), c.Aliases)
 	}
-	if !stringSliceContains(c.Aliases, "stage") {
+	if !slices.Contains(c.Aliases, "stage") {
 		t.Errorf("alias 'stage' not stored; aliases = %v", c.Aliases)
 	}
-	if !stringSliceContains(c.Aliases, "lifecycle-stage") {
+	if !slices.Contains(c.Aliases, "lifecycle-stage") {
 		t.Errorf("alias 'lifecycle-stage' not stored; aliases = %v", c.Aliases)
 	}
 }
@@ -178,7 +179,7 @@ func TestUpdateConceptRegistry_Aliases_Accumulated(t *testing.T) {
 	if len(c.Aliases) != 2 {
 		t.Errorf("expected 2 accumulated aliases, got %d: %v", len(c.Aliases), c.Aliases)
 	}
-	if !stringSliceContains(c.Aliases, "alias-one") || !stringSliceContains(c.Aliases, "alias-two") {
+	if !slices.Contains(c.Aliases, "alias-one") || !slices.Contains(c.Aliases, "alias-two") {
 		t.Errorf("unexpected aliases: %v", c.Aliases)
 	}
 }

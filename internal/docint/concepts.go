@@ -1,6 +1,9 @@
 package docint
 
-import "strings"
+import (
+	"slices"
+	"strings"
+)
 
 // UpdateConceptRegistry updates the concept registry with concepts from a document's classifications.
 // It adds new concepts and updates existing ones with new introduced_in/used_in references.
@@ -34,11 +37,11 @@ func upsertConceptRef(registry *ConceptRegistry, name, sectionRef string, isIntr
 		return
 	}
 	if isIntro {
-		if !stringSliceContains(concept.IntroducedIn, sectionRef) {
+		if !slices.Contains(concept.IntroducedIn, sectionRef) {
 			concept.IntroducedIn = append(concept.IntroducedIn, sectionRef)
 		}
 	} else {
-		if !stringSliceContains(concept.UsedIn, sectionRef) {
+		if !slices.Contains(concept.UsedIn, sectionRef) {
 			concept.UsedIn = append(concept.UsedIn, sectionRef)
 		}
 	}
@@ -57,7 +60,7 @@ func mergeAliases(registry *ConceptRegistry, canonicalName string, aliases []str
 		if norm == canonical {
 			continue // skip alias identical to canonical name
 		}
-		if !stringSliceContains(concept.Aliases, norm) {
+		if !slices.Contains(concept.Aliases, norm) {
 			concept.Aliases = append(concept.Aliases, norm)
 		}
 	}
@@ -121,11 +124,3 @@ func removeByPrefix(refs []string, prefix string) []string {
 	return result
 }
 
-func stringSliceContains(slice []string, s string) bool {
-	for _, v := range slice {
-		if v == s {
-			return true
-		}
-	}
-	return false
-}

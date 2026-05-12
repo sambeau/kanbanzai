@@ -14,6 +14,7 @@ package context
 import (
 	"context"
 	"log"
+	"strings"
 	"sync"
 	"time"
 
@@ -165,9 +166,9 @@ func deriveScopeForTracking(filePaths []string) string {
 		d := dirPrefix(fp)
 		for prefix != "" && prefix != d {
 			if len(prefix) > len(d) {
-				prefix = dirPrefix(trimTrailingSlash(prefix))
+				prefix = dirPrefix(strings.TrimSuffix(prefix, "/"))
 			} else {
-				d = dirPrefix(trimTrailingSlash(d))
+				d = dirPrefix(strings.TrimSuffix(d, "/"))
 			}
 		}
 		if prefix == "" {
@@ -187,9 +188,3 @@ func dirPrefix(path string) string {
 	return ""
 }
 
-func trimTrailingSlash(s string) string {
-	if len(s) > 0 && s[len(s)-1] == '/' {
-		return s[:len(s)-1]
-	}
-	return s
-}
