@@ -1,0 +1,6 @@
+id: TASK-01KREHJ64TT5T
+parent_feature: FEAT-01KREH8TF8JZ8
+slug: ws-d1-atomic-write-consolidation
+name: replace atomicWriteFile with fsutil.WriteFileAtomic
+summary: "In internal/context/refresh.go: delete atomicWriteFile function, replace its two call-sites with fsutil.WriteFileAtomic(path, data, 0o644), add import github.com/sambeau/kanbanzai/internal/fsutil. No other files changed."
+status: queued
