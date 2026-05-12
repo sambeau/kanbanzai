@@ -1,7 +1,7 @@
 id: BUG-01KR45KJWB2KY
 slug: handoff-nil-pipeline-panic
 name: Handoff panics with nil pipeline on bindings load failure
-status: needs-review
+status: needs-rework
 severity: critical
 priority: critical
 type: implementation-defect
@@ -11,6 +11,7 @@ observed: "Every handoff() MCP call appears to time out client-side. Server-side
 expected: "handoff() returns an assembled prompt within ~1 second. If the pipeline is unavailable, handoff returns a structured JSON error (code: pipeline_unavailable) with remediation guidance, never a panic. Stage-bindings load failure surfaces as a loud startup warning, never as a silent skip."
 design: work/P61-handoff-resilience-binding-hardening/P61-design-handoff-resilience.md
 needs_review_at: "2026-05-12T00:47:47Z"
+review_cycle: 1
 spec: BUG-01KR45KJWB2KY/spec-spec
 tier: bug_fix
 verification: The nil-pipeline panic was fixed by adding a nil-Bindings guard in stepLookupBinding (internal/context/pipeline.go L339-354) — this was the Tier 1 stop-gap fix applied directly on main. The server now correctly returns a structured pipeline_unavailable error instead of panicking when stage-bindings.yaml fails to load.
