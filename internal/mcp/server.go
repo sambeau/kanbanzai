@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"log/slog"
+	"os"
 	"path/filepath"
 	"strings"
 	"time"
@@ -47,6 +49,8 @@ func NewServer(entityRoot string) (*server.MCPServer, error) {
 // newServerWithConfig creates an MCP server using the provided configuration.
 // Separated from NewServer to allow config injection in tests.
 func newServerWithConfig(entityRoot string, cfg *config.Config) (*server.MCPServer, error) {
+	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{Level: slog.LevelInfo})))
+
 	entitySvc := service.NewEntityService(entityRoot)
 
 	// Documents are stored relative to the repository root (current directory).

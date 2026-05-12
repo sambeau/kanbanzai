@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"log/slog"
 	"os"
 	"strings"
 	"sync"
@@ -98,6 +99,7 @@ func defaultDependencies() dependencies {
 }
 
 func main() {
+	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{Level: slog.LevelInfo})))
 	if err := run(os.Args[1:], defaultDependencies()); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
