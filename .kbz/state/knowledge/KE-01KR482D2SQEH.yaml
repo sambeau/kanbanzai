@@ -3,10 +3,10 @@ content: "In nextClaimMode, returning json.RawMessage(invariants.Format(...)) fr
 created: "2026-05-08T16:52:25Z"
 created_by: unknown
 id: KE-01KR482D2SQEH
-last_accessed_at: "2026-05-12T11:46:22Z"
+last_accessed_at: "2026-05-12T11:46:30Z"
 learned_from: TASK-01KR3Q0ANRJ6K
 miss_count: 0
-recent_use_count: 103
+recent_use_count: 104
 scope: project
 status: contributed
 tier: 3
