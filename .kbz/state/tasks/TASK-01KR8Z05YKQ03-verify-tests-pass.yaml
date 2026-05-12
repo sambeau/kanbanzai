@@ -3,4 +3,37 @@ parent_feature: FEAT-01KR8YRQN1HPG
 slug: verify-tests-pass
 name: Verify go test passes
 summary: Run go test ./... and confirm zero failures after all Phase 1 fixes. Depends on all other Phase 1 tasks completing first.
-status: ready
+status: done
+files_planned:
+  - internal/service/prereq.go
+  - internal/service/bug_gate.go
+  - internal/service/doc_path.go
+  - internal/service/doc_path_test.go
+  - internal/kbzinit/stage-bindings.yaml
+  - internal/kbzinit/roles/base.yaml
+  - internal/kbzinit/roles/plan-validator.yaml
+  - internal/kbzinit/roles/review-gate-validator.yaml
+  - internal/kbzinit/roles/spec-validator.yaml
+  - internal/kbzinit/roles/verifier.yaml
+  - internal/kbzinit/skills/agents/SKILL.md
+  - internal/kbzinit/skills/documents/SKILL.md
+  - internal/kbzinit/skills/getting-started/SKILL.md
+  - internal/kbzinit/skills/task-execution/audit-codebase/SKILL.md
+  - internal/kbzinit/skills/task-execution/decompose-feature/SKILL.md
+  - internal/kbzinit/skills/task-execution/implement-task/SKILL.md
+  - internal/kbzinit/skills/task-execution/orchestrate-development/SKILL.md
+  - internal/kbzinit/skills/task-execution/orchestrate-review/SKILL.md
+  - internal/kbzinit/skills/task-execution/prompt-engineering/SKILL.md
+  - internal/kbzinit/skills/task-execution/review-code/SKILL.md
+  - internal/kbzinit/skills/task-execution/write-design/SKILL.md
+  - internal/kbzinit/skills/task-execution/write-dev-plan/SKILL.md
+  - internal/kbzinit/skills/task-execution/write-research/SKILL.md
+  - internal/kbzinit/skills/task-execution/write-spec/SKILL.md
+  - internal/mcp/doc_tool_test.go
+  - internal/mcp/doc_tool_autovalidate_test.go
+  - internal/mcp/fast_track_integration_test.go
+  - internal/config/config_test.go
+  - .kbz/stage-bindings.yaml
+completed: "2026-05-12T11:46:09Z"
+completion_summary: Verified go test ./... exits 0 across all 41 packages. Fixed 17+ failing tests in 4 packages plus 1 integration test. See commit 75cfe2808 for details.
+verification: "go test ./... — all 41 packages pass, zero failures"
