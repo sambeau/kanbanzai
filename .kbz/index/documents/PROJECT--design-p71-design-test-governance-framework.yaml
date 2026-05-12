@@ -1,0 +1,196 @@
+document_id: PROJECT/design-p71-design-test-governance-framework
+document_path: work/P71-test-governance/P71-design-test-governance-framework.md
+content_hash: 42e24134efaf724eee4cb74adf69f78b0f0f94ce386a88303ef89585450020eb
+indexed_at: 2026-05-12T12:38:35.262593Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Test Governance Framework'
+      byte_offset: 0
+      byte_count: 8729
+      word_count: 1303
+      content_hash: 42e24134efaf724eee4cb74adf69f78b0f0f94ce386a88303ef89585450020eb
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 37
+          byte_count: 338
+          word_count: 52
+          content_hash: 806cc991031d83e0c7a62b7b8f06ccd76cc75632b14a3f5220271543ef18fdf4
+        - path: "1.2"
+          level: 2
+          title: Goals
+          byte_offset: 375
+          byte_count: 392
+          word_count: 68
+          content_hash: 6f8aeb12eea3c1becda305d7cf28f5ff6bdfc2a0e641aae4fa9bb29d33485ce5
+        - path: "1.3"
+          level: 2
+          title: Non-Goals
+          byte_offset: 767
+          byte_count: 246
+          word_count: 45
+          content_hash: 0a990283ad3da0b85b6eef985ffb0b8ba14d337b9d043eec574235866e3bbfcc
+        - path: "1.4"
+          level: 2
+          title: Design
+          byte_offset: 1013
+          byte_count: 5497
+          word_count: 791
+          content_hash: 1e76bef04d156cfee9a9354597fb95971dce9aa7c6688d6896b2abdac9834470
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'Record Format: `.kbz/state/test-status.yaml`'
+              byte_offset: 1024
+              byte_count: 941
+              word_count: 118
+              content_hash: 47c457c8cd1f4c1f7478f7c5a2aee9f02e86c1db97e6a71e37e5a0bdca01b60e
+            - path: 1.4.2
+              level: 3
+              title: Lifecycle
+              byte_offset: 1965
+              byte_count: 1076
+              word_count: 154
+              content_hash: 8b776666c0f2d2ea5d1de8152ca7434c922724ef80f8c6d2e9edaa75c4eb7b8f
+            - path: 1.4.3
+              level: 3
+              title: 'MCP Tool: `test`'
+              byte_offset: 3041
+              byte_count: 449
+              word_count: 61
+              content_hash: 1ace3f17c0cc0202260408b403afac80ff0c497717afad02722b405ec65c9169
+            - path: 1.4.4
+              level: 3
+              title: Integration with `status`
+              byte_offset: 3490
+              byte_count: 588
+              word_count: 78
+              content_hash: 56b9d6dc9d70b4da9b280d6a7de775adb5d05e74fa3d548c324d746e3a4f4590
+            - path: 1.4.5
+              level: 3
+              title: Integration with Skill Procedures
+              byte_offset: 4078
+              byte_count: 1126
+              word_count: 170
+              content_hash: f45af396302bcd633ae9d670faa5a7c1b3164eaff4090a0fbab176eb4201f6be
+              children:
+                - path: 1.4.5.1
+                  level: 4
+                  title: '`orchestrate-development` — Phase 0 (Session Start Audit)'
+                  byte_offset: 4117
+                  byte_count: 343
+                  word_count: 53
+                  content_hash: d4807d49444efc6c329c88d8f76025b0b1cb0213272506b93c27349ae9b9862c
+                - path: 1.4.5.2
+                  level: 4
+                  title: '`orchestrate-development` — Post-Merge step'
+                  byte_offset: 4460
+                  byte_count: 301
+                  word_count: 42
+                  content_hash: 019ec4ab21e2ccdf9c6cc42b22be519f4d723be7251b4b5498f8a6b3489fb143
+                - path: 1.4.5.3
+                  level: 4
+                  title: '`kanbanzai-getting-started` — Session Start Checklist'
+                  byte_offset: 4761
+                  byte_count: 242
+                  word_count: 37
+                  content_hash: adafca4843f774a286f7e06990b5b97115d624e4808559fb8bdcd05e54ef39e0
+                - path: 1.4.5.4
+                  level: 4
+                  title: '`implement-task` — Phase 4 (Verify)'
+                  byte_offset: 5003
+                  byte_count: 201
+                  word_count: 33
+                  content_hash: e94e50cc530995490cd82f3484e850aeb9dd3b32971081c57865e7ec9a3d0c7c
+            - path: 1.4.6
+              level: 3
+              title: Pre-commit Hook Update
+              byte_offset: 5204
+              byte_count: 378
+              word_count: 58
+              content_hash: afe3c4ab3f33abdb00087c5a25b52a3356d72f9a282a794444ad382722d34b7f
+            - path: 1.4.7
+              level: 3
+              title: Why a YAML File Instead of Knowledge Entries
+              byte_offset: 5582
+              byte_count: 573
+              word_count: 97
+              content_hash: b2fd1ff83f034cef09977fab1c4d2f469545aded7ee459132e110b74733714b7
+            - path: 1.4.8
+              level: 3
+              title: Backward Compatibility
+              byte_offset: 6155
+              byte_count: 355
+              word_count: 53
+              content_hash: 58c14d21335c05cca425d63ed17e6a8fc5ca41aee69bc74d1f5eca8925b23b75
+        - path: "1.5"
+          level: 2
+          title: Edge Cases
+          byte_offset: 6510
+          byte_count: 1070
+          word_count: 168
+          content_hash: 8eca12f10f9225faf8aa2a0165d00acfd159709af16c08493ae7e3fe7c9dab6b
+          children:
+            - path: 1.5.1
+              level: 3
+              title: First Run / Fresh Clone
+              byte_offset: 6525
+              byte_count: 243
+              word_count: 37
+              content_hash: b56dfeed0e52a03ddb698f54b3df84f1923f0442d9dffac4d78b292a74ac0c84
+            - path: 1.5.2
+              level: 3
+              title: TTL Expiry
+              byte_offset: 6768
+              byte_count: 242
+              word_count: 38
+              content_hash: 73009b1db0478e169fbd2821f5aadf9a93d558a7f309738462eb9fbc4027e881
+            - path: 1.5.3
+              level: 3
+              title: Concurrent Test Runs
+              byte_offset: 7010
+              byte_count: 333
+              word_count: 52
+              content_hash: 57b603f9f718585a0208a0bf87376cdf754c647a69599249f27a550393d10c04
+            - path: 1.5.4
+              level: 3
+              title: CI Integration (Future)
+              byte_offset: 7343
+              byte_count: 237
+              word_count: 38
+              content_hash: 45afb34a80bacb7384f83fad4acc2f03241ba8c1af423842e161e93cdba16932
+        - path: "1.6"
+          level: 2
+          title: Open Questions
+          byte_offset: 7580
+          byte_count: 377
+          word_count: 60
+          content_hash: 67fd00bc04cc0dc19c83a462882bfe2a132f125c5981c23cfb7e1e0d8ac7826d
+        - path: "1.7"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 7957
+          byte_count: 772
+          word_count: 114
+          content_hash: e2db4b98dba4d014c2ded1fc058ea1d6d7a591f834621e430eb8d48444cfe352
+entity_refs:
+    - entity_id: BUG-entity
+      entity_type: bug
+      section_path: "1.3"
+      byte_offset: 989
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.3"
+      role: constraint
+      confidence: high
+    - section_path: "1.6"
+      role: question
+      confidence: high
+    - section_path: "1.7"
+      role: alternative
+      confidence: high
+classified: false

@@ -1,0 +1,339 @@
+document_id: P65-state-storage-architecture/design-p65-design-state-storage-architecture
+document_path: work/P65-state-storage-architecture/P65-design-state-storage-architecture.md
+content_hash: 43d7d0ccea48bbc16c4e89ab10569d2db9982fc0c7addb353c4761d7f8f23dc0
+indexed_at: 2026-05-12T13:34:18.738473Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: State Storage Architecture for Kanbanzai'
+      byte_offset: 0
+      byte_count: 30363
+      word_count: 4181
+      content_hash: 43d7d0ccea48bbc16c4e89ab10569d2db9982fc0c7addb353c4761d7f8f23dc0
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Overview
+          byte_offset: 760
+          byte_count: 1597
+          word_count: 204
+          content_hash: 6c33255452101d7df4f28295cfa65819ea28bfaff26f0a5e746b99e395f86a79
+        - path: "1.2"
+          level: 2
+          title: 2. Goals and Non-Goals
+          byte_offset: 2357
+          byte_count: 2362
+          word_count: 345
+          content_hash: 8b345c139a7db84ab7ef8dd6cd57e09d94dee7f5e889640bba5eecd835d946e1
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 2.1 Goals
+              byte_offset: 2384
+              byte_count: 1664
+              word_count: 237
+              content_hash: c218ddd2291f0ce1110d9e48242aa414fe7c50f86f12106367395c14ae92bf91
+            - path: 1.2.2
+              level: 3
+              title: 2.2 Non-Goals
+              byte_offset: 4048
+              byte_count: 671
+              word_count: 103
+              content_hash: 817392688267d91ea45262d9c32c124f35b6967b5c3fbbe6004746d85e3da3a6
+        - path: "1.3"
+          level: 2
+          title: 3. Problem and Motivation
+          byte_offset: 4719
+          byte_count: 4283
+          word_count: 606
+          content_hash: 453f59be787e634bdb2f019638d044a012bcf1544ddf42e805ed80298b3358a3
+          children:
+            - path: 1.3.1
+              level: 3
+              title: '3.1 Pressure 1: Commit noise'
+              byte_offset: 5098
+              byte_count: 395
+              word_count: 55
+              content_hash: ce46c11f05b1cc452281e8677f01ce5a99789973446ac1f03cde7f2a6d337f4b
+            - path: 1.3.2
+              level: 3
+              title: '3.2 Pressure 2: Multi-write transactionality'
+              byte_offset: 5493
+              byte_count: 1307
+              word_count: 180
+              content_hash: b0e6f5d68394b020c6cca7a035ce376133b95dcf1bcb89edd560b41b1f1127d6
+            - path: 1.3.3
+              level: 3
+              title: '3.3 Pressure 3: Durable workflow execution'
+              byte_offset: 6800
+              byte_count: 896
+              word_count: 133
+              content_hash: 0a19d0f4cc865103be337e17affdf4ad231bcb1764031ae9020a0d19df9ceda2
+            - path: 1.3.4
+              level: 3
+              title: '3.4 Pressure 4: Concurrency'
+              byte_offset: 7696
+              byte_count: 392
+              word_count: 59
+              content_hash: 41d5fa92bad3bba5e49cd6875316bb93a1b99242869c0da36f818d6d3715a515
+            - path: 1.3.5
+              level: 3
+              title: 3.5 What changed since the transition-history design was written
+              byte_offset: 8088
+              byte_count: 914
+              word_count: 125
+              content_hash: 6230d847a588bfde148c33c8521dd43989b1206f22767e72a98cdf189549a58d
+        - path: "1.4"
+          level: 2
+          title: 4. Recommendation
+          byte_offset: 9002
+          byte_count: 4019
+          word_count: 573
+          content_hash: 988431e744823b08c15b0fea1df5365036e231bbdf74116753b30be1fa4f84f5
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 4.1 Tiered storage model
+              byte_offset: 9164
+              byte_count: 1296
+              word_count: 181
+              content_hash: 221d4163b81040c821097f37d0fe8a57404c361cbaf1be56cd2d9f031f9d719b
+            - path: 1.4.2
+              level: 3
+              title: 4.2 What's NOT in SQLite
+              byte_offset: 10460
+              byte_count: 818
+              word_count: 121
+              content_hash: dd745239f9404dda52c224c30c5e9173fe99d9f392ccfdb5a8f2c3dd7841c1b9
+            - path: 1.4.3
+              level: 3
+              title: 4.3 Why SQLite first, not Postgres
+              byte_offset: 11278
+              byte_count: 1035
+              word_count: 144
+              content_hash: d7807c6ba6e6acf6f7c58ec26112934b08f7ed9c8795a7104d1cf4ecf1c45aab
+            - path: 1.4.4
+              level: 3
+              title: 4.4 What stays from the transition-history design
+              byte_offset: 12313
+              byte_count: 708
+              word_count: 105
+              content_hash: 036def25aa5276ab9eb354cadfa7e9cff3bb2d5b13ce1fae111c68290c6ca483
+        - path: "1.5"
+          level: 2
+          title: 5. Schema sketch
+          byte_offset: 13021
+          byte_count: 4413
+          word_count: 463
+          content_hash: c07fa73f2a3dfa3ce56c127ac68232643959438f43f4b80a55e790985252d1f7
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Core tables
+              byte_offset: 13116
+              byte_count: 2424
+              word_count: 254
+              content_hash: 64713243dc9fd7a5d742c7e5bea4337daa34fa0a2fee88836f3fd44afc1695e2
+            - path: 1.5.2
+              level: 3
+              title: 5.2 P44 Phase 2 tables
+              byte_offset: 15540
+              byte_count: 1733
+              word_count: 176
+              content_hash: 947a4904967690c3dfb0a20a79985a52eb96a5795f13af7ad5cae21fa901c075
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Migration metadata
+              byte_offset: 17273
+              byte_count: 161
+              word_count: 20
+              content_hash: 12defe2d42bfcbd4c765de748bce12ea5256b0565586fc7b96af622fbfb7c522
+        - path: "1.6"
+          level: 2
+          title: 6. Phasing
+          byte_offset: 17434
+          byte_count: 3174
+          word_count: 472
+          content_hash: 7b7e740f5600dd6721c1b9b42522b18f4622023409be8881b660448870c3bf60
+          children:
+            - path: 1.6.1
+              level: 3
+              title: Phase 0 — Decision and pre-work (current)
+              byte_offset: 17449
+              byte_count: 257
+              word_count: 37
+              content_hash: 84a2f19554d803dba8e3b87dd8c465fca3964dda1340d6281c65e1481d0c6f09
+            - path: 1.6.2
+              level: 3
+              title: Phase 1 — Ship the JSONL transition log as a stepping stone (2–4 weeks)
+              byte_offset: 17706
+              byte_count: 1183
+              word_count: 170
+              content_hash: 3e5fd8d9f1894da377041e458df32f0411926b60351faf5b6f9e5f10d048748a
+            - path: 1.6.3
+              level: 3
+              title: Phase 2 — SQLite for execution-tier state (1–3 months)
+              byte_offset: 18889
+              byte_count: 1262
+              word_count: 193
+              content_hash: 0a3d87aa2f045e4f9e62ede9496cd23c5cfe73e262f2be1185fc8f3623ea8c46
+            - path: 1.6.4
+              level: 3
+              title: 'Phase 3 — Optional: Postgres readiness (6–12 months, gated on need)'
+              byte_offset: 20151
+              byte_count: 457
+              word_count: 69
+              content_hash: 3e57482282f0ac76f3ba06cd5a59b21d1b0c1d7394b676a7c6d7203adaef0cae
+        - path: "1.7"
+          level: 2
+          title: 7. Risks and Mitigations
+          byte_offset: 20608
+          byte_count: 1884
+          word_count: 304
+          content_hash: 9e08f4f5255ed578ff6c79b3ecd6cf2783cd6b4022e2d70e8a9ab41ee570b598
+        - path: "1.8"
+          level: 2
+          title: 8. Alternatives Considered
+          byte_offset: 22492
+          byte_count: 2393
+          word_count: 347
+          content_hash: d91f8de9ff0c051f9aac0208bfc0d8c3a483c3ef681480b0247b0475ce1ff606
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 8.1 Pure Git-native (the original transition-history design)
+              byte_offset: 22523
+              byte_count: 620
+              word_count: 89
+              content_hash: 6042ac3f54d61ad6045ec8f15979273864c9ddb136f7344a301dc1f6df7097ad
+            - path: 1.8.2
+              level: 3
+              title: 8.2 SQLite-from-day-one (skip Phase 1)
+              byte_offset: 23143
+              byte_count: 380
+              word_count: 57
+              content_hash: 8249827105e9268994353113fee6ecd7a7baf3637a87affaeaf6355eefd9cfff
+            - path: 1.8.3
+              level: 3
+              title: 8.3 Postgres from the start
+              byte_offset: 23523
+              byte_count: 305
+              word_count: 44
+              content_hash: ea3fa19da6f5c13c7a62bad92942c19d33002a0139d600319d7b6d78e7911fe5
+            - path: 1.8.4
+              level: 3
+              title: 8.4 Custom append-only file format
+              byte_offset: 23828
+              byte_count: 258
+              word_count: 35
+              content_hash: f6f8fca9f3127e310e1bc7a1b4b6f57a379327dc73ea86e4958c9ce2c3846bfb
+            - path: 1.8.5
+              level: 3
+              title: 8.5 Embed Bolt or another KV store
+              byte_offset: 24086
+              byte_count: 398
+              word_count: 60
+              content_hash: 4b540407863527848954c3ceeb45d9b09e43e93beca98004bc1455bd76aa05d8
+            - path: 1.8.6
+              level: 3
+              title: 8.6 Two databases (one for execution, one for audit)
+              byte_offset: 24484
+              byte_count: 401
+              word_count: 58
+              content_hash: 12a31ea010973e882960731e23b2438c5731014292d504c0421156c06a3b44ec
+        - path: "1.9"
+          level: 2
+          title: 9. Migration story for users
+          byte_offset: 24885
+          byte_count: 1005
+          word_count: 155
+          content_hash: 91a51e1af7a3112dc227d3f758683f873ef7eb28d3778f5acd2bf1a50f8fae70
+        - path: "1.10"
+          level: 2
+          title: 10. Coupling with P44
+          byte_offset: 25890
+          byte_count: 1597
+          word_count: 246
+          content_hash: 2dfed9bab887171d68c16e7c0b0c0124844d6cc430ce157efb05165e11a162f5
+        - path: "1.11"
+          level: 2
+          title: 11. Open Questions
+          byte_offset: 27487
+          byte_count: 1538
+          word_count: 210
+          content_hash: dbfebb63c9170d3b769eb60aeead81f659898fdb97426a9ab85f057321d652e2
+        - path: "1.12"
+          level: 2
+          title: 12. Decisions
+          byte_offset: 29025
+          byte_count: 880
+          word_count: 127
+          content_hash: ebe75042ba52b1329ef10c762e577ee8915d6e2b02597155d6ac07123854dfb4
+        - path: "1.13"
+          level: 2
+          title: 13. Cross-references
+          byte_offset: 29905
+          byte_count: 458
+          word_count: 57
+          content_hash: c2600fa4c2953d355574521e0260dc1d771b32be8eebbda9e638c96ad6e5e849
+entity_refs:
+    - entity_id: FEAT-01ABC
+      entity_type: feature
+      section_path: 1.5.1
+      byte_offset: 13298
+    - entity_id: P44-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 315
+    - entity_id: P44-design-deterministic-workflow-controller
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 348
+cross_doc_links:
+    - target_path: work/_project/design-transition-history-storage.md
+      link_text: work/_project/design-transition-history-storage.md
+      section_path: "1"
+    - target_path: work/P44-model-routing-agent-launcher/P44-design-deterministic-workflow-controller.md
+      link_text: work/P44-model-routing-agent-launcher/P44-design-deterministic-workflow-controller.md
+      section_path: "1"
+    - target_path: design-transition-history-storage.md
+      link_text: design-transition-history-storage.md
+      section_path: "1.1"
+    - target_path: design-transition-history-storage.md
+      link_text: design-transition-history-storage.md
+      section_path: 1.3.1
+    - target_path: design-transition-history-storage.md
+      link_text: design-transition-history-storage.md
+      section_path: 1.6.2
+    - target_path: design-transition-history-storage.md
+      link_text: design-transition-history-storage.md
+      section_path: "1.12"
+    - target_path: work/_project/design-transition-history-storage.md
+      link_text: work/_project/design-transition-history-storage.md
+      section_path: "1.13"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: 1.6.1
+      role: decision
+      confidence: high
+    - section_path: "1.7"
+      role: risk
+      confidence: high
+    - section_path: "1.8"
+      role: alternative
+      confidence: high
+    - section_path: "1.11"
+      role: question
+      confidence: high
+    - section_path: "1.12"
+      role: decision
+      confidence: high
+classified: false

@@ -1,0 +1,307 @@
+document_id: P66-test-governance/spec-p66-spec-test-governance-framework
+document_path: work/P66-test-governance/P66-spec-test-governance-framework.md
+content_hash: 654dc2e658a8904698c025575a1e1e593e56934fc2bf8746a0db56f87b56a474
+indexed_at: 2026-05-12T14:23:59.808496Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Specification: Test Governance Framework'
+      byte_offset: 0
+      byte_count: 10861
+      word_count: 1594
+      content_hash: 654dc2e658a8904698c025575a1e1e593e56934fc2bf8746a0db56f87b56a474
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 44
+          byte_count: 434
+          word_count: 64
+          content_hash: c36d64be5f393a7214847009cb8d24207f2d9c172911d088ddb6cf1b845ad80e
+        - path: "1.2"
+          level: 2
+          title: Scope
+          byte_offset: 478
+          byte_count: 990
+          word_count: 133
+          content_hash: 4d4cc3e613905c5d41c6e7f72fe5bae3299ff1a9bd8692bfd63019753cffbe2d
+          children:
+            - path: 1.2.1
+              level: 3
+              title: In Scope
+              byte_offset: 488
+              byte_count: 560
+              word_count: 67
+              content_hash: 1890109f18182031c76e703d50453ec9f090baeec9fdaffb08027610f8c483fd
+            - path: 1.2.2
+              level: 3
+              title: Out of Scope
+              byte_offset: 1048
+              byte_count: 420
+              word_count: 64
+              content_hash: af4c411c83b4e10739d8b982f272e06f013e3cc96aad79ed88540051666645ca
+        - path: "1.3"
+          level: 2
+          title: Functional Requirements
+          byte_offset: 1468
+          byte_count: 6819
+          word_count: 1018
+          content_hash: a8cbab354c6bc55be783ad8ddfef974731580f7100ff8ecd4b293db9b07aaa62
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 'FR-001: Record Format'
+              byte_offset: 1496
+              byte_count: 936
+              word_count: 160
+              content_hash: eff84dd702af71a8977f3d0cc6a00d83fd6ad1d5595d4aa27e64f0ea31b4584a
+            - path: 1.3.2
+              level: 3
+              title: 'FR-002: Record Seeding'
+              byte_offset: 2432
+              byte_count: 145
+              word_count: 22
+              content_hash: 356a83407ef7e06b9b8582ef1d752711d786246cd941adffbbad64c242438cd3
+            - path: 1.3.3
+              level: 3
+              title: 'FR-003: Test Runner Tool — `test(action: "run")`'
+              byte_offset: 2577
+              byte_count: 344
+              word_count: 49
+              content_hash: fbc4e0dac6f695c76b779fbdc8d262c864a36351e8d154b4405613a4c9b3caa8
+            - path: 1.3.4
+              level: 3
+              title: 'FR-004: Test Verify Tool — `test(action: "verify")`'
+              byte_offset: 2921
+              byte_count: 745
+              word_count: 105
+              content_hash: 0e7c686d8f971fb8b0f55f3b62a032427205f734761e5c3be76abaeec4c9aaee
+            - path: 1.3.5
+              level: 3
+              title: 'FR-005: Test Status Tool — `test(action: "status")`'
+              byte_offset: 3666
+              byte_count: 198
+              word_count: 28
+              content_hash: 23f81beb75a5572156898d58b9dcdf86c70b73970c6b322c826d10b92704c7e6
+            - path: 1.3.6
+              level: 3
+              title: 'FR-006: Force-Fail Tool — `test(action: "force-fail")`'
+              byte_offset: 3864
+              byte_count: 371
+              word_count: 50
+              content_hash: f8f8809e65a29f96b6edd4a9ba7f6cdd2e5cf3acbae2b687a072aeb51c73a9c3
+            - path: 1.3.7
+              level: 3
+              title: 'FR-007: Status Integration — Project Overview'
+              byte_offset: 4235
+              byte_count: 574
+              word_count: 80
+              content_hash: f13d6dc8f18abf29ef451bfd7499b11e552f4d87de1f90a56d3cb57626048a77
+            - path: 1.3.8
+              level: 3
+              title: 'FR-008: Status Integration — Attention Items'
+              byte_offset: 4809
+              byte_count: 554
+              word_count: 84
+              content_hash: 2ae78c0acacac80c977cd5ea649fbce9501af25892ec4e2fdec0867b2af5fedd
+            - path: 1.3.9
+              level: 3
+              title: 'FR-009: Orchestrate-Development — Pre-Dispatch Gate'
+              byte_offset: 5363
+              byte_count: 436
+              word_count: 65
+              content_hash: bb1c6cb6b50e27d6d2351af85ca25693913dc7036d4a9ea3ed530b7250de2fb0
+            - path: 1.3.10
+              level: 3
+              title: 'FR-010: Kanbanzai-Getting-Started — Session Start Gate'
+              byte_offset: 5799
+              byte_count: 279
+              word_count: 45
+              content_hash: 150cebc8de895a5730a74121d28a4485def9e39fd8e55ec9e60c10c07efd9540
+            - path: 1.3.11
+              level: 3
+              title: 'FR-011: Implement-Task — Post-Phase-4 Update'
+              byte_offset: 6078
+              byte_count: 245
+              word_count: 36
+              content_hash: e307ce226e18c618f3c129f17b9db8ce12c38f2a429a5048aecc7da9e1343a93
+            - path: 1.3.12
+              level: 3
+              title: 'FR-012: Orchestrate-Review — Post-Merge Update'
+              byte_offset: 6323
+              byte_count: 198
+              word_count: 28
+              content_hash: 32a7856b74d1e8c9cb8a0a51f43d0b68bb3872f17812b77488a30754df8928a1
+            - path: 1.3.13
+              level: 3
+              title: 'FR-013: Verify-Closeout — DoD Item 4 Update'
+              byte_offset: 6521
+              byte_count: 209
+              word_count: 32
+              content_hash: 2a496007abc2a1903f367d73b866de604791817476e05e6d7ba13ee22309b633
+            - path: 1.3.14
+              level: 3
+              title: 'FR-014: Pre-Commit Hook Update'
+              byte_offset: 6730
+              byte_count: 393
+              word_count: 58
+              content_hash: 4c4d83ce78803b3b8e7414a3339bf2edea175f276476072c6707c73bb454ce62
+            - path: 1.3.15
+              level: 3
+              title: 'FR-015: AGENTS.md Test Discipline Update'
+              byte_offset: 7123
+              byte_count: 467
+              word_count: 67
+              content_hash: d57ce6f380a80eee492cb98d84eff65e0d30f754286aa44c88eb3a57f5ea81cd
+            - path: 1.3.16
+              level: 3
+              title: 'FR-016: Test-Status Record Is Always Updated After a Test Run'
+              byte_offset: 7590
+              byte_count: 500
+              word_count: 75
+              content_hash: 42d5c2d85bd549c4f4c7cb7fba78d9e4e9956686aa6bffc9851efdf60bb9e57b
+            - path: 1.3.17
+              level: 3
+              title: 'FR-017: Merging Is Blocked When Tests Are Failing'
+              byte_offset: 8090
+              byte_count: 197
+              word_count: 31
+              content_hash: 2dd539cff23c5b944fe1c0134042818b47a6290e4fd24a833be973a51ad52fe7
+        - path: "1.4"
+          level: 2
+          title: Non-Functional Requirements
+          byte_offset: 8287
+          byte_count: 839
+          word_count: 120
+          content_hash: 9de84ad6f59a3501af880d15379b1e065b0fe7c91609b5d82f804ef752cf2fc7
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 'NFR-001: Read Performance'
+              byte_offset: 8319
+              byte_count: 141
+              word_count: 20
+              content_hash: cb9112bc684ab3d1f256267d10cc36fabf09e6c47020bec65ab21421ff564555
+            - path: 1.4.2
+              level: 3
+              title: 'NFR-002: Verify Performance'
+              byte_offset: 8460
+              byte_count: 199
+              word_count: 31
+              content_hash: 87204ced840658e6fe84c0e9961886d60eb3bf2352bce48c9e6d165518f9a6a7
+            - path: 1.4.3
+              level: 3
+              title: 'NFR-003: Write Safety'
+              byte_offset: 8659
+              byte_count: 172
+              word_count: 25
+              content_hash: 0893d8cd04c8638abef0a3ed309ffb3166399fb2028c5413494172596e83e4aa
+            - path: 1.4.4
+              level: 3
+              title: 'NFR-004: Backward Compatibility'
+              byte_offset: 8831
+              byte_count: 295
+              word_count: 41
+              content_hash: a7d4723590fe6bc341cbda8b4b48882545635865ca4698baa0fee5e40ed6b896
+        - path: "1.5"
+          level: 2
+          title: Acceptance Criteria
+          byte_offset: 9126
+          byte_count: 1735
+          word_count: 254
+          content_hash: d290205464ad1086574cd4f36b75bd935c69a9b0f7063f50eb9447e98850af4e
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'AC-001: Record Creation'
+              byte_offset: 9150
+              byte_count: 139
+              word_count: 18
+              content_hash: af3821d05074dee9631aaf96749b6c66387083d65196dbe62295d592ae51a682
+            - path: 1.5.2
+              level: 3
+              title: 'AC-002: Test Run Recording'
+              byte_offset: 9289
+              byte_count: 182
+              word_count: 25
+              content_hash: 422ab03fb27968ae85bd631bb84cbe212c0a20843d69a6d7e18c42e307ce244c
+            - path: 1.5.3
+              level: 3
+              title: 'AC-003: Status Surface'
+              byte_offset: 9471
+              byte_count: 158
+              word_count: 24
+              content_hash: 121e16ee2999c7e548202783a5839fae27c4baf1190d9a9d40830f31010b3d5e
+            - path: 1.5.4
+              level: 3
+              title: 'AC-004: Failure Attention'
+              byte_offset: 9629
+              byte_count: 207
+              word_count: 27
+              content_hash: 0f18fade1df9b577b79b7fbd914cc54884fa89db85821486b63318be66ea038c
+            - path: 1.5.5
+              level: 3
+              title: 'AC-005: Verify Returns Cached When Code Unchanged'
+              byte_offset: 9836
+              byte_count: 261
+              word_count: 39
+              content_hash: 27a08783104c9ff7f863f7269a9df05b9683ebafad30eaf052b5ca5c7d869acc
+            - path: 1.5.6
+              level: 3
+              title: 'AC-006: Verify Re-Runs When Code Changed'
+              byte_offset: 10097
+              byte_count: 227
+              word_count: 35
+              content_hash: 152a3e61744cd1dc69b1e81891bf5b8e2ef6f9991dec87490d2bd3231c0eb014
+            - path: 1.5.7
+              level: 3
+              title: 'AC-007: Verify Re-Runs When Last Result Was Fail'
+              byte_offset: 10324
+              byte_count: 234
+              word_count: 36
+              content_hash: 717e7b2f7f0f60e2f892f1541a595e9a408e1ceaa0c67e214ca76ee2d101859e
+            - path: 1.5.8
+              level: 3
+              title: 'AC-008: Skill Gate Blocks Dispatch'
+              byte_offset: 10558
+              byte_count: 151
+              word_count: 22
+              content_hash: 91e73b673924aa209063fd54d2aa5fb454613faca0ab4023f62f3683a36d7237
+            - path: 1.5.9
+              level: 3
+              title: 'AC-009: Merge Gate Blocks on Failure'
+              byte_offset: 10709
+              byte_count: 152
+              word_count: 25
+              content_hash: c25bbe5dd4568c0f8d1eeb04ee9063c97070dfef2ef1db46052a51a429c9b259
+entity_refs:
+    - entity_id: BUG-entity
+      entity_type: bug
+      section_path: 1.2.2
+      byte_offset: 1170
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.2"
+      role: constraint
+      confidence: high
+    - section_path: 1.2.1
+      role: constraint
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+    - section_path: 1.3.7
+      role: narrative
+      confidence: high
+    - section_path: "1.4"
+      role: requirement
+      confidence: high
+    - section_path: "1.5"
+      role: requirement
+      confidence: high
+classified: false

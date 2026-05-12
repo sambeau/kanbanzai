@@ -1,0 +1,264 @@
+document_id: P44-model-routing-agent-launcher/research-p44-research-hardening-principle
+document_path: work/P44-model-routing-agent-launcher/P44-research-hardening-principle.md
+content_hash: 5297938b501c565ba3238b42847271ae0037ca3e9c69b018793a5222e522f495
+indexed_at: 2026-05-12T12:57:27.42182Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Research Report: Adopting the Hardening Principle for Kanbanzai'
+      byte_offset: 0
+      byte_count: 26821
+      word_count: 3656
+      content_hash: 5297938b501c565ba3238b42847271ae0037ca3e9c69b018793a5222e522f495
+      children:
+        - path: "1.1"
+          level: 2
+          title: 1. Executive Summary
+          byte_offset: 607
+          byte_count: 2998
+          word_count: 387
+          content_hash: c1eea35d7c55a3bc2e2ca9819d4ebe7b0d17a22e0d219d6778c0e4b7fa806b2e
+        - path: "1.2"
+          level: 2
+          title: '2. Current State: What''s Already Hardened'
+          byte_offset: 3605
+          byte_count: 3131
+          word_count: 439
+          content_hash: 7114ac57fe1bc54bec058af7b0b7e645f6d619a209b47bdfc5eee049381efe1c
+          children:
+            - path: 1.2.1
+              level: 3
+              title: '2.1 The decompose tool: a case study in successful hardening'
+              byte_offset: 5464
+              byte_count: 1272
+              word_count: 180
+              content_hash: 5b0589f4abedb16400b5759d0a1c58a771329669906fa9d513d8365058238616
+        - path: "1.3"
+          level: 2
+          title: '3. Gap Analysis: Fuzzy Steps Remaining in Orchestrator Sessions'
+          byte_offset: 6736
+          byte_count: 4729
+          word_count: 630
+          content_hash: 03d64d0415b456a7d365b0d808dff80da382ba8daf0ef206c32d53a54b68bb12
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 3.1 Post-completion summarization
+              byte_offset: 7022
+              byte_count: 1109
+              word_count: 148
+              content_hash: a9f1a07c7f5b3fd2f347d057a99fbfaf74442dc9a1b76c140a755752f8df135e
+            - path: 1.3.2
+              level: 3
+              title: 3.2 Review finding collation and deduplication
+              byte_offset: 8131
+              byte_count: 1099
+              word_count: 146
+              content_hash: 95686abaa920659e6c732ec84699dd441495ceee292a0190431d5e00bb645e81
+            - path: 1.3.3
+              level: 3
+              title: 3.3 Standalone spec and dev-plan validation
+              byte_offset: 9230
+              byte_count: 975
+              word_count: 129
+              content_hash: 1eaee8cc6141d35a942575095e8c4f6f02fb4671c9b934d42123ea2d7efeda36
+            - path: 1.3.4
+              level: 3
+              title: 3.4 Knowledge signal extraction from task completion
+              byte_offset: 10205
+              byte_count: 1260
+              word_count: 172
+              content_hash: e3bad12eb52a6e27ff6ae033402fb30dcab7ec0e7cf796c94dd915c49fae2061
+        - path: "1.4"
+          level: 2
+          title: 4. Hardening Opportunities by Impact and Effort
+          byte_offset: 11465
+          byte_count: 1243
+          word_count: 207
+          content_hash: af68466aa77e75ad075b26b42904f090592e7e1ceaf2c3a67911e6c09560501d
+        - path: "1.5"
+          level: 2
+          title: 5. Risks and Pitfalls
+          byte_offset: 12708
+          byte_count: 1782
+          word_count: 238
+          content_hash: e755cefbafc42ee4759e0be07056662aec406093136b7be71768b6c89e4bad80
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 5.1 Premature hardening (the article's pitfall 1)
+              byte_offset: 12734
+              byte_count: 496
+              word_count: 65
+              content_hash: e04469647aba5caca1545828a627004c8e58a8e1d1991df732a6f3a6b7426d33
+            - path: 1.5.2
+              level: 3
+              title: 5.2 Hardening the wrong step (the article's pitfall 3)
+              byte_offset: 13230
+              byte_count: 462
+              word_count: 65
+              content_hash: 94800f537a7bc7b374da1f2e7905125d57fd620d0ce93fa99117ca150d544f6b
+            - path: 1.5.3
+              level: 3
+              title: 5.3 Never hardening (the article's pitfall 2)
+              byte_offset: 13692
+              byte_count: 385
+              word_count: 53
+              content_hash: 2f27fdb6250ff31cca6794738668ad9ec0100864da04d87678fa0a3892b32954
+            - path: 1.5.4
+              level: 3
+              title: 5.4 Tool proliferation without schema standardisation
+              byte_offset: 14077
+              byte_count: 413
+              word_count: 50
+              content_hash: 5d9af0f5c1e24012795fb5fdc1e86d28ccc1aad38ff390c7748f8472465327f7
+        - path: "1.6"
+          level: 2
+          title: 6. Foundational Changes Required
+          byte_offset: 14490
+          byte_count: 2773
+          word_count: 362
+          content_hash: c48c0ca50cb748abfcab4ea25d29919eaedb0a036ec7d528525630afebbf2da2
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 6.1 Standardise the structured output types
+              byte_offset: 14631
+              byte_count: 1333
+              word_count: 166
+              content_hash: 7cdda579b2ec26e4980a95945c40ed17e0602fe00f2eeb2a1e5abd508b8313d6
+            - path: 1.6.2
+              level: 3
+              title: 6.2 Add "hardened" annotation to tool metadata
+              byte_offset: 15964
+              byte_count: 484
+              word_count: 57
+              content_hash: cd9899e9f855dbbd7d3cc6c811e8523fec331c9ebfe732d6fa20dbb821732064
+            - path: 1.6.3
+              level: 3
+              title: 6.3 Formally separate "orchestration glue" from "creative" in skill procedures
+              byte_offset: 16448
+              byte_count: 815
+              word_count: 117
+              content_hash: a2b4227ff5c24f63a20c44c4d9f86d52697baa2c0525d0dc7a50d411c9253d05
+        - path: "1.7"
+          level: 2
+          title: 7. Specific Tool Proposals
+          byte_offset: 17263
+          byte_count: 5620
+          word_count: 779
+          content_hash: 70fd4a6f774a28171fb27b6330975f4e53dcbace648233502c325a95b92e854d
+          children:
+            - path: 1.7.1
+              level: 3
+              title: '7.1 `task(action: "summarize")` — Post-Completion Summary Tool'
+              byte_offset: 17294
+              byte_count: 1596
+              word_count: 215
+              content_hash: 5e318f95ff8df70ca4fe7464e0205d6504cea47f5b6ab7d579b6328e0e05a5e0
+            - path: 1.7.2
+              level: 3
+              title: '7.2 `review(action: "collate")` — Review Finding Collation Tool'
+              byte_offset: 18890
+              byte_count: 1852
+              word_count: 243
+              content_hash: 8e910560e608646df9a826b2c0f7d4c2e095b8e2befa80b74b166f0b6fe2b56c
+            - path: 1.7.3
+              level: 3
+              title: 7.3 Extended `doc validate` checks
+              byte_offset: 20742
+              byte_count: 1079
+              word_count: 155
+              content_hash: 3a7128d1018a7ca3b8c661385eb9282699ef4523516c0bfcf06a94d255753a08
+            - path: 1.7.4
+              level: 3
+              title: 7.4 `harden` workflow action (design sketch)
+              byte_offset: 21821
+              byte_count: 1062
+              word_count: 161
+              content_hash: dd1e5090edb7b244caacf08eb962d1d929c9ab2a5a146b0b3812bd95742c168c
+        - path: "1.8"
+          level: 2
+          title: 8. Recommendations (Priority-Ordered)
+          byte_offset: 22883
+          byte_count: 2305
+          word_count: 310
+          content_hash: 20fa16b07c354cf3098572d2663aacead572191252d5b09fc27e43b67fa5a763
+          children:
+            - path: 1.8.1
+              level: 3
+              title: 'Must do (high impact, low effort, time to market: 1–2 sprints)'
+              byte_offset: 22972
+              byte_count: 713
+              word_count: 89
+              content_hash: 0b7810bcae19ecf6a6721565cbb2557c12ebd13c9ebc12c65536e99b2598bbc4
+            - path: 1.8.2
+              level: 3
+              title: 'Should do (medium impact, medium effort, time to market: 2–4 sprints)'
+              byte_offset: 23685
+              byte_count: 588
+              word_count: 78
+              content_hash: 4014fa32b7b452e6e5ce1517e61be7dbdb9c2401e850fcf621a7a2d5bdca8563
+            - path: 1.8.3
+              level: 3
+              title: 'Could do (design-phase, time to market: 4+ sprints)'
+              byte_offset: 24273
+              byte_count: 534
+              word_count: 80
+              content_hash: 8cd9f09934c94187901cceda09d7abf70504b3b057cccb50f04dc9acb98d0728
+            - path: 1.8.4
+              level: 3
+              title: Should not do (leave as LLM-appropriate)
+              byte_offset: 24807
+              byte_count: 381
+              word_count: 51
+              content_hash: dd2bd6501482e900bae0d53854a5f24f7196b40b1a814518e1ae47cc0d2d3f07
+        - path: "1.9"
+          level: 2
+          title: 9. Implementation Timeline (Sketch)
+          byte_offset: 25188
+          byte_count: 528
+          word_count: 81
+          content_hash: 96d378441f271639a7078a4c0dd5746668f218854553cced491e5c5426e9e377
+        - path: "1.10"
+          level: 2
+          title: 10. Conclusion
+          byte_offset: 25716
+          byte_count: 1105
+          word_count: 153
+          content_hash: 0bc9ef7b2bb3432b4661d8d732f26eba1bf527d6988b0d52eaa7aed9d7923420
+entity_refs:
+    - entity_id: FEAT-xxx
+      entity_type: feature
+      section_path: 1.7.2
+      byte_offset: 18988
+    - entity_id: FEAT-001
+      entity_type: feature
+      section_path: 1.7.2
+      byte_offset: 19864
+    - entity_id: TASK-xxx
+      entity_type: task
+      section_path: 1.7.1
+      byte_offset: 17384
+    - entity_id: TASK-042
+      entity_type: task
+      section_path: 1.7.1
+      byte_offset: 17949
+cross_doc_links:
+    - target_path: orchestrate-development/SKILL.md
+      link_text: orchestrate-development/SKILL.md
+      section_path: 1.3.1
+    - target_path: orchestrate-review/SKILL.md
+      link_text: orchestrate-review/SKILL.md
+      section_path: 1.3.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: "1.5"
+      role: risk
+      confidence: high
+    - section_path: 1.7.1
+      role: narrative
+      confidence: high
+classified: false

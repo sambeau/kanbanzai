@@ -1,0 +1,211 @@
+document_id: P44-model-routing-agent-launcher/report-p44-report-hardening-principle-independent-opinion
+document_path: work/P44-model-routing-agent-launcher/P44-report-hardening-principle-independent-opinion.md
+content_hash: c78a32d4d0b04b246d458ad26de8a4dca5c6b91db86f89e49b5416c5f006da6e
+indexed_at: 2026-05-12T13:03:08.794387Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Report: Independent Opinion on Adopting the Hardening Principle for Kanbanzai'
+      byte_offset: 0
+      byte_count: 15484
+      word_count: 2183
+      content_hash: c78a32d4d0b04b246d458ad26de8a4dca5c6b91db86f89e49b5416c5f006da6e
+      children:
+        - path: "1.1"
+          level: 2
+          title: Executive Summary
+          byte_offset: 323
+          byte_count: 1061
+          word_count: 155
+          content_hash: da480972779ede5542912002347ff6df217c001d289dbdaf6dec85098efc1aa3
+        - path: "1.2"
+          level: 2
+          title: Recommended Doctrine
+          byte_offset: 1384
+          byte_count: 1076
+          word_count: 148
+          content_hash: ebf358fbd935e15c816f1d5167bb343aa8874ea117551a1f0adade12a74dce21
+        - path: "1.3"
+          level: 2
+          title: Fundamental Changes Required
+          byte_offset: 2460
+          byte_count: 6271
+          word_count: 910
+          content_hash: 2ce4133736299874295237faf6efbd05e64b29e12afbebfa94a3eb05dda5c58a
+          children:
+            - path: 1.3.1
+              level: 3
+              title: 1. Introduce an explicit hardening lifecycle
+              byte_offset: 2493
+              byte_count: 931
+              word_count: 137
+              content_hash: f572012302406a30d0c72d64459653b9eb2b3c137382fcffd701cd3aa3547b51
+            - path: 1.3.2
+              level: 3
+              title: 2. Add a canonical invariant catalog
+              byte_offset: 3424
+              byte_count: 1297
+              word_count: 193
+              content_hash: 85d8861cfffaec2290c51db46c374415223aa3049407a87b6dde35c8cdc32953
+            - path: 1.3.3
+              level: 3
+              title: 3. Replace fragile multi-step orchestration with composite deterministic tools
+              byte_offset: 4721
+              byte_count: 717
+              word_count: 83
+              content_hash: 52c9c5b78a4d0be08da8815c6e82db919389fcda70ad0660d9bd4c9294fb6c08
+            - path: 1.3.4
+              level: 3
+              title: 4. Treat document structure as data, not prose
+              byte_offset: 5438
+              byte_count: 1038
+              word_count: 153
+              content_hash: 20feedd73f0a2e78855a21ad636fa3976c59209b2f1fd15eb80c691b3c380409
+            - path: 1.3.5
+              level: 3
+              title: 5. Make prompt-only rules visible technical debt
+              byte_offset: 6476
+              byte_count: 946
+              word_count: 143
+              content_hash: 3ac4a9dc0c67af78c2c15af584477bcc41362d61f006282091a7064af9445b7c
+            - path: 1.3.6
+              level: 3
+              title: 6. Strengthen consumer extension points
+              byte_offset: 7422
+              byte_count: 1309
+              word_count: 197
+              content_hash: d488bac949a84e2cff955ef5bf33b8d307f53e67d1173f1c108ecc8faf7ecd09
+        - path: "1.4"
+          level: 2
+          title: Highest-Impact Areas of Change
+          byte_offset: 8731
+          byte_count: 3828
+          word_count: 523
+          content_hash: b7b32b9b25fc1e46a89c656c92b725c0146ae687f9a644dfd0db9c7664fb715a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: 1. Agent dispatch and prompt assembly
+              byte_offset: 8766
+              byte_count: 568
+              word_count: 72
+              content_hash: 5859f00e154d9e03b99b39fe176722b4b55be58eb5fb3581ee9cd3e0843b1811
+            - path: 1.4.2
+              level: 3
+              title: 2. Lifecycle gates and transitions
+              byte_offset: 9334
+              byte_count: 615
+              word_count: 85
+              content_hash: 108124d82d229d27487b17599a6839fcd6877ac7546d0ec7446aebfcee8c70ba
+            - path: 1.4.3
+              level: 3
+              title: 3. Review evidence and merge readiness
+              byte_offset: 9949
+              byte_count: 591
+              word_count: 77
+              content_hash: a2d0e11f3982e8fe1a630b37a4bdf3b665b7066081bfa773c2106549c9343768
+            - path: 1.4.4
+              level: 3
+              title: 4. Specification and dev-plan validation
+              byte_offset: 10540
+              byte_count: 524
+              word_count: 74
+              content_hash: 57c01e9e8f71f8c5ca47e71ff856dafb5025abed94ae5fb7ed8b1b5516ac2265
+            - path: 1.4.5
+              level: 3
+              title: 5. Document lifecycle and document intelligence
+              byte_offset: 11064
+              byte_count: 458
+              word_count: 64
+              content_hash: 28d42489b5f938c14ac706076e514bac385b406749176d8e6e99df70ac4daebe
+            - path: 1.4.6
+              level: 3
+              title: 6. File, Git, and worktree safety
+              byte_offset: 11522
+              byte_count: 458
+              word_count: 71
+              content_hash: 610c63f098063d86fe53d8c8d7afebb21d3cbbaba8e835872a4f8106f1457abf
+            - path: 1.4.7
+              level: 3
+              title: 7. Observability and retrospective hardening
+              byte_offset: 11980
+              byte_count: 579
+              word_count: 75
+              content_hash: 3bb75c2cd527db63ce1020ff8858a33257c624ced46bb8a1258ebb516c776728
+        - path: "1.5"
+          level: 2
+          title: What Should Remain Fuzzy
+          byte_offset: 12559
+          byte_count: 501
+          word_count: 75
+          content_hash: 5b1cdea20709b616739a6a278a3c5ab26704cf8106b67cfd10589b28a0da64e0
+        - path: "1.6"
+          level: 2
+          title: Suggested Adoption Plan
+          byte_offset: 13060
+          byte_count: 1638
+          word_count: 219
+          content_hash: d8929f6835d2485ea7a21bd255b88a77b49c67cdfdf12601e3d4648c58475dc4
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 'Phase 1: Doctrine and vocabulary'
+              byte_offset: 13088
+              byte_count: 372
+              word_count: 43
+              content_hash: dc50373294ba87af1cfac5701686568452586169b037a8033c5ed1ae56ed6358
+            - path: 1.6.2
+              level: 3
+              title: 'Phase 2: Audit existing workflow rules'
+              byte_offset: 13460
+              byte_count: 332
+              word_count: 38
+              content_hash: 3f88db2abeb85e9d7fefe0718983f25c6df017b95240be311b6a4536331e09df
+            - path: 1.6.3
+              level: 3
+              title: 'Phase 3: Harden top recurring failures'
+              byte_offset: 13792
+              byte_count: 440
+              word_count: 57
+              content_hash: 2beb550948d95acffaaf173eb2d09a9924789535aa383ba781a0bc4558eb1bd6
+            - path: 1.6.4
+              level: 3
+              title: 'Phase 4: Publish a consumer hardening guide'
+              byte_offset: 14232
+              byte_count: 466
+              word_count: 77
+              content_hash: 8cf435042f3b8c71bc1a83dfbbaf8dee6471b29b1dd4156ef7bfa10fe3310253
+        - path: "1.7"
+          level: 2
+          title: Conclusion
+          byte_offset: 14698
+          byte_count: 786
+          word_count: 110
+          content_hash: acac120da796e3357f9e81bbf3c700353f7178f63da9d8c12177f620610814f5
+entity_refs:
+    - entity_id: P44-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 190
+    - entity_id: P44-research-hardening-principle
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 283
+cross_doc_links:
+    - target_path: work/P44-model-routing-agent-launcher/P44-research-hardening-principle.md
+      link_text: work/P44-model-routing-agent-launcher/P44-research-hardening-principle.md
+      section_path: "1"
+    - target_path: README.md
+      link_text: README.md
+      section_path: 1.6.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.6.1
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.6.2
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

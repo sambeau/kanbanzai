@@ -1,0 +1,112 @@
+document_id: P66-test-governance/dev-plan-p66-dev-plan-test-governance
+document_path: work/P66-test-governance/P66-dev-plan-test-governance.md
+content_hash: c6db523dc6f690907f51e2e0b433386653664d6623b138641e7a0b475292d56d
+indexed_at: 2026-05-12T14:24:11.661521Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Dev Plan: Test Governance Framework'
+      byte_offset: 0
+      byte_count: 9373
+      word_count: 1351
+      content_hash: c6db523dc6f690907f51e2e0b433386653664d6623b138641e7a0b475292d56d
+      children:
+        - path: "1.1"
+          level: 2
+          title: Overview
+          byte_offset: 39
+          byte_count: 364
+          word_count: 50
+          content_hash: 5d8a12dbc4665ec146f2abeca27363a3d522f0bd0cf70d0185524a4419db7726
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 403
+          byte_count: 7040
+          word_count: 939
+          content_hash: 520498e35f827e13ba071c6b19d24a571a2ba0ab06be5812abd90cc5bde65974
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task 1: Test-Status Record Store'
+              byte_offset: 422
+              byte_count: 971
+              word_count: 122
+              content_hash: 85d37246d37183d55370cbdb78658b60793b683156e582291bdd08d28d3f1c01
+            - path: 1.2.2
+              level: 3
+              title: 'Task 2: CLI Subcommand `kanbanzai test`'
+              byte_offset: 1393
+              byte_count: 1007
+              word_count: 133
+              content_hash: 1081ed971e1bda9782005d1293a7da65bf5620095ecb207d9661b43c503bae21
+            - path: 1.2.3
+              level: 3
+              title: 'Task 3: MCP Tool `test`'
+              byte_offset: 2400
+              byte_count: 1339
+              word_count: 178
+              content_hash: 1ac8a6adfc999603355e2e426e1e7ffd282cbbfd1ca1f3518966be21e3d3de85
+            - path: 1.2.4
+              level: 3
+              title: 'Task 4: Status Integration'
+              byte_offset: 3739
+              byte_count: 996
+              word_count: 126
+              content_hash: 3a08b5cccbce343cd4a861a9152ae668119344e8a19463e02d26c24ca3cd65b1
+            - path: 1.2.5
+              level: 3
+              title: 'Task 5: Skill and Documentation Updates'
+              byte_offset: 4735
+              byte_count: 1842
+              word_count: 265
+              content_hash: b911f7b30f00d56c3712a8b8b095b37d47013b167aebaa4f31cef5f05edcd67d
+            - path: 1.2.6
+              level: 3
+              title: 'Task 6: Pre-Commit Hook Update'
+              byte_offset: 6577
+              byte_count: 473
+              word_count: 59
+              content_hash: 722530e42d30085cd7a9cf2cbfbe273aea323bb4a6e9d8280107106058a23903
+            - path: 1.2.7
+              level: 3
+              title: 'Task 7: Init Command Seed'
+              byte_offset: 7050
+              byte_count: 393
+              word_count: 53
+              content_hash: 82f3b8b32df13bc7ce5f274a4c1054045151a9042f1e2953ae568a7b07590b27
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 7443
+          byte_count: 613
+          word_count: 97
+          content_hash: 9228b67a74ec51ce846b2736ec154e1c98ccdb2eb56b41d3e2fcc578366bf315
+        - path: "1.4"
+          level: 2
+          title: Traceability Matrix
+          byte_offset: 8056
+          byte_count: 1317
+          word_count: 259
+          content_hash: 5b05357b1a83ec95024d6fbbe7e586c616552cdbb20fa0cf993e0936eef65332
+cross_doc_links:
+    - target_path: .kbz/skills/orchestrate-development/SKILL.md
+      link_text: .kbz/skills/orchestrate-development/SKILL.md
+      section_path: 1.2.5
+    - target_path: .kbz/skills/orchestrate-review/SKILL.md
+      link_text: .kbz/skills/orchestrate-review/SKILL.md
+      section_path: 1.2.5
+    - target_path: .kbz/skills/implement-task/SKILL.md
+      link_text: .kbz/skills/implement-task/SKILL.md
+      section_path: 1.2.5
+    - target_path: .kbz/skills/verify-closeout/SKILL.md
+      link_text: .kbz/skills/verify-closeout/SKILL.md
+      section_path: 1.2.5
+    - target_path: .agents/skills/kanbanzai-getting-started/SKILL.md
+      link_text: .agents/skills/kanbanzai-getting-started/SKILL.md
+      section_path: 1.2.5
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

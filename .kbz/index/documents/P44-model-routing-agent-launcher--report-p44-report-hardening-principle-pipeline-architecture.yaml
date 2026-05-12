@@ -1,0 +1,372 @@
+document_id: P44-model-routing-agent-launcher/report-p44-report-hardening-principle-pipeline-architecture
+document_path: work/P44-model-routing-agent-launcher/P44-report-hardening-principle-pipeline-architecture.md
+content_hash: 9ed2aa2021bfe15d430a57fcfaf2460e7b50d2b95a201f4ab037e7c69abfd882
+indexed_at: 2026-05-12T13:17:45.620717Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Report: Adopting the Hardening Principle via Pipeline Architecture'
+      byte_offset: 0
+      byte_count: 25890
+      word_count: 3379
+      content_hash: 9ed2aa2021bfe15d430a57fcfaf2460e7b50d2b95a201f4ab037e7c69abfd882
+      children:
+        - path: "1.1"
+          level: 2
+          title: Background
+          byte_offset: 247
+          byte_count: 725
+          word_count: 98
+          content_hash: cc2102e5c029eeeead8ce904a09cc2e152f9de2b9aaa61465d586eeb6351400b
+        - path: "1.2"
+          level: 2
+          title: Part 1 — Adopting the Hardening Principle in Today's Kanbanzai
+          byte_offset: 972
+          byte_count: 6817
+          word_count: 950
+          content_hash: bfd8efeee5cccd487c2ba955a5fc69957e6d717dd3152666735445c75e51c4aa
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Where Kanbanzai already follows the principle
+              byte_offset: 1041
+              byte_count: 1082
+              word_count: 161
+              content_hash: d5ba6ac0d42e7a9469878e81f9ec0b702a41ec8d58adcbc453ddefe93fb1d1c5
+            - path: 1.2.2
+              level: 3
+              title: Where the system is still leaning on LLM judgement for mechanical work
+              byte_offset: 2123
+              byte_count: 3994
+              word_count: 557
+              content_hash: 70a5ebf8c00e4af9aeb5c880a5e7892b5cbfe1157d7822c7553148af3ec71dd1
+              children:
+                - path: 1.2.2.1
+                  level: 4
+                  title: 1. Validators (highest impact, lowest risk)
+                  byte_offset: 2251
+                  byte_count: 1104
+                  word_count: 167
+                  content_hash: db13faa8a1d0b910e19885dfc3e621edf60092bf01d0c7b1a197fd227196d7dc
+                - path: 1.2.2.2
+                  level: 4
+                  title: 2. Document classification (`doc_intel classify`)
+                  byte_offset: 3355
+                  byte_count: 716
+                  word_count: 92
+                  content_hash: 0406e961d2c81bb4fc3e399c9f153f159a1b101c5e3c16ee7071780ca23c18f8
+                - path: 1.2.2.3
+                  level: 4
+                  title: '3. Decomposition (`decompose(action: propose)`)'
+                  byte_offset: 4071
+                  byte_count: 547
+                  word_count: 76
+                  content_hash: b8795dec7b8a2a0f005ac5626b772b58edbaf64a73735d10ce0b73fa39d1706d
+                - path: 1.2.2.4
+                  level: 4
+                  title: 4. Review findings
+                  byte_offset: 4618
+                  byte_count: 669
+                  word_count: 89
+                  content_hash: a965600b2d8958b3996c90fbde02cafa7ad70240c3bdb6ce563a4017047baa85
+                - path: 1.2.2.5
+                  level: 4
+                  title: '5. Retrospective synthesis (`retro(action: synthesise)`)'
+                  byte_offset: 5287
+                  byte_count: 418
+                  word_count: 55
+                  content_hash: 3e8ca07d107bc2cda2d1edc61152349a71a5ae3782c73a425dde5d8f0b03ac1b
+                - path: 1.2.2.6
+                  level: 4
+                  title: 6. Commit messages and PR descriptions
+                  byte_offset: 5705
+                  byte_count: 177
+                  word_count: 25
+                  content_hash: 9d8e691d31fb3ea1a267442abb6a801f73a68888b50d0650a29bc1a21a898e02
+                - path: 1.2.2.7
+                  level: 4
+                  title: 7. Knowledge tier and forward decisions
+                  byte_offset: 5882
+                  byte_count: 235
+                  word_count: 33
+                  content_hash: f0279856811637c29d18c76e27a475a8e6db2e79aa79817944903f6fc48b7a57
+            - path: 1.2.3
+              level: 3
+              title: Fundamental changes proposed (chat-orchestration era)
+              byte_offset: 6117
+              byte_count: 1160
+              word_count: 154
+              content_hash: 59cce4bd1098a80ff32baedb46de5f82c35929b3a2dc79d805108651b01c0d65
+            - path: 1.2.4
+              level: 3
+              title: Where the impact concentrates
+              byte_offset: 7277
+              byte_count: 512
+              word_count: 67
+              content_hash: 156c9064851670ac0ac4d361c7ec077e569314e4420b1bd6858b35735239248a
+        - path: "1.3"
+          level: 2
+          title: Part 2 — How the Advice Changes Under Code-Based Orchestration
+          byte_offset: 7789
+          byte_count: 5781
+          word_count: 818
+          content_hash: 34ecb08e302c5be56939d14f6b5f6c6f5027b33478a39ce4c84cd6f98bf6686b
+          children:
+            - path: 1.3.1
+              level: 3
+              title: The shift in what "hardening" means
+              byte_offset: 7858
+              byte_count: 846
+              word_count: 133
+              content_hash: dae2b4d41887a6302329bb7a9ef4e0c3a61a1f8e46b79a968d40f8b96773fb61
+            - path: 1.3.2
+              level: 3
+              title: How earlier advice changes
+              byte_offset: 8704
+              byte_count: 1104
+              word_count: 174
+              content_hash: 638d28bb35ef0a5e1b3dc7f98c1ef1a9f4dd48c2762893c15a23f810ef9b25b5
+            - path: 1.3.3
+              level: 3
+              title: New advantages only available with code orchestration
+              byte_offset: 9808
+              byte_count: 1791
+              word_count: 232
+              content_hash: 60b03d7552c8c7779fb5502aab691d745d7ea1cfbefd8decd6957f2405a117af
+            - path: 1.3.4
+              level: 3
+              title: What becomes obsolete
+              byte_offset: 11599
+              byte_count: 670
+              word_count: 89
+              content_hash: 08b86c8604cd2b6310474ad64d49e2762127b31f71edc51c8cc358c3488b0fe6
+            - path: 1.3.5
+              level: 3
+              title: What stays fuzzy (correctly)
+              byte_offset: 12269
+              byte_count: 485
+              word_count: 68
+              content_hash: ed5e7be323d37de321daf1d8d52daebdc160a3e31beea581b4b8d38b6b2d38e2
+            - path: 1.3.6
+              level: 3
+              title: New risks introduced
+              byte_offset: 12754
+              byte_count: 816
+              word_count: 111
+              content_hash: b6bf2a2f199dfea50fd8f9756ac963516b111261c8ad90a423fe7de78fca3496
+        - path: "1.4"
+          level: 2
+          title: Part 3 — Concrete Pipeline Sketch and Migration Strategy
+          byte_offset: 13570
+          byte_count: 10850
+          word_count: 1312
+          content_hash: d5c7f468a91383d926730e22348baa0edbcf41619b655cadad0643dd2dc1343a
+          children:
+            - path: 1.4.1
+              level: 3
+              title: The feature pipeline, end to end
+              byte_offset: 13633
+              byte_count: 5707
+              word_count: 569
+              content_hash: de8b79521fdcd73685cf06f527c7ca2ab343d3ad7e6ca3214f671e277b4f9512
+              children:
+                - path: 1.4.1.1
+                  level: 4
+                  title: Stage 1 — Design
+                  byte_offset: 13816
+                  byte_count: 604
+                  word_count: 59
+                  content_hash: aea873580ba9f4b6c0e5ffb3ac7d47a9db11dcb1ae6023ffad89c2b105279ef8
+                - path: 1.4.1.2
+                  level: 4
+                  title: Stage 2 — Specification
+                  byte_offset: 14420
+                  byte_count: 782
+                  word_count: 76
+                  content_hash: 8cea4d475297d31983c62441c7fb402b90b1896ea5bc0b3a14d259dc1c88e537
+                - path: 1.4.1.3
+                  level: 4
+                  title: Stage 3 — Dev-plan
+                  byte_offset: 15202
+                  byte_count: 910
+                  word_count: 94
+                  content_hash: 6b91e8a573b5aa9b2d76f0cc76066f409a076f76fdd22b45ff2e3d5ffdd20fd1
+                - path: 1.4.1.4
+                  level: 4
+                  title: Stage 4 — Develop (parallel)
+                  byte_offset: 16112
+                  byte_count: 1206
+                  word_count: 119
+                  content_hash: 9e45824ed68252b5328a9204d040bb58b416fe4a609c70e13e18f31279b58d03
+                - path: 1.4.1.5
+                  level: 4
+                  title: Stage 5 — Review
+                  byte_offset: 17318
+                  byte_count: 1178
+                  word_count: 113
+                  content_hash: dfd24ceecee26127b74a2b4c31e0ba5c35f0fc68bc46436d25afc88779d95127
+                - path: 1.4.1.6
+                  level: 4
+                  title: Stage 6 — Merge
+                  byte_offset: 18496
+                  byte_count: 379
+                  word_count: 37
+                  content_hash: 17d1721b0967f03abdcc13929999ce0cb67dbd18dd4ea27f0705a42c05156f73
+                - path: 1.4.1.7
+                  level: 4
+                  title: Stage 7 — Verify
+                  byte_offset: 18875
+                  byte_count: 465
+                  word_count: 47
+                  content_hash: 93807ba34fc8b956ee4c717e3fdcfd8f288ee69bc87722274a849a3c9a52545b
+            - path: 1.4.2
+              level: 3
+              title: Patterns that fall out of the sketch
+              byte_offset: 19340
+              byte_count: 968
+              word_count: 147
+              content_hash: 2ac1d73435a280374d9930c2ab84d19e0fbe30b94d92bd943ac447c9fecadc29
+            - path: 1.4.3
+              level: 3
+              title: 'Greenfield vs upgrade — recommendation: **hybrid**'
+              byte_offset: 20308
+              byte_count: 4112
+              word_count: 586
+              content_hash: b894f5fdec82a8ec0eb3fe066d346900c5133ca0e431cb8ce83882add180d9fe
+              children:
+                - path: 1.4.3.1
+                  level: 4
+                  title: What's worth keeping
+                  byte_offset: 20444
+                  byte_count: 412
+                  word_count: 56
+                  content_hash: fbdb441894792545615a9636888dbe0a7ddb7f05b32041a9714f121fae3bec65
+                - path: 1.4.3.2
+                  level: 4
+                  title: What's vestigial under code orchestration
+                  byte_offset: 20856
+                  byte_count: 360
+                  word_count: 52
+                  content_hash: 4958fa7316389b82915e33a30758f6c0e84cb799590bfe49dc95328c68d7be79
+                - path: 1.4.3.3
+                  level: 4
+                  title: Why pure upgrade is wrong
+                  byte_offset: 21216
+                  byte_count: 528
+                  word_count: 70
+                  content_hash: 1bd64ac4ac32a106facdbcc7996f4ce0dfd0f54c9a5f76aec5b221e3bd5ab344
+                - path: 1.4.3.4
+                  level: 4
+                  title: Why pure greenfield is wrong
+                  byte_offset: 21744
+                  byte_count: 344
+                  word_count: 53
+                  content_hash: aeda16d55f4ee9ee68cea5971bd7db28b5104e1aaeb25966e86b94d8e83901ce
+                - path: 1.4.3.5
+                  level: 4
+                  title: The hybrid path
+                  byte_offset: 22088
+                  byte_count: 1278
+                  word_count: 191
+                  content_hash: 3f6ec7ed858b2a0b43345c5d77c16dd163d8281e290daeb807fffd4a8f7f1aee
+                - path: 1.4.3.6
+                  level: 4
+                  title: Estimated split of current codebase
+                  byte_offset: 23366
+                  byte_count: 628
+                  word_count: 80
+                  content_hash: 5f05ff885cbd2f72e5ef03adc05b6e172b14cea208c6ef333af929015572b56f
+                - path: 1.4.3.7
+                  level: 4
+                  title: Migration story for users
+                  byte_offset: 23994
+                  byte_count: 426
+                  word_count: 66
+                  content_hash: 8762fd8fbc827a0c0c1b3820a9386bb5261e81c37b90d18a90229753050eb59c
+        - path: "1.5"
+          level: 2
+          title: Summary
+          byte_offset: 24420
+          byte_count: 1160
+          word_count: 154
+          content_hash: ba883d9b75f3f12800b543d4358dbd1ca36077f57ce56a75a430f6b4bad77636
+        - path: "1.6"
+          level: 2
+          title: Related documents
+          byte_offset: 25580
+          byte_count: 310
+          word_count: 15
+          content_hash: 6fc14fea4d4cb31c8133842576ce9ccfaab7d57abee7c77d5a52ccac9e055fb3
+entity_refs:
+    - entity_id: P44-research-hardening-principle
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 25605
+    - entity_id: P44-research-orchestrator-architecture
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 25645
+    - entity_id: P44-design-deterministic-workflow-controller
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 25691
+    - entity_id: P44-design-feature-execution-pipeline
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 25743
+    - entity_id: P44-design-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 25788
+    - entity_id: P44-report-hardening-principle-independent-opinion
+      entity_type: plan
+      section_path: "1.6"
+      byte_offset: 25835
+cross_doc_links:
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.3.4
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: 1.3.4
+    - target_path: AGENTS.md
+      link_text: AGENTS.md
+      section_path: 1.4.3.2
+    - target_path: copilot-instructions.md
+      link_text: copilot-instructions.md
+      section_path: 1.4.3.2
+    - target_path: P44-research-hardening-principle.md
+      link_text: P44-research-hardening-principle.md
+      section_path: "1.6"
+    - target_path: P44-research-orchestrator-architecture.md
+      link_text: P44-research-orchestrator-architecture.md
+      section_path: "1.6"
+    - target_path: P44-design-deterministic-workflow-controller.md
+      link_text: P44-design-deterministic-workflow-controller.md
+      section_path: "1.6"
+    - target_path: P44-design-feature-execution-pipeline.md
+      link_text: P44-design-feature-execution-pipeline.md
+      section_path: "1.6"
+    - target_path: P44-design-model-routing-agent-launcher.md
+      link_text: P44-design-model-routing-agent-launcher.md
+      section_path: "1.6"
+    - target_path: P44-report-hardening-principle-independent-opinion.md
+      link_text: P44-report-hardening-principle-independent-opinion.md
+      section_path: "1.6"
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.2.1
+      role: risk
+      confidence: high
+    - section_path: 1.2.2.7
+      role: decision
+      confidence: high
+    - section_path: 1.3.6
+      role: risk
+      confidence: high
+    - section_path: "1.5"
+      role: narrative
+      confidence: high
+classified: false
