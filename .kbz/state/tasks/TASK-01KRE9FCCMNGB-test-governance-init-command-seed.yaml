@@ -3,7 +3,6 @@ parent_feature: FEAT-01KRE9DSX3Z17
 slug: test-governance-init-command-seed
 name: Init Command Seed
 summary: Init Command Seed
-<<<<<<< Updated upstream
 status: done
 depends_on:
   - TASK-01KRE9FCCCHD9
@@ -12,12 +11,3 @@ files_planned:
 completed: "2026-05-12T15:04:13Z"
 completion_summary: Added teststatus.WriteRecord call in runNewProject (unconditional) and runExistingProject (guarded by file-not-exists check) to seed .kbz/state/test-status.yaml with ResultUnknown and no LastRun after kanbanzai init completes. All existing tests pass.
 verification: go test ./internal/kbzinit/... passes (4.9s). go test ./internal/teststatus/... passes (0.2s).
-=======
-status: active
-depends_on:
-  - TASK-01KRE9FCCCHD9
-claimed_at: "2026-05-12T15:01:53Z"
-dispatched_to: unspecified
-dispatched_at: "2026-05-12T15:01:53Z"
-dispatched_by: sambeau
->>>>>>> Stashed changes

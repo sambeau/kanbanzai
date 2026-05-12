@@ -3,17 +3,10 @@ content: Edit_file tool diffs may not persist. Verify changes with grep after ed
 created: "2026-04-28T09:40:47Z"
 created_by: unknown
 id: KE-01KQ9QCVQ58K7
-<<<<<<< Updated upstream
 last_accessed_at: "2026-05-12T15:15:41Z"
 learned_from: TASK-01KQ8X04S4ACH
 miss_count: 0
 recent_use_count: 429
-=======
-last_accessed_at: "2026-05-12T15:01:53Z"
-learned_from: TASK-01KQ8X04S4ACH
-miss_count: 0
-recent_use_count: 427
->>>>>>> Stashed changes
 scope: project
 status: contributed
 tier: 3

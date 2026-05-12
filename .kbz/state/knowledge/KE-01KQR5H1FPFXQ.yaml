@@ -3,15 +3,9 @@ content: "Strategic plans have \"done\" as their terminal state — there is no 
 created: "2026-05-04T00:17:06Z"
 created_by: sambeau
 id: KE-01KQR5H1FPFXQ
-<<<<<<< Updated upstream
 last_accessed_at: "2026-05-12T15:15:41Z"
 miss_count: 0
 recent_use_count: 341
-=======
-last_accessed_at: "2026-05-12T15:01:53Z"
-miss_count: 0
-recent_use_count: 339
->>>>>>> Stashed changes
 scope: project
 status: contributed
 tags:

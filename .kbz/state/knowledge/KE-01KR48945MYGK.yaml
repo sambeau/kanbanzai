@@ -3,17 +3,10 @@ content: "[minor] worked-well: The T2 agent proactively included T4's next_tool.
 created: "2026-05-08T16:56:06Z"
 created_by: unknown
 id: KE-01KR48945MYGK
-<<<<<<< Updated upstream
 last_accessed_at: "2026-05-12T15:15:41Z"
 learned_from: TASK-01KR3Q0FB91YP
 miss_count: 0
 recent_use_count: 124
-=======
-last_accessed_at: "2026-05-12T15:01:53Z"
-learned_from: TASK-01KR3Q0FB91YP
-miss_count: 0
-recent_use_count: 122
->>>>>>> Stashed changes
 scope: project
 status: contributed
 tags:

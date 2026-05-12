@@ -3,15 +3,9 @@ content: "The handoff MCP tool had dual context-assembly paths (3.0 pipeline and
 created: "2026-05-05T10:03:12Z"
 created_by: sambeau
 id: KE-01KQVSEYCND3N
-<<<<<<< Updated upstream
 last_accessed_at: "2026-05-12T15:15:41Z"
 miss_count: 0
 recent_use_count: 262
-=======
-last_accessed_at: "2026-05-12T15:01:53Z"
-miss_count: 0
-recent_use_count: 260
->>>>>>> Stashed changes
 scope: project
 status: contributed
 tags:

@@ -3,15 +3,9 @@ content: "Prompt files (like bootstrapping-gap-audit-prompt.md) are currently sa
 created: "2026-05-03T13:32:28Z"
 created_by: sambeau
 id: KE-01KQQ0MPDMYVV
-<<<<<<< Updated upstream
 last_accessed_at: "2026-05-12T15:15:41Z"
 miss_count: 0
 recent_use_count: 341
-=======
-last_accessed_at: "2026-05-12T15:01:53Z"
-miss_count: 0
-recent_use_count: 339
->>>>>>> Stashed changes
 scope: project
 status: contributed
 tags:

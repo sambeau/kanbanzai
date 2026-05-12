@@ -3,15 +3,9 @@ content: "Bugs are frequently fixed without advancing their lifecycle state. The
 created: "2026-04-30T13:08:11Z"
 created_by: sambeau
 id: KE-01KQF821VEWBE
-<<<<<<< Updated upstream
 last_accessed_at: "2026-05-12T15:15:41Z"
 miss_count: 0
 recent_use_count: 412
-=======
-last_accessed_at: "2026-05-12T15:01:53Z"
-miss_count: 0
-recent_use_count: 410
->>>>>>> Stashed changes
 scope: project
 status: contributed
 tags:

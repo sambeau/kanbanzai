@@ -3,15 +3,9 @@ content: "Reviews and agents should NOT proactively file bug reports for issues 
 created: "2026-04-21T11:55:45Z"
 created_by: sambeau
 id: KE-01KPQYAZAM3B6
-<<<<<<< Updated upstream
 last_accessed_at: "2026-05-12T15:15:41Z"
 miss_count: 0
 recent_use_count: 618
-=======
-last_accessed_at: "2026-05-12T15:01:53Z"
-miss_count: 0
-recent_use_count: 616
->>>>>>> Stashed changes
 scope: project
 status: confirmed
 tags:
