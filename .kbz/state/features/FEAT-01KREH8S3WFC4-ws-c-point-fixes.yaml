@@ -2,7 +2,7 @@ id: FEAT-01KREH8S3WFC4
 slug: ws-c-point-fixes
 name: stdlib point fixes
 parent: B72-stdlib-modernisation
-status: reviewing
+status: done
 review_cycle: 1
 summary: "Delete three hand-rolled helper functions and replace inline with stdlib equivalents: slices.Contains, strings.TrimSuffix, bytes.Contains. Workstream C of P67."
 created: "2026-05-12T16:45:36Z"
