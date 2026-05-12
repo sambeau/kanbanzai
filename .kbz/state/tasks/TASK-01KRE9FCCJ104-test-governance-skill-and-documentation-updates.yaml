@@ -3,6 +3,20 @@ parent_feature: FEAT-01KRE9DSX3Z17
 slug: test-governance-skill-and-documentation-updates
 name: Skill and Documentation Updates
 summary: Skill and Documentation Updates
-status: ready
+status: done
 depends_on:
   - TASK-01KRE9FCCFMEP
+files_planned:
+  - AGENTS.md
+  - .kbz/skills/orchestrate-development/SKILL.md
+  - .kbz/skills/orchestrate-review/SKILL.md
+  - .kbz/skills/implement-task/SKILL.md
+  - .kbz/skills/verify-closeout/SKILL.md
+  - .agents/skills/kanbanzai-getting-started/SKILL.md
+completed: "2026-05-12T15:17:25Z"
+claimed_at: "2026-05-12T15:15:41Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-12T15:15:41Z"
+dispatched_by: sambeau
+completion_summary: "Updated 6 files: AGENTS.md (7 test-health gate rules), orchestrate-development (test gate in Phase 0 + test run post-merge), orchestrate-review (test run in merge step), implement-task (test run in Phase 4), verify-closeout (test-status record ref in DoD Item 4), kanbanzai-getting-started (test health check in checklist)."
+verification: "Verified via grep that all 6 files contain test(action: verify) or test(action: run) references. Each skill file mentions the test tool. AGENTS.md has the 7 numbered rules. orchestrate-development Phase 0 includes the pre-dispatch test-health gate. Getting-started checklist includes the test-health check step."
