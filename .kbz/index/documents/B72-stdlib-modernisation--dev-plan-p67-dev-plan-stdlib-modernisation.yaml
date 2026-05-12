@@ -1,0 +1,199 @@
+document_id: B72-stdlib-modernisation/dev-plan-p67-dev-plan-stdlib-modernisation
+document_path: work/P67-stdlib-modernisation/P67-dev-plan-stdlib-modernisation.md
+content_hash: c9f7b74b0c6b5299aca0617f11ab9035c02cab3f08913ef5454ff6dec6640bbc
+indexed_at: 2026-05-12T16:48:05.69435Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Implementation Plan: Go Standard Library Modernisation (P67)'
+      byte_offset: 0
+      byte_count: 13459
+      word_count: 1621
+      content_hash: c9f7b74b0c6b5299aca0617f11ab9035c02cab3f08913ef5454ff6dec6640bbc
+      children:
+        - path: "1.1"
+          level: 2
+          title: Scope
+          byte_offset: 330
+          byte_count: 1070
+          word_count: 119
+          content_hash: 9b03c185df19d592a3e6fa1d63f98a95b841975b4ef8b0567cf6aec179c46858
+        - path: "1.2"
+          level: 2
+          title: Task Breakdown
+          byte_offset: 1400
+          byte_count: 6567
+          word_count: 663
+          content_hash: 94ff87fce1074585700c95a11fe0921c7a9d7d9c35ca0d4c6f9a199d0165158e
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 'Task A1: sort→slices — internal/service/ (11 files)'
+              byte_offset: 1419
+              byte_count: 891
+              word_count: 77
+              content_hash: 90a3727c40e46fbd993a9236b175f1d87d7c3db8b3bcc30ae748e369e9fda865
+            - path: 1.2.2
+              level: 3
+              title: 'Task A2: sort→slices — internal/mcp/ (3 files)'
+              byte_offset: 2310
+              byte_count: 522
+              word_count: 53
+              content_hash: 7dde032e99e1e867404402415830ffe9f537f8190a594d447ec61b6ea3c365e2
+            - path: 1.2.3
+              level: 3
+              title: 'Task A3: sort→slices — internal/knowledge/ (5 files)'
+              byte_offset: 2832
+              byte_count: 516
+              word_count: 49
+              content_hash: a89476b55dc1eb7ffcd9ca16a941af362ed09f42c7daf2af38d42edfbef59325
+            - path: 1.2.4
+              level: 3
+              title: 'Task A4: sort→slices — remaining 16 files'
+              byte_offset: 3348
+              byte_count: 1074
+              word_count: 87
+              content_hash: 67ce4eb7c898b885643f59f52061662767c364bcd7c87f81d3d4ddffb93efc5e
+            - path: 1.2.5
+              level: 3
+              title: 'Task B1: slog entry-point configuration'
+              byte_offset: 4422
+              byte_count: 596
+              word_count: 78
+              content_hash: 05b9b7319b4956947f5aa7c1229de988a275dea20ce520622ef1af8bb73566bc
+            - path: 1.2.6
+              level: 3
+              title: 'Task B2: slog migration — internal/mcp/ (11 files)'
+              byte_offset: 5018
+              byte_count: 1099
+              word_count: 117
+              content_hash: c7f72d17bdec2289e11ccc0ad2438843fa78259478b72947edc849c6c877782f
+            - path: 1.2.7
+              level: 3
+              title: 'Task B3: slog migration — remaining 6 files'
+              byte_offset: 6117
+              byte_count: 544
+              word_count: 58
+              content_hash: 13b05fe6875d9678152828d0431d8a9ae19eb588d2eeb13195467e9e4a06423e
+            - path: 1.2.8
+              level: 3
+              title: 'Task C1: Point fixes — delete three hand-rolled helpers'
+              byte_offset: 6661
+              byte_count: 794
+              word_count: 88
+              content_hash: 0b9d17fac2bc681536df35174f1a24aaa32c501e61c825eb647d0b83bcfcc7e1
+            - path: 1.2.9
+              level: 3
+              title: 'Task D1: Atomic-write consolidation'
+              byte_offset: 7455
+              byte_count: 512
+              word_count: 53
+              content_hash: dd358314822986d90195b8016d651c9ca330d4deef1bd0cb0e1d53f055f5c939
+        - path: "1.3"
+          level: 2
+          title: Dependency Graph
+          byte_offset: 7967
+          byte_count: 1328
+          word_count: 201
+          content_hash: 4f5b708fd2202e1b31b010d5ab0053e8a19a2781b70b2b62c4504d5914d0e304
+        - path: "1.4"
+          level: 2
+          title: Merge Schedule
+          byte_offset: 9295
+          byte_count: 671
+          word_count: 100
+          content_hash: 350fbc8747ac3c90c2ac4869b13461cb6977427cb977f3f97ae7641089ebc9b5
+        - path: "1.5"
+          level: 2
+          title: Risk Assessment
+          byte_offset: 9966
+          byte_count: 2023
+          word_count: 281
+          content_hash: 70801392c01869a9ff177063dc98da746b7945e687fc12a8e37bac5dc203bb4b
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 'Risk: Comparator contract change breaks sort stability'
+              byte_offset: 9986
+              byte_count: 524
+              word_count: 67
+              content_hash: cf45961877eb303f2f96f2a589e4d8a7a0f23506de196b170669d3c8cdc69d21
+            - path: 1.5.2
+              level: 3
+              title: 'Risk: slog level mis-mapping produces silent information loss'
+              byte_offset: 10510
+              byte_count: 392
+              word_count: 51
+              content_hash: 87207448a42fc594d1afbbe56aaadfd8e2e94d1fb892d6f4b7bd17ed70f07bc9
+            - path: 1.5.3
+              level: 3
+              title: 'Risk: `cmp` package added where not needed'
+              byte_offset: 10902
+              byte_count: 378
+              word_count: 55
+              content_hash: a53158e580c9e10e1a97b9501bb21f9a5715159a95f36375a0105d4a4dfe2bb4
+            - path: 1.5.4
+              level: 3
+              title: 'Risk: go.mod modified by adding a new import path'
+              byte_offset: 11280
+              byte_count: 408
+              word_count: 63
+              content_hash: 4219caa6fc37610924054c07c3db8964780167d0ea3773d0509d85c5d7698675
+            - path: 1.5.5
+              level: 3
+              title: 'Risk: Test files inadvertently modified'
+              byte_offset: 11688
+              byte_count: 301
+              word_count: 42
+              content_hash: 0cb54308b9aa5f115c3cb489903d62b76b71713afd8eb9904cde8f31e67a315f
+        - path: "1.6"
+          level: 2
+          title: Verification Approach
+          byte_offset: 11989
+          byte_count: 1470
+          word_count: 227
+          content_hash: 5714b39ac45a8f62d3e3737b1d351f4e152a454e49ac14b3d0d57179e09ecee0
+entity_refs:
+    - entity_id: FEAT-01KREH8S3WFC4
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 9871
+    - entity_id: FEAT-01KREH8TF8JZ8
+      entity_type: feature
+      section_path: "1.4"
+      byte_offset: 9892
+    - entity_id: P67-stdlib-modernisation
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 395
+    - entity_id: P67-spec-stdlib-modernisation
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 420
+cross_doc_links:
+    - target_path: work/P67-stdlib-modernisation/P67-spec-stdlib-modernisation.md
+      link_text: work/P67-stdlib-modernisation/P67-spec-stdlib-modernisation.md
+      section_path: "1.1"
+conventional_roles:
+    - section_path: "1.1"
+      role: constraint
+      confidence: high
+    - section_path: "1.5"
+      role: risk
+      confidence: high
+    - section_path: 1.5.1
+      role: risk
+      confidence: high
+    - section_path: 1.5.2
+      role: risk
+      confidence: high
+    - section_path: 1.5.3
+      role: risk
+      confidence: high
+    - section_path: 1.5.4
+      role: risk
+      confidence: high
+    - section_path: 1.5.5
+      role: risk
+      confidence: high
+classified: false

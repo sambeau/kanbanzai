@@ -1,0 +1,108 @@
+document_id: P67-stdlib-modernisation/research-p67-research-stdlib-modernisation
+document_path: work/P67-stdlib-modernisation/P67-research-stdlib-modernisation.md
+content_hash: 825401bc9a449d631858a84a4a06d96c54726ce0a0f40287ab924f88a9dc92d1
+indexed_at: 2026-05-12T16:22:38.762134Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Go Standard Library / Well-Known Library Audit: kanbanzai'
+      byte_offset: 0
+      byte_count: 11553
+      word_count: 1390
+      content_hash: 825401bc9a449d631858a84a4a06d96c54726ce0a0f40287ab924f88a9dc92d1
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 223
+          byte_count: 640
+          word_count: 92
+          content_hash: 739347c4124e1ae9a0a27969ca42fe1d95e444173d73897db832b63aa4dcc895
+        - path: "1.2"
+          level: 2
+          title: STDLIB Replacements (priority)
+          byte_offset: 863
+          byte_count: 5728
+          word_count: 620
+          content_hash: 5baa50686375f6490a14bd7666adfdf252d1e9cebb7e6de43355dbc826e96315
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Finding 1 — `sort` → `slices` (35 files, 52 call-sites)
+              byte_offset: 898
+              byte_count: 2254
+              word_count: 193
+              content_hash: 94ecdbb306c66509cfddb653a3d051cdf3be05f5b9ecbe02b6074a9bdc27543c
+            - path: 1.2.2
+              level: 3
+              title: Finding 2 — `"log"` → `"log/slog"` (16 files, 74 call-sites)
+              byte_offset: 3152
+              byte_count: 1610
+              word_count: 164
+              content_hash: 673609badf192dc14e747e05f22e5212a8b262e688911703ca7781ee5c81fd12
+            - path: 1.2.3
+              level: 3
+              title: Finding 3 — `stringSliceContains` → `slices.Contains`
+              byte_offset: 4762
+              byte_count: 675
+              word_count: 100
+              content_hash: fd45a37938c2bbf433a105030ec482486005996233459be73d26e9e975f13162
+            - path: 1.2.4
+              level: 3
+              title: Finding 4 — `trimTrailingSlash` → `strings.TrimSuffix`
+              byte_offset: 5437
+              byte_count: 473
+              word_count: 69
+              content_hash: c0dd687898f00afd1a5be9fcd4e9604a2ba52166c78319aa9d311b6fdd08127c
+            - path: 1.2.5
+              level: 3
+              title: Finding 5 — `containsMarker` → `bytes.Contains`
+              byte_offset: 5910
+              byte_count: 681
+              word_count: 90
+              content_hash: 2b8d2da367aa3e9083088b3b7e6f32e4ae2024e16522ab5a94ae1d3ec4bfd2c6
+        - path: "1.3"
+          level: 2
+          title: Well-Known Library Recommendations
+          byte_offset: 6591
+          byte_count: 358
+          word_count: 33
+          content_hash: 695e5a67d5f940d6c2c26c0feb8f79e6e8c3766aedbee158c057dfaf6647e173
+        - path: "1.4"
+          level: 2
+          title: Boundary Cases (justified, adjacent to stdlib)
+          byte_offset: 6949
+          byte_count: 2057
+          word_count: 262
+          content_hash: ffa674ff0c7376d79653a3d3d034debfa9250022af4db63a3c52e36e4461e553
+        - path: "1.5"
+          level: 2
+          title: 'Appendix A: Search Methodology'
+          byte_offset: 9006
+          byte_count: 1093
+          word_count: 124
+          content_hash: fb6314651a92d1a1e3e0e88eea2d0af6d05a6997ef683c16558ed1d09a0046e7
+        - path: "1.6"
+          level: 2
+          title: 'Appendix B: Go Version Note'
+          byte_offset: 10099
+          byte_count: 500
+          word_count: 87
+          content_hash: a5a6820da304429d3ac182abd07f708da3b90429d4b17c0f5c3ccb30623de9c5
+        - path: "1.7"
+          level: 2
+          title: 'Appendix C: Retrieval Anchors (for design phase)'
+          byte_offset: 10599
+          byte_count: 954
+          word_count: 143
+          content_hash: 69bdd04275e08024f2f82f780ab6f77a7c6f438aca796d073aaa8baa1f71da5b
+entity_refs:
+    - entity_id: P67-stdlib-modernisation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 71
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

@@ -1,0 +1,138 @@
+document_id: P67-stdlib-modernisation/design-p67-design-stdlib-modernisation
+document_path: work/P67-stdlib-modernisation/P67-design-stdlib-modernisation.md
+content_hash: 94257abfbaa4f652fba08f47b0ae4053ed0256d662ad35dbe64a3b848269be51
+indexed_at: 2026-05-12T16:27:47.411433Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Design: Go Standard Library Modernisation'
+      byte_offset: 0
+      byte_count: 17397
+      word_count: 2357
+      content_hash: 94257abfbaa4f652fba08f47b0ae4053ed0256d662ad35dbe64a3b848269be51
+      children:
+        - path: "1.1"
+          level: 2
+          title: Problem and Motivation
+          byte_offset: 387
+          byte_count: 2628
+          word_count: 349
+          content_hash: 6e593d0bdaee4a0977fec5e4c0be4eda14282e535019b9e11a065bc709229aba
+        - path: "1.2"
+          level: 2
+          title: Design
+          byte_offset: 3015
+          byte_count: 7766
+          word_count: 1024
+          content_hash: 8ab159452cdfd5602f742273a1499f69dbff0f6a9f8d0c52cfa23cb04762107b
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Workstream A — `sort` → `slices`
+              byte_offset: 3271
+              byte_count: 1994
+              word_count: 263
+              content_hash: 4a96ae3d768ca88c898d260b7b9d9d9ad8096b0ac0ac9c12e9705d87c9ad5704
+            - path: 1.2.2
+              level: 3
+              title: Workstream B — `"log"` → `"log/slog"`
+              byte_offset: 5265
+              byte_count: 2491
+              word_count: 324
+              content_hash: 9ee7e3a8da926532495271e35a4fce852672e26a2fd3a671cc387a4a93c6a73c
+            - path: 1.2.3
+              level: 3
+              title: Workstream C — Point fixes (Findings 3, 4, 5)
+              byte_offset: 7756
+              byte_count: 1012
+              word_count: 123
+              content_hash: a3ce4dc4cf60fcdaa4920b7290ebf77a1d4eacad8ef67e944b19a420090d9da8
+            - path: 1.2.4
+              level: 3
+              title: Workstream D — Internal atomic-write consolidation
+              byte_offset: 8768
+              byte_count: 1213
+              word_count: 168
+              content_hash: dc3a071a409ffb7463e60fdfce52ece30ed009626523bd8b872f752fa6e182f2
+            - path: 1.2.5
+              level: 3
+              title: What is explicitly out of scope
+              byte_offset: 9981
+              byte_count: 800
+              word_count: 106
+              content_hash: b7c954e8166ee4241b5ec3e224fa264d22863acc870da90d48dc8e0e55df60b8
+        - path: "1.3"
+          level: 2
+          title: Alternatives Considered
+          byte_offset: 10781
+          byte_count: 3006
+          word_count: 438
+          content_hash: 93631347b8c6187544a65b0b20bb97e758853d02dff8f8b20ca123a17324122f
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Alternative A — Opportunistic migration (migrate only when files are otherwise touched)
+              byte_offset: 10809
+              byte_count: 771
+              word_count: 115
+              content_hash: 722f7ad040562b5517f38667eff34ede69747362e100215f430c4d1bd22acc6d
+            - path: 1.3.2
+              level: 3
+              title: Alternative B — Do nothing (status quo)
+              byte_offset: 11580
+              byte_count: 710
+              word_count: 101
+              content_hash: 65c21e5c6d5ce7498ec4acbbc9beb9f587b4c40cd349e7afef3a5cf3f2f5b48b
+            - path: 1.3.3
+              level: 3
+              title: Alternative C — Single omnibus PR across all workstreams
+              byte_offset: 12290
+              byte_count: 679
+              word_count: 103
+              content_hash: cba8b7b162f5d5f24d2ddf142eb3c6fe0ef422e42323f49ba32049008a6695c8
+            - path: 1.3.4
+              level: 3
+              title: Alternative D — Thread `*slog.Logger` through function arguments (for Workstream B)
+              byte_offset: 12969
+              byte_count: 818
+              word_count: 116
+              content_hash: 29a7f1e87757b24c7e182ae94a5835f0d1cf2ada4b3a436a4ae623726a2c8b1a
+        - path: "1.4"
+          level: 2
+          title: Decisions
+          byte_offset: 13787
+          byte_count: 3610
+          word_count: 506
+          content_hash: b52e84d526e5039b290d9371584138fd9d86402381cc8f9ab132ae9c0fe5001e
+entity_refs:
+    - entity_id: P67-stdlib-modernisation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 296
+    - entity_id: P67-research-stdlib-modernisation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 344
+conventional_roles:
+    - section_path: 1.2.5
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: alternative
+      confidence: high
+    - section_path: 1.3.1
+      role: alternative
+      confidence: high
+    - section_path: 1.3.2
+      role: alternative
+      confidence: high
+    - section_path: 1.3.3
+      role: alternative
+      confidence: high
+    - section_path: 1.3.4
+      role: alternative
+      confidence: high
+    - section_path: "1.4"
+      role: decision
+      confidence: high
+classified: false

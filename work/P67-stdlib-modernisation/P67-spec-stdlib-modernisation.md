@@ -3,7 +3,7 @@
 | Field  | Value                                                              |
 |--------|--------------------------------------------------------------------|
 | Date   | 2026-05-12                                                         |
-| Status | Draft                                                              |
+| Status | approved |
 | Author | Claude (Sonnet 4.6)                                                |
 | Plan   | P67-stdlib-modernisation                                           |
 | Design | `work/P67-stdlib-modernisation/P67-design-stdlib-modernisation.md` |

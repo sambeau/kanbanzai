@@ -1,0 +1,8 @@
+id: WT-01KREHJSV9XAJ
+entity_id: FEAT-01KREH8TF8JZ8
+branch: feature/FEAT-01KREH8TF8JZ8-ws-d-atomic-write
+path: .worktrees/FEAT-01KREH8TF8JZ8-ws-d-atomic-write
+status: active
+created: "2026-05-12T16:51:04Z"
+created_by: sambeau
+graph_project: Users-samphillips-Dev-kanbanzai

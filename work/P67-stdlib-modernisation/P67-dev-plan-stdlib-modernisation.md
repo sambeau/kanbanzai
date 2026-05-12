@@ -3,8 +3,19 @@
 | Field  | Value                                   |
 |--------|-----------------------------------------|
 | Date   | 2026-05-12                              |
-| Status | Approved                                |
+| Status | approved |
 | Author | orchestrator (sambeau)                  |
+
+## Overview
+
+This plan modernises the kanbanzai codebase to use Go standard library packages
+introduced in Go 1.21 (`slices`, `cmp`, `log/slog`) and consolidates two classes of
+hand-rolled helper functions with direct stdlib calls. The work is purely mechanical:
+no business logic changes, no API surface changes, and no new dependencies.
+
+Four workstreams execute in sequence by cohort (C/D first, then A, then B) to avoid
+merge conflicts on shared files. All nine tasks are defined and scoped to disjoint
+file sets within each cohort.
 
 ## Scope
 
@@ -219,6 +230,35 @@ Features must be merged in the following order to avoid conflicts on shared file
 Cohort 1 verified safe (disjoint files).
 
 ---
+
+## Interface Contracts
+
+No new interface contracts are introduced by this plan. All changes are internal
+implementation replacements with identical external behaviour:
+
+| Package | Existing contract | Post-migration contract |
+|---------|-------------------|-------------------------|
+| `sort.Strings(s)` | Sorts `[]string` in ascending order, in-place | `slices.Sort(s)` — identical behaviour |
+| `sort.Slice(s, less)` | Sorts `s` using `less(i,j) bool` comparator | `slices.SortFunc(s, cmp func(a,b T) int)` — identical result, comparator contract changes from bool to int |
+| `sort.SliceStable(s, less)` | Stable sort using `less(i,j) bool` | `slices.SortStableFunc(s, cmp)` — stability preserved, comparator contract changes |
+| `log.Printf(...)` | Unstructured stderr logging | `slog.Info/Warn/Error(...)` — structured key-value logging, same destination |
+| `atomicWriteFile(path, data, perm)` | Private atomic write | `fsutil.WriteFileAtomic(path, data, 0o644)` — same semantics, fixed 0o644 permission |
+
+## Traceability Matrix
+
+| Spec Requirement | Task(s) | Acceptance Criterion |
+|------------------|---------|----------------------|
+| FR-001: Replace `sort` with `slices` (non-stable) | A1, A2, A3, A4 | AC-001, AC-003 |
+| FR-002: Replace `sort` with `slices`+`cmp` (stable) | A1, A2, A3, A4 | AC-001, AC-003 |
+| FR-003: Configure `slog` global handler at entry points | B1 | AC-002 |
+| FR-004: Translate `log.*` call-sites to `slog.*` | B2, B3 | AC-002, AC-004 |
+| FR-005: `slog.SetDefault` before any log call | B1 | AC-002 |
+| FR-006: Delete hand-rolled helpers (contains, trim, scanner) | C1 | AC-005 |
+| FR-007: Replace `atomicWriteFile` with `fsutil.WriteFileAtomic` | D1 | AC-006 |
+| NFR-001: `go build ./...` passes after each workstream | All | AC-007 |
+| NFR-002: `go test ./...` passes after each workstream | All | AC-008 |
+| NFR-003: `go.mod` and `go.sum` unchanged | All | AC-009 |
+| NFR-004: No `*_test.go` files modified | All | AC-010 |
 
 ## Risk Assessment
 

@@ -1,0 +1,72 @@
+document_id: FEAT-01KRE9DSX3Z17/report-p66-review-test-governance
+document_path: work/P66-test-governance/P66-review-test-governance.md
+content_hash: 3be7e49f43dba35943adb8a5fe3f5faee474bc06ece2b0f4850550a6e3a1ca9e
+indexed_at: 2026-05-12T15:22:17.186193Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: Test Governance Framework'
+      byte_offset: 0
+      byte_count: 1845
+      word_count: 248
+      content_hash: 3be7e49f43dba35943adb8a5fe3f5faee474bc06ece2b0f4850550a6e3a1ca9e
+      children:
+        - path: "1.1"
+          level: 2
+          title: 'Aggregate Verdict: **APPROVED**'
+          byte_offset: 191
+          byte_count: 544
+          word_count: 88
+          content_hash: c630ca996ec767abff7ebbe9fe7330f68e57771374366472e89ac7b29122af04
+        - path: "1.2"
+          level: 2
+          title: Summary
+          byte_offset: 735
+          byte_count: 938
+          word_count: 119
+          content_hash: 10132939570511c064452f43b74df3ec5cb13761d987ffa1d2caf7d2bf694768
+          children:
+            - path: 1.2.1
+              level: 3
+              title: Non-blocking observations (new code)
+              byte_offset: 915
+              byte_count: 490
+              word_count: 62
+              content_hash: 6bde0612feac371ffb641dd2917b3388604cbaf2c54963888b52f0c68f068a0b
+            - path: 1.2.2
+              level: 3
+              title: Pre-existing code observations (not in scope)
+              byte_offset: 1405
+              byte_count: 268
+              word_count: 32
+              content_hash: 44327f39bf87dc4367250860593acff61e41ed1c284a0c27775d557436edb7e7
+        - path: "1.3"
+          level: 2
+          title: Requirements Traceability
+          byte_offset: 1673
+          byte_count: 118
+          word_count: 19
+          content_hash: 89ffe6fee7ffcfeeb31f438d2abee9d1e45d47ffffc40922c1b081f2efccd629
+        - path: "1.4"
+          level: 2
+          title: Recommendation
+          byte_offset: 1791
+          byte_count: 54
+          word_count: 7
+          content_hash: 081da7b35d61feca3d512760894632efb2420eec385ce346053ec3661e4aa4f0
+entity_refs:
+    - entity_id: FEAT-01KRE9DSX3Z17
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 50
+conventional_roles:
+    - section_path: "1.2"
+      role: narrative
+      confidence: high
+    - section_path: 1.2.2
+      role: constraint
+      confidence: high
+    - section_path: "1.3"
+      role: requirement
+      confidence: high
+classified: false

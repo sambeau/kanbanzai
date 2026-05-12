@@ -3,10 +3,43 @@
 | Field  | Value                              |
 |--------|------------------------------------|
 | Date   | 2026-05-12                         |
-| Status | Draft                              |
+| Status | approved |
 | Author | Claude (Sonnet 4.6)                |
 | Plan   | P67-stdlib-modernisation           |
 | Source | P67-research-stdlib-modernisation  |
+
+---
+
+## Overview
+
+This design covers the replacement of hand-rolled helpers and legacy standard library packages
+with their modern Go equivalents across the kanbanzai codebase. The work is scoped to four
+independent workstreams: (A) migrating `"sort"` to `"slices"` across 35 files, (B) migrating
+`"log"` to `"log/slog"` across 16 files, (C) deleting three single-file helper functions that
+reduplicate one stdlib call each, and (D) consolidating a duplicated atomic-write helper. All
+changes are purely mechanical — no public API surfaces, data formats, or feature behaviours
+are altered.
+
+---
+
+## Goals and Non-Goals
+
+**Goals:**
+- Replace all `"sort"` imports with `"slices"` (and `"cmp"` where comparators are needed).
+- Replace all `"log"` imports with `"log/slog"`, configured at the two binary entry points.
+- Delete `stringSliceContains`, `trimTrailingSlash`, and `containsMarker` in favour of the
+  stdlib calls they wrap.
+- Consolidate the duplicate `atomicWriteFile` in `internal/context/refresh.go` onto
+  `internal/fsutil.WriteFileAtomic`.
+- Ensure `go build ./...` and the full test suite pass after each workstream is merged.
+
+**Non-Goals:**
+- Replacing any custom code that has no direct stdlib equivalent (`deduplicateStrings`,
+  `clamp`, `parseSemver`, `GenerateTSID13`, `buildinfo`).
+- Introducing a custom `slog.Handler` abstraction or per-request logging context.
+- Migrating test files — test helpers that call `log.Printf` are out of scope.
+- Any performance tuning or algorithmic changes beyond what the API substitution provides.
+- Changing any public API surface or data model.
 
 ---
 
@@ -347,3 +380,22 @@ before reviewers see `"log/slog"`.
 **Consequences:** Four PRs instead of one. Recommended merge order: C → D → A → B. Workstreams
 C and D are trivially small and establish a clean baseline; A is the mechanical bulk; B
 requires the entry-point handler decision to be reviewed last, with the widest context.
+
+---
+
+## Dependencies
+
+**No new external dependencies are introduced.** All replacements use packages that are part
+of the Go standard library and are already available at the project's declared toolchain
+version of `go 1.25.0`:
+
+| Package | Type | Available since | Already in go.mod? |
+|---------|------|----------------|--------------------|
+| `"slices"` | stdlib | Go 1.21 | Not needed — stdlib |
+| `"cmp"` | stdlib | Go 1.21 | Not needed — stdlib |
+| `"log/slog"` | stdlib | Go 1.21 | Not needed — stdlib |
+| `"bytes"` | stdlib | Go 1 | Not needed — stdlib |
+| `"strings"` | stdlib | Go 1 | Not needed — stdlib |
+
+`go.mod` and `go.sum` require no changes. The `internal/fsutil` package used in Workstream D
+is already a first-party package within this module.
