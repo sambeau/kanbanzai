@@ -3,8 +3,23 @@ parent_feature: FEAT-01KREH8PKSPM3
 slug: ws-a1-service-sort-to-slices
 name: sort to slices — internal/service/
 summary: "Replace all sort.* calls with slices.*/cmp.* in 11 internal/service/ files. Remove sort import, add slices import (and cmp where sort.Slice/SliceStable used). Every SliceStable must become SortStableFunc."
-status: active
+status: done
+files_planned:
+  - internal/service/doc_audit.go
+  - internal/service/doc_validate.go
+  - internal/service/documents.go
+  - internal/service/entities.go
+  - internal/service/incidents.go
+  - internal/service/knowledge.go
+  - internal/service/migration.go
+  - internal/service/queries.go
+  - internal/service/queue.go
+  - internal/service/retro_synthesis.go
+  - internal/service/retro.go
+completed: "2026-05-12T17:01:37Z"
 claimed_at: "2026-05-12T16:55:43Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-12T16:55:43Z"
 dispatched_by: sambeau
+completion_summary: "Replaced all sort package usages with slices/cmp in 11 internal/service/ files. Converted sort.Strings→slices.Sort (5 files), sort.Slice→slices.SortFunc (5 files with cmp.Compare comparators), sort.SliceStable→slices.SortStableFunc (retro_synthesis.go). Removed \"sort\" import from all files; added \"slices\" to all 11; added \"cmp\" to 6 files that use SortFunc/SortStableFunc."
+verification: "go build ./internal/service/... — clean. go test ./internal/service/... — ok (1.897s). grep for \\\"sort\\\" in non-test production files — empty. One test file (entities_cache_read_test.go) retains \\\"sort\\\" per the constraint against modifying *_test.go files."
