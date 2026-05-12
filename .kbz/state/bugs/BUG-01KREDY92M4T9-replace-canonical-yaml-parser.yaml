@@ -1,0 +1,13 @@
+id: BUG-01KREDY92M4T9
+slug: replace-canonical-yaml-parser
+name: Replace custom canonical YAML parser with yaml.v3
+status: done
+severity: medium
+priority: medium
+type: implementation-defect
+reported_by: samphillips
+reported: "2026-05-12T15:47:26Z"
+observed: "Entity listing fails with \"unexpected indentation at line 13\" for features using inline list format like `- from_status: dev-planning`. The hotfix patches the custom parser but hand-rolled parsers will always lag behind standard libraries."
+expected: "All valid YAML formats parse correctly, including inline list items, quoted strings with colons, and multi-line scalars, via a battle-tested standard library."
+spec: BUG-01KREDY92M4T9/spec-spec
+tier: bug_fix
