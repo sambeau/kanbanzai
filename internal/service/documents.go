@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"slices"
@@ -575,17 +575,17 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 	// Patch the Status field in the source file (best-effort; FR-006).
 	patchOK, patchErr := fsutil.PatchStatusField(fullPath, "approved")
 	if patchErr != nil {
-		log.Printf("[doc] WARNING: could not patch status field in %s: %v", fullPath, patchErr)
+		slog.Warn("could not patch status field", "component", "doc", "path", fullPath, "error", patchErr)
 	} else if patchOK {
 		// Re-compute and store the updated content hash.
 		newHash, hashErr := storage.ComputeContentHash(fullPath)
 		if hashErr != nil {
-			log.Printf("[doc] WARNING: could not compute content hash after status patch in %s: %v", fullPath, hashErr)
+			slog.Warn("could not compute content hash after status patch", "component", "doc", "path", fullPath, "error", hashErr)
 		} else {
 			doc.ContentHash = newHash
 			hashRecord := storage.DocumentToRecord(doc, "") // no optimistic locking for hash-refresh write
 			if _, writeErr := s.store.Write(hashRecord); writeErr != nil {
-				log.Printf("[doc] WARNING: could not update content hash record after status patch in %s: %v", fullPath, writeErr)
+				slog.Warn("could not update content hash record after status patch", "component", "doc", "path", fullPath, "error", writeErr)
 			}
 		}
 	}

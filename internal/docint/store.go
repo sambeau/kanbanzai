@@ -3,7 +3,7 @@ package docint
 import (
 	"database/sql"
 	"fmt"
-	"log"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -444,7 +444,7 @@ func loadSectionContent(docPath string, sec *Section) string {
 	}
 	data, err := os.ReadFile(docPath)
 	if err != nil {
-		log.Printf("doc_intel: cannot read source file %q for content retrieval: %v", docPath, err)
+		slog.Info("doc_intel: cannot read source file for content retrieval", "path", docPath, "error", err)
 		return ""
 	}
 	start := sec.ByteOffset

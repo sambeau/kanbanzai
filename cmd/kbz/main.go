@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"log"
 	"log/slog"
 	"os"
 	"strings"
@@ -87,9 +86,9 @@ func defaultDependencies() dependencies {
 				cacheOnce.Do(func() {
 					start := time.Now()
 					if n, err := svc.RebuildCache(); err != nil {
-						log.Printf("[cli] cache warm-up failed (continuing without cache): %v", err)
+						slog.Info("cache warm-up failed (continuing without cache)", "component", "cli", "error", err)
 					} else {
-						log.Printf("[cli] cache warm-up: loaded %d entities in %s", n, time.Since(start))
+						slog.Info("cache warm-up: loaded entities", "component", "cli", "count", n, "elapsed", time.Since(start))
 					}
 				})
 			}
