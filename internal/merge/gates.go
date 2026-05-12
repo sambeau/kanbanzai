@@ -466,7 +466,8 @@ type TestSuiteResult struct {
 	TotalPackages int
 }
 
-// DefaultTestRunner runs go test ./... and parses the output into a TestSuiteResult.
+// DefaultTestRunner runs go test ./... from the given repo directory
+// and parses the output into a TestSuiteResult.
 func DefaultTestRunner(repoPath string) (TestSuiteResult, string) {
 	result := TestSuiteResult{}
 

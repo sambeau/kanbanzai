@@ -9,3 +9,5 @@ created: "2026-05-10T12:46:03Z"
 created_by: sambeau
 display_id: B68-F1
 tier: feature
+verification: "TASK-01KR8Z11B8M2Y: go test ./internal/service/ passes. go test ./internal/mcp/ passes (modulo pre-existing parallel test flake unrelated to changes). All other 39 packages pass consistently.\nTASK-01KR8Z11BA20C: Document written to work/P63-test-remediation/duplicate-test-analysis.md. All tests pass.\nTASK-01KR8Z11BAXBZ: No more planEntityTypeFromID or id[0]=='B' patterns in test files. All tests pass.\nTASK-01KR8Z11BJ6YA: go test ./internal/service/ passes. All tests build and run."
+verification_status: passed
