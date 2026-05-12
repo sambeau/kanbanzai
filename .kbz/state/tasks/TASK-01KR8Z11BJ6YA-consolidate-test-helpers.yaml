@@ -3,8 +3,20 @@ parent_feature: FEAT-01KR8YRQN0P0W
 slug: consolidate-test-helpers
 name: Consolidate writeTestPlan helpers
 summary: "Consolidate duplicated writeTestPlan helpers from entities_test.go, display_id_test.go, conflict_test.go, decompose_test.go, dispatch_test.go, doc_path_test.go into a single shared helper using model.EntityKindPlan."
-status: active
+status: done
+files_planned:
+  - internal/service/entities_test.go
+  - internal/service/conflict_test.go
+  - internal/service/conflict_feature_test.go
+  - internal/service/decompose_test.go
+  - internal/service/decompose_skeleton_test.go
+  - internal/service/dispatch_test.go
+  - internal/service/doc_path_test.go
+  - internal/service/verification_test.go
+completed: "2026-05-12T12:08:06Z"
 claimed_at: "2026-05-12T11:46:21Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-12T11:46:21Z"
 dispatched_by: sambeau
+completion_summary: "Consolidated duplicated writeTestPlan helpers from 7 test files into the single shared writeTestPlan in entities_test.go. Removed writeConflictTestPlan, writeDecomposeTestPlan, writeDispatchTestPlan. Updated callers in conflict_feature_test.go, verification_test.go, decompose_skeleton_test.go. Updated writeBatch in doc_path_test.go to use model.EntityKindPlan. Cleaned up unused imports."
+verification: go test ./internal/service/ passes. All tests build and run.
