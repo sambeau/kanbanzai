@@ -1,7 +1,7 @@
 id: BUG-01KRBD4B236SZ
 slug: doc-path-strategic-plan-parent-lookup
 name: doc path fails with strategic-plan ancestor
-status: verifying
+status: closed
 severity: high
 priority: medium
 type: implementation-defect
