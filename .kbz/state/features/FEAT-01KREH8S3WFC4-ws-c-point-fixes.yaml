@@ -2,9 +2,15 @@ id: FEAT-01KREH8S3WFC4
 slug: ws-c-point-fixes
 name: stdlib point fixes
 parent: B72-stdlib-modernisation
-status: proposed
+status: specifying
 summary: "Delete three hand-rolled helper functions and replace inline with stdlib equivalents: slices.Contains, strings.TrimSuffix, bytes.Contains. Workstream C of P67."
 created: "2026-05-12T16:45:36Z"
 created_by: sambeau
+overrides:
+  -
+    from_status: proposed
+    reason: Design and spec completed at plan level P67; advancing directly to dev-planning
+    timestamp: "2026-05-12T17:46:09+01:00"
+    to_status: specifying
 display_id: B72-F3
 tier: feature
