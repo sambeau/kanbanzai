@@ -3,10 +3,17 @@ content: "[minor] worked-well: write_file with entity_id correctly scoped writes
 created: "2026-05-08T16:49:28Z"
 created_by: unknown
 id: KE-01KR47X0CXKAR
+<<<<<<< Updated upstream
 last_accessed_at: "2026-05-12T15:15:41Z"
 learned_from: TASK-01KR3PYR0BR41
 miss_count: 0
 recent_use_count: 134
+=======
+last_accessed_at: "2026-05-12T15:01:53Z"
+learned_from: TASK-01KR3PYR0BR41
+miss_count: 0
+recent_use_count: 132
+>>>>>>> Stashed changes
 scope: project
 status: contributed
 tags:

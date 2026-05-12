@@ -3,9 +3,15 @@ content: "When closing a bug, the fix commit should be made before or alongside 
 created: "2026-05-04T00:46:05Z"
 created_by: sambeau
 id: KE-01KQR76396E46
+<<<<<<< Updated upstream
 last_accessed_at: "2026-05-12T15:15:41Z"
 miss_count: 0
 recent_use_count: 335
+=======
+last_accessed_at: "2026-05-12T15:01:53Z"
+miss_count: 0
+recent_use_count: 333
+>>>>>>> Stashed changes
 scope: project
 status: contributed
 tags:

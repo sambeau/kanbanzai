@@ -3,9 +3,15 @@ content: "When writing retrospective or review documents, agents must call `retr
 created: "2026-03-28T13:18:59Z"
 created_by: sambeau
 id: KE-01KMT9J3YKJCB
+<<<<<<< Updated upstream
 last_accessed_at: "2026-05-12T15:15:41Z"
 miss_count: 0
 recent_use_count: 620
+=======
+last_accessed_at: "2026-05-12T15:01:53Z"
+miss_count: 0
+recent_use_count: 618
+>>>>>>> Stashed changes
 scope: project
 status: confirmed
 tags:

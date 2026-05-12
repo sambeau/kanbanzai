@@ -3,10 +3,17 @@ content: "[moderate] tool-friction: write_file with entity_id resolves paths rel
 created: "2026-05-08T17:38:52Z"
 created_by: unknown
 id: KE-01KR4AQE06G9W
+<<<<<<< Updated upstream
 last_accessed_at: "2026-05-12T15:15:41Z"
 learned_from: TASK-01KR47D688P0S
 miss_count: 0
 recent_use_count: 95
+=======
+last_accessed_at: "2026-05-12T15:01:53Z"
+learned_from: TASK-01KR47D688P0S
+miss_count: 0
+recent_use_count: 93
+>>>>>>> Stashed changes
 scope: project
 status: contributed
 tags:

@@ -3,10 +3,17 @@ content: ".github/copilot-instructions.md has never contained any handoff capabi
 created: "2026-05-08T17:07:06Z"
 created_by: unknown
 id: KE-01KR48X8WGZDE
+<<<<<<< Updated upstream
 last_accessed_at: "2026-05-12T15:15:41Z"
 learned_from: TASK-01KR47B9N5RBR
 miss_count: 0
 recent_use_count: 110
+=======
+last_accessed_at: "2026-05-12T15:01:53Z"
+learned_from: TASK-01KR47B9N5RBR
+miss_count: 0
+recent_use_count: 108
+>>>>>>> Stashed changes
 scope: project
 status: contributed
 tags:

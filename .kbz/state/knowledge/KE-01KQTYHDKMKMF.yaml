@@ -3,9 +3,15 @@ content: "The handoff tool produces a prompt designed for spawn_agent — it inc
 created: "2026-05-05T02:12:42Z"
 created_by: sambeau
 id: KE-01KQTYHDKMKMF
+<<<<<<< Updated upstream
 last_accessed_at: "2026-05-12T15:15:41Z"
 miss_count: 0
 recent_use_count: 302
+=======
+last_accessed_at: "2026-05-12T15:01:53Z"
+miss_count: 0
+recent_use_count: 300
+>>>>>>> Stashed changes
 scope: project
 status: contributed
 tags:

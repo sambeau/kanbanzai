@@ -3,10 +3,17 @@ content: "[moderate] tool-friction: kanbanzai_edit_file did not persist for some
 created: "2026-05-09T11:02:29Z"
 created_by: unknown
 id: KE-01KR66EC6D3F3
+<<<<<<< Updated upstream
 last_accessed_at: "2026-05-12T15:15:41Z"
 learned_from: TASK-01KR47D68JK4S
 miss_count: 0
 recent_use_count: 63
+=======
+last_accessed_at: "2026-05-12T15:01:53Z"
+learned_from: TASK-01KR47D68JK4S
+miss_count: 0
+recent_use_count: 61
+>>>>>>> Stashed changes
 scope: project
 status: contributed
 tags:

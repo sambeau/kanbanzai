@@ -3,9 +3,15 @@ content: "ValidateSections in internal/service/section_validate.go did literal s
 created: "2026-04-20T15:36:07Z"
 created_by: sambeau
 id: KE-01KPNRHR9S53Y
+<<<<<<< Updated upstream
 last_accessed_at: "2026-05-12T15:15:41Z"
 miss_count: 0
 recent_use_count: 558
+=======
+last_accessed_at: "2026-05-12T15:01:53Z"
+miss_count: 0
+recent_use_count: 556
+>>>>>>> Stashed changes
 scope: project
 status: confirmed
 tags:
