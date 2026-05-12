@@ -1,10 +1,10 @@
 id: B71-test-governance-impl
 slug: test-governance-impl
 name: Test Governance Framework Implementation
-status: active
+status: done
 summary: "Implement P66 test governance framework: teststatus package, kanbanzai test CLI, MCP test tool, status integration, skill/doc updates, pre-commit hook, init seed."
 created: "2026-05-12T14:28:24Z"
 created_by: sambeau
-updated: "2026-05-12T14:28:24Z"
+updated: "2026-05-12T15:26:25Z"
 next_feature_seq: 2
 parent: P66-test-governance
