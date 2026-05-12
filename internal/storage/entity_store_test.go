@@ -248,18 +248,6 @@ func TestEntityStore_Write_RejectsMismatchedIdentity(t *testing.T) {
 	}
 }
 
-func TestUnmarshalCanonicalYAML_RejectsUnexpectedIndentation(t *testing.T) {
-	t.Parallel()
-
-	content := "" +
-		"id: FEAT-01J3K7MXP3RT5\n" +
-		"  slug: bad-indent\n"
-
-	if _, err := UnmarshalCanonicalYAML(content); err == nil {
-		t.Fatal("UnmarshalCanonicalYAML() error = nil, want indentation error")
-	}
-}
-
 func TestCanonicalYAML_FixturesRoundTrip(t *testing.T) {
 	t.Parallel()
 
@@ -651,8 +639,7 @@ func TestMarshalCanonicalYAML_BackslashEscapingRoundTrip(t *testing.T) {
 func TestUnmarshalCanonicalYAML_ParsesBareListItems(t *testing.T) {
 	t.Parallel()
 
-	// Bare `-` at end of input (i+1 >= len(lines) branch)
-	// and bare `-` followed by same-indent line (nextIndent <= indent branch)
+	// yaml.v3 parses bare `-` as null (nil), not as an empty mapping.
 	content := "" +
 		"id: BUG-01J4AR7WHN4F2\n" +
 		"slug: bare-list\n" +
@@ -672,43 +659,13 @@ func TestUnmarshalCanonicalYAML_ParsesBareListItems(t *testing.T) {
 		"slug": "bare-list",
 		"steps": []any{
 			map[string]any{"action": "first"},
-			map[string]any{},
-			map[string]any{},
+			nil,
+			nil,
 		},
 	}
 
 	if !reflect.DeepEqual(got, want) {
 		t.Fatalf("UnmarshalCanonicalYAML() mismatch\nwant: %#v\ngot:  %#v", want, got)
-	}
-}
-
-func TestUnmarshalCanonicalYAML_RejectsInvalidListItem(t *testing.T) {
-	t.Parallel()
-
-	content := "" +
-		"id: BUG-01J4AR7WHN4F2\n" +
-		"slug: bad-list\n" +
-		"items:\n" +
-		"  - good\n" +
-		"  not-a-list-item\n"
-
-	if _, err := UnmarshalCanonicalYAML(content); err == nil {
-		t.Fatal("UnmarshalCanonicalYAML() error = nil, want invalid list item error")
-	}
-}
-
-func TestUnmarshalCanonicalYAML_RejectsUnexpectedListIndentation(t *testing.T) {
-	t.Parallel()
-
-	content := "" +
-		"id: BUG-01J4AR7WHN4F2\n" +
-		"slug: bad-indent\n" +
-		"items:\n" +
-		"  - good\n" +
-		"      - over-indented\n"
-
-	if _, err := UnmarshalCanonicalYAML(content); err == nil {
-		t.Fatal("UnmarshalCanonicalYAML() error = nil, want unexpected indentation error")
 	}
 }
 

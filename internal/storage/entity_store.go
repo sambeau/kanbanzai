@@ -10,9 +10,11 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/sambeau/kanbanzai/internal/fsutil"
 	"github.com/sambeau/kanbanzai/internal/model"
+	"gopkg.in/yaml.v3"
 )
 
 type EntityRecord struct {
@@ -165,15 +167,103 @@ func MarshalCanonicalYAML(entityType string, fields map[string]any) (string, err
 }
 
 func UnmarshalCanonicalYAML(content string) (map[string]any, error) {
-	lines := splitNonEmptyLines(content)
-	result, next, err := parseMapping(lines, 0, 0)
+	if strings.TrimSpace(content) == "" {
+		return map[string]any{}, nil
+	}
+
+	var doc yaml.Node
+	if err := yaml.Unmarshal([]byte(content), &doc); err != nil {
+		return nil, fmt.Errorf("unmarshal yaml: %w", err)
+	}
+
+	// doc is a Document node with a single child: the root mapping.
+	if len(doc.Content) == 0 {
+		return map[string]any{}, nil
+	}
+
+	result, err := nodeToValue(doc.Content[0])
 	if err != nil {
 		return nil, err
 	}
-	if next != len(lines) {
-		return nil, fmt.Errorf("unexpected trailing content at line %d", next+1)
+
+	m, ok := result.(map[string]any)
+	if !ok {
+		return nil, fmt.Errorf("expected top-level mapping, got %T", result)
 	}
-	return result, nil
+	return m, nil
+}
+
+// nodeToValue recursively converts a yaml.Node into a Go value
+// (map[string]any, []any, string, int, float64, bool, or nil).
+// It normalises time.Time values to RFC3339 strings.
+func nodeToValue(node *yaml.Node) (any, error) {
+	switch node.Kind {
+	case yaml.MappingNode:
+		m := make(map[string]any, len(node.Content)/2)
+		for i := 0; i < len(node.Content); i += 2 {
+			key := node.Content[i].Value
+			val, err := nodeToValue(node.Content[i+1])
+			if err != nil {
+				return nil, err
+			}
+			m[key] = val
+		}
+		return m, nil
+
+	case yaml.SequenceNode:
+		result := make([]any, 0, len(node.Content))
+		for _, child := range node.Content {
+			val, err := nodeToValue(child)
+			if err != nil {
+				return nil, err
+			}
+			result = append(result, val)
+		}
+		return result, nil
+
+	case yaml.ScalarNode:
+		return scalarNodeValue(node), nil
+
+	default:
+		// Tag or Alias — not expected in canonical YAML
+		return nil, fmt.Errorf("unexpected YAML node kind %d", node.Kind)
+	}
+}
+
+// scalarNodeValue extracts the Go value from a yaml.ScalarNode.
+// It returns time.Time values as RFC3339 strings for consistency.
+func scalarNodeValue(node *yaml.Node) any {
+	// If the tag is !!timestamp or the value looks like a timestamp that
+	// yaml.v3 would parse, decode it and return as a string.
+	if node.Tag == "!!timestamp" {
+		if t, err := time.Parse(time.RFC3339, node.Value); err == nil {
+			return t.Format(time.RFC3339)
+		}
+		return node.Value
+	}
+
+	switch node.Tag {
+	case "!!int":
+		// yaml.v3 always uses int64 for decimal ints
+		if v, err := strconv.ParseInt(node.Value, 10, 64); err == nil {
+			return int(v)
+		}
+		return node.Value
+	case "!!float":
+		if v, err := strconv.ParseFloat(node.Value, 64); err == nil {
+			return v
+		}
+		return node.Value
+	case "!!bool":
+		return node.Value == "true"
+	case "!!null":
+		return nil
+	case "!!str":
+		return node.Value
+	default:
+		// Unrecognised tag — try inference or return raw
+		return node.Value
+	}
 }
 
 func writeOrderedMapping(b *strings.Builder, indent int, entityType string, fields map[string]any) error {
@@ -295,136 +385,6 @@ func writeYAMLList(b *strings.Builder, indent int, values []any) error {
 	return nil
 }
 
-func parseMapping(lines []string, start, indent int) (map[string]any, int, error) {
-	result := map[string]any{}
-	i := start
-	for i < len(lines) {
-		line := lines[i]
-		currentIndent := countIndent(line)
-		if currentIndent < indent {
-			break
-		}
-		if currentIndent > indent {
-			return nil, i, fmt.Errorf("unexpected indentation at line %d", i+1)
-		}
-		trimmed := strings.TrimSpace(line)
-		if strings.HasPrefix(trimmed, "- ") || trimmed == "-" {
-			return nil, i, fmt.Errorf("unexpected list item at line %d", i+1)
-		}
-		parts := strings.SplitN(trimmed, ":", 2)
-		if len(parts) != 2 {
-			return nil, i, fmt.Errorf("invalid mapping entry at line %d", i+1)
-		}
-		key := strings.TrimSpace(parts[0])
-		rest := strings.TrimSpace(parts[1])
-		if key == "" {
-			return nil, i, fmt.Errorf("empty key at line %d", i+1)
-		}
-		if rest != "" {
-			result[key] = parseScalar(rest)
-			i++
-			continue
-		}
-		if i+1 >= len(lines) {
-			result[key] = map[string]any{}
-			i++
-			continue
-		}
-		nextIndent := countIndent(lines[i+1])
-		if nextIndent <= indent {
-			result[key] = map[string]any{}
-			i++
-			continue
-		}
-		nextTrimmed := strings.TrimSpace(lines[i+1])
-		if strings.HasPrefix(nextTrimmed, "- ") || nextTrimmed == "-" {
-			list, next, err := parseList(lines, i+1, indent+1)
-			if err != nil {
-				return nil, i, err
-			}
-			result[key] = list
-			i = next
-			continue
-		}
-		nested, next, err := parseMapping(lines, i+1, indent+1)
-		if err != nil {
-			return nil, i, err
-		}
-		result[key] = nested
-		i = next
-	}
-	return result, i, nil
-}
-
-func parseList(lines []string, start, indent int) ([]any, int, error) {
-	var result []any
-	i := start
-	for i < len(lines) {
-		line := lines[i]
-		currentIndent := countIndent(line)
-		if currentIndent < indent {
-			break
-		}
-		if currentIndent > indent {
-			return nil, i, fmt.Errorf("unexpected indentation at line %d", i+1)
-		}
-		trimmed := strings.TrimSpace(line)
-		if trimmed == "-" {
-			if i+1 >= len(lines) {
-				result = append(result, map[string]any{})
-				i++
-				continue
-			}
-			nextIndent := countIndent(lines[i+1])
-			if nextIndent <= indent {
-				result = append(result, map[string]any{})
-				i++
-				continue
-			}
-			nested, next, err := parseMapping(lines, i+1, indent+1)
-			if err != nil {
-				return nil, i, err
-			}
-			result = append(result, nested)
-			i = next
-			continue
-		}
-		if !strings.HasPrefix(trimmed, "- ") {
-			return nil, i, fmt.Errorf("invalid list item at line %d", i+1)
-		}
-		value := strings.TrimSpace(strings.TrimPrefix(trimmed, "- "))
-		result = append(result, parseScalar(value))
-		i++
-	}
-	return result, i, nil
-}
-
-func parseScalar(value string) any {
-	value = strings.TrimSpace(value)
-	switch value {
-	case "true":
-		return true
-	case "false":
-		return false
-	case "null":
-		return nil
-	}
-	if intValue, err := strconv.Atoi(value); err == nil {
-		return intValue
-	}
-	if floatValue, err := strconv.ParseFloat(value, 64); err == nil && strings.Contains(value, ".") {
-		return floatValue
-	}
-	if len(value) >= 2 && strings.HasPrefix(value, "\"") && strings.HasSuffix(value, "\"") {
-		unquoted := value[1 : len(value)-1]
-		unquoted = strings.ReplaceAll(unquoted, "\\\"", "\"")
-		unquoted = strings.ReplaceAll(unquoted, "\\\\", "\\")
-		unquoted = strings.ReplaceAll(unquoted, "\\n", "\n")
-		return unquoted
-	}
-	return value
-}
-
 func formatScalar(value any) string {
 	switch typed := value.(type) {
 	case nil:
@@ -500,25 +460,4 @@ func needsQuotes(value string) bool {
 func quoteString(value string) string {
 	replacer := strings.NewReplacer(`\`, `\\`, `"`, `\"`, "\n", `\n`)
 	return `"` + replacer.Replace(value) + `"`
-}
-
-func splitNonEmptyLines(content string) []string {
-	raw := strings.Split(strings.ReplaceAll(content, "\r\n", "\n"), "\n")
-	lines := make([]string, 0, len(raw))
-	for _, line := range raw {
-		if strings.TrimSpace(line) == "" {
-			continue
-		}
-		lines = append(lines, line)
-	}
-	return lines
-}
-
-func countIndent(line string) int {
-	count := 0
-	for strings.HasPrefix(line, "  ") {
-		count++
-		line = line[2:]
-	}
-	return count
 }
