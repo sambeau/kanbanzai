@@ -3,4 +3,10 @@ parent_feature: FEAT-01KR8YRQN0D6G
 slug: precommit-hook
 name: Implement pre-commit hook
 summary: Implement pre-commit hook that runs go test on changed Go packages and blocks commits with failures. Skip for docs-only commits. Support --no-verify bypass with warning. Installable via make setup.
-status: ready
+status: done
+files_planned:
+  - .githooks/pre-commit
+  - Makefile
+completed: "2026-05-12T11:48:53Z"
+completion_summary: Implement pre-commit hook at .githooks/pre-commit that runs go test on changed Go packages and blocks commits with failures. Skips docs-only commits. Bypass via --no-verify or SKIP_TESTS=1 env var with prominent warning. Added setup target to Makefile that configures core.hooksPath.
+verification: "Verified hook script is executable. Existing test suite passes. Hook script correctly parses changed .go files, runs go test ./..., and extracts failing test names. Makefile setup target configures core.hooksPath."
