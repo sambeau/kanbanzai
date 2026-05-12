@@ -12,7 +12,9 @@ cached by Go's built-in test cache). This speed means a time-based TTL is not
 needed — the decision to re-run is driven by source-code modification, not elapsed
 time.
 
-## Goals
+## Goals and Non-Goals
+
+### Goals
 
 1. Any agent can determine the test suite health of `main` without running tests.
 2. The orchestrator refuses to begin new implementation work when tests are failing.
@@ -20,12 +22,31 @@ time.
 4. The record is self-evident — a human looking at the codebase can see "tests failed
    on May 12 at 14:30" in a committed YAML file.
 
-## Non-Goals
+### Non-Goals
 
 - Not a CI system — this does not replace GitHub Actions or other CI.
 - Not a test runner — this records results produced by `go test ./...`.
 - Not a flaky test detector — that's already handled by the BUG-entity convention.
 - Not a coverage tracker — test governance is about pass/fail, not coverage.
+
+## Dependencies
+
+- **`go test ./...`** — the canonical test runner. The design assumes Go's built-in
+  test cache semantics (cached when no source files have changed; ~1.5s vs ~37s
+  uncached on this codebase).
+- **`internal/kbzinit`** — extended to seed `.kbz/state/test-status.yaml` during
+  `kanbanzai init`.
+- **`internal/mcp/status_tool.go`** — extended to emit a `test_health` block and
+  `test_failure` attention items.
+- **`merge` MCP tool** — extended to call `test(action: "verify")` as a blocking
+  merge gate (FR-017).
+- **`.githooks/pre-commit`** — extended to record the test result via the new
+  `kanbanzai test record` CLI subcommand.
+- **Skill files** consumed and modified: `orchestrate-development`,
+  `orchestrate-review`, `implement-task`, `verify-closeout`,
+  `kanbanzai-getting-started`, plus `AGENTS.md` Test Discipline section.
+- **No new external dependencies.** YAML serialisation uses the existing
+  `gopkg.in/yaml.v3` library already in use across the codebase.
 
 ## Performance Baseline
 
