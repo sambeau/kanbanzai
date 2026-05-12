@@ -3,4 +3,10 @@ parent_feature: FEAT-01KR8YRQN0D6G
 slug: kbz-doctor-tests
 name: Add test suite check to kbz doctor
 summary: "Add go test ./... diagnostics to kbz doctor CLI. Report pass/fail status per package, total counts, and specific failure names."
-status: ready
+status: done
+files_planned:
+  - internal/kbzdoctor/doctor.go
+  - internal/kbzdoctor/doctor_test.go
+completed: "2026-05-12T11:56:29Z"
+completion_summary: "Add go test ./... diagnostics to kbz doctor CLI command. Test suite check added to Run() method. Reports per-package pass/fail, total counts, and specific failure names. TestSuiteResult with TotalPackages, PassingPackages, FailingPackages, FailingTests fields. Uses injectable runTestSuiteCmd for testability. Gracefully skips when go.mod is absent (non-Go project)."
+verification: "All kbzdoctor tests pass including new tests: RunTestSuite_EmptyPath, RunTestSuite_NoGoModDir, RunTestSuite_Mocked (passing/failing), FormatTestSuiteResult. Existing tests unmodified and passing."
