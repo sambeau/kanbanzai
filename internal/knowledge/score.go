@@ -1,7 +1,8 @@
 package knowledge
 
 import (
-	"sort"
+	"cmp"
+	"slices"
 	"time"
 )
 
@@ -48,11 +49,11 @@ func RankAndCap(entries []MatchedEntry, now time.Time, maxEntries int) ([]Scored
 		}
 	}
 
-	sort.SliceStable(scored, func(i, j int) bool {
-		if scored[i].Score != scored[j].Score {
-			return scored[i].Score < scored[j].Score
+	slices.SortStableFunc(scored, func(a, b ScoredEntry) int {
+		if n := cmp.Compare(a.Score, b.Score); n != 0 {
+			return n
 		}
-		return scored[i].ID < scored[j].ID
+		return cmp.Compare(a.ID, b.ID)
 	})
 
 	if len(scored) <= maxEntries {

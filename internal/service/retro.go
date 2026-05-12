@@ -13,7 +13,7 @@ package service
 
 import (
 	"fmt"
-	"sort"
+	"slices"
 	"strings"
 )
 
@@ -157,6 +157,6 @@ func sortedRetroKeys(m map[string]bool) []string {
 	for k := range m {
 		keys = append(keys, k)
 	}
-	sort.Strings(keys)
+	slices.Sort(keys)
 	return keys
 }

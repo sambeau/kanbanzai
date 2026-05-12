@@ -1,10 +1,11 @@
 package knowledge
 
 import (
+	"cmp"
 	"encoding/json"
 	"os"
 	"path/filepath"
-	"sort"
+	"slices"
 	"sync"
 )
 
@@ -77,8 +78,8 @@ func (t *CapTracker) ScopesNeedingCompaction() []ScopeCompactionInfo {
 		}
 	}
 
-	sort.Slice(result, func(i, j int) bool {
-		return result[i].Scope < result[j].Scope
+	slices.SortFunc(result, func(a, b ScopeCompactionInfo) int {
+		return cmp.Compare(a.Scope, b.Scope)
 	})
 
 	return result

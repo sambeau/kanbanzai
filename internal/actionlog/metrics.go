@@ -1,7 +1,8 @@
 package actionlog
 
 import (
-	"sort"
+	"cmp"
+	"slices"
 	"time"
 )
 
@@ -171,8 +172,8 @@ func computeTimePerStage(features []FeatureMetricsData) []StageDuration {
 
 	for _, f := range features {
 		transitions := f.Transitions
-		sort.Slice(transitions, func(i, j int) bool {
-			return transitions[i].At.Before(transitions[j].At)
+		slices.SortFunc(transitions, func(a, b StatusTransition) int {
+			return a.At.Compare(b.At)
 		})
 		for i := 0; i < len(transitions)-1; i++ {
 			stage := transitions[i].ToStatus
@@ -185,7 +186,7 @@ func computeTimePerStage(features []FeatureMetricsData) []StageDuration {
 
 	stages := make([]StageDuration, 0, len(stageDurations))
 	for stage, durations := range stageDurations {
-		sort.Float64s(durations)
+		slices.Sort(durations)
 		stages = append(stages, StageDuration{
 			Stage:  stage,
 			Median: percentile(durations, 50),
@@ -194,8 +195,8 @@ func computeTimePerStage(features []FeatureMetricsData) []StageDuration {
 		})
 	}
 
-	sort.Slice(stages, func(i, j int) bool {
-		return stages[i].Stage < stages[j].Stage
+	slices.SortFunc(stages, func(a, b StageDuration) int {
+		return cmp.Compare(a.Stage, b.Stage)
 	})
 	return stages
 }
@@ -254,14 +255,14 @@ func computeActionDistribution(entries []Entry) []ToolActionCount {
 	}
 
 	// Sort by calls descending, then tool ascending, then action ascending.
-	sort.Slice(result, func(i, j int) bool {
-		if result[i].Count != result[j].Count {
-			return result[i].Count > result[j].Count
+	slices.SortFunc(result, func(a, b ToolActionCount) int {
+		if n := cmp.Compare(b.Count, a.Count); n != 0 {
+			return n
 		}
-		if result[i].Tool != result[j].Tool {
-			return result[i].Tool < result[j].Tool
+		if n := cmp.Compare(a.Tool, b.Tool); n != 0 {
+			return n
 		}
-		return result[i].Action < result[j].Action
+		return cmp.Compare(a.Action, b.Action)
 	})
 
 	return result
@@ -337,7 +338,9 @@ func computeDocTypeFunnel(entries []Entry, lookup StageFeatureLookup) *DocFunnel
 	}
 
 	// Stable sort by doc type.
-	sort.Slice(metric.Records, func(i, j int) bool { return metric.Records[i].DocType < metric.Records[j].DocType })
+	slices.SortFunc(metric.Records, func(a, b DocFunnelRecord) int {
+		return cmp.Compare(a.DocType, b.DocType)
+	})
 
 	return metric
 }
@@ -386,7 +389,7 @@ func computeTaskCompletionGap(entries []Entry) *TaskGapMetric {
 		return nil
 	}
 
-	sort.Float64s(gaps)
+	slices.Sort(gaps)
 	return &TaskGapMetric{
 		Count:  len(gaps),
 		Median: percentile(gaps, 50),

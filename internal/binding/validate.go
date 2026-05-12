@@ -2,7 +2,7 @@ package binding
 
 import (
 	"fmt"
-	"sort"
+	"slices"
 	"strings"
 )
 
@@ -25,7 +25,7 @@ func ValidateBindingFile(bf *BindingFile, roleChecker RoleChecker) *ValidationRe
 	for s := range validStages {
 		validList = append(validList, s)
 	}
-	sort.Strings(validList)
+	slices.Sort(validList)
 
 	for stageName, binding := range bf.StageBindings {
 		// 1. Check stage name is valid.

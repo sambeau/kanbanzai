@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"sort"
+	"slices"
 	"strings"
 
 	"gopkg.in/yaml.v3"
@@ -178,7 +178,7 @@ func extractRoles(root string) (map[string]RoleEntry, error) {
 			yamlFiles = append(yamlFiles, e.Name())
 		}
 	}
-	sort.Strings(yamlFiles)
+	slices.Sort(yamlFiles)
 
 	roles := make(map[string]RoleEntry, len(yamlFiles))
 	for _, name := range yamlFiles {

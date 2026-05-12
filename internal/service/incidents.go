@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 	"path/filepath"
-	"sort"
+	"slices"
 	"strings"
 	"time"
 
@@ -212,7 +212,7 @@ func (s *EntityService) ListIncidents(statusFilter, severityFilter string) ([]Li
 	if err != nil {
 		return nil, fmt.Errorf("list incidents: %w", err)
 	}
-	sort.Strings(entries)
+	slices.Sort(entries)
 
 	var results []ListResult
 	for _, path := range entries {

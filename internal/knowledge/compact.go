@@ -2,8 +2,9 @@
 package knowledge
 
 import (
+	"cmp"
 	"fmt"
-	"sort"
+	"slices"
 	"time"
 )
 
@@ -270,7 +271,7 @@ func mergeAnchors(a, b []string) []string {
 	}
 
 	// Sort for deterministic output
-	sort.Strings(result)
+	slices.Sort(result)
 	return result
 }
 
@@ -437,8 +438,8 @@ func compactActiveEntries(entries []map[string]any, opts CompactionOptions) (Com
 	}
 
 	// Sort updates by ID for deterministic output
-	sort.Slice(updates, func(i, j int) bool {
-		return getEntryIDFromFields(updates[i]) < getEntryIDFromFields(updates[j])
+	slices.SortFunc(updates, func(a, b map[string]any) int {
+		return cmp.Compare(getEntryIDFromFields(a), getEntryIDFromFields(b))
 	})
 
 	return result, updates

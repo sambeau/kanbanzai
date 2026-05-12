@@ -2,7 +2,7 @@ package service
 
 import (
 	"fmt"
-	"sort"
+	"slices"
 	"time"
 
 	"github.com/sambeau/kanbanzai/internal/model"
@@ -61,8 +61,8 @@ func MigrateDisplayIDs(svc *EntityService) error {
 		}
 
 		// Sort by created timestamp ascending (oldest gets lowest seq number).
-		sort.Slice(toBackfill, func(i, j int) bool {
-			return toBackfill[i].created.Before(toBackfill[j].created)
+		slices.SortFunc(toBackfill, func(a, b featureEntry) int {
+			return a.created.Compare(b.created)
 		})
 
 		seq := intFromState(planResult.State, "next_feature_seq", 1)

@@ -3,7 +3,8 @@
 package cleanup
 
 import (
-	"sort"
+	"cmp"
+	"slices"
 	"time"
 
 	"github.com/sambeau/kanbanzai/internal/worktree"
@@ -59,18 +60,20 @@ func ListCleanupItems(records []worktree.Record, now time.Time, opts ListOptions
 	}
 
 	// Sort by cleanup time (earliest first), then by ID for determinism
-	sort.Slice(items, func(i, j int) bool {
+	slices.SortFunc(items, func(a, b CleanupItem) int {
 		// Abandoned items (no cleanup time) sort first
-		if items[i].CleanupAfter.IsZero() && !items[j].CleanupAfter.IsZero() {
-			return true
+		aZero := a.CleanupAfter.IsZero()
+		bZero := b.CleanupAfter.IsZero()
+		if aZero && !bZero {
+			return -1
 		}
-		if !items[i].CleanupAfter.IsZero() && items[j].CleanupAfter.IsZero() {
-			return false
+		if !aZero && bZero {
+			return 1
 		}
-		if items[i].CleanupAfter.Equal(items[j].CleanupAfter) {
-			return items[i].WorktreeID < items[j].WorktreeID
+		if a.CleanupAfter.Equal(b.CleanupAfter) {
+			return cmp.Compare(a.WorktreeID, b.WorktreeID)
 		}
-		return items[i].CleanupAfter.Before(items[j].CleanupAfter)
+		return a.CleanupAfter.Compare(b.CleanupAfter)
 	})
 
 	return items

@@ -1,7 +1,7 @@
 package health
 
 import (
-	"sort"
+	"slices"
 	"strconv"
 )
 
@@ -23,7 +23,7 @@ func FormatHealthResult(result HealthResult) map[string]any {
 	for name := range result.Categories {
 		names = append(names, name)
 	}
-	sort.Strings(names)
+	slices.Sort(names)
 
 	for _, name := range names {
 		cat := result.Categories[name]

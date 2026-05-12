@@ -1,8 +1,9 @@
 package knowledge
 
 import (
+	"cmp"
 	"regexp"
-	"sort"
+	"slices"
 	"strings"
 )
 
@@ -46,8 +47,8 @@ func ScanEntityRefs(text string) []EntityRef {
 	}
 
 	// Sort by start position so we process left-to-right.
-	sort.Slice(all, func(i, j int) bool {
-		return all[i].start < all[j].start
+	slices.SortFunc(all, func(a, b rawMatch) int {
+		return cmp.Compare(a.start, b.start)
 	})
 
 	seen := make(map[string]struct{})

@@ -1,9 +1,10 @@
 package service
 
 import (
+	"cmp"
 	"context"
 	"fmt"
-	"sort"
+	"slices"
 	"strings"
 	"time"
 
@@ -157,28 +158,26 @@ func (s *EntityService) WorkQueue(input WorkQueueInput) (WorkQueueResult, error)
 	}
 
 	// Sort: estimate ASC (nil last), age DESC, task ID lexicographic
-	sort.Slice(result.Queue, func(i, j int) bool {
-		a, b := result.Queue[i], result.Queue[j]
-
+	slices.SortFunc(result.Queue, func(a, b WorkQueueItem) int {
 		if a.Estimate == nil && b.Estimate != nil {
-			return false // nil estimate sorts last
+			return 1 // nil estimate sorts last
 		}
 		if a.Estimate != nil && b.Estimate == nil {
-			return true // non-nil estimate sorts first
+			return -1 // non-nil estimate sorts first
 		}
 		if a.Estimate != nil && b.Estimate != nil {
-			if *a.Estimate != *b.Estimate {
-				return *a.Estimate < *b.Estimate
+			if n := cmp.Compare(*a.Estimate, *b.Estimate); n != 0 {
+				return n
 			}
 		}
 
 		// Same estimate band: age DESC
-		if a.AgeDays != b.AgeDays {
-			return a.AgeDays > b.AgeDays
+		if n := cmp.Compare(b.AgeDays, a.AgeDays); n != 0 {
+			return n
 		}
 
 		// Tie-break: task ID lexicographic
-		return a.TaskID < b.TaskID
+		return cmp.Compare(a.TaskID, b.TaskID)
 	})
 
 	// Conflict check: annotate each ready task with conflict risk against active tasks

@@ -1,9 +1,10 @@
 package context
 
 import (
+	"cmp"
 	"context"
 	"fmt"
-	"sort"
+	"slices"
 	"strings"
 
 	kbzsvc "github.com/sambeau/kanbanzai/internal/service"
@@ -230,8 +231,8 @@ func Assemble(
 
 	// Trim T3 lowest-confidence first.
 	if totalBytes > maxBytes {
-		sort.SliceStable(tier3Items, func(i, j int) bool {
-			return tier3Items[i].Confidence < tier3Items[j].Confidence
+		slices.SortStableFunc(tier3Items, func(a, b AssemblyItem) int {
+			return cmp.Compare(a.Confidence, b.Confidence)
 		})
 		for len(tier3Items) > 0 && totalBytes > maxBytes {
 			cut := tier3Items[0]
@@ -256,8 +257,8 @@ func Assemble(
 
 	// Trim T2 lowest-confidence first, if still over budget.
 	if totalBytes > maxBytes {
-		sort.SliceStable(tier2Items, func(i, j int) bool {
-			return tier2Items[i].Confidence < tier2Items[j].Confidence
+		slices.SortStableFunc(tier2Items, func(a, b AssemblyItem) int {
+			return cmp.Compare(a.Confidence, b.Confidence)
 		})
 		for len(tier2Items) > 0 && totalBytes > maxBytes {
 			cut := tier2Items[0]

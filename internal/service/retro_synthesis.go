@@ -11,10 +11,11 @@
 package service
 
 import (
+	"cmp"
 	"fmt"
 	"os"
 	"path/filepath"
-	"sort"
+	"slices"
 	"strings"
 	"time"
 
@@ -993,7 +994,7 @@ func buildRetroThemes(signals []parsedRetroSignal) []RetroTheme {
 	for cat := range byCategory {
 		categories = append(categories, cat)
 	}
-	sort.Strings(categories)
+	slices.Sort(categories)
 
 	var allClusters []retroCluster
 	for _, cat := range categories {
@@ -1002,13 +1003,13 @@ func buildRetroThemes(signals []parsedRetroSignal) []RetroTheme {
 
 	// Rank: descending by cluster_score = signal_count × max_severity_weight,
 	// then descending by signal_count as tiebreaker (spec §7.2).
-	sort.SliceStable(allClusters, func(i, j int) bool {
-		si := retroClusterScore(allClusters[i])
-		sj := retroClusterScore(allClusters[j])
-		if si != sj {
-			return si > sj
+	slices.SortStableFunc(allClusters, func(a, b retroCluster) int {
+		si := retroClusterScore(a)
+		sj := retroClusterScore(b)
+		if n := cmp.Compare(sj, si); n != 0 {
+			return n
 		}
-		return len(allClusters[i].signals) > len(allClusters[j].signals)
+		return cmp.Compare(len(b.signals), len(a.signals))
 	})
 
 	themes := make([]RetroTheme, len(allClusters))
@@ -1059,7 +1060,7 @@ func (s *RetroService) buildExperiments(signals []parsedRetroSignal) []RetroExpe
 	for id := range byDecision {
 		ids = append(ids, id)
 	}
-	sort.Strings(ids)
+	slices.Sort(ids)
 
 	var experiments []RetroExperiment
 	for _, id := range ids {

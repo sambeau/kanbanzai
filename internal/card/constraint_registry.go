@@ -1,9 +1,10 @@
 package card
 
 import (
+	"cmp"
 	"fmt"
 	"os"
-	"sort"
+	"slices"
 
 	"gopkg.in/yaml.v3"
 )
@@ -64,8 +65,8 @@ func LoadConstraintRegistry(path string) (*ConstraintRegistry, error) {
 	}
 
 	// Sort by ID for deterministic ordering (REQ-NF-004).
-	sort.Slice(f.Constraints, func(i, j int) bool {
-		return f.Constraints[i].ID < f.Constraints[j].ID
+	slices.SortFunc(f.Constraints, func(a, b ConstraintEntry) int {
+		return cmp.Compare(a.ID, b.ID)
 	})
 
 	return &ConstraintRegistry{entries: f.Constraints}, nil

@@ -1,12 +1,13 @@
 package service
 
 import (
+	"cmp"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
-	"sort"
+	"slices"
 	"strconv"
 	"strings"
 	"sync"
@@ -322,10 +323,10 @@ func (s *KnowledgeService) List(filters KnowledgeFilters) ([]storage.KnowledgeRe
 
 	// Sort by descending recent_use_count when requested (FR-006).
 	if filters.Sort == "recent" {
-		sort.Slice(result, func(i, j int) bool {
-			ci := knowledgeFieldInt(result[i].Fields, "recent_use_count")
-			cj := knowledgeFieldInt(result[j].Fields, "recent_use_count")
-			return ci > cj
+		slices.SortFunc(result, func(a, b storage.KnowledgeRecord) int {
+			ci := knowledgeFieldInt(a.Fields, "recent_use_count")
+			cj := knowledgeFieldInt(b.Fields, "recent_use_count")
+			return cmp.Compare(cj, ci)
 		})
 	}
 

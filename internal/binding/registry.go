@@ -2,7 +2,7 @@ package binding
 
 import (
 	"fmt"
-	"sort"
+	"slices"
 	"strings"
 )
 
@@ -81,7 +81,7 @@ func (r *BindingRegistry) Stages() []string {
 	for name := range r.bindings.StageBindings {
 		stages = append(stages, name)
 	}
-	sort.Strings(stages)
+	slices.Sort(stages)
 	return stages
 }
 

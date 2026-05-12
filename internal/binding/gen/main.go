@@ -3,10 +3,11 @@
 package main
 
 import (
+	"cmp"
 	"fmt"
 	"os"
 	"path/filepath"
-	"sort"
+	"slices"
 	"text/template"
 
 	"gopkg.in/yaml.v3"
@@ -149,7 +150,7 @@ func main() {
 	for status := range rf.Routing {
 		workableStatuses = append(workableStatuses, status)
 	}
-	sort.Strings(workableStatuses)
+	slices.Sort(workableStatuses)
 
 	// Build bug cases: only statuses that map to a different key (i.e., bug statuses).
 	var bugCases []bugCase
@@ -159,14 +160,14 @@ func main() {
 		}
 	}
 	// Sort for determinism.
-	sort.Slice(bugCases, func(i, j int) bool {
-		return bugCases[i].Status < bugCases[j].Status
+	slices.SortFunc(bugCases, func(a, b bugCase) int {
+		return cmp.Compare(a.Status, b.Status)
 	})
 
 	// Build bug statuses list (sorted for determinism).
 	bugStatuses := make([]string, len(rf.BugStatuses))
 	copy(bugStatuses, rf.BugStatuses)
-	sort.Strings(bugStatuses)
+	slices.Sort(bugStatuses)
 
 	// Valid tiers (architectural constants).
 	validTiers := map[string]bool{

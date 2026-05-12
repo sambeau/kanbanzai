@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"sort"
+	"slices"
 	"strings"
 	"time"
 
@@ -504,7 +504,7 @@ func (s *DocumentService) ApproveDocument(input ApproveDocumentInput) (DocumentR
 			for k := range doc.QualityEvaluation.Dimensions {
 				dimKeys = append(dimKeys, k)
 			}
-			sort.Strings(dimKeys)
+			slices.Sort(dimKeys)
 			for _, k := range dimKeys {
 				fmt.Fprintf(&sb, "  - %s: %g\n", k, doc.QualityEvaluation.Dimensions[k])
 			}

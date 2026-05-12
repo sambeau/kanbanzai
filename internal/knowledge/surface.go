@@ -1,7 +1,8 @@
 package knowledge
 
 import (
-	"sort"
+	"cmp"
+	"slices"
 	"strings"
 	"time"
 
@@ -62,8 +63,8 @@ func MatchEntries(entries []map[string]any, input MatchInput) []MatchedEntry {
 		result = append(result, toMatchedEntry(entry, id, scope, status, tags))
 	}
 
-	sort.Slice(result, func(i, j int) bool {
-		return result[i].ID < result[j].ID
+	slices.SortFunc(result, func(a, b MatchedEntry) int {
+		return cmp.Compare(a.ID, b.ID)
 	})
 
 	if result == nil {

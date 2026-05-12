@@ -2,9 +2,10 @@
 package status
 
 import (
+	"cmp"
 	"fmt"
 	"io"
-	"sort"
+	"slices"
 
 	"github.com/sambeau/kanbanzai/internal/cli/render"
 	"github.com/sambeau/kanbanzai/internal/service"
@@ -163,8 +164,8 @@ func attentionFirst(items []render.AttentionItem) string {
 	if len(items) == 0 {
 		return "none"
 	}
-	sort.Slice(items, func(i, j int) bool {
-		return severityRank(items[i].Severity) > severityRank(items[j].Severity)
+	slices.SortFunc(items, func(a, b render.AttentionItem) int {
+		return cmp.Compare(severityRank(b.Severity), severityRank(a.Severity))
 	})
 	return items[0].Message
 }

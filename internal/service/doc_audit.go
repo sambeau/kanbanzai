@@ -14,12 +14,13 @@
 package service
 
 import (
+	"cmp"
 	"context"
 	"fmt"
 	"io/fs"
 	"os"
 	"path/filepath"
-	"sort"
+	"slices"
 	"strings"
 	"time"
 
@@ -345,8 +346,8 @@ func collectMostAccessed(svc *IntelligenceService, limit int) []AccessedDocument
 		})
 	}
 
-	sort.Slice(entries, func(i, j int) bool {
-		return entries[i].AccessCount > entries[j].AccessCount
+	slices.SortFunc(entries, func(a, b AccessedDocumentEntry) int {
+		return cmp.Compare(b.AccessCount, a.AccessCount)
 	})
 
 	if len(entries) > limit {

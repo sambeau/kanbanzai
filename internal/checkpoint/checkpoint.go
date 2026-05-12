@@ -1,13 +1,14 @@
 package checkpoint
 
 import (
+	"cmp"
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
-	"sort"
+	"slices"
 	"strings"
 	"time"
 
@@ -179,8 +180,8 @@ func (s *Store) List(statusFilter string) ([]Record, error) {
 		records = append(records, record)
 	}
 
-	sort.Slice(records, func(i, j int) bool {
-		return records[i].ID < records[j].ID
+	slices.SortFunc(records, func(a, b Record) int {
+		return cmp.Compare(a.ID, b.ID)
 	})
 
 	return records, nil
@@ -277,7 +278,7 @@ func marshalRecord(record Record) (string, error) {
 			extras = append(extras, k)
 		}
 	}
-	sort.Strings(extras)
+	slices.Sort(extras)
 	for _, k := range extras {
 		writeField(&b, k, fields[k])
 	}

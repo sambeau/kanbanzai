@@ -14,10 +14,11 @@
 package mcp
 
 import (
+	"cmp"
 	"context"
 	"encoding/json"
 	"fmt"
-	"sort"
+	"slices"
 	"strings"
 	"sync"
 	"time"
@@ -612,32 +613,34 @@ func nextFindTopReadyTask(featureID string, entitySvc *service.EntityService) (*
 // nextSortByQueueOrder sorts tasks by: estimate ASC (nil last), age DESC, ID ASC.
 func nextSortByQueueOrder(tasks []service.ListResult) {
 	now := time.Now()
-	sort.SliceStable(tasks, func(i, j int) bool {
-		ai := service.GetEstimateFromFields(tasks[i].State)
-		bj := service.GetEstimateFromFields(tasks[j].State)
+	slices.SortStableFunc(tasks, func(a, b service.ListResult) int {
+		ai := service.GetEstimateFromFields(a.State)
+		bj := service.GetEstimateFromFields(b.State)
 
 		if ai == nil && bj != nil {
-			return false // nil estimate sorts last
+			return 1 // nil estimate sorts last
 		}
 		if ai != nil && bj == nil {
-			return true
+			return -1
 		}
-		if ai != nil && bj != nil && *ai != *bj {
-			return *ai < *bj
+		if ai != nil && bj != nil {
+			if n := cmp.Compare(*ai, *bj); n != 0 {
+				return n
+			}
 		}
 
 		// Age descending: older tasks have higher priority.
-		ciStr := nextStateStr(tasks[i].State, "created")
-		cjStr := nextStateStr(tasks[j].State, "created")
+		ciStr := nextStateStr(a.State, "created")
+		cjStr := nextStateStr(b.State, "created")
 		ci, _ := time.Parse(time.RFC3339, ciStr)
 		cj, _ := time.Parse(time.RFC3339, cjStr)
 		ageI := int(now.Sub(ci).Hours() / 24)
 		ageJ := int(now.Sub(cj).Hours() / 24)
-		if ageI != ageJ {
-			return ageI > ageJ
+		if n := cmp.Compare(ageJ, ageI); n != 0 { // descending: older first
+			return n
 		}
 
-		return tasks[i].ID < tasks[j].ID
+		return cmp.Compare(a.ID, b.ID)
 	})
 }
 

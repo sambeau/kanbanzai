@@ -9,7 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
-	"sort"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -948,7 +948,7 @@ func (s *EntityService) List(entityType string) ([]ListResult, error) {
 		return nil, fmt.Errorf("list %s entities: %w", entityType, err)
 	}
 
-	sort.Strings(entries)
+	slices.Sort(entries)
 
 	results := make([]ListResult, 0, len(entries))
 	for _, entry := range entries {

@@ -8,7 +8,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"sort"
+	"slices"
 	"strings"
 	"time"
 
@@ -38,7 +38,7 @@ func EntityTool(entitySvc *service.EntityService, docSvc *service.DocumentServic
 func entityTool(entitySvc *service.EntityService, docSvc *service.DocumentService, gateRouter *gate.GateRouter, checkpointStore *checkpoint.Store, requiresHumanReview func() bool) server.ServerTool {
 	tool := mcp.NewTool("entity",
 		mcp.WithTitleAnnotation("Entity Manager"),
-		mcp.WithDescription(		"The primary tool for managing workflow entities (batches, features, tasks, bugs, decisions) — "+
+		mcp.WithDescription("The primary tool for managing workflow entities (batches, features, tasks, bugs, decisions) — "+
 			"use this whenever you need to create, query, modify, or advance entities through their lifecycle. "+
 			"Actions: create, get, list, update, transition. "+
 			"Verify entity existence before working on it — do not create worktrees, write files, "+
@@ -1106,7 +1106,7 @@ func entityTransitionError(entitySvc *service.EntityService, entityType, entityI
 		details["current_status"] = currentStatus
 		if kind, ok := entityKindFromType(entityType); ok {
 			if next := validate.NextStates(kind, currentStatus); len(next) > 0 {
-				sort.Strings(next)
+				slices.Sort(next)
 				details["valid_transitions"] = next
 			}
 		}

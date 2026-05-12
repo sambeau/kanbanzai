@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"sort"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -292,7 +292,7 @@ func orderedKeys(entityType string, fields map[string]any) []string {
 		}
 		extras = append(extras, key)
 	}
-	sort.Strings(extras)
+	slices.Sort(extras)
 	return append(keys, extras...)
 }
 
@@ -328,7 +328,7 @@ func writeYAMLField(b *strings.Builder, indent int, key string, value any) error
 		for nestedKey := range typed {
 			keys = append(keys, nestedKey)
 		}
-		sort.Strings(keys)
+		slices.Sort(keys)
 		for _, nestedKey := range keys {
 			if err := writeYAMLField(b, indent+1, nestedKey, typed[nestedKey]); err != nil {
 				return err
@@ -369,7 +369,7 @@ func writeYAMLList(b *strings.Builder, indent int, values []any) error {
 			for key := range typed {
 				keys = append(keys, key)
 			}
-			sort.Strings(keys)
+			slices.Sort(keys)
 			for _, key := range keys {
 				if err := writeYAMLField(b, indent+1, key, typed[key]); err != nil {
 					return err

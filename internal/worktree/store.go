@@ -1,13 +1,14 @@
 package worktree
 
 import (
+	"cmp"
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
-	"sort"
+	"slices"
 	"strings"
 	"time"
 
@@ -185,8 +186,8 @@ func (s *Store) List() ([]Record, error) {
 	}
 
 	// Sort by ID for deterministic ordering
-	sort.Slice(records, func(i, j int) bool {
-		return records[i].ID < records[j].ID
+	slices.SortFunc(records, func(a, b Record) int {
+		return cmp.Compare(a.ID, b.ID)
 	})
 
 	return records, nil
@@ -315,7 +316,7 @@ func marshalYAML(fields map[string]any) (string, error) {
 			extras = append(extras, key)
 		}
 	}
-	sort.Strings(extras)
+	slices.Sort(extras)
 	for _, key := range extras {
 		writeField(&b, key, fields[key])
 	}

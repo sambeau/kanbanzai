@@ -2,7 +2,7 @@ package registry
 
 import (
 	"fmt"
-	"sort"
+	"slices"
 	"strings"
 )
 
@@ -64,7 +64,7 @@ func RoleIndexContent(model *RegistryModel) string {
 	for id := range model.Roles {
 		ids = append(ids, id)
 	}
-	sort.Strings(ids)
+	slices.Sort(ids)
 
 	for _, id := range ids {
 		r := model.Roles[id]

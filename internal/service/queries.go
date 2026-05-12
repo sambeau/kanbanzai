@@ -2,7 +2,7 @@ package service
 
 import (
 	"fmt"
-	"sort"
+	"slices"
 	"strings"
 	"time"
 
@@ -66,7 +66,7 @@ func (s *EntityService) ListAllTags() ([]string, error) {
 	for tag := range seen {
 		tags = append(tags, tag)
 	}
-	sort.Strings(tags)
+	slices.Sort(tags)
 	return tags, nil
 }
 

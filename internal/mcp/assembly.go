@@ -14,9 +14,10 @@
 package mcp
 
 import (
+	"cmp"
 	"fmt"
 	"regexp"
-	"sort"
+	"slices"
 	"strings"
 	"time"
 
@@ -613,8 +614,8 @@ func asmLoadKnowledge(svc *service.KnowledgeService, role string) []asmKnowledge
 	}
 
 	// Highest confidence first.
-	sort.SliceStable(entries, func(i, j int) bool {
-		return entries[i].confidence > entries[j].confidence
+	slices.SortStableFunc(entries, func(a, b asmKnowledgeEntry) int {
+		return cmp.Compare(b.confidence, a.confidence)
 	})
 	return entries
 }
@@ -651,10 +652,10 @@ func asmLoadSiblingKnowledge(svc *service.KnowledgeService, entitySvc *service.E
 
 	// Process siblings in completion order (most recent first, per NFR-002).
 	// Sort by completed timestamp descending.
-	sort.SliceStable(siblings, func(i, j int) bool {
-		ic := parseTimeField(siblings[i].State, "completed")
-		jc := parseTimeField(siblings[j].State, "completed")
-		return ic.After(jc)
+	slices.SortStableFunc(siblings, func(a, b service.ListResult) int {
+		ic := parseTimeField(a.State, "completed")
+		jc := parseTimeField(b.State, "completed")
+		return jc.Compare(ic)
 	})
 
 	for _, sib := range siblings {
@@ -898,8 +899,8 @@ func asmTrimContext(actx assembledContext) assembledContext {
 		}
 	}
 	// Sort ascending so we cut lowest-confidence entries first.
-	sort.SliceStable(t3, func(i, j int) bool { return t3[i].confidence < t3[j].confidence })
-	sort.SliceStable(t2, func(i, j int) bool { return t2[i].confidence < t2[j].confidence })
+	slices.SortStableFunc(t3, func(a, b asmKnowledgeEntry) int { return cmp.Compare(a.confidence, b.confidence) })
+	slices.SortStableFunc(t2, func(a, b asmKnowledgeEntry) int { return cmp.Compare(a.confidence, b.confidence) })
 
 	current := asmByteCount(actx)
 
@@ -953,8 +954,8 @@ func asmTrimContext(actx assembledContext) assembledContext {
 	}
 
 	// Rebuild knowledge list: T2 then T3, both descending by confidence.
-	sort.SliceStable(t3, func(i, j int) bool { return t3[i].confidence > t3[j].confidence })
-	sort.SliceStable(t2, func(i, j int) bool { return t2[i].confidence > t2[j].confidence })
+	slices.SortStableFunc(t3, func(a, b asmKnowledgeEntry) int { return cmp.Compare(b.confidence, a.confidence) })
+	slices.SortStableFunc(t2, func(a, b asmKnowledgeEntry) int { return cmp.Compare(b.confidence, a.confidence) })
 	actx.knowledge = append(t2, t3...)
 	actx.byteUsage = current
 	return actx

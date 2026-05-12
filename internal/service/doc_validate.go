@@ -1,10 +1,11 @@
 package service
 
 import (
+	"cmp"
 	"fmt"
 	"path/filepath"
 	"regexp"
-	"sort"
+	"slices"
 	"strings"
 )
 
@@ -30,7 +31,7 @@ var sortedDocTypes = func() []string {
 		"design", "spec", "dev-plan", "review", "report", "research", "retro", "proposal",
 		"policy", "rca",
 	}
-	sort.Slice(types, func(i, j int) bool { return len(types[i]) > len(types[j]) })
+	slices.SortFunc(types, func(a, b string) int { return cmp.Compare(len(b), len(a)) })
 	return types
 }()
 

@@ -2,7 +2,7 @@ package validate
 
 import (
 	"fmt"
-	"sort"
+	"slices"
 	"strings"
 
 	"github.com/sambeau/kanbanzai/internal/model"
@@ -444,7 +444,7 @@ func ValidNextStates(kind EntityKind, from string) []string {
 	for s := range nextStates {
 		states = append(states, s)
 	}
-	sort.Strings(states)
+	slices.Sort(states)
 	return states
 }
 
