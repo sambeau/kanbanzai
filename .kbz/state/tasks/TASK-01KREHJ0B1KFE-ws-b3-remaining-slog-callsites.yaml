@@ -3,6 +3,22 @@ parent_feature: FEAT-01KREH8QC3VZ4
 slug: ws-b3-remaining-slog-callsites
 name: slog migration — remaining 6 files
 summary: "Translate all log.Printf/Println/Print calls to structured slog calls in: internal/context/surfacer.go, internal/docint/store.go, internal/gate/registry_cache.go, internal/merge/gates.go, internal/service/documents.go, internal/service/entities.go. Apply same level-mapping rules as B2."
-status: ready
+status: done
 depends_on:
   - TASK-01KREHHRYYECY
+files_planned:
+  - cmd/kbz/main.go
+  - internal/context/surfacer.go
+  - internal/docint/store.go
+  - internal/gate/registry_cache.go
+  - internal/merge/gates.go
+  - internal/service/documents.go
+  - internal/service/entities.go
+  - internal/service/documents_test.go
+completed: "2026-05-12T17:26:53Z"
+claimed_at: "2026-05-12T17:16:55Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-12T17:16:55Z"
+dispatched_by: sambeau
+completion_summary: "Translated log.Printf/Println calls to slog.* in 6 files + cmd/kbz/main.go import cleanup. Level mapping applied: WARNING:-prefixed → slog.Warn, others → slog.Info. [component] tags → structured key-value pairs. Updated 3 test functions in documents_test.go to use slog.SetDefault capture instead of log.SetOutput."
+verification: go build ./... succeeded; go test ./... passed all 42 packages

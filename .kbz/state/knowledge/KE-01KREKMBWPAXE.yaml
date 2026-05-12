@@ -1,0 +1,17 @@
+confidence: "0.5"
+content: "[moderate] tool-friction: kanbanzai_edit_file fuzzy matching corrupted a test file when old_text spanned multiple function bodies. Required Python script to recover. Suggestion: For edits spanning >20 lines or crossing function boundaries, use terminal-based Python/sed replacement over the edit tool."
+created: "2026-05-12T17:26:53Z"
+created_by: unknown
+id: KE-01KREKMBWPAXE
+learned_from: TASK-01KREHJ0B1KFE
+miss_count: 0
+scope: project
+status: contributed
+tags:
+  - retrospective
+  - tool-friction
+tier: 3
+topic: retro-task-01krehj0b1kfe
+ttl_days: 30
+updated: "2026-05-12T17:26:53Z"
+use_count: 0
