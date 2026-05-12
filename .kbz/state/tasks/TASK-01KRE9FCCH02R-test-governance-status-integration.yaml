@@ -3,6 +3,6 @@ parent_feature: FEAT-01KRE9DSX3Z17
 slug: test-governance-status-integration
 name: Status Integration
 summary: Status Integration
-status: queued
+status: ready
 depends_on:
   - TASK-01KRE9FCCCHD9

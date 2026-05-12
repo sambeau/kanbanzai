@@ -3,6 +3,6 @@ parent_feature: FEAT-01KRE9DSX3Z17
 slug: test-governance-init-command-seed
 name: Init Command Seed
 summary: Init Command Seed
-status: queued
+status: ready
 depends_on:
   - TASK-01KRE9FCCCHD9

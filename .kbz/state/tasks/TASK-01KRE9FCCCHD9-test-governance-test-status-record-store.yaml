@@ -3,4 +3,15 @@ parent_feature: FEAT-01KRE9DSX3Z17
 slug: test-governance-test-status-record-store
 name: Test-Status Record Store
 summary: Test-Status Record Store
-status: ready
+status: done
+files_planned:
+  - internal/teststatus/types.go
+  - internal/teststatus/store.go
+  - internal/teststatus/store_test.go
+completed: "2026-05-12T14:49:59Z"
+claimed_at: "2026-05-12T14:47:59Z"
+dispatched_to: unspecified
+dispatched_at: "2026-05-12T14:47:59Z"
+dispatched_by: sambeau
+completion_summary: "Implemented the internal/teststatus package with types.go (Result, Failure, Record structs), store.go (ReadRecord, WriteRecord with atomic write, IsStale with modtime scan), and store_test.go (10 tests covering: missing file, round-trip, round-trip with failures, nil LastRun, stale after touch, not stale when unchanged, hidden dir exclusion, vendor exclusion, worktrees exclusion, directory creation). All tests pass."
+verification: go test ./internal/teststatus/ passes with 10/10 tests OK.
