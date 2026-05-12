@@ -2,7 +2,7 @@ id: FEAT-01KR8YRQN1M56
 slug: dod-policy-updates
 name: Phase 4 — DoD and Policy Updates
 parent: B68-test-remediation-impl
-status: reviewing
+status: done
 review_cycle: 1
 summary: Update Definition of Done with test-passing requirement and shared ownership clause. Update AGENTS.md with pre-commit hook documentation and no-failing-tests rule. Add test suite health to status dashboard. Enforce commit message convention for test removal.
 spec: FEAT-01KR8YRQN1M56/spec-p63-spec-test-remediation
