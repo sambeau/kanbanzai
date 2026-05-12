@@ -24,6 +24,7 @@ func setupNextTest(t *testing.T) (*service.EntityService, *service.DispatchServi
 	stateRoot := t.TempDir()
 	entitySvc := service.NewEntityService(entityRoot)
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
+	t.Cleanup(knowledgeSvc.Close)
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
 	return entitySvc, dispatchSvc
 }
@@ -46,6 +47,7 @@ func setupNextTestFull(t *testing.T) (
 
 	entitySvc := service.NewEntityService(entityRoot)
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
+	t.Cleanup(knowledgeSvc.Close)
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
 	profileStore := kbzctx.NewProfileStore(profileRoot)
 	intelligenceSvc := service.NewIntelligenceService(indexRoot, repoRoot)

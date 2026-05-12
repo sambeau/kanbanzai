@@ -25,9 +25,11 @@ func setupDocIntelFind(t *testing.T) *docIntelFindEnv {
 	indexRoot := filepath.Join(t.TempDir(), "index")
 	intelSvc := service.NewIntelligenceService(indexRoot, repoRoot)
 	t.Cleanup(func() { _ = intelSvc.Close() })
+	knowledgeSvc := service.NewKnowledgeService(stateRoot)
+	t.Cleanup(knowledgeSvc.Close)
 	return &docIntelFindEnv{
 		intelSvc:     intelSvc,
-		knowledgeSvc: service.NewKnowledgeService(stateRoot),
+		knowledgeSvc: knowledgeSvc,
 		stateRoot:    stateRoot,
 	}
 }
@@ -269,6 +271,7 @@ func TestDocIntelFind_EntityID_RelatedKnowledge_ScopeMatch(t *testing.T) {
 	intelSvc := service.NewIntelligenceService(indexRoot, repoRoot)
 	t.Cleanup(func() { _ = intelSvc.Close() })
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
+	t.Cleanup(knowledgeSvc.Close)
 
 	entityID := "FEAT-TESTSCOPEMATCH001"
 

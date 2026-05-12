@@ -23,6 +23,7 @@ func setupFinishTest(t *testing.T) (*service.EntityService, *service.DispatchSer
 	stateRoot := t.TempDir()
 	entitySvc := service.NewEntityService(entityRoot)
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
+	t.Cleanup(knowledgeSvc.Close)
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
 	return entitySvc, dispatchSvc
 }
@@ -578,6 +579,7 @@ func TestFinish_UnblockedTasksInSideEffects(t *testing.T) {
 	stateRoot := t.TempDir()
 	entitySvc := service.NewEntityService(entityRoot)
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
+	t.Cleanup(knowledgeSvc.Close)
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
 
 	// Wire the dependency unblocking hook.
@@ -976,6 +978,7 @@ func TestFinish_BatchAggregateSideEffects(t *testing.T) {
 	stateRoot := t.TempDir()
 	entitySvc := service.NewEntityService(entityRoot)
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
+	t.Cleanup(knowledgeSvc.Close)
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
 
 	// Wire dependency unblocking hook.
@@ -1132,6 +1135,7 @@ func TestFinish_RetroStoredAsKnowledgeEntry(t *testing.T) {
 	stateRoot := t.TempDir()
 	entitySvc := service.NewEntityService(entityRoot)
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
+	t.Cleanup(knowledgeSvc.Close)
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
 
 	planID := createFinishTestPlan(t, entitySvc, "retro-ke-plan")
@@ -1211,6 +1215,7 @@ func TestFinish_RetroTopicNaming(t *testing.T) {
 	stateRoot := t.TempDir()
 	entitySvc := service.NewEntityService(entityRoot)
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
+	t.Cleanup(knowledgeSvc.Close)
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
 
 	planID := createFinishTestPlan(t, entitySvc, "retro-topic-plan")
@@ -1401,6 +1406,7 @@ func TestFinish_RetroOptionalSuggestion(t *testing.T) {
 	stateRoot := t.TempDir()
 	entitySvc := service.NewEntityService(entityRoot)
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
+	t.Cleanup(knowledgeSvc.Close)
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
 
 	planID := createFinishTestPlan(t, entitySvc, "retro-nosugg-plan")
@@ -1448,6 +1454,7 @@ func TestFinish_RetroOnlyStoredAfterTransition(t *testing.T) {
 	stateRoot := t.TempDir()
 	entitySvc := service.NewEntityService(entityRoot)
 	knowledgeSvc := service.NewKnowledgeService(stateRoot)
+	t.Cleanup(knowledgeSvc.Close)
 	dispatchSvc := service.NewDispatchService(entitySvc, knowledgeSvc)
 
 	planID := createFinishTestPlan(t, entitySvc, "retro-notrans-plan")

@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"sort"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
@@ -37,12 +38,31 @@ import (
 	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
+// checkKbzDirtyFuncMu protects checkKbzDirtyFunc from data races during
+// parallel tests that stub the function.
+var checkKbzDirtyFuncMu sync.RWMutex
+
 // checkKbzDirtyFunc is the function called by nextClaimMode to detect orphaned
 // workflow state before claiming a task. It is a package-level variable so
 // tests can inject a stub without requiring a real git repository (same
 // pattern as commitStateFunc in handoff_tool.go).
 var checkKbzDirtyFunc = func(repoRoot string) ([]string, error) {
 	return git.CheckKbzDirty(repoRoot)
+}
+
+// setCheckKbzDirtyFunc sets the package-level checkKbzDirtyFunc safely for
+// concurrent access. Used by tests to inject stubs.
+func setCheckKbzDirtyFunc(fn func(string) ([]string, error)) {
+	checkKbzDirtyFuncMu.Lock()
+	checkKbzDirtyFunc = fn
+	checkKbzDirtyFuncMu.Unlock()
+}
+
+// restoreCheckKbzDirtyFunc restores the original checkKbzDirtyFunc after a test stub.
+func restoreCheckKbzDirtyFunc(orig func(string) ([]string, error)) {
+	checkKbzDirtyFuncMu.Lock()
+	checkKbzDirtyFunc = orig
+	checkKbzDirtyFuncMu.Unlock()
 }
 
 // NextTools returns the `next` MCP tool registered in the core group.
@@ -249,7 +269,10 @@ func nextClaimMode(
 	// files are orphaned (modified/untracked) in the working tree.
 	// Skipped on reclaim paths for parity with the existing reclaim behaviour.
 	if !isReclaim {
-		dirtyFiles, dirtyErr := checkKbzDirtyFunc(".")
+		checkKbzDirtyFuncMu.RLock()
+		kbfn := checkKbzDirtyFunc
+		checkKbzDirtyFuncMu.RUnlock()
+		dirtyFiles, dirtyErr := kbfn(".")
 		if dirtyErr == nil && len(dirtyFiles) > 0 {
 			reason := "Orphaned workflow state detected. Dirty files under .kbz/: " + strings.Join(dirtyFiles, ", ")
 			return nil, fmt.Errorf("%s", invariants.Format(invariants.RefusalResponse{

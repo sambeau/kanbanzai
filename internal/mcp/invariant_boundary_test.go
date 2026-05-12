@@ -18,9 +18,11 @@ func TestInvariant_INV002_Next_UnregisteredTask(t *testing.T) {
 	entitySvc, dispatchSvc := setupNextTest(t)
 
 	// Stub the dirty-state check so it does not interfere.
+	checkKbzDirtyFuncMu.RLock()
 	orig := checkKbzDirtyFunc
-	checkKbzDirtyFunc = func(string) ([]string, error) { return nil, nil }
-	t.Cleanup(func() { checkKbzDirtyFunc = orig })
+	checkKbzDirtyFuncMu.RUnlock()
+	setCheckKbzDirtyFunc(func(string) ([]string, error) { return nil, nil })
+	t.Cleanup(func() { restoreCheckKbzDirtyFunc(orig) })
 
 	resp := callNextJSON(t, entitySvc, dispatchSvc, map[string]any{
 		"id": "TASK-01ZZZZZZZZZZ9",
@@ -100,9 +102,11 @@ func TestInvariant_INV003_Next_OrphanedState(t *testing.T) {
 		".kbz/index/documents/DOC-999.yaml",
 	}
 
+	checkKbzDirtyFuncMu.RLock()
 	orig := checkKbzDirtyFunc
-	checkKbzDirtyFunc = func(string) ([]string, error) { return dirtyFiles, nil }
-	t.Cleanup(func() { checkKbzDirtyFunc = orig })
+	checkKbzDirtyFuncMu.RUnlock()
+	setCheckKbzDirtyFunc(func(string) ([]string, error) { return dirtyFiles, nil })
+	t.Cleanup(func() { restoreCheckKbzDirtyFunc(orig) })
 
 	text := callNext(t, entitySvc, dispatchSvc, map[string]any{"id": taskID})
 
@@ -135,9 +139,11 @@ func TestInvariant_INV004_ContextWarning_Next(t *testing.T) {
 	setNextTaskReady(t, entitySvc, taskID, taskSlug)
 
 	// Ensure no dirty-state refusal interferes.
+	checkKbzDirtyFuncMu.RLock()
 	orig := checkKbzDirtyFunc
-	checkKbzDirtyFunc = func(string) ([]string, error) { return nil, nil }
-	t.Cleanup(func() { checkKbzDirtyFunc = orig })
+	checkKbzDirtyFuncMu.RUnlock()
+	setCheckKbzDirtyFunc(func(string) ([]string, error) { return nil, nil })
+	t.Cleanup(func() { restoreCheckKbzDirtyFunc(orig) })
 
 	resp := callNextJSON(t, entitySvc, dispatchSvc, map[string]any{"id": taskID})
 
