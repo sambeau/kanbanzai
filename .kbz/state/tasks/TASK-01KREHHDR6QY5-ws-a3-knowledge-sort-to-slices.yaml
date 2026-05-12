@@ -3,8 +3,17 @@ parent_feature: FEAT-01KREH8PKSPM3
 slug: ws-a3-knowledge-sort-to-slices
 name: sort to slices — internal/knowledge/ (5 files)
 summary: "Replace all sort.* calls with slices.*/cmp.* in 5 internal/knowledge/ files (cap_tracker.go, compact.go, links.go, score.go, surface.go). Remove sort import, add slices (and cmp if needed)."
-status: active
+status: done
+files_planned:
+  - internal/knowledge/cap_tracker.go
+  - internal/knowledge/compact.go
+  - internal/knowledge/links.go
+  - internal/knowledge/score.go
+  - internal/knowledge/surface.go
+completed: "2026-05-12T17:00:29Z"
 claimed_at: "2026-05-12T16:56:01Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-12T16:56:01Z"
 dispatched_by: sambeau
+completion_summary: "Replaced sort→slices/cmp in 5 knowledge package files. sort.Strings→slices.Sort, sort.Slice→slices.SortFunc, sort.SliceStable→slices.SortStableFunc. Removed \"sort\" import from all 5 files, added \"slices\" and \"cmp\" imports as needed."
+verification: "go build ./internal/knowledge/... clean; go test ./internal/knowledge/... passed (0.317s); grep for \\\"sort\\\" import returns empty."
