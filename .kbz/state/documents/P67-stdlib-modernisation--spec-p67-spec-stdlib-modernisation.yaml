@@ -1,0 +1,11 @@
+canonical_content_hash: adc420d0d24786ad7046abf01d05e272cac1bee95e1f337e785615807e5c2f46
+content_hash: da35cef8a88a3dd4e7ce2227c2869104301c1f62e3b3a6b3ea71ca6c91ac7018
+created: "2026-05-12T16:33:29Z"
+created_by: sambeau
+id: P67-stdlib-modernisation/spec-p67-spec-stdlib-modernisation
+owner: P67-stdlib-modernisation
+path: work/P67-stdlib-modernisation/P67-spec-stdlib-modernisation.md
+status: draft
+title: "Specification: Go Standard Library Modernisation"
+type: spec
+updated: "2026-05-12T16:33:29Z"
