@@ -1,9 +1,9 @@
 id: P66-test-governance
 slug: test-governance
 name: Test Governance Framework
-status: active
+status: done
 summary: "Persistent, committed test-status record (.kbz/state/test-status.yaml) that AI agents check before starting work and that surfaces in every status() call. Modtime-based staleness, new test() MCP tool, hard merge gate when tests fail."
 order: 0
 created: "2026-05-12T14:23:43Z"
 created_by: sambeau
-updated: "2026-05-12T14:28:24Z"
+updated: "2026-05-12T20:07:12Z"
