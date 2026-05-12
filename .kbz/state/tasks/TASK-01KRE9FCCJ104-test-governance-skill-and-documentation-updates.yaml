@@ -3,6 +3,6 @@ parent_feature: FEAT-01KRE9DSX3Z17
 slug: test-governance-skill-and-documentation-updates
 name: Skill and Documentation Updates
 summary: Skill and Documentation Updates
-status: queued
+status: ready
 depends_on:
   - TASK-01KRE9FCCFMEP

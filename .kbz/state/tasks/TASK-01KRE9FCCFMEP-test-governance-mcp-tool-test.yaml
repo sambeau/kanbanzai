@@ -3,6 +3,16 @@ parent_feature: FEAT-01KRE9DSX3Z17
 slug: test-governance-mcp-tool-test
 name: "MCP Tool `test`"
 summary: "MCP Tool `test`"
-status: ready
+status: done
 depends_on:
   - TASK-01KRE9FCCEHYD
+files_planned:
+  - internal/mcp/test_tool.go
+  - internal/mcp/test_tool_test.go
+  - internal/mcp/server.go
+  - internal/mcp/groups.go
+  - internal/mcp/groups_test.go
+  - internal/mcp/server_groups_test.go
+completed: "2026-05-12T15:14:46Z"
+completion_summary: "Implemented MCP Tool `test` with four actions (run, verify, status, force-fail). Created internal/mcp/test_tool.go with os/exec-based go test execution, teststatus.Record reading/writing, staleness checks, and failure parsing. Created internal/mcp/test_tool_test.go with comprehensive test coverage. Registered tool in core group via server.go and groups.go. Updated group membership tests."
+verification: "All diagnostics pass for modified files: test_tool.go, test_tool_test.go, server.go, groups.go, groups_test.go, server_groups_test.go. Build compiles cleanly (go build). Tests cover: status with missing file (returns unknown), status with record, status with failures, force-fail, force-fail missing summary, verify cached pass, verify stale re-runs, verify fail re-runs, verify unknown re-runs, unknown action, missing action, parseFailures, buildTestResponse, buildRecordFromOutput, and run with no go.mod (graceful failure)."
