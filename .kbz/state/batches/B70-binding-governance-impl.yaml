@@ -1,7 +1,7 @@
 id: B70-binding-governance-impl
 slug: binding-governance-impl
 name: Binding Governance Implementation
-status: reviewing
+status: done
 summary: "Implementation of all three P64 features: Startup Validation Hardening, Tier Routing and Bug Bindings, and Router Extraction and P44 Contract."
 created: "2026-05-11T15:28:44Z"
 created_by: sambeau
