@@ -1,3 +1,5 @@
+approved_at: "2026-05-12T14:29:13Z"
+approved_by: sambeau
 canonical_content_hash: b17bd96d24ff6fe12153db9d079adba4644cb7c9eb993c97355f34acb0c355ca
 content_hash: 654dc2e658a8904698c025575a1e1e593e56934fc2bf8746a0db56f87b56a474
 created: "2026-05-12T14:29:08Z"
@@ -5,7 +7,7 @@ created_by: sambeau
 id: FEAT-01KRE9DSX3Z17/spec-p66-spec-test-governance
 owner: FEAT-01KRE9DSX3Z17
 path: work/P66-test-governance/P66-spec-test-governance.md
-status: draft
+status: approved
 title: "Specification: Test Governance Framework"
 type: spec
-updated: "2026-05-12T14:29:08Z"
+updated: "2026-05-12T14:29:13Z"
