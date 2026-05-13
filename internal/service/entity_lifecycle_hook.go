@@ -29,8 +29,16 @@ func NewEntityLifecycleHook(entitySvc *EntityService) EntityLifecycleHook {
 
 func (h *entityLifecycleHookImpl) resolveEntity(entityID string) (entityType, resolvedID, slug string, err error) {
 	if model.IsPlanID(entityID) {
-		_, _, planSlug := model.ParsePlanID(entityID)
-		return "plan", entityID, planSlug, nil
+		prefix, _, planSlug := model.ParsePlanID(entityID)
+		switch prefix {
+		case "P":
+			return "strategic-plan", entityID, planSlug, nil
+		case "B":
+			return "plan", entityID, planSlug, nil
+		default:
+			// Unrecognized prefix — treat as batch for backward compatibility.
+			return "plan", entityID, planSlug, nil
+		}
 	}
 	if strings.HasPrefix(entityID, "FEAT-") {
 		resolvedID, resolvedSlug, err := h.entitySvc.ResolvePrefix("feature", entityID)
@@ -59,6 +67,13 @@ func (h *entityLifecycleHookImpl) TransitionStatus(entityID, newStatus string) e
 		}
 		currentStatus = stringFromState(result.State, "status")
 		kind = validate.EntityPlan
+	case "strategic-plan":
+		result, err := h.entitySvc.GetStrategicPlan(resolvedID)
+		if err != nil {
+			return fmt.Errorf("load strategic plan %s: %w", resolvedID, err)
+		}
+		currentStatus = stringFromState(result.State, "status")
+		kind = validate.EntityStrategicPlan
 	case "feature":
 		result, err := h.entitySvc.Get(context.Background(), "feature", resolvedID, slug)
 		if err != nil {
@@ -76,6 +91,8 @@ func (h *entityLifecycleHookImpl) TransitionStatus(entityID, newStatus string) e
 	switch entityType {
 	case "plan":
 		_, err = h.entitySvc.UpdatePlanStatus(resolvedID, slug, newStatus)
+	case "strategic-plan":
+		_, err = h.entitySvc.UpdateStrategicPlanStatus(resolvedID, slug, newStatus)
 	case "feature":
 		_, err = h.entitySvc.UpdateStatus(UpdateStatusInput{
 			Type:   "feature",
@@ -100,6 +117,17 @@ func (h *entityLifecycleHookImpl) SetDocumentRef(entityID, docField, docID strin
 		}
 		designVal := docID
 		_, err := h.entitySvc.UpdatePlan(UpdatePlanInput{
+			ID:     resolvedID,
+			Slug:   slug,
+			Design: &designVal,
+		})
+		return err
+	case "strategic-plan":
+		if docField != "design" {
+			return nil
+		}
+		designVal := docID
+		_, err := h.entitySvc.UpdateStrategicPlan(UpdateStrategicPlanInput{
 			ID:     resolvedID,
 			Slug:   slug,
 			Design: &designVal,
@@ -131,6 +159,12 @@ func (h *entityLifecycleHookImpl) GetEntityStatus(entityID string) (string, stri
 			return "", "", err
 		}
 		return "plan", stringFromState(result.State, "status"), nil
+	case "strategic-plan":
+		result, err := h.entitySvc.GetStrategicPlan(resolvedID)
+		if err != nil {
+			return "", "", err
+		}
+		return "strategic-plan", stringFromState(result.State, "status"), nil
 	case "feature":
 		result, err := h.entitySvc.Get(context.Background(), "feature", resolvedID, slug)
 		if err != nil {
