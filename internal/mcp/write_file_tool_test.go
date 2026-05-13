@@ -565,3 +565,97 @@ func TestWriteFile_PermissionBits(t *testing.T) {
 		t.Errorf("file mode = %04o, want %04o", gotMode, wantMode)
 	}
 }
+
+func TestStripProjectPrefix(t *testing.T) {
+	t.Parallel()
+
+	repoRoot := "/home/user/dev/kanbanzai"
+
+	tests := []struct {
+		name         string
+		path         string
+		wantPath     string
+		wantWarning  bool
+	}{
+		{
+			name:        "prefixed with project name",
+			path:        "kanbanzai/internal/foo/bar.go",
+			wantPath:    "internal/foo/bar.go",
+			wantWarning: true,
+		},
+		{
+			name:        "normal relative path",
+			path:        "internal/foo/bar.go",
+			wantPath:    "internal/foo/bar.go",
+			wantWarning: false,
+		},
+		{
+			name:        "single component (no separator)",
+			path:        "README.md",
+			wantPath:    "README.md",
+			wantWarning: false,
+		},
+		{
+			name:        "different project name prefix",
+			path:        "other/internal/foo.go",
+			wantPath:    "other/internal/foo.go",
+			wantWarning: false,
+		},
+		{
+			name:        "absolute path (not prefixed)",
+			path:        "/absolute/path/to/file.go",
+			wantPath:    "/absolute/path/to/file.go",
+			wantWarning: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotPath, warning := stripProjectPrefix(tt.path, repoRoot)
+			if gotPath != tt.wantPath {
+				t.Errorf("path = %q, want %q", gotPath, tt.wantPath)
+			}
+			if (warning != "") != tt.wantWarning {
+				t.Errorf("warning = %q, wantWarning = %v", warning, tt.wantWarning)
+			}
+		})
+	}
+}
+
+func TestWriteFile_ProjectPrefixAutoCorrected(t *testing.T) {
+	t.Parallel()
+
+	// Create a repo root whose base name matches the project (e.g. "kanbanzai").
+	repoRoot := filepath.Join(t.TempDir(), "kanbanzai")
+	if err := os.MkdirAll(repoRoot, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	store := worktree.NewStore(t.TempDir())
+
+	// Write with a project-prefixed path — should auto-correct and warn.
+	resp := invokeWriteFile(t, repoRoot, store, map[string]any{
+		"path":    "kanbanzai/internal/foo/bar.go",
+		"content": "package foo",
+	})
+
+	if _, hasErr := resp["error"]; hasErr {
+		t.Fatalf("unexpected error: %v", resp["error"])
+	}
+
+	// File should be at the corrected path, not the nested one.
+	wantPath := filepath.Join(repoRoot, "internal", "foo", "bar.go")
+	if _, err := os.Stat(wantPath); err != nil {
+		t.Errorf("file not found at corrected path %s: %v", wantPath, err)
+	}
+
+	// Nested path should NOT exist.
+	nestedPath := filepath.Join(repoRoot, "kanbanzai", "internal", "foo", "bar.go")
+	if _, err := os.Stat(nestedPath); err == nil {
+		t.Errorf("nested path should not exist: %s", nestedPath)
+	}
+
+	// Response should include a warning.
+	if w, ok := resp["warning"].(string); !ok || w == "" {
+		t.Error("expected warning in response for auto-corrected path")
+	}
+}

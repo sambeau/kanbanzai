@@ -21,6 +21,25 @@ func WriteFileTool(repoRoot string, worktreeStore *worktree.Store, entitySvc *se
 	return []server.ServerTool{writeFileTool(repoRoot, worktreeStore, entitySvc)}
 }
 
+// stripProjectPrefix detects when a path is incorrectly prefixed with the
+// project root directory name (e.g. "kanbanzai/internal/foo.go" instead of
+// "internal/foo.go") and returns the corrected path with a warning.
+// Returns the original path and empty warning if no correction is needed.
+func stripProjectPrefix(path, repoRoot string) (string, string) {
+	projectName := filepath.Base(repoRoot)
+	parts := strings.SplitN(path, string(os.PathSeparator), 2)
+	if len(parts) > 1 && parts[0] == projectName {
+		corrected := parts[1]
+		warning := fmt.Sprintf(
+			"path was prefixed with project name %q — paths are relative to the repo root; "+
+				"corrected %q to %q",
+			projectName, path, corrected,
+		)
+		return corrected, warning
+	}
+	return path, ""
+}
+
 func writeFileTool(repoRoot string, worktreeStore *worktree.Store, entitySvc *service.EntityService) server.ServerTool {
 	tool := mcp.NewTool("write_file",
 		mcp.WithReadOnlyHintAnnotation(false),
@@ -54,6 +73,10 @@ func writeFileTool(repoRoot string, worktreeStore *worktree.Store, entitySvc *se
 		if path == "" {
 			return inlineErr("missing_parameter", "path must not be empty")
 		}
+
+		// Auto-correct project-name prefix (e.g. "kanbanzai/internal/foo.go" → "internal/foo.go").
+		var pathWarning string
+		path, pathWarning = stripProjectPrefix(path, repoRoot)
 
 		args, _ := req.Params.Arguments.(map[string]any)
 		_, hasContent := args["content"]
@@ -105,8 +128,15 @@ func writeFileTool(repoRoot string, worktreeStore *worktree.Store, entitySvc *se
 			"path":  resolved,
 			"bytes": len(content),
 		}
-		if warning := activeBugWorktreeWarning(entitySvc, worktreeStore, entityID); warning != "" {
-			resp["warning"] = warning
+		var warnings []string
+		if pathWarning != "" {
+			warnings = append(warnings, pathWarning)
+		}
+		if w := activeBugWorktreeWarning(entitySvc, worktreeStore, entityID); w != "" {
+			warnings = append(warnings, w)
+		}
+		if len(warnings) > 0 {
+			resp["warning"] = strings.Join(warnings, "; ")
 		}
 		return resp, nil
 	})
