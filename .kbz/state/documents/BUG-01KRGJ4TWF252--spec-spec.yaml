@@ -1,0 +1,13 @@
+approved_at: "2026-05-13T11:39:24Z"
+approved_by: sambeau
+canonical_content_hash: 199215e1cb7f147faa8d8b182a130f0d6a55acb7c742c068620794d44f21c6f4
+content_hash: 199215e1cb7f147faa8d8b182a130f0d6a55acb7c742c068620794d44f21c6f4
+created: "2026-05-13T11:39:24Z"
+created_by: sambeau
+id: BUG-01KRGJ4TWF252/spec-spec
+owner: BUG-01KRGJ4TWF252
+path: work/bugs/strategic-plan-stale-batches/spec.md
+status: approved
+title: "Bug Specification: Strategic plan stale copies in batches/ misreport status"
+type: spec
+updated: "2026-05-13T11:39:24Z"

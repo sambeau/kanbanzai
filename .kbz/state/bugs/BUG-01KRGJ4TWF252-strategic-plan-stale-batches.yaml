@@ -1,0 +1,13 @@
+id: BUG-01KRGJ4TWF252
+slug: strategic-plan-stale-batches
+name: Strategic plan stale copies in batches/ misreport status
+status: reported
+severity: high
+priority: high
+type: implementation-defect
+reported_by: sambeau
+reported: "2026-05-13T11:39:24Z"
+observed: "10 P-prefixed strategic plan files exist in .kbz/state/batches/: P39, P40, P41, P42, P43, P44, P45, P46, P48, P50. P40's batches/ copy shows status: idea (stale) while its plans/ copy correctly shows status: done. The status dashboard reports these as \"in flight\" plans with wrong statuses."
+expected: Strategic plans (P-prefixed) should only be stored in .kbz/state/plans/. The entity lifecycle hook should distinguish P-prefix strategic plans from B-prefix batches and route each to the correct storage directory. No stale duplicates should exist in batches/.
+spec: BUG-01KRGJ4TWF252/spec-spec
+tier: bug_fix
