@@ -1,0 +1,9 @@
+id: B73-fix-handoff-code-graph
+slug: fix-handoff-code-graph
+name: Fix Handoff Code Graph Section
+status: proposed
+summary: "BUG-01KRG-DC3K32H8: Handoff does not emit Code Graph section for sub-agents. Implement the pipeline change to inject graph_project metadata into handoff prompts."
+created: "2026-05-13T10:31:19Z"
+created_by: sambeau
+updated: "2026-05-13T10:31:19Z"
+next_feature_seq: 1
