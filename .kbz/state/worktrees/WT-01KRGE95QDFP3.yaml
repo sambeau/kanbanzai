@@ -1,0 +1,7 @@
+id: WT-01KRGE95QDFP3
+entity_id: BUG-01KRGDC3K32H8
+branch: bug/BUG-01KRGDC3K32H8-handoff-missing-code-graph-section
+path: .worktrees/BUG-01KRGDC3K32H8-handoff-missing-code-graph-section
+status: active
+created: "2026-05-13T10:31:52Z"
+created_by: sambeau

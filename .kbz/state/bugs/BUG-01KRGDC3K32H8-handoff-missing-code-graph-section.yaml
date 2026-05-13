@@ -1,7 +1,7 @@
 id: BUG-01KRGDC3K32H8
 slug: handoff-missing-code-graph-section
 name: Handoff does not emit Code Graph section for sub-agents
-status: planned
+status: in-progress
 severity: medium
 priority: medium
 type: implementation-defect
