@@ -1,0 +1,34 @@
+document_id: FEAT-01KR8YRQN0P0W/report-p63-f1-report-test-infra-hardening
+document_path: work/P63-test-remediation/P63-F1-report-test-infra-hardening.md
+content_hash: 612059c18fef141edf69a81a121fa286d5e746b544bc40d5eee6689cff99128f
+indexed_at: 2026-05-12T20:05:53.854038Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Phase 2 — Test Infrastructure Hardening'
+      byte_offset: 0
+      byte_count: 653
+      word_count: 90
+      content_hash: 612059c18fef141edf69a81a121fa286d5e746b544bc40d5eee6689cff99128f
+      children:
+        - path: "1.1"
+          level: 2
+          title: Verification Summary
+          byte_offset: 205
+          byte_count: 448
+          word_count: 67
+          content_hash: bc8294df07d73701eb7bd300db313ca79126b8198780bb2380c7607558161561
+entity_refs:
+    - entity_id: FEAT-01KR8YRQN0P0W
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 116
+    - entity_id: P63-test-remediation
+      entity_type: plan
+      section_path: "1.1"
+      byte_offset: 572
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

@@ -1,0 +1,374 @@
+document_id: PROJECT/design-p49-design-skill-validation-tests
+document_path: work/P49-skill-validation-tests/P49-design-skill-validation-tests.md
+content_hash: 65be2e28526d87584224dfbd7fd5b6ed3954e416bd9b6929b1ae02ae6b050558
+indexed_at: 2026-05-12T20:40:22.118287Z
+sections:
+    - path: "1"
+      level: 2
+      title: Related Work
+      byte_offset: 459
+      byte_count: 1530
+      word_count: 173
+      content_hash: 961fd060f0f02062ec6a01c8ce78ef131d10aeb5df9b6916dd603a09e471a662
+    - path: "2"
+      level: 2
+      title: Problem and Motivation
+      byte_offset: 1989
+      byte_count: 4084
+      word_count: 555
+      content_hash: 19d052f15bf7260c2dd14525813ba28d13eb63821c565f0b6f076f3ad2d4cb07
+      children:
+        - path: "2.1"
+          level: 3
+          title: Original problem (May 3, 2026)
+          byte_offset: 2016
+          byte_count: 383
+          word_count: 58
+          content_hash: be77e3f208ccb56e49994fba4e5c4749dc2bc041afacdd8d889d2e42771b21ae
+        - path: "2.2"
+          level: 3
+          title: What changed
+          byte_offset: 2399
+          byte_count: 1093
+          word_count: 141
+          content_hash: 212f9fd2ef24a1ca79fdeea931c473c4f670347fb9a3be73dc4283072e41485d
+        - path: "2.3"
+          level: 3
+          title: What remains untested
+          byte_offset: 3492
+          byte_count: 1982
+          word_count: 269
+          content_hash: 3870f8c4be5bf9f7b12b8fcd95b2f3ddb4c359597966416dc7fd846a13126adf
+        - path: "2.4"
+          level: 3
+          title: Why this still matters
+          byte_offset: 5474
+          byte_count: 599
+          word_count: 83
+          content_hash: e9b2f2d70d23cf1c65ae240ced475ba71517fd6d8956bc71d968623bbe160575
+    - path: "3"
+      level: 2
+      title: Design
+      byte_offset: 6073
+      byte_count: 7949
+      word_count: 1139
+      content_hash: 604d23bdeb0fca5e0b921ba6242bc545bd973751c0402818a9f378246946b843
+      children:
+        - path: "3.1"
+          level: 3
+          title: 'Rename: from "skill-validation-tests" to "agent-file-structural-verification"'
+          byte_offset: 6084
+          byte_count: 487
+          word_count: 54
+          content_hash: 77e4056c9fe11255217eb88a991c605869fa607e564da1246d015665a467f295
+        - path: "3.2"
+          level: 3
+          title: 'Architecture: static analysis, not runtime tests'
+          byte_offset: 6571
+          byte_count: 462
+          word_count: 67
+          content_hash: 7608d72371f397b619858a8fa59101616dca6c57223c34dad89c8ad9a15ae443
+        - path: "3.3"
+          level: 3
+          title: 'Component: Structural health record'
+          byte_offset: 7033
+          byte_count: 603
+          word_count: 84
+          content_hash: 6a76bf7689ab66c99890285979501c9df0c82003ebf0aac427c1c8c4c0fa2b4a
+        - path: "3.4"
+          level: 3
+          title: Checks by category
+          byte_offset: 7636
+          byte_count: 3179
+          word_count: 489
+          content_hash: db09d3b948bff0f0184266d157e4fc4caedfbcd74f46f6340594479cf5bc8d39
+          children:
+            - path: 3.4.1
+              level: 4
+              title: 'C1: Cross-reference integrity'
+              byte_offset: 7660
+              byte_count: 872
+              word_count: 128
+              content_hash: 3e0286b31d340d4348795c129994d62984f33cc92e86c78f7cdfaa0356faca10
+            - path: 3.4.2
+              level: 4
+              title: 'C2: SKILL.md frontmatter validity'
+              byte_offset: 8532
+              byte_count: 500
+              word_count: 85
+              content_hash: 0abd9b613547d7eadebc192d40a6a24bf6dc8a61ea119e90b94a5d95e32a2035
+            - path: 3.4.3
+              level: 4
+              title: 'C3: CONVENTIONS.md section-ordering compliance'
+              byte_offset: 9032
+              byte_count: 699
+              word_count: 112
+              content_hash: 57edda4dc70565b656ee40ef1511cdbe07726ab777ae1ad00d5277a4d2f14340
+            - path: 3.4.4
+              level: 4
+              title: 'C4: Role YAML structural validity'
+              byte_offset: 9731
+              byte_count: 436
+              word_count: 67
+              content_hash: 5321164bb2885155da8dbf043a87e6d26f4798e393787a3f1858480ed56ad77b
+            - path: 3.4.5
+              level: 4
+              title: 'C5: Stage-binding structural validity'
+              byte_offset: 10167
+              byte_count: 648
+              word_count: 93
+              content_hash: b464e4a2852472ebe178d081827019e440a59a01256307d42c84b16df334a5d1
+        - path: "3.5"
+          level: 3
+          title: What's explicitly out of scope
+          byte_offset: 10815
+          byte_count: 1141
+          word_count: 164
+          content_hash: 36a1afe6f2199ba94c695c5f481c14588927a1634aba982f13eaf63d63f5f5b6
+        - path: "3.6"
+          level: 3
+          title: Relationship to P44
+          byte_offset: 11956
+          byte_count: 1131
+          word_count: 164
+          content_hash: ec7ebddad1bdc5952d8112449fa028fed52b9f15360336d3e38da8e07af14432
+        - path: "3.7"
+          level: 3
+          title: Implementation approach
+          byte_offset: 13087
+          byte_count: 935
+          word_count: 115
+          content_hash: 276b71c8d7b94e2f989f86c40fb61f86b172eca71358f937e98abe795c8bcf6d
+    - path: "4"
+      level: 2
+      title: Alternatives Considered
+      byte_offset: 14022
+      byte_count: 2302
+      word_count: 350
+      content_hash: 6a82222f66d27b2aafd9b88daae5e7ec9d30581f00706b4ee49d886987627392
+      children:
+        - path: "4.1"
+          level: 3
+          title: A1. Do nothing (status quo)
+          byte_offset: 14050
+          byte_count: 406
+          word_count: 61
+          content_hash: b8627943d87c7bdf71a40875fc2b673b531a2ded3b1953fd473a1249bad43117
+        - path: "4.2"
+          level: 3
+          title: A2. Expand P59's CI guard instead of creating a separate plan
+          byte_offset: 14456
+          byte_count: 494
+          word_count: 75
+          content_hash: a997bce1301e8f57f0ca3586c2831465bb6175a2ed4a0923aeb6ba9bfa8a1854
+        - path: "4.3"
+          level: 3
+          title: A3. Wait for P44 and build outcome tests instead
+          byte_offset: 14950
+          byte_count: 461
+          word_count: 68
+          content_hash: 21059ff079f9ad3af167cea9f86aeb14798e15746c811f814dd4415d9417e05b
+        - path: "4.4"
+          level: 3
+          title: A4. Make this a linter/CLI tool instead of a test suite
+          byte_offset: 15411
+          byte_count: 410
+          word_count: 69
+          content_hash: 137f722281b9e74415392512c8400d01728c33064ff6d2d15b58d0c625423930
+        - path: "4.5"
+          level: 3
+          title: A5. Use the P66 test-governance pattern (committed YAML health record)
+          byte_offset: 15821
+          byte_count: 503
+          word_count: 74
+          content_hash: 5dace74a8a612a10a912869b6b7d5e9089d53d871c300dfc68659d79569ec30b
+    - path: "5"
+      level: 2
+      title: Decisions
+      byte_offset: 16324
+      byte_count: 3689
+      word_count: 496
+      content_hash: 2fc9220a1d48c78b8d8f664f00b000335a1c2788fa947a006fbd2657335fe707
+      children:
+        - path: "5.1"
+          level: 3
+          title: D1. The plan is renamed to "Agent File Structural Verification."
+          byte_offset: 16338
+          byte_count: 557
+          word_count: 65
+          content_hash: 97bbea3e330ff187409adfdacf7dedfc0204e4eb751627bcbffb99bc5bc3422c
+        - path: "5.2"
+          level: 3
+          title: D2. All checks are static analysis — no MCP server, no LLM evaluation.
+          byte_offset: 16895
+          byte_count: 537
+          word_count: 81
+          content_hash: b69787bfb3ead1fc05591c080365edc5277d86d4ef72f5126f78fa9dd473362e
+        - path: "5.3"
+          level: 3
+          title: D3. CONVENTIONS.md is treated as the authoritative schema for SKILL.md files.
+          byte_offset: 17432
+          byte_count: 610
+          word_count: 82
+          content_hash: 7a2b23d5428f0a5c674ec5dd634f3ee7f12ec7345ec878bd71d3c74df4ba092d
+        - path: "5.4"
+          level: 3
+          title: D4. C3.2 (line budget) and C3.4 (vocabulary count) are warnings, not failures.
+          byte_offset: 18042
+          byte_count: 651
+          word_count: 97
+          content_hash: 00c2823ec21fca43913838a3cf6d6b8787210fd82e81dd014fb1b12b707343fa
+        - path: "5.5"
+          level: 3
+          title: D5. The optional health record follows P66's YAML pattern.
+          byte_offset: 18693
+          byte_count: 562
+          word_count: 74
+          content_hash: 668ed371c3bcdba37c695a382857ccd3696086b760295a3628e1f83e5c21b89a
+        - path: "5.6"
+          level: 3
+          title: D6. `.github/skills/` and `.agents/skills/` files are in scope only for cross-reference checks (C1.7), not for structural checks.
+          byte_offset: 19255
+          byte_count: 758
+          word_count: 95
+          content_hash: 391dfd4818a98abce74588e5942ab1c3733b477d65e8740292e3cd59ecc77193
+    - path: "6"
+      level: 2
+      title: Dependencies
+      byte_offset: 20013
+      byte_count: 1039
+      word_count: 141
+      content_hash: 7fa43baf263cf2e10b32fca51f13ac6dae99c1f3e39484c1f118284e14c571a1
+      children:
+        - path: "6.1"
+          level: 3
+          title: Internal
+          byte_offset: 20030
+          byte_count: 460
+          word_count: 54
+          content_hash: 6fe00aab56e5c2b44c4e863c1f33700ca8d8f8d0041b8116149c72202926cb4e
+        - path: "6.2"
+          level: 3
+          title: External
+          byte_offset: 20490
+          byte_count: 68
+          word_count: 11
+          content_hash: ce81907239dedb7ec52e3b1790242a4e7f05202472611f588b8b14930b1f438a
+        - path: "6.3"
+          level: 3
+          title: Sequencing
+          byte_offset: 20558
+          byte_count: 494
+          word_count: 74
+          content_hash: 7f1eed53548005c0cf3b35a8dd4521b8d73a24c49cff70e7fd397106059c2a61
+    - path: "7"
+      level: 2
+      title: Open Questions
+      byte_offset: 21052
+      byte_count: 1280
+      word_count: 198
+      content_hash: 3fcc5a66b899dd59919df4a370139ab2f892df5315e55546a86793b15a91af71
+front_matter:
+    extra:
+        ? '`work/P44-model-routing-agent-launcher/P44-design-model-routing-agent-launcher.md` (superseded) — P44''s `dispatch_task`, when built, would enable outcome-based testing of skills (dispatch an agent with a skill, check output quality). This is a future capability'
+        : P49's current scope is structural verification; P44 unlocks behavioral validation as a follow-on.
+        '`work/P63-test-remediation/P63-design-test-remediation.md` (approved) — P63 established the project''s test culture': all tests must pass, failing tests block new work. P49 inherits this standard.
+entity_refs:
+    - entity_id: P59-roles-skills-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 484
+    - entity_id: P59-design-roles-skills-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 513
+    - entity_id: P66-test-governance
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 858
+    - entity_id: P66-design-test-governance
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 878
+    - entity_id: P44-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 1100
+    - entity_id: P44-design-model-routing-agent-launcher
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 1133
+    - entity_id: P63-test-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 1465
+    - entity_id: P63-design-test-remediation
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 1486
+    - entity_id: P44-enabled
+      entity_type: plan
+      section_path: "3.6"
+      byte_offset: 12494
+    - entity_id: P49-skill-validation-tests
+      entity_type: plan
+      section_path: "5.1"
+      byte_offset: 16424
+    - entity_id: P49-agent-file-structural-verification
+      entity_type: plan
+      section_path: "5.1"
+      byte_offset: 16455
+cross_doc_links:
+    - target_path: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      link_text: work/P59-roles-skills-remediation/P59-design-roles-skills-remediation.md
+      section_path: "1"
+    - target_path: work/P66-test-governance/P66-design-test-governance.md
+      link_text: work/P66-test-governance/P66-design-test-governance.md
+      section_path: "1"
+    - target_path: work/P44-model-routing-agent-launcher/P44-design-model-routing-agent-launcher.md
+      link_text: work/P44-model-routing-agent-launcher/P44-design-model-routing-agent-launcher.md
+      section_path: "1"
+    - target_path: work/P63-test-remediation/P63-design-test-remediation.md
+      link_text: work/P63-test-remediation/P63-design-test-remediation.md
+      section_path: "1"
+    - target_path: .kbz/skills/*/SKILL.md
+      link_text: .kbz/skills/*/SKILL.md
+      section_path: "2.3"
+    - target_path: .kbz/skills/<name>/SKILL.md
+      link_text: .kbz/skills/<name>/SKILL.md
+      section_path: 3.4.1
+    - target_path: .kbz/skills/*/SKILL.md
+      link_text: .kbz/skills/*/SKILL.md
+      section_path: 3.4.1
+    - target_path: .agents/skills/kanbanzai-*/SKILL.md
+      link_text: .agents/skills/kanbanzai-*/SKILL.md
+      section_path: 3.4.1
+    - target_path: write-spec/SKILL.md
+      link_text: write-spec/SKILL.md
+      section_path: 3.4.2
+    - target_path: .kbz/skills/*/SKILL.md
+      link_text: .kbz/skills/*/SKILL.md
+      section_path: "6.1"
+    - target_path: .kbz/skills/CONVENTIONS.md
+      link_text: .kbz/skills/CONVENTIONS.md
+      section_path: "6.1"
+    - target_path: .github/copilot-instructions.md
+      link_text: .github/copilot-instructions.md
+      section_path: "7"
+conventional_roles:
+    - section_path: "3.5"
+      role: constraint
+      confidence: high
+    - section_path: "4"
+      role: alternative
+      confidence: high
+    - section_path: "5"
+      role: decision
+      confidence: high
+    - section_path: "5.6"
+      role: constraint
+      confidence: high
+    - section_path: "7"
+      role: question
+      confidence: high
+classified: false

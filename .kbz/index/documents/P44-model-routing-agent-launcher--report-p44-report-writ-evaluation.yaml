@@ -1,0 +1,232 @@
+document_id: P44-model-routing-agent-launcher/report-p44-report-writ-evaluation
+document_path: work/P44-model-routing-agent-launcher/P44-report-writ-evaluation.md
+content_hash: 67f77489ee3f84103a20f7d1a6381fb688a57593dad96436bdfe643fb5dd7f7c
+indexed_at: 2026-05-12T19:23:12.783315Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Report: Evaluation of Writ as an Approach to Agent Rule-Following'
+      byte_offset: 0
+      byte_count: 18512
+      word_count: 2715
+      content_hash: 67f77489ee3f84103a20f7d1a6381fb688a57593dad96436bdfe643fb5dd7f7c
+      children:
+        - path: "1.1"
+          level: 2
+          title: TL;DR
+          byte_offset: 464
+          byte_count: 2090
+          word_count: 304
+          content_hash: cf4fed6c7c1817e8a8e7d68c69a9453ebe5a58a68519f7964e9f80ed90bb950f
+        - path: "1.2"
+          level: 2
+          title: 1. What Writ actually is
+          byte_offset: 2554
+          byte_count: 2047
+          word_count: 300
+          content_hash: 5c7f2b546e3ece9fe240341d9a9e89cb6e3b5cc21a0a43f5199379b6a3b43129
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 1.1 The librarian (the knowledge layer)
+              byte_offset: 2649
+              byte_count: 879
+              word_count: 135
+              content_hash: 3800eb3d44160025ebca3709b7ca888c62a81dc95e509475a31f91088efc0656
+            - path: 1.2.2
+              level: 3
+              title: 1.2 The process keeper (the enforcement layer)
+              byte_offset: 3528
+              byte_count: 765
+              word_count: 102
+              content_hash: 9444587f4b99948ffb96376995b78b253ff02d3f291e06dc921b42ae55a201cd
+            - path: 1.2.3
+              level: 3
+              title: 1.3 Mode/gate state machine
+              byte_offset: 4293
+              byte_count: 308
+              word_count: 47
+              content_hash: 76510713e5be11d42e2f3bde7cf1d00a02d9a7740eab5ac39b910cc8c74a4449
+        - path: "1.3"
+          level: 2
+          title: 2. Are the claims realistic?
+          byte_offset: 4601
+          byte_count: 2185
+          word_count: 353
+          content_hash: d81bcc310a09b02993d26b7a8eb31a87ff86dc9bfa3ae15d537e5b88fa786810
+        - path: "1.4"
+          level: 2
+          title: 3. Is the Neo4j dependency mandatory?
+          byte_offset: 6786
+          byte_count: 1324
+          word_count: 197
+          content_hash: c57c304c968a17f5257d50edbcd3a72387f33e09c0554b955e624a9b3d714fb2
+        - path: "1.5"
+          level: 2
+          title: 4. Comparison against the new P44 design
+          byte_offset: 8110
+          byte_count: 4446
+          word_count: 695
+          content_hash: 4f9700eab39498a6cc5c1da2cb83451af32d1fc837d4f5fec26b88f9ab9c4c29
+          children:
+            - path: 1.5.1
+              level: 3
+              title: 4.1 Where they agree (the architectural insight)
+              byte_offset: 8385
+              byte_count: 667
+              word_count: 100
+              content_hash: d56f32003bf8fcca97b1bdac5d19383e25292d64eaac4d9eb4a9691dcf8ea054
+            - path: 1.5.2
+              level: 3
+              title: 4.2 Where they diverge (the enforcement locus)
+              byte_offset: 9052
+              byte_count: 1179
+              word_count: 197
+              content_hash: fc757c01f3f1393bc67131d840888db61450df335175e251bf007ef7f7aa70b5
+            - path: 1.5.3
+              level: 3
+              title: 4.3 Where they don't address the same thing
+              byte_offset: 10231
+              byte_count: 1546
+              word_count: 235
+              content_hash: 011f4e9b874b4a8a6b3ac0edd2678e2db35d9b92c259c95d231360e5e78a0bb5
+            - path: 1.5.4
+              level: 3
+              title: 4.4 Where Writ goes against the P44 hardening direction
+              byte_offset: 11777
+              byte_count: 779
+              word_count: 121
+              content_hash: ca9dd588363383f7273c08f4c65944ce8e2a1e4425384ea8fc131417df7f4139
+        - path: "1.6"
+          level: 2
+          title: 5. Are there ideas worth stealing?
+          byte_offset: 12556
+          byte_count: 2201
+          word_count: 318
+          content_hash: cd7ee78a1035ef795742c50e45e6d13e942a244f0421a0030f5fd830f882abb4
+          children:
+            - path: 1.6.1
+              level: 3
+              title: 5.1 The approval-token-via-typed-phrase pattern
+              byte_offset: 12649
+              byte_count: 1122
+              word_count: 161
+              content_hash: 1c72b2e4296093c528757a3ffeb71df87de3ad8b3d39875cf28a8c02c043ccbd
+            - path: 1.6.2
+              level: 3
+              title: 5.2 The "always-on / mandatory" tier with its own token budget
+              byte_offset: 13771
+              byte_count: 986
+              word_count: 142
+              content_hash: 011a9487d17decdce0e6c4c87b15162efc123f29832ef5d8e38e95fd29ce9a1b
+        - path: "1.7"
+          level: 2
+          title: 6. Concrete recommendations
+          byte_offset: 14757
+          byte_count: 2212
+          word_count: 309
+          content_hash: 981d0ba8213fa3e2de9b792119e32d769ddcccd909819f316d4550c644f76272
+        - path: "1.8"
+          level: 2
+          title: 7. Why not a "wait and watch" stance?
+          byte_offset: 16969
+          byte_count: 852
+          word_count: 121
+          content_hash: 6604a9f34e09a600b91ee731609acc3de3754fdbe85fedcb67be45c2712192ee
+        - path: "1.9"
+          level: 2
+          title: 8. Summary
+          byte_offset: 17821
+          byte_count: 367
+          word_count: 61
+          content_hash: 04ce0d9ba25a548dc95f49a53ec11140b9a8cb2ef5e1ce745889f4e391115ccb
+        - path: "1.10"
+          level: 2
+          title: Related documents
+          byte_offset: 18188
+          byte_count: 324
+          word_count: 16
+          content_hash: 7a8859ed32e9e1554565cd7a0ec94a0a9b16992632ddb1c90ba1553206fea46e
+entity_refs:
+    - entity_id: P44-design-deterministic-workflow-controller
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 307
+    - entity_id: P44-research-hardening-principle
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 360
+    - entity_id: P44-report-hardening-principle-pipeline-architecture
+      entity_type: plan
+      section_path: "1"
+      byte_offset: 401
+    - entity_id: P44-research-hardening-principle
+      entity_type: plan
+      section_path: 1.5.4
+      byte_offset: 11843
+    - entity_id: P44-design-deterministic-workflow-controller
+      entity_type: plan
+      section_path: "1.7"
+      byte_offset: 16324
+    - entity_id: P44-design-deterministic-workflow-controller
+      entity_type: plan
+      section_path: "1.10"
+      byte_offset: 18213
+    - entity_id: P44-research-orchestrator-architecture
+      entity_type: plan
+      section_path: "1.10"
+      byte_offset: 18265
+    - entity_id: P44-research-hardening-principle
+      entity_type: plan
+      section_path: "1.10"
+      byte_offset: 18311
+    - entity_id: P44-report-hardening-principle-pipeline-architecture
+      entity_type: plan
+      section_path: "1.10"
+      byte_offset: 18351
+    - entity_id: P44-report-hardening-principle-independent-opinion
+      entity_type: plan
+      section_path: "1.10"
+      byte_offset: 18411
+cross_doc_links:
+    - target_path: P44-design-deterministic-workflow-controller.md
+      link_text: P44-design-deterministic-workflow-controller.md
+      section_path: "1"
+    - target_path: P44-research-hardening-principle.md
+      link_text: P44-research-hardening-principle.md
+      section_path: "1"
+    - target_path: P44-report-hardening-principle-pipeline-architecture.md
+      link_text: P44-report-hardening-principle-pipeline-architecture.md
+      section_path: "1"
+    - target_path: plan.md
+      link_text: plan.md
+      section_path: 1.2.2
+    - target_path: plan.md
+      link_text: plan.md
+      section_path: 1.2.3
+    - target_path: P44-research-hardening-principle.md
+      link_text: P44-research-hardening-principle.md
+      section_path: 1.5.4
+    - target_path: P44-design-deterministic-workflow-controller.md
+      link_text: P44-design-deterministic-workflow-controller.md
+      section_path: "1.7"
+    - target_path: P44-design-deterministic-workflow-controller.md
+      link_text: P44-design-deterministic-workflow-controller.md
+      section_path: "1.10"
+    - target_path: P44-research-orchestrator-architecture.md
+      link_text: P44-research-orchestrator-architecture.md
+      section_path: "1.10"
+    - target_path: P44-research-hardening-principle.md
+      link_text: P44-research-hardening-principle.md
+      section_path: "1.10"
+    - target_path: P44-report-hardening-principle-pipeline-architecture.md
+      link_text: P44-report-hardening-principle-pipeline-architecture.md
+      section_path: "1.10"
+    - target_path: P44-report-hardening-principle-independent-opinion.md
+      link_text: P44-report-hardening-principle-independent-opinion.md
+      section_path: "1.10"
+conventional_roles:
+    - section_path: "1.9"
+      role: narrative
+      confidence: high
+classified: false

@@ -1,0 +1,256 @@
+document_id: PROJECT/report-retrospective-2026-05-12
+document_path: work/retrospective-2026-05-12.md
+content_hash: a690e0599bd7202b1e2e34c462f718103adb19cfbbc9dbad32d757fa49c2415a
+indexed_at: 2026-05-12T21:14:59.117101Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Retrospective: Project-wide Signal Synthesis'
+      byte_offset: 0
+      byte_count: 19933
+      word_count: 2865
+      content_hash: a690e0599bd7202b1e2e34c462f718103adb19cfbbc9dbad32d757fa49c2415a
+      children:
+        - path: "1.1"
+          level: 2
+          title: 'Part 1: Complete Signal Inventory'
+          byte_offset: 237
+          byte_count: 12944
+          word_count: 1811
+          content_hash: 0b204dc26a3766498d1ac7076b3612290207192709af81f74aaa30ba0c72ddaf
+          children:
+            - path: 1.1.1
+              level: 3
+              title: Friction Signals (23 total, grouped into 20 themes)
+              byte_offset: 275
+              byte_count: 10142
+              word_count: 1367
+              content_hash: 743c8fdcf316aa5e8d9c6a5f358b94ea0fe552fea3c6dcc3ffeab47515505d95
+              children:
+                - path: 1.1.1.1
+                  level: 4
+                  title: 'Theme 1: Commit discipline not followed for workflow actions'
+                  byte_offset: 332
+                  byte_count: 740
+                  word_count: 102
+                  content_hash: 92c2bfd271cb834eb73cf5c853950f1e37dd11896205ac175597accc378991fb
+                - path: 1.1.1.2
+                  level: 4
+                  title: 'Theme 2: AC-013 ValidateBindingFile spec/test mismatch'
+                  byte_offset: 1072
+                  byte_count: 460
+                  word_count: 57
+                  content_hash: 1b98bbdd7224f48aaadea243892c609021d64584d978a81449055c054489f2ff
+                - path: 1.1.1.3
+                  level: 4
+                  title: 'Theme 3: Terminal heredoc failed for multi-line Go code'
+                  byte_offset: 1532
+                  byte_count: 397
+                  word_count: 55
+                  content_hash: 16398d912befbe9a5f20644a6fd4ed960d9a8d634424b7f2eec069657fad0e03
+                - path: 1.1.1.4
+                  level: 4
+                  title: 'Theme 4: Writing Go source files from worktree sub-agent'
+                  byte_offset: 1929
+                  byte_count: 507
+                  word_count: 67
+                  content_hash: f973707229940bbca19b62161bbac46eb3b7fcaaff3c0b19e605418ad6a3c343
+                - path: 1.1.1.5
+                  level: 4
+                  title: 'Theme 5: Pre-existing test compilation errors in internal/mcp'
+                  byte_offset: 2436
+                  byte_count: 433
+                  word_count: 59
+                  content_hash: fe4928274c0656a49cb89a297e4c48fc709e637107959353a5297c20ec8fb688
+                - path: 1.1.1.6
+                  level: 4
+                  title: 'Theme 6: kanbanzai_edit_file persistence failure'
+                  byte_offset: 2869
+                  byte_count: 516
+                  word_count: 67
+                  content_hash: 061b30f190551a02d08c4f4386d065af634350d6c861b37e2e1539e4bb79229a
+                - path: 1.1.1.7
+                  level: 4
+                  title: 'Theme 7: write_file path resolution confusion'
+                  byte_offset: 3385
+                  byte_count: 583
+                  word_count: 75
+                  content_hash: a3bc30e201b742c970228f723392e1a292ca5614cc181a04cbf5498c3373c0ae
+                - path: 1.1.1.8
+                  level: 4
+                  title: 'Theme 8: bug_gate_test.go compilation errors'
+                  byte_offset: 3968
+                  byte_count: 455
+                  word_count: 51
+                  content_hash: ae0d701bcb28be3346e2580aa9193155917f6132df9d6da18c656acf2e8df33b
+                - path: 1.1.1.9
+                  level: 4
+                  title: 'Theme 9: kanbanzai_edit_file Python fallback needed'
+                  byte_offset: 4423
+                  byte_count: 379
+                  word_count: 51
+                  content_hash: 02e7844ef1f4ac14ddbaa815c6f23d2f47f808cad423a25eb26bd6f536c36142
+                - path: 1.1.1.10
+                  level: 4
+                  title: 'Theme 10: kanbanzai_edit_file fuzzy matching corruption'
+                  byte_offset: 4802
+                  byte_count: 471
+                  word_count: 60
+                  content_hash: b9faa63e114e1fb86bd83f9cf9cce79094f240305525d32e576a6b7cd42a954d
+                - path: 1.1.1.11
+                  level: 4
+                  title: 'Theme 11: Shell string escaping in python3 -c'
+                  byte_offset: 5273
+                  byte_count: 425
+                  word_count: 62
+                  content_hash: 2aecbe1b8f4dd1009ef123fc8be896d42b61494b89dcde75e0b777cd2a1bfa3a
+                - path: 1.1.1.12
+                  level: 4
+                  title: 'Theme 12: Working directly on main'
+                  byte_offset: 5698
+                  byte_count: 552
+                  word_count: 85
+                  content_hash: 1071ab2797337913a90d04c0607d2916d31a6a4cab06a3baed9a3922608a0c2a
+                - path: 1.1.1.13
+                  level: 4
+                  title: 'Theme 13: T2 and T4 preempted T3 deliverables'
+                  byte_offset: 6250
+                  byte_count: 452
+                  word_count: 65
+                  content_hash: 2c1c6e4bd3e50632f6a16b1f5a737a28c73406e9ae854b7476ae61e264194a7c
+                - path: 1.1.1.14
+                  level: 4
+                  title: 'Theme 14: Parallel agents uncommitted changes broke tests'
+                  byte_offset: 6702
+                  byte_count: 610
+                  word_count: 85
+                  content_hash: cea939e16ea73fbf1e845c67296359197d9a635f96256e6c2043b884b2649c0e
+                - path: 1.1.1.15
+                  level: 4
+                  title: 'Theme 15: Shared worktree had unstaged changes from multiple agents'
+                  byte_offset: 7312
+                  byte_count: 675
+                  word_count: 94
+                  content_hash: 25a91a29086799355ea35238f412a23a88d599b750d92e77e21546fec6418085
+                - path: 1.1.1.16
+                  level: 4
+                  title: 'Theme 16: EntityService.Get signature changes uncommitted'
+                  byte_offset: 7987
+                  byte_count: 352
+                  word_count: 43
+                  content_hash: c1a1220266f8c070446a3d379f86a60e22226ff43b2d0e5fd367c2784be507b8
+                - path: 1.1.1.17
+                  level: 4
+                  title: 'Theme 17: REQ-004 spec inaccuracy about copilot-instructions.md'
+                  byte_offset: 8339
+                  byte_count: 748
+                  word_count: 98
+                  content_hash: b1ac7e1fcc3b07da502f108635028aa8d9675b6beacfcc5e4e3f8bf6fde87bcf
+                - path: 1.1.1.18
+                  level: 4
+                  title: 'Theme 18: AC-07 needs-review task blocking description'
+                  byte_offset: 9087
+                  byte_count: 567
+                  word_count: 71
+                  content_hash: ec54c5fdf19c2a3e57a819eb32fef189d4d3df8caf28bd7e3b96653f4ae23e49
+                - path: 1.1.1.19
+                  level: 4
+                  title: 'Theme 19: Spec FR-002 omitted Rationale field'
+                  byte_offset: 9654
+                  byte_count: 412
+                  word_count: 60
+                  content_hash: 27430f56c478ae8b2eb2b6d689b48b07c82c8c49b9ff1880c6671190a7da8718
+                - path: 1.1.1.20
+                  level: 4
+                  title: 'Theme 20: Untracked T3 files staged without commit'
+                  byte_offset: 10066
+                  byte_count: 351
+                  word_count: 51
+                  content_hash: ccf91d9b61cdaa94863fd1e2e17e6c9a95696a5d37c44fe8adf4dc69f694153f
+            - path: 1.1.2
+              level: 3
+              title: Worked-Well Signals (20 total)
+              byte_offset: 10417
+              byte_count: 2764
+              word_count: 438
+              content_hash: a4da0d349740a40d43c473aecc8b22e9a9279567e85c2658248a07ad8818754a
+        - path: "1.2"
+          level: 2
+          title: 'Part 2: Cross-Reference Against P44 (Deterministic Workflow Controller)'
+          byte_offset: 13181
+          byte_count: 4990
+          word_count: 745
+          content_hash: eced240b530b391fbd47c2188a687dac29fa630e45b82861bf47b887b9781791
+          children:
+            - path: 1.2.1
+              level: 3
+              title: What P44 is
+              byte_offset: 13257
+              byte_count: 931
+              word_count: 127
+              content_hash: 5242e4a0415746036834dcff55586c03133764dd8598b34d26f16f7eb11ef0d2
+            - path: 1.2.2
+              level: 3
+              title: Retro signals that P44 directly addresses (no separate action needed)
+              byte_offset: 14188
+              byte_count: 1788
+              word_count: 283
+              content_hash: 74d9ac375399189910cbe58eef6473081a7556489074d30e2c7b46312bd06b7f
+            - path: 1.2.3
+              level: 3
+              title: Retro signals that should be fixed BEFORE P44 work
+              byte_offset: 15976
+              byte_count: 1297
+              word_count: 199
+              content_hash: c43691b90ee33fd35d88f7762ee9e7c6abc6d2af3be5bc88f26155d5af6264a4
+            - path: 1.2.4
+              level: 3
+              title: Worked-well signals that validate P44's direction
+              byte_offset: 17273
+              byte_count: 898
+              word_count: 127
+              content_hash: f4cbfeef2208954668bb4341dabd6b4341014a56b921859acbae8ceb45f154e0
+        - path: "1.3"
+          level: 2
+          title: 'Part 3: Recommendations'
+          byte_offset: 18171
+          byte_count: 1381
+          word_count: 202
+          content_hash: 2e48a564e99bb47abc045618175e3cce1934aa16f59a27bc4568746eb28cf3f0
+          children:
+            - path: 1.3.1
+              level: 3
+              title: Immediate (before P44 Phase 1 starts)
+              byte_offset: 18199
+              byte_count: 413
+              word_count: 61
+              content_hash: fb263bf02b86ff6364bdeecbea4188160848baa62a62c0babc639f9745e335dd
+            - path: 1.3.2
+              level: 3
+              title: Defer to P44 (no separate action)
+              byte_offset: 18612
+              byte_count: 309
+              word_count: 49
+              content_hash: 0d8638bab95f368d8d29774e620c0963ecfe43dcff65443ef25b447e4ae2f078
+            - path: 1.3.3
+              level: 3
+              title: Watch during P44
+              byte_offset: 18921
+              byte_count: 631
+              word_count: 88
+              content_hash: 1c89e41e937db9314dd937d0f82ed6dbf46f65706be48509256aaddecef6e37e
+        - path: "1.4"
+          level: 2
+          title: Summary Statistics
+          byte_offset: 19552
+          byte_count: 381
+          word_count: 79
+          content_hash: f52f781cf2bfeef589c153c8b1247eb11b752d018ff1af6b21ce05f9509b2906
+conventional_roles:
+    - section_path: 1.1.1.19
+      role: rationale
+      confidence: high
+    - section_path: "1.4"
+      role: narrative
+      confidence: high
+classified: false

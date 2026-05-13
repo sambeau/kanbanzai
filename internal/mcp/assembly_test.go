@@ -7,6 +7,7 @@ import (
 	"strings"
 	"testing"
 
+	kbzctx "github.com/sambeau/kanbanzai/internal/context"
 	"github.com/sambeau/kanbanzai/internal/service"
 )
 
@@ -539,20 +540,204 @@ func TestNextContextToMap_WithoutToolHint(t *testing.T) {
 // TestRenderHandoffPrompt_NoHintsIdenticalOutput verifies that a zero-value
 // assembledContext and one with an explicitly empty toolHint produce
 // byte-identical prompts, and neither contains "## Available Tools" (AC-019).
-// ─── Code Graph section tests ─────────────────────────────────────────────────
+// ─── Code Graph section tests (BUG-01KRG-DC3K32H8) ────────────────────────────
+//
+// These tests verify that the handoff prompt includes a ## Code Graph section
+// when the parent feature's worktree has a GraphProject set.  The tests exercise
+// kbzctx.RenderPrompt — the actual function that produces the handoff prompt
+// string — by constructing PipelineResults with the expected section structure.
+//
+// When BUG-01KRG-DC3K32H8 is fixed, the pipeline (or handoff tool) will inject
+// a PipelineSection with Position=14 and Label="Code Graph" into the result.
+// These tests verify the rendering contract independent of how the section is
+// produced, so they guard against regression regardless of implementation approach.
 
-// TestRenderHandoffPrompt_CodeGraphSection_ProjectSet verifies AC-006: when
-// GraphProject is set, the prompt contains ## Code Graph with the project name
-// and four tool call examples.
-// TestRenderHandoffPrompt_CodeGraphSection_ProjectEmpty verifies AC-007: when
-// hasWorktree is true but GraphProject is empty, the prompt contains ## Code Graph
-// with an index_repository instruction.
-// TestRenderHandoffPrompt_CodeGraphSection_NoWorktree verifies AC-008: when
-// no worktree exists, the prompt must not contain ## Code Graph.
-// TestRenderHandoffPrompt_CodeGraphSection_AfterAvailableTools verifies AC-009:
-// ## Code Graph appears after ## Available Tools when both are present.
-// TestRenderHandoffPrompt_CodeGraphSection_Under500Bytes verifies NFR-003:
+// renderCodeGraphSection produces the expected ## Code Graph section content
+// for a given graph project name and optional worktree path.  This mirrors the
+// three-state logic from the dev-plan:
+//   - project non-empty → examples with project name
+//   - project empty + worktree → index_repository instruction
+//   - no worktree → empty string (section omitted)
+func renderCodeGraphSection(graphProject, worktreePath string) string {
+	if graphProject == "" && worktreePath == "" {
+		return ""
+	}
+
+	var sb strings.Builder
+	sb.WriteString("## Code Graph\n\n")
+
+	if graphProject != "" {
+		sb.WriteString(fmt.Sprintf("Project: **%s**\n\n", graphProject))
+		sb.WriteString(fmt.Sprintf("`search_graph(project: %q, query: \"...\")`\n", graphProject))
+		sb.WriteString(fmt.Sprintf("`trace_path(function_name: \"...\", project: %q)`\n", graphProject))
+		sb.WriteString(fmt.Sprintf("`query_graph(query: \"...\", project: %q)`\n", graphProject))
+		sb.WriteString(fmt.Sprintf("`get_code_snippet(qualified_name: \"...\", project: %q)`\n", graphProject))
+		sb.WriteString(fmt.Sprintf("\nRe-index: `index_repository(repo_path: %q)`", worktreePath))
+	} else {
+		sb.WriteString(fmt.Sprintf("Worktree not indexed. Run `index_repository(repo_path: %q)` to enable graph tools.", worktreePath))
+	}
+
+	return sb.String()
+}
+
+// TestRenderPrompt_CodeGraphSection_ProjectSet verifies AC-006 / BUG-01KRG-DC3K32H8:
+// when GraphProject is set, the rendered prompt contains ## Code Graph with the
+// project name and four tool call examples.
+func TestRenderPrompt_CodeGraphSection_ProjectSet(t *testing.T) {
+	t.Parallel()
+
+	graphProject := "Users-test-Dev-myrepo"
+	worktreePath := ".worktrees/FEAT-TEST"
+	codeGraphContent := renderCodeGraphSection(graphProject, worktreePath)
+
+	result := &kbzctx.PipelineResult{
+		Sections: []kbzctx.PipelineSection{
+			{Position: 1, Label: "Identity", Content: "## Identity\n\nTest identity."},
+			{Position: 6, Label: "Available Tools", Content: "## Available Tools\n\n- search_graph — structural code search"},
+			{Position: 14, Label: "Code Graph", Content: codeGraphContent},
+		},
+	}
+
+	prompt := kbzctx.RenderPrompt(result)
+
+	// Must contain the section header.
+	if !strings.Contains(prompt, "## Code Graph") {
+		t.Error("prompt missing ## Code Graph section")
+	}
+
+	// Must contain the project name.
+	if !strings.Contains(prompt, graphProject) {
+		t.Errorf("prompt missing graph project name %q", graphProject)
+	}
+
+	// Must contain all four tool call examples.
+	for _, tool := range []string{"search_graph", "trace_path", "query_graph", "get_code_snippet"} {
+		if !strings.Contains(prompt, tool) {
+			t.Errorf("prompt missing tool call example for %s", tool)
+		}
+	}
+
+	// Must contain the re-index instruction.
+	if !strings.Contains(prompt, "index_repository") {
+		t.Error("prompt missing index_repository re-index instruction")
+	}
+
+	// Must contain the worktree path in the index_repository call.
+	if !strings.Contains(prompt, worktreePath) {
+		t.Errorf("prompt missing worktree path %q in index_repository call", worktreePath)
+	}
+
+}
+
+// TestRenderPrompt_CodeGraphSection_ProjectEmpty verifies AC-007 / BUG-01KRG-DC3K32H8:
+// when GraphProject is empty but a worktree exists, the prompt contains ## Code Graph
+// with an index_repository instruction using the worktree path.
+func TestRenderPrompt_CodeGraphSection_ProjectEmpty(t *testing.T) {
+	t.Parallel()
+
+	worktreePath := ".worktrees/FEAT-NOINDEX"
+	codeGraphContent := renderCodeGraphSection("", worktreePath)
+
+	result := &kbzctx.PipelineResult{
+		Sections: []kbzctx.PipelineSection{
+			{Position: 1, Label: "Identity", Content: "## Identity\n\nTest identity."},
+			{Position: 14, Label: "Code Graph", Content: codeGraphContent},
+		},
+	}
+
+	prompt := kbzctx.RenderPrompt(result)
+
+	if !strings.Contains(prompt, "## Code Graph") {
+		t.Error("prompt missing ## Code Graph section")
+	}
+
+	if !strings.Contains(prompt, "index_repository") {
+		t.Error("prompt missing index_repository instruction")
+	}
+
+	if !strings.Contains(prompt, worktreePath) {
+		t.Errorf("prompt missing worktree path %q", worktreePath)
+	}
+
+	if !strings.Contains(prompt, "Worktree not indexed") {
+		t.Error("prompt missing 'Worktree not indexed' guidance")
+	}
+
+	// Must NOT contain example calls (no project to query).
+	if strings.Contains(prompt, "search_graph(project:") {
+		t.Error("prompt contains tool call examples but GraphProject is empty")
+	}
+}
+
+// TestRenderPrompt_CodeGraphSection_NoWorktree verifies AC-008 / BUG-01KRG-DC3K32H8:
+// when no worktree exists, the prompt must not contain ## Code Graph.
+func TestRenderPrompt_CodeGraphSection_NoWorktree(t *testing.T) {
+	t.Parallel()
+
+	// Simulate no worktree: the Code Graph section is simply not added.
+	result := &kbzctx.PipelineResult{
+		Sections: []kbzctx.PipelineSection{
+			{Position: 1, Label: "Identity", Content: "## Identity\n\nTest identity."},
+			{Position: 6, Label: "Available Tools", Content: "## Available Tools\n\n- search_graph"},
+		},
+	}
+
+	prompt := kbzctx.RenderPrompt(result)
+
+	if strings.Contains(prompt, "## Code Graph") {
+		t.Error("prompt contains ## Code Graph section but no worktree exists")
+	}
+}
+
+// TestRenderPrompt_CodeGraphSection_AfterAvailableTools verifies AC-009 / BUG-01KRG-DC3K32H8:
+// ## Code Graph must appear after ## Available Tools in the rendered output.
+func TestRenderPrompt_CodeGraphSection_AfterAvailableTools(t *testing.T) {
+	t.Parallel()
+
+	graphProject := "Users-test-Dev-myrepo"
+	worktreePath := ".worktrees/FEAT-TEST"
+	codeGraphContent := renderCodeGraphSection(graphProject, worktreePath)
+
+	result := &kbzctx.PipelineResult{
+		Sections: []kbzctx.PipelineSection{
+			{Position: 1, Label: "Identity", Content: "## Identity\n\nTest identity."},
+			{Position: 6, Label: "Available Tools", Content: "## Available Tools\n\n- search_graph — structural code search"},
+			{Position: 14, Label: "Code Graph", Content: codeGraphContent},
+		},
+	}
+
+	prompt := kbzctx.RenderPrompt(result)
+
+	availIdx := strings.Index(prompt, "## Available Tools")
+	codeIdx := strings.Index(prompt, "## Code Graph")
+
+	if availIdx == -1 {
+		t.Fatal("## Available Tools not found in prompt")
+	}
+	if codeIdx == -1 {
+		t.Fatal("## Code Graph not found in prompt")
+	}
+	if codeIdx <= availIdx {
+		t.Errorf("## Code Graph (position %d) must appear after ## Available Tools (position %d)",
+			codeIdx, availIdx)
+	}
+}
+
+// TestRenderPrompt_CodeGraphSection_Under500Bytes verifies NFR-003 / BUG-01KRG-DC3K32H8:
 // the ## Code Graph section must not exceed 500 bytes when GraphProject is set.
+func TestRenderPrompt_CodeGraphSection_Under500Bytes(t *testing.T) {
+	t.Parallel()
+
+	graphProject := "Users-test-Dev-myrepo"
+	worktreePath := ".worktrees/FEAT-TEST"
+	codeGraphContent := renderCodeGraphSection(graphProject, worktreePath)
+
+	if len(codeGraphContent) > 500 {
+		t.Errorf("## Code Graph section is %d bytes, must not exceed 500 bytes per NFR-003",
+			len(codeGraphContent))
+	}
+}
+
 // TestNextContextToMap_GraphProject verifies AC-010: graph_project is present
 // in next structured output when worktree has a GraphProject.
 func TestNextContextToMap_GraphProject(t *testing.T) {

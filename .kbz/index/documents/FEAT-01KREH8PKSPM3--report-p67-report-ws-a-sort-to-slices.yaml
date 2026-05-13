@@ -1,0 +1,73 @@
+document_id: FEAT-01KREH8PKSPM3/report-p67-report-ws-a-sort-to-slices
+document_path: work/P67-stdlib-modernisation/P67-report-ws-a-sort-to-slices.md
+content_hash: 9f5bda1fbfedb50d706acbc257924a1bef9d556fe9c795158643400ce13c7d0d
+indexed_at: 2026-05-12T17:31:08.739595Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Conformance Review: ws-a-sort-to-slices'
+      byte_offset: 0
+      byte_count: 3005
+      word_count: 377
+      content_hash: 9f5bda1fbfedb50d706acbc257924a1bef9d556fe9c795158643400ce13c7d0d
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 210
+          byte_count: 569
+          word_count: 90
+          content_hash: 487604b88fed7080ff3ad34567a256fc56cc36c2fa1f35bbafa29cbcd3bf89d3
+        - path: "1.2"
+          level: 2
+          title: Conformance Findings
+          byte_offset: 779
+          byte_count: 1690
+          word_count: 191
+          content_hash: 4af58110c46f185e603d1ce77766e9e05ac26afd8d0352c19ccf1dc1c52de821
+          children:
+            - path: 1.2.1
+              level: 3
+              title: 1. No remaining `sort` package imports in production files
+              byte_offset: 804
+              byte_count: 416
+              word_count: 61
+              content_hash: a91bc09efb5b91af82b81c7811bcb16e7e2feb02c0d8c4640f813ab8350ea4a1
+            - path: 1.2.2
+              level: 3
+              title: 2. Stability preservation
+              byte_offset: 1220
+              byte_count: 817
+              word_count: 79
+              content_hash: 5beaea44195593ec879ab5e40904d7441163821a35ba223d10f88dd957d61bf7
+            - path: 1.2.3
+              level: 3
+              title: 3. Function mapping correctness
+              byte_offset: 2037
+              byte_count: 432
+              word_count: 48
+              content_hash: 70a957e6573a32014fe14952be16b9060f4303111cd166c53f9e9b70b7c4d05c
+        - path: "1.3"
+          level: 2
+          title: Build and Test Verification
+          byte_offset: 2469
+          byte_count: 246
+          word_count: 40
+          content_hash: 4ab1b9ec48d079d5b4c8c1efab1a2e0e21f455b7706d7241e6ec812713df72c3
+        - path: "1.4"
+          level: 2
+          title: Overall Verdict
+          byte_offset: 2715
+          byte_count: 290
+          word_count: 41
+          content_hash: dcc07aaa587e5af4f2f6c165799d168fa4987eee0d81de166e089806d419d11b
+entity_refs:
+    - entity_id: FEAT-01KREH8PKSPM3
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 56
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

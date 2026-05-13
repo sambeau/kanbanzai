@@ -1,0 +1,37 @@
+document_id: FEAT-01KR8YRQN1HPG/report-p63-f2-report-fix-failing-tests
+document_path: work/P63-test-remediation/P63-F2-report-fix-failing-tests.md
+content_hash: 4150108218aa7c53f53d98c959a2faece2a3bc7929faee11a1bd59b6cb30a26d
+indexed_at: 2026-05-12T20:05:53.854056Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Phase 1 — Fix All 111 Failing Tests'
+      byte_offset: 0
+      byte_count: 868
+      word_count: 139
+      content_hash: 4150108218aa7c53f53d98c959a2faece2a3bc7929faee11a1bd59b6cb30a26d
+      children:
+        - path: "1.1"
+          level: 2
+          title: Verification Summary
+          byte_offset: 197
+          byte_count: 381
+          word_count: 65
+          content_hash: 280f8713a3d7e2885b2e8eeca95815ff62f7dff2fd61afa9d86370693aae650c
+        - path: "1.2"
+          level: 2
+          title: Finding
+          byte_offset: 578
+          byte_count: 290
+          word_count: 47
+          content_hash: 67bed96e46ef9f3f7ee3063b02f5b4a105b3666c832872318b63beb2d1320975
+entity_refs:
+    - entity_id: FEAT-01KR8YRQN1HPG
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 108
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

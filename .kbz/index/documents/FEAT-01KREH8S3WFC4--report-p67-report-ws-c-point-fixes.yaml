@@ -1,0 +1,58 @@
+document_id: FEAT-01KREH8S3WFC4/report-p67-report-ws-c-point-fixes
+document_path: work/P67-stdlib-modernisation/P67-report-ws-c-point-fixes.md
+content_hash: b99444f623dc02d2fb60f48e0332ce97e164b215f86e105431b6689cd3a5dc3d
+indexed_at: 2026-05-12T17:30:15.598283Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review: ws-c-point-fixes (FEAT-01KREH8S3WFC4)'
+      byte_offset: 0
+      byte_count: 2516
+      word_count: 316
+      content_hash: b99444f623dc02d2fb60f48e0332ce97e164b215f86e105431b6689cd3a5dc3d
+      children:
+        - path: "1.1"
+          level: 2
+          title: Summary
+          byte_offset: 198
+          byte_count: 583
+          word_count: 68
+          content_hash: 5ca8b4ca9034d065ee1851634c0e5c7fc3f451c7e1ec24ecced685e24fe3e1e6
+        - path: "1.2"
+          level: 2
+          title: Conformance findings
+          byte_offset: 781
+          byte_count: 503
+          word_count: 70
+          content_hash: 5e03d6a6d6cbcb8ed77ca010c40a9ae4ba0029ce8d26c0c4ae548bb2efe330dd
+        - path: "1.3"
+          level: 2
+          title: Quality
+          byte_offset: 1284
+          byte_count: 901
+          word_count: 108
+          content_hash: f38eacd5b07832100a44f6d0c1a1a335dbd0d57c30bec5a9f27a87aebc87e21d
+        - path: "1.4"
+          level: 2
+          title: Build and test verification
+          byte_offset: 2185
+          byte_count: 150
+          word_count: 27
+          content_hash: d9cf3daa9a71964fb1143d4300714b57171297f4af6b5ba5433f982c0b87cfda
+        - path: "1.5"
+          level: 2
+          title: Overall verdict
+          byte_offset: 2335
+          byte_count: 181
+          word_count: 29
+          content_hash: bfd292a3973d65e140d08c9d1efd94cf495ba2ae2e65f3fbd4cd2133e19ec5cb
+entity_refs:
+    - entity_id: FEAT-01KREH8S3WFC4
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 28
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false

@@ -1,0 +1,30 @@
+document_id: FEAT-01KR8YRQN1M56/report-p63-f1-report-dod-policy-updates
+document_path: work/P63-test-remediation/P63-F1-report-dod-policy-updates.md
+content_hash: 0500c8d6c767affe151bf22344646713698a2bcfe2a0194982caa2e27e3a203a
+indexed_at: 2026-05-12T20:05:53.855326Z
+sections:
+    - path: "1"
+      level: 1
+      title: 'Review Report: Phase 4 — DoD and Policy Updates'
+      byte_offset: 0
+      byte_count: 794
+      word_count: 124
+      content_hash: 0500c8d6c767affe151bf22344646713698a2bcfe2a0194982caa2e27e3a203a
+      children:
+        - path: "1.1"
+          level: 2
+          title: Verification Summary
+          byte_offset: 191
+          byte_count: 603
+          word_count: 99
+          content_hash: db6291044252acd7560ee433abb6daa66dd2032466c498c7230e61a44715c477
+entity_refs:
+    - entity_id: FEAT-01KR8YRQN1M56
+      entity_type: feature
+      section_path: "1"
+      byte_offset: 102
+conventional_roles:
+    - section_path: "1.1"
+      role: narrative
+      confidence: high
+classified: false
