@@ -263,7 +263,7 @@ func newServerWithConfig(entityRoot string, cfg *config.Config) (*server.MCPServ
 		}
 		mcpServer.AddTools(NextTools(entitySvc, dispatchSvc, profileStore, knowledgeSvc, intelligenceSvc, docRecordSvc, mergedToolHints, roleStore, worktreeStore, bf, constraintReg)...)
 		// Track G: handoff — sub-agent prompt generation (3.0 pipeline)
-		mcpServer.AddTools(HandoffTools(entitySvc, pipeline, bf, roleStore, constraintReg)...)
+		mcpServer.AddTools(HandoffTools(entitySvc, pipeline, bf, roleStore, constraintReg, worktreeStore)...)
 		// Track H: entity — consolidated entity CRUD
 		mcpServer.AddTools(EntityTool(entitySvc, docRecordSvc, gateRouter, checkpointStore, cfg.Merge.RequiresHumanReview)...)
 		// Track I: doc — consolidated document operations

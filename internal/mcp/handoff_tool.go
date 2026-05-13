@@ -33,6 +33,7 @@ import (
 	"github.com/sambeau/kanbanzai/internal/model"
 	"github.com/sambeau/kanbanzai/internal/service"
 	"github.com/sambeau/kanbanzai/internal/validate"
+	"github.com/sambeau/kanbanzai/internal/worktree"
 )
 
 // commitStateFunc is the function called by the handoff handler to commit any
@@ -55,8 +56,9 @@ func HandoffTools(
 	bf *binding.BindingFile,
 	roleStore *kbzctx.RoleStore,
 	constraintReg *card.ConstraintRegistry,
+	worktreeStore *worktree.Store,
 ) []server.ServerTool {
-	return []server.ServerTool{handoffTool(entitySvc, pipeline, bf, roleStore, constraintReg)}
+	return []server.ServerTool{handoffTool(entitySvc, pipeline, bf, roleStore, constraintReg, worktreeStore)}
 }
 
 func handoffTool(
@@ -65,6 +67,7 @@ func handoffTool(
 	bf *binding.BindingFile,
 	roleStore *kbzctx.RoleStore,
 	constraintReg *card.ConstraintRegistry,
+	worktreeStore *worktree.Store,
 ) server.ServerTool {
 	tool := mcp.NewTool("handoff",
 		mcp.WithReadOnlyHintAnnotation(true),
@@ -212,6 +215,15 @@ func handoffTool(
 
 		if parentFeat.State != nil {
 			input.FeatureState = parentFeat.State
+		}
+
+		// Graph project context from worktree record.
+		if worktreeStore != nil && parentFeature != "" {
+			if wt, err := worktreeStore.GetByEntityID(parentFeature); err == nil && wt != nil {
+				input.HasWorktree = true
+				input.WorktreePath = wt.Path
+				input.GraphProject = wt.GraphProject
+			}
 		}
 
 		result, runErr := pipeline.Run(ctx, input)

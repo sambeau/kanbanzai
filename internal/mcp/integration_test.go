@@ -125,7 +125,7 @@ func TestIntegration_NextHandoffFinish(t *testing.T) {
 
 	// ── Step 2: handoff(task_id) — generate sub-agent prompt ────────────
 
-	handoffTools := HandoffTools(entitySvc, testHandoffPipeline(), nil, nil, nil)
+	handoffTools := HandoffTools(entitySvc, testHandoffPipeline(), nil, nil, nil, nil)
 	if len(handoffTools) == 0 {
 		t.Fatal("HandoffTools returned no tools")
 	}

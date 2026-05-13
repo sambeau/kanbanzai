@@ -37,6 +37,7 @@ const (
 	PositionRetrievalAnchors  = 11
 	PositionDispatchContract  = 12
 	PositionWorktreeDirective = 13
+	PositionCodeGraph         = 14
 )
 
 // Progressive disclosure layer assignments (FR-018).
@@ -105,6 +106,14 @@ type PipelineInput struct {
 	FeatureState map[string]any
 	Role         string // optional role override from the caller
 	Instructions string // optional orchestrator instructions
+	// GraphProject is the codebase-memory-mcp project name from the worktree record.
+	// Empty string when no worktree exists or GraphProject is not set.
+	GraphProject string
+	// WorktreePath is the filesystem path of the feature's worktree.
+	// Empty string when no worktree exists.
+	WorktreePath string
+	// HasWorktree indicates whether the parent feature has a worktree record.
+	HasWorktree bool
 }
 
 // PipelineSection represents one section in the attention-curve-ordered output.
@@ -639,6 +648,35 @@ func (p *Pipeline) stepAssembleSections(state *PipelineState) {
 			Content:  toolHintContent,
 			Layer:    LayerAlways,
 			Tokens:   estimateTokens(toolHintContent),
+		})
+	}
+
+	// Position 14: Code Graph (Layer 1).
+	// Injected when the parent feature has an active worktree.
+	// Three-state logic: project set → tool examples + re-index;
+	// project empty + worktree → index_repository; no worktree → omit.
+	if state.Input.HasWorktree {
+		var codeGraphContent string
+		if state.Input.GraphProject != "" {
+			codeGraphContent = fmt.Sprintf("## Code Graph\n\nProject: **%s**\n\n"+
+				"`search_graph(project: %q, query: \"...\")`\n"+
+				"`trace_path(function_name: \"...\", project: %q)`\n"+
+				"`query_graph(query: \"...\", project: %q)`\n"+
+				"`get_code_snippet(qualified_name: \"...\", project: %q)`\n"+
+				"\nRe-index: `index_repository(repo_path: %q)`",
+				state.Input.GraphProject, state.Input.GraphProject,
+				state.Input.GraphProject, state.Input.GraphProject,
+				state.Input.GraphProject, state.Input.WorktreePath)
+		} else {
+			codeGraphContent = fmt.Sprintf("## Code Graph\n\nWorktree not indexed. Run `index_repository(repo_path: %q)` to enable graph tools.",
+				state.Input.WorktreePath)
+		}
+		state.Sections = append(state.Sections, PipelineSection{
+			Position: PositionCodeGraph,
+			Label:    "Code Graph",
+			Content:  codeGraphContent,
+			Layer:    LayerAlways,
+			Tokens:   estimateTokens(codeGraphContent),
 		})
 	}
 

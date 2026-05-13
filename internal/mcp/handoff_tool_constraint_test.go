@@ -98,7 +98,7 @@ func callHandoffWithCard(
 	args map[string]any,
 ) map[string]any {
 	t.Helper()
-	tool := handoffTool(entitySvc, pipeline, bf, roleStore, reg)
+	tool := handoffTool(entitySvc, pipeline, bf, roleStore, reg, nil)
 	req := makeRequest(args)
 	result, err := tool.Handler(context.Background(), req)
 	if err != nil {
