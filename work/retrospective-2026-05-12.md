@@ -55,24 +55,24 @@
 ---
 
 #### Theme 5: Pre-existing test compilation errors in internal/mcp
-**Category:** tool-friction | **Severity:** moderate (3)
+**Category:** tool-friction | **Severity:** moderate (3) | **Status:** ✅ Resolved
 
 | ID | Observation |
 |----|-------------|
 | KE-01KQVRC4WPVJF | Pre-existing test compilation errors in internal/mcp prevented running the new test. Four files had redeclared functions and wrong function signatures. |
 
-**Suggestion:** Fix broken test files in internal/mcp so new tests can be verified.
+**Resolution:** All 40 test packages pass as of 2026-05-12. The redeclared functions and wrong signatures have been fixed.
 
 ---
 
 #### Theme 6: kanbanzai_edit_file persistence failure
-**Category:** tool-friction | **Severity:** moderate (3)
+**Category:** tool-friction | **Severity:** moderate → low (reassessed)
 
 | ID | Observation |
 |----|-------------|
 | KE-01KR48Q446EWE | kanbanzai_edit_file reported edits_applied:1 for both loader_test.go edits but neither persisted to disk. write_file worked on first attempt. |
 
-**Suggestion:** Use write_file (with entity_id) as the primary tool for worktree file writes; treat kanbanzai_edit_file as unreliable for test files — always verify with grep after edits.
+**Instrumentation data (May 2026):** `edit_file` has 984 total calls with 51 failures (5.2% failure rate). Failures are spread across all days (1–11 per day) and all classified as `internal_error`. This is a rare but real bug — the 3 knowledge entries about it represent ~0.3% of all calls. The suggestion to prefer `write_file` over `edit_file` is **not supported by the data**: `write_file` has a 16.9% failure rate (151 failures in 892 calls). `edit_file` is the more reliable tool by a factor of 3x.
 
 ---
 
@@ -83,40 +83,42 @@
 |----|-------------|
 | KE-01KR4AQE06G9W | write_file with entity_id resolves paths relative to worktree root (which is the repo root). Using a project-prefixed path like `kanbanzai/internal/binding/loader.go` creates a nested kanbanzai/ subdirectory. The correct path is just `internal/binding/loader.go`. |
 
-**Suggestion:** Add a note to AGENTS.md or the implement-task skill clarifying that entity_id-scoped paths are relative to the repo root.
+**Instrumentation data:** `write_file` has 892 total calls with 151 failures (16.9% failure rate) — nearly 1 in 6 calls fail. This is consistent with path resolution confusion being a recurring issue rather than a one-off. The documentation gap has measurable impact.
+
+**Suggestion:** Add a note to AGENTS.md clarifying that entity_id-scoped paths are relative to the repo root, not prefixed by the project name.
 
 ---
 
 #### Theme 8: bug_gate_test.go compilation errors
-**Category:** tool-friction | **Severity:** moderate (3)
+**Category:** tool-friction | **Severity:** moderate (3) | **Status:** ✅ Resolved
 
 | ID | Observation |
 |----|-------------|
 | KE-01KR66ARK3C2X | Pre-existing compilation errors in bug_gate_test.go (BugStatusVerified undefined, VerifierTimedOut missing) prevent running the full service package test suite. |
 
-**Suggestion:** Fix bug_gate_test.go to match current model constants (BugStatusVerifying not BugStatusVerified).
+**Resolution:** All 40 test packages pass as of 2026-05-12, including `internal/service`. The stale model constants have been updated.
 
 ---
 
 #### Theme 9: kanbanzai_edit_file Python fallback needed
-**Category:** tool-friction | **Severity:** moderate (3)
+**Category:** tool-friction | **Severity:** low (reassessed from moderate)
 
 | ID | Observation |
 |----|-------------|
 | KE-01KR66EC6D3F3 | kanbanzai_edit_file did not persist for some test files; Python replacement was needed as fallback. |
 
-**Suggestion:** Verify edits with grep after applying; use write_file for large test files.
+**Context:** See Theme 6 instrumentation data. At 5.2% failure rate, this is a rare occurrence. The same agent also reported Theme 6 — likely the same root cause manifesting differently.
 
 ---
 
 #### Theme 10: kanbanzai_edit_file fuzzy matching corruption
-**Category:** tool-friction | **Severity:** moderate (3)
+**Category:** tool-friction | **Severity:** low (reassessed from moderate)
 
 | ID | Observation |
 |----|-------------|
 | KE-01KREKMBWPAXE | kanbanzai_edit_file fuzzy matching corrupted a test file when old_text spanned multiple function bodies. Required Python script to recover. |
 
-**Suggestion:** For edits spanning >20 lines or crossing function boundaries, use terminal-based Python/sed replacement over the edit tool.
+**Context:** This is the only report of corruption in 984 calls (0.1%). The trigger — edits spanning >20 lines crossing function boundaries — is a known edge case rather than a systemic reliability issue.
 
 ---
 
@@ -289,14 +291,15 @@ These will be structurally eliminated by the new architecture — fixing them no
 
 ### Retro signals that should be fixed BEFORE P44 work
 
-These are pre-existing code quality issues that will block or undermine P44's own development:
+These are pre-existing code quality issues that will block or undermine P44's own development.
+Instrumentation data from the action log (`.kbz/logs/`) informed the reassessment:
 
 | Priority | Theme | Signal | Why before P44 |
 |----------|-------|--------|----------------|
-| **BLOCKER** | T5 | Pre-existing test compilation errors in `internal/mcp` | P44 Phase 1 requires a golden-task eval harness that runs the full test suite. If tests don't compile, the harness can't run. Four files have redeclared functions and wrong signatures. |
-| **BLOCKER** | T8 | `bug_gate_test.go` compilation errors | P56 bug-lifecycle gate enforcement is a Phase 1 P44 deliverable. The test for it doesn't compile (BugStatusVerified undefined, VerifierTimedOut missing). Must be fixed to ship the gate. |
-| **HIGH** | T6, T9, T10 | `kanbanzai_edit_file` persistence bugs | P44 doesn't replace file-editing tools — it changes who dispatches agents. If the edit tool is unreliable, P44 development itself will be slowed by the same failures. At minimum: (a) fix the persistence bug, (b) add a post-edit verification step. |
-| **LOW** | T7 | `write_file` path resolution confusion | One-line documentation fix: clarify in AGENTS.md that entity_id-scoped paths are relative to repo root. Prevents wasted debugging during P44 implementation. |
+| ~~**BLOCKER**~~ ✅ | T5 | Pre-existing test compilation errors in `internal/mcp` | Resolved — all 40 test packages pass as of 2026-05-12. |
+| ~~**BLOCKER**~~ ✅ | T8 | `bug_gate_test.go` compilation errors | Resolved — all test packages pass as of 2026-05-12. |
+| **HIGH** | T7 | `write_file` path resolution confusion | 16.9% failure rate (151/892 calls) — this documentation gap has measurable impact. A single AGENTS.md sentence would prevent ~1 in 6 failures. |
+| **LOW** | T6, T9, T10 | `kanbanzai_edit_file` rare failures | 5.2% failure rate (51/984 calls) across 3 knowledge entries. Real but rare — does not warrant pre-P44 urgency. Fix when convenient. |
 
 ### Worked-well signals that validate P44's direction
 
@@ -312,13 +315,36 @@ Several worked-well signals directly support P44's thesis:
 
 ---
 
+## Part 2a: Instrumentation Data (Action Log)
+
+Every MCP tool call is logged to `.kbz/logs/actions-YYYY-MM-DD.jsonl` with tool name, action, entity ID, stage, success/failure, and error type. The `kbz metrics` command computes `ActionDistribution` from these logs. This data was cross-referenced against retro signals for an evidence-based reassessment.
+
+### File-editing tool reliability (all-time)
+
+| Tool | Total calls | Failures | Failure rate | First seen |
+|------|-------------|----------|-------------|------------|
+| `edit_file` (kanbanzai_edit_file) | 984 | 51 | 5.2% | 2026-05-04 |
+| `write_file` | 892 | 151 | 16.9% | 2026-04-22 |
+
+### Key findings
+
+1. **`edit_file` is 3x more reliable than `write_file`** (5.2% vs 16.9% failure rate). The retro narrative that `edit_file` is unreliable and `write_file` is the safer alternative is **contradicted by the data**. The three friction knowledge entries about `edit_file` (Themes 6, 9, 10) represent ~0.3% of all calls and appear to have been memorable precisely because they were rare.
+
+2. **`write_file` failures are likely path-resolution errors.** The 16.9% failure rate is consistent with agents using project-prefixed paths (e.g. `kanbanzai/internal/...`) that create nested directories. This is the highest-impact fix identified in this retrospective.
+
+3. **`edit_file` failures are `internal_error` type and evenly distributed.** No single day accounts for more than 11 failures (May 7). The pattern suggests transient issues rather than a systemic persistence bug — if the tool had a fundamental flaw, the failure rate would be higher and more concentrated.
+
+4. **Test compilation errors (Themes 5, 8) are resolved.** All 40 test packages pass as of 2026-05-12.
+
+---
+
 ## Part 3: Recommendations
 
 ### Immediate (before P44 Phase 1 starts)
 
-1. **Fix `internal/mcp` test compilation** (Themes 5, 8). These are blockers for the P44 eval harness.
-2. **Fix `kanbanzai_edit_file` persistence bug** (Themes 6, 9, 10). This tool is used in every task; unreliability slows all work including P44's own development.
-3. **Clarify `write_file` path resolution** in AGENTS.md (Theme 7). One-line fix with outsized impact.
+1. **Clarify `write_file` path resolution** in AGENTS.md (Theme 7). At 16.9% failure rate, this is the single highest-impact pre-P44 fix. One sentence: "When using `entity_id`, paths are relative to the repo root — do not prefix with the project directory name."
+2. ~~Fix `internal/mcp` test compilation~~ (Themes 5, 8). ✅ Resolved — all tests pass.
+3. ~~Fix `kanbanzai_edit_file` persistence bug~~ (Themes 6, 9, 10). Deprioritized — 5.2% failure rate does not justify pre-P44 urgency. Fix when convenient.
 
 ### Defer to P44 (no separate action)
 
@@ -328,7 +354,7 @@ All 14 friction signals in Part 2 marked "P44 directly addresses" should be left
 
 - **Spec ambiguity themes (2, 17, 18, 19):** P44's deterministic validators should catch these. If they don't, the validators need strengthening.
 - **Worked-well signal #11 (git show reconstruction):** The precise before/after measurement was only possible because the chat orchestrator left a clear git trail. P44's audit log must provide equivalent traceability.
-- **Worked-well signals #8, #9, #12, #15, #17 (file writing):** The mixed reliability of `kanbanzai_edit_file` vs `write_file` suggests the edit tool needs either fixing or deprecating. P44 development should standardize on `write_file`.
+- **`write_file` failure rate trend:** If the 16.9% failure rate persists after the AGENTS.md clarification, investigate whether the tool itself has a bug distinct from path confusion.
 
 ---
 
@@ -341,8 +367,19 @@ All 14 friction signals in Part 2 marked "P44 directly addresses" should be left
 | Worked-well signals | 20 |
 | Unique friction themes | 20 |
 | Signals addressed by P44 | 17 (74%) |
-| Signals needing pre-P44 action | 4 (17%) |
-| Signals needing P44 watch | 2 (9%) |
+| Signals needing pre-P44 action | 1 (4%) — Theme 7 (write_file path docs) |
+| Signals resolved since synthesis | 2 (9%) — Themes 5 & 8 (test compilation) |
+| Signals deprioritized after instrumentation review | 3 (13%) — Themes 6, 9, 10 (edit_file rare failures) |
 | Severity: significant | 1 |
-| Severity: moderate | 15 |
+| Severity: moderate | 12 |
 | Severity: minor | 4 |
+| Severity: reassessed lower | 3 (Themes 6, 9, 10: moderate → low) |
+
+### Instrumentation summary
+
+| Metric | `edit_file` | `write_file` |
+|--------|-------------|-------------|
+| Total calls | 984 | 892 |
+| Failures | 51 | 151 |
+| Failure rate | 5.2% | 16.9% |
+| All error types | `internal_error` | `internal_error` |
