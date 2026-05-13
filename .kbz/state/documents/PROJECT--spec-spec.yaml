@@ -1,0 +1,10 @@
+canonical_content_hash: bf11a8c18a31f9cf502063a102c5c53fae52507fe5b6a1989e97cb5ec9a76fa0
+content_hash: d739729b26374ac31db6c50ec6421e05d7b470e2125551f2b8f880e3fd5beed7
+created: "2026-05-13T10:30:40Z"
+created_by: sambeau
+id: PROJECT/spec-spec
+path: work/bugs/handoff-missing-code-graph-section/spec.md
+status: draft
+title: "Bug Spec: Handoff does not emit Code Graph section for sub-agents"
+type: spec
+updated: "2026-05-13T10:30:40Z"
