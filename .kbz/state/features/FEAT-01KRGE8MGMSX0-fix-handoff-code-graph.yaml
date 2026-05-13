@@ -1,0 +1,13 @@
+id: FEAT-01KRGE8MGMSX0
+slug: fix-handoff-code-graph
+name: Fix handoff Code Graph section emission
+parent: B73-fix-handoff-code-graph
+status: proposed
+summary: "Implement the missing ## Code Graph section in handoff prompts so sub-agents receive graph_project metadata. Injection point: pipeline.go stepAssembleSections or handoff post-processing. Tests already written in assembly_test.go."
+tags:
+  - bug_fix
+  - fast-track
+created: "2026-05-13T10:31:34Z"
+created_by: sambeau
+display_id: B73-F1
+tier: feature
