@@ -2,7 +2,8 @@ id: FEAT-01KRGE8MGMSX0
 slug: fix-handoff-code-graph
 name: Fix handoff Code Graph section emission
 parent: B73-fix-handoff-code-graph
-status: developing
+status: reviewing
+review_cycle: 1
 summary: "Implement the missing ## Code Graph section in handoff prompts so sub-agents receive graph_project metadata. Injection point: pipeline.go stepAssembleSections or handoff post-processing. Tests already written in assembly_test.go."
 tags:
   - bug_fix
@@ -27,3 +28,5 @@ overrides:
     to_status: developing
 display_id: B73-F1
 tier: feature
+verification: "All 5 Code Graph rendering tests pass (TestRenderPrompt_CodeGraphSection_*). Full internal/mcp and internal/context test suites pass with zero regressions. Review finding BF-1 (nil-pointer dereference) fixed. go build ./... succeeds. Three-state logic verified: project set, project empty + worktree, no worktree."
+verification_status: passed
