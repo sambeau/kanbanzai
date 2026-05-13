@@ -3,10 +3,10 @@ content: "Tool hints in sub-agent prompts no longer require configuration. When 
 created: "2026-05-07T14:50:42Z"
 created_by: unknown
 id: KE-01KR1EPST17EN
-last_accessed_at: "2026-05-12T20:35:12Z"
+last_accessed_at: "2026-05-13T10:32:46Z"
 learned_from: TASK-01KR1EFVWN5MT
 miss_count: 0
-recent_use_count: 237
+recent_use_count: 238
 scope: project
 status: confirmed
 tier: 2

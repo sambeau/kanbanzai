@@ -3,10 +3,10 @@ content: "[minor] worked-well: go build ./... as oracle quickly surfaced all rem
 created: "2026-05-09T11:02:29Z"
 created_by: unknown
 id: KE-01KR66EC6J801
-last_accessed_at: "2026-05-12T21:10:21Z"
+last_accessed_at: "2026-05-13T10:32:46Z"
 learned_from: TASK-01KR47D68JK4S
 miss_count: 0
-recent_use_count: 78
+recent_use_count: 79
 scope: project
 status: contributed
 tags:
