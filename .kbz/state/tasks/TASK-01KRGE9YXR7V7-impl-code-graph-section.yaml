@@ -1,0 +1,6 @@
+id: TASK-01KRGE9YXR7V7
+parent_feature: FEAT-01KRGE8MGMSX0
+slug: impl-code-graph-section
+name: Implement Code Graph section in handoff pipeline
+summary: "Inject a ## Code Graph PipelineSection into the handoff prompt when the parent feature's worktree has a GraphProject set. Three-state logic: project set → tool examples + re-index; project empty + worktree → index_repository; no worktree → omit. Must appear after ## Available Tools, ≤500 bytes when GraphProject set."
+status: queued
