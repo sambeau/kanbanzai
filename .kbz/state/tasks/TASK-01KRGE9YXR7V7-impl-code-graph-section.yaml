@@ -3,9 +3,18 @@ parent_feature: FEAT-01KRGE8MGMSX0
 slug: impl-code-graph-section
 name: Implement Code Graph section in handoff pipeline
 summary: "Inject a ## Code Graph PipelineSection into the handoff prompt when the parent feature's worktree has a GraphProject set. Three-state logic: project set → tool examples + re-index; project empty + worktree → index_repository; no worktree → omit. Must appear after ## Available Tools, ≤500 bytes when GraphProject set."
-status: active
+status: done
 estimate: "3"
+files_planned:
+  - internal/context/pipeline.go
+  - internal/mcp/handoff_tool.go
+  - internal/mcp/server.go
+  - internal/mcp/handoff_tool_constraint_test.go
+  - internal/mcp/handoff_tool_test.go
+  - internal/mcp/integration_test.go
+completed: "2026-05-13T10:44:18Z"
 claimed_at: "2026-05-13T10:32:45Z"
 dispatched_to: unspecified
 dispatched_at: "2026-05-13T10:32:45Z"
 dispatched_by: sambeau
+completion_summary: "Injected Code Graph PipelineSection into handoff prompt via three-state logic. Added PositionCodeGraph (14) constant, GraphProject/WorktreePath/HasWorktree fields to PipelineInput, and Code Graph section rendering in stepAssembleSections. Wired worktreeStore through HandoffTools to populate graph context from the worktree record. All 7 existing Code Graph tests pass; full mcp and context test suites pass with no regressions."
